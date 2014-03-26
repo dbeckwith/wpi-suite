@@ -1,25 +1,30 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Stores a list of games and their statuses
  * @author Akshay
  *
  */
-public class GameListModel {
+public class GameListModel extends AbstractListModel<GameModel> {
 	
-	public static enum GameStatus {PENDING, COMPLETE};
 
-	private HashMap<Requirement, GameStatus> games;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4216338772150454616L;
+
+	
+	private ArrayList<GameModel> games;
 	private ArrayList<SimpleListObserver> observers;
 
 	public GameListModel(){
-		games = new HashMap<>();
+		games = new ArrayList<>();
 		observers = new ArrayList<SimpleListObserver>();
 	}
 
@@ -34,57 +39,31 @@ public class GameListModel {
 	}
 	
 	/**
-	 * Add a game and its status to the list
+	 * Add a game to the list
 	 * @param req The game to add
 	 * @param status The game's status
 	 */
-	public void addGame(Requirement req, GameStatus status){
-		games.put(req, status);	
+	public void addGame(GameModel g){
+		games.add(g);	
 		updated();
-	}
-
-	/**
-	 * Update a game's status. Doesn't do anything if the game is not in the list.
-	 * @param req The game to update
-	 * @param status The game's new status
-	 */
-	public void updateGame(Requirement req, GameStatus status){
-		if(games.containsKey(req)){
-			games.put(req, status);
-			updated();	
-		}
 	}
 
 	/**
 	 * Removes a game from the list. Doesn't do anything if the game is not in the list
 	 * @param req The game to remove
 	 */
-	public void removeGame(Requirement req){
-		if(games.containsKey(req)){
-			games.remove(req);
+	public void removeGame(GameModel g){
+		if(games.contains(g)){
+			games.remove(g);
 			updated();
 		}
 	}
 
 	/**
-	 * @return an array containing the game in the list
+	 * @return the list of games
 	 */
-	public Requirement[] getGames(){
-		return games.keySet().toArray(new Requirement[]{});
-	}
-
-	/**
-	 * @return an array containing the statuses of the games
-	 */
-	public GameStatus[] getStatuses(){
-		return games.values().toArray(new GameStatus[]{});
-	}
-	
-	/**
-	 * @return the number of games in this model
-	 */
-	public int getNumGames() {
-	    return games.size();
+	public ArrayList<GameModel> getGames(){
+		return games;
 	}
 	
 	/**
@@ -94,5 +73,15 @@ public class GameListModel {
 		for(SimpleListObserver observer:observers){
 			observer.listUpdated();
 		}		
+	}
+
+	@Override
+	public int getSize() {
+		return games.size();
+	}
+
+	@Override
+	public GameModel getElementAt(int index) {
+		return games.get(index);
 	}
 }

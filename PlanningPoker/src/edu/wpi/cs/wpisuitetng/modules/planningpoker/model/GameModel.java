@@ -2,6 +2,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.Date;
 
+import com.google.gson.Gson;
+
+import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -10,16 +13,27 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * @author Akshay
  * 
  */
-public class GameModel {
+public class GameModel extends AbstractModel {
     
+	public static enum GameStatus {
+		PENDING("Pending"), COMPLETE("Complete");
+		
+		public String name;
+		
+		GameStatus(String stat){
+			name = stat;
+		}		
+	};
+
+	
     public static enum GameType {
         LIVE, DISTRIBUTED
     };
     
-    private Requirement requirement;
+    private Requirement[] requirements;
     private Date endDate;
     private GameType type;
-    private boolean isEnded;
+    private GameStatus status;
     
     /**
      * Constructor
@@ -33,19 +47,19 @@ public class GameModel {
      * @param finished
      *            whether or not the game has been manually ended
      */
-    public GameModel(Requirement req, Date end, GameType type, boolean finished) {
-        requirement = req;
+    public GameModel(Requirement[] req, Date end, GameType type, GameStatus stat) {
+        requirements = req;
         endDate = end;
         this.type = type;
-        isEnded = finished;
+        status = stat;
     }
     
     /**
      * 
      * @return The Requirement for this game
      */
-    public Requirement getRequirement() {
-        return requirement;
+    public Requirement[] getRequirements() {
+        return requirements;
     }
     
     /**
@@ -71,12 +85,32 @@ public class GameModel {
      * @param fin
      */
     public void setEnded(boolean fin) {
-        isEnded = fin;
+        status = fin?GameStatus.COMPLETE:GameStatus.PENDING;
     }
     
     public boolean isEnded() {
-        return isEnded
+        return (status == GameStatus.COMPLETE)
                 || (endDate.before(new Date(System.currentTimeMillis())));
     }
+
+	@Override
+	public void delete() {
+		
+	}
+
+	@Override
+	public Boolean identify(Object arg0) {
+		return null;
+	}
+
+	@Override
+	public void save() {
+		
+	}
+
+	@Override
+	public String toJSON() {
+		return new Gson().toJson(this, GameModel.class);
+	}
     
 }

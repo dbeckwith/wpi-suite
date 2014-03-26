@@ -1,29 +1,30 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 import javax.swing.AbstractListModel;
 
-import com.google.gson.Gson;
-
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
- * Stores a list of users and their estimates
+ * Stores a list of user's estimate
  * 
  * @author Akshay
  * 
  */
-public class EstimateListModel extends AbstractListModel {
+public class EstimateListModel extends AbstractListModel<EstimateModel> {
     
-    private HashMap<User, Float> estimateList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3957508701397985775L;
+
+	
+	private ArrayList<EstimateModel> estimateList;
     private ArrayList<SimpleListObserver> observers;
     
     public EstimateListModel() {
-        estimateList = new HashMap<>();
+        estimateList = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -46,54 +47,31 @@ public class EstimateListModel extends AbstractListModel {
      * @param user
      * @param estoimate
      */
-    public void addEstimate(User user, Float estimate) {
-        estimateList.put(user, estimate);
+    public void addEstimate(EstimateModel e) {
+        estimateList.add(e);
         updated();
     }
     
+   
     /**
-     * Update a user's estimate. Doesn't do anything if the user is not in the
-     * list.
-     * 
-     * @param user
-     *            The user to update
-     * @param estimate
-     *            The user's new estimate
-     */
-    public void updateEstimate(User user, Float estimate) {
-        if (estimateList.containsKey(user)) {
-            estimateList.put(user, estimate);
-            updated();
-        }
-    }
-    
-    /**
-     * Removes a user and their estimate from the list. Doesn't do anything if
-     * the user is not in the list
+     * Removes a user's estimate from the list. Doesn't do anything if
+     * the estimate is not in the list
      * 
      * @param user
      *            the user to remove
      */
-    public void removeEstimate(User user) {
-        if (estimateList.containsKey(user)) {
-            estimateList.remove(user);
+    public void removeEstimate(EstimateModel e) {
+        if (estimateList.contains(e)) {
+            estimateList.remove(e);
             updated();
         }
     }
-    
-    /**
-     * @return an array containing the users in the list
-     */
-    public User[] getUsers() {
-        return estimateList.keySet().toArray(new User[] {});
-        
-    }
-    
+
     /**
      * @return an array containing all of the estimates
      */
-    public Float[] getEstimates() {
-        return estimateList.values().toArray(new Float[] {});
+    public ArrayList<EstimateModel> getEstimates() {
+        return estimateList;
     }
     
     /**
@@ -103,8 +81,8 @@ public class EstimateListModel extends AbstractListModel {
      */
     public float getMean() {
         float mean = 0;
-        for (Float f : estimateList.values()) {
-            mean += f / (estimateList.values().size());
+        for (EstimateModel e:estimateList) {
+            mean += e.getEstimate() / (estimateList.size());
         }
         return mean;
     }
@@ -115,11 +93,11 @@ public class EstimateListModel extends AbstractListModel {
      * @return the median
      */
     public float getMedian() {
-        Float[] nums = estimateList.values().toArray(new Float[] {});
-        if (estimateList.values().size() % 2 == 1) {
-            return nums[estimateList.values().size() / 2];
+    	int count = estimateList.size();
+        if (estimateList.size() % 2 == 1) {
+        	return estimateList.get(count/2).getEstimate();
         } else {
-            return (nums[nums.length / 2] + nums[nums.length / 2 - 1]) / 2;
+        	return (estimateList.get(count/2).getEstimate() + estimateList.get(count/2 -1).getEstimate())/2;
         }
     }
     
@@ -138,8 +116,8 @@ public class EstimateListModel extends AbstractListModel {
 	}
 
 	@Override
-	public Object getElementAt(int index) {
-		return null;
+	public EstimateModel getElementAt(int index) {
+		return estimateList.get(index);
 	}
     
 }
