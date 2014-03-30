@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
@@ -39,6 +40,7 @@ public class GameModel extends AbstractModel {
     
 	private ArrayList<Estimate> estimateList;
     private ArrayList<SimpleListObserver> observers;
+    private ArrayList<User> userList;
     
     private int id;
     private String name;
@@ -64,19 +66,23 @@ public class GameModel extends AbstractModel {
 
     /**
      * Constructor
+     * @param id
+     * @param name
      * @param requirements
      * @param end
      * @param type
      * @param status
+     * @param userList list of users in the game
      */
-    public GameModel(int id, String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status) {
+    public GameModel(int id, String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         this.endDate = end;
         this.type = type;
-        this.status = status; 
+        this.status = status;
+        this.userList = userList;
         estimateList = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
     }
@@ -88,8 +94,9 @@ public class GameModel extends AbstractModel {
      * @param type
      * @param status
      * @param estimates
+     * @param userList list of users in the game
      */
-    public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates) {
+    public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
         this.id = -1;
         this.name = name;
         this.description = description;
@@ -98,7 +105,7 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         this.estimateList = estimates;
-        
+        this.userList = userList;
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -140,8 +147,7 @@ public class GameModel extends AbstractModel {
     
     /**
      * Add a user's estimate to the list 
-     * @param user
-     * @param estoimate
+     * @param e the estimate to add
      */
     public void addEstimate(Estimate e) {
         estimateList.add(e);
@@ -153,7 +159,7 @@ public class GameModel extends AbstractModel {
      * Removes a user's estimate from the list. Doesn't do anything if
      * the estimate is not in the list
      * 
-     * @param user the user to remove
+     * @param e the estimate to remove
      */
     public void removeEstimate(Estimate e) {
         if (estimateList.contains(e)) {
@@ -204,7 +210,10 @@ public class GameModel extends AbstractModel {
     }
     
     public boolean isEnded() {
-        if((endDate.before(new Date(System.currentTimeMillis())))){
+        if (estimateList.size() == userList.size()){
+        	setEnded(true);
+        }
+    	else if((endDate.before(new Date(System.currentTimeMillis())))){
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);
