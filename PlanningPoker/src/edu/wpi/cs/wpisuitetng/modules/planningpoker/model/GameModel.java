@@ -237,6 +237,10 @@ public class GameModel extends AbstractModel {
         return id;
     }
     
+    public GameStatus getStatus() {
+        return status;
+    }
+    
     
     public void copyFrom(GameModel g) {
         id = g.id;

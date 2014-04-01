@@ -41,13 +41,7 @@ public class GamesListPanel extends javax.swing.JPanel {
      */
     public GamesListPanel() {
         initComponents();
-        try {
-            gameTree.setCellRenderer(new GamesListTreeCellRenderer(
-                    new ImageIcon(ImageIO.read(AdminButtons.class
-                            .getResource("EndGame.png")))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        gameTree.setCellRenderer(new GamesListTreeCellRenderer());
         
         GameListModel.getInstance().addListListener(new SimpleListObserver() {
             

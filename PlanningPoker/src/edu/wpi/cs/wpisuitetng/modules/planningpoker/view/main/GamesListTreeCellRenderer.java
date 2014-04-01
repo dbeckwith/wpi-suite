@@ -10,6 +10,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
 
 public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
     
@@ -18,10 +21,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
      */
     private static final long serialVersionUID = -2728918517590604079L;
     
-    private ImageIcon test_icon;
-    
-    public GamesListTreeCellRenderer(ImageIcon test_icon) {
-        this.test_icon = test_icon;
+    public GamesListTreeCellRenderer() {
     }
     
     @Override
@@ -38,7 +38,16 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             
             // TODO: set game status icon
             
-            icon = test_icon;
+            GameModel game = (GameModel)node.getUserObject();
+            
+            switch (game.getStatus()) {
+                case COMPLETE:
+                    icon = new ImageIcon(ImageLoader.load("tick_octagon.png"));
+                    break;
+                case PENDING:
+                    icon = new ImageIcon(ImageLoader.load("in-progress.png"));
+                    break;
+            }
             
             if (icon != null) {
                 setIcon(icon);
