@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -37,6 +38,8 @@ public class GameModel extends AbstractModel {
     };
     
     private ArrayList<SimpleListObserver> observers;
+    private ArrayList<User> userList;
+    private ArrayList<ArrayList<Estimate>> estimates;
     
     private int id;
     private String name;
@@ -60,15 +63,13 @@ public class GameModel extends AbstractModel {
     
     /**
      * Constructor
-     * 
      * @param requirements
      * @param end
      * @param type
      * @param status
+     * @param userList list of users in the game
      */
-    public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+    public GameModel(int id, String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -76,7 +77,14 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        observers = new ArrayList<SimpleListObserver>();
+        this.userList = userList;
+        ArrayList<Estimate> innerList;
+        
+        for(int i = 0; i < requirements.size(); i++){
+        	innerList = requirements.get(i).getEstimates();
+        	this.estimates.add(innerList);
+        }
+   		observers = new ArrayList<SimpleListObserver>();
     }
     
     /**
@@ -87,10 +95,9 @@ public class GameModel extends AbstractModel {
      * @param type
      * @param status
      * @param estimates
+     * @param userList list of users in the game
      */
-    public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
         id = -1;
         this.name = name;
         this.description = description;
@@ -98,7 +105,13 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
+        this.userList = userList;
+        ArrayList<Estimate> innerList;
         
+        for(int i = 0; i < requirements.size(); i++){
+        	innerList = requirements.get(i).getEstimates();
+        	this.estimates.add(innerList);
+        }
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -138,16 +151,13 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * Add a user's estimate to the list
-     * 
-     * @param user
-     * @param estoimate
+     * Add a user's estimate to the list 
+     * @param e the estimate to add
      */
     public void addEstimate(Estimate e, int reqIndex) {
         requirements.get(reqIndex).addEstimate(e);
         updated();
     }
-    
     
     /**
      * @return an array containing all of the estimates
@@ -190,8 +200,27 @@ public class GameModel extends AbstractModel {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
+    /**
+     * Determines if all users have voted
+     * @return boolean
+     */
+    public boolean allVoted(){
+    	for(int i = 0; i < estimates.size(); i++){
+    		if(estimates.get(i).size() == userList.size()){
+    			return true;
+    		}
+    		else return false;
+    	}
+		return false;
+    }
+    /**
+     * Determines if the game should be ended, and ends the game
+     */
     public boolean isEnded() {
-        if ((endDate.before(new Date(System.currentTimeMillis())))) {
+        if (allVoted() == true){
+        	setEnded(true);
+        }
+    	else if((endDate.before(new Date(System.currentTimeMillis())))){
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);
@@ -252,6 +281,8 @@ public class GameModel extends AbstractModel {
         type = g.type;
         status = g.status;
         observers = g.observers;
+        estimates = g.estimates;
+        userList = g.userList;
     }
     
 }

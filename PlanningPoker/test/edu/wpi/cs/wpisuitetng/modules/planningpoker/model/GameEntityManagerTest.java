@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -47,12 +48,14 @@ public class GameEntityManagerTest {
         otherProject = new Project("other", "2");
         mockSsid = "abc123";
         adminSession = new Session(admin, testProject, mockSsid); 
-        existingUser = new User("joe", "joe", "1234", 2);       
-        existingGame = new GameModel(1, "Existing Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);       
+        ArrayList<User> users = new ArrayList<User>();
+        existingUser = new User("joe", "joe", "1234", 2); 
+        users.add(existingUser);
+        existingGame = new GameModel(1, "Existing Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);       
         defaultSession = new Session(existingUser, testProject, mockSsid);
-        newGame = new GameModel(-1, "New Game", "A new game", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);  
-        otherGame = new GameModel(3, "Other Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING); 
-        goodUpdatedGame = new GameModel(1, "Updated Game", "Some updates", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);  
+        newGame = new GameModel(-1, "New Game", "A new game", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);  
+        otherGame = new GameModel(3, "Other Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users); 
+        goodUpdatedGame = new GameModel(1, "Updated Game", "Some updates", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);  
         
         db = new MockData(new HashSet<Object>());
         db.save(existingGame, testProject);
@@ -95,7 +98,10 @@ public class GameEntityManagerTest {
     
     @Test
     public void testSave() throws WPISuiteException {
-        GameModel game = new GameModel(4, "Save Test", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);  
+    	ArrayList<User> users = new ArrayList<User>();
+    	User kevin = new User("Kevin", "kpmartin", "password", 1);
+    	users.add(kevin);
+        GameModel game = new GameModel(4, "Save Test", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);  
         manager.save(defaultSession, game);
         assertSame(game, db.retrieve(GameModel.class, "id", 4).get(0));
         assertSame(testProject, game.getProject());
@@ -125,7 +131,10 @@ public class GameEntityManagerTest {
    
     @Test
     public void testDeleteAll() throws WPISuiteException {
-        GameModel anotherGame = new GameModel(-1, "a title", "a description", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);
+    	ArrayList<User> users = new ArrayList<User>();
+    	User kevin = new User("Kevin", "kpmartin", "password", 1);
+    	users.add(kevin);
+        GameModel anotherGame = new GameModel(-1, "a title", "a description", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
         manager.makeEntity(defaultSession, anotherGame.toJSON());
         assertEquals(2, db.retrieveAll(new GameModel(), testProject).size());
         manager.deleteAll(adminSession);
