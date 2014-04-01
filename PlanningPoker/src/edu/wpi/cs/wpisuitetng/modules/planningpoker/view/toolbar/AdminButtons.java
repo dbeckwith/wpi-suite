@@ -42,7 +42,8 @@ public class AdminButtons extends ToolbarGroupView {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>"); 
-        ImageIcon icon = new ImageIcon(ImageLoader.load("EndGame.png"));
+        //ImageIcon icon = new ImageIcon(ImageLoader.load("EndGame.png"));
+        //endGameButton.setIcon(icon);
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);

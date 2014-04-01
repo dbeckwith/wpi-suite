@@ -47,22 +47,16 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
-                    setGameOrReqView(true);
+                    ((CardLayout) selectedItemPanel.getLayout()).show(
+                            selectedItemPanel, "game");
                 } else if (nodeInfo instanceof GameRequirementModel) {
-                    setGameOrReqView(false);
+                    ((CardLayout) selectedItemPanel.getLayout()).show(
+                            selectedItemPanel, "req");
+                    requirementPanel.getVotePanel().setRequirement(
+                            (GameRequirementModel) nodeInfo);
                 }
             }
         });
-    }
-    
-    private void setGameOrReqView(boolean is_game) {
-        if (is_game) {
-            ((CardLayout) selectedItemPanel.getLayout()).show(
-                    selectedItemPanel, "game");
-        } else {
-            ((CardLayout) selectedItemPanel.getLayout()).show(
-                    selectedItemPanel, "req");
-        }
     }
     
     /**

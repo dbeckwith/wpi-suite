@@ -42,10 +42,10 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             
             switch (game.getStatus()) {
                 case COMPLETE:
-                    icon = new ImageIcon(ImageLoader.load("tick_octagon.png"));
+                    //icon = new ImageIcon(ImageLoader.load("tick_octagon.png"));
                     break;
                 case PENDING:
-                    icon = new ImageIcon(ImageLoader.load("in-progress.png"));
+                    //icon = new ImageIcon(ImageLoader.load("in-progress.png"));
                     break;
             }
             

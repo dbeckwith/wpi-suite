@@ -47,7 +47,8 @@ public class CommonButtons extends ToolbarGroupView {
         
         newGameButton = new JButton("<html>Create<br/>Game</html>");
         
-		ImageIcon icon = new ImageIcon(ImageLoader.load("NewGame.png"));
+		//ImageIcon icon = new ImageIcon(ImageLoader.load("NewGame.png"));
+        //newGameButton.setIcon(icon);
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);

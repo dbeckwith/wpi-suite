@@ -12,6 +12,8 @@ public class RequirementDescriptionPanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = 6869910614623975734L;
+    private VotePanel votePanel;
+    private CompletedRequirementPanel completedPanel;
     
     /**
      * Create the panel.
@@ -19,10 +21,10 @@ public class RequirementDescriptionPanel extends JPanel {
     public RequirementDescriptionPanel() {
         setLayout(new CardLayout(0, 0));
         
-        VotePanel votePanel = new VotePanel();
+        votePanel = new VotePanel();
         add(votePanel, "vote");
         
-        CompletedRequirementPanel completedPanel = new CompletedRequirementPanel();
+        completedPanel = new CompletedRequirementPanel();
         add(completedPanel, "complete");
         
     }
@@ -40,4 +42,10 @@ public class RequirementDescriptionPanel extends JPanel {
         }
     }
     
+    public VotePanel getVotePanel() {
+        return votePanel;
+    }
+    public CompletedRequirementPanel getCompletedPanel() {
+        return completedPanel;
+    }
 }
