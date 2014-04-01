@@ -21,7 +21,7 @@ public class AddGameController {
 	/**
 	 * Construct an AddGameController for the given model, view pair
 	 */
-	private AddGameController() {
+	public AddGameController() {
 		setObserver(new AddGameRequestObserver(this));
 	}
 
@@ -46,7 +46,7 @@ public class AddGameController {
 	 */
 	public void addGame(GameModel newGame) {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpokermanager/planningpoker", HttpMethod.PUT); // PUT ==
+				"planningpoker/game", HttpMethod.PUT); // PUT ==
 																		// create
 		request.setBody(newGame.toJSON()); // put the new game in the body of
 											// the request

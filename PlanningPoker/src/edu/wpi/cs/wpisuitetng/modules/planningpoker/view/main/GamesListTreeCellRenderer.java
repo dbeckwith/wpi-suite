@@ -11,6 +11,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
 
@@ -42,10 +43,10 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             
             switch (game.getStatus()) {
                 case COMPLETE:
-                    //icon = new ImageIcon(ImageLoader.load("tick_octagon.png"));
+                    icon = new ImageIcon(ImageLoader.getImage("tick_octagon.png"));
                     break;
                 case PENDING:
-                    //icon = new ImageIcon(ImageLoader.load("in-progress.png"));
+                    icon = new ImageIcon(ImageLoader.getImage("in-progress.png"));
                     break;
             }
             
