@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -32,6 +33,7 @@ public class GameModel extends AbstractModel {
     };
     
     private ArrayList<SimpleListObserver> observers;
+    private ArrayList<User> userList;
     
     private int id;
     private String name;
@@ -53,6 +55,7 @@ public class GameModel extends AbstractModel {
         type = null;
         status = null;
         observers = null;
+        userList = null;
     }
     
     /**
@@ -65,10 +68,9 @@ public class GameModel extends AbstractModel {
      * @param end
      * @param type
      * @param status
+     * @param userList list of users in the game
      */
-    public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end,
-            GameType type, GameStatus status) {
+    public GameModel(int id, String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -76,7 +78,9 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        observers = new ArrayList<SimpleListObserver>();
+        this.userList = userList;
+      
+   		observers = new ArrayList<SimpleListObserver>();
     }
     
     /**
@@ -88,10 +92,10 @@ public class GameModel extends AbstractModel {
      * @param end
      * @param type
      * @param status
+     * @param estimates
+     * @param userList list of users in the game
      */
-    public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end,
-            GameType type, GameStatus status) {
+    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
         id = -1;
         this.name = name;
         this.description = description;
@@ -99,6 +103,8 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
+        this.userList = userList;
+        
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -135,10 +141,8 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * Add a user's estimate to the list
-     * 
-     * @param user
-     * @param estimate
+     * Add a user's estimate to the list 
+     * @param e the estimate to add
      */
     public void addEstimate(Estimate e, int reqIndex) {
         requirements.get(reqIndex).addEstimate(e);
@@ -185,13 +189,27 @@ public class GameModel extends AbstractModel {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
+   public ArrayList<User> getUserList(){
+	   return userList;
+   }
+   
+   public boolean checkVoted(){
+	   for(int i = 0; i < requirements.size(); i++){
+		   if(requirements.get(i).allVoted(this) == false){
+			   return false;
+		   }
+		   else return true;
+	   }
+	return false;
+   }
     /**
-     * If the current time is past the end date of the game, set the game as ended.
-     * 
-     * @return whether the game has ended
+     * Determines if the game should be ended, and ends the game
      */
     public boolean isEnded() {
-        if ((endDate.before(new Date(System.currentTimeMillis())))) {
+        if (checkVoted() == true){
+        	setEnded(true);
+        }
+    	else if((endDate.before(new Date(System.currentTimeMillis())))){
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);
@@ -254,6 +272,7 @@ public class GameModel extends AbstractModel {
         type = g.type;
         status = g.status;
         observers = g.observers;
+        userList = g.userList;
     }
     
     /**

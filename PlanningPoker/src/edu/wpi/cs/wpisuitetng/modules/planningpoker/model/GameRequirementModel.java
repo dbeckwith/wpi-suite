@@ -143,6 +143,16 @@ public class GameRequirementModel extends AbstractModel {
         return mean;
     }
     
+    /**
+     * Determines if all users have voted
+     * @return boolean
+     */
+    public boolean allVoted(GameModel g){
+    	if(estimates.size() == g.getUserList().size()){
+    		return true;
+    	}
+    	else return false;
+    }    
     
     /*
      * (non-Javadoc)
