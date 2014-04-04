@@ -1,6 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginController;
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class UserPrefsController implements IUserController {
@@ -24,7 +24,7 @@ public class UserPrefsController implements IUserController {
 			System.err.println("Request for users failed");
 		} else {
 			this.users = users;
-			this.user = findUser(LoginController.getUsername(), users);
+			this.user = findUser(ConfigManager.getConfig().getUserName(), users);
 		}
 	}
 
