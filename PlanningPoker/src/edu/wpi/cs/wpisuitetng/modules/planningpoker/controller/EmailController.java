@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController {
+public class EmailController implements IUserController {
     private UserRequestObserver observer;
     private User[] users;
     

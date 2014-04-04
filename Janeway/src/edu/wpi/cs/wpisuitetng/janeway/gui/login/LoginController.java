@@ -46,6 +46,9 @@ public class LoginController implements ActionListener {
 
 	/** The title of error dialogs */
 	private static final String errorTitle = "Login Error";
+	
+	/** The name of the user currently logged in. */
+	private static String username = "";
 
 	/**
 	 * Construct a new login controller
@@ -139,6 +142,8 @@ public class LoginController implements ActionListener {
 			}
 			
 			System.out.println(Network.getInstance().getDefaultNetworkConfiguration().getRequestHeaders().get("cookie").get(0));
+			
+			username = view.getUserNameField().getText();
 
 			// Select the project
 			Request projectSelectRequest = Network.getInstance().makeRequest("login", HttpMethod.PUT);
@@ -213,5 +218,13 @@ public class LoginController implements ActionListener {
 	public void projectSelectFailed(String error) {
 		JOptionPane.showMessageDialog(view, "Unable to select projectc: " + error, "Project Selection Error", 
 				JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**
+	 * Gets the name of the user currently logged in. This String is empty if login failed.
+	 * @return
+	 */
+	public static String getUsername() {
+		return username;
 	}
 }
