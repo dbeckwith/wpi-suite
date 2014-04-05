@@ -176,7 +176,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		timeSpinner.setValue(new Date());
 
 		selectDeadline.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				datePicker.setEnabled(selectDeadline.isSelected());
@@ -333,10 +332,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	}
 
 	/**
-	 * Validates the user-entered deadline.
-	 * If entered deadline is before the current date and time
-	 * return false and show error.
-	 * @return
+	 * Validates the user-entered deadline. If entered deadline is before the
+	 * current date and time return false and show error.
+	 * 
+	 * @return valid
 	 */
 	public boolean validateDeadline() {
 		if (!selectDeadline.isSelected()) {
@@ -353,6 +352,11 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		return valid;
 	}
 
+	/**
+	 * Check whether the name, description, and date have valid data
+	 * 
+	 * @return valid
+	 */
 	public boolean validateForm() {
 		boolean valid = isNameValid && isDescriptionValid && validateDeadline();
 		return valid;
