@@ -40,12 +40,17 @@ public class ViewController {
         
     }
     
-    public void addUserPrefsTab() {
-    	final UserPreferencesPanel prefsPanel = new UserPreferencesPanel();
+	public void addUserPrefsTab() {
+    	final UserPreferencesPanel prefsPanel = UserPreferencesPanel.getPanel();
     	mainView.addTab("Preferences", prefsPanel);
     	mainView.setSelectedComponent(prefsPanel);
     	
-    	mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel), new ClosableTabComponent(mainView));
+    	mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel), new ClosableTabComponent(mainView){
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			mainView.removeTabAt(mainView.indexOfComponent(prefsPanel));
+    		}
+    	});
     }
     
     public void saveNewGame(NewGamePanel e) {

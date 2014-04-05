@@ -22,12 +22,22 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserPrefsControll
  */
 public class UserPreferencesPanel extends javax.swing.JPanel {
 
-	private static final UserPrefsController prefsController = UserPrefsController.getInstance();
+	private static final UserPrefsController prefsController = 
+			UserPrefsController.getInstance();
+
+	private static UserPreferencesPanel instance;
+
+	public static UserPreferencesPanel getPanel() {
+		if (instance == null) {
+			instance = new UserPreferencesPanel();
+		}
+		return instance;
+	}
 
 	/**
 	 * Creates new form UserPreferencesPanel
 	 */
-	public UserPreferencesPanel() {
+	private UserPreferencesPanel() {
 		initComponents();
 		System.out.println("User=" + prefsController.getUser());
 		if (prefsController.getUser() != null) {

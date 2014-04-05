@@ -31,7 +31,7 @@ public class UserPrefsTest {
 
 	@Before
 	public void setup() {
-		controller = new UserPrefsController();
+		controller = UserPrefsController.getInstance();
 		network = new MockNetwork();
 		u = new User("Local User", "localuser", "1234", 0);
 		o1 = new User("Remote User 1", "remoteuser1", "1234", 1);
