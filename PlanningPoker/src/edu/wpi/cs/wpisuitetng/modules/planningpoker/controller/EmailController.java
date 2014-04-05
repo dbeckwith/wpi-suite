@@ -24,9 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController implements IUserController {
-	private UserRequestObserver observer;
-	private User[] users;
+public class EmailController extends AbsUserController {
 
 	private String from = "team9wpi@gmail.com"; // GMail user name
 	private String password = "team9ftw"; // GMail password
@@ -95,17 +93,6 @@ public class EmailController implements IUserController {
 			System.err.println("Email notifications failed to send");
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Requests query of all users related to the project
-	 */
-	private void requestUsers() {
-		final Request request = Network.getInstance().makeRequest("core/user",
-				HttpMethod.GET);
-		request.addObserver(observer); // add an observer to process the
-										// response
-		request.send(); // send the request
 	}
 
 	/**
