@@ -2,6 +2,11 @@ package edu.wpi.cs.wpisuitetng.exceptions;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Exception thrown when invalid email address entered for a user
+ * @author tcarmstrong
+ *
+ */
 public class InvalidEmailException extends WPISuiteException {
     
     /**
