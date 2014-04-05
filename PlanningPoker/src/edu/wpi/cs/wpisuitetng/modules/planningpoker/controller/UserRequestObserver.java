@@ -14,13 +14,13 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class UserRequestObserver implements RequestObserver {
     
-    private IUserController controller;
+    private AbsUserController controller;
     
     /**
      * Creates a new UserRequestController
      * @param controller The EmailController that will be used to call receivedUsers()
      */
-    public UserRequestObserver(IUserController controller) {
+    public UserRequestObserver(AbsUserController controller) {
         this.controller = controller;
     }
 

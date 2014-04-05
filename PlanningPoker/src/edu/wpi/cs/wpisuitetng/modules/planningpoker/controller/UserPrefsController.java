@@ -3,17 +3,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
-public class UserPrefsController implements IUserController {
+public class UserPrefsController extends AbsUserController {
 
-	// the request observer for getting users from the server
-	private UserRequestObserver observer;
-	// all users on the server
-	private User[] users;
-	// the current user
+	/** The current user */
 	private User user;
 
 	public UserPrefsController() {
-		observer = new UserRequestObserver(this);
+		super();
+		requestUsers();
 	}
 
 	@Override
@@ -21,7 +18,7 @@ public class UserPrefsController implements IUserController {
 		if (users == null) {
 			this.users = new User[0];
 			this.user = null;
-			System.err.println("Request for users failed");
+			System.err.println("No users received");
 		} else {
 			this.users = users;
 			this.user = findUser(ConfigManager.getConfig().getUserName(), users);
@@ -39,6 +36,7 @@ public class UserPrefsController implements IUserController {
 	 *         exists
 	 */
 	private User findUser(String name, User[] users) {
+		System.out.println("Finding user with name " + name); //TODO remove
 		for (User u : users) {
 			if (u.getName().equals(name)) {
 				return u;
@@ -47,17 +45,29 @@ public class UserPrefsController implements IUserController {
 		return null;
 	}
 
+	/**
+	 * Get the user currently logged in.
+	 * 
+	 * @return
+	 */
 	public User getUser() {
 		return user;
 	}
-	
+
+	public boolean getNotifyByEmail() {
+		return user.isNotifyByEmail();
+	}
+
+	public boolean getNotifyByIM() {
+		return user.isNotifyByIM();
+	}
+
 	public void setNotifyByEmail(boolean notify) {
 		user.setNotifyByEmail(notify);
 	}
-	
+
 	public void setNotifyByIM(boolean notify) {
 		user.setNotifyByIM(notify);
 	}
-
 
 }
