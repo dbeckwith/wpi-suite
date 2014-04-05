@@ -52,9 +52,11 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     public int compareTo(Estimate arg0) {
         if (estimate > arg0.getEstimate()) {
             return 1;
-        } else if (estimate == arg0.getEstimate()) {
+        }
+        else if (estimate == arg0.getEstimate()) {
             return 0;
-        } else {
+        }
+        else {
             return -1;
         }
     }

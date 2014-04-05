@@ -1,7 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,8 +12,8 @@ public class PlanningPokerTest {
     public void testElements() {
         PlanningPoker poker = new PlanningPoker();
         ViewController vc = PlanningPoker.getViewController();
-        assertSame("PlanningPoker", poker.getName());
-        assertSame("PlanningPoker", poker.getTabs().get(0).getName());
+        Assert.assertSame("PlanningPoker", poker.getName());
+        Assert.assertSame("PlanningPoker", poker.getTabs().get(0).getName());
         MainView mv = vc.getMainView();
         int before = mv.getTabCount();
         vc.addNewGameTab();
