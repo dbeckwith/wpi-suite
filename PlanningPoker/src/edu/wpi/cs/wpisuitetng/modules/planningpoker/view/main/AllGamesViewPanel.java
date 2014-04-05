@@ -56,7 +56,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
                             .getParent())).getUserObject();
                     
-                    requirementPanel.setData(parent_game, req);
+                    // TODO: figure out what the current user is
+                    requirementPanel.setData(null, parent_game, req);
                 }
             }
         });
