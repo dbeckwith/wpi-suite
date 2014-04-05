@@ -1,7 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import static org.junit.Assert.*;
-
 import java.util.Date;
 
 import org.junit.Assert;
@@ -15,6 +13,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
 import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 public class GetGamesControllerTest {
     
@@ -29,6 +28,9 @@ public class GetGamesControllerTest {
     
     @BeforeClass
     static public void setUpBeforeClass() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
         GetGamesControllerTest.instance = GetGamesController.getInstance();
         GetGamesControllerTest.nullGame = new GameModel();
         GetGamesControllerTest.game1 = new GameModel(1, "Test Game 1",
@@ -82,20 +84,22 @@ public class GetGamesControllerTest {
     @Test
     public void testRetrieveGames() {
         GetGamesController.getInstance().retrieveGames();
-        MockRequest request = ((MockNetwork)Network.getInstance()).getLastRequestMade();
-        if(request == null) {
-            fail("request not sent");
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
         }
-        assertTrue(request.isSent());
+        Assert.assertTrue(request.isSent());
     }
     
     @Test
     public void testActionPerformed() {
         GetGamesController.getInstance().actionPerformed(null);
-        MockRequest request = ((MockNetwork)Network.getInstance()).getLastRequestMade();
-        if(request == null) {
-            fail("request not sent");
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
         }
-        assertTrue(request.isSent());
+        Assert.assertTrue(request.isSent());
     }
 }

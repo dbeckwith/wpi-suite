@@ -1,10 +1,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -18,12 +17,13 @@ public class UpdateGamesControllerTest {
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
         UpdateGamesController ugc = UpdateGamesController.getInstance();
-        ugc.updateGame(GameListModel.getInstance());
-        MockRequest request = ((MockNetwork)Network.getInstance()).getLastRequestMade();
-        if(request == null) {
-            fail("request not sent");
+        ugc.updateGame(new GameModel());
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
         }
-        assertTrue(request.isSent());
+        Assert.assertTrue(request.isSent());
     }
     
 }
