@@ -16,6 +16,7 @@
 		<fileset dir="${janeway-lib}">
 			<include name="miglayout-4.0-swing.jar"/>			
 			<include name="swingx-all-1.6.4.jar"/>
+			<include name="commons-email-1.3.2.jar"/>
 			<include name="javax.mail.jar"/>
 		</fileset>
 		<pathelement path="build"/>
