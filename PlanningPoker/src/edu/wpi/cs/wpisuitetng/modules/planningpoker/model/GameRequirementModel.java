@@ -30,6 +30,9 @@ public class GameRequirementModel extends AbstractModel {
     /** the type of requirement */
     private String type;
     
+    /** true if the user has submitted an estimate */
+    public boolean votedOn;
+    
     /** the estimates for the requirement */
     private ArrayList<Estimate> estimates;
     
@@ -40,6 +43,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         this.estimates = estimates;
+        
         Collections.sort(this.estimates);
     }
     

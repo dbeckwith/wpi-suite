@@ -36,6 +36,7 @@ public class RequirementDescriptionPanel extends JPanel {
             completedPanel.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "complete");
         } else {
+        	votePanel.setGameReqModel(req);
             votePanel.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "vote");
         }

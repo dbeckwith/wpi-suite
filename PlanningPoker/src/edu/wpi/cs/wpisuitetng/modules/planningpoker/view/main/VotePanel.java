@@ -47,6 +47,14 @@ public class VotePanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    /**
+     * Sets current game requirement model to the one passed in
+     * @param req
+     */
+    public void setGameReqModel(GameRequirementModel req) {
+    	gameReqModel = req;
+    }
+    
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         reqDescriptionTextArea.setText(req.getDescription());
         setRequirementName(req.getName());
@@ -89,6 +97,7 @@ public class VotePanel extends javax.swing.JPanel {
         for (Component c : estimateCardsPanel.getComponents()) {
             ((JButton) c).setEnabled(false);
         }
+        gameReqModel.votedOn = true;
     }
     
     protected void setEndDate(Date date) {
@@ -296,6 +305,7 @@ public class VotePanel extends javax.swing.JPanel {
     private JPanel estimateCardsPanel;
     private JLabel requirementNameLabel;
     private JLabel requirementType;
+    private GameRequirementModel gameReqModel;
     
     protected void setRequirementName(String text) {
         requirementNameLabel.setText(text);
