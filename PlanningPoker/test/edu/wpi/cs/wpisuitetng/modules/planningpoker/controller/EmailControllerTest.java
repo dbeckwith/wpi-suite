@@ -1,8 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import static org.junit.Assert.*;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 
 import org.junit.Before;

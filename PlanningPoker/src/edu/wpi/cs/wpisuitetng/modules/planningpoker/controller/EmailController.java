@@ -16,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController {
+public class EmailController extends AbsUserController {
     private UserRequestObserver observer;
     private User[] users;
     
@@ -87,23 +87,13 @@ public class EmailController {
         }
     }
     
-    
-    /**
-     * Requests query of all users related to the project
-     */
-    private void requestUsers() {
-        final Request request = Network.getInstance().makeRequest("core/user",
-                HttpMethod.GET);
-        request.addObserver(observer); // add an observer to process the response
-        request.send(); // send the request
-    }
-    
     /**
      * Sets the users list to the users received by the network
      * 
      * @param users
      *        The list of users received by UserRequestController
      */
+    @Override
     public void receivedUsers(User[] users) {
         if (users != null) {
             this.users = users;
