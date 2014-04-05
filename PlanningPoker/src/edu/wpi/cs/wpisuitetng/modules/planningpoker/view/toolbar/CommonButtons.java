@@ -37,6 +37,7 @@ public class CommonButtons extends ToolbarGroupView {
     private static final long serialVersionUID = -2589339467561118867L;
     
     private JButton newGameButton;
+    private JButton userPrefsButton;
     
     private final JPanel contentPanel = new JPanel();
     
@@ -46,8 +47,10 @@ public class CommonButtons extends ToolbarGroupView {
         newGameButton = new JButton("<html>Create<br/>Game</html>");
         newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
         
+        userPrefsButton = new JButton("<html>Preferences</html>");
+        
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(175);
+        setPreferredWidth(350);
         // Adding functionality to new game button, not sure if this is where
         // this should go --nfbrown
         newGameButton.addActionListener(new ActionListener() {
@@ -57,9 +60,19 @@ public class CommonButtons extends ToolbarGroupView {
             }
         });
         
+        userPrefsButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PlanningPoker.getViewController().addUserPrefsTab();
+			}
+		});
+        
         newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        userPrefsButton.setHorizontalAlignment(SwingConstants.CENTER);
         
         contentPanel.add(newGameButton);
+        contentPanel.add(userPrefsButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);

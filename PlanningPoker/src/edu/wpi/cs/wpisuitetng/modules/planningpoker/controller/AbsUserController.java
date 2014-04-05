@@ -6,7 +6,7 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * An interface for classes wishing to recieve users from the server.
+ * An abstract class for classes requesting users from the server.
  * 
  * @author Sam Carlberg
  * 

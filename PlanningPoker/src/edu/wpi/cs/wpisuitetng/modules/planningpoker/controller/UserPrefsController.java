@@ -8,15 +8,24 @@ public class UserPrefsController extends AbsUserController {
 	/** The current user */
 	private User user;
 
-	public UserPrefsController() {
+	private UserPrefsController() {
 		super();
 		requestUsers();
+	}
+
+	private static UserPrefsController instance;
+
+	public static UserPrefsController getInstance() {
+		if (instance == null) {
+			instance = new UserPrefsController();
+		}
+		return instance;
 	}
 
 	@Override
 	public void receivedUsers(User[] users) {
 		if (users == null) {
-			this.users = new User[0];
+			this.users = null;
 			this.user = null;
 			System.err.println("No users received");
 		} else {
@@ -36,7 +45,6 @@ public class UserPrefsController extends AbsUserController {
 	 *         exists
 	 */
 	private User findUser(String name, User[] users) {
-		System.out.println("Finding user with name " + name); //TODO remove
 		for (User u : users) {
 			if (u.getName().equals(name)) {
 				return u;

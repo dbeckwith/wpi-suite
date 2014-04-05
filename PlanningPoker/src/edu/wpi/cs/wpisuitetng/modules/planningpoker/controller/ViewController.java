@@ -7,6 +7,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
 public class ViewController {
@@ -37,6 +38,14 @@ public class ViewController {
                     }
                 });
         
+    }
+    
+    public void addUserPrefsTab() {
+    	final UserPreferencesPanel prefsPanel = new UserPreferencesPanel();
+    	mainView.addTab("Preferences", prefsPanel);
+    	mainView.setSelectedComponent(prefsPanel);
+    	
+    	mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel), new ClosableTabComponent(mainView));
     }
     
     public void saveNewGame(NewGamePanel e) {
