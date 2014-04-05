@@ -29,6 +29,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
@@ -336,6 +337,8 @@ public class NewGamePanel extends JPanel {
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
         PlanningPoker.getViewController().saveNewGame(this);
+        EmailController ec = new EmailController();
+        ec.sendNotifications();
     }// GEN-LAST:event_saveButtonActionPerformed
     
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
