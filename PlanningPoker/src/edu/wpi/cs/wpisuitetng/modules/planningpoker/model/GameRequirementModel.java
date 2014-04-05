@@ -121,12 +121,17 @@ public class GameRequirementModel extends AbstractModel {
      * @return the median
      */
     public float getEstimateMedian() {
-        int count = estimates.size();
-        if (estimates.size() % 2 == 1) {
-            return estimates.get(count / 2).getEstimate();
+        if (estimates.isEmpty()) {
+            return 0;
+        }
+        ArrayList<Estimate> estimates_copy = new ArrayList<>(estimates);
+        Collections.sort(estimates_copy);
+        int count = estimates_copy.size();
+        if (estimates_copy.size() % 2 == 1) {
+            return estimates_copy.get(count / 2).getEstimate();
         } else {
-            return (estimates.get(count / 2).getEstimate() + estimates.get(
-                    count / 2 - 1).getEstimate()) / 2;
+            return (estimates_copy.get(count / 2).getEstimate() + estimates_copy
+                    .get(count / 2 - 1).getEstimate()) / 2;
         }
     }
     
@@ -136,6 +141,9 @@ public class GameRequirementModel extends AbstractModel {
      * @return the mean (average)
      */
     public float getEstimateMean() {
+        if (estimates.isEmpty()) {
+            return 0;
+        }
         float mean = 0;
         for (Estimate e : estimates) {
             mean += e.getEstimate() / (estimates.size());

@@ -13,7 +13,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
@@ -49,6 +48,10 @@ public class GamesListPanel extends javax.swing.JPanel {
                             private static final long serialVersionUID = 8933074607488306596L;
                             
                             {
+                                DefaultMutableTreeNode pending_folder = new DefaultMutableTreeNode(
+                                        "Pending Games");
+                                DefaultMutableTreeNode complete_folder = new DefaultMutableTreeNode(
+                                        "Complete Games");
                                 for (GameModel gm : GameListModel.getInstance()
                                         .getGames()) {
                                     DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
@@ -63,39 +66,41 @@ public class GamesListPanel extends javax.swing.JPanel {
                                             game_node.add(req_node);
                                         }
                                     }
-                                    add(game_node);
+                                    if (gm.isEnded()) {
+                                        complete_folder.add(game_node);
+                                    }
+                                    else {
+                                        pending_folder.add(game_node);
+                                    }
                                 }
+                                add(pending_folder);
+                                add(complete_folder);
                             }
                         }));
             }
         });
         
-        ArrayList<Estimate> estimates = new ArrayList<>();
+        
+        // TODO: estimates are not possible cards!!! change to deck values once
+        // the deck is added
+        
+        
         ArrayList<GameRequirementModel> reqs = new ArrayList<>();
-        estimates.add(new Estimate(null, 0.5f));
-        estimates.add(new Estimate(null, 1f));
-        estimates.add(new Estimate(null, 2f));
-        estimates.add(new Estimate(null, 5f));
-        estimates.add(new Estimate(null, 10f));
         reqs.add(new GameRequirementModel(367432, "Requirement 1",
-                "THis is required!", "its type", estimates));
+                "THis is required!", "its type"));
         GameListModel.getInstance().addGame(
                 new GameModel(23, "Test Game", "This game is a test", reqs,
                         new Date(), GameType.LIVE, GameStatus.PENDING));
         reqs = new ArrayList<>();
         reqs.add(new GameRequirementModel(15, "Requirement A",
-                "THis is required!", "user story", estimates));
-        estimates = new ArrayList<>();
-        estimates.add(new Estimate(null, 1f));
-        estimates.add(new Estimate(null, 7f));
-        estimates.add(new Estimate(null, 8f));
-        estimates.add(new Estimate(null, 15f));
+                "THis is required!", "user story"));
         reqs.add(new GameRequirementModel(51, "Requirement B",
-                "THis is definitely required!", "doofus story", estimates));
+                "THis is definitely required!", "doofus story"));
         GameListModel.getInstance().addGame(
                 new GameModel(25, "Test Game 2", "This game is also a test",
-                        reqs, new Date(), GameType.DISTRIBUTED,
-                        GameStatus.COMPLETE));
+                        reqs, new Date(System.currentTimeMillis() + 24 * 60
+                                * 60 * 1000), GameType.DISTRIBUTED,
+                        GameStatus.PENDING));
     }
     
     public JTree getTree() {

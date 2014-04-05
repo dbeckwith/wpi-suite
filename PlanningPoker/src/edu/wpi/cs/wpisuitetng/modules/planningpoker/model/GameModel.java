@@ -218,7 +218,7 @@ public class GameModel extends AbstractModel {
         if (checkVoted() == true){
         	setEnded(true);
         }
-    	else if((endDate.before(new Date(System.currentTimeMillis())))){
+    	else if((endDate != null && (endDate.before(new Date(System.currentTimeMillis()))))){
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);

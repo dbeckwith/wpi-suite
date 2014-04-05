@@ -1,16 +1,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Properties;
+import javax.mail.internet.AddressException;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import org.apache.commons.mail.*;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -20,82 +12,78 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This class controls the sending of email notifications
- * The code for sending emails was based on code at
- * http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
  * 
  * @author nfbrown, szhou, dcwethern
  * 
  */
 public class EmailController {
-    private static EmailController instance;
-    
     private UserRequestObserver observer;
     private User[] users;
     
-    private String username = "team9wpi@gmail.com";  // GMail user name (just the part before "@gmail.com")
-    private String password = "team9ftw"; // GMail password
+    private String username = "team9wpi";
+    private String from = "team9wpi@gmail.com";     // GMail user name
+    private String password = "team9ftw";           // GMail password
+    private String subject = "A new Planning Poker game has begun!";
     private String body;
-    private String subject;
-    private String to = "team9wpi@gmail.com";
     
     /**
      * Creates a new EmailController class
      */
     public EmailController() {
-        body = ConfigManager.getConfig().getUserName()
-                + " has created a new Planning Poker game. Please open Janeway and make your estimates!";
-        subject = "A planning poker game is about to begin";
-        observer = new UserRequestObserver(this);
+        this.observer = new UserRequestObserver(this);
+    }
+    
+    /**
+     * Gets all users, then sends email notifications to all users with email
+     * addresses on file
+     */
+    public void sendNotifications() {
         requestUsers();
     }
     
     /**
-     * 
-     * @return the instance of the EmailController or creates one if it does
-     *         not exist.
+     * Sets the body of the email
      */
-    public static EmailController getInstance() {
-        if (EmailController.instance == null) {
-            EmailController.instance = new EmailController();
+    private void setBody() {
+        String username = ConfigManager.getConfig().getUserName();
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                this.body = u.getName()
+                        + " has created a new Planning Poker game. Please make your estimates!";
+                break;
+            }
         }
-        
-        return EmailController.instance;
     }
     
     /**
-     * Sends an email to all users that are not the creator of the game
+     * Sends an email to all users
+     * 
+     * @throws EmailException
+     * @throws AddressException
      */
-    public void sendEmails() {
-        
-        //System.err.println("Email addresses: " + this.to);  
-                
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-        
+    private void sendEmails() {
+        setBody();
+        System.setProperty("java.net.preferIPv4Stack", "true");
         try {
-            
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
-            message.setSubject(subject);
-            message.setText(body);
-            
-            Transport.send(message);            
+            for (User u : users) {
+                if (u.getEmail() != null) {
+                    Email email = new SimpleEmail();
+                    email.setHostName("smtp.gmail.com");
+                    email.setSmtpPort(587);
+                    email.setAuthenticator(new DefaultAuthenticator(username,
+                            password));
+                    email.setSSLOnConnect(true);
+                    email.addTo(u.getEmail());
+                    email.setSubject(subject);
+                    email.setFrom(from);
+                    email.setMsg("Dear " + u.getName() + ",\n" + body);
+                    email.send();
+                }
+            }
         }
-        catch (MessagingException e) {
-            throw new RuntimeException(e);
+        catch (EmailException e) {
+            System.err.println("Email failed to send");
+            e.printStackTrace();
         }
     }
     
@@ -119,31 +107,12 @@ public class EmailController {
     public void receivedUsers(User[] users) {
         if (users != null) {
             this.users = users;
-            //parseEmails();
+            sendEmails();
         }
         else {
-            // TODO: error handling
+            System.err.println("Users not received properly");
         }
     }
     
-    /**
-     * Sets the "to" field for the notification email with
-     * the email addresses of all users that are not the creator of the game
-     */
-    private void parseEmails() {
-        String s = "";
-        int i;
-        for (i = 0; i < users.length - 1; i++) {
-            if (users[i].getEmail() != null
-                    && !users[i].getUsername().equals(
-                            ConfigManager.getConfig().getUserName())) {
-                s += users[i].getEmail() + ", ";
-            }
-        }
-        if (users[i].getEmail() != null) {
-            s += users[i].getEmail();
-        }
-        this.to = s;
-    }
     
 }

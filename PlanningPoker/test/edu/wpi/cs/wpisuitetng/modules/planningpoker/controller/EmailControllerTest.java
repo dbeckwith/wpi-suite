@@ -29,7 +29,7 @@ public class EmailControllerTest {
     
     @Before
     public void setup() {
-        //ec = new EmailController();
+        ec = new EmailController();
         u1 = new User("James Bond", "jbond", "team9wpi@gmail.com", null, 7);
         u2 = new User("Money Penny", "mpenny", "team9wpi@gmail.com", null, 2);
         u3 = new User("Q", "q", "shanzhou321@gmail.com", "secret", 1);
@@ -48,7 +48,7 @@ public class EmailControllerTest {
     
     @Test
     public void testTest() {
-        EmailController.getInstance().sendEmails();
+        ec.sendNotifications();
     }
     
 }

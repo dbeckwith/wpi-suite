@@ -2,7 +2,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
@@ -49,7 +48,6 @@ public class ViewController {
         	@Override
         	public void run(){
         		AddGameController.getInstance().addGame(newGame);
-        		GetGamesController.getInstance().retrieveGames();
         	}
         }.start();
         

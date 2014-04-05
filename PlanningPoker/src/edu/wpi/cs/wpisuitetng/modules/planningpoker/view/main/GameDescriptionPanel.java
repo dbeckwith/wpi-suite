@@ -11,15 +11,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.CardLayout;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
@@ -35,20 +27,31 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
      *
      */
     private static final long serialVersionUID = 7579915917240962935L;
+    private CompletedGamePanel completed;
+    private UncompletedGameDescriptionPanel uncompleted;
     
     /**
      * Creates new form NewJPanel
      */
     public GameDescriptionPanel() {
+        setLayout(new CardLayout(0, 0));
+        
+        uncompleted = new UncompletedGameDescriptionPanel();
+        add(uncompleted, "uncompleted");
+        
+        completed = new CompletedGamePanel();
+        add(completed, "completed");
         initComponents();
     }
     
     public void setGame(GameModel game) {
-        setGameName(game.getName());
-        setDescriptionText(game.getDescription());
-        // DefaultListModel<String> listModel = new DefaultListModel<>();
-        // listModel.addElement(element);
-        // getParticipantsList().setModel(listModel);
+        if (game.isEnded()) {
+            ((CardLayout) getLayout()).show(this, "completed");
+            completed.setGame(game);
+        } else {
+            ((CardLayout) getLayout()).show(this, "uncompleted");
+            uncompleted.setGame(game);
+        }
     }
     
     /**
@@ -60,160 +63,13 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        
-        nameLabel = new javax.swing.JLabel();
-        nameLabel.setText("Name:");
-        
-        gameName = new JLabel("");
-        
-        JLabel lblParticipants = new JLabel("Participants:");
-        
-        JScrollPane scrollPane = new JScrollPane();
-        
-        JLabel lblProgress = new JLabel("Requirement Progress:");
-        
-        progressBar = new JProgressBar();
-        
-        progressLabel = new JLabel("0/0");
-        
-        JLabel lblDescription = new JLabel("Description:");
-        
-        JScrollPane scrollPane_1 = new JScrollPane();
-        
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        Alignment.TRAILING,
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.TRAILING)
-                                                .addComponent(
-                                                        scrollPane_1,
-                                                        Alignment.LEADING,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        430, Short.MAX_VALUE)
-                                                .addGroup(
-                                                        Alignment.LEADING,
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        nameLabel)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        gameName))
-                                                .addComponent(
-                                                        scrollPane,
-                                                        Alignment.LEADING,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        430, Short.MAX_VALUE)
-                                                .addComponent(lblParticipants,
-                                                        Alignment.LEADING)
-                                                .addGroup(
-                                                        Alignment.LEADING,
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        lblProgress)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        progressBar,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        progressLabel))
-                                                .addComponent(lblDescription,
-                                                        Alignment.LEADING))
-                                .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(nameLabel)
-                                                .addComponent(gameName))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(lblDescription)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(scrollPane_1,
-                                        GroupLayout.DEFAULT_SIZE, 59,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(lblParticipants)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(scrollPane,
-                                        GroupLayout.PREFERRED_SIZE, 77,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(lblProgress)
-                                                .addComponent(
-                                                        progressBar,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(progressLabel))
-                                .addGap(62)));
-        
-        descriptionText = new JTextPane();
-        scrollPane_1.setViewportView(descriptionText);
-        
-        participantsList = new JList<String>();
-        participantsList.setModel(new DefaultListModel<String>());
-        scrollPane.setViewportView(participantsList);
-        setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
-    private javax.swing.JLabel nameLabel;
-    private JLabel gameName;
-    private JTextPane descriptionText;
-    private JList<String> participantsList;
-    private JProgressBar progressBar;
-    private JLabel progressLabel;
-    
-    protected String getGameName() {
-        return gameName.getText();
+    protected CompletedGamePanel getCompleted() {
+        return completed;
     }
     
-    protected void setGameName(String text) {
-        gameName.setText(text);
-    }
-    
-    protected String getDescriptionText() {
-        return descriptionText.getText();
-    }
-    
-    protected void setDescriptionText(String text_1) {
-        descriptionText.setText(text_1);
-    }
-    
-    protected int getProgressBarValue() {
-        return progressBar.getValue();
-    }
-    
-    protected void setProgressBarValue(int value) {
-        progressBar.setValue(value);
-    }
-    
-    protected String getProgressLabelText() {
-        return progressLabel.getText();
-    }
-    
-    protected void setProgressLabelText(String text_2) {
-        progressLabel.setText(text_2);
-    }
-    
-    protected JList<String> getParticipantsList() {
-        return participantsList;
+    protected UncompletedGameDescriptionPanel getUncompleted() {
+        return uncompleted;
     }
 }

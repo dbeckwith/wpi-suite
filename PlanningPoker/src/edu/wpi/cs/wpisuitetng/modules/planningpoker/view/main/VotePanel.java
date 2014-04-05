@@ -23,7 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -53,15 +52,23 @@ public class VotePanel extends javax.swing.JPanel {
         setRequirementName(req.getName());
         setRequirementType(req.getType());
         setEndDate(parent_game.getEndTime());
-        //setRequirementProgress();
+        // setRequirementProgress();
         
         
-        ArrayList<Estimate> estimates = req.getEstimates();
+        ArrayList<String> deck = new ArrayList<>();
+        deck.add("0.5");
+        deck.add("1");
+        deck.add("2");
+        deck.add("3");
+        deck.add("5");
+        deck.add("10");
         
         estimateCardsPanel.removeAll();
-        for (Estimate est : estimates) {
+        for (String estimate : deck) {
             JButton estimate_card = new JButton();
-            estimate_card.setText(est.getEstimate() + "");
+            // TODO: set card background image
+            
+            estimate_card.setText(estimate);
             estimate_card.setPreferredSize(new Dimension(80, 120));
             estimate_card.addActionListener(new ActionListener() {
                 
@@ -70,14 +77,11 @@ public class VotePanel extends javax.swing.JPanel {
                     selectEstimateCard((JButton) e.getSource());
                 }
             });
+            
             estimateCardsPanel.add(estimate_card);
         }
         validate();
         repaint();
-        
-        
-        // TODO: make GameRequirementModel have reference to parent game for
-        // getting endDate, etc...
     }
     
     private void selectEstimateCard(JButton selected_card_button) {
@@ -88,7 +92,13 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     protected void setEndDate(Date date) {
-        setEndTimeFieldText(VotePanel.date_format.format(date));
+        if (date == null) {
+            setNoDeadline(true);
+        }
+        else {
+            setNoDeadline(false);
+            setEndTimeFieldText(VotePanel.date_format.format(date));
+        }
     }
     
     protected void setRequirementProgress(int num_completed, int total) {
@@ -317,5 +327,20 @@ public class VotePanel extends javax.swing.JPanel {
     
     protected void setEndTimeFieldText(String text_3) {
         endTimeField.setText(text_3);
+    }
+    
+    /**
+     * sets deadline field visible/invisible depending on if game has a deadline
+     * @param status true if no deadline, false if there is a deadline
+     */
+    protected void setNoDeadline(boolean status) {
+        if (status) {
+            endsLabel.setVisible(false);
+            endTimeField.setVisible(false);
+        }
+        else {
+            endsLabel.setVisible(true);
+            endTimeField.setVisible(true);
+        }
     }
 }
