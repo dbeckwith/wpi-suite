@@ -1,5 +1,8 @@
 package edu.wpi.cs.team9.planningpoker;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +16,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
-import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.team9.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.team9.planningpoker.view.GameListAdapter;
 
 public class GameListActivity extends Activity implements GetGamesObserver {
@@ -55,6 +58,15 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 
 	@Override
 	public void receivedGames(final GameModel[] games) {
+		
+		Arrays.sort(games, new Comparator<GameModel>() {
+			@Override
+			public int compare(GameModel lhs, GameModel rhs) {
+				if(lhs.getStatus().equals(GameStatus.PENDING)){
+					return -1;
+				} else return 1;
+			}
+		});
 		
 		runOnUiThread(new Runnable() {
 			@Override

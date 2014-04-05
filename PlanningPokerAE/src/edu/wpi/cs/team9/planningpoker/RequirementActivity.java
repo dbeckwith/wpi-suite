@@ -70,7 +70,7 @@ public class RequirementActivity extends Activity implements
 
 		Log.d(TAG, "5");
 		
-		//viewPager.setCurrentItem(getIntent().getExtras().getInt("index"));
+		viewPager.setCurrentItem(getIntent().getExtras().getInt("index"));
 		
 	}
 
