@@ -50,7 +50,7 @@ public class CommonButtons extends ToolbarGroupView {
 		userPrefsButton = new JButton("<html>Preferences</html>");
 
 		// TODO make this image
-//		userPrefsButton.setIcon(ImageLoader.getIcon("Preferences.png"));
+		userPrefsButton.setIcon(ImageLoader.getIcon("prefs.png"));
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		setPreferredWidth(350);
