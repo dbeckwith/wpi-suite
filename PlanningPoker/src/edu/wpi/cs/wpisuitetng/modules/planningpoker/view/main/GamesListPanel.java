@@ -48,6 +48,10 @@ public class GamesListPanel extends javax.swing.JPanel {
                             private static final long serialVersionUID = 8933074607488306596L;
                             
                             {
+                                DefaultMutableTreeNode pending_folder = new DefaultMutableTreeNode(
+                                        "Pending Games");
+                                DefaultMutableTreeNode complete_folder = new DefaultMutableTreeNode(
+                                        "Complete Games");
                                 for (GameModel gm : GameListModel.getInstance()
                                         .getGames()) {
                                     DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
@@ -62,8 +66,15 @@ public class GamesListPanel extends javax.swing.JPanel {
                                             game_node.add(req_node);
                                         }
                                     }
-                                    add(game_node);
+                                    if (gm.isEnded()) {
+                                        complete_folder.add(game_node);
+                                    }
+                                    else {
+                                        pending_folder.add(game_node);
+                                    }
                                 }
+                                add(pending_folder);
+                                add(complete_folder);
                             }
                         }));
             }

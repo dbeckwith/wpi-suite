@@ -50,6 +50,7 @@ PlanningPoker/build
 /RequirementManager/nbproject/private/
 /Janeway/nbproject/private/
 /Janeway/build/
+
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
 PlanningPokerAE/bin/jarlist.cache
 PlanningPokerAE/project.properties
@@ -65,3 +66,7 @@ PlanningPokerAE/bin/jarlist.cache
 PlanningPokerAE/bin/resources.ap_
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/R.java
+
+PlanningPokerAE/bin/
+PlanningPokerAE/card-web.png
+PlanningPokerAE/ic_card_front-web.png

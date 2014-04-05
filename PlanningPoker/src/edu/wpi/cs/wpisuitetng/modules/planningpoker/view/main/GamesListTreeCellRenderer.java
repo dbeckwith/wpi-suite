@@ -28,10 +28,9 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 row, hasFocus);
         
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+        ImageIcon icon = null;
         
         if (node.getUserObject() instanceof GameModel) {
-            ImageIcon icon = null;
-            
             GameModel game = (GameModel) node.getUserObject();
             
             if (game.isEnded()) {
@@ -39,10 +38,16 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             } else {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
             }
-            
-            if (icon != null) {
-                setIcon(icon);
+        } else if (node.getUserObject() != null) {
+            if (node.getUserObject().equals("Pending Games")) {
+                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
+            } else if (node.getUserObject().equals("Complete Games")) {
+                icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
             }
+        }
+        
+        if (icon != null) {
+            setIcon(icon);
         }
         
         return this;
