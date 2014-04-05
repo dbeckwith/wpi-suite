@@ -8,36 +8,128 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/req_name"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/req_desc"
-        android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/req_desc"
-        android:background="#cccccc"
-        android:padding="10dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/req_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="10dp"
-        android:layout_weight="0.26"
-        android:background="#cccccc"
-        android:padding="10dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.39" >
+            <TextView
+                android:id="@+id/req_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#cccccc"
+                android:padding="10dp"
+                android:text="Large Text  "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    </GridLayout>
+            <TextView
+                android:id="@+id/req_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="0.60"
+                android:background="#cccccc"
+                android:padding="10dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <GridLayout
+                android:layout_width="262dp"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <Space />
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_row="0"
+                    android:background="@drawable/ic_card_front"
+                    android:text="1" />
+                
+                 <Button
+                    android:id="@+id/button2"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="1"
+                    android:layout_gravity="left|top"
+                    android:layout_row="0"
+                    android:background="@drawable/ic_card_front"
+                    android:text="2" />
+
+                  <Button
+                    android:id="@+id/button3"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_row="1"
+                    android:background="@drawable/ic_card_front"
+                    android:text="3" />
+                  
+                   <Button
+                    android:id="@+id/button4"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="1"
+                    android:layout_gravity="left|top"
+                    android:layout_row="1"
+                    android:background="@drawable/ic_card_front"
+                    android:text="5" />
+                   
+                    <Button
+                    android:id="@+id/button5"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_row="2"
+                    android:background="@drawable/ic_card_front"
+                    android:text="8" />
+                    
+                     <Button
+                    android:id="@+id/button6"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="1"
+                    android:layout_gravity="left|top"
+                    android:layout_row="2"
+                    android:background="@drawable/ic_card_front"
+                    android:text="13" />
+                     
+                     <Button
+                    android:id="@+id/button7"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_row="3"
+                    android:background="@drawable/ic_card_front"
+                    android:text="21" />
+                     
+                      <Button
+                    android:id="@+id/button8"
+                    android:layout_width="140dp"
+                    android:layout_height="102dp"
+                    android:layout_column="1"
+                    android:layout_gravity="left|top"
+                    android:layout_row="3"
+                    android:background="@drawable/ic_card_front"
+                    android:text="34" />
+                
+            </GridLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
