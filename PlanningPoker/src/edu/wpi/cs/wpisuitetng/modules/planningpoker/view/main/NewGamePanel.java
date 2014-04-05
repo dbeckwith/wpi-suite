@@ -266,6 +266,9 @@ public class NewGamePanel extends JPanel {
 						.addRequirement(new GameRequirementModel(0, newReqName
 								.getText(), newReqDesc.getText(),
 								(String) newReqType.getSelectedItem()));
+				newGameRequirementsPanel.requirementsTable.setValueAt(true,
+						newGameRequirementsPanel.requirementsTable
+								.getRowCount() - 1, 0);
 				newReqName.setText("");
 				newReqDesc.setText("");
 				newReqType.setSelectedIndex(0);
