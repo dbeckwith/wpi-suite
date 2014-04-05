@@ -1,5 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import static org.junit.Assert.*;
+
 import java.util.Date;
 
 import org.junit.Assert;
@@ -10,6 +12,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
+import edu.wpi.cs.wpisuitetng.network.Network;
 
 public class GetGamesControllerTest {
     
@@ -74,4 +79,23 @@ public class GetGamesControllerTest {
                 .contains(GetGamesControllerTest.game4));
     }
     
+    @Test
+    public void testRetrieveGames() {
+        GetGamesController.getInstance().retrieveGames();
+        MockRequest request = ((MockNetwork)Network.getInstance()).getLastRequestMade();
+        if(request == null) {
+            fail("request not sent");
+        }
+        assertTrue(request.isSent());
+    }
+    
+    @Test
+    public void testActionPerformed() {
+        GetGamesController.getInstance().actionPerformed(null);
+        MockRequest request = ((MockNetwork)Network.getInstance()).getLastRequestMade();
+        if(request == null) {
+            fail("request not sent");
+        }
+        assertTrue(request.isSent());
+    }
 }
