@@ -12,6 +12,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -82,8 +83,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
                             .getParent())).getUserObject();
                     
-                    // TODO: figure out what the current user is
-                    getRequirementDescriptionPanel().setData(null, parent_game, req);
+                    getRequirementDescriptionPanel().setData(ConfigManager.getConfig().getUserName(), parent_game, req);
                     
                     GameModel game = (GameModel)((DefaultMutableTreeNode)node.getParent()).getUserObject();
                     getGameDescriptionPanel().setGame(game);

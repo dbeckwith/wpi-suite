@@ -51,15 +51,6 @@ public class VotePanel extends javax.swing.JPanel {
 		req = null;
 	}
 
-	/**
-	 * Sets current game requirement model to the one passed in
-	 * 
-	 * @param req
-	 */
-	public void setGameReqModel(GameRequirementModel req) {
-		gameReqModel = req;
-	}
-
 	public void setRequirement(User current_user, GameModel parent_game,
 			GameRequirementModel req) {
 		this.current_user = current_user;
@@ -71,12 +62,15 @@ public class VotePanel extends javax.swing.JPanel {
 		setRequirementType(req.getType());
 		// setRequirementProgress();
 
-		boolean already_voted = false;
+		already_voted = false;
 
 		for (Estimate e : req.getEstimates()) {
 			if (e.getUser() != null && current_user != null
 					&& e.getUser().equals(current_user)) {
 				already_voted = true;
+				for (Component c : estimateCardsPanel.getComponents()) {
+					((JButton) c).setEnabled(false);
+				}
 				break;
 			}
 		}
@@ -123,7 +117,8 @@ public class VotePanel extends javax.swing.JPanel {
 		for (Component c : estimateCardsPanel.getComponents()) {
 			((JButton) c).setEnabled(false);
 		}
-		gameReqModel.votedOn = true;
+		already_voted = true;
+		req.votedOn = true;
 	}
 
 	protected void setRequirementProgress(int num_completed, int total) {
@@ -296,8 +291,8 @@ public class VotePanel extends javax.swing.JPanel {
 	private JPanel estimateCardsPanel;
 	private JLabel requirementNameLabel;
 	private JLabel requirementType;
-	private GameRequirementModel gameReqModel;
-
+	private boolean already_voted;
+	
 	protected void setRequirementName(String text) {
 		requirementNameLabel.setText(text);
 	}
