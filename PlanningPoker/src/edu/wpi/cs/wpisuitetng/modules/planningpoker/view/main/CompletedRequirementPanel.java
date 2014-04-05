@@ -70,7 +70,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void initComponents() {
         
         jSeparator1 = new javax.swing.JSeparator();
@@ -92,12 +91,12 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             /**
              * 
              */
-            private static final long serialVersionUID = -8613174878148410098L;
-            Class[] columnTypes = new Class[] { String.class, String.class };
+            private static final long serialVersionUID = -5144539907705808611L;
+            boolean[] columnEditables = new boolean[] { false, false };
             
             @Override
-            public Class getColumnClass(int columnIndex) {
-                return columnTypes[columnIndex];
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
             }
         });
         voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);

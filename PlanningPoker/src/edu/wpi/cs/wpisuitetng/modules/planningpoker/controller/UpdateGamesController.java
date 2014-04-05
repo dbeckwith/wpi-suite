@@ -7,7 +7,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -43,10 +43,10 @@ public class UpdateGamesController {
      * @param newGame
      *            is the game to be updated on the server.
      */
-    public void updateGame(GameListModel newGame) {
+    public void updateGame(GameModel newGame) {
         Request request = Network.getInstance().makeRequest(
                 "planningpoker/game", HttpMethod.POST); // POST == update
-        // request.setBody(newGame.toJSON()); // put the new game in the body of
+        request.setBody(newGame.toJSON()); // put the new game in the body of
         // the request
         request.addObserver(observer); // add an observer to process the
                                        // response
