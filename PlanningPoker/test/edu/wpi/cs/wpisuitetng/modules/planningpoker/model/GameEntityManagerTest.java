@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -46,8 +47,8 @@ public class GameEntityManagerTest {
         testProject = new Project("test", "1");
         otherProject = new Project("other", "2");
         mockSsid = "abc123";
-        adminSession = new Session(admin, testProject, mockSsid); 
-        existingUser = new User("joe", "joe", "1234", 2);       
+        adminSession = new Session(admin, testProject, mockSsid);
+        existingUser = new User("joe", "joe", "1234", 2); 
         existingGame = new GameModel(1, "Existing Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);       
         defaultSession = new Session(existingUser, testProject, mockSsid);
         newGame = new GameModel(-1, "New Game", "A new game", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);  
@@ -95,7 +96,7 @@ public class GameEntityManagerTest {
     
     @Test
     public void testSave() throws WPISuiteException {
-        GameModel game = new GameModel(4, "Save Test", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);  
+    	GameModel game = new GameModel(4, "Save Test", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);  
         manager.save(defaultSession, game);
         assertSame(game, db.retrieve(GameModel.class, "id", 4).get(0));
         assertSame(testProject, game.getProject());
@@ -125,7 +126,7 @@ public class GameEntityManagerTest {
    
     @Test
     public void testDeleteAll() throws WPISuiteException {
-        GameModel anotherGame = new GameModel(-1, "a title", "a description", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);
+    	GameModel anotherGame = new GameModel(-1, "a title", "a description", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);
         manager.makeEntity(defaultSession, anotherGame.toJSON());
         assertEquals(2, db.retrieveAll(new GameModel(), testProject).size());
         manager.deleteAll(adminSession);

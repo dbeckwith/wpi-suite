@@ -15,6 +15,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 public class UserRequestObserver implements RequestObserver {
     
     private EmailController controller;
+    private UserController userController;
     
     /**
      * Creates a new UserRequestController
@@ -23,13 +24,18 @@ public class UserRequestObserver implements RequestObserver {
     public UserRequestObserver(EmailController controller) {
         this.controller = controller;
     }
+    
+    public UserRequestObserver(UserController controller){
+    	this.userController = controller;
+    }
 
     @Override
     public void responseSuccess(IRequest iReq) {
         String response = iReq.getResponse().getBody();
         final Gson parser = new Gson();
         User[] users = parser.fromJson(response, User[].class);
-        controller.receivedUsers(users);  
+        controller.receivedUsers(users); 
+        userController.receivedUsers(users);
     }
 
     @Override
