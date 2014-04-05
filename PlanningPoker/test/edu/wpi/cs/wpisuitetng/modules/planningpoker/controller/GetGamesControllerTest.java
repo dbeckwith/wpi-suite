@@ -10,6 +10,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 public class GetGamesControllerTest {
     
@@ -24,6 +28,9 @@ public class GetGamesControllerTest {
     
     @BeforeClass
     static public void setUpBeforeClass() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
         GetGamesControllerTest.instance = GetGamesController.getInstance();
         GetGamesControllerTest.nullGame = new GameModel();
         GetGamesControllerTest.game1 = new GameModel(1, "Test Game 1",
@@ -74,4 +81,25 @@ public class GetGamesControllerTest {
                 .contains(GetGamesControllerTest.game4));
     }
     
+    @Test
+    public void testRetrieveGames() {
+        GetGamesController.getInstance().retrieveGames();
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
+    }
+    
+    @Test
+    public void testActionPerformed() {
+        GetGamesController.getInstance().actionPerformed(null);
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
+    }
 }

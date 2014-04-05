@@ -10,6 +10,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockData;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 public class EmailControllerTest {
     
@@ -34,8 +36,9 @@ public class EmailControllerTest {
         testProject = new Project("test", "1");
         mockSsid = "abc123";
         defaultSession = new Session(u1, testProject, mockSsid);
-        
-        network = new MockNetwork();
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
         db = new MockData(new HashSet<Object>());
         db.save(u1, testProject);
         db.save(u2, testProject);

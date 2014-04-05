@@ -9,7 +9,7 @@ public class UpdateGamesRequestObserver implements RequestObserver {
     private final UpdateGamesController controller;
     
     /**
-     * Constructs the observer given an AddGamesController
+     * Constructs the observer given an UpdateGamesController
      * 
      * @param controller
      *            the controller used to add games
