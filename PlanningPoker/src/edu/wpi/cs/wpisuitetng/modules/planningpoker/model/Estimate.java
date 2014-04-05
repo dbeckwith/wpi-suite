@@ -43,6 +43,11 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
         return new Gson().toJson(this, Estimate.class);
     }
     
+    public Estimate fromJSON(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, Estimate.class);
+    }
+    
     @Override
     public int compareTo(Estimate arg0) {
         if (estimate > arg0.getEstimate()) {

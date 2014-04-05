@@ -63,4 +63,8 @@ public class ViewController {
         // }
     }
     
+    public MainView getMainView() {
+        return mainView;
+    }
+    
 }
