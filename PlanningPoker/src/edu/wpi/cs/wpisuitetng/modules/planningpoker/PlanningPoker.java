@@ -43,7 +43,6 @@ public class PlanningPoker implements IJanewayModule {
     
     public PlanningPoker() {
         
-        
         tabs = new ArrayList<JanewayTabModel>();
         
         // setup toolbar

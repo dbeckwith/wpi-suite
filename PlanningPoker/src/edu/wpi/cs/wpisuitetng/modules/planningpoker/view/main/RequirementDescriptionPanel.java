@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -30,14 +31,12 @@ public class RequirementDescriptionPanel extends JPanel {
         
     }
     
-    public void setData(GameModel parent_game, GameRequirementModel req) {
-        
+    public void setData(User current_user, GameModel parent_game, GameRequirementModel req) {
         if (parent_game.isEnded()) {
             completedPanel.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "complete");
         } else {
-        	votePanel.setGameReqModel(req);
-            votePanel.setRequirement(parent_game, req);
+            votePanel.setRequirement(current_user, parent_game, req);
             ((CardLayout) getLayout()).show(this, "vote");
         }
     }

@@ -15,6 +15,8 @@ package edu.wpi.cs.wpisuitetng.modules.core.entitymanagers;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
 import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
 import edu.wpi.cs.wpisuitetng.exceptions.DatabaseException;
 import edu.wpi.cs.wpisuitetng.exceptions.ForbiddenException;
+import edu.wpi.cs.wpisuitetng.exceptions.InvalidEmailException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotImplementedException;
 import edu.wpi.cs.wpisuitetng.exceptions.SerializationException;
@@ -89,6 +92,7 @@ public class UserManager implements EntityManager<User> {
 			logger.log(Level.WARNING, "Invalid User entity creation string.");
 			throw new BadRequestException("The entity creation string had invalid format. Entity String: " + content);
 		}
+		
 
 		if(getEntity(s,p.getUsername())[0] == null)
 		{
@@ -98,15 +102,44 @@ public class UserManager implements EntityManager<User> {
 			p.setPassword(hashedPassword);
 			
 			p.setRole(Role.USER);
-			
-			save(s,p);
+		
 		}
 		else
 		{
 			logger.log(Level.WARNING, "Conflict Exception during User creation.");
 			throw new ConflictException("A user with the given ID already exists. Entity String: " + content);
 		}
+		
 
+        final String theEmail = p.getEmail();
+        
+        if (theEmail != null) {
+            Pattern emailPattern;
+            Matcher emailMatcher;
+            final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+            emailPattern = Pattern.compile(EMAIL_PATTERN);
+            
+            emailMatcher = emailPattern.matcher(theEmail);
+            
+            //Check if email is correct format
+            if (emailMatcher.matches()) {
+                save(s, p);
+            }
+            else {
+                logger.log(Level.WARNING,
+                        "Invalid Email given in user creation.");
+                throw new InvalidEmailException(
+                        "The email is an invalid format:" + theEmail
+                                + ". Entity String: " + content);
+            }
+        }
+        else {
+            save(s, p);
+        }
+        
+        
+            
 		logger.log(Level.FINE, "User creation success!");
 
 		return p;
