@@ -341,6 +341,7 @@ public class NewGamePanel extends JPanel {
 	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
 		if (!(newGameRequirementsPanel.validateForm() && gameDescription
 				.validateForm())) {
+		    check();
 			return;
 		}
 
