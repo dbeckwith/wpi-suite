@@ -46,7 +46,7 @@ public class Janeway {
 	public static void main(final String[] args) {
 		
 		// Set the look and feel to cross-platform so the UI looks
-		// the same across operating systems
+		// the same across operating systems 
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} 

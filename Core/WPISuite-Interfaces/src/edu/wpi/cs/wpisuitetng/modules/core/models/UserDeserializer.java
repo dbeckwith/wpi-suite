@@ -50,6 +50,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		 int idNum = 0;
 		 String username = deflated.get("username").getAsString();
 		 String name = null;
+		 String email = null;
 		 String password = null;
 		 
 		 if(deflated.has("idNum") && !deflated.get("idNum").getAsString().equals(""))
@@ -71,7 +72,12 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			 name = deflated.get("name").getAsString();
 		 }
 		 
-		 User inflated = new User(name, username, password, idNum);
+		 if(deflated.has("email")  && !deflated.get("email").getAsString().equals(""))
+         {
+             email = deflated.get("email").getAsString();
+         }
+		 
+		 User inflated = new User(name, username, email, password, idNum);
 		 
 		 if(deflated.has("role")  && !deflated.get("role").getAsString().equals(""))
 		 {

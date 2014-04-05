@@ -27,6 +27,7 @@ public class User extends AbstractModel
 
 	private String name;
 	private String username;
+	private String email;
 	private int idNum;
 	private Role role;
 	
@@ -45,6 +46,16 @@ public class User extends AbstractModel
 		this.password = password;
 		this.idNum = idNum;
 		this.role = Role.USER;
+		this.email = null;
+	}
+	
+	public User(String name, String username, String email, String password, int idNum) {
+	    this.name = name;
+        this.username = username;
+        this.password = password;
+        this.idNum = idNum;
+        this.role = Role.USER;
+        this.email = email;
 	}
 	
 	@Override
@@ -63,6 +74,11 @@ public class User extends AbstractModel
 				{
 					return false;
 				}
+				
+				if(this.email != null && !this.email.equals(((User)other).email))
+                {
+                    return false;
+                }
 				
 				if(this.password != null && !this.password.equals(((User)other).password))
 				{
@@ -103,6 +119,16 @@ public class User extends AbstractModel
 	public String getPassword()
 	{
 		return this.password;
+	}
+	
+	public String getEmail() 
+	{
+	    return this.email;
+	}
+	
+	public void setEmail(String email) 
+	{
+	    this.email = email;
 	}
 	
 	/* Accessors */
