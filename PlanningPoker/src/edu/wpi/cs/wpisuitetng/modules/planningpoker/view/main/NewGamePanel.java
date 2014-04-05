@@ -335,6 +335,10 @@ public class NewGamePanel extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
+    	if (!(newGameRequirementsPanel.validateForm() && gameDescription.validateForm())){
+    		return;
+    	}
+    	
         PlanningPoker.getViewController().saveNewGame(this);
     }// GEN-LAST:event_saveButtonActionPerformed
     
