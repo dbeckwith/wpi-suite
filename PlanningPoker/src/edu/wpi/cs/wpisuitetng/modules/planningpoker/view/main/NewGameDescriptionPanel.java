@@ -97,6 +97,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				validateDeadline();
+				parent.check();
 			}
 		});
 
@@ -105,6 +106,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				validateDeadline();
+				parent.check();
 			}
 		});
 
@@ -113,6 +115,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				validateDeadline();
+				parent.check();
 			}
 		});
 	}

@@ -385,8 +385,8 @@ public class NewGamePanel extends JPanel {
      */
     public void check() {
         saveButton
-                .setEnabled((gameDescription.validateForm() && newGameRequirementsPanel
-                        .validateForm()));
+                .setEnabled(gameDescription.validateForm() && newGameRequirementsPanel
+                        .validateForm());
     }
     
     /**
