@@ -2,6 +2,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 public class UserPrefsController extends AbsUserController {
 
@@ -30,7 +33,8 @@ public class UserPrefsController extends AbsUserController {
 			System.err.println("No users received");
 		} else {
 			this.users = users;
-			this.user = findUser(ConfigManager.getConfig().getUserName(), users);
+			this.user = findUser(ConfigManager.getConfig().getUserName());
+			System.out.println("Current user = " + user.toJSON());// TODO remove
 		}
 	}
 
@@ -44,7 +48,7 @@ public class UserPrefsController extends AbsUserController {
 	 * @return the user in the array with the given user name, or null if none
 	 *         exists
 	 */
-	private User findUser(String name, User[] users) {
+	private User findUser(String name) {
 		for (User u : users) {
 			if (u.getName().equals(name)) {
 				return u;
@@ -71,11 +75,29 @@ public class UserPrefsController extends AbsUserController {
 	}
 
 	public void setNotifyByEmail(boolean notify) {
-		user.setNotifyByEmail(notify);
+		sendPutRequest("email", notify);
 	}
 
 	public void setNotifyByIM(boolean notify) {
-		user.setNotifyByIM(notify);
+		sendPutRequest("im", notify);
+	}
+
+	private void sendPutRequest(String notificationType, boolean notify) {
+		switch (notificationType) {
+		case "email":
+			user.setNotifyByEmail(notify);
+			break;
+		case "im":
+			user.setNotifyByIM(notify);
+			break;
+		default:
+			System.err.println("Invalid notification type " + notificationType);
+			return;
+		}
+		final Request request = Network.getInstance().makeRequest("core/user",
+				HttpMethod.PUT);
+		request.setBody(user.toJSON());
+		request.send();
 	}
 
 }

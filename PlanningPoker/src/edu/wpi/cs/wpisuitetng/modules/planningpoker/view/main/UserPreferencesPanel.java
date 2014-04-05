@@ -22,6 +22,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserPrefsControll
  */
 public class UserPreferencesPanel extends javax.swing.JPanel {
 
+	// stops Eclipse from complaining
+	private static final long serialVersionUID = 3565380843068717833L;
+
 	private static final UserPrefsController prefsController = 
 			UserPrefsController.getInstance();
 
@@ -39,12 +42,9 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
 	 */
 	private UserPreferencesPanel() {
 		initComponents();
-		System.out.println("User=" + prefsController.getUser());
 		if (prefsController.getUser() != null) {
 			emailBox.setSelected(prefsController.getNotifyByEmail());
 			imBox.setSelected(prefsController.getNotifyByIM());
-		} else {
-			System.err.println("Null user in UserPrefsController");
 		}
 	}
 
