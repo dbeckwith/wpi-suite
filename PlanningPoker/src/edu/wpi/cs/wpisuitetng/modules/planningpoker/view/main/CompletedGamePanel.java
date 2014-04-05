@@ -47,7 +47,6 @@ public class CompletedGamePanel extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void initComponents() {
         
         jSeparator1 = new javax.swing.JSeparator();
@@ -60,15 +59,15 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                 null, null, null }, }, new String[] { "Requirement", "Mean",
                 "Median", "Final Estimate" }) {
             /**
-             * 
-             */
-            private static final long serialVersionUID = 4276605021406383928L;
-            Class[] columnTypes = new Class[] { String.class, String.class,
-                    String.class, String.class };
+                     * 
+                     */
+            private static final long serialVersionUID = -7421202548175051005L;
+            boolean[] columnEditables = new boolean[] { false, false, false,
+                    false };
             
             @Override
-            public Class getColumnClass(int columnIndex) {
-                return columnTypes[columnIndex];
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
             }
         });
         tableScrollPane.setViewportView(voteResultTable);
@@ -112,7 +111,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                         layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(tableScrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 220,
+                                        GroupLayout.DEFAULT_SIZE, 89,
                                         Short.MAX_VALUE)
                                 .addPreferredGap(ComponentPlacement.RELATED)
                                 .addGroup(
@@ -130,7 +129,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                                                                         lblNumberOfRequirements)
                                                                 .addComponent(
                                                                         numRequirements)))
-                                .addGap(35)));
+                                .addContainerGap()));
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
