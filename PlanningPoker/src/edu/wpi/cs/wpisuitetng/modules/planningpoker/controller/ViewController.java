@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
@@ -65,6 +66,7 @@ public class ViewController {
             }
         }.start();
         
+        RequirementsListModel.getInstance().removeListListener(e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
         
     }
@@ -73,6 +75,7 @@ public class ViewController {
         // int result = JOptionPane.showConfirmDialog(e,
         // "Are you sure you want to cancel this game?");
         // if(result == JOptionPane.OK_OPTION) {
+        RequirementsListModel.getInstance().removeListListener(e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
         // }
     }

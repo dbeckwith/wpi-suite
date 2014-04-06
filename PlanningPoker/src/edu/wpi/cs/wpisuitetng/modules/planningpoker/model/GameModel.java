@@ -6,7 +6,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
 /**
  * Represents a planning poker game
@@ -31,7 +31,7 @@ public class GameModel extends AbstractModel {
         LIVE, DISTRIBUTED
     };
     
-    private ArrayList<SimpleListObserver> observers;
+    private transient ArrayList<GameStatusObserver> status_observers;
     
     private int id;
     private String name;
@@ -52,7 +52,7 @@ public class GameModel extends AbstractModel {
         endDate = null;
         type = null;
         status = null;
-        observers = null;
+        status_observers = null;
     }
     
     /**
@@ -76,7 +76,7 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        observers = new ArrayList<SimpleListObserver>();
+        status_observers = new ArrayList<>();
     }
     
     /**
@@ -99,7 +99,7 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        observers = new ArrayList<SimpleListObserver>();
+        status_observers = new ArrayList<>();
     }
     
     /**
@@ -121,28 +121,16 @@ public class GameModel extends AbstractModel {
         return description;
     }
     
-    /**
-     * Add a SimpleListObserver that is notified when the list of estimates is
-     * changed
-     * 
-     * @param slo
-     *        The SimpleListObserver to add
-     */
-    public void addListListener(SimpleListObserver slo) {
-        if (!observers.contains(slo)) {
-            observers.add(slo);
+    public void addStatusListener(GameStatusObserver gso) {
+        if (!status_observers.contains(gso)) {
+            status_observers.add(gso);
         }
     }
     
-    /**
-     * Add a user's estimate to the list
-     * 
-     * @param user
-     * @param estimate
-     */
-    public void addEstimate(Estimate e, int reqIndex) {
-        requirements.get(reqIndex).addEstimate(e);
-        updated();
+    public void removeStatusListener(GameStatusObserver gso) {
+        if (status_observers.contains(gso)) {
+            status_observers.remove(gso);
+        }
     }
     
     /**
@@ -179,31 +167,30 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
-     *        whether or not the game should be ended
+     *            whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
-        status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        if (status != new_status) {
+            status = new_status;
+            for (GameStatusObserver gso : status_observers) {
+                gso.statusChanged(this);
+            }
+        }
     }
     
     /**
-     * If the current time is past the end date of the game, set the game as ended.
+     * If the current time is past the end date of the game, set the game as
+     * ended.
      * 
      * @return whether the game has ended
      */
     public boolean isEnded() {
-        if (endDate != null && (endDate.before(new Date(System.currentTimeMillis())))) {
+        if (endDate != null
+                && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);
-    }
-    
-    /**
-     * Notifies all observers when that the list has changed
-     */
-    private void updated() {
-        for (SimpleListObserver observer : observers) {
-            observer.listUpdated();
-        }
     }
     
     @Override
@@ -229,12 +216,18 @@ public class GameModel extends AbstractModel {
     
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
-        return parser.fromJson(json, GameModel.class);
+        GameModel gm = parser.fromJson(json, GameModel.class);
+        gm.status_observers = new ArrayList<>();
+        return gm;
     }
     
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
-        return parser.fromJson(json, GameModel[].class);
+        GameModel[] gms = parser.fromJson(json, GameModel[].class);
+        for (GameModel gm : gms) {
+            gm.status_observers = new ArrayList<>();
+        }
+        return gms;
     }
     
     public int getID() {
@@ -253,17 +246,17 @@ public class GameModel extends AbstractModel {
         endDate = g.endDate;
         type = g.type;
         status = g.status;
-        observers = g.observers;
+        status_observers = g.status_observers;
     }
     
     /**
      * 
      * @return the simplelistobservers for the list of games
      */
-    public ArrayList<SimpleListObserver> getObservers(){
-        return observers;
+    public ArrayList<GameStatusObserver> getStatusObservers() {
+        return status_observers;
     }
-        
+    
     @Override
     public String toString() {
         return getName();
