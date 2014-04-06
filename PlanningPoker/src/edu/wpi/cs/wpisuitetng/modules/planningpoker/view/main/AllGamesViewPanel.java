@@ -86,8 +86,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                    
                     // TODO Update this once current user controller made into a singleton
                     CurrentUserController userController = new CurrentUserController();
-                    // Block until current user object populated
-                    while (userController.getUser().getName() != ConfigManager.getConfig().getUserName()) {}
+                    System.out.println(userController.getUser().getName());
                     getRequirementDescriptionPanel().setData(userController.getUser(), parent_game, req);
                     
                     GameModel game = (GameModel)((DefaultMutableTreeNode)node.getParent()).getUserObject();
