@@ -30,9 +30,6 @@ public class GameRequirementModel extends AbstractModel {
     /** the type of requirement */
     private String type;
     
-    /** true if the user has submitted an estimate */
-    public boolean votedOn = false;
-    
     /** the estimates for the requirement */
     private ArrayList<Estimate> estimates;
     
