@@ -54,15 +54,15 @@ public class ViewController {
     }
     
     public void saveNewGame(NewGamePanel e) {
-        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
-                e.getRequirements(), e.getEndDate(), e.getGameType(),
-                GameStatus.PENDING);
+        final GameModel newGame = new GameModel(e.getName(),
+                e.getDescription(), e.getRequirements(), e.getEndDate(),
+                e.getGameType(), GameStatus.PENDING);
         
-        new Thread(){
-        	@Override
-        	public void run(){
-        		AddGameController.getInstance().addGame(newGame);
-        	}
+        new Thread() {
+            @Override
+            public void run() {
+                AddGameController.getInstance().addGame(newGame);
+            }
         }.start();
         
         mainView.removeTabAt(mainView.indexOfComponent(e));
@@ -75,6 +75,10 @@ public class ViewController {
         // if(result == JOptionPane.OK_OPTION) {
         mainView.removeTabAt(mainView.indexOfComponent(e));
         // }
+    }
+    
+    public MainView getMainView() {
+        return mainView;
     }
     
 }
