@@ -37,9 +37,12 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
-				Intent intent = new Intent(getBaseContext(), VoteActivity.class);
-				String reqJson = ((GameRequirementModel)adapter.getChild(groupPosition, childPosition)).toJSON();			
-				intent.putExtra("req", reqJson);
+				Intent intent = new Intent(getBaseContext(), RequirementActivity.class);
+				
+				String gameJson = ((GameModel)adapter.getGroup(groupPosition)).toJSON();	
+				
+				intent.putExtra("game", gameJson);
+				intent.putExtra("index", childPosition);
 				startActivity(intent);
 				return true;
 			}

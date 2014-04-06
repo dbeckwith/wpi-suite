@@ -30,8 +30,12 @@
         </activity>
         <activity
             android:name="edu.wpi.cs.team9.planningpoker.VoteActivity"
-            android:label="@string/title_activity_vote" 
-            android:parentActivityName="edu.wpi.cs.team9.planningpoker.GameListActivity">
+            android:label="@string/title_activity_vote"
+            android:parentActivityName="edu.wpi.cs.team9.planningpoker.GameListActivity" >
+        </activity>
+        <activity
+            android:name="edu.wpi.cs.team9.planningpoker.RequirementActivity"
+            android:label="@string/title_activity_requirement" >
         </activity>
     </application>
 
