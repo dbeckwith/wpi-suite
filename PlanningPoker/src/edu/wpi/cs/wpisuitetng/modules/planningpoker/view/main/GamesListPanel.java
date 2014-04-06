@@ -5,9 +5,6 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -19,8 +16,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**

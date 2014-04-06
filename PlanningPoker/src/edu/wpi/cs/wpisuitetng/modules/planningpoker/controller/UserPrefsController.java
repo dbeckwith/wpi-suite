@@ -17,17 +17,20 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UserPrefsController extends CurrentUserController {
     
-    /**
-     * Default constructor.
-     * 
-     * @see CurrentUserController#CurrentUserController()
-     */
-    public UserPrefsController() {
-        super();
+    private static UserPrefsController instance = null;
+    
+    public static UserPrefsController getInstance() {
+        if (UserPrefsController.instance == null) {
+            UserPrefsController.instance = new UserPrefsController();
+            CurrentUserController.instance = UserPrefsController.instance;
+        }
+        
+        return UserPrefsController.instance;
     }
     
     /**
      * Gets the user's current email notification setting.
+     * 
      * @return
      */
     public boolean getNotifyByEmail() {

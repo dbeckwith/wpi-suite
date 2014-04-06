@@ -19,10 +19,20 @@ public class CurrentUserController extends AbsUserController {
             .getUserName();
     private User user = null;
     
+    protected static CurrentUserController instance = null;
+    
+    public static CurrentUserController getInstance() {
+        if (CurrentUserController.instance == null) {
+            CurrentUserController.instance = new CurrentUserController();
+        }
+        
+        return CurrentUserController.instance;
+    }
+    
     /**
      * Creates a new controller and requests users from the database.
      */
-    public CurrentUserController() {
+    protected CurrentUserController() {
         super();
         requestUsers();
     }
@@ -31,10 +41,9 @@ public class CurrentUserController extends AbsUserController {
     public void receivedUsers(User[] users) {
         if (users == null) {
             System.err.println("No users received");
-        }
-        else {
+        } else {
             setUsers(users);
-            this.user = findUser(USER_NAME);
+            user = findUser(CurrentUserController.USER_NAME);
             System.out.println("Set user to " + user); // TODO remove
         }
     }
@@ -43,13 +52,15 @@ public class CurrentUserController extends AbsUserController {
      * Finds the user with the given username.
      * 
      * @param name
-     *        the username to search for
+     *            the username to search for
      * @return the user in the array with the given user name, or null if none
      *         exists
      */
     public User findUser(String name) {
         for (User u : getUsers()) {
-            if (u.getUsername().equals(name)) { return u; }
+            if (u.getUsername().equals(name)) {
+                return u;
+            }
         }
         return null;
     }

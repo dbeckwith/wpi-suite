@@ -25,8 +25,6 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     // stops Eclipse from complaining
     private static final long serialVersionUID = 3565380843068717833L;
     
-    private final UserPrefsController prefsController = new UserPrefsController();
-    
     private static UserPreferencesPanel instance;
     
     /**
@@ -44,9 +42,9 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
      */
     private UserPreferencesPanel() {
         initComponents();
-        if (prefsController.getUser() != null) {
-            emailBox.setSelected(prefsController.getNotifyByEmail());
-            imBox.setSelected(prefsController.getNotifyByIM());
+        if (UserPrefsController.getInstance().getUser() != null) {
+            emailBox.setSelected(UserPrefsController.getInstance().getNotifyByEmail());
+            imBox.setSelected(UserPrefsController.getInstance().getNotifyByIM());
         }
     }
     
@@ -145,11 +143,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBoxActionPerformed
-        prefsController.setNotifyByEmail(emailBox.isSelected());
+        UserPrefsController.getInstance().setNotifyByEmail(emailBox.isSelected());
     }// GEN-LAST:event_emailBoxActionPerformed
     
     private void imBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_imBoxActionPerformed
-        prefsController.setNotifyByIM(imBox.isSelected());
+        UserPrefsController.getInstance().setNotifyByIM(imBox.isSelected());
     }// GEN-LAST:event_imBoxActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
