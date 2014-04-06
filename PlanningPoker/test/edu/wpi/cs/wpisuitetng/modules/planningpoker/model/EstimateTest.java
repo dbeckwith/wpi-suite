@@ -18,4 +18,14 @@ public class EstimateTest {
         assertTrue(est2.compareTo(est1) < 0);
     }
     
+    @Test
+    public void testJSON() {
+        Estimate est = new Estimate(new User("joe", "joe", "password", 1), 20);
+        Estimate estAfter = est.fromJSON(est.toJSON());
+        assertEquals(est.getUser().getIdNum(), estAfter.getUser().getIdNum());
+        assertEquals(est.getUser().getName(), estAfter.getUser().getName());
+        assertEquals(est.getUser().getUsername(), estAfter.getUser().getUsername());
+        assertEquals(est.getEstimate(), estAfter.getEstimate(), 3);
+    }
+    
 }
