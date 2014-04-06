@@ -88,6 +88,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      */
     public void emptyModel() {
         games.clear();
+        updated();
     }
     
     /**
