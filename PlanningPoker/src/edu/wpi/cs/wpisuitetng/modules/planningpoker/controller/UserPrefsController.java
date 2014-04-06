@@ -42,14 +42,14 @@ public class UserPrefsController extends CurrentUserController {
     }
     
     /**
-     * Sets the user to recieve or stop recieving email notifications.
+     * Sets the user to receive or stop receiving email notifications.
      */
     public void setNotifyByEmail(boolean doNotify) {
         sendPutRequest("email", doNotify);
     }
     
     /**
-     * Sets the user to recieve or stop recieving IM notifications.
+     * Sets the user to receive or stop receiving IM notifications.
      */
     public void setNotifyByIM(boolean doNotify) {
         sendPutRequest("im", doNotify);
@@ -78,5 +78,6 @@ public class UserPrefsController extends CurrentUserController {
         request.send();
         System.out.println("Updated: " + getUser());// TODO remove
     }
+    
     
 }
