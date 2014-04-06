@@ -40,14 +40,14 @@ public class CurrentUserController extends AbsUserController {
     }
     
     /**
-     * Finds the user with the given username in an array of users.
+     * Finds the user with the given username.
      * 
      * @param name
      *        the username to search for
      * @return the user in the array with the given user name, or null if none
      *         exists
      */
-    protected User findUser(String name) {
+    public User findUser(String name) {
         for (User u : getUsers()) {
             if (u.getUsername().equals(name)) { return u; }
         }
