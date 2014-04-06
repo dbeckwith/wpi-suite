@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -32,6 +33,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     private ArrayList<GameModel> games;
     private ArrayList<SimpleListObserver> observers;
+    private ArrayList<GameStatusObserver> status_observers;
+    private GameStatusObserver game_observer;
     
     /**
      * Constructor that initializes list of games, list of observers, a
@@ -40,7 +43,17 @@ public class GameListModel extends AbstractListModel<GameModel> {
      */
     public GameListModel() {
         games = new ArrayList<>();
-        observers = new ArrayList<SimpleListObserver>();
+        observers = new ArrayList<>();
+        status_observers = new ArrayList<>();
+        game_observer = new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
+                for (GameStatusObserver gso : status_observers) {
+                    gso.statusChanged(game);
+                }
+            }
+        };
     }
     
     /**
@@ -56,6 +69,12 @@ public class GameListModel extends AbstractListModel<GameModel> {
         }
     }
     
+    public void addStatusListener(GameStatusObserver gso) {
+        if (!status_observers.contains(gso)) {
+            status_observers.add(gso);
+        }
+    }
+    
     /**
      * Add a game to the list
      * 
@@ -66,6 +85,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      */
     public void addGame(GameModel g) {
         games.add(g);
+        g.addStatusListener(game_observer);
         updated();
     }
     
@@ -79,6 +99,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     public void removeGame(GameModel g) {
         if (games.contains(g)) {
             games.remove(g);
+            g.removeStatusListener(game_observer);
             updated();
         }
     }
@@ -87,7 +108,11 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Empties the list of games.
      */
     public void emptyModel() {
+        for (GameModel g : games) {
+            g.removeStatusListener(game_observer);
+        }
         games.clear();
+        updated();
     }
     
     /**

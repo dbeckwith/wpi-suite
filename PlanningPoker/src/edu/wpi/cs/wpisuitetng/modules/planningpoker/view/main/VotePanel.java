@@ -21,7 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -32,10 +34,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
  * @author nfbrown
  */
 public class VotePanel extends javax.swing.JPanel {
-    
-    /**
+
+	/**
      *
      */
+
     private static final long serialVersionUID = 6053116033835102214L;
     
     private User current_user;
@@ -65,8 +68,13 @@ public class VotePanel extends javax.swing.JPanel {
         boolean already_voted = false;
         
         for (Estimate e : req.getEstimates()) {
-            if (e.getUser() != null && current_user != null
-                    && e.getUser().equals(current_user)) {
+            System.out.println(e.getEstimate() + " from " + e.getUser());
+            if (e.getUser() != null
+                    && current_user != null
+                    && e.getUser().getIdNum() == current_user.getIdNum()
+                    && e.getUser().getName().equals(current_user.getName())
+                    && e.getUser().getUsername()
+                            .equals(current_user.getUsername())) {
                 already_voted = true;
                 break;
             }
@@ -103,9 +111,10 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void selectEstimateCard(JButton selected_card_button) {
-        req.addEstimate(new Estimate(null, Float
+        req.addEstimate(new Estimate(current_user, Float
                 .parseFloat(selected_card_button.getText())));
         new Thread() {
+            @Override
             public void run() {
                 UpdateGamesController.getInstance().updateGame(parent_game);
             }
@@ -158,60 +167,114 @@ public class VotePanel extends javax.swing.JPanel {
         requirementType = new JLabel("");
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                        .addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(lblRequirement)
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(requirementNameLabel))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(249)
-                                    .addComponent(lblType)
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(requirementType))))
-                        .addComponent(lblDescription, Alignment.LEADING)
-                        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(estimateLabel)
-                            .addPreferredGap(ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
-                            .addComponent(voteField)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(completedVotesField)))
-                    .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblRequirement)
-                        .addComponent(requirementNameLabel)
-                        .addComponent(lblType)
-                        .addComponent(requirementType))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(lblDescription)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(estimateLabel)
-                        .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(voteField)
-                                .addComponent(completedVotesField))
-                            .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addContainerGap())
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.TRAILING)
+                                                .addComponent(
+                                                        scrollPane_1,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        584, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        scrollPane,
+                                                        Alignment.LEADING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        584, Short.MAX_VALUE)
+                                                .addGroup(
+                                                        Alignment.LEADING,
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        lblRequirement)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        requirementNameLabel))
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addGap(249)
+                                                                                                .addComponent(
+                                                                                                        lblType)
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        requirementType))))
+                                                .addComponent(lblDescription,
+                                                        Alignment.LEADING)
+                                                .addGroup(
+                                                        Alignment.LEADING,
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        estimateLabel)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED,
+                                                                        324,
+                                                                        Short.MAX_VALUE)
+                                                                .addComponent(
+                                                                        voteField)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        votesProgressBar,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        160,
+                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        completedVotesField)))
+                                .addContainerGap()));
+        layout.setVerticalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(lblRequirement)
+                                                .addComponent(
+                                                        requirementNameLabel)
+                                                .addComponent(lblType)
+                                                .addComponent(requirementType))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(lblDescription)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane,
+                                        GroupLayout.PREFERRED_SIZE, 83,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(estimateLabel)
+                                                .addGroup(
+                                                        layout.createParallelGroup(
+                                                                Alignment.TRAILING)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.BASELINE)
+                                                                                .addComponent(
+                                                                                        voteField)
+                                                                                .addComponent(
+                                                                                        completedVotesField))
+                                                                .addComponent(
+                                                                        votesProgressBar,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane_1,
+                                        GroupLayout.DEFAULT_SIZE, 109,
+                                        Short.MAX_VALUE).addContainerGap()));
         
         estimateCardsPanel = new JPanel();
         scrollPane_1.setViewportView(estimateCardsPanel);
