@@ -11,7 +11,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -67,26 +66,28 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
             public void valueChanged(TreeSelectionEvent e) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
-
+                
                 if (node == null) { return; }
                 
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "no requirement");
-                    GameModel game = (GameModel) nodeInfo;                    
+                    GameModel game = (GameModel) nodeInfo;
                     getGameDescriptionPanel().setGame(game);
-                } else if (nodeInfo instanceof GameRequirementModel) {
+                }
+                else if (nodeInfo instanceof GameRequirementModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "requirement");
                     GameRequirementModel req = (GameRequirementModel) nodeInfo;
                     GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
                             .getParent())).getUserObject();
+                    getRequirementDescriptionPanel().setData(
+                            CurrentUserController.getInstance().getUser(),
+                            parent_game, req);
                     
-                    // TODO: figure out what the current user is
-                    getRequirementDescriptionPanel().setData(CurrentUserController.getInstance().getUser(), parent_game, req);
-                    
-                    GameModel game = (GameModel)((DefaultMutableTreeNode)node.getParent()).getUserObject();
+                    GameModel game = (GameModel) ((DefaultMutableTreeNode) node
+                            .getParent()).getUserObject();
                     getGameDescriptionPanel().setGame(game);
                 }
             }
@@ -136,12 +137,15 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private JPanel requirementPanel;
     private RequirementDescriptionPanel requirementDescriptionPanel;
     private GameDescriptionPanel gameDescriptionPanel;
+    
     protected JPanel getRequirementPanel() {
         return requirementPanel;
     }
+    
     protected RequirementDescriptionPanel getRequirementDescriptionPanel() {
         return requirementDescriptionPanel;
     }
+    
     protected GameDescriptionPanel getGameDescriptionPanel() {
         return gameDescriptionPanel;
     }
