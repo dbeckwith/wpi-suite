@@ -21,7 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -104,7 +106,11 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void selectEstimateCard(JButton selected_card_button) {
-        req.addEstimate(new Estimate(null, Float
+        // TODO Update this once current user controller made into a singleton
+        CurrentUserController userController = new CurrentUserController();
+        // Block until current user object populated
+        while (userController.getUser().getName() != ConfigManager.getConfig().getUserName()) {}
+        req.addEstimate(new Estimate(userController.getUser(), Float
                 .parseFloat(selected_card_button.getText())));
         new Thread() {
             public void run() {

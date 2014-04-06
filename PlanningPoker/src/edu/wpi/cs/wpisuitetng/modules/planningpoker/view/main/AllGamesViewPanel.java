@@ -13,6 +13,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -82,8 +83,12 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     GameRequirementModel req = (GameRequirementModel) nodeInfo;
                     GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
                             .getParent())).getUserObject();
-                    
-                    getRequirementDescriptionPanel().setData(ConfigManager.getConfig().getUserName(), parent_game, req);
+                   
+                    // TODO Update this once current user controller made into a singleton
+                    CurrentUserController userController = new CurrentUserController();
+                    // Block until current user object populated
+                    while (userController.getUser().getName() != ConfigManager.getConfig().getUserName()) {}
+                    getRequirementDescriptionPanel().setData(userController.getUser(), parent_game, req);
                     
                     GameModel game = (GameModel)((DefaultMutableTreeNode)node.getParent()).getUserObject();
                     getGameDescriptionPanel().setGame(game);
