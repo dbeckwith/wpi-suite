@@ -398,6 +398,10 @@ public class NewGamePanel extends JPanel {
 	public void checkNewRequirement() {
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
 	}
+	
+	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
+	    return newGameRequirementsPanel;
+	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton cancelButton;

@@ -21,7 +21,10 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 
 /**
  * 
@@ -34,6 +37,8 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
      */
 	private static final long serialVersionUID = -4252474071295177531L;
 
+	private SimpleListObserver requirementsListObserver;
+	
 	/**
 	 * Creates new form GameRequirements
 	 */
@@ -48,6 +53,24 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 						parent.check();
 					}
 				});
+		
+		GetRequirementsController.getInstance().retrieveRequirements();
+		requirementsListObserver = new SimpleListObserver() {
+            
+            @Override
+            public void listUpdated() {
+                // TODO: remove previous requirements
+                // TODO: making a new requirement should add it to RequirementsListModel
+                for (GameRequirementModel req : RequirementsListModel.getInstance().getAll()) {
+                    addRequirement(req);
+                }
+            }
+        };
+		RequirementsListModel.getInstance().addListListener(requirementsListObserver);
+	}
+	
+	public SimpleListObserver getRequirementsListObserver() {
+	    return requirementsListObserver;
 	}
 
 	/**
