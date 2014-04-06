@@ -293,6 +293,9 @@ public class UserManager implements EntityManager<User> {
 				String encryptedPass = this.passwordHash.generateHash(changes.getPassword());
 				toUpdate.setPassword(encryptedPass);
 			}
+			
+			toUpdate.setNotifyByEmail(changes.isNotifyByEmail());
+			toUpdate.setNotifyByIM(changes.isNotifyByIM());
 	
 			if((changes.getRole() != null))
 			{

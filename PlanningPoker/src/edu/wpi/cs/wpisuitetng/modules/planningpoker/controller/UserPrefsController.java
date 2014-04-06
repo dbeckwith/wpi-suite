@@ -1,5 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -16,6 +18,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  */
 public class UserPrefsController extends CurrentUserController {
+    
+    private final ArrayList observers = new ArrayList<>();
     
     /**
      * Default constructor.
@@ -45,21 +49,21 @@ public class UserPrefsController extends CurrentUserController {
      * Sets the user to receive or stop receiving email notifications.
      */
     public void setNotifyByEmail(boolean doNotify) {
-        sendPutRequest("email", doNotify);
+        sendPostRequest("email", doNotify);
     }
     
     /**
      * Sets the user to receive or stop receiving IM notifications.
      */
     public void setNotifyByIM(boolean doNotify) {
-        sendPutRequest("im", doNotify);
+        sendPostRequest("im", doNotify);
     }
     
     /**
      * A helper method for setting notification preference in the user's
      * preferences.
      */
-    private void sendPutRequest(String notificationType, boolean doNotify) {
+    private void sendPostRequest(String notificationType, boolean doNotify) {
         switch (notificationType) {
             case "email":
                 getUser().setNotifyByEmail(doNotify);
