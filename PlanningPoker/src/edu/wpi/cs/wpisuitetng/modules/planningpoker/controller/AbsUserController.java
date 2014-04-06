@@ -13,8 +13,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public abstract class AbsUserController {
 
-	UserRequestObserver observer;
-	User[] users;
+	private final UserRequestObserver observer;
+	private User[] users = null;
 
 	public AbsUserController() {
 		observer = new UserRequestObserver(this);
@@ -30,13 +30,30 @@ public abstract class AbsUserController {
 	public abstract void receivedUsers(User[] users);
 
 	/**
-	 * Requests query of all users related to the project
+	 * Requests query of all users related to the project.
+	 * 
+	 * @see AbsUserController#receivedUsers(User[])
 	 */
 	protected void requestUsers() {
 		final Request request = Network.getInstance().makeRequest("core/user",
 				HttpMethod.GET);
-		request.addObserver(observer); // add an observer to process the response
+		request.addObserver(observer); // add an observer to process the
+										// response
 		request.send(); // send the request
+	}
+
+	/**
+	 * Set the array of users in the current project.
+	 */
+	public void setUsers(User[] users) {
+		this.users = users;
+	}
+
+	/**
+	 * Gets the array of users in the current project.
+	 */
+	public User[] getUsers() {
+		return users;
 	}
 
 }
