@@ -10,10 +10,13 @@ public class UserPrefsController extends AbsUserController {
 
 	/** The current user */
 	private User user;
+	private UserRequestObserver observer;
+	
 
 	private UserPrefsController() {
 		super();
 		requestUsers();
+		observer = new UserRequestObserver(this);
 	}
 
 	private static UserPrefsController instance;
@@ -34,7 +37,8 @@ public class UserPrefsController extends AbsUserController {
 		} else {
 			this.users = users;
 			this.user = findUser(ConfigManager.getConfig().getUserName());
-			System.out.println("Current user = " + user.toJSON());// TODO remove
+			System.out.println(ConfigManager.getConfig().getUserName());
+			System.out.println("Current user = " + user);// TODO remove
 		}
 	}
 
@@ -43,14 +47,12 @@ public class UserPrefsController extends AbsUserController {
 	 * 
 	 * @param name
 	 *            the username to search for
-	 * @param users
-	 *            the array of users
 	 * @return the user in the array with the given user name, or null if none
 	 *         exists
 	 */
 	private User findUser(String name) {
 		for (User u : users) {
-			if (u.getName().equals(name)) {
+			if (u.getUsername().equals(name)) {
 				return u;
 			}
 		}
@@ -95,9 +97,14 @@ public class UserPrefsController extends AbsUserController {
 			return;
 		}
 		final Request request = Network.getInstance().makeRequest("core/user",
-				HttpMethod.PUT);
+				HttpMethod.POST);
 		request.setBody(user.toJSON());
+		request.addObserver(observer);
 		request.send();
+	}
+	
+	public void updateReceived(User user) {
+	    System.out.println("User updated: " + user);
 	}
 
 }

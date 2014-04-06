@@ -6,9 +6,6 @@ import org.apache.commons.mail.*;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This class controls the sending of email notifications
@@ -17,7 +14,6 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  */
 public class EmailController extends AbsUserController {
-    private UserRequestObserver observer;
     private User[] users;
     
     private String username = "team9wpi";
@@ -26,11 +22,20 @@ public class EmailController extends AbsUserController {
     private String subject = "A new Planning Poker game has begun!";
     private String body;
     
+    private static EmailController instance;
+    
     /**
      * Creates a new EmailController class
      */
     public EmailController() {
-        this.observer = new UserRequestObserver(this);
+        super();
+    }
+    
+    public static EmailController getInstance() {
+        if (instance == null) {
+            instance = new EmailController();
+        }
+        return instance;
     }
     
     /**
@@ -66,7 +71,8 @@ public class EmailController extends AbsUserController {
         System.setProperty("java.net.preferIPv4Stack", "true");
         try {
             for (User u : users) {
-                if (u.getEmail() != null) {
+                if (u.getEmail() != null && u.isNotifyByEmail()) {
+                    System.out.println("Sending email to: " + u); // TODO: remove
                     Email email = new SimpleEmail();
                     email.setHostName("smtp.gmail.com");
                     email.setSmtpPort(587);
