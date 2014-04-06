@@ -79,6 +79,7 @@ public class UserPrefsController extends CurrentUserController {
         final Request request = Network.getInstance().makeRequest("core/user",
                 HttpMethod.POST);
         request.setBody(getUser().toJSON());
+        request.addObserver(new UpdateUserRequestObserver(this));
         request.send();
         System.out.println("Updated: " + getUser());// TODO remove
     }

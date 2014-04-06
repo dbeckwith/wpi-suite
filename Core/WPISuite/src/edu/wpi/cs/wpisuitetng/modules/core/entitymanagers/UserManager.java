@@ -253,6 +253,7 @@ public class UserManager implements EntityManager<User> {
 		// TODO: permissions checking here
 
 		User changes;
+		System.out.println("Changeset: " + changeSet);
 
 		// Inflate the changeSet into a User object.
 		try
@@ -277,6 +278,9 @@ public class UserManager implements EntityManager<User> {
                 toUpdate.setEmail(newEmail);
             }
         }
+        
+        toUpdate.setNotifyByEmail(changes.isNotifyByEmail());
+        toUpdate.setNotifyByIM(changes.isNotifyByIM());
 		
 		if(s.getUser().getUsername().equals(toUpdate.getUsername()) || s.getUser().getRole().equals(Role.ADMIN))
 		{
@@ -293,9 +297,6 @@ public class UserManager implements EntityManager<User> {
 				String encryptedPass = this.passwordHash.generateHash(changes.getPassword());
 				toUpdate.setPassword(encryptedPass);
 			}
-			
-			toUpdate.setNotifyByEmail(changes.isNotifyByEmail());
-			toUpdate.setNotifyByIM(changes.isNotifyByIM());
 	
 			if((changes.getRole() != null))
 			{
@@ -309,8 +310,10 @@ public class UserManager implements EntityManager<User> {
 					toUpdate.setRole(changes.getRole());
 				}
 				else
-				{
-					logger.log(Level.WARNING,"User: "+s.getUser().getUsername()+" attempted unauthorized priveledge elevation");
+				{ 
+				    if (s.getUser().getRole() != changes.getRole()) {
+				        logger.log(Level.WARNING,"User: "+s.getUser().getUsername()+" attempted unauthorized priveledge elevation");
+				    }
 				}
 			}
 	

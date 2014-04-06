@@ -69,7 +69,7 @@ public class EmailController extends AbsUserController {
         System.setProperty("java.net.preferIPv4Stack", "true");
         try {
             for (User u : getUsers()) {
-                if (u.getEmail() != null) {
+                if (u.getEmail() != null && u.isNotifyByEmail()) {
                     Email email = new SimpleEmail();
                     email.setHostName("smtp.gmail.com");
                     email.setSmtpPort(587);
