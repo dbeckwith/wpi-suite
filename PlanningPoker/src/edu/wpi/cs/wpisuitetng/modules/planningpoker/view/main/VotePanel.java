@@ -219,6 +219,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         reqDescriptionTextArea = new JTextArea();
         reqDescriptionTextArea.setEditable(false);
+        reqDescriptionTextArea.setLineWrap(true);
         scrollPane.setViewportView(reqDescriptionTextArea);
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents

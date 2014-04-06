@@ -55,15 +55,15 @@ public class ViewController {
     }
     
     public void saveNewGame(NewGamePanel e) {
-        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
-                e.getRequirements(), e.getEndDate(), e.getGameType(),
-                GameStatus.PENDING);
+        final GameModel newGame = new GameModel(e.getName(),
+                e.getDescription(), e.getRequirements(), e.getEndDate(),
+                e.getGameType(), GameStatus.PENDING);
         
-        new Thread(){
-        	@Override
-        	public void run(){
-        		AddGameController.getInstance().addGame(newGame);
-        	}
+        new Thread() {
+            @Override
+            public void run() {
+                AddGameController.getInstance().addGame(newGame);
+            }
         }.start();
         
         RequirementsListModel.getInstance().removeListListener(e.getNewGameRequirementsPanel().getRequirementsListObserver());
@@ -78,6 +78,10 @@ public class ViewController {
         RequirementsListModel.getInstance().removeListListener(e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
         // }
+    }
+    
+    public MainView getMainView() {
+        return mainView;
     }
     
 }

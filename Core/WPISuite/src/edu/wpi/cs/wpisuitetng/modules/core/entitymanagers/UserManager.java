@@ -114,16 +114,8 @@ public class UserManager implements EntityManager<User> {
         final String theEmail = p.getEmail();
         
         if (theEmail != null) {
-            Pattern emailPattern;
-            Matcher emailMatcher;
-            final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-            emailPattern = Pattern.compile(EMAIL_PATTERN);
-            
-            emailMatcher = emailPattern.matcher(theEmail);
-            
             //Check if email is correct format
-            if (emailMatcher.matches()) {
+            if (validEmail(theEmail)) {
                 save(s, p);
             }
             else {
@@ -274,7 +266,17 @@ public class UserManager implements EntityManager<User> {
 
 			throw new SerializationException("Error inflating the changeset: " + e.getMessage());
 		}
-
+		
+        //check if the new email is in valid email format
+        String newEmail = changes.getEmail();
+        if (newEmail != null) {
+            if (!validEmail(newEmail)) { throw new InvalidEmailException(
+                    "The email is an invalid format:" + newEmail
+                            + ". Entity String: " + changeSet); }
+            else {
+                toUpdate.setEmail(newEmail);
+            }
+        }
 		
 		if(s.getUser().getUsername().equals(toUpdate.getUsername()) || s.getUser().getRole().equals(Role.ADMIN))
 		{
@@ -408,4 +410,21 @@ public class UserManager implements EntityManager<User> {
 	private int getAdminCount() throws WPISuiteException {
 		return data.retrieve(User.class, "role", Role.ADMIN).size();
 	}
+	
+	/**
+	 * Uses regex to check if the supplied string is a valid email format: user@domain.com
+	 * 
+	 * @param theEmail Email to check
+	 * @return True if a valid email format, else false.
+	 */
+    private Boolean validEmail(String theEmail) {
+        Pattern emailPattern;
+        Matcher emailMatcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        emailPattern = Pattern.compile(EMAIL_PATTERN);
+        emailMatcher = emailPattern.matcher(theEmail);
+        
+        return emailMatcher.matches();
+    }
 }
