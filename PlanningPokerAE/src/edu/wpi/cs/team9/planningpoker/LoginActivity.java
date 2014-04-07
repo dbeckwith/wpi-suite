@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,6 +34,29 @@ public class LoginActivity extends Activity {
 	private Button loginButton;
 	
 	private SharedPreferences prefs;
+	
+	private TextWatcher formWatcher = new TextWatcher() {
+		
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			if( usernameText.getText().toString().isEmpty()
+					|| passwordText.getText().toString().isEmpty()
+					|| projectText.getText().toString().isEmpty()
+					|| serverText.getText().toString().isEmpty()) {
+				loginButton.setEnabled(false);
+				loginButton.setBackgroundResource(R.drawable.bg_card_disable);
+			} else {
+				loginButton.setEnabled(true);
+				loginButton.setBackgroundResource(R.drawable.bg_card_highlight);
+			}
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+		
+		@Override
+		public void afterTextChanged(Editable s) {}
+	};
 	
 	private RequestObserver projectObserver = new RequestObserver() {
 		
@@ -152,6 +177,12 @@ public class LoginActivity extends Activity {
 		passwordText.setText(prefs.getString("password", ""));
 		projectText.setText(prefs.getString("project", ""));
 		serverText.setText(prefs.getString("server", ""));
+
+		usernameText.addTextChangedListener(formWatcher);
+		passwordText.addTextChangedListener(formWatcher);
+		projectText.addTextChangedListener(formWatcher);
+		serverText.addTextChangedListener(formWatcher);
+		
 		
 		errorView = (TextView)findViewById(R.id.error);
 		errorView.setText("");
@@ -172,6 +203,9 @@ public class LoginActivity extends Activity {
 						loginObserver);				
 			}
 		});
+		
+
+		formWatcher.onTextChanged("", 0, 0, 0);
 		
 	}
 	

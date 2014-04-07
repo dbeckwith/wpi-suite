@@ -33,42 +33,17 @@ public class RequirementActivity extends Activity implements
 		setContentView(R.layout.activity_requirement);
 		
 		game = new Gson().fromJson(getIntent().getExtras().getString("game"), GameModel.class);
-		
-		Log.d(TAG, "1");
-		
-		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-
-		Log.d(TAG, "2");
-		
+				
 		requirementAdapter = new RequirementPagerAdapter(getFragmentManager(), game);
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(requirementAdapter);
-
-
-		Log.d(TAG, "3");
 		
-		viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
-		
-
-		Log.d(TAG, "4");
-
-		for (int i = 0; i < requirementAdapter.getCount(); i++) {
-			actionBar.addTab(actionBar.newTab()
-					.setText(requirementAdapter.getPageTitle(i))
-					.setTabListener(this));
-		}
-		
-
-		Log.d(TAG, "5");
+//		for (int i = 0; i < requirementAdapter.getCount(); i++) {
+//			actionBar.addTab(actionBar.newTab()
+//					.setText(requirementAdapter.getPageTitle(i))
+//					.setTabListener(this));
+//		}
 		
 		viewPager.setCurrentItem(getIntent().getExtras().getInt("index"));
 		
