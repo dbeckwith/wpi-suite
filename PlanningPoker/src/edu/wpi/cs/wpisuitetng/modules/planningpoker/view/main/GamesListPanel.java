@@ -59,11 +59,6 @@ public class GamesListPanel extends javax.swing.JPanel {
             }
         });
         
-        
-        // TODO: estimates are not possible cards!!! change to deck values once
-        // the deck is added
-        
-        
     }
     
     private void updateTree() {

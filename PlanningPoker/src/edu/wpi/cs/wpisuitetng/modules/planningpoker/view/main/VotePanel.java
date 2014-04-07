@@ -21,9 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -34,11 +32,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
  * @author nfbrown
  */
 public class VotePanel extends javax.swing.JPanel {
-
-	/**
+    
+    /**
      *
      */
-
+    
     private static final long serialVersionUID = 6053116033835102214L;
     
     private User current_user;
@@ -69,12 +67,8 @@ public class VotePanel extends javax.swing.JPanel {
         
         for (Estimate e : req.getEstimates()) {
             System.out.println(e.getEstimate() + " from " + e.getUser());
-            if (e.getUser() != null
-                    && current_user != null
-                    && e.getUser().getIdNum() == current_user.getIdNum()
-                    && e.getUser().getName().equals(current_user.getName())
-                    && e.getUser().getUsername()
-                            .equals(current_user.getUsername())) {
+            if (e.getUser() != null && current_user != null
+                    && e.getUser().equals(current_user)) {
                 already_voted = true;
                 break;
             }
@@ -113,6 +107,7 @@ public class VotePanel extends javax.swing.JPanel {
     private void selectEstimateCard(JButton selected_card_button) {
         req.addEstimate(new Estimate(current_user, Float
                 .parseFloat(selected_card_button.getText())));
+        
         new Thread() {
             @Override
             public void run() {
