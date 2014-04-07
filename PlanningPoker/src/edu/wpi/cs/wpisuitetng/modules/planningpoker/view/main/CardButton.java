@@ -56,34 +56,44 @@ public class CardButton extends JButton implements MouseListener {
 		
 		int margin = (int)(getWidth()*MARGIN);
 		int suitMargin = (int)(getWidth()*MARGIN_LOGO);
-//		g2.setColor(Color.BLACK);		
-//		g2.fillRect(0, 0, getWidth(), getHeight());
-//
-//		g2.setColor(Color.WHITE);
-//		g2.fillRect(margin, margin, getWidth()-2*margin, getHeight()-2*margin);
 		
+		//draw drop shadow
 		g2.setColor(Color.GRAY);
 		g2.fillRect(margin, margin, getWidth()-margin, getHeight()-margin);
 		
-		g2.setColor((hover && isEnabled())?Color.WHITE:new Color(240,240,240));
-		g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));
-		g2.setColor(Color.BLACK);
-		g2.drawRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));
+		
+		g2.setColor(new Color(240,240,240));
+		g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));	
 		
 		
 		if(isEnabled()){
 			int suitSize = (int)(getWidth()*FRONT_SUIT_SIZE);
+			
+			//highlight card background
+			if(hover){
+				g2.setColor(Color.WHITE);
+				g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));	
+				
+			}
+			
+			//draw suit logos on the corners
 			g2.drawImage(suits[suitIndex], suitMargin*2, suitMargin*2, suitSize, suitSize, null);
 			g2.drawImage(suits[suitIndex], getWidth()-suitSize-suitMargin*2, getHeight()-suitSize-suitMargin*2, suitSize, suitSize, null);
 			
+			//draw text
 			g2.setColor(Color.BLACK);
 			g2.setFont(new Font(g.getFont().getFontName(), Font.BOLD, (int)(getWidth()*(hover?FONT_SIZE_HOVER:FONT_SIZE))));
 			Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
 			g2.drawString(value, (int)(getWidth()-r.getWidth())/2,(int)(getHeight() - r.getHeight())/2 + g2.getFontMetrics().getAscent());
+			
 		} else {
 			int suitSize = (int)(getWidth()*BACK_SUIT_SIZE);
 			g2.drawImage(suits[suitIndex], (getWidth()-suitSize)/2, (getHeight()-suitSize)/2, suitSize, suitSize, null);
 		}
+		
+		//draw card outline
+		g2.setColor(Color.BLACK);
+		g2.drawRect(0, 0, getWidth()-1, getHeight()-1);
 	}
 
 	@Override

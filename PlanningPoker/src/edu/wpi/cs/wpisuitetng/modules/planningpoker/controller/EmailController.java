@@ -13,7 +13,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController extends AbsUserController {
+public class EmailController extends AbstractUserController {
 
 	private String username = "team9wpi";
 	private String from = "team9wpi@gmail.com"; // GMail user name
