@@ -41,17 +41,19 @@ public class ViewController {
         
     }
     
-	public void addUserPrefsTab() {
-    	final UserPreferencesPanel prefsPanel = UserPreferencesPanel.getPanel();
-    	mainView.addTab("Preferences", prefsPanel);
-    	mainView.setSelectedComponent(prefsPanel);
-    	
-    	mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel), new ClosableTabComponent(mainView){
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    			mainView.removeTabAt(mainView.indexOfComponent(prefsPanel));
-    		}
-    	});
+    public void addUserPrefsTab() {
+        final UserPreferencesPanel prefsPanel = UserPreferencesPanel.getPanel();
+        mainView.addTab("Preferences", prefsPanel);
+        mainView.setSelectedComponent(prefsPanel);
+        
+        mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
+                new ClosableTabComponent(mainView) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mainView.removeTabAt(mainView
+                                .indexOfComponent(prefsPanel));
+                    }
+                });
     }
     
     public void saveNewGame(NewGamePanel e) {
@@ -66,7 +68,8 @@ public class ViewController {
             }
         }.start();
         
-        RequirementsListModel.getInstance().removeListListener(e.getNewGameRequirementsPanel().getRequirementsListObserver());
+        RequirementsListModel.getInstance().removeListListener(
+                e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
         
     }
@@ -75,7 +78,8 @@ public class ViewController {
         // int result = JOptionPane.showConfirmDialog(e,
         // "Are you sure you want to cancel this game?");
         // if(result == JOptionPane.OK_OPTION) {
-        RequirementsListModel.getInstance().removeListListener(e.getNewGameRequirementsPanel().getRequirementsListObserver());
+        RequirementsListModel.getInstance().removeListListener(
+                e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
         // }
     }
@@ -84,12 +88,15 @@ public class ViewController {
         return mainView;
     }
     
-    public void endEstimation(){
-        //check every requirement in the game
-        
-        
-        //set ended
-        return;
+    /**
+     * Called to manually end estimation on the currently selected game
+     */
+    public void endEstimation() {
+        GameModel curr = mainView.getMainPanel().getSelectedGame();
+        if (curr != null && !curr.isEnded()){
+            curr.setEnded(true);
+            UpdateGamesController.getInstance().updateGame(curr);
+        }
     }
     
 }

@@ -6,6 +6,8 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
 /**
@@ -40,6 +42,7 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
+//    private User owner;
     
     /**
      * Default constructor creates instance with invalid id and null fields
@@ -53,6 +56,7 @@ public class GameModel extends AbstractModel {
         type = null;
         status = null;
         status_observers = null;
+//        owner = CurrentUserController.getInstance().getUser();
     }
     
     /**
@@ -77,6 +81,7 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         status_observers = new ArrayList<>();
+//        owner = CurrentUserController.getInstance().getUser();
     }
     
     /**
@@ -100,6 +105,7 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         status_observers = new ArrayList<>();
+//        owner = CurrentUserController.getInstance().getUser();
     }
     
     /**
@@ -121,6 +127,13 @@ public class GameModel extends AbstractModel {
         return description;
     }
     
+    /**
+     * @return the owner
+     */
+//    public User getOwner() {
+//        return owner;
+//    }
+
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
