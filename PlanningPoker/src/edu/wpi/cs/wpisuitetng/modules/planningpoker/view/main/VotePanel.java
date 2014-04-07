@@ -8,8 +8,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -26,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * 
@@ -82,8 +86,9 @@ public class VotePanel extends javax.swing.JPanel {
         deck.add("10");
         
         estimateCardsPanel.removeAll();
-        for (String estimate : deck) {
-            JButton estimate_card = new JButton();
+        for (final String estimate : deck) {
+            final JButton estimate_card = new CardButton(estimate);
+            
             
             estimate_card.setText(estimate);
             estimate_card.setPreferredSize(new Dimension(80, 120));
@@ -112,7 +117,7 @@ public class VotePanel extends javax.swing.JPanel {
         }.start();
         
         for (Component c : estimateCardsPanel.getComponents()) {
-            ((JButton) c).setEnabled(false);
+            if(selected_card_button != c)((JButton) c).setEnabled(false);
         }
     }
     
