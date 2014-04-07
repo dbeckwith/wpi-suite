@@ -118,7 +118,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                                     .addGap(154)
                                     .addComponent(lblDeadline)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(gameDeadline))))
                         .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lblDeck)

@@ -42,6 +42,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         this.estimates = estimates;
+        
         Collections.sort(this.estimates);
         finalEstimate = -1;
     }

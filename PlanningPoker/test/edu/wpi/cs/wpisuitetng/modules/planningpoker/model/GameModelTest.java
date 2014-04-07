@@ -54,19 +54,6 @@ public class GameModelTest {
     }
     
     @Test
-    public void testAddListListener() {
-        SimpleListObserver slo = new SimpleListObserver() {
-            @Override
-            public void listUpdated() {
-            }
-        };
-        game1.addListListener(slo);
-        Assert.assertTrue(game1.getObservers().contains(slo));
-        game1.addListListener(slo);
-        Assert.assertTrue(game1.getObservers().contains(slo));
-    }
-    
-    @Test
     public void testSetEnded() {
         game1.setEnded(true);
         Assert.assertEquals(GameStatus.COMPLETE, game1.getStatus());
@@ -82,15 +69,5 @@ public class GameModelTest {
         Assert.assertFalse(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
         Assert.assertTrue(game4.isEnded());
-    }
-    
-    @Test
-    public void testEstimateManipulation() {
-        Estimate est1 = new Estimate(null, 10);
-        Estimate est2 = new Estimate(null, 15);
-        game1.addEstimate(est1, 0);
-        game1.addEstimate(est2, 0);
-        Assert.assertTrue(game1.getEstimates(0).contains(est1));
-        Assert.assertTrue(game1.getEstimates(0).contains(est2));
     }
 }

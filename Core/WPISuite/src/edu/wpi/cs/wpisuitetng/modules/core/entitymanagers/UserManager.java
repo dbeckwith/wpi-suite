@@ -273,6 +273,9 @@ public class UserManager implements EntityManager<User> {
             if (!validEmail(newEmail)) { throw new InvalidEmailException(
                     "The email is an invalid format:" + newEmail
                             + ". Entity String: " + changeSet); }
+            else {
+                toUpdate.setEmail(newEmail);
+            }
         }
 		
 		if(s.getUser().getUsername().equals(toUpdate.getUsername()) || s.getUser().getRole().equals(Role.ADMIN))
