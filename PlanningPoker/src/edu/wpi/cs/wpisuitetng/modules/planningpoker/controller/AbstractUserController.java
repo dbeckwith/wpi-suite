@@ -11,12 +11,12 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Sam Carlberg
  * 
  */
-public abstract class AbsractUserController {
+public abstract class AbstractUserController {
 
 	private final UserRequestObserver observer;
 	private User[] users = null;
 
-	public AbsractUserController() {
+	public AbstractUserController() {
 		observer = new UserRequestObserver(this);
 	}
 
@@ -32,7 +32,7 @@ public abstract class AbsractUserController {
 	/**
 	 * Requests query of all users related to the project.
 	 * 
-	 * @see AbsractUserController#receivedUsers(User[])
+	 * @see AbstractUserController#receivedUsers(User[])
 	 */
 	protected void requestUsers() {
 		final Request request = Network.getInstance().makeRequest("core/user",
