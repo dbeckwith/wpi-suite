@@ -81,4 +81,12 @@ public class ViewController {
         return mainView;
     }
     
+    public void endEstimation(){
+        //check every requirement in the game
+        
+        
+        //set ended
+        return;
+    }
+    
 }

@@ -36,7 +36,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         }
         for (GameRequirementModel req : game.getRequirements()) {
             model.addRow(new Object[] { req.getName(), req.getEstimateMean(),
-                    req.getEstimateMedian(), 0 });
+                    req.getEstimateMedian(), req.getFinalEstimate()});
         }
     }
     
