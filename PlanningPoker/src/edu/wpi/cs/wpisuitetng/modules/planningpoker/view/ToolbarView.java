@@ -33,20 +33,21 @@ public class ToolbarView extends DefaultToolbarView {
     
     public ToolbarView() {
         addGroup(commonButtons);
+        addGroup(adminButtons);
+        adminButtons.setVisible(false);
     }
     
     /**
      * shows the admin buttons in the toolbar
      */
     public void showAdmin(){
-        remove(adminButtons);    //ensures admin buttons are not already in the toolbar
-        addGroup(adminButtons);
+        adminButtons.setVisible(true);
     }
     
     /**
      * hides the admin buttons
      */
     public void hideAdmin(){
-        remove(adminButtons);
+        adminButtons.setVisible(false);
     }
 }

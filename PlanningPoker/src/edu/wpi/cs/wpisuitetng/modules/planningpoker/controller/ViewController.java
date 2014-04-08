@@ -121,7 +121,6 @@ public class ViewController {
         else {
             toolbar.hideAdmin();
         }
-        toolbar.repaint();
     }
     
 }
