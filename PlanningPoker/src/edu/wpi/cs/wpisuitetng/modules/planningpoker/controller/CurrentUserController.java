@@ -10,7 +10,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * @author Sam Carlberg
  * 
  */
-public class CurrentUserController extends AbsUserController {
+public class CurrentUserController extends AbstractUserController {
     
     /**
      * The username of the user currently logged in.
