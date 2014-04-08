@@ -24,9 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -38,11 +36,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author nfbrown
  */
 public class VotePanel extends javax.swing.JPanel {
-
-	/**
+    
+    /**
      *
      */
-
+    
     private static final long serialVersionUID = 6053116033835102214L;
 
     
@@ -122,6 +120,7 @@ public class VotePanel extends javax.swing.JPanel {
         repaint();
     }
     
+
     private void selectEstimateCard() {
     	
         new Thread() {

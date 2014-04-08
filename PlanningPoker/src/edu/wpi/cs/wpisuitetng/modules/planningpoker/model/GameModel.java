@@ -262,4 +262,17 @@ public class GameModel extends AbstractModel {
         return getName();
     }
     
+    public boolean equals(GameModel other) {
+        return other.id == id && other.name.equals(other.name);
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        else if (other instanceof GameModel)
+            return this.equals((GameModel) other);
+        else
+            return super.equals(other);
+    }
+    
 }
