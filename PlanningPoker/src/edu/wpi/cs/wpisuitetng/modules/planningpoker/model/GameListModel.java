@@ -38,8 +38,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     /**
      * Constructor that initializes list of games, list of observers, a
-     * controller to service DB retrieval requests,
-     * and a timer to periodically refresh the list of games.
+     * controller to service DB retrieval requests, and a timer to periodically
+     * refresh the list of games.
      */
     public GameListModel() {
         games = new ArrayList<>();
@@ -61,7 +61,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * changed
      * 
      * @param slo
-     *        The SimpleListObserver to add
+     *            The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -78,10 +78,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
     /**
      * Add a game to the list
      * 
-     * @param req
-     *        The game to add
-     * @param status
-     *        The game's status
+     * @param g
+     *            the game to add
      */
     public void addGame(GameModel g) {
         games.add(g);
@@ -90,11 +88,26 @@ public class GameListModel extends AbstractListModel<GameModel> {
     }
     
     /**
+     * Add multiple games to the list. The purpose of this method is that it
+     * will add multiple games at once and fire only one update on the list.
+     * 
+     * @param gs
+     *            the list of games to add
+     */
+    public void addGames(GameModel[] gs) {
+        for (GameModel g : gs) {
+            games.add(g);
+            g.addStatusListener(game_observer);
+        }
+        updated();
+    }
+    
+    /**
      * Removes a game from the list. Doesn't do anything if the game is not in
      * the list
      * 
-     * @param req
-     *        The game to remove
+     * @param g
+     *            The game to remove
      */
     public void removeGame(GameModel g) {
         if (games.contains(g)) {
@@ -112,6 +125,23 @@ public class GameListModel extends AbstractListModel<GameModel> {
             g.removeStatusListener(game_observer);
         }
         games.clear();
+        updated();
+    }
+    
+    /**
+     * Sets the list of games to only contain the given games. The purpose of
+     * this method is to be able to clear the model and add multiple games to it
+     * and fire only one list updated event.
+     * 
+     * @param gs
+     *            the games to be included in the list model
+     */
+    public void setGames(GameModel[] gs) {
+        games.clear();
+        for (GameModel g : gs) {
+            games.add(g);
+            g.addStatusListener(game_observer);
+        }
         updated();
     }
     
@@ -153,7 +183,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * 
      * @return the simplelistobservers for the list of games
      */
-    public ArrayList<SimpleListObserver> getObservers(){
+    public ArrayList<SimpleListObserver> getObservers() {
         return observers;
     }
     

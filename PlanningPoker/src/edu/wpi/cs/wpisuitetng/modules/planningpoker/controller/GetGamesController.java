@@ -78,17 +78,12 @@ public class GetGamesController implements ActionListener {
      *            array of games received from the server
      */
     public void receivedGames(GameModel[] games) {
-        // Empty the local model to eliminate duplications
-        GameListModel.getInstance().emptyModel();
-        
         // Make sure the response was not null
         if (games != null) {
-            //if (games[0].getID() != -1) {
-                // add the games to the local model
-                for (GameModel singleGame : games) {
-                    GameListModel.getInstance().addGame(singleGame);
-                }
-           // }
+            // if (games[0].getID() != -1) {
+            // add the games to the local model
+            GameListModel.getInstance().setGames(games);
+            // }
         }
     }
 }
