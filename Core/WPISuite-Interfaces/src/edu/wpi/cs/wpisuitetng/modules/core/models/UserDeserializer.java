@@ -84,7 +84,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		}
 
 		if (deflated.has("imNotify") && !isValueEmpty(deflated, "imNotify")) {
-			emailNotify = deflated.get("imNotify").getAsBoolean();
+			imNotify = deflated.get("imNotify").getAsBoolean();
 		}
 
 		User inflated = new User(name, username, email, password, idNum);
@@ -97,7 +97,6 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		} else {
 			inflated.setRole(null);
 		}
-
 		return inflated;
 	}
 

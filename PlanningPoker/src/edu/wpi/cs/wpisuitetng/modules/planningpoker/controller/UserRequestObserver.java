@@ -1,8 +1,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.Arrays;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -14,21 +18,25 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class UserRequestObserver implements RequestObserver {
     
-    private AbsUserController controller;
+    private AbstractUserController controller;
     
     /**
      * Creates a new UserRequestController
      * @param controller The EmailController that will be used to call receivedUsers()
      */
-    public UserRequestObserver(AbsUserController controller) {
+    public UserRequestObserver(AbstractUserController controller) {
         this.controller = controller;
     }
 
     @Override
     public void responseSuccess(IRequest iReq) {
+        Gson gson;
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(User.class, new UserDeserializer());
+        gson = builder.create();
+        
         String response = iReq.getResponse().getBody();
-        final Gson parser = new Gson();
-        User[] users = parser.fromJson(response, User[].class);
+        User[] users = gson.fromJson(response, User[].class);
         controller.receivedUsers(users);  
     }
 

@@ -32,16 +32,17 @@ public class ImageLoader {
      */
     public static BufferedImage getImage(String file) {
         BufferedImage bImg = null;
+        
+        //check if the image is already loaded
         if (ImageLoader.images.containsKey(file)) {
-            bImg = ImageLoader.images.get(file);
+            bImg = ImageLoader.images.get(file); //get the image from the list
         } else {
             try {
-                URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath
-                        + file);
+                URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
                 System.out.println(u.toString());
-                bImg = ImageIO.read(ImageLoader.class
-                        .getResource(ImageLoader.modifiedPath + file));
+                bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
                 if (bImg != null) {
+                	//put the image in the list
                     ImageLoader.images.put(file, bImg);
                 }
             } catch (Exception e) {

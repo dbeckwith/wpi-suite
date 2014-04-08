@@ -10,7 +10,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * @author Sam Carlberg
  * 
  */
-public class CurrentUserController extends AbsUserController {
+public class CurrentUserController extends AbstractUserController {
     
     /**
      * The username of the user currently logged in.
@@ -19,7 +19,7 @@ public class CurrentUserController extends AbsUserController {
             .getUserName();
     private User user = null;
     
-    protected static CurrentUserController instance = null;
+    private static CurrentUserController instance = null;
     
     public static CurrentUserController getInstance() {
         if (CurrentUserController.instance == null) {
