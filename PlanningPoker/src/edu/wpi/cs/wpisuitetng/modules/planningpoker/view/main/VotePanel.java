@@ -78,6 +78,7 @@ public class VotePanel extends javax.swing.JPanel {
                     && e.getUser().getUsername()
                             .equals(currentUser.getUsername())) {
                 alreadyVoted = true;
+                btnSubmit.setEnabled(false);
                 break;
             }
         }
@@ -116,6 +117,7 @@ public class VotePanel extends javax.swing.JPanel {
             
             estimateCardsPanel.add(estimateCard);
         }
+                
         validate();
         repaint();
     }
@@ -128,6 +130,13 @@ public class VotePanel extends javax.swing.JPanel {
                 UpdateGamesController.getInstance().updateGame(parentGame);
             }
         }.start();
+        
+        ArrayList<Estimate> estimates = req.getEstimates();
+        for(Estimate e:estimates){
+        	if(e.getUser().equals(currentUser)){
+        		return;
+        	}
+        }
         
         float estimate = 0;
         for(CardButton c: cards){
