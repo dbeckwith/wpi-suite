@@ -65,4 +65,10 @@ public class DeckModel extends AbstractModel {
         DeckModel deck = parser.fromJson(json,  DeckModel.class);
         return deck;
     }
+
+    public static DeckModel[] fromJSONArray(String json) {
+        final Gson parser = new Gson();
+        DeckModel[] decks = parser.fromJson(json,  DeckModel[].class);
+        return decks;
+    }
 }
