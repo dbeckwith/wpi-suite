@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -95,6 +97,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     getGameDescriptionPanel().setGame(game);
                     currentSelectionGame = game;
                 }
+                PlanningPoker.getViewController().displayAdmin(
+                        currentSelectionGame);
             }
         });
     }

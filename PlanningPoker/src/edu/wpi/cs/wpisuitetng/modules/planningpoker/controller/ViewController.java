@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
@@ -48,6 +49,11 @@ public class ViewController {
         
         mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
                 new ClosableTabComponent(mainView) {
+                    /**
+                     * 
+                     */
+                    private static final long serialVersionUID = 3668078500346186662L;
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         mainView.removeTabAt(mainView
@@ -93,10 +99,29 @@ public class ViewController {
      */
     public void endEstimation() {
         GameModel curr = mainView.getMainPanel().getSelectedGame();
-        if (curr != null && !curr.isEnded()){
+        if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);
         }
+    }
+    
+    /**
+     * displays the admin buttons if the user is the owner
+     * 
+     * @param game
+     *        the currently displayed game
+     */
+    public void displayAdmin(GameModel game) {
+        if (game != null
+                && game.getOwner().equals(
+                        ConfigManager.getConfig().getUserName())
+                && !game.isEnded()) {
+            toolbar.showAdmin();
+        }
+        else {
+            toolbar.hideAdmin();
+        }
+        toolbar.repaint();
     }
     
 }

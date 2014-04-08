@@ -5,8 +5,8 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
@@ -42,7 +42,7 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-//    private User owner;
+    private String owner;
     
     /**
      * Default constructor creates instance with invalid id and null fields
@@ -56,7 +56,7 @@ public class GameModel extends AbstractModel {
         type = null;
         status = null;
         status_observers = null;
-//        owner = CurrentUserController.getInstance().getUser();
+        owner = null;
     }
     
     /**
@@ -81,7 +81,7 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         status_observers = new ArrayList<>();
-//        owner = CurrentUserController.getInstance().getUser();
+        owner = ConfigManager.getConfig().getUserName();
     }
     
     /**
@@ -105,9 +105,33 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         status_observers = new ArrayList<>();
-//        owner = CurrentUserController.getInstance().getUser();
+        owner = ConfigManager.getConfig().getUserName();
     }
     
+    /**
+     * @param id
+     * @param name
+     * @param description
+     * @param requirements
+     * @param endDate
+     * @param type
+     * @param status
+     * @param owner
+     */
+    public GameModel(int id, String name, String description,
+            ArrayList<GameRequirementModel> requirements, Date endDate,
+            GameType type, GameStatus status, String owner) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.requirements = requirements;
+        this.endDate = endDate;
+        this.type = type;
+        this.status = status;
+        this.owner = owner;
+        status_observers = new ArrayList<>();
+    }
+
     /**
      * @return the name of this game
      */
@@ -130,9 +154,9 @@ public class GameModel extends AbstractModel {
     /**
      * @return the owner
      */
-//    public User getOwner() {
-//        return owner;
-//    }
+    public String getOwner() {
+        return owner;
+    }
 
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
