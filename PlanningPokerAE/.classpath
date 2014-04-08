@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="/WPISuite/gson/gson-2.2.2-javadoc.jar"/>
 	<classpathentry exported="true" kind="lib" path="/WPISuite/gson/gson-2.2.2-sources.jar"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

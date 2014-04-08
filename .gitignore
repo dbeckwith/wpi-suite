@@ -53,8 +53,6 @@ PlanningPoker/build
 
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
 PlanningPokerAE/bin/jarlist.cache
-PlanningPokerAE/project.properties
-PlanningPokerAE/project.properties
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
 PlanningPokerAE/project.properties
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
@@ -71,4 +69,3 @@ PlanningPokerAE/bin/
 PlanningPokerAE/card-web.png
 PlanningPokerAE/ic_card_front-web.png
 PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
-PlanningPokerAE/project.properties
