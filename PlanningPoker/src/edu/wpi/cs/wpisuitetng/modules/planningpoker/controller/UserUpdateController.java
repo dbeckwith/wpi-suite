@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.util.ArrayList;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -17,23 +18,29 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Sam Carlberg
  * 
  */
-public class UserPrefsController extends CurrentUserController {
+public class UserUpdateController {
+    
+    private User user;
     
     /**
      * Default constructor.
      * 
      * @see CurrentUserController#CurrentUserController()
      */
-    private UserPrefsController() {
-        super();
+    private UserUpdateController() {
+        user = CurrentUserController.getInstance().getUser();
+    }
+    
+    private enum FieldName {
+        IM_NOTIFY, EMAIL_NOTIFY        
     }
     
     
-    private static UserPrefsController instance;
+    private static UserUpdateController instance;
     
-    public static UserPrefsController getInstance() {
+    public static UserUpdateController getInstance() {
         if (instance == null)
-            instance = new UserPrefsController();
+            instance = new UserUpdateController();
         return instance;
     }
     
@@ -43,53 +50,52 @@ public class UserPrefsController extends CurrentUserController {
      * @return
      */
     public boolean getNotifyByEmail() {
-        return getUser().isNotifyByEmail();
+        return user.isNotifyByEmail();
     }
     
     /**
      * Gets the user's current IM notification setting.
      */
     public boolean getNotifyByIM() {
-        return getUser().isNotifyByIM();
+        return user.isNotifyByIM();
     }
     
     /**
      * Sets the user to receive or stop receiving email notifications.
      */
     public void setNotifyByEmail(boolean doNotify) {
-        sendPostRequest("email", doNotify);
+        sendPostRequest(FieldName.EMAIL_NOTIFY, doNotify);
     }
     
     /**
      * Sets the user to receive or stop receiving IM notifications.
      */
     public void setNotifyByIM(boolean doNotify) {
-        sendPostRequest("im", doNotify);
+        sendPostRequest(FieldName.IM_NOTIFY, doNotify);
     }
     
     /**
      * A helper method for setting notification preference in the user's
      * preferences.
      */
-    private void sendPostRequest(String notificationType, boolean doNotify) {
-        switch (notificationType) {
-            case "email":
-                getUser().setNotifyByEmail(doNotify);
+    private <T> void sendPostRequest(FieldName fieldToUpdate, T newValue) {
+        switch (fieldToUpdate) {
+            case EMAIL_NOTIFY:
+                user.setNotifyByEmail((Boolean) newValue);
                 break;
-            case "im":
-                getUser().setNotifyByIM(doNotify);
+            case IM_NOTIFY:
+                user.setNotifyByIM((Boolean) newValue);
                 break;
             default:
                 System.err.println("Invalid notification type "
-                        + notificationType);
+                        + fieldToUpdate);
                 return;
         }
         final Request request = Network.getInstance().makeRequest("core/user",
                 HttpMethod.POST);
-        request.setBody(getUser().toJSON());
-        request.addObserver(new UpdateUserRequestObserver(this));
+        request.setBody(user.toJSON());
         request.send();
-        System.out.println("Updated: " + getUser());// TODO remove
+        System.out.println("Updated: " + user);// TODO remove
     }
     
     

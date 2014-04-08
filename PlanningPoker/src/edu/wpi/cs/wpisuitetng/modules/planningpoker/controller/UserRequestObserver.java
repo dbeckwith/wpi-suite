@@ -36,9 +36,7 @@ public class UserRequestObserver implements RequestObserver {
         gson = builder.create();
         
         String response = iReq.getResponse().getBody();
-        System.out.println("Server: " + response);
         User[] users = gson.fromJson(response, User[].class);
-        System.out.println("Parsed: " + Arrays.toString(users));
         controller.receivedUsers(users);  
     }
 

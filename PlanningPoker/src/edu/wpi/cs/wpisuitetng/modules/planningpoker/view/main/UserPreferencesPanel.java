@@ -12,7 +12,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserPrefsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -42,9 +43,9 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
      */
     private UserPreferencesPanel() {
         initComponents();
-        if (UserPrefsController.getInstance().getUser() != null) {
-            emailBox.setSelected(UserPrefsController.getInstance().getNotifyByEmail());
-            imBox.setSelected(UserPrefsController.getInstance().getNotifyByIM());
+        if (CurrentUserController.getInstance().getUser() != null) {
+            emailBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByEmail());
+            imBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByIM());
         }
     }
     
@@ -67,7 +68,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         javax.swing.border.TitledBorder.DEFAULT_POSITION, null,
                         java.awt.Color.black));
         
-        emailBox.setText("Recieve e-mail");
+        emailBox.setText("Receive e-mail");
         emailBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,11 +144,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBoxActionPerformed
-        UserPrefsController.getInstance().setNotifyByEmail(emailBox.isSelected());
+        UserUpdateController.getInstance().setNotifyByEmail(emailBox.isSelected());
     }// GEN-LAST:event_emailBoxActionPerformed
     
     private void imBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_imBoxActionPerformed
-        UserPrefsController.getInstance().setNotifyByIM(imBox.isSelected());
+        UserUpdateController.getInstance().setNotifyByIM(imBox.isSelected());
     }// GEN-LAST:event_imBoxActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
