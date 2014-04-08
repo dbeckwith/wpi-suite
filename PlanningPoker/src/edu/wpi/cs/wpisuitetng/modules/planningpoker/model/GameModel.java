@@ -6,7 +6,9 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserController;
 
 /**
  * Represents a planning poker game
@@ -40,6 +42,8 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
+    private User[] users;
+    private UserController userController;
     
     /**
      * Default constructor creates instance with invalid id and null fields
@@ -53,6 +57,8 @@ public class GameModel extends AbstractModel {
         type = null;
         status = null;
         status_observers = null;
+        users = null;
+        userController = null;
     }
     
     /**
@@ -77,6 +83,8 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         status_observers = new ArrayList<>();
+        userController = new UserController();
+        users = userController.getUsers();
     }
     
     /**
@@ -100,6 +108,8 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         status_observers = new ArrayList<>();
+        userController = new UserController();
+        users = userController.getUsers();
     }
     
     /**
@@ -180,19 +190,42 @@ public class GameModel extends AbstractModel {
     }
     
     /**
+	 * Checks if all users have voted
+	 * 
+	 * @return boolean
+	 */
+	public boolean checkVoted() {
+		if (requirements == null){
+			return false;
+		}
+		for (int i = 0; i < requirements.size(); i++) {
+			if (requirements.get(i).allVoted(this) == false) {
+				return false;
+			} else
+				return true;
+		}
+		return false;
+	}
+
+    /**
      * If the current time is past the end date of the game, set the game as
      * ended.
      * 
      * @return whether the game has ended
      */
     public boolean isEnded() {
-        if (endDate != null
+    	if (checkVoted() == true) {
+			setEnded(true);
+		} else if (endDate != null
                 && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);
     }
     
+    public User[] getUsers(){
+    	return users;
+    }
     @Override
     public void save() {
         
