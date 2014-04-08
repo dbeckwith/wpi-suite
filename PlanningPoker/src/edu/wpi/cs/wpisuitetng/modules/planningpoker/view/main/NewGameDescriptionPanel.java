@@ -25,6 +25,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
@@ -48,6 +49,17 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     public NewGameDescriptionPanel() {
 		initComponents();
 
+		ArrayList<Double> cards = new ArrayList<Double>();
+		cards.add(.5);
+		cards.add(1.0);
+		cards.add(2.0);
+		cards.add(3.0);
+		cards.add(10.0);
+		
+		DeckModel newDeck = new DeckModel("Deck1", cards); 
+		
+		AddDeckController.getInstance().addDeck(newDeck);
+		
 		GetDecksController.getInstance().retrieveDecks();
 		ArrayList<DeckModel> decks = DeckListModel.getInstance().getDecks();
 		for (DeckModel deck : decks) {

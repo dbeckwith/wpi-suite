@@ -15,14 +15,14 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
  */
 public class DeckModel extends AbstractModel {
     private String name;
-    private ArrayList<Float> cards;
+    private ArrayList<Double> cards;
     
     /**
      * Creates a new deck
      * @param name
      * @param cards
      */
-    public DeckModel(String name, ArrayList<Float> cards) {
+    public DeckModel(String name, ArrayList<Double> cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -48,7 +48,7 @@ public class DeckModel extends AbstractModel {
      * Adds a card to this deck
      * @param newCard
      */
-    public void addCard(Float newCard) {
+    public void addCard(Double newCard) {
         if (cards.contains(newCard)) { return; }
         cards.add(newCard);
     }
@@ -57,7 +57,7 @@ public class DeckModel extends AbstractModel {
      * Removes a card from this deck
      * @param card
      */
-    public void removeCard(Float card) {
+    public void removeCard(Double card) {
         if (!cards.contains(card)) { return; }
         cards.remove(card);
     }
