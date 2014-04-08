@@ -51,21 +51,6 @@ PlanningPoker/build
 /Janeway/nbproject/private/
 /Janeway/build/
 
-PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
-PlanningPokerAE/bin/jarlist.cache
-PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
-PlanningPokerAE/project.properties
-PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
-PlanningPokerAE/bin/jarlist.cache
-PlanningPokerAE/bin/PlanningPokerAE.apk
-PlanningPokerAE/bin/R.txt
-PlanningPokerAE/bin/classes.dex
-PlanningPokerAE/bin/jarlist.cache
-PlanningPokerAE/bin/resources.ap_
-PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java
-PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/R.java
+/PlanningPokerAE/gen/
+/PlanningPokerAE/bin/
 
-PlanningPokerAE/bin/
-PlanningPokerAE/card-web.png
-PlanningPokerAE/ic_card_front-web.png
-PlanningPokerAE/gen/edu/wpi/cs/team9/planningpoker/BuildConfig.java

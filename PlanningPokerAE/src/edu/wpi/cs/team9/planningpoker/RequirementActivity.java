@@ -8,7 +8,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -38,21 +37,12 @@ public class RequirementActivity extends Activity implements
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(requirementAdapter);
-		
-//		for (int i = 0; i < requirementAdapter.getCount(); i++) {
-//			actionBar.addTab(actionBar.newTab()
-//					.setText(requirementAdapter.getPageTitle(i))
-//					.setTabListener(this));
-//		}
-		
+	
 		viewPager.setCurrentItem(getIntent().getExtras().getInt("index"));
-		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.requirement, menu);
 		return true;
 	}
@@ -67,10 +57,7 @@ public class RequirementActivity extends Activity implements
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in
-		// the ViewPager.
+	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -114,7 +101,4 @@ public class RequirementActivity extends Activity implements
 			return game.getRequirements().get(position).getName();
 		}
 	}
-
-
-
 }

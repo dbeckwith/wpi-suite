@@ -1,10 +1,9 @@
 package edu.wpi.cs.team9.planningpoker.controller;
 
-import java.util.Date;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
-import android.util.Log;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
