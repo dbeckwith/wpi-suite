@@ -42,18 +42,18 @@ public class GameListModelTest {
     
     @Test
     public void testGameManipulation(){
-        GameModel nullGame = new GameModel();
-        GameModel trueGame = new GameModel(1, "Test Game", "Test Game Description", null, new Date(), null, GameStatus.COMPLETE);
-        instance.addGame(nullGame);
-        instance.addGame(trueGame);
-        assertTrue(instance.getGames().contains(nullGame));
-        assertTrue(instance.getGames().contains(trueGame));
-        instance.removeGame(nullGame);
-        assertTrue(instance.getGames().contains(trueGame));
-        assertFalse(instance.getGames().contains(nullGame));
-        instance.addGame(nullGame);
+        GameModel game1 = new GameModel(1, "Test Game", "Test Game Description", null, new Date(), null, GameStatus.PENDING);
+        GameModel game2 = new GameModel(2, "Test Game 2", "Test Game Description 2", null, new Date(), null, GameStatus.COMPLETE);
+        instance.addGame(game1);
+        instance.addGame(game2);
+        assertTrue(instance.getGames().contains(game1));
+        assertTrue(instance.getGames().contains(game2));
+        instance.removeGame(game1);
+        assertTrue(instance.getGames().contains(game2));
+        assertFalse(instance.getGames().contains(game1));
+        instance.addGame(game1);
         instance.emptyModel();
-        assertFalse(instance.getGames().contains(trueGame));
-        assertFalse(instance.getGames().contains(nullGame));
+        assertFalse(instance.getGames().contains(game1));
+        assertFalse(instance.getGames().contains(game2));
     }
 }

@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
@@ -17,6 +18,13 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  */
 public class ViewControllerTest {
     
+    @BeforeClass
+    static public void setUpBeforeClass() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
+    }
+    
     @Test
     public void testAddNewGameTab() {
         MainView mv = new MainView();
@@ -29,9 +37,6 @@ public class ViewControllerTest {
     
     @Test
     public void testSaveNewGame() {
-        Network.initNetwork(new MockNetwork());
-        Network.getInstance().setDefaultNetworkConfiguration(
-                new NetworkConfiguration("http://wpisuitetng"));
         MainView mv = new MainView();
         ViewController vc = new ViewController(mv, new ToolbarView());
         int count = mv.getTabCount();
