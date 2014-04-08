@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
@@ -39,13 +41,15 @@ public class CardButton extends JButton implements MouseListener {
 	private String value;
 	private int suitIndex;
 	
+	private boolean selected = false;
+	
 	private boolean hover;
 	
 	public CardButton(String val){
 		super();
 		value = val;
 		suitIndex = (int)(Math.random()*suits.length);
-		
+		selected = false;
 		this.addMouseListener(this);
 		
 	}
@@ -70,10 +74,9 @@ public class CardButton extends JButton implements MouseListener {
 			int suitSize = (int)(getWidth()*FRONT_SUIT_SIZE);
 			
 			//highlight card background
-			if(hover){
+			if(hover || selected){
 				g2.setColor(Color.WHITE);
-				g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));	
-				
+				g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));					
 			}
 			
 			//draw suit logos on the corners
@@ -93,13 +96,27 @@ public class CardButton extends JButton implements MouseListener {
 		
 		//draw card outline
 		g2.setColor(Color.BLACK);
+		if(selected){
+			g2.setColor(Color.GREEN);
+		}
 		g2.drawRect(0, 0, getWidth()-1, getHeight()-1);
+		g2.drawRect(1, 1, getWidth()-2, getHeight()-2);
+	}
+	
+	public float getEstimateValue(){
+		return Float.parseFloat(value);
+	}
+	
+	public void setCardSelected(boolean selected){
+		this.selected = selected;
+	}
+	
+	public boolean isCardSelected(){
+		return selected;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -127,5 +144,4 @@ public class CardButton extends JButton implements MouseListener {
 		repaint();
 		
 	}
-
 }
