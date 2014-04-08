@@ -4,8 +4,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -20,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 
 /**
  * 
@@ -182,6 +186,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 lblNonnegativeIntegersOnly.setVisible(false);
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField.getText()));
                 UpdateGamesController.getInstance().updateGame(parent);
+                ArrayList<GameStatusObserver> gsos = parent.getStatusObservers();
+                for(GameStatusObserver g: gsos){
+                    g.statusChanged(parent);
+                }
             }
         });
         

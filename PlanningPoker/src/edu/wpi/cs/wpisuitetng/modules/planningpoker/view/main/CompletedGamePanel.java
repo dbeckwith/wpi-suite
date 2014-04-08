@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -28,6 +29,15 @@ public class CompletedGamePanel extends javax.swing.JPanel {
     }
     
     public void setGame(GameModel game) {
+        game.addStatusListener(new GameStatusObserver(){
+
+            @Override
+            public void statusChanged(GameModel game) {
+                setGame(game);
+                
+            }
+            
+        });
         setNumRequirements(game.getRequirements().size() + "");
         DefaultTableModel model = (DefaultTableModel) voteResultTable
                 .getModel();
