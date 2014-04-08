@@ -4,6 +4,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -33,7 +34,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     private DefaultTableModel tableModel;
     
-    GameRequirementModel req;
+    private GameRequirementModel req;
+    private GameModel parent;
     
     /**
      * Creates new form DetailPanel
@@ -45,6 +47,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         this.req = req;
+        parent = parent_game;
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
@@ -178,7 +181,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent arg0) {
                 lblNonnegativeIntegersOnly.setVisible(false);
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField.getText()));
-                
+                UpdateGamesController.getInstance().updateGame(parent);
             }
         });
         
