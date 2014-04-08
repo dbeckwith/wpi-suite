@@ -50,6 +50,13 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
     }
     
     /**
+     * Returns all decks[]
+     */
+    public ArrayList<DeckModel> getDecks() {
+        return decks;
+    }
+    
+    /**
      * Gets length of decks
      */
     @Override
