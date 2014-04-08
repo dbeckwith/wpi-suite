@@ -116,9 +116,8 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
     }
     
     @Override
-    public void save(Session arg0, DeckModel arg1) throws WPISuiteException {
-        // TODO Auto-generated method stub
-        
+    public void save(Session s, DeckModel deck) throws WPISuiteException {
+        db.save(deck, s.getProject());
     }
     
     @Override
