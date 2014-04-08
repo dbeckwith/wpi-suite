@@ -62,6 +62,7 @@ public class GamesListPanel extends javax.swing.JPanel {
     }
     
     private void updateTree() {
+        // TODO: re-expand previously expanded paths when tree is updated
         DefaultMutableTreeNode root_node = new DefaultMutableTreeNode() {
             private static final long serialVersionUID = 8933074607488306596L;
             
