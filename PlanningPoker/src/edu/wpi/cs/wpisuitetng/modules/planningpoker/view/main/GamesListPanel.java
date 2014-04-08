@@ -5,18 +5,17 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
@@ -24,8 +23,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
  * @author Sonaxaton
  */
 public class GamesListPanel extends javax.swing.JPanel {
-    
-    // TODO: organize games into completed and uncompleted folders
     
     /**
      *
@@ -43,40 +40,22 @@ public class GamesListPanel extends javax.swing.JPanel {
             
             @Override
             public void listUpdated() {
-                gameTree.setModel(new DefaultTreeModel(
-                        new DefaultMutableTreeNode() {
-                            private static final long serialVersionUID = 8933074607488306596L;
-                            
-                            {
-                                DefaultMutableTreeNode pending_folder = new DefaultMutableTreeNode(
-                                        "Pending Games");
-                                DefaultMutableTreeNode complete_folder = new DefaultMutableTreeNode(
-                                        "Complete Games");
-                                for (GameModel gm : GameListModel.getInstance()
-                                        .getGames()) {
-                                    DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
-                                    game_node.setUserObject(gm);
-                                    
-                                    if (gm.getRequirements() != null) {
-                                        for (GameRequirementModel r : gm
-                                                .getRequirements()) {
-                                            DefaultMutableTreeNode req_node = new DefaultMutableTreeNode();
-                                            req_node.setUserObject(r);
-                                            
-                                            game_node.add(req_node);
-                                        }
-                                    }
-                                    if (gm.isEnded()) {
-                                        complete_folder.add(game_node);
-                                    }
-                                    else {
-                                        pending_folder.add(game_node);
-                                    }
-                                }
-                                add(pending_folder);
-                                add(complete_folder);
-                            }
-                        }));
+                updateTree();
+            }
+        });
+        GameListModel.getInstance().addStatusListener(new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
+                updateTree();
+            }
+        });
+        
+        gameTree.addTreeSelectionListener(new TreeSelectionListener() {
+            
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                gameTree.expandPath(e.getPath());
             }
         });
         
@@ -85,22 +64,49 @@ public class GamesListPanel extends javax.swing.JPanel {
         // the deck is added
         
         
-        ArrayList<GameRequirementModel> reqs = new ArrayList<>();
-        reqs.add(new GameRequirementModel(367432, "Requirement 1",
-                "THis is required!", "its type"));
-        GameListModel.getInstance().addGame(
-                new GameModel(23, "Test Game", "This game is a test", reqs,
-                        new Date(), GameType.LIVE, GameStatus.PENDING));
-        reqs = new ArrayList<>();
-        reqs.add(new GameRequirementModel(15, "Requirement A",
-                "THis is required!", "user story"));
-        reqs.add(new GameRequirementModel(51, "Requirement B",
-                "THis is definitely required!", "doofus story"));
-        GameListModel.getInstance().addGame(
-                new GameModel(25, "Test Game 2", "This game is also a test",
-                        reqs, new Date(System.currentTimeMillis() + 24 * 60
-                                * 60 * 1000), GameType.DISTRIBUTED,
-                        GameStatus.PENDING));
+    }
+    
+    private void updateTree() {
+        DefaultMutableTreeNode root_node = new DefaultMutableTreeNode() {
+            private static final long serialVersionUID = 8933074607488306596L;
+            
+            {
+                DefaultMutableTreeNode pending_folder = new DefaultMutableTreeNode(
+                        "Pending Games");
+                DefaultMutableTreeNode complete_folder = new DefaultMutableTreeNode(
+                        "Complete Games");
+                for (GameModel gm : GameListModel.getInstance().getGames()) {
+                    DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
+                    game_node.setUserObject(gm);
+                    
+                    if (gm.getRequirements() != null) {
+                        for (GameRequirementModel r : gm.getRequirements()) {
+                            DefaultMutableTreeNode req_node = new DefaultMutableTreeNode();
+                            req_node.setUserObject(r);
+                            
+                            game_node.add(req_node);
+                        }
+                    }
+                    if (gm.isEnded()) {
+                        complete_folder.add(game_node);
+                    } else {
+                        pending_folder.add(game_node);
+                    }
+                }
+                add(pending_folder);
+                add(complete_folder);
+            }
+        };
+        gameTree.setModel(new DefaultTreeModel(root_node));
+        
+        
+        DefaultMutableTreeNode currentNode = root_node.getNextNode();
+        do {
+            if (currentNode.getLevel() == 1) {
+                gameTree.expandPath(new TreePath(currentNode.getPath()));
+            }
+            currentNode = currentNode.getNextNode();
+        } while (currentNode != null);
     }
     
     public JTree getTree() {

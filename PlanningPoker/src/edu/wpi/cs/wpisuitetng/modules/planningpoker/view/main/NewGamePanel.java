@@ -346,8 +346,7 @@ public class NewGamePanel extends JPanel {
 		}
 
 		PlanningPoker.getViewController().saveNewGame(this);
-		EmailController ec = new EmailController();
-		ec.sendNotifications();
+		EmailController.getInstance().sendNotifications();
 	}// GEN-LAST:event_saveButtonActionPerformed
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
@@ -397,6 +396,10 @@ public class NewGamePanel extends JPanel {
 	 */
 	public void checkNewRequirement() {
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
+	}
+	
+	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
+	    return newGameRequirementsPanel;
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables

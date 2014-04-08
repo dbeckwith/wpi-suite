@@ -30,6 +30,8 @@ public class User extends AbstractModel
 	private String email;
 	private int idNum;
 	private Role role;
+	private boolean notifyByEmail = false;
+	private boolean notifyByIM = false;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -147,6 +149,14 @@ public class User extends AbstractModel
 		return username;
 	}
 	
+	public boolean isNotifyByEmail() {
+		return notifyByEmail;
+	}
+	
+	public boolean isNotifyByIM() {
+		return notifyByIM;
+	}
+	
 	/* database interaction */
 	public void save()
 	{
@@ -258,6 +268,14 @@ public class User extends AbstractModel
 	public void setRole(Role r)
 	{
 		this.role = r;
+	}
+	
+	public void setNotifyByEmail(boolean notify) {
+		this.notifyByEmail = notify;
+	}
+	
+	public void setNotifyByIM(boolean notify) {
+		this.notifyByIM = notify;
 	}
 
 	

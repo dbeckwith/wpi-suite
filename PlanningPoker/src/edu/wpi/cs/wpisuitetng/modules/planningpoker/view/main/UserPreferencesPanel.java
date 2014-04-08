@@ -1,16 +1,19 @@
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
- *    Sam Carlberg
+ * Sam Carlberg
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -20,16 +23,30 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
  */
 public class UserPreferencesPanel extends javax.swing.JPanel {
     
+    // stops Eclipse from complaining
+    private static final long serialVersionUID = 3565380843068717833L;
+    
+    private static UserPreferencesPanel instance;
+    
     /**
-     * 
+     * Gets the single instance of the panel.
      */
-    private static final long serialVersionUID = 5015247314811659439L;
+    public static UserPreferencesPanel getPanel() {
+        if (instance == null) {
+            instance = new UserPreferencesPanel();
+        }
+        return instance;
+    }
     
     /**
      * Creates new form UserPreferencesPanel
      */
-    public UserPreferencesPanel() {
+    private UserPreferencesPanel() {
         initComponents();
+        if (CurrentUserController.getInstance().getUser() != null) {
+            emailBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByEmail());
+            imBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByIM());
+        }
     }
     
     /**
@@ -41,12 +58,9 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         
-        jLabel1 = new javax.swing.JLabel();
         notificationsPanel = new javax.swing.JPanel();
         emailBox = new javax.swing.JCheckBox();
         imBox = new javax.swing.JCheckBox();
-        
-        jLabel1.setText("jLabel1");
         
         notificationsPanel.setBorder(javax.swing.BorderFactory
                 .createTitledBorder(null, "Notifications",
@@ -54,7 +68,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         javax.swing.border.TitledBorder.DEFAULT_POSITION, null,
                         java.awt.Color.black));
         
-        emailBox.setText("Recieve e-mail");
+        emailBox.setText("Receive e-mail");
         emailBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,18 +144,16 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBoxActionPerformed
-        // TODO add your handling code here:
+        UserUpdateController.getInstance().setNotifyByEmail(emailBox.isSelected());
     }// GEN-LAST:event_emailBoxActionPerformed
     
     private void imBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_imBoxActionPerformed
-        // TODO add your handling code here:
+        UserUpdateController.getInstance().setNotifyByIM(imBox.isSelected());
     }// GEN-LAST:event_imBoxActionPerformed
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox emailBox;
     private javax.swing.JCheckBox imBox;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel notificationsPanel;
     // End of variables declaration//GEN-END:variables
 }

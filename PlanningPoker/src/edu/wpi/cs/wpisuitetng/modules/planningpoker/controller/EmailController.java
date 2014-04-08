@@ -6,9 +6,6 @@ import org.apache.commons.mail.*;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This class controls the sending of email notifications
@@ -16,21 +13,27 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController {
-    private UserRequestObserver observer;
-    private User[] users;
+public class EmailController extends AbstractUserController {
     
     private String username = "team9wpi";
-    private String from = "team9wpi@gmail.com";     // GMail user name
-    private String password = "team9ftw";           // GMail password
+    private String from = "team9wpi@gmail.com"; // GMail user name
+    private String password = "team9ftw"; // GMail password
     private String subject = "A new Planning Poker game has begun!";
     private String body;
     
     /**
      * Creates a new EmailController class
      */
-    public EmailController() {
-        this.observer = new UserRequestObserver(this);
+    private EmailController() {
+        super();
+    }
+    
+    private static EmailController instance;
+    
+    public static EmailController getInstance() {
+        if (instance == null)
+            instance = new EmailController();
+        return instance;
     }
     
     /**
@@ -46,7 +49,7 @@ public class EmailController {
      */
     private void setBody() {
         String username = ConfigManager.getConfig().getUserName();
-        for (User u : users) {
+        for (User u : getUsers()) {
             if (u.getUsername().equals(username)) {
                 this.body = u.getName()
                         + " has created a new Planning Poker game. Please make your estimates!";
@@ -65,8 +68,8 @@ public class EmailController {
         setBody();
         System.setProperty("java.net.preferIPv4Stack", "true");
         try {
-            for (User u : users) {
-                if (u.getEmail() != null) {
+            for (User u : getUsers()) {
+                if (u.getEmail() != null && u.isNotifyByEmail()) {
                     Email email = new SimpleEmail();
                     email.setHostName("smtp.gmail.com");
                     email.setSmtpPort(587);
@@ -87,32 +90,21 @@ public class EmailController {
         }
     }
     
-    
-    /**
-     * Requests query of all users related to the project
-     */
-    private void requestUsers() {
-        final Request request = Network.getInstance().makeRequest("core/user",
-                HttpMethod.GET);
-        request.addObserver(observer); // add an observer to process the response
-        request.send(); // send the request
-    }
-    
     /**
      * Sets the users list to the users received by the network
      * 
      * @param users
      *        The list of users received by UserRequestController
      */
+    @Override
     public void receivedUsers(User[] users) {
         if (users != null) {
-            this.users = users;
+            setUsers(users);
             sendEmails();
         }
         else {
             System.err.println("Users not received properly");
         }
     }
-    
     
 }
