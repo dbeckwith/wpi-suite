@@ -9,7 +9,6 @@ import java.util.Collections;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -34,7 +33,7 @@ public class GameRequirementModel extends AbstractModel {
     /** the estimates for the requirement */
     private ArrayList<Estimate> estimates;
     
-    private transient ArrayList<SimpleListObserver> observers;
+    private int finalEstimate;
     
     public GameRequirementModel(int parentId, String name, String description,
             String type, ArrayList<Estimate> estimates) {
@@ -45,9 +44,9 @@ public class GameRequirementModel extends AbstractModel {
         this.estimates = estimates;
         
         Collections.sort(this.estimates);
-        
-        observers = new ArrayList<>();
+        finalEstimate = -1;
     }
+    
     
     /**
      * @param parentId
@@ -61,7 +60,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         estimates = new ArrayList<Estimate>();
-        observers = new ArrayList<>();
+        finalEstimate = -1;
     }
     
     public GameRequirementModel() {
@@ -71,18 +70,6 @@ public class GameRequirementModel extends AbstractModel {
     public GameRequirementModel(Requirement r) {
         this(r.getId(), r.getName(), r.getDescription(),
                 r.getType().toString(), new ArrayList<Estimate>());
-    }
-    
-    public void addEstimateListListener(SimpleListObserver slo) {
-        if (!observers.contains(slo)) {
-            observers.add(slo);
-        }
-    }
-    
-    public void removeEstimateListListener(SimpleListObserver slo) {
-        if (observers.contains(slo)) {
-            observers.remove(slo);
-        }
     }
     
     
@@ -132,9 +119,6 @@ public class GameRequirementModel extends AbstractModel {
     public void addEstimate(Estimate e) {
         estimates.add(e);
         Collections.sort(estimates);
-        for (SimpleListObserver slo : observers) {
-            slo.listUpdated();
-        }
     }
     
     /**
@@ -216,6 +200,14 @@ public class GameRequirementModel extends AbstractModel {
     @Override
     public String toString() {
         return getName();
+    }
+    
+    public int getFinalEstimate() {
+        return finalEstimate;
+    }
+    
+    public void setFinalEstimate(int finalEstimate) {
+        this.finalEstimate = finalEstimate;
     }
     
 }
