@@ -218,7 +218,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         
-        lblNonnegativeIntegersOnly = new JLabel("Non-negative Integers Only!");
+        lblNonnegativeIntegersOnly = new JLabel("* Non-negative Integers Only!");
         lblNonnegativeIntegersOnly.setVisible(false);
         lblNonnegativeIntegersOnly.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblNonnegativeIntegersOnly.setForeground(Color.RED);
