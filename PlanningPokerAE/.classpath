@@ -5,9 +5,9 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Network"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/WPISuite-Interfaces"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="/WPISuite/gson/gson-2.2.2-javadoc.jar"/>
 	<classpathentry exported="true" kind="lib" path="/WPISuite/gson/gson-2.2.2-sources.jar"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -11,8 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ListView;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
@@ -23,7 +25,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 
 	private static final String TAG = GameListActivity.class.getSimpleName();
 
-	private ExpandableListView gameListView;
+	private ListView gameListView;
 	private GameListAdapter adapter;
 
 	@Override
@@ -31,26 +33,25 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_game_list);
-
-		String project = getIntent().getExtras().getString("project");
+		//Intent intent = getIntent();
+		
+		String project = getIntent().getStringExtra("project");
 		setTitle(String.format("PlanningPoker : %s", project));
 		
-		gameListView = (ExpandableListView) findViewById(R.id.gameList);
+		gameListView = (ListView) findViewById(R.id.gameList);
 		adapter = new GameListAdapter(this);
 		gameListView.setAdapter(adapter);
 		
-		gameListView.setOnChildClickListener(new OnChildClickListener() {			
+		gameListView.setOnItemClickListener(new OnItemClickListener() {			
 			@Override
-			public boolean onChildClick(ExpandableListView parent, View v,
-					int groupPosition, int childPosition, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getBaseContext(), RequirementActivity.class);
 				
-				String gameJson = ((GameModel)adapter.getGroup(groupPosition)).toJSON();	
+				String gameJson = ((GameModel)adapter.getItem(position)).toJSON();	
 				
 				intent.putExtra("game", gameJson);
-				intent.putExtra("index", childPosition);
 				startActivity(intent);
-				return true;
+				
 			}
 		});
 

@@ -6,7 +6,7 @@
     android:padding="20dp"
     tools:context=".GameListActivity" >
 
-    <ExpandableListView
+    <ListView
         android:id="@+id/gameList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +14,6 @@
         android:layout_alignParentTop="true" 
         android:divider="@null">
 		
-    </ExpandableListView>
+    </ListView>
 
 </RelativeLayout>

@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name="edu.wpi.cs.team9.planningpoker.GameListActivity"
-            android:label="@string/title_activity_game_list" >
+            android:label="@string/title_activity_game_list" 
+            android:launchMode="singleTop">
         </activity>
         <activity
             android:name="edu.wpi.cs.team9.planningpoker.RequirementActivity"

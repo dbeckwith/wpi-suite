@@ -43,10 +43,14 @@ public class RequirementActivity extends Activity implements
 				
 		requirementAdapter = new RequirementPagerAdapter(getFragmentManager(), game);
 
+		
 		viewPager = (ViewPager) findViewById(R.id.pager);
+
+		viewPager.setOffscreenPageLimit(game.getRequirements().size()+1);
 		viewPager.setAdapter(requirementAdapter);
 	
 		viewPager.setCurrentItem(getIntent().getExtras().getInt("index"));
+		
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
