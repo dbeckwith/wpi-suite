@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutWatcher;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -38,8 +39,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     /**
      * Constructor that initializes list of games, list of observers, a
-     * controller to service DB retrieval requests,
-     * and a timer to periodically refresh the list of games.
+     * controller to service DB retrieval requests, and a timer to periodically
+     * refresh the list of games.
      */
     public GameListModel() {
         games = new ArrayList<>();
@@ -61,7 +62,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * changed
      * 
      * @param slo
-     *        The SimpleListObserver to add
+     *            The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -78,14 +79,25 @@ public class GameListModel extends AbstractListModel<GameModel> {
     /**
      * Add a game to the list
      * 
-     * @param req
-     *        The game to add
-     * @param status
-     *        The game's status
+     * @param g
+     *            the game to add
      */
     public void addGame(GameModel g) {
-        games.add(g);
-        g.addStatusListener(game_observer);
+        addAndRegisterGame(g);
+        updated();
+    }
+    
+    /**
+     * Add multiple games to the list. The purpose of this method is that it
+     * will add multiple games at once and fire only one update on the list.
+     * 
+     * @param gs
+     *            the list of games to add
+     */
+    public void addGames(GameModel[] gs) {
+        for (GameModel g : gs) {
+            addAndRegisterGame(g);
+        }
         updated();
     }
     
@@ -93,13 +105,12 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Removes a game from the list. Doesn't do anything if the game is not in
      * the list
      * 
-     * @param req
-     *        The game to remove
+     * @param g
+     *            The game to remove
      */
     public void removeGame(GameModel g) {
         if (games.contains(g)) {
-            games.remove(g);
-            g.removeStatusListener(game_observer);
+            removeAndUnregisterGame(g);
             updated();
         }
     }
@@ -108,11 +119,58 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Empties the list of games.
      */
     public void emptyModel() {
-        for (GameModel g : games) {
-            g.removeStatusListener(game_observer);
+        int numGames = games.size();
+        for (int i = 0; i < numGames; i++) {
+            removeAndUnregisterGame(games.get(0));
         }
-        games.clear();
         updated();
+    }
+    
+    /**
+     * Sets the list of games to only contain the given games. The purpose of
+     * this method is to be able to clear the model and add multiple games to it
+     * and fire only one list updated event.
+     * 
+     * @param gs
+     *            the games to be included in the list model
+     */
+    public void setGames(GameModel[] gs) {
+        int numGames = games.size();
+        for (int i = 0; i < numGames; i++) {
+            removeAndUnregisterGame(games.get(0));
+        }
+        for (GameModel g : gs) {
+            addAndRegisterGame(g);
+        }
+        updated();
+    }
+    
+    /**
+     * Adds the given game to the list and registers it with any listeners,
+     * watchers, etc. that are required.
+     * 
+     * @param g
+     */
+    private void addAndRegisterGame(GameModel g) {
+        games.add(g);
+        g.addStatusListener(game_observer);
+        if (!g.isEnded()) {
+            // if the game is still going
+            // watch for when it ends
+            GameTimeoutWatcher.getInstance().watchGame(g);
+        }
+    }
+    
+    /**
+     * Removes the given game from the list and unregisters it from an
+     * listeners, watchers, etc.
+     * 
+     * @param g
+     */
+    private void removeAndUnregisterGame(GameModel g) {
+        games.remove(g);
+        g.removeStatusListener(game_observer);
+        GameTimeoutWatcher.getInstance().stopWatchingGame(g);
     }
     
     /**
@@ -153,7 +211,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * 
      * @return the simplelistobservers for the list of games
      */
-    public ArrayList<SimpleListObserver> getObservers(){
+    public ArrayList<SimpleListObserver> getObservers() {
         return observers;
     }
     
