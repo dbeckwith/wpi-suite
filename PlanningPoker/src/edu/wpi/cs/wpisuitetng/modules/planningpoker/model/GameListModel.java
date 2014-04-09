@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutWatcher;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -82,8 +83,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      *            the game to add
      */
     public void addGame(GameModel g) {
-        games.add(g);
-        g.addStatusListener(game_observer);
+        addAndRegisterGame(g);
         updated();
     }
     
@@ -96,8 +96,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      */
     public void addGames(GameModel[] gs) {
         for (GameModel g : gs) {
-            games.add(g);
-            g.addStatusListener(game_observer);
+            addAndRegisterGame(g);
         }
         updated();
     }
@@ -111,8 +110,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      */
     public void removeGame(GameModel g) {
         if (games.contains(g)) {
-            games.remove(g);
-            g.removeStatusListener(game_observer);
+            removeAndUnregisterGame(g);
             updated();
         }
     }
@@ -121,10 +119,10 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Empties the list of games.
      */
     public void emptyModel() {
-        for (GameModel g : games) {
-            g.removeStatusListener(game_observer);
+        int numGames = games.size();
+        for (int i = 0; i < numGames; i++) {
+            removeAndUnregisterGame(games.get(0));
         }
-        games.clear();
         updated();
     }
     
@@ -137,12 +135,42 @@ public class GameListModel extends AbstractListModel<GameModel> {
      *            the games to be included in the list model
      */
     public void setGames(GameModel[] gs) {
-        games.clear();
+        int numGames = games.size();
+        for (int i = 0; i < numGames; i++) {
+            removeAndUnregisterGame(games.get(0));
+        }
         for (GameModel g : gs) {
-            games.add(g);
-            g.addStatusListener(game_observer);
+            addAndRegisterGame(g);
         }
         updated();
+    }
+    
+    /**
+     * Adds the given game to the list and registers it with any listeners,
+     * watchers, etc. that are required.
+     * 
+     * @param g
+     */
+    private void addAndRegisterGame(GameModel g) {
+        games.add(g);
+        g.addStatusListener(game_observer);
+        if (!g.isEnded()) {
+            // if the game is still going
+            // watch for when it ends
+            GameTimeoutWatcher.getInstance().watchGame(g);
+        }
+    }
+    
+    /**
+     * Removes the given game from the list and unregisters it from an
+     * listeners, watchers, etc.
+     * 
+     * @param g
+     */
+    private void removeAndUnregisterGame(GameModel g) {
+        games.remove(g);
+        g.removeStatusListener(game_observer);
+        GameTimeoutWatcher.getInstance().stopWatchingGame(g);
     }
     
     /**

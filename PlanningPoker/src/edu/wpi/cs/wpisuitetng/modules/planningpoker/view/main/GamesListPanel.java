@@ -16,6 +16,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -43,6 +44,14 @@ public class GamesListPanel extends javax.swing.JPanel {
             
             @Override
             public void listUpdated() {
+                updateTree();
+            }
+        });
+        
+        GameListModel.getInstance().addStatusListener(new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
                 updateTree();
             }
         });
