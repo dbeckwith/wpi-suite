@@ -15,6 +15,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
+/**
+ * 
+ * @author Andrew
+ * 
+ */
 public class GetGamesControllerTest {
     
     static GetGamesController instance;

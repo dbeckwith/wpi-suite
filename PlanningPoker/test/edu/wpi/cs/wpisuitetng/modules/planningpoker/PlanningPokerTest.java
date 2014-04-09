@@ -9,6 +9,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
+/**
+ * 
+ * @author Andrew
+ * 
+ */
 public class PlanningPokerTest {
     
     @Test

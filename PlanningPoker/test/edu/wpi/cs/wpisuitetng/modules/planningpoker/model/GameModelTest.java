@@ -1,7 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,12 +7,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
- * TODO: Add tests for requirement manipulation
  * 
  * @author Andrew
  * 
@@ -75,7 +71,9 @@ public class GameModelTest {
     
     @Test
     public void testJSON() {
-        assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON()).getName());
-        assertEquals(game2.getName(), GameModel.fromJSONArray("[" + game2.toJSON() + "]")[0].getName());
+        Assert.assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON())
+                .getName());
+        Assert.assertEquals(game2.getName(), GameModel.fromJSONArray("["
+                + game2.toJSON() + "]")[0].getName());
     }
 }
