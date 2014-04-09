@@ -30,10 +30,10 @@ public class MainView extends JTabbedPane {
      * 
      */
     private static final long serialVersionUID = 7802378837976895569L;
-    
+    private final AllGamesViewPanel mainPanel;
     
     public MainView() {
-        AllGamesViewPanel mainPanel = new AllGamesViewPanel();
+        mainPanel = new AllGamesViewPanel();
         
         addTab("Games", null, mainPanel, null);
         
@@ -60,5 +60,12 @@ public class MainView extends JTabbedPane {
             
         });
         
+    }
+
+    /**
+     * @return the mainPanel
+     */
+    public AllGamesViewPanel getMainPanel() {
+        return mainPanel;
     }
 }
