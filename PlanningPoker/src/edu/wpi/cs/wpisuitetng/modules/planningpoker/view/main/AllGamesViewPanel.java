@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -31,6 +33,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      *
      */
     private static final long serialVersionUID = -6990619499118841478L;
+    private GameModel currentSelectionGame;
     
     /**
      * Creates new form GameViewPanel
@@ -69,11 +72,14 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 
                 if (node == null) { return; }
                 
+                currentSelectionGame = null; //reset selected game
+                
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "no requirement");
                     GameModel game = (GameModel) nodeInfo;
+                    currentSelectionGame = game;
                     getGameDescriptionPanel().setGame(game);
                 }
                 else if (nodeInfo instanceof GameRequirementModel) {
@@ -89,7 +95,10 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     GameModel game = (GameModel) ((DefaultMutableTreeNode) node
                             .getParent()).getUserObject();
                     getGameDescriptionPanel().setGame(game);
+                    currentSelectionGame = game;
                 }
+                PlanningPoker.getViewController().displayAdmin(
+                        currentSelectionGame);
             }
         });
     }
@@ -148,5 +157,17 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     
     protected GameDescriptionPanel getGameDescriptionPanel() {
         return gameDescriptionPanel;
+    }
+    
+    /**
+     * gets currently selected game in the tree, either the selected game, or
+     * parent game of the selected requirement
+     * 
+     * @return the currently selected game parent in the tree, null if currently
+     *         selected is note a game or requirement
+     */
+    public GameModel getSelectedGame() {
+        
+        return currentSelectionGame;
     }
 }
