@@ -31,6 +31,9 @@
         <activity
             android:name="edu.wpi.cs.team9.planningpoker.RequirementActivity"
             android:label="@string/title_activity_requirement" >
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="edu.wpi.cs.team9.planningpoker.GameListActivity" />
         </activity>
         <activity
             android:name="edu.wpi.cs.team9.planningpoker.MainActivity"

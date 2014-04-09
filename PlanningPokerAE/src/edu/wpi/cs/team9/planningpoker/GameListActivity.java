@@ -32,6 +32,9 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_game_list);
 
+		String project = getIntent().getExtras().getString("project");
+		setTitle(String.format("PlanningPoker : %s", project));
+		
 		gameListView = (ExpandableListView) findViewById(R.id.gameList);
 		adapter = new GameListAdapter(this);
 		gameListView.setAdapter(adapter);

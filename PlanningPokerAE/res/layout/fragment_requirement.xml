@@ -37,7 +37,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/req_desc"
+                    android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.60"

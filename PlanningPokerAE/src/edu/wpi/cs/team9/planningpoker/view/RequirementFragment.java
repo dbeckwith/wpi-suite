@@ -60,7 +60,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 		View root = inflater.inflate(R.layout.fragment_requirement, null);
 					
 		nameView = (TextView)root.findViewById(R.id.req_name);
-		descView = (TextView)root.findViewById(R.id.req_desc);			
+		descView = (TextView)root.findViewById(R.id.description);			
 		
 		nameView.setText(requirement.getName());
 		descView.setText(requirement.getDescription());

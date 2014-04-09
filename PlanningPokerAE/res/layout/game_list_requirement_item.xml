@@ -13,7 +13,6 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/bg_card"
         android:text="Medium Text"
-        android:layout_marginLeft="40dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

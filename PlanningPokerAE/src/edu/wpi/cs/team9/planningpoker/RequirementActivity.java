@@ -1,5 +1,7 @@
 package edu.wpi.cs.team9.planningpoker;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,6 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +17,9 @@ import android.view.MenuItem;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
+import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment;
+import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment.RequirementListListener;
 import edu.wpi.cs.team9.planningpoker.view.RequirementFragment;
 
 public class RequirementActivity extends Activity implements
@@ -32,6 +38,8 @@ public class RequirementActivity extends Activity implements
 		setContentView(R.layout.activity_requirement);
 		
 		game = new Gson().fromJson(getIntent().getExtras().getString("game"), GameModel.class);
+		
+		setTitle(String.format("PlanningPoker : %s", game.getName()));
 				
 		requirementAdapter = new RequirementPagerAdapter(getFragmentManager(), game);
 
@@ -39,6 +47,8 @@ public class RequirementActivity extends Activity implements
 		viewPager.setAdapter(requirementAdapter);
 	
 		viewPager.setCurrentItem(getIntent().getExtras().getInt("index"));
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -50,9 +60,13 @@ public class RequirementActivity extends Activity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
+		
 		if (id == R.id.action_settings) {
 			return true;
+		} else if(id ==  android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -86,19 +100,45 @@ public class RequirementActivity extends Activity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			RequirementFragment rf = new RequirementFragment();
-			rf.setRequirement(game.getRequirements().get(position));
-			return rf;
+			if(position == 0){
+				GameSummaryFragment gsf = new GameSummaryFragment();
+				gsf.setGame(game);
+				gsf.setListener(new RequirementListListener() {					
+					@Override
+					public void requirementSelected(String selected) {
+						viewPager.setCurrentItem(getTitleIndex(selected), true);						
+					}
+				});
+				return gsf;
+			} else {
+				RequirementFragment rf = new RequirementFragment();
+				rf.setRequirement(game.getRequirements().get(position-1));
+				return rf;
+			}
+		}
+		
+		public int getTitleIndex(String s){
+			ArrayList<GameRequirementModel> reqs = game.getRequirements();
+			for(GameRequirementModel r:reqs){
+				if(r.getName().equals(s)){
+					return reqs.indexOf(r) + 1;
+				}
+			}
+			return 0;
 		}
 
 		@Override
 		public int getCount() {
-			return game.getRequirements().size();
+			return game.getRequirements().size()+1;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return game.getRequirements().get(position).getName();
+			if(position == 0){
+				return game.getName();
+			} else {
+				return game.getRequirements().get(position-1).getName();
+			}
 		}
 	}
 }

@@ -66,7 +66,9 @@ public class LoginActivity extends Activity {
 			if (response.getStatusCode() == 200) {
 				LoginController.projectSelectSuccessful(response);
 				Log.d(TAG, "Project Select Success!");
-				startActivity(new Intent(getBaseContext(), GameListActivity.class));
+				Intent intent = new Intent(getBaseContext(), GameListActivity.class);
+				intent.putExtra("project", projectText.getText().toString());
+				startActivity(intent);
 				setError("");
 				
 				prefs.edit()
@@ -85,7 +87,6 @@ public class LoginActivity extends Activity {
 			ResponseModel response = ((Request)iReq).getResponse();
 			if (iReq.getResponse().getStatusCode() == 403) {
 				setError("Incorrect username, password or project.");
-
 			} else {
 				setError(String.format("Error %d: %s", response.getStatusCode(), response.getStatusMessage()));
 				Log.e(TAG, "Project Select Failed " + response.getStatusCode());			
@@ -204,6 +205,7 @@ public class LoginActivity extends Activity {
 			}
 		});
 		
+		setTitle("PlanningPoker Login");
 
 		formWatcher.onTextChanged("", 0, 0, 0);
 		
