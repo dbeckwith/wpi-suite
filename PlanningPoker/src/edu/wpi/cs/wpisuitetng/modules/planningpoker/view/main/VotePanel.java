@@ -105,11 +105,13 @@ public class VotePanel extends javax.swing.JPanel {
                 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	estimateCard.setCardSelected(!estimateCard.isCardSelected());
-                	if(!selectMultiple){
-                		deselectOtherCards(estimateCard);
+                	if(estimateCard.isCardEnabled()){
+	                	estimateCard.setCardSelected(!estimateCard.isCardSelected());
+	                	if(!selectMultiple){
+	                		deselectOtherCards(estimateCard);
+	                	}
+	            		validateCards();
                 	}
-            		validateCards();
             		VotePanel.this.repaint();
                 }
             });
@@ -140,6 +142,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         float estimate = 0;
         for(CardButton c: cards){
+        	c.setCardEnabled(false);
         	if(c.isCardSelected()){
         		estimate += c.getEstimateValue(); 
         	} else {

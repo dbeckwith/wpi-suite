@@ -44,6 +44,7 @@ public class CardButton extends JButton implements MouseListener {
 	private boolean selected = false;
 	
 	private boolean hover;
+	private boolean cardEnabled = true;
 	
 	public CardButton(String val){
 		super();
@@ -111,8 +112,16 @@ public class CardButton extends JButton implements MouseListener {
 		this.selected = selected;
 	}
 	
+	public void setCardEnabled(boolean enabled){
+		cardEnabled = enabled;
+	}
+	
 	public boolean isCardSelected(){
 		return selected;
+	}
+	
+	public boolean isCardEnabled(){
+		return cardEnabled;
 	}
 
 	@Override
@@ -133,8 +142,12 @@ public class CardButton extends JButton implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		hover = true;
-		repaint();
+		if(cardEnabled){
+			hover = true;
+			repaint();
+		} else {
+			mouseExited(e);
+		}
 		
 	}
 
