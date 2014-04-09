@@ -45,7 +45,7 @@ public class AddDeckController {
     }
     
     /**
-     * Returns observer for AddGameController
+     * Returns observer for AddDeckController
      * 
      * @return
      */

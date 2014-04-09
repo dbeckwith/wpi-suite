@@ -7,16 +7,19 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
+
 /**
  *
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
     private static DeckListModel instance;
+    private ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
     /**
      * 
      */
     private static final long serialVersionUID = 3193186441179194894L;
-    private ArrayList<DeckModel> decks;
+    private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
     
     public static DeckListModel getInstance() {
         if (DeckListModel.instance == null) {
@@ -37,6 +40,18 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
      */
     public void addDeck(DeckModel deck) {
         decks.add(deck);
+
+        for (SimpleListObserver o : observers) {
+            o.listUpdated();
+        }
+    }
+    
+    /**
+     * Adds an observer to this model
+     * @param o
+     */
+    public void addObserver(SimpleListObserver o) {
+        observers.add(o);
     }
     
     /**

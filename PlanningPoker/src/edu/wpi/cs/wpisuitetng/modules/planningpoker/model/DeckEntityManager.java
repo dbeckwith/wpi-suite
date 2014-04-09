@@ -112,7 +112,9 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
         if (!db.save(newDeck, s.getProject())) {
             throw new WPISuiteException();
         }
-        return null;
+        
+        DeckListModel.getInstance().addDeck(newDeck);
+        return newDeck;
     }
     
     @Override
