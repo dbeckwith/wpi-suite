@@ -210,8 +210,8 @@ public class GameModel extends AbstractModel {
         GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
         if (status != new_status) {
             status = new_status;
-            for (GameStatusObserver gso : status_observers) {
-                gso.statusChanged(this);
+            for (int i = 0; i < status_observers.size(); i++) {
+                status_observers.get(i).statusChanged(this);
             }
         }
     }
