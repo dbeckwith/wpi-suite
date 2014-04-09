@@ -12,12 +12,16 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -40,10 +44,16 @@ public class AdminButtons extends ToolbarGroupView {
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
         endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
-        endGameButton.setEnabled(false);        //disables button because it hasn't been implemented
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(175);
+        
+        endGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlanningPoker.getViewController().endEstimation();
+            }
+        });
         
         endGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         

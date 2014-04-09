@@ -33,6 +33,8 @@ public class GameRequirementModel extends AbstractModel {
     /** the estimates for the requirement */
     private ArrayList<Estimate> estimates;
     
+    private int finalEstimate;
+    
     public GameRequirementModel(int parentId, String name, String description,
             String type, ArrayList<Estimate> estimates) {
         this.parentId = parentId;
@@ -42,7 +44,10 @@ public class GameRequirementModel extends AbstractModel {
         this.estimates = estimates;
         
         Collections.sort(this.estimates);
+        finalEstimate = -1;
     }
+    
+    
     
     /**
      * @param parentId
@@ -56,6 +61,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         estimates = new ArrayList<Estimate>();
+        finalEstimate = -1;
     }
     
     public GameRequirementModel() {
@@ -195,6 +201,14 @@ public class GameRequirementModel extends AbstractModel {
     @Override
     public String toString() {
         return getName();
+    }
+
+    public int getFinalEstimate() {
+        return finalEstimate;
+    }
+
+    public void setFinalEstimate(int finalEstimate) {
+        this.finalEstimate = finalEstimate;
     }
     
 }
