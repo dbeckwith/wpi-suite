@@ -1,5 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -69,5 +71,11 @@ public class GameModelTest {
         Assert.assertFalse(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
         Assert.assertTrue(game4.isEnded());
+    }
+    
+    @Test
+    public void testJSON() {
+        assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON()).getName());
+        assertEquals(game2.getName(), GameModel.fromJSONArray("[" + game2.toJSON() + "]")[0].getName());
     }
 }

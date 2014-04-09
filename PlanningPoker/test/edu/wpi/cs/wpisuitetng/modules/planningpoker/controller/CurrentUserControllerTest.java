@@ -1,7 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -16,19 +14,24 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
+/**
+ * 
+ * @author Andrew
+ * 
+ */
 public class CurrentUserControllerTest {
     
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
     PrintStream oldOut = System.out;
     PrintStream oldErr = System.err;
-
+    
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outStream));
         System.setErr(new PrintStream(errStream));
     }
-
+    
     @After
     public void cleanUpStreams() {
         System.setOut(oldOut);
@@ -51,12 +54,16 @@ public class CurrentUserControllerTest {
     }
     
     @Test
-    public void testReceivedUsers(){
+    public void testReceivedUsers() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
         CurrentUserController cuc = CurrentUserController.getInstance();
         cuc.receivedUsers(null);
-        assertEquals("No users received\r\n", errStream.toString());
-        cuc.receivedUsers(new User[] {new User("User", "Username", "Password", 1)});
-        assertEquals("Set user to null\r\n", outStream.toString());
+        Assert.assertTrue(errStream.toString().contains("No users received"));
+        cuc.receivedUsers(new User[] { new User("User", "Username", "Password",
+                1) });
+        Assert.assertTrue(outStream.toString().contains("Set user to null"));
     }
     
 }
