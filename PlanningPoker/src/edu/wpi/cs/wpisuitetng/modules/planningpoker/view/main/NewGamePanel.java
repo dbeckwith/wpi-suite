@@ -33,6 +33,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import javax.swing.BoxLayout;
+import javax.swing.SpringLayout;
+import javax.swing.JTextPane;
 
 /**
  * 
@@ -147,62 +150,35 @@ public class NewGamePanel extends JPanel {
 		newGameRequirementsCard = new JPanel();
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addContainerGap()
-																.addComponent(
-																		saveButton)
-																.addGap(16)
-																.addComponent(
-																		cancelButton))
-												.addComponent(
-														gameDescription,
-														GroupLayout.PREFERRED_SIZE,
-														428,
-														GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(newGameRequirementsCard,
-										GroupLayout.DEFAULT_SIZE,
-										GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE).addContainerGap()));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(Alignment.TRAILING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addComponent(
-																		gameDescription,
-																		GroupLayout.DEFAULT_SIZE,
-																		290,
-																		Short.MAX_VALUE)
-																.addGap(18)
-																.addGroup(
-																		layout.createParallelGroup(
-																				Alignment.BASELINE)
-																				.addComponent(
-																						saveButton)
-																				.addComponent(
-																						cancelButton)))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(12)
-																.addComponent(
-																		newGameRequirementsCard,
-																		GroupLayout.DEFAULT_SIZE,
-																		322,
-																		Short.MAX_VALUE)))
-								.addContainerGap()));
+		layout.setHorizontalGroup(
+		    layout.createParallelGroup(Alignment.LEADING)
+		        .addGroup(layout.createSequentialGroup()
+		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+		                .addGroup(layout.createSequentialGroup()
+		                    .addContainerGap()
+		                    .addComponent(saveButton)
+		                    .addGap(16)
+		                    .addComponent(cancelButton))
+		                .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE))
+		            .addGap(724)
+		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		            .addContainerGap())
+		);
+		layout.setVerticalGroup(
+		    layout.createParallelGroup(Alignment.TRAILING)
+		        .addGroup(layout.createSequentialGroup()
+		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+		                .addGroup(layout.createSequentialGroup()
+		                    .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+		                    .addGap(18)
+		                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+		                        .addComponent(saveButton)
+		                        .addComponent(cancelButton)))
+		                .addGroup(layout.createSequentialGroup()
+		                    .addGap(12)
+		                    .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+		            .addGap(264))
+		);
 		newGameRequirementsCard.setLayout(new CardLayout(0, 0));
 
 		newGameRequirementsPanel = new NewGameRequirementsPanel();
