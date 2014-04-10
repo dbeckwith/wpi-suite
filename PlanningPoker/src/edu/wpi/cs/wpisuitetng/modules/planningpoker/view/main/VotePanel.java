@@ -68,12 +68,12 @@ public class VotePanel extends javax.swing.JPanel {
         
         boolean alreadyVoted = false;
         for (Estimate e : req.getEstimates()) {
-            System.out.println(e.getEstimate() + " from " + e.getUser());
-            if (e.getUser() != null
+            System.out.println(e.getEstimate() + " from " + e.getUsername());
+            if (e.getUsername() != null
                     && currentUser != null
-                    && e.getUser().getIdNum() == currentUser.getIdNum()
-                    && e.getUser().getName().equals(currentUser.getName())
-                    && e.getUser().getUsername()
+                    && e.getIdNum() == currentUser.getIdNum()
+                    && e.getName().equals(currentUser.getName())
+                    && e.getUsername()
                             .equals(currentUser.getUsername())) {
                 alreadyVoted = true;
                 btnSubmit.setEnabled(false);
@@ -134,7 +134,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         ArrayList<Estimate> estimates = req.getEstimates();
         for(Estimate e:estimates){
-        	if(e.getUser().equals(currentUser)){
+        	if(e.getUsername().equals(currentUser.getUsername())){
         		return;
         	}
         }
