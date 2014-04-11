@@ -20,7 +20,6 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * 
  */
 public class GameRequirementModel extends AbstractModel {
-<<<<<<< HEAD
 	/** the id of the parent requirement in requirements manager */
 	private int parentId;
 
@@ -171,14 +170,12 @@ public class GameRequirementModel extends AbstractModel {
 			users = CurrentUserController.getInstance().getUsers();
 		}
 
-		System.out.println(estimates.size() + " " + users.length);
 		for (Estimate e : estimates) {
 			estimateUsers.add(e.getUser());
 		}
 
 		for (User u : users) {
 			if (!estimateUsers.contains(u)) {
-				System.out.println("User not found" + u);
 				return false;
 			}
 		}
