@@ -43,8 +43,8 @@ public class RequirementsListModelTest {
     
     @Test
     public void testObserverManipulation() {
-        RequirementsListModel rlm = RequirementsListModel.getInstance();
-        SimpleListObserver mySLO = new SimpleListObserver() {
+        final RequirementsListModel rlm = RequirementsListModel.getInstance();
+        final SimpleListObserver mySLO = new SimpleListObserver() {
             
             @Override
             public void listUpdated() {

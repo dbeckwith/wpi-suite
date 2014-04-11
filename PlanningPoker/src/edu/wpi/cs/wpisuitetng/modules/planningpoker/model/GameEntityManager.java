@@ -50,7 +50,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     private void ensureRole(Session session, Role role)
             throws WPISuiteException {
-        User user = (User) db.retrieve(User.class, "username",
+        final User user = (User) db.retrieve(User.class, "username",
                 session.getUsername()).get(0);
         if (!user.getRole().equals(role)) {
             throw new UnauthorizedException();
@@ -170,20 +170,20 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public GameModel update(Session s, String content) throws WPISuiteException {
-        GameModel updatedGameModel = GameModel.fromJSON(content);
+        final GameModel updatedGameModel = GameModel.fromJSON(content);
         /*
          * Because of the disconnected objects problem in db4o, we can't just
          * save GameModels. We have to get the original GameModel from db4o,
          * copy properties from updatedGameModel, then save the original
          * GameModel again.
          */
-        List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
+        final List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
                 updatedGameModel.getID(), s.getProject());
         if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) {
             throw new BadRequestException("GameModel with ID does not exist.");
         }
         
-        GameModel existingGameModel = (GameModel) oldGameModels.get(0);
+        final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);

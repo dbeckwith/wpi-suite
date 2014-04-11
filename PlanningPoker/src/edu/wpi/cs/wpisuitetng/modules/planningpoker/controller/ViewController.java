@@ -25,8 +25,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 
 public class ViewController {
     
-    private MainView mainView;
-    private ToolbarView toolbar;
+    private final MainView mainView;
+    private final ToolbarView toolbar;
     
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
@@ -109,7 +109,7 @@ public class ViewController {
      * Called to manually end estimation on the currently selected game
      */
     public void endEstimation() {
-        GameModel curr = mainView.getMainPanel().getSelectedGame();
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);

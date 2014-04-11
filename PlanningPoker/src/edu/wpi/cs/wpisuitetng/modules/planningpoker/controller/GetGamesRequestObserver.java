@@ -15,7 +15,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetGamesRequestObserver implements RequestObserver {
     
-    private GetGamesController controller;
+    private final GetGamesController controller;
     
     /**
      * Constructs the observer given a GetGamesController
@@ -35,7 +35,7 @@ public class GetGamesRequestObserver implements RequestObserver {
     @Override
     public void responseSuccess(IRequest iReq) {
         // Convert the JSON array of games to a Games object array
-        GameModel games[] = GameModel.fromJSONArray(iReq.getResponse()
+        final GameModel games[] = GameModel.fromJSONArray(iReq.getResponse()
                 .getBody());
         
         // Pass these Games to the controller
@@ -59,7 +59,7 @@ public class GetGamesRequestObserver implements RequestObserver {
     @Override
     public void fail(IRequest iReq, Exception exception) {
         // TODO: Needs to be updated with a GameModel indicating an error
-        GameModel[] errorGames = { new GameModel() };
+        final GameModel[] errorGames = { new GameModel() };
         controller.receivedGames(errorGames);
     }
 }

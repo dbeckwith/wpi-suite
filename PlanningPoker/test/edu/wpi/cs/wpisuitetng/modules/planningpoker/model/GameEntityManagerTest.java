@@ -52,7 +52,7 @@ public class GameEntityManagerTest {
     
     @Before
     public void setUp() {
-        User admin = new User("admin", "admin", "1234", 27);
+        final User admin = new User("admin", "admin", "1234", 27);
         admin.setRole(Role.ADMIN);
         testProject = new Project("test", "1");
         otherProject = new Project("other", "2");
@@ -83,7 +83,7 @@ public class GameEntityManagerTest {
     
     @Test
     public void testMakeEntity() throws WPISuiteException {
-        GameModel created = manager
+        final GameModel created = manager
                 .makeEntity(defaultSession, newGame.toJSON());
         Assert.assertEquals(2, created.getID()); // IDs are unique across projects
         Assert.assertEquals("New Game", created.getName());
@@ -92,7 +92,7 @@ public class GameEntityManagerTest {
     
     @Test
     public void testGetEntity() throws NotFoundException {
-        GameModel[] games = manager.getEntity(defaultSession, "1");
+        final GameModel[] games = manager.getEntity(defaultSession, "1");
         Assert.assertSame(existingGame, games[0]);
     }
     
@@ -108,14 +108,14 @@ public class GameEntityManagerTest {
     
     @Test
     public void testGetAll() throws WPISuiteException {
-        GameModel[] received = manager.getAll(defaultSession);
+        final GameModel[] received = manager.getAll(defaultSession);
         Assert.assertEquals(1, received.length);
         Assert.assertSame(existingGame, received[0]);
     }
     
     @Test
     public void testSave() throws WPISuiteException {
-        GameModel game = new GameModel(4, "Save Test", "something", null,
+        final GameModel game = new GameModel(4, "Save Test", "something", null,
                 new Date(System.currentTimeMillis() - 100000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         manager.save(defaultSession, game);
@@ -149,7 +149,7 @@ public class GameEntityManagerTest {
     
     @Test
     public void testDeleteAll() throws WPISuiteException {
-        GameModel anotherGame = new GameModel(-1, "a title", "a description",
+        final GameModel anotherGame = new GameModel(-1, "a title", "a description",
                 null, new Date(System.currentTimeMillis() - 100000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         manager.makeEntity(defaultSession, anotherGame.toJSON());
@@ -182,7 +182,7 @@ public class GameEntityManagerTest {
     
     @Test
     public void testUpdate() throws WPISuiteException {
-        GameModel updated = manager.update(defaultSession,
+        final GameModel updated = manager.update(defaultSession,
                 goodUpdatedGame.toJSON());
         Assert.assertSame(existingGame, updated);
         Assert.assertEquals(goodUpdatedGame.getName(), updated.getName()); // make sure ModelMapper is used

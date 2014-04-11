@@ -54,9 +54,9 @@ public class CurrentUserControllerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        CurrentUserController cuc = CurrentUserController.getInstance();
+        final CurrentUserController cuc = CurrentUserController.getInstance();
         cuc.requestUsers();
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
@@ -69,7 +69,7 @@ public class CurrentUserControllerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        CurrentUserController cuc = CurrentUserController.getInstance();
+        final CurrentUserController cuc = CurrentUserController.getInstance();
         cuc.receivedUsers(null);
         Assert.assertTrue(errStream.toString().contains("No users received"));
         cuc.receivedUsers(new User[] { new User("User", "Username", "Password",

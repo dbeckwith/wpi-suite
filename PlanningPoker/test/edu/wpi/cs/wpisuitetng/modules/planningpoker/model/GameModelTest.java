@@ -38,7 +38,7 @@ public class GameModelTest {
     @Before
     public void setUp() {
         reqs = new ArrayList<GameRequirementModel>();
-        GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
+        final GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
                 "Req desc", "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();

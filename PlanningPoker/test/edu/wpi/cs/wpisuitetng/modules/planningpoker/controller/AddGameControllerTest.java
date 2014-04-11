@@ -52,11 +52,11 @@ public class AddGameControllerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        AddGameController agc = AddGameController.getInstance();
+        final AddGameController agc = AddGameController.getInstance();
         agc.addGame(new GameModel(1, "Test", "Test Description",
                 new ArrayList<GameRequirementModel>(), new Date(),
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE));
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");

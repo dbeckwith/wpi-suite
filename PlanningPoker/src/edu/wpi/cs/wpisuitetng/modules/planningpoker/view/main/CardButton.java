@@ -39,9 +39,9 @@ public class CardButton extends JButton implements MouseListener {
 	
 	static {
 		suits = new BufferedImage[4];
-		BufferedImage allSuits = ImageLoader.getImage("suits.png");
-		int sWidth = allSuits.getWidth()/2;
-		int sHeight = allSuits.getHeight()/2;
+		final BufferedImage allSuits = ImageLoader.getImage("suits.png");
+		final int sWidth = allSuits.getWidth()/2;
+		final int sHeight = allSuits.getHeight()/2;
 		suits[0] = allSuits.getSubimage(0, 0, sWidth, sHeight);
 		suits[1] = allSuits.getSubimage(sWidth, 0, sWidth, sHeight);
 		suits[2] = allSuits.getSubimage(0, sHeight, sWidth, sHeight);
@@ -49,8 +49,8 @@ public class CardButton extends JButton implements MouseListener {
 		
 	}
 	
-	private String value;
-	private int suitIndex;
+	private final String value;
+	private final int suitIndex;
 	
 	private boolean selected = false;
 	
@@ -66,11 +66,11 @@ public class CardButton extends JButton implements MouseListener {
 	}
 	
 	public void paint(Graphics g){
-		Graphics2D g2 = (Graphics2D)g;
+	    final Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		int margin = (int)(getWidth()*MARGIN);
-		int suitMargin = (int)(getWidth()*MARGIN_LOGO);
+		final int margin = (int)(getWidth()*MARGIN);
+		final int suitMargin = (int)(getWidth()*MARGIN_LOGO);
 		
 		//draw drop shadow
 		g2.setColor(Color.GRAY);
@@ -78,16 +78,16 @@ public class CardButton extends JButton implements MouseListener {
 		
 		
 		g2.setColor(new Color(240,240,240));
-		g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));	
+		g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));
 		
 		
 		if(isEnabled()){
-			int suitSize = (int)(getWidth()*FRONT_SUIT_SIZE);
+		    final int suitSize = (int)(getWidth()*FRONT_SUIT_SIZE);
 			
 			//highlight card background
 			if(hover || selected){
 				g2.setColor(Color.WHITE);
-				g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));					
+				g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));
 			}
 			
 			//draw suit logos on the corners
@@ -97,11 +97,11 @@ public class CardButton extends JButton implements MouseListener {
 			//draw text
 			g2.setColor(Color.BLACK);
 			g2.setFont(new Font(g.getFont().getFontName(), Font.BOLD, (int)(getWidth()*(hover?FONT_SIZE_HOVER:FONT_SIZE))));
-			Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
+			final Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
 			g2.drawString(value, (int)(getWidth()-r.getWidth())/2,(int)(getHeight() - r.getHeight())/2 + g2.getFontMetrics().getAscent());
 			
 		} else {
-			int suitSize = (int)(getWidth()*BACK_SUIT_SIZE);
+		    final int suitSize = (int)(getWidth()*BACK_SUIT_SIZE);
 			g2.drawImage(suits[suitIndex], (getWidth()-suitSize)/2, (getHeight()-suitSize)/2, suitSize, suitSize, null);
 		}
 		

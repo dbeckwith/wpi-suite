@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 public class GetRequirementsController {
 
-    private GetRequirementsRequestObserver observer;
+    private final GetRequirementsRequestObserver observer;
     private static GetRequirementsController instance;
 
     /**

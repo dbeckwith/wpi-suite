@@ -37,7 +37,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
      */
 	private static final long serialVersionUID = -4252474071295177531L;
 
-	private SimpleListObserver requirementsListObserver;
+	private final SimpleListObserver requirementsListObserver;
 	
 	/**
 	 * Creates new form GameRequirements
@@ -144,7 +144,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		countError.setForeground(new java.awt.Color(255, 0, 0));
 		countError.setText("At least one requirement is needed!");
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
@@ -171,7 +171,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void setAllSelected(boolean select) {
-		DefaultTableModel model = (DefaultTableModel) requirementsTable
+	    final DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
 		for (int i = 0; i < model.getRowCount(); i++) {
 			model.setValueAt(select, i, 0);
@@ -181,7 +181,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 
 	public void addRequirement(GameRequirementModel r) {
 		System.out.println("added requirement " + r.toString());
-		DefaultTableModel model = (DefaultTableModel) requirementsTable
+		final DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
 		model.addRow(new Object[] { false, r, r.getDescription().toString(),
 				r.getType().toString() });
@@ -191,9 +191,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	}
 
 	public ArrayList<GameRequirementModel> getRequirementsFromTable() {
-		DefaultTableModel model = (DefaultTableModel) requirementsTable
+	    final DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
-		ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
+	    final ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
 		for (int i = 0; i < model.getRowCount(); i++) {
 			if (!(Boolean) model.getValueAt(i, 0)) {
 				continue;

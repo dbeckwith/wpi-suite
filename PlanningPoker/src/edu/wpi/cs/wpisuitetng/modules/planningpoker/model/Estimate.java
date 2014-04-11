@@ -18,8 +18,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
-    private User user;
-    private float estimate;
+    private final User user;
+    private final float estimate;
     
     public Estimate(User user, float estimate) {
         this.user = user;

@@ -81,19 +81,19 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         
         gameName = new JLabel("");
         
-        JLabel lblProgress = new JLabel("Progress:");
+        final JLabel lblProgress = new JLabel("Progress:");
         
         progressBar = new JProgressBar();
         
         progressLabel = new JLabel("0/0");
         
-        JScrollPane scrollPane_1 = new JScrollPane();
+        final JScrollPane scrollPane_1 = new JScrollPane();
         
         lblDeadline = new JLabel("Deadline:");
         
         gameDeadline = new JLabel("");
         
-        JTextArea textArea = new JTextArea();
+        final JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         
         lblAdmin = new JLabel("Admin:");
@@ -102,7 +102,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         
         deckName = new JLabel("");
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()

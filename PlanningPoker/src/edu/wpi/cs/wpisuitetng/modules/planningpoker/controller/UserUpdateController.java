@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UserUpdateController {
     
-    private User user;
+    private final User user;
     
     /**
      * Default constructor.

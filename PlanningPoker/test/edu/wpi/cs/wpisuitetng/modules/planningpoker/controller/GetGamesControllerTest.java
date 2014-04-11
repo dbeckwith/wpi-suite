@@ -100,7 +100,7 @@ public class GetGamesControllerTest {
     @Test
     public void testRetrieveGames() {
         GetGamesController.getInstance().retrieveGames();
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
@@ -111,7 +111,7 @@ public class GetGamesControllerTest {
     @Test
     public void testActionPerformed() {
         GetGamesController.getInstance().actionPerformed(null);
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
