@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
+import java.awt.Color;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -42,6 +43,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
      * Creates new form UserPreferencesPanel
      */
     private UserPreferencesPanel() {
+        setBackground(Color.WHITE);
         initComponents();
         if (CurrentUserController.getInstance().getUser() != null) {
             emailBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByEmail());
@@ -59,8 +61,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         notificationsPanel = new javax.swing.JPanel();
+        notificationsPanel.setBackground(Color.WHITE);
         emailBox = new javax.swing.JCheckBox();
+        emailBox.setBackground(Color.WHITE);
         imBox = new javax.swing.JCheckBox();
+        imBox.setBackground(Color.WHITE);
         
         notificationsPanel.setBorder(javax.swing.BorderFactory
                 .createTitledBorder(null, "Notifications",

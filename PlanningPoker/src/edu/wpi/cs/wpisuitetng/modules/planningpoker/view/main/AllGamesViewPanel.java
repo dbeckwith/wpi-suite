@@ -27,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import java.awt.Color;
 
 
 /*
@@ -68,10 +69,12 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         requirementPanel.add(requirementDescriptionPanel, "requirement");
         
         JPanel noRequirementPanel = new JPanel();
+        noRequirementPanel.setBackground(Color.WHITE);
         requirementPanel.add(noRequirementPanel, "no requirement");
         noRequirementPanel.setLayout(new BorderLayout(0, 0));
         
         JLabel lblSelectARequirement = new JLabel("Select a requirement");
+        lblSelectARequirement.setForeground(Color.GRAY);
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
         tree.addTreeSelectionListener(new TreeSelectionListener() {

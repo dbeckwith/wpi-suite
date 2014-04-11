@@ -24,6 +24,7 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import java.awt.Color;
 
 /**
  * The requirements panel of the planning poker GUI
@@ -45,6 +46,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
      * Creates new form NewJPanel
      */
     public UncompletedGameDescriptionPanel() {
+        setBackground(Color.WHITE);
         initComponents();
     }
     
@@ -93,11 +95,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         
         gameDeadline = new JLabel("");
         
-        JTextArea textArea = new JTextArea();
-        textArea.setEditable(false);
-        
-        lblAdmin = new JLabel("Admin:");
-        
         lblDeck = new JLabel("Deck:");
         
         deckName = new JLabel("");
@@ -108,36 +105,30 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(nameLabel)
                             .addGroup(layout.createParallelGroup(Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(gameName))
+                                    .addComponent(nameLabel)
+                                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(ComponentPlacement.RELATED)
+                                            .addComponent(gameName))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(154)
+                                            .addComponent(lblDeadline)
+                                            .addPreferredGap(ComponentPlacement.RELATED)
+                                            .addComponent(gameDeadline))))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(154)
-                                    .addComponent(lblDeadline)
+                                    .addComponent(lblDeck)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(gameDeadline))))
-                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblDeck)
-                            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(deckName)
-                                    .addPreferredGap(ComponentPlacement.RELATED, 147, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(lblProgress)
-                                    .addPreferredGap(ComponentPlacement.RELATED)))
+                                    .addComponent(deckName)))
+                            .addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                            .addComponent(lblProgress)
+                            .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(progressLabel)))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(lblAdmin)
-                        .addComponent(textArea, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -148,21 +139,17 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                         .addComponent(nameLabel)
                         .addComponent(gameName)
                         .addComponent(lblDeadline, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblAdmin)
                         .addComponent(gameDeadline))
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                .addComponent(progressLabel)
-                                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                    .addComponent(lblDeck)
-                                    .addComponent(deckName)
-                                    .addComponent(lblProgress))
-                                .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(textArea, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(progressLabel)
+                        .addComponent(lblProgress)
+                        .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                            .addComponent(lblDeck)
+                            .addComponent(deckName)))
                     .addContainerGap(186, Short.MAX_VALUE))
         );
         
@@ -179,7 +166,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     private JLabel progressLabel;
     private JLabel gameDeadline;
     private JLabel lblDeadline;
-    private JLabel lblAdmin;
     private JLabel lblDeck;
     private JLabel deckName;
     

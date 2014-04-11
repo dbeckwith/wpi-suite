@@ -23,6 +23,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.jdesktop.swingx.JXDatePicker;
+import java.awt.Color;
 
 /**
  * 
@@ -39,6 +40,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 * Creates new form GameDescription
 	 */
 	public NewGameDescriptionPanel() {
+	    setBackground(Color.WHITE);
 		initComponents();
 
 		nameField.getDocument().addDocumentListener(new DocumentListener() {
@@ -136,9 +138,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		jScrollPane1 = new javax.swing.JScrollPane();
 		descriptionField = new javax.swing.JTextPane();
 		selectDeadline = new javax.swing.JCheckBox();
+		selectDeadline.setBackground(Color.WHITE);
 		selectDeadline.setSelected(true);
 		distributed = new javax.swing.JRadioButton();
+		distributed.setBackground(Color.WHITE);
 		live = new javax.swing.JRadioButton();
+		live.setBackground(Color.WHITE);
 		nameError = new javax.swing.JLabel();
 		descriptionError = new javax.swing.JLabel();
 

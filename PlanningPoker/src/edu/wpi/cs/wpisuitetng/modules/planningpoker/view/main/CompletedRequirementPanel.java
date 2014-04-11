@@ -57,8 +57,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      * Creates new form DetailPanel
      */
     public CompletedRequirementPanel() {
+        setBackground(Color.WHITE);
         // setup tablemodel (using autogenerted netbeans code)
         initComponents();
+        tableScrollPane.getViewport().setBackground(Color.WHITE);
     }
     
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
@@ -132,6 +134,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         medianLabel = new javax.swing.JLabel();
         tableScrollPane = new javax.swing.JScrollPane();
         voteResultTable = new javax.swing.JTable();
+        voteResultTable.setBackground(Color.WHITE);
         meanValueLabel = new javax.swing.JLabel();
         medianValueLabel = new javax.swing.JLabel();
         
@@ -139,7 +142,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         medianLabel.setText("Median:");
         
-        tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
+        tableScrollPane.setBackground(Color.WHITE);
         
         voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
                 null }, }, new String[] { "User", "Estimate" }) {
@@ -235,109 +238,52 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblNonnegativeIntegersOnly.setForeground(Color.RED);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGap(16)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.TRAILING)
-                                                                                .addComponent(
-                                                                                        meanLabel)
-                                                                                .addComponent(
-                                                                                        medianLabel))
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING,
-                                                                                false)
-                                                                                .addComponent(
-                                                                                        medianValueLabel,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        30,
-                                                                                        Short.MAX_VALUE)
-                                                                                .addComponent(
-                                                                                        meanValueLabel,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        Short.MAX_VALUE))
-                                                                .addGap(74)
-                                                                .addComponent(
-                                                                        lblFinalEstimate)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        finalEstimateField,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        106,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        saveFinalEstimateButton)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        lblNonnegativeIntegersOnly,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        77,
-                                                                        Short.MAX_VALUE))
-                                                .addComponent(
-                                                        jSeparator1,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(
-                                                        tableScrollPane,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        478, Short.MAX_VALUE))
-                                .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(tableScrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 213,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(jSeparator1,
-                                        GroupLayout.PREFERRED_SIZE, 10,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(meanLabel)
-                                                .addComponent(meanValueLabel)
-                                                .addComponent(lblFinalEstimate)
-                                                .addComponent(
-                                                        finalEstimateField,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(
-                                                        saveFinalEstimateButton)
-                                                .addComponent(
-                                                        lblNonnegativeIntegersOnly,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        9,
-                                                        GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(medianLabel)
-                                                .addComponent(medianValueLabel))
-                                .addGap(13)));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(16)
+                            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                                .addComponent(meanLabel)
+                                .addComponent(medianLabel))
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(medianValueLabel, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                                .addComponent(meanValueLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(74)
+                            .addComponent(lblFinalEstimate)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(finalEstimateField, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(saveFinalEstimateButton)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(lblNonnegativeIntegersOnly, GroupLayout.PREFERRED_SIZE, 131, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap())
+                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(meanLabel)
+                        .addComponent(meanValueLabel)
+                        .addComponent(lblFinalEstimate)
+                        .addComponent(finalEstimateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveFinalEstimateButton)
+                        .addComponent(lblNonnegativeIntegersOnly, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(medianLabel)
+                        .addComponent(medianValueLabel))
+                    .addGap(13))
+        );
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     

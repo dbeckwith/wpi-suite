@@ -30,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import java.awt.Color;
 
 /**
  * 
@@ -48,6 +49,7 @@ public class VotePanel extends javax.swing.JPanel {
      * Creates new form VotePanel
      */
     public VotePanel() {
+        setBackground(Color.WHITE);
         initComponents();
         parentGame = null;
         req = null;
@@ -264,6 +266,7 @@ public class VotePanel extends javax.swing.JPanel {
         );
         
         estimateCardsPanel = new JPanel();
+        estimateCardsPanel.setBackground(Color.WHITE);
         scrollPane_1.setViewportView(estimateCardsPanel);
         estimateCardsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         
