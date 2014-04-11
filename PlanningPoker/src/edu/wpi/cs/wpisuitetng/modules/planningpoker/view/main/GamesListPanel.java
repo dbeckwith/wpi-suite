@@ -90,16 +90,16 @@ public class GamesListPanel extends javax.swing.JPanel {
         } catch (NullPointerException e) {
         }
         
-        
+
+        final DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
+                "Games in Progress (0)");
+        final DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
+                "Complete Games (0)");
         // rebuild the tree
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode() {
             private static final long serialVersionUID = 8933074607488306596L;
             
             {
-                DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
-                        "Pending Games");
-                DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
-                        "Complete Games");
                 add(pendingFolder);
                 add(completeFolder);
                 for (GameModel gm : GameListModel.getInstance().getGames()) {
@@ -118,7 +118,13 @@ public class GamesListPanel extends javax.swing.JPanel {
                             gameNode.add(reqNode);
                         }
                     }
+                    pendingFolder.setUserObject("Games in Progress (" + pendingFolder.getChildCount() + ")");
+                    completeFolder.setUserObject("Complete Games (" + completeFolder.getChildCount() + ")");
                 }
+                if (completeFolder.getChildCount() == 0)
+                	completeFolder.add(new DefaultMutableTreeNode("<There are no complete games>"));
+                if (pendingFolder.getChildCount() == 0)
+                	pendingFolder.add(new DefaultMutableTreeNode("<There are no games in progress>"));
             }
         };
         gameTree.setModel(new DefaultTreeModel(rootNode));
@@ -133,8 +139,7 @@ public class GamesListPanel extends javax.swing.JPanel {
                 if (node.getUserObject() != null
                         && ((node.getUserObject() instanceof GameModel && expandedGames
                                 .contains(node.getUserObject()))
-                                || node.getUserObject().equals("Pending Games") || node
-                                .getUserObject().equals("Complete Games"))) {
+                                || node == pendingFolder || node == completeFolder)) {
                     // if the node's game was in the list,
                     // or the node is a folder of games, expand it
                     gameTree.expandPath(new TreePath(node.getPath()));
