@@ -59,8 +59,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
             
             @Override
             public void listUpdated() {
-                // TODO: remove previous requirements
-                // TODO: making a new requirement should add it to RequirementsListModel
                 for (GameRequirementModel req : RequirementsListModel.getInstance().getAll()) {
                     addRequirement(req);
                 }

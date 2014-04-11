@@ -56,4 +56,14 @@ public class ViewControllerTest {
         vc.cancelNewGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
     }
+    
+    @Test
+    public void testAddUserPrefsTab() {
+        MainView mv = new MainView();
+        ViewController vc = new ViewController(mv, new ToolbarView());
+        int before = mv.getTabCount();
+        vc.addUserPrefsTab();
+        Assert.assertEquals(before + 1, mv.getTabCount());
+        Assert.assertSame("Preferences", mv.getTitleAt(before));
+    }
 }
