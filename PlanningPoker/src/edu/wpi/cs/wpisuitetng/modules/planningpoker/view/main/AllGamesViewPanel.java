@@ -81,9 +81,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) {
-                    return;
-                }
+                if (node == null) { return; }
                 
                 currentSelectionGame = null; // reset selected game
                 
@@ -94,7 +92,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     GameModel game = (GameModel) nodeInfo;
                     currentSelectionGame = game;
                     getGameDescriptionPanel().setGame(game);
-                } else if (nodeInfo instanceof GameRequirementModel) {
+                }
+                else if (nodeInfo instanceof GameRequirementModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "requirement");
                     GameRequirementModel req = (GameRequirementModel) nodeInfo;
@@ -109,10 +108,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     getGameDescriptionPanel().setGame(game);
                     currentSelectionGame = game;
                 }
-                if (currentSelectionGame != null) {
-                    PlanningPoker.getViewController().displayAdmin(
-                            currentSelectionGame);
-                }
+                PlanningPoker.getViewController().displayAdmin(
+                        currentSelectionGame);
             }
         });
     }
