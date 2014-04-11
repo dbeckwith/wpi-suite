@@ -78,8 +78,9 @@ public class RequirementsListModel extends
     }
     
     public void addRequirements(GameRequirementModel[] reqs) {
-        for (GameRequirementModel req : reqs)
+        for (GameRequirementModel req : reqs) {
             requirements.add(req);
+        }
         updated();
     }
     

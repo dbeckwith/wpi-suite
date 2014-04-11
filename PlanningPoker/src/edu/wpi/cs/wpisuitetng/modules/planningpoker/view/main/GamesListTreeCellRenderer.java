@@ -54,8 +54,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                     .getUserObject();
             
             for (Estimate e : req.getEstimates()) {
-                if (e.getUser() != null && e.getUser().equals(
-                        CurrentUserController.getInstance().getUser())) {
+                if (e.getUsername() != null && e.getUsername().equals(
+                        CurrentUserController.getInstance().getUser().getUsername())) {
                     icon = new ImageIcon(
                             ImageLoader.getImage("GameCompleted.png"));
                     break;
