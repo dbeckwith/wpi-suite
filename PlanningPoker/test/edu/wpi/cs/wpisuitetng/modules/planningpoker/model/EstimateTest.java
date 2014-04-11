@@ -37,12 +37,9 @@ public class EstimateTest {
     public void testJSON() {
         Estimate est = new Estimate(new User("joe", "joe", "password", 1), 20);
         Estimate estAfter = est.fromJSON(est.toJSON());
-        Assert.assertEquals(est.getUser().getIdNum(), estAfter.getUser()
-                .getIdNum());
-        Assert.assertEquals(est.getUser().getName(), estAfter.getUser()
-                .getName());
-        Assert.assertEquals(est.getUser().getUsername(), estAfter.getUser()
-                .getUsername());
+        Assert.assertEquals(est.getIdNum(), estAfter.getIdNum());
+        Assert.assertEquals(est.getName(), estAfter.getName());
+        Assert.assertEquals(est.getUsername(), estAfter.getUsername());
         Assert.assertEquals(est.getEstimate(), estAfter.getEstimate(), 3);
     }
     
