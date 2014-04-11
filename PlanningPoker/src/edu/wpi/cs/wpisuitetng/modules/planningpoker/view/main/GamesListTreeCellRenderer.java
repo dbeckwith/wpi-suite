@@ -29,10 +29,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
     /**
      * 
      */
-    private static final long serialVersionUID = -2728918517590604079L;
-    
-    public GamesListTreeCellRenderer() {
-    }
+    private static final long serialVersionUID = -2728918517590604079L;  
     
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value,

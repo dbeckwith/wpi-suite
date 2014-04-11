@@ -36,7 +36,6 @@ public class EmailController extends AbstractUserController {
      * Creates a new EmailController class
      */
     private EmailController() {
-        super();
     }
     
     private static EmailController instance;

@@ -58,7 +58,6 @@ public class CardButton extends JButton implements MouseListener {
 	private boolean cardEnabled = true;
 	
 	public CardButton(String val){
-		super();
 		value = val;
 		suitIndex = (int)(Math.random()*suits.length);
 		selected = false;

@@ -44,7 +44,6 @@ public class CurrentUserController extends AbstractUserController {
      * Creates a new controller and requests users from the database.
      */
     protected CurrentUserController() {
-        super();
         requestUsers();
     }
     
