@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import org.junit.Assert;
@@ -55,5 +66,15 @@ public class ViewControllerTest {
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
         vc.cancelNewGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
+    }
+    
+    @Test
+    public void testAddUserPrefsTab() {
+        MainView mv = new MainView();
+        ViewController vc = new ViewController(mv, new ToolbarView());
+        int before = mv.getTabCount();
+        vc.addUserPrefsTab();
+        Assert.assertEquals(before + 1, mv.getTabCount());
+        Assert.assertSame("Preferences", mv.getTitleAt(before));
     }
 }

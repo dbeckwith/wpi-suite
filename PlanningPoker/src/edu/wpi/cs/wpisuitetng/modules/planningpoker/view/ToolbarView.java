@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
- *    TODO: Contributors' names
+ * TODO: Contributors' names
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
@@ -34,5 +34,20 @@ public class ToolbarView extends DefaultToolbarView {
     public ToolbarView() {
         addGroup(commonButtons);
         addGroup(adminButtons);
+        adminButtons.setVisible(false);
+    }
+    
+    /**
+     * shows the admin buttons in the toolbar
+     */
+    public void showAdmin() {
+        adminButtons.setVisible(true);
+    }
+    
+    /**
+     * hides the admin buttons
+     */
+    public void hideAdmin() {
+        adminButtons.setVisible(false);
     }
 }

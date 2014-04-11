@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
@@ -5,6 +16,7 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
@@ -42,6 +54,7 @@ public class GameModel extends AbstractModel {
 	private GameType type;
 	private GameStatus status;
 	private User[] users;
+	private String owner;
 
 	/**
 	 * Default constructor creates instance with invalid id and null fields
@@ -56,6 +69,7 @@ public class GameModel extends AbstractModel {
 		status = null;
 		status_observers = null;
 		users = null;
+		owner = null;
 	}
 
 	/**
@@ -81,6 +95,7 @@ public class GameModel extends AbstractModel {
 		this.type = type;
 		this.status = status;
 		status_observers = new ArrayList<>();
+		owner = ConfigManager.getConfig().getUserName();
 		users = CurrentUserController.getInstance().getUsers();
 	}
 
@@ -106,8 +121,33 @@ public class GameModel extends AbstractModel {
 		this.type = type;
 		this.status = status;
 		status_observers = new ArrayList<>();
+		owner = ConfigManager.getConfig().getUserName();
 		users = CurrentUserController.getInstance().getUsers();
 	}
+
+	/**
+     * @param id
+     * @param name
+     * @param description
+     * @param requirements
+     * @param endDate
+     * @param type
+     * @param status
+     * @param owner
+     */
+    public GameModel(int id, String name, String description,
+            ArrayList<GameRequirementModel> requirements, Date endDate,
+            GameType type, GameStatus status, String owner) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.requirements = requirements;
+        this.endDate = endDate;
+        this.type = type;
+        this.status = status;
+        this.owner = owner;
+        status_observers = new ArrayList<>();
+    }
 
 	/**
 	 * @return the name of this game
@@ -282,6 +322,7 @@ public class GameModel extends AbstractModel {
 		status = g.status;
 		status_observers = g.status_observers;
 		users = g.users;
+		owner = g.owner;
 	}
 
 	/**
@@ -297,4 +338,23 @@ public class GameModel extends AbstractModel {
 		return getName();
 	}
 
+    /**
+     * @return the owner
+     */
+    public String getOwner() {
+        return owner;
+    }
+
+    public boolean equals(GameModel other) {
+        return other.id == id && other.name.equals(other.name);
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        else if (other instanceof GameModel)
+            return this.equals((GameModel) other);
+        else
+            return super.equals(other);
+    }
 }

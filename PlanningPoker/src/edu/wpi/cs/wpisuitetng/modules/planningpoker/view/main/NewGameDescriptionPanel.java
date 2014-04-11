@@ -158,10 +158,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		live.setText("Live Game");
 
 		nameError.setForeground(new java.awt.Color(255, 0, 0));
-		nameError.setText("Required field!");
+		nameError.setText("* Required field!");
 
 		descriptionError.setForeground(new java.awt.Color(255, 0, 0));
-		descriptionError.setText("Required field!");
+		descriptionError.setText("* Required field!");
 		descriptionError.setFocusable(false);
 
 		datePicker = new JXDatePicker(new Date());

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
@@ -7,12 +18,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
- * TODO: Add tests for requirement manipulation
  * 
  * @author Andrew
  * 
@@ -69,5 +78,13 @@ public class GameModelTest {
         Assert.assertFalse(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
         Assert.assertTrue(game4.isEnded());
+    }
+    
+    @Test
+    public void testJSON() {
+        Assert.assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON())
+                .getName());
+        Assert.assertEquals(game2.getName(), GameModel.fromJSONArray("["
+                + game2.toJSON() + "]")[0].getName());
     }
 }

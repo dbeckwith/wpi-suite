@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * 
  */
 public class GameRequirementModel extends AbstractModel {
+<<<<<<< HEAD
 	/** the id of the parent requirement in requirements manager */
 	private int parentId;
 
@@ -34,6 +35,8 @@ public class GameRequirementModel extends AbstractModel {
 
 	/** the estimates for the requirement */
 	private ArrayList<Estimate> estimates;
+	
+	private int finalEstimate;
 
 	public GameRequirementModel(int parentId, String name, String description,
 			String type, ArrayList<Estimate> estimates) {
@@ -44,6 +47,7 @@ public class GameRequirementModel extends AbstractModel {
 		this.estimates = estimates;
 
 		Collections.sort(this.estimates);
+		finalEstimate = -1;
 	}
 
 	/**
@@ -58,6 +62,7 @@ public class GameRequirementModel extends AbstractModel {
 		this.description = description;
 		this.type = type;
 		estimates = new ArrayList<Estimate>();
+		finalEstimate = -1;
 	}
 
 	public GameRequirementModel() {
@@ -223,5 +228,12 @@ public class GameRequirementModel extends AbstractModel {
 	public String toString() {
 		return getName();
 	}
-
+    
+    public int getFinalEstimate() {
+        return finalEstimate;
+    }
+    
+    public void setFinalEstimate(int finalEstimate) {
+        this.finalEstimate = finalEstimate;
+    }
 }

@@ -229,7 +229,7 @@ public class NewGamePanel extends JPanel {
 		gbc_nameLabel.gridy = 0;
 		newRequirementPanel.add(nameLabel, gbc_nameLabel);
 
-		newReqNameError = new JLabel("Required field!");
+		newReqNameError = new JLabel("* Required field!");
 		newReqNameError.setFont(new Font("Dialog", Font.BOLD, 12));
 		newReqNameError.setForeground(new java.awt.Color(255, 0, 0));
 		GridBagConstraints gbc_newReqNameError = new GridBagConstraints();
@@ -276,7 +276,7 @@ public class NewGamePanel extends JPanel {
 			}
 		});
 
-		newReqDescError = new JLabel("Required field!");
+		newReqDescError = new JLabel("* Required field!");
 		newReqDescError.setForeground(new java.awt.Color(255, 0, 0));
 		GridBagConstraints gbc_newReqDescError = new GridBagConstraints();
 		gbc_newReqDescError.anchor = GridBagConstraints.WEST;
