@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import javax.swing.GroupLayout;
@@ -21,32 +32,48 @@ public class CompletedGamePanel extends javax.swing.JPanel {
      */
     private static final long serialVersionUID = -7702704328142908459L;
     
+    private GameStatusObserver gameStatusListener = null;
+    
+    private GameModel selectedGame;
+    
     /**
      * Creates new form DetailPanel
      */
     public CompletedGamePanel() {
         initComponents();
+        gameStatusListener = new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
+                updateGame();
+            }
+            
+        };
+        selectedGame = null;
     }
     
     public void setGame(GameModel game) {
-        game.addStatusListener(new GameStatusObserver(){
-
-            @Override
-            public void statusChanged(GameModel game) {
-                setGame(game);
-                
-            }
-            
-        });
-        setNumRequirements(game.getRequirements().size() + "");
-        DefaultTableModel model = (DefaultTableModel) voteResultTable
-                .getModel();
-        for (int i = model.getRowCount() - 1; i >= 0; i--) {
-            model.removeRow(i);
+        if (selectedGame != null) {
+            selectedGame.removeStatusListener(gameStatusListener);
         }
-        for (GameRequirementModel req : game.getRequirements()) {
-            model.addRow(new Object[] { req.getName(), req.getEstimateMean(),
-                    req.getEstimateMedian(), req.getFinalEstimate()});
+        selectedGame = game;
+        selectedGame.addStatusListener(gameStatusListener);
+        updateGame();
+    }
+    
+    private void updateGame() {
+        if (selectedGame != null) {
+            setNumRequirements(selectedGame.getRequirements().size() + "");
+            DefaultTableModel model = (DefaultTableModel) voteResultTable
+                    .getModel();
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+            for (GameRequirementModel req : selectedGame.getRequirements()) {
+                model.addRow(new Object[] { req.getName(),
+                        req.getEstimateMean(), req.getEstimateMedian(),
+                        req.getFinalEstimate() });
+            }
         }
     }
     

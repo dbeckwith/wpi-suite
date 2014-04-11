@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
@@ -210,8 +221,8 @@ public class GameModel extends AbstractModel {
         GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
         if (status != new_status) {
             status = new_status;
-            for (GameStatusObserver gso : status_observers) {
-                gso.statusChanged(this);
+            for (int i = 0; i < status_observers.size(); i++) {
+                status_observers.get(i).statusChanged(this);
             }
         }
     }
@@ -297,6 +308,19 @@ public class GameModel extends AbstractModel {
     @Override
     public String toString() {
         return getName();
+    }
+    
+    public boolean equals(GameModel other) {
+        return other.id == id && other.name.equals(other.name);
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        else if (other instanceof GameModel)
+            return this.equals((GameModel) other);
+        else
+            return super.equals(other);
     }
     
 }

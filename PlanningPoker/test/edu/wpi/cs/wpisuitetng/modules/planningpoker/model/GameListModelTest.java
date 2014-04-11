@@ -1,9 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
-
-import static org.junit.Assert.*;
 
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,47 +23,59 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 /**
  * 
  * @author Andrew
- *
+ * 
  */
 public class GameListModelTest {
     static GameListModel instance;
     
     @BeforeClass
-    static public void setUpBeforeClass(){
-        instance = GameListModel.getInstance();
+    static public void setUpBeforeClass() {
+        GameListModelTest.instance = GameListModel.getInstance();
     }
     
     @Test
     public void testGetInstance() {
-        assertEquals("A new instance is not the same as the previous instance", instance, GameListModel.getInstance());
+        Assert.assertEquals(
+                "A new instance is not the same as the previous instance",
+                GameListModelTest.instance, GameListModel.getInstance());
     }
     
     @Test
-    public void testAddListListener(){
-        SimpleListObserver slo = new SimpleListObserver() {  
+    public void testAddListListener() {
+        SimpleListObserver slo = new SimpleListObserver() {
             @Override
-            public void listUpdated() {}
+            public void listUpdated() {
+            }
         };
-        instance.addListListener(slo);
-        assertTrue(instance.getObservers().contains(slo));
-        instance.addListListener(slo);
-        assertTrue(instance.getObservers().contains(slo));
+        GameListModelTest.instance.addListListener(slo);
+        Assert.assertTrue(GameListModelTest.instance.getObservers().contains(
+                slo));
+        GameListModelTest.instance.addListListener(slo);
+        Assert.assertTrue(GameListModelTest.instance.getObservers().contains(
+                slo));
     }
     
     @Test
-    public void testGameManipulation(){
-        GameModel game1 = new GameModel(1, "Test Game", "Test Game Description", null, new Date(), null, GameStatus.PENDING);
-        GameModel game2 = new GameModel(2, "Test Game 2", "Test Game Description 2", null, new Date(), null, GameStatus.COMPLETE);
-        instance.addGame(game1);
-        instance.addGame(game2);
-        assertTrue(instance.getGames().contains(game1));
-        assertTrue(instance.getGames().contains(game2));
-        instance.removeGame(game1);
-        assertTrue(instance.getGames().contains(game2));
-        assertFalse(instance.getGames().contains(game1));
-        instance.addGame(game1);
-        instance.emptyModel();
-        assertFalse(instance.getGames().contains(game1));
-        assertFalse(instance.getGames().contains(game2));
+    public void testGameManipulation() {
+        GameModel game1 = new GameModel(1, "Test Game",
+                "Test Game Description", null, new Date(), null,
+                GameStatus.PENDING);
+        GameModel game2 = new GameModel(2, "Test Game 2",
+                "Test Game Description 2", null, new Date(), null,
+                GameStatus.COMPLETE);
+        GameListModelTest.instance.addGame(game1);
+        GameListModelTest.instance.addGame(game2);
+        Assert.assertTrue(GameListModelTest.instance.getGames().contains(game1));
+        Assert.assertTrue(GameListModelTest.instance.getGames().contains(game2));
+        GameListModelTest.instance.removeGame(game1);
+        Assert.assertTrue(GameListModelTest.instance.getGames().contains(game2));
+        Assert.assertFalse(GameListModelTest.instance.getGames()
+                .contains(game1));
+        GameListModelTest.instance.addGame(game1);
+        GameListModelTest.instance.emptyModel();
+        Assert.assertFalse(GameListModelTest.instance.getGames()
+                .contains(game1));
+        Assert.assertFalse(GameListModelTest.instance.getGames()
+                .contains(game2));
     }
 }

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
@@ -44,9 +55,9 @@ public class CardButton extends JButton implements MouseListener {
 	private boolean selected = false;
 	
 	private boolean hover;
+	private boolean cardEnabled = true;
 	
 	public CardButton(String val){
-		super();
 		value = val;
 		suitIndex = (int)(Math.random()*suits.length);
 		selected = false;
@@ -111,8 +122,16 @@ public class CardButton extends JButton implements MouseListener {
 		this.selected = selected;
 	}
 	
+	public void setCardEnabled(boolean enabled){
+		cardEnabled = enabled;
+	}
+	
 	public boolean isCardSelected(){
 		return selected;
+	}
+	
+	public boolean isCardEnabled(){
+		return cardEnabled;
 	}
 
 	@Override
@@ -133,8 +152,12 @@ public class CardButton extends JButton implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		hover = true;
-		repaint();
+		if(cardEnabled){
+			hover = true;
+			repaint();
+		} else {
+			mouseExited(e);
+		}
 		
 	}
 

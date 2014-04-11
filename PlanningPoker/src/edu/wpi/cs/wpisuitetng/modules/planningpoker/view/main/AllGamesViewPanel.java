@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.BorderLayout;
@@ -70,9 +81,11 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) { return; }
+                if (node == null) {
+                    return;
+                }
                 
-                currentSelectionGame = null; //reset selected game
+                currentSelectionGame = null; // reset selected game
                 
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
@@ -81,8 +94,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     GameModel game = (GameModel) nodeInfo;
                     currentSelectionGame = game;
                     getGameDescriptionPanel().setGame(game);
-                }
-                else if (nodeInfo instanceof GameRequirementModel) {
+                } else if (nodeInfo instanceof GameRequirementModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "requirement");
                     GameRequirementModel req = (GameRequirementModel) nodeInfo;
@@ -97,8 +109,10 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     getGameDescriptionPanel().setGame(game);
                     currentSelectionGame = game;
                 }
-                PlanningPoker.getViewController().displayAdmin(
-                        currentSelectionGame);
+                if (currentSelectionGame != null) {
+                    PlanningPoker.getViewController().displayAdmin(
+                            currentSelectionGame);
+                }
             }
         });
     }

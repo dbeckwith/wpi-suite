@@ -48,7 +48,6 @@ public class GameRequirementModel extends AbstractModel {
     }
     
     
-    
     /**
      * @param parentId
      * @param name
@@ -202,11 +201,11 @@ public class GameRequirementModel extends AbstractModel {
     public String toString() {
         return getName();
     }
-
+    
     public int getFinalEstimate() {
         return finalEstimate;
     }
-
+    
     public void setFinalEstimate(int finalEstimate) {
         this.finalEstimate = finalEstimate;
     }
