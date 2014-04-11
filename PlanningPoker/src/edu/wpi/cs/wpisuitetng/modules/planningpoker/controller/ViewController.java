@@ -17,6 +17,11 @@ public class ViewController {
     private MainView mainView;
     private ToolbarView toolbar;
     
+    /**
+     * indicates if admin buttons are being shown if all games panel is selected
+     */
+    private boolean showAdmin;
+    
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
         this.toolbar = toolbar;
@@ -116,10 +121,28 @@ public class ViewController {
                 && game.getOwner().equals(
                         ConfigManager.getConfig().getUserName())
                 && !game.isEnded()) {
-            toolbar.showAdmin();
+            toolbar.setAdminVisibility(true);
+            showAdmin = true;
         }
         else {
-            toolbar.hideAdmin();
+            toolbar.setAdminVisibility(false);
+            showAdmin = false;
+        }
+    }
+    
+    /**
+     * changes state of admin buttons when a different tab in mainView is
+     * displayed
+     * 
+     * @param index
+     *        the tab now being displayed.
+     */
+    public void tabChanged(int index) {
+        if (showAdmin && index == 0) {
+            toolbar.setAdminVisibility(true);
+        }
+        else {
+            toolbar.setAdminVisibility(false);
         }
     }
     
