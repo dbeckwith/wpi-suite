@@ -46,6 +46,4 @@ public class ToolbarView extends DefaultToolbarView {
     public void setAdminVisibility(boolean b) {
         adminButtons.setVisible(b);
     }
-    
-    
 }
