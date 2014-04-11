@@ -161,11 +161,11 @@ public class GameRequirementModel extends AbstractModel {
 	public boolean allVoted(GameModel g) {
 		ArrayList<User> estimateUsers = new ArrayList<User>();
 		User[] users = CurrentUserController.getInstance().getUsers();
-		
+
 		while (users == null) {
 			users = CurrentUserController.getInstance().getUsers();
 		}
-		
+
 		System.out.println(estimates.size() + " " + users.length);
 		for (Estimate e : estimates) {
 			estimateUsers.add(e.getUser());
