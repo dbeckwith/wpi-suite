@@ -161,7 +161,7 @@ public class GameRequirementModel extends AbstractModel {
 	/**
 	 * Determines if all users have voted on a requirement
 	 * 
-	 * @return boolean
+	 * @return whether all users have voted on a requirement
 	 */
 	public boolean allVoted(GameModel g) {
 		ArrayList<User> estimateUsers = new ArrayList<User>();

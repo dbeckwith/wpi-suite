@@ -229,7 +229,7 @@ public class GameModel extends AbstractModel {
 	/**
 	 * Checks if all users have voted on all requirements
 	 * 
-	 * @return boolean
+	 * @return whether all users have voted on all requirements
 	 */
 	public boolean checkVoted() {
 		if (requirements == null) {
