@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -23,7 +24,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.jdesktop.swingx.JXDatePicker;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
 import java.awt.Color;
+import java.awt.Insets;
 
 /**
  * 
@@ -170,7 +175,18 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		descriptionError.setFocusable(false);
 
 		datePicker = new JXDatePicker(new Date());
-
+		JButton eDate = (JButton) datePicker.getComponent(1);
+		JButton dateBtn = (JButton) datePicker.getComponent(1);
+		dateBtn.remove(eDate);
+		
+		dateBtn.setIcon(ImageLoader.getIcon("calendar.png"));
+		dateBtn.setFocusPainted(false);
+		dateBtn.setMargin(new Insets(0, 0, 0, 0));
+		dateBtn.setContentAreaFilled(false);
+		dateBtn.setBorderPainted(false);
+		dateBtn.setOpaque(false);
+		
+		
 		JLabel lblDate = new JLabel("Date:");
 
 		timeSpinner = new JSpinner();
