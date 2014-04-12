@@ -126,10 +126,10 @@ public class GameModel extends AbstractModel {
      * @param status
      * @param owner
      */
-    public GameModel(int id, String name, String description,
+    public GameModel(String name, String description,
             ArrayList<GameRequirementModel> requirements, Date endDate,
             GameType type, GameStatus status, String owner) {
-        this.id = id;
+        //this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;

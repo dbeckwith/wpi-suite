@@ -11,6 +11,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -42,14 +44,16 @@ public class GetRequirementsRequestObserver implements RequestObserver {
         Requirement[] requirements = Requirement.fromJsonArray(iReq
                 .getResponse().getBody());
         
-        GameRequirementModel[] game_reqs = new GameRequirementModel[requirements.length];
+        ArrayList<GameRequirementModel> game_reqs = new ArrayList<>();
         
-        for (int i = 0; i < requirements.length; i++) {
-            game_reqs[i] = new GameRequirementModel(requirements[i]);
+        for (Requirement req : requirements) {
+            if (req.getIteration().equals("Backlog")) {
+                game_reqs.add(new GameRequirementModel(req));
+            }
         }
         
         // Pass these Requirements to the controller
-        controller.receivedRequirements(game_reqs);
+        controller.receivedRequirements(game_reqs.toArray(new GameRequirementModel[0]));
     }
     
     /**
