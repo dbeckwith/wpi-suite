@@ -72,14 +72,12 @@ public class VotePanel extends javax.swing.JPanel {
         // setRequirementProgress();
         
         old = null; //ensure it is erased
-        boolean alreadyVoted = false;
         for (Estimate e : req.getEstimates()) {
             System.out.println(e.getEstimate() + " from " + e.getUsername());
             if (e.getUsername() != null && currentUser != null
                     && e.getIdNum() == currentUser.getIdNum()
                     && e.getName().equals(currentUser.getName())
                     && e.getUsername().equals(currentUser.getUsername())) {
-                alreadyVoted = true;
                 old = e;
                 break;
             }
@@ -94,6 +92,10 @@ public class VotePanel extends javax.swing.JPanel {
         deck.add("5");
         deck.add("10");
         
+        ArrayList<Integer> selected = new ArrayList<Integer>();
+        if(old != null){
+            selected = old.getCardsSelected();
+        }
         
         cards.clear();
         estimateCardsPanel.removeAll();
@@ -103,6 +105,7 @@ public class VotePanel extends javax.swing.JPanel {
             
             estimateCard.setText(estimate);
             estimateCard.setPreferredSize(new Dimension(80, 120));
+            estimateCard.setCardSelected(selected.contains(new Integer(deck.indexOf(estimate))));
             estimateCard.addActionListener(new ActionListener() {
                 
                 @Override
@@ -144,19 +147,17 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
+        ArrayList<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
         for (CardButton c : cards) {
-            //c.setCardEnabled(false);
             if (c.isCardSelected()) {
                 estimate += c.getEstimateValue();
-            }
-            else {
-                //c.setEnabled(false);
+                selected.add(new Integer(cards.indexOf(c)));
             }
         }
         
         System.out.println("Estimate = " + estimate);
-        Estimate est = new Estimate(currentUser, estimate);
+        Estimate est = new Estimate(currentUser, estimate, selected);
         
         if (alreadyVoted) {
             req.UpdateEstimate(old, est);
