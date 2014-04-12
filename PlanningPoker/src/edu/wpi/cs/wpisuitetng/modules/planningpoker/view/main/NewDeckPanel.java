@@ -27,6 +27,7 @@ import javax.swing.JTextPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 
 import java.awt.SystemColor;
@@ -35,6 +36,8 @@ import java.util.regex.Pattern;
 
 public class NewDeckPanel extends JPanel {
 	public NewDeckPanel() {
+		GetDecksController.getInstance().retrieveDecks();
+		
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
@@ -75,8 +78,19 @@ public class NewDeckPanel extends JPanel {
 			}
 
 			public void validate() {
+				for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
+					if (deck.toString().equals(newDeckName.getText()) || newDeckName.getText().equals("default")) {
+						isNameValid = false;
+						deckNameErrorLabel.setText("Name already in use!");
+						deckNameErrorLabel.setVisible(true);
+						checkNewDeck();
+						return;
+					}
+				}
+				
 				isNameValid = newDeckName.getText() != null
 						&& !newDeckName.getText().isEmpty();
+				deckNameErrorLabel.setText("Required field!");
 				deckNameErrorLabel.setVisible(!isNameValid);
 				checkNewDeck();
 			}
