@@ -34,7 +34,7 @@ public class GameRequirementModel extends AbstractModel {
 
 	/** the estimates for the requirement */
 	private ArrayList<Estimate> estimates;
-	
+
 	private int finalEstimate;
 
 	public GameRequirementModel(int parentId, String name, String description,
@@ -166,12 +166,18 @@ public class GameRequirementModel extends AbstractModel {
 		ArrayList<User> estimateUsers = new ArrayList<User>();
 		User[] users = CurrentUserController.getInstance().getUsers();
 
+		// waits for users to be populated
 		while (users == null) {
 			users = CurrentUserController.getInstance().getUsers();
 		}
 
+		// checks to see if an all users have voted
 		for (Estimate e : estimates) {
-			estimateUsers.add(e.getUser());
+			for (User u : users) {
+				if (e.getIdNum() == u.getIdNum()) {
+					estimateUsers.add(u);
+				}
+			}
 		}
 
 		for (User u : users) {
@@ -225,12 +231,12 @@ public class GameRequirementModel extends AbstractModel {
 	public String toString() {
 		return getName();
 	}
-    
-    public int getFinalEstimate() {
-        return finalEstimate;
-    }
-    
-    public void setFinalEstimate(int finalEstimate) {
-        this.finalEstimate = finalEstimate;
-    }
+
+	public int getFinalEstimate() {
+		return finalEstimate;
+	}
+
+	public void setFinalEstimate(int finalEstimate) {
+		this.finalEstimate = finalEstimate;
+	}
 }
