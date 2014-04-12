@@ -25,6 +25,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsCo
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 /**
  * 
@@ -50,6 +52,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 					@Override
 					public void tableChanged(TableModelEvent e) {
 						validateForm();
+						checkAllSelected();
 						parent.check();
 					}
 				});
@@ -86,46 +89,23 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		addButton = new javax.swing.JButton();
 		countError = new javax.swing.JLabel();
 
-		requirementsTable.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-
-				}, new String[] { "Add", "Name", "Description", "Type" }) {
-			/**
-                     * 
-                     */
-			private static final long serialVersionUID = 3245971487236783965L;
-			Class[] types = new Class[] { java.lang.Boolean.class,
-					java.lang.Object.class, java.lang.String.class,
-					java.lang.String.class };
-			boolean[] canEdit = new boolean[] { true, false, false, false };
-
-			@Override
-			public Class getColumnClass(int columnIndex) {
-				return types[columnIndex];
-			}
-
-			@Override
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return canEdit[columnIndex];
-			}
+		requirementsTable.setModel(new DefaultTableModel(
+		    new Object[][] {
+		    },
+		    new String[] {
+		        "Include?", "Name", "Description", "Type"
+		    }
+		) {
+		    Class[] columnTypes = new Class[] {
+		        Boolean.class, Object.class, Object.class, Object.class
+		    };
+		    public Class getColumnClass(int columnIndex) {
+		        return columnTypes[columnIndex];
+		    }
 		});
 		requirementsTable
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
-
-		addAllSelect = new SelectionTableHeadRenderer();
-		addAllSelect.setText("Add");
-		addAllSelect.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("action in header");
-				setAllSelected(addAllSelect.isSelected());
-
-			}
-		});
-		requirementsTable.getColumnModel().getColumn(0)
-				.setHeaderRenderer(addAllSelect);
-		requirementsTable.getTableHeader().addMouseListener(addAllSelect);
 
 		jScrollPane1.setViewportView(requirementsTable);
 		if (requirementsTable.getColumnModel().getColumnCount() > 0) {
@@ -143,40 +123,70 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 
 		countError.setForeground(new java.awt.Color(255, 0, 0));
 		countError.setText("At least one requirement is needed!");
+		
+		btnSelectAll = new JButton("Select All");
+		btnSelectAll.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (allSelected) {
+		            setAllSelected(false);
+		            btnSelectAll.setText("Select All");
+		        }
+		        else {
+		            setAllSelected(true);
+		            btnSelectAll.setText("Deselect All");
+		        }
+		    }
+		});
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup().addContainerGap()
-								.addComponent(addButton).addGap(18)
-								.addComponent(countError)
-								.addContainerGap(135, Short.MAX_VALUE))
-				.addComponent(jScrollPane1, Alignment.TRAILING,
-						GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addComponent(jScrollPane1,
-										GroupLayout.DEFAULT_SIZE, 255,
-										Short.MAX_VALUE)
-								.addGap(11)
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(addButton)
-												.addComponent(countError))
-								.addContainerGap()));
+		layout.setHorizontalGroup(
+		    layout.createParallelGroup(Alignment.LEADING)
+		        .addGroup(layout.createSequentialGroup()
+		            .addContainerGap()
+		            .addComponent(btnSelectAll)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(addButton)
+		            .addGap(18)
+		            .addComponent(countError)
+		            .addContainerGap(121, Short.MAX_VALUE))
+		        .addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+		);
+		layout.setVerticalGroup(
+		    layout.createParallelGroup(Alignment.LEADING)
+		        .addGroup(layout.createSequentialGroup()
+		            .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+		            .addGap(11)
+		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(addButton)
+		                .addComponent(countError)
+		                .addComponent(btnSelectAll))
+		            .addContainerGap())
+		);
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
 
+	private boolean allSelected = false;
 	private void setAllSelected(boolean select) {
+	    allSelected = select;
 		DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
 		for (int i = 0; i < model.getRowCount(); i++) {
 			model.setValueAt(select, i, 0);
 		}
-		requirementsTable.setModel(model);
+	}
+	
+	private void checkAllSelected() {
+	    DefaultTableModel model = (DefaultTableModel) requirementsTable
+                .getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (!(Boolean) model.getValueAt(i, 0)) {
+                allSelected = false;
+                btnSelectAll.setText("Select All");
+                return;
+            }
+        }
+        allSelected = true;
+        btnSelectAll.setText("Deselect All");
 	}
 
 	public void addRequirement(GameRequirementModel r) {
@@ -223,64 +233,13 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	}
 
 	private NewGamePanel parent;
-	private SelectionTableHeadRenderer addAllSelect;
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton addButton;
 	private javax.swing.JLabel countError;
 	private javax.swing.JScrollPane jScrollPane1;
 	protected javax.swing.JTable requirementsTable;
+	private JButton btnSelectAll;
 
 	// End of variables declaration//GEN-END:variables
-
-	private class SelectionTableHeadRenderer extends JCheckBox implements
-			TableCellRenderer, MouseListener {
-
-		/**
-         * 
-         */
-		private static final long serialVersionUID = 2375539707024199617L;
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
-			return this;
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(e);
-			if (requirementsTable.getColumnModel().getColumnIndexAtX(e.getX()) == 0) {
-
-				doClick();
-				requirementsTable.getTableHeader().repaint();
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 }
