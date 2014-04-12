@@ -122,6 +122,17 @@ public class GameRequirementModel extends AbstractModel {
     }
     
     /**
+     * Updates an estimate with a new one
+     * @param old the old estimate
+     * @param updated the new estimate
+     */
+    public void UpdateEstimate(Estimate old, Estimate updated){
+        estimates.remove(old);
+        estimates.add(updated);
+        Collections.sort(estimates);
+    }
+    
+    /**
      * Computes the median of all of the estimates
      * 
      * @return the median

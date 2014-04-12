@@ -18,6 +18,13 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
+/**
+ * This handles all requests for requirements
+ * 
+ * TODO @author
+ *
+ */
+
 public class GetRequirementsRequestObserver implements RequestObserver {
     
     private GetRequirementsController controller;
