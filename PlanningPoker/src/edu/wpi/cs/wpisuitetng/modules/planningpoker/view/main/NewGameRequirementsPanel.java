@@ -27,6 +27,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
 
 /**
  * 
@@ -45,7 +48,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	 * Creates new form GameRequirements
 	 */
 	public NewGameRequirementsPanel() {
+	    setBackground(Color.WHITE);
 		initComponents();
+		requirementsTableScrollPane.getViewport().setBackground(Color.WHITE);
 		requirementsTable.getModel().addTableModelListener(
 				new TableModelListener() {
 
@@ -84,7 +89,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-		jScrollPane1 = new javax.swing.JScrollPane();
+		requirementsTableScrollPane = new javax.swing.JScrollPane();
 		requirementsTable = new javax.swing.JTable();
 		addButton = new javax.swing.JButton();
 		countError = new javax.swing.JLabel();
@@ -107,7 +112,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
 
-		jScrollPane1.setViewportView(requirementsTable);
+		requirementsTableScrollPane.setViewportView(requirementsTable);
 		if (requirementsTable.getColumnModel().getColumnCount() > 0) {
 			requirementsTable.getColumnModel().getColumn(0).setMinWidth(60);
 			requirementsTable.getColumnModel().getColumn(0).setMaxWidth(60);
@@ -137,6 +142,8 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		        }
 		    }
 		});
+		
+		JLabel lblGameRequirements = new JLabel("Game Requirements:");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(
@@ -148,13 +155,20 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		            .addComponent(addButton)
 		            .addGap(18)
 		            .addComponent(countError)
-		            .addContainerGap(121, Short.MAX_VALUE))
-		        .addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+		            .addContainerGap(40, Short.MAX_VALUE))
+		        .addGroup(layout.createSequentialGroup()
+		            .addContainerGap()
+		            .addComponent(lblGameRequirements)
+		            .addContainerGap(340, Short.MAX_VALUE))
+		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 		);
 		layout.setVerticalGroup(
 		    layout.createParallelGroup(Alignment.LEADING)
-		        .addGroup(layout.createSequentialGroup()
-		            .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+		        .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+		            .addContainerGap()
+		            .addComponent(lblGameRequirements)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
 		            .addGap(11)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(addButton)
@@ -237,9 +251,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton addButton;
 	private javax.swing.JLabel countError;
-	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JScrollPane requirementsTableScrollPane;
 	protected javax.swing.JTable requirementsTable;
 	private JButton btnSelectAll;
-
-	// End of variables declaration//GEN-END:variables
 }
