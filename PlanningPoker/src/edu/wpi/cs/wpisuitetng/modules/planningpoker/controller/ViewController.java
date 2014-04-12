@@ -158,4 +158,11 @@ public class ViewController {
         }
     }
     
+    /**
+     * closes a game so it can't be edited
+     */
+    public void closeGame(){
+        //TODO implement method
+    }
+    
 }

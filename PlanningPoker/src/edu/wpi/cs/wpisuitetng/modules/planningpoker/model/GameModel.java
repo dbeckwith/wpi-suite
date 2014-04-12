@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 public class GameModel extends AbstractModel {
     
     public static enum GameStatus {
-        PENDING("Pending"), COMPLETE("Complete");
+        PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
         
         public String name;
         
@@ -142,7 +142,7 @@ public class GameModel extends AbstractModel {
         this.owner = owner;
         status_observers = new ArrayList<>();
     }
-
+    
     /**
      * @return the name of this game
      */
@@ -168,7 +168,7 @@ public class GameModel extends AbstractModel {
     public String getOwner() {
         return owner;
     }
-
+    
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
@@ -215,7 +215,7 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
-     *            whether or not the game should be ended
+     *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
         GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
@@ -231,14 +231,30 @@ public class GameModel extends AbstractModel {
      * If the current time is past the end date of the game, set the game as
      * ended.
      * 
-     * @return whether the game has ended
+     * @return whether the game has ended or is closed
      */
     public boolean isEnded() {
         if (endDate != null
                 && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
-        return (status == GameStatus.COMPLETE);
+        return (status == GameStatus.COMPLETE || status == GameStatus.CLOSED);
+    }
+    
+    /**
+     * Returns whether the game is closed
+     * 
+     * @return whether the game has been closed
+     */
+    public boolean isClosed() {
+        return (status == GameStatus.CLOSED);
+    }
+    
+    /**
+     * sets the game status to closed so that no more edits can be made
+     */
+    public void closeGame() {
+        status = GameStatus.CLOSED;
     }
     
     @Override
