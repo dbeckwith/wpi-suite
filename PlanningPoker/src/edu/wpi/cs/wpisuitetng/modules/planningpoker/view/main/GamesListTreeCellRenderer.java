@@ -41,7 +41,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         ImageIcon icon = null;
-
+        
         setFont(getFont().deriveFont(Font.PLAIN));
         
         if (node.getUserObject() instanceof GameModel) {
@@ -51,22 +51,27 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
             } else {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
-
+                
                 if (game.getRequirements() != null) {
                     boolean hasUnvotedReqs = false;
-                    req_loop: for (GameRequirementModel req : game.getRequirements()) {
+                    req_loop: for (GameRequirementModel req : game
+                            .getRequirements()) {
                         if (req.getEstimates() != null) {
                             boolean voted = false;
                             for (Estimate e : req.getEstimates()) {
-                                if (e.getUsername() != null
+                                if (e != null
+                                        && e.getUsername() != null
                                         && e.getUsername().equals(
-                                                CurrentUserController.getInstance()
-                                                        .getUser().getUsername())) {
+                                                CurrentUserController
+                                                        .getInstance()
+                                                        .getUser()
+                                                        .getUsername())) {
                                     voted = true;
                                     break req_loop;
                                 }
                             }
-                            if (!voted) hasUnvotedReqs = true;
+                            if (!voted)
+                                hasUnvotedReqs = true;
                         }
                     }
                     if (hasUnvotedReqs) {
