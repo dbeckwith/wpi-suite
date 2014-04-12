@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
@@ -16,6 +27,11 @@ public class ViewController {
     
     private MainView mainView;
     private ToolbarView toolbar;
+    
+    /**
+     * indicates if admin buttons are being shown if all games panel is selected
+     */
+    private boolean showAdmin;
     
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
@@ -116,10 +132,28 @@ public class ViewController {
                 && game.getOwner().equals(
                         ConfigManager.getConfig().getUserName())
                 && !game.isEnded()) {
-            toolbar.showAdmin();
+            toolbar.setAdminVisibility(true);
+            showAdmin = true;
         }
         else {
-            toolbar.hideAdmin();
+            toolbar.setAdminVisibility(false);
+            showAdmin = false;
+        }
+    }
+    
+    /**
+     * changes state of admin buttons when a different tab in mainView is
+     * displayed
+     * 
+     * @param index
+     *        the tab now being displayed.
+     */
+    public void tabChanged(int index) {
+        if (showAdmin && index == 0) {
+            toolbar.setAdminVisibility(true);
+        }
+        else {
+            toolbar.setAdminVisibility(false);
         }
     }
     
