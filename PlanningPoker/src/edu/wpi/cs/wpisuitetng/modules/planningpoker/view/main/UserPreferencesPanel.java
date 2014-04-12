@@ -15,6 +15,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -61,19 +65,14 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         notificationsPanel = new javax.swing.JPanel();
+        notificationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Notification Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
         emailBox = new javax.swing.JCheckBox();
         emailBox.setBackground(Color.WHITE);
         imBox = new javax.swing.JCheckBox();
         imBox.setBackground(Color.WHITE);
         
-        notificationsPanel.setBorder(javax.swing.BorderFactory
-                .createTitledBorder(null, "Notifications",
-                        javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                        javax.swing.border.TitledBorder.DEFAULT_POSITION, null,
-                        java.awt.Color.black));
-        
-        emailBox.setText("Receive e-mail");
+        emailBox.setText("Receive E-mail");
         emailBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,27 +124,21 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                                         .addComponent(emailBox)));
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        layout.setHorizontalGroup(
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(399, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(368, Short.MAX_VALUE))
+        );
         setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(notificationsPanel,
-                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                Short.MAX_VALUE)));
-        layout.setVerticalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(notificationsPanel,
-                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                Short.MAX_VALUE)));
     }// </editor-fold>//GEN-END:initComponents
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBoxActionPerformed
