@@ -47,7 +47,7 @@ public class AdminButtons extends ToolbarGroupView {
         endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
         
         closeGameButton = new JButton("<html>Close<br/>Game</html>");
-        //TODO set icon here
+        closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);
@@ -81,9 +81,11 @@ public class AdminButtons extends ToolbarGroupView {
     
     /**
      * sets whether the endGame button is Enabled
-     * @param b whether the button should be enabled
+     * 
+     * @param b
+     *        whether the button should be enabled
      */
-    public void setEndGameEnabled (boolean b){
+    public void setEndGameEnabled(boolean b) {
         endGameButton.setEnabled(b);
     }
 }
