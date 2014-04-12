@@ -191,7 +191,7 @@ public class VotePanel extends javax.swing.JPanel {
         completedVotesField = new javax.swing.JLabel();
         votesProgressBar = new javax.swing.JProgressBar();
         
-        estimateLabel.setText("Estimate:");
+        estimateLabel.setText("Select Your Estimate:");
         
         voteField.setText("Votes:");
         
