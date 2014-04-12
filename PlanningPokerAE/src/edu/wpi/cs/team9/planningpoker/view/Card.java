@@ -68,6 +68,10 @@ public class Card implements View.OnClickListener{
 	public View getView(){
 		return view;
 	}
+	
+	public float getValue(){
+		return value;
+	}
 
 	@Override
 	public void onClick(View v) {

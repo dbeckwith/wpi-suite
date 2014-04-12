@@ -124,13 +124,6 @@ public class VotePanel extends javax.swing.JPanel {
     
 
     private void selectEstimateCard() {
-    	
-        new Thread() {
-            @Override
-            public void run() {
-                UpdateGamesController.getInstance().updateGame(parentGame);
-            }
-        }.start();
         
         ArrayList<Estimate> estimates = req.getEstimates();
         for(Estimate e:estimates){
@@ -152,6 +145,8 @@ public class VotePanel extends javax.swing.JPanel {
         System.out.println("Estimate = "+estimate);
         
        req.addEstimate(new Estimate(currentUser, estimate));
+
+       UpdateGamesController.getInstance().updateGame(parentGame);
     }
     
     protected void setRequirementProgress(int numCompleted, int total) {

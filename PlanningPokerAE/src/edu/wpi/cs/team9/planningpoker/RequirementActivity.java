@@ -16,14 +16,15 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.team9.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment;
 import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment.RequirementListListener;
 import edu.wpi.cs.team9.planningpoker.view.RequirementFragment;
+import edu.wpi.cs.team9.planningpoker.view.RequirementFragment.RequirementFragmentListener;
 
-public class RequirementActivity extends Activity implements
-		ActionBar.TabListener {
+public class RequirementActivity extends Activity implements RequirementFragmentListener {
 
 	private static final String TAG = RequirementActivity.class.getSimpleName();
 
@@ -41,7 +42,7 @@ public class RequirementActivity extends Activity implements
 		
 		setTitle(String.format("PlanningPoker : %s", game.getName()));
 				
-		requirementAdapter = new RequirementPagerAdapter(getFragmentManager(), game);
+		requirementAdapter = new RequirementPagerAdapter(getFragmentManager(), game, this);
 
 		
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -75,18 +76,8 @@ public class RequirementActivity extends Activity implements
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-		viewPager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void onTabReselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public void updated(GameRequirementModel requirement) {
+		UpdateGamesController.getInstance().updateGame(game);		
 	}
 
 	/**
@@ -96,10 +87,12 @@ public class RequirementActivity extends Activity implements
 	public class RequirementPagerAdapter extends FragmentPagerAdapter {
 		
 		private GameModel game;
-
-		public RequirementPagerAdapter(FragmentManager fm, GameModel game) {
+		private RequirementFragmentListener reqListener;
+		
+		public RequirementPagerAdapter(FragmentManager fm, GameModel game, RequirementFragmentListener rfl) {
 			super(fm);
 			this.game = game;
+			this.reqListener = rfl;
 		}
 
 		@Override
@@ -117,6 +110,7 @@ public class RequirementActivity extends Activity implements
 			} else {
 				RequirementFragment rf = new RequirementFragment();
 				rf.setRequirement(game.getRequirements().get(position-1));
+				rf.setListener(reqListener);
 				return rf;
 			}
 		}
@@ -145,4 +139,5 @@ public class RequirementActivity extends Activity implements
 			}
 		}
 	}
+
 }

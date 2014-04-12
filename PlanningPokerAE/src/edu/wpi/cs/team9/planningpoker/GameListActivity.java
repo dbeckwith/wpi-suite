@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
@@ -58,6 +59,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		setProgressBarIndeterminateVisibility(true);
 		GetGamesController.getInstance().setObserver(this);
 		GetGamesController.getInstance().requestGames();
+		CurrentUserController.getInstance();
 	}
 
 	@Override

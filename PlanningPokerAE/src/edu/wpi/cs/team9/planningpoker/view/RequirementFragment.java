@@ -3,16 +3,22 @@ package edu.wpi.cs.team9.planningpoker.view;
 import java.util.ArrayList;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.R;
+import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.team9.planningpoker.controller.UpdateGamesController;
+import edu.wpi.cs.team9.planningpoker.model.Estimate;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.team9.planningpoker.view.Card.CardListener;
 
@@ -34,6 +40,8 @@ public class RequirementFragment extends Fragment implements CardListener {
 	        TableRow.LayoutParams.MATCH_PARENT,
 	        1.0f);
 	
+	private RequirementFragmentListener listener;
+	
 	private GameRequirementModel requirement;
 	
 	private TextView nameView;
@@ -52,6 +60,10 @@ public class RequirementFragment extends Fragment implements CardListener {
 		this.requirement = req;		
 	}
 	
+	public void setListener(RequirementFragmentListener rfl){
+		listener = rfl;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {		
@@ -66,6 +78,19 @@ public class RequirementFragment extends Fragment implements CardListener {
 		descView.setText(requirement.getDescription());
 		
 		submit = (Button)root.findViewById(R.id.submitButton);
+		submit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+				String userName = prefs.getString("username", "");
+				Log.d(TAG, String.format("submitting estimate for %s : %s", userName, getEstimate()));
+				requirement.addEstimate(new Estimate(CurrentUserController.getInstance().findUser(userName), getEstimate()));
+				if(listener != null){
+					listener.updated(requirement);
+				}
+			}
+		});
 		
 		table = (TableLayout)root.findViewById(R.id.buttonLayout);
 		setUpCardTable();
@@ -116,6 +141,20 @@ public class RequirementFragment extends Fragment implements CardListener {
 				submit.setEnabled(false);	
 			}
 		}
+	}
+	
+	public float getEstimate(){
+		float estimate = 0;
+		for(Card c:cards){
+			if(c.isCardSelected()){
+				estimate += c.getValue();				
+			}
+		}
+		return estimate;
+	}
+	
+	public interface RequirementFragmentListener{
+		public void updated(GameRequirementModel requirement);
 	}
 }
 
