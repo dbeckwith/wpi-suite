@@ -42,7 +42,7 @@ public class GameListModelTest {
     
     @Test
     public void testAddListListener() {
-        final SimpleListObserver slo = new SimpleListObserver() {
+        SimpleListObserver slo = new SimpleListObserver() {
             @Override
             public void listUpdated() {
             }
@@ -57,10 +57,10 @@ public class GameListModelTest {
     
     @Test
     public void testGameManipulation() {
-        final GameModel game1 = new GameModel(1, "Test Game",
+        GameModel game1 = new GameModel(1, "Test Game",
                 "Test Game Description", null, new Date(), null,
                 GameStatus.PENDING);
-        final GameModel game2 = new GameModel(2, "Test Game 2",
+        GameModel game2 = new GameModel(2, "Test Game 2",
                 "Test Game Description 2", null, new Date(), null,
                 GameStatus.COMPLETE);
         GameListModelTest.instance.addGame(game1);

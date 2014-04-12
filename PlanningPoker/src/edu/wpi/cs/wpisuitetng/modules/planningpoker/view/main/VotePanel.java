@@ -132,7 +132,7 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }.start();
         
-        final ArrayList<Estimate> estimates = req.getEstimates();
+        ArrayList<Estimate> estimates = req.getEstimates();
         for(Estimate e:estimates){
         	if(e.getUsername().equals(currentUser.getUsername())){
         		return;
@@ -181,22 +181,22 @@ public class VotePanel extends javax.swing.JPanel {
         
         completedVotesField.setText("0/0");
         
-        final JLabel lblRequirement = new JLabel("Requirement:");
+        JLabel lblRequirement = new JLabel("Requirement:");
         
-        final JScrollPane scrollPane = new JScrollPane();
+        JScrollPane scrollPane = new JScrollPane();
         
-        final JScrollPane scrollPane_1 = new JScrollPane();
+        JScrollPane scrollPane_1 = new JScrollPane();
         
         requirementNameLabel = new JLabel("");
         
-        final JLabel lblDescription = new JLabel("Description:");
+        JLabel lblDescription = new JLabel("Description:");
         
-        final JLabel lblType = new JLabel("Type:");
+        JLabel lblType = new JLabel("Type:");
         
         requirementType = new JLabel("");
         
         btnSubmit = new JButton("Submit");
-        btnSubmit.addActionListener(new ActionListener() {
+        btnSubmit.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selectEstimateCard();
@@ -204,7 +204,7 @@ public class VotePanel extends javax.swing.JPanel {
 		});
         btnSubmit.setEnabled(false);
         
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
@@ -331,7 +331,7 @@ public class VotePanel extends javax.swing.JPanel {
     
     private JButton btnSubmit;
     
-    private final ArrayList<CardButton> cards;
+    private ArrayList<CardButton> cards;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel completedVotesField;

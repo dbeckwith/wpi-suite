@@ -130,9 +130,9 @@ public class GameRequirementModel extends AbstractModel {
         if (estimates.isEmpty()) {
             return 0;
         }
-        final ArrayList<Estimate> estimates_copy = new ArrayList<>(estimates);
+        ArrayList<Estimate> estimates_copy = new ArrayList<>(estimates);
         Collections.sort(estimates_copy);
-        final int count = estimates_copy.size();
+        int count = estimates_copy.size();
         if (estimates_copy.size() % 2 == 1) {
             return estimates_copy.get(count / 2).getEstimate();
         } else {

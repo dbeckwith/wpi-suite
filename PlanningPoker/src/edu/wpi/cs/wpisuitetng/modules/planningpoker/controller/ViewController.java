@@ -27,8 +27,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 
 public class ViewController {
     
-    private final MainView mainView;
-    private final ToolbarView toolbar;
+    private MainView mainView;
+    private ToolbarView toolbar;
     
     /**
      * indicates if admin buttons are being shown if all games panel is selected
@@ -115,7 +115,7 @@ public class ViewController {
      * Called to manually end estimation on the currently selected game
      */
     public void endEstimation() {
-        final GameModel curr = mainView.getMainPanel().getSelectedGame();
+        GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);

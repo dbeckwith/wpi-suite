@@ -26,10 +26,10 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class EmailController extends AbstractUserController {
     
-    private final String username = "team9wpi";
-    private final String from = "team9wpi@gmail.com"; // GMail user name
-    private final String password = "team9ftw"; // GMail password
-    private final String subject = "A new Planning Poker game has begun!";
+    private String username = "team9wpi";
+    private String from = "team9wpi@gmail.com"; // GMail user name
+    private String password = "team9ftw"; // GMail password
+    private String subject = "A new Planning Poker game has begun!";
     private String body;
     
     /**
@@ -58,7 +58,7 @@ public class EmailController extends AbstractUserController {
      * Sets the body of the email
      */
     private void setBody() {
-        final String username = ConfigManager.getConfig().getUserName();
+        String username = ConfigManager.getConfig().getUserName();
         for (User u : getUsers()) {
             if (u.getUsername().equals(username)) {
                 this.body = u.getName()

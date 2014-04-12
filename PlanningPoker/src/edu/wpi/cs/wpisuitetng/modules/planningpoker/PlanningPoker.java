@@ -50,17 +50,17 @@ public class PlanningPoker implements IJanewayModule {
 		tabs = new ArrayList<JanewayTabModel>();
 		
 		// setup toolbar
-		final ToolbarView toolbar = new ToolbarView();
+		ToolbarView toolbar = new ToolbarView();
 		
 		// setup main panel
-		final MainView mainPanel = new MainView();
+		MainView mainPanel = new MainView();
 		
 		
 		PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
 		
 		// Create a tab model that contains the toolbar panel and the main
 		// content panel
-		final JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
+		JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
 				toolbar, mainPanel);
 		
 		// Add the tab to the list of tabs owned by this module

@@ -32,12 +32,12 @@ public class PlanningPokerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        final PlanningPoker poker = new PlanningPoker();
-        final ViewController vc = PlanningPoker.getViewController();
+        PlanningPoker poker = new PlanningPoker();
+        ViewController vc = PlanningPoker.getViewController();
         Assert.assertSame("PlanningPoker", poker.getName());
         Assert.assertSame("PlanningPoker", poker.getTabs().get(0).getName());
-        final MainView mv = vc.getMainView();
-        final int before = mv.getTabCount();
+        MainView mv = vc.getMainView();
+        int before = mv.getTabCount();
         vc.addNewGameTab();
         Assert.assertEquals(before + 1, mv.getTabCount());
     }

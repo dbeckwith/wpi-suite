@@ -53,7 +53,7 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-    private final String owner;
+    private String owner;
     
     /**
      * Default constructor creates instance with invalid id and null fields
@@ -218,7 +218,7 @@ public class GameModel extends AbstractModel {
      *            whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
-        final GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
         if (status != new_status) {
             status = new_status;
             for (int i = 0; i < status_observers.size(); i++) {
@@ -264,14 +264,14 @@ public class GameModel extends AbstractModel {
     
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
-        final GameModel gm = parser.fromJson(json, GameModel.class);
+        GameModel gm = parser.fromJson(json, GameModel.class);
         gm.status_observers = new ArrayList<>();
         return gm;
     }
     
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
-        final GameModel[] gms = parser.fromJson(json, GameModel[].class);
+        GameModel[] gms = parser.fromJson(json, GameModel[].class);
         for (GameModel gm : gms) {
             gm.status_observers = new ArrayList<>();
         }

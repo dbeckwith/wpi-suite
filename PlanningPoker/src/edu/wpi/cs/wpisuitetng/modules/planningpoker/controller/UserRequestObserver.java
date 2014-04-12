@@ -29,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class UserRequestObserver implements RequestObserver {
     
-    private final AbstractUserController controller;
+    private AbstractUserController controller;
     
     /**
      * Creates a new UserRequestController
@@ -41,13 +41,13 @@ public class UserRequestObserver implements RequestObserver {
 
     @Override
     public void responseSuccess(IRequest iReq) {
-        final Gson gson;
-        final GsonBuilder builder = new GsonBuilder();
+        Gson gson;
+        GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(User.class, new UserDeserializer());
         gson = builder.create();
         
-        final String response = iReq.getResponse().getBody();
-        final User[] users = gson.fromJson(response, User[].class);
+        String response = iReq.getResponse().getBody();
+        User[] users = gson.fromJson(response, User[].class);
         controller.receivedUsers(users);  
     }
 

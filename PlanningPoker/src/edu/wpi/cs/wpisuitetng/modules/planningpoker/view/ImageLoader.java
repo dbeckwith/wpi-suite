@@ -49,7 +49,7 @@ public class ImageLoader {
             bImg = ImageLoader.images.get(file); //get the image from the list
         } else {
             try {
-                final URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
+                URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
                 System.out.println(u.toString());
                 bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
                 if (bImg != null) {
@@ -72,7 +72,7 @@ public class ImageLoader {
      */
     public static ImageIcon getIcon(String file) {
         ImageIcon icon = null;
-        final BufferedImage image = ImageLoader.getImage(file);
+        BufferedImage image = ImageLoader.getImage(file);
         if (image != null) {
             icon = new ImageIcon(image);
         }

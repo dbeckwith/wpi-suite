@@ -52,7 +52,7 @@ public class MockData implements Data {
     @SuppressWarnings("unchecked")
     @Override
     public <T> List<T> deleteAll(T arg0) {
-        final List<T> deleted = new ArrayList<T>();
+        List<T> deleted = new ArrayList<T>();
         for (Object obj : objects) {
             if (arg0.getClass().isInstance(obj)) {
                 deleted.add((T) obj);
@@ -66,7 +66,7 @@ public class MockData implements Data {
     @SuppressWarnings("rawtypes")
     @Override
     public List<Model> retrieve(Class type, String fieldName, Object value) {
-        final List<Model> rv = new ArrayList<Model>();
+        List<Model> rv = new ArrayList<Model>();
         for (Object obj : objects) {
             if (!type.isInstance(obj)) {
                 continue;
@@ -97,7 +97,7 @@ public class MockData implements Data {
     @SuppressWarnings("unchecked")
     @Override
     public <T> List<T> retrieveAll(T arg0) {
-        final List<T> all = new ArrayList<T>();
+        List<T> all = new ArrayList<T>();
         for (Object obj : objects) {
             if (arg0.getClass().isInstance(obj)) {
                 all.add((T) obj);
@@ -138,7 +138,7 @@ public class MockData implements Data {
     
     @Override
     public <T> List<Model> deleteAll(T arg0, Project arg1) {
-        final List<Model> toDelete = retrieveAll(arg0, arg1);
+        List<Model> toDelete = retrieveAll(arg0, arg1);
         objects.removeAll(toDelete);
         return toDelete;
     }
@@ -152,7 +152,7 @@ public class MockData implements Data {
     }
     
     private List<Model> filterByProject(List<Model> models, Project project) {
-        final List<Model> filteredModels = new ArrayList<Model>();
+        List<Model> filteredModels = new ArrayList<Model>();
         for (Model m : models) {
             if (m.getProject().getName().equalsIgnoreCase(project.getName())) {
                 filteredModels.add(m);

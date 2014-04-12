@@ -43,10 +43,10 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     private static final long serialVersionUID = -4216338772150454616L;
     
-    private final ArrayList<GameModel> games;
-    private final ArrayList<SimpleListObserver> observers;
-    private final ArrayList<GameStatusObserver> status_observers;
-    private final GameStatusObserver game_observer;
+    private ArrayList<GameModel> games;
+    private ArrayList<SimpleListObserver> observers;
+    private ArrayList<GameStatusObserver> status_observers;
+    private GameStatusObserver game_observer;
     
     /**
      * Constructor that initializes list of games, list of observers, a
@@ -130,7 +130,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Empties the list of games.
      */
     public void emptyModel() {
-        final int numGames = games.size();
+        int numGames = games.size();
         for (int i = 0; i < numGames; i++) {
             removeAndUnregisterGame(games.get(0));
         }
@@ -146,7 +146,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      *            the games to be included in the list model
      */
     public void setGames(GameModel[] gs) {
-        final int numGames = games.size();
+        int numGames = games.size();
         for (int i = 0; i < numGames; i++) {
             removeAndUnregisterGame(games.get(0));
         }

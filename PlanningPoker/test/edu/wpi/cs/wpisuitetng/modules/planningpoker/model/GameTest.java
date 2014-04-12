@@ -27,7 +27,7 @@ public class GameTest {
     
     @Test
     public void TestRequirementEndsAfterDeadline() {
-        final GameModel testgame = new GameModel(1, "Test Game", "something", null,
+        GameModel testgame = new GameModel(1, "Test Game", "something", null,
                 new Date(System.currentTimeMillis() - 100000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         Assert.assertTrue(testgame.isEnded());
@@ -35,7 +35,7 @@ public class GameTest {
     
     @Test
     public void TestRequirementNotCompleteBeforeDeadline() {
-        final GameModel testgame = new GameModel(2, "Test Game", "something", null,
+        GameModel testgame = new GameModel(2, "Test Game", "something", null,
                 new Date(System.currentTimeMillis() + 100000000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         Assert.assertFalse(testgame.isEnded());

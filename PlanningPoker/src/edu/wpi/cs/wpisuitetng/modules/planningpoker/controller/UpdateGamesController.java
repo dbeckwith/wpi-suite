@@ -15,7 +15,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class UpdateGamesController {
     
     private static UpdateGamesController instance;
-    private final UpdateGamesRequestObserver observer;
+    private UpdateGamesRequestObserver observer;
     
     /**
      * Construct an UpdateGamesController for the given model, view pair
@@ -44,7 +44,7 @@ public class UpdateGamesController {
      *            is the game to be updated on the server.
      */
     public void updateGame(GameModel newGame) {
-        final Request request = Network.getInstance().makeRequest(
+        Request request = Network.getInstance().makeRequest(
                 "planningpoker/game", HttpMethod.POST); // POST == update
         request.setBody(newGame.toJSON()); // put the new game in the body of
         // the request

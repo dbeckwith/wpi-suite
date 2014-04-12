@@ -11,6 +11,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -18,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 public class GetRequirementsRequestObserver implements RequestObserver {
     
-    private final GetRequirementsController controller;
+    private GetRequirementsController controller;
     
     /**
      * Constructs the observer given a GetRequirementsController
@@ -39,17 +41,19 @@ public class GetRequirementsRequestObserver implements RequestObserver {
     @Override
     public void responseSuccess(IRequest iReq) {
         // Convert the JSON array of requirements to a Requirement object array
-        final Requirement[] requirements = Requirement.fromJsonArray(iReq
+        Requirement[] requirements = Requirement.fromJsonArray(iReq
                 .getResponse().getBody());
         
-        final GameRequirementModel[] game_reqs = new GameRequirementModel[requirements.length];
+        ArrayList<GameRequirementModel> game_reqs = new ArrayList<>();
         
-        for (int i = 0; i < requirements.length; i++) {
-            game_reqs[i] = new GameRequirementModel(requirements[i]);
+        for (Requirement req : requirements) {
+            if (req.getIteration().equals("Backlog")) {
+                game_reqs.add(new GameRequirementModel(req));
+            }
         }
         
         // Pass these Requirements to the controller
-        controller.receivedRequirements(game_reqs);
+        controller.receivedRequirements(game_reqs.toArray(new GameRequirementModel[0]));
     }
     
     /**
@@ -68,7 +72,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {
-        final GameRequirementModel[] errorRequirement = { new GameRequirementModel(
+        GameRequirementModel[] errorRequirement = { new GameRequirementModel(
                 new Requirement(6, "Error", "error desc")) };
         controller.receivedRequirements(errorRequirement);
     }

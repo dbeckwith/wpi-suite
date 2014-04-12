@@ -25,8 +25,8 @@ public class RequirementDescriptionPanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = 6869910614623975734L;
-    private final VotePanel votePanel;
-    private final CompletedRequirementPanel completedPanel;
+    private VotePanel votePanel;
+    private CompletedRequirementPanel completedPanel;
     
     /**
      * Create the panel.

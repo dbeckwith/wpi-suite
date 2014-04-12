@@ -38,9 +38,9 @@ public class ViewControllerTest {
     
     @Test
     public void testAddNewGameTab() {
-        final MainView mv = new MainView();
-        final ViewController vc = new ViewController(mv, new ToolbarView());
-        final int before = mv.getTabCount();
+        MainView mv = new MainView();
+        ViewController vc = new ViewController(mv, new ToolbarView());
+        int before = mv.getTabCount();
         vc.addNewGameTab();
         Assert.assertEquals(before + 1, mv.getTabCount());
         Assert.assertSame("New Game", mv.getTitleAt(before));
@@ -48,31 +48,31 @@ public class ViewControllerTest {
     
     @Test
     public void testSaveNewGame() {
-        final MainView mv = new MainView();
-        final ViewController vc = new ViewController(mv, new ToolbarView());
-        final int count = mv.getTabCount();
+        MainView mv = new MainView();
+        ViewController vc = new ViewController(mv, new ToolbarView());
+        int count = mv.getTabCount();
         vc.addNewGameTab();
-        final NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
+        NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
         vc.saveNewGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
     }
     
     @Test
     public void testCancelNewGame() {
-        final MainView mv = new MainView();
-        final ViewController vc = new ViewController(mv, new ToolbarView());
-        final int count = mv.getTabCount();
+        MainView mv = new MainView();
+        ViewController vc = new ViewController(mv, new ToolbarView());
+        int count = mv.getTabCount();
         vc.addNewGameTab();
-        final NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
+        NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
         vc.cancelNewGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
     }
     
     @Test
     public void testAddUserPrefsTab() {
-        final MainView mv = new MainView();
-        final ViewController vc = new ViewController(mv, new ToolbarView());
-        final int before = mv.getTabCount();
+        MainView mv = new MainView();
+        ViewController vc = new ViewController(mv, new ToolbarView());
+        int before = mv.getTabCount();
         vc.addUserPrefsTab();
         Assert.assertEquals(before + 1, mv.getTabCount());
         Assert.assertSame("Preferences", mv.getTitleAt(before));

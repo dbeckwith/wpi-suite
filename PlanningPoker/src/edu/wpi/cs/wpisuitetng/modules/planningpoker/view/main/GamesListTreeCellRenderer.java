@@ -38,11 +38,11 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
                 row, hasFocus);
         
-        final DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         ImageIcon icon = null;
         
         if (node.getUserObject() instanceof GameModel) {
-            final GameModel game = (GameModel) node.getUserObject();
+            GameModel game = (GameModel) node.getUserObject();
             
             if (game.isEnded()) {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
@@ -50,7 +50,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
             }
         } else if (node.getUserObject() instanceof GameRequirementModel) {
-            final GameRequirementModel req = (GameRequirementModel) node
+            GameRequirementModel req = (GameRequirementModel) node
                     .getUserObject();
             
             for (Estimate e : req.getEstimates()) {

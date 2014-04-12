@@ -27,8 +27,8 @@ public class RequirementsListModel extends
 
     private static RequirementsListModel instance = null;
     
-    private final ArrayList<GameRequirementModel> requirements;
-    private final ArrayList<SimpleListObserver> observers;
+    private ArrayList<GameRequirementModel> requirements;
+    private ArrayList<SimpleListObserver> observers;
     
     private RequirementsListModel() {
         requirements = new ArrayList<GameRequirementModel>();
