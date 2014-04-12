@@ -24,6 +24,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jdesktop.swingx.JXDatePicker;
 import java.awt.Color;
+import java.awt.Dimension;
 
 /**
  * 
@@ -112,14 +113,16 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 			}
 		});
 
-		selectDeadline.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				validateDeadline();
-				parent.check();
-			}
-		});
+		selectDeadline.addChangeListener(new ChangeListener() {
+            
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                validateDeadline();
+                parent.check();
+            }
+        });
+		
+		validateDeadline();
 	}
 
 	/**
@@ -139,7 +142,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		descriptionField = new javax.swing.JTextPane();
 		selectDeadline = new javax.swing.JCheckBox();
 		selectDeadline.setBackground(Color.WHITE);
-		selectDeadline.setSelected(true);
 		distributed = new javax.swing.JRadioButton();
 		distributed.setBackground(Color.WHITE);
 		live = new javax.swing.JRadioButton();
@@ -169,7 +171,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		descriptionError.setText("* Required field!");
 		descriptionError.setFocusable(false);
 
-		datePicker = new JXDatePicker(new Date());
+		datePicker = new JXDatePicker(getDefaultDate());
 
 		JLabel lblDate = new JLabel("Date:");
 
@@ -178,15 +180,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
 				"h:mm a");
 		timeSpinner.setEditor(dEdit);
-		timeSpinner.setValue(new Date());
-
-		selectDeadline.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				datePicker.setEnabled(selectDeadline.isSelected());
-				timeSpinner.setEnabled(selectDeadline.isSelected());
-			}
-		});
+		timeSpinner.setValue(getDefaultDate());
 
 		deadlineError = new JLabel("Invalid date!");
 		deadlineError.setForeground(new java.awt.Color(255, 0, 0));
@@ -317,6 +311,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
 
+	private Date getDefaultDate() {
+	    Date currentDate=  new Date();
+	    // default date is one hour from now
+	    return new Date(currentDate.getTime() + 1000 * 60 * 60);
+	}
+	
 	public Date getDate() {
 		// We need to go through all of these incantations because almost every
 		// relevant method in Date is deprecated...
@@ -343,6 +343,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 * @return valid
 	 */
 	public boolean validateDeadline() {
+        datePicker.setEnabled(selectDeadline.isSelected());
+        timeSpinner.setEnabled(selectDeadline.isSelected());
+        
 		if (!selectDeadline.isSelected()) {
 			deadlineError.setVisible(false);
 			return true;
