@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
@@ -97,13 +99,12 @@ public class ViewController {
     }
     
     public void cancelNewGame(NewGamePanel e) {
-        // int result = JOptionPane.showConfirmDialog(e,
-        // "Are you sure you want to cancel this game?");
-        // if(result == JOptionPane.OK_OPTION) {
-        RequirementsListModel.getInstance().removeListListener(
-                e.getNewGameRequirementsPanel().getRequirementsListObserver());
-        mainView.removeTabAt(mainView.indexOfComponent(e));
-        // }
+         int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?", "Cancel Game", JOptionPane.OK_CANCEL_OPTION);
+         if(result == JOptionPane.OK_OPTION) {
+	        RequirementsListModel.getInstance().removeListListener(
+	                e.getNewGameRequirementsPanel().getRequirementsListObserver());
+	        mainView.removeTabAt(mainView.indexOfComponent(e));
+        }
     }
     
     public MainView getMainView() {
