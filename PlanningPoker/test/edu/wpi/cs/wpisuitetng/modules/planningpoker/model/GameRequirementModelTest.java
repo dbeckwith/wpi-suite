@@ -30,9 +30,9 @@ public class GameRequirementModelTest {
     public void testMean() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
                 "A requirement", "A Description", "A type");
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
         Assert.assertEquals("testing mean failed", 25, grm.getEstimateMean(), 3);
     }
     
@@ -40,12 +40,12 @@ public class GameRequirementModelTest {
     public void testMedian() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
                 "A requirement", "A Description", "A type");
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
         Assert.assertEquals("testing median failed", 25,
                 grm.getEstimateMedian(), 3);
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 25));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 25, null));
         Assert.assertEquals("testing median failed", 25,
                 grm.getEstimateMedian(), 3);
         
