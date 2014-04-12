@@ -18,69 +18,82 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  *
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
-    private static DeckListModel instance;
-    private ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 3193186441179194894L;
-    private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
-    
-    public static DeckListModel getInstance() {
-        if (DeckListModel.instance == null) {
-            DeckListModel.instance = new DeckListModel();
-        }
-        
-        return DeckListModel.instance;
-    }
-    
-    public void emptyModel() {
-        decks.clear();
-    }
-    
-    /**
-     * Adds a new deck to the list
-     * 
-     * @param deck
-     */
-    public void addDeck(DeckModel deck) {
-        decks.add(deck);
+	private DeckModel defaultDeck;
+	private static DeckListModel instance;
+	private ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
+	private static final long serialVersionUID = 3193186441179194894L;
+	private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
 
-        for (SimpleListObserver o : observers) {
-            o.listUpdated();
-        }
-    }
-    
-    /**
-     * Adds an observer to this model
-     * @param o
-     */
-    public void addObserver(SimpleListObserver o) {
-        observers.add(o);
-    }
-    
-    /**
-     * Gets element at index
-     * 
-     * @param index
-     */
-    @Override
-    public DeckModel getElementAt(int index) {
-        return decks.get(index);
-    }
-    
-    /**
-     * Returns all decks[]
-     */
-    public ArrayList<DeckModel> getDecks() {
-        return decks;
-    }
-    
-    /**
-     * Gets length of decks
-     */
-    @Override
-    public int getSize() {
-        return decks.size();
-    }
+	public static DeckListModel getInstance() {
+		if (DeckListModel.instance == null) {
+			DeckListModel.instance = new DeckListModel();
+		}
+
+		return DeckListModel.instance;
+	}
+
+	public void emptyModel() {
+		decks.clear();
+	}
+
+	/**
+	 * Adds default deck
+	 */
+	public void setDefaultDeck(DeckModel defaultDeck) {
+		this.defaultDeck = defaultDeck;
+	}
+
+	/**
+	 * Gets default deck
+	 */
+	public DeckModel getDefaultDeck() {
+		return defaultDeck;
+	}
+
+	/**
+	 * Adds a new deck to the list
+	 * 
+	 * @param deck
+	 */
+	public void addDeck(DeckModel deck) {
+		decks.add(deck);
+
+		for (SimpleListObserver o : observers) {
+			o.listUpdated();
+		}
+	}
+
+	/**
+	 * Adds an observer to this model
+	 * 
+	 * @param o
+	 */
+	public void addObserver(SimpleListObserver o) {
+		observers.add(o);
+	}
+
+	/**
+	 * Gets element at index
+	 * 
+	 * @param index
+	 */
+	@Override
+	public DeckModel getElementAt(int index) {
+		return decks.get(index);
+	}
+
+	/**
+	 * Returns all decks[]
+	 */
+	public ArrayList<DeckModel> getDecks() {
+		return decks;
+	}
+
+	/**
+	 * Gets length of decks
+	 */
+	@Override
+	public int getSize() {
+		return decks.size();
+	}
 }

@@ -31,6 +31,7 @@ import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
@@ -40,7 +41,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Lukas
  */
 public class NewGamePanel extends JPanel {
-
 	/**
      * 
      */
@@ -53,7 +53,7 @@ public class NewGamePanel extends JPanel {
 	public NewGamePanel() {
 
 		initComponents();
-		
+
 		gameDescription.setEditGamePanel(this);
 		newGameRequirementsPanel.setEditGamePanel(this);
 		newDeckPanel.setEditGamePanel(this);
@@ -212,7 +212,7 @@ public class NewGamePanel extends JPanel {
 
 		newDeckPanel = new NewDeckPanel();
 		newGameRequirementsCard.add(newDeckPanel, "newdeckpanel");
-		
+
 		newRequirementPanel = new JPanel();
 		newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
 		GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
@@ -346,7 +346,7 @@ public class NewGamePanel extends JPanel {
 	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
 		if (!(newGameRequirementsPanel.validateForm() && gameDescription
 				.validateForm())) {
-		    check();
+			check();
 			return;
 		}
 
@@ -366,6 +366,15 @@ public class NewGamePanel extends JPanel {
 	@Override
 	public String getName() {
 		return gameDescription.nameField.getText();
+	}
+
+	/**
+	 * Gets selected deck
+	 * 
+	 * @return
+	 */
+	public DeckModel getDeck() {
+		return gameDescription.getDeck();
 	}
 
 	public String getDescription() {
@@ -402,9 +411,9 @@ public class NewGamePanel extends JPanel {
 	public void checkNewRequirement() {
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
 	}
-	
+
 	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
-	    return newGameRequirementsPanel;
+		return newGameRequirementsPanel;
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables

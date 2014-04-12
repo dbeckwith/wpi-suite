@@ -79,7 +79,7 @@ public class NewDeckPanel extends JPanel {
 
 			public void validate() {
 				for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
-					if (deck.toString().equals(newDeckName.getText()) || newDeckName.getText().equals("default")) {
+					if (deck.toString().equals(newDeckName.getText()) || newDeckName.getText().equals("Default")) {
 						isNameValid = false;
 						deckNameErrorLabel.setText("Name already in use!");
 						deckNameErrorLabel.setVisible(true);

@@ -55,6 +55,7 @@ public class GameModel extends AbstractModel {
 	private GameStatus status;
 	private User[] users;
 	private String owner;
+	private DeckModel deck;
 
 	/**
 	 * Default constructor creates instance with invalid id and null fields
@@ -70,6 +71,7 @@ public class GameModel extends AbstractModel {
 		status_observers = null;
 		users = null;
 		owner = null;
+		deck = DeckListModel.getInstance().getDefaultDeck();
 	}
 
 	/**
@@ -77,6 +79,7 @@ public class GameModel extends AbstractModel {
 	 * 
 	 * @param id
 	 * @param name
+	 * @param deck
 	 * @param description
 	 * @param requirements
 	 * @param end
@@ -85,12 +88,13 @@ public class GameModel extends AbstractModel {
 	 * @param users
 	 */
 	public GameModel(int id, String name, String description,
-			ArrayList<GameRequirementModel> requirements, Date end,
-			GameType type, GameStatus status) {
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date end, GameType type, GameStatus status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
+		this.deck = deck;
 		endDate = end;
 		this.type = type;
 		this.status = status;
@@ -103,6 +107,7 @@ public class GameModel extends AbstractModel {
 	 * Constructor
 	 * 
 	 * @param name
+	 * @param deck
 	 * @param description
 	 * @param requirements
 	 * @param end
@@ -111,12 +116,13 @@ public class GameModel extends AbstractModel {
 	 * @param users
 	 */
 	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, Date end,
-			GameType type, GameStatus status) {
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date end, GameType type, GameStatus status) {
 		id = -1;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
+		this.deck = deck;
 		endDate = end;
 		this.type = type;
 		this.status = status;
@@ -128,6 +134,7 @@ public class GameModel extends AbstractModel {
 	/**
 	 * @param id
 	 * @param name
+	 * @param deck
 	 * @param description
 	 * @param requirements
 	 * @param endDate
@@ -136,12 +143,12 @@ public class GameModel extends AbstractModel {
 	 * @param owner
 	 */
 	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, Date endDate,
-			GameType type, GameStatus status, String owner) {
-		// this.id = id;
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date endDate, GameType type, GameStatus status, String owner) {
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
+		this.deck = deck;
 		this.endDate = endDate;
 		this.type = type;
 		this.status = status;
