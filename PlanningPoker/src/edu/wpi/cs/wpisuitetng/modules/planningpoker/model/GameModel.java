@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
@@ -39,6 +38,7 @@ public class GameModel extends AbstractModel {
 			name = stat;
 		}
 	};
+    
 
 	public static enum GameType {
 		LIVE, DISTRIBUTED
@@ -53,7 +53,6 @@ public class GameModel extends AbstractModel {
 	private Date endDate;
 	private GameType type;
 	private GameStatus status;
-	private User[] users;
 	private String owner;
 	private DeckModel deck;
 
@@ -69,7 +68,6 @@ public class GameModel extends AbstractModel {
 		type = null;
 		status = null;
 		status_observers = null;
-		users = null;
 		owner = null;
 		deck = DeckListModel.getInstance().getDefaultDeck();
 	}
@@ -85,7 +83,6 @@ public class GameModel extends AbstractModel {
 	 * @param end
 	 * @param type
 	 * @param status
-	 * @param users
 	 */
 	public GameModel(int id, String name, String description,
 			ArrayList<GameRequirementModel> requirements, DeckModel deck,
@@ -100,7 +97,6 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		status_observers = new ArrayList<>();
 		owner = ConfigManager.getConfig().getUserName();
-		users = CurrentUserController.getInstance().getUsers();
 	}
 
 	/**
@@ -113,7 +109,6 @@ public class GameModel extends AbstractModel {
 	 * @param end
 	 * @param type
 	 * @param status
-	 * @param users
 	 */
 	public GameModel(String name, String description,
 			ArrayList<GameRequirementModel> requirements, DeckModel deck,
@@ -128,7 +123,6 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		status_observers = new ArrayList<>();
 		owner = ConfigManager.getConfig().getUserName();
-		users = CurrentUserController.getInstance().getUsers();
 	}
 
 	/**
@@ -174,6 +168,13 @@ public class GameModel extends AbstractModel {
 	public String getDescription() {
 		return description;
 	}
+
+    /**
+     * @return the owner
+     */
+    public String getOwner() {
+        return owner;
+    }
 
 	public void addStatusListener(GameStatusObserver gso) {
 		if (!status_observers.contains(gso)) {
@@ -227,52 +228,24 @@ public class GameModel extends AbstractModel {
 		GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
 		if (status != new_status) {
 			status = new_status;
-			for (GameStatusObserver gso : status_observers) {
-				gso.statusChanged(this);
+            for (int i = 0; i < status_observers.size(); i++) {
+                status_observers.get(i).statusChanged(this);
 			}
 		}
 	}
 
 	/**
-	 * Checks if all users have voted on all requirements
-	 * 
-	 * @return whether all users have voted on all requirements
-	 */
-	public boolean checkVoted() {
-		if (requirements == null) {
-			return false;
-		}
-		for (GameRequirementModel r : requirements) {
-			if (r.allVoted(this) == false) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * If the current time is past the end date of the game or all requirements
-	 * have been voted on by all users, set the game to ended.
+     * If the current time is past the end date of the game, set the game as
+     * ended.
 	 * 
 	 * @return whether the game has ended
 	 */
 	public boolean isEnded() {
-		if (checkVoted() == true) {
-			setEnded(true);
-		} else if (endDate != null
+        if (endDate != null
 				&& (endDate.before(new Date(System.currentTimeMillis())))) {
 			setEnded(true);
 		}
 		return (status == GameStatus.COMPLETE);
-	}
-
-	/**
-	 * Gets the array of users
-	 * 
-	 * @return users
-	 */
-	public User[] getUsers() {
-		return users;
 	}
 
 	@Override
@@ -328,8 +301,6 @@ public class GameModel extends AbstractModel {
 		type = g.type;
 		status = g.status;
 		status_observers = g.status_observers;
-		users = g.users;
-		owner = g.owner;
 	}
 
 	/**
@@ -345,13 +316,6 @@ public class GameModel extends AbstractModel {
 		return getName();
 	}
 
-	/**
-	 * @return the owner
-	 */
-	public String getOwner() {
-		return owner;
-	}
-
 	public boolean equals(GameModel other) {
 		return other.id == id && other.name.equals(other.name);
 	}
@@ -364,4 +328,5 @@ public class GameModel extends AbstractModel {
 		else
 			return super.equals(other);
 	}
+    
 }
