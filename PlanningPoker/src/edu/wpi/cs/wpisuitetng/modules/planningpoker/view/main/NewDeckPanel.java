@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.event.ActionEvent;
@@ -9,14 +17,21 @@ import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import java.awt.Color;
-import java.util.regex.Pattern;
 
 import javax.swing.JRadioButton;
+import javax.swing.JTextPane;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+
+import java.awt.SystemColor;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class NewDeckPanel extends JPanel {
 	public NewDeckPanel() {
@@ -35,6 +50,8 @@ public class NewDeckPanel extends JPanel {
 				SpringLayout.SOUTH, deckLabel);
 		springLayout.putConstraint(SpringLayout.WEST, newDeckName, 10,
 				SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, newDeckName, -10,
+				SpringLayout.EAST, this);
 		add(newDeckName);
 		newDeckName.setColumns(10);
 
@@ -72,8 +89,8 @@ public class NewDeckPanel extends JPanel {
 				SpringLayout.WEST, deckLabel);
 		add(cardLabel);
 
-		newDeckCards = new JTextArea();
-		newDeckCards.setLineWrap(true);
+		newDeckCards = new JTextPane();
+		newDeckCards.setForeground(SystemColor.desktop);
 		springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
 				SpringLayout.SOUTH, cardLabel);
 		springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
@@ -82,8 +99,6 @@ public class NewDeckPanel extends JPanel {
 				SpringLayout.SOUTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, newDeckCards, -10,
 				SpringLayout.EAST, this);
-		springLayout.putConstraint(SpringLayout.EAST, newDeckName, 0,
-				SpringLayout.EAST, newDeckCards);
 		add(newDeckCards);
 
 		newDeckCards.getDocument().addDocumentListener(new DocumentListener() {
@@ -106,7 +121,7 @@ public class NewDeckPanel extends JPanel {
 			}
 
 			public void validate() {
-				String pattern = "(\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
+				String pattern = "( *\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
 				areCardsValid = newDeckCards.getText() != null
 						&& !newDeckCards.getText().isEmpty()
 						&& Pattern.matches(pattern, newDeckCards.getText());
@@ -121,6 +136,26 @@ public class NewDeckPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, createDeckButton, -10,
 				SpringLayout.SOUTH, this);
 		add(createDeckButton);
+
+		createDeckButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				String newCards = newDeckCards.getText();
+				String newCardArray[] = newCards.split("[ ,]+");
+				ArrayList<Double> cards = new ArrayList<Double>();
+				for (String newCard : newCardArray) {
+					if (!newCard.isEmpty() && !newCard.equals(null)) {
+						cards.add(Double.parseDouble(newCard));
+					}
+				}
+				DeckModel newDeck = new DeckModel(newDeckName.getText(), cards,
+						multipleSelect.isSelected());
+				AddDeckController.getInstance().addDeck(newDeck);
+				parent.showPanel("reqlistpanel");
+				newDeckName.setText("");
+				newDeckCards.setText("");
+			}
+		});
 
 		cancelCreationButton = new JButton("Cancel Creation");
 		cancelCreationButton.addActionListener(new ActionListener() {
@@ -151,31 +186,40 @@ public class NewDeckPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, cardsErrorLabel, 6,
 				SpringLayout.EAST, cardLabel);
 		add(cardsErrorLabel);
-		
+
 		ButtonGroup selectionGroup = new ButtonGroup();
-		
+
 		JRadioButton singleSelect = new JRadioButton("Single");
 		singleSelect.setSelected(true);
-		springLayout.putConstraint(SpringLayout.WEST, singleSelect, 0, SpringLayout.WEST, deckLabel);
-		springLayout.putConstraint(SpringLayout.SOUTH, singleSelect, -19, SpringLayout.NORTH, createDeckButton);
+		springLayout.putConstraint(SpringLayout.WEST, singleSelect, 0,
+				SpringLayout.WEST, deckLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, singleSelect, -19,
+				SpringLayout.NORTH, createDeckButton);
 		add(singleSelect);
-		
+
 		multipleSelect = new JRadioButton("Multiple");
-		springLayout.putConstraint(SpringLayout.NORTH, multipleSelect, 0, SpringLayout.NORTH, singleSelect);
-		springLayout.putConstraint(SpringLayout.WEST, multipleSelect, 4, SpringLayout.EAST, singleSelect);
+		springLayout.putConstraint(SpringLayout.NORTH, multipleSelect, 0,
+				SpringLayout.NORTH, singleSelect);
+		springLayout.putConstraint(SpringLayout.WEST, multipleSelect, 4,
+				SpringLayout.EAST, singleSelect);
 		add(multipleSelect);
-		
+
 		selectionGroup.add(singleSelect);
 		selectionGroup.add(multipleSelect);
-		
+
 		JLabel selectionLabel = new JLabel("Selection Mode");
-		springLayout.putConstraint(SpringLayout.WEST, selectionLabel, 0, SpringLayout.WEST, deckLabel);
-		springLayout.putConstraint(SpringLayout.SOUTH, selectionLabel, -1, SpringLayout.NORTH, singleSelect);
+		springLayout.putConstraint(SpringLayout.WEST, selectionLabel, 0,
+				SpringLayout.WEST, deckLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, selectionLabel, -1,
+				SpringLayout.NORTH, singleSelect);
 		add(selectionLabel);
-		
-		cardHelpLabel = new JLabel("Please enter a list of numbers separated by commas");
-		springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 6, SpringLayout.SOUTH, newDeckCards);
-		springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0, SpringLayout.WEST, deckLabel);
+
+		cardHelpLabel = new JLabel(
+				"Please enter a list of numbers separated by commas");
+		springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 2,
+				SpringLayout.SOUTH, newDeckCards);
+		springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0,
+				SpringLayout.WEST, deckLabel);
 		add(cardHelpLabel);
 		checkNewDeck();
 	}
@@ -210,7 +254,7 @@ public class NewDeckPanel extends JPanel {
 	private boolean areCardsValid = false;
 	private JLabel deckNameErrorLabel;
 	private JLabel cardsErrorLabel;
-	private JTextArea newDeckCards;
+	private JTextPane newDeckCards;
 	private JRadioButton multipleSelect;
 	private JLabel cardHelpLabel;
 }
