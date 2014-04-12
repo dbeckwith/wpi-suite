@@ -190,7 +190,7 @@ public class NewGamePanel extends JPanel {
 				1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		newRequirementPanel.setLayout(gbl_newRequirementPanel);
 
-		nameLabel = new JLabel("Name:");
+		nameLabel = new JLabel("Requirement Name:");
 		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
 		gbc_nameLabel.anchor = GridBagConstraints.WEST;
 		gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
@@ -218,7 +218,7 @@ public class NewGamePanel extends JPanel {
 		newRequirementPanel.add(newReqName, gbc_newReqName);
 		newReqName.setColumns(10);
 
-		descLabel = new JLabel("Description:");
+		descLabel = new JLabel("Requirement Description:");
 		GridBagConstraints gbc_descLabel = new GridBagConstraints();
 		gbc_descLabel.anchor = GridBagConstraints.WEST;
 		gbc_descLabel.insets = new Insets(0, 0, 5, 5);

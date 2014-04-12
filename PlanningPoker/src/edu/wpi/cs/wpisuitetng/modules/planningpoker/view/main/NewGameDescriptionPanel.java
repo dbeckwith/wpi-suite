@@ -147,9 +147,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		nameError = new javax.swing.JLabel();
 		descriptionError = new javax.swing.JLabel();
 
-		nameLabel.setText("Name:");
+		nameLabel.setText("Game Name:");
 
-		descriptionLabel.setText("Description:");
+		descriptionLabel.setText("Game Description:");
 
 		jScrollPane1.setViewportView(descriptionField);
 
