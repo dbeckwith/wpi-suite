@@ -55,14 +55,6 @@ public class GamesListPanel extends javax.swing.JPanel {
                 updateTree();
             }
         });
-        
-        gameTree.addTreeSelectionListener(new TreeSelectionListener() {
-            
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                gameTree.expandPath(e.getPath());
-            }
-        });
     }
     
     private void updateTree() {
