@@ -45,6 +45,13 @@ public class DeckModel extends AbstractModel {
 		this.cards = null;
 		this.allowsMultipleSelection = false;
 	}
+	
+	/**
+	 * @return The cards in the deck
+	 */
+	public ArrayList<Double> getCards() {
+		return this.cards;
+	}
 
 	/**
 	 * Still creating a new deck, but THIS ONE is empty

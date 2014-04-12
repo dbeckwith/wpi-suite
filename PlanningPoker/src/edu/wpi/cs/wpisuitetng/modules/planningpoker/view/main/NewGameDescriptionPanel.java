@@ -12,8 +12,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -29,9 +33,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-
-import javax.swing.JComboBox;
-import javax.swing.JButton;
 
 /**
  * 
@@ -436,11 +437,13 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 	@Override
 	public void listUpdated() {
 		ArrayList<DeckModel> decks = DeckListModel.getInstance().getDecks();
-		deckComboBox.removeAllItems();
-		deckComboBox.addItem(defaultDeck);
+		DefaultComboBoxModel<DeckModel> newModel = new DefaultComboBoxModel<DeckModel>();
+		newModel.addElement(defaultDeck);
 		for (DeckModel deck : decks) {
-			deckComboBox.addItem(deck);
+			newModel.addElement(deck);
 		}
+		deckComboBox.removeAllItems();
+		deckComboBox.setModel(newModel);
 	}
 
 	public void setEditGamePanel(NewGamePanel p) {

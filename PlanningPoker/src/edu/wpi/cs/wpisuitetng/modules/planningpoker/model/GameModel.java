@@ -200,6 +200,13 @@ public class GameModel extends AbstractModel {
 	public ArrayList<GameRequirementModel> getRequirements() {
 		return requirements;
 	}
+	
+	/**
+	 * @return The deck for this game
+	 */
+	public DeckModel getDeck() {
+		return deck;
+	}
 
 	/**
 	 * @return The end time for this game
