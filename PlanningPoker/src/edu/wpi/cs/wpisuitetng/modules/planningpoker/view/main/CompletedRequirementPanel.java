@@ -70,7 +70,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         
         if (ConfigManager.getConfig().getUserName()
-                .equals(parent_game.getOwner())) {
+                .equals(parent_game.getOwner())
+                && !parent_game.isClosed()) {
             displayFinalEstimateFields(true);
         }
         

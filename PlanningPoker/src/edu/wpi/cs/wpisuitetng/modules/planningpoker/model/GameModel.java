@@ -255,6 +255,10 @@ public class GameModel extends AbstractModel {
      */
     public void closeGame() {
         status = GameStatus.CLOSED;
+        //notify status listeners of the change
+        for (int i = 0; i < status_observers.size(); i++) {
+            status_observers.get(i).statusChanged(this);
+        }
     }
     
     @Override
