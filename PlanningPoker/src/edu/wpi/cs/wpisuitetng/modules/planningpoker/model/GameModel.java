@@ -126,28 +126,28 @@ public class GameModel extends AbstractModel {
 	}
 
 	/**
-     * @param id
-     * @param name
-     * @param description
-     * @param requirements
-     * @param endDate
-     * @param type
-     * @param status
-     * @param owner
-     */
-    public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date endDate,
-            GameType type, GameStatus status, String owner) {
-        //this.id = id;
-        this.name = name;
-        this.description = description;
-        this.requirements = requirements;
-        this.endDate = endDate;
-        this.type = type;
-        this.status = status;
-        this.owner = owner;
-        status_observers = new ArrayList<>();
-    }
+	 * @param id
+	 * @param name
+	 * @param description
+	 * @param requirements
+	 * @param endDate
+	 * @param type
+	 * @param status
+	 * @param owner
+	 */
+	public GameModel(String name, String description,
+			ArrayList<GameRequirementModel> requirements, Date endDate,
+			GameType type, GameStatus status, String owner) {
+		// this.id = id;
+		this.name = name;
+		this.description = description;
+		this.requirements = requirements;
+		this.endDate = endDate;
+		this.type = type;
+		this.status = status;
+		this.owner = owner;
+		status_observers = new ArrayList<>();
+	}
 
 	/**
 	 * @return the name of this game
@@ -338,23 +338,23 @@ public class GameModel extends AbstractModel {
 		return getName();
 	}
 
-    /**
-     * @return the owner
-     */
-    public String getOwner() {
-        return owner;
-    }
+	/**
+	 * @return the owner
+	 */
+	public String getOwner() {
+		return owner;
+	}
 
-    public boolean equals(GameModel other) {
-        return other.id == id && other.name.equals(other.name);
-    }
-    
-    public boolean equals(Object other) {
-        if (this == other)
-            return true;
-        else if (other instanceof GameModel)
-            return this.equals((GameModel) other);
-        else
-            return super.equals(other);
-    }
+	public boolean equals(GameModel other) {
+		return other.id == id && other.name.equals(other.name);
+	}
+
+	public boolean equals(Object other) {
+		if (this == other)
+			return true;
+		else if (other instanceof GameModel)
+			return this.equals((GameModel) other);
+		else
+			return super.equals(other);
+	}
 }
