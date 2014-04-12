@@ -47,7 +47,7 @@ public class LoginActivity extends Activity {
 				loginButton.setBackgroundResource(R.drawable.bg_card_disable);
 			} else {
 				loginButton.setEnabled(true);
-				loginButton.setBackgroundResource(R.drawable.bg_card_highlight);
+				loginButton.setBackgroundResource(R.drawable.bg_card_button);
 			}
 		}
 		

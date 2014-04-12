@@ -9,10 +9,20 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Info:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#777777"
+        android:textStyle="italic" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_card"
+        android:layout_marginTop="5dp"
         android:orientation="vertical" >
 
         <TextView
@@ -33,12 +43,22 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Requirements:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#777777"
+        android:textStyle="italic" />
+
     <ListView
         android:id="@+id/requirementList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="5dp" >
 
     </ListView>
 

@@ -102,8 +102,8 @@ public class RequirementActivity extends Activity implements RequirementFragment
 				gsf.setGame(game);
 				gsf.setListener(new RequirementListListener() {					
 					@Override
-					public void requirementSelected(String selected) {
-						viewPager.setCurrentItem(getTitleIndex(selected), true);						
+					public void requirementSelected(GameRequirementModel selected) {
+						viewPager.setCurrentItem(getTitleIndex(selected.getName()), true);						
 					}
 				});
 				return gsf;

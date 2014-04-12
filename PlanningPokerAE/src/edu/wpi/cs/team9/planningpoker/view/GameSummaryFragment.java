@@ -25,7 +25,7 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 	private TextView descriptionText;
 	private ListView requirementListView;
 	
-	private ArrayAdapter<String> adapter;
+	private RequirementListAdapter adapter;
 	
 	private GameModel game;
 	
@@ -53,7 +53,7 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 		
 		requirementListView = (ListView)root.findViewById(R.id.requirementList);
 		
-		adapter = new ArrayAdapter<String>(getActivity(), R.layout.game_list_requirement_item, R.id.text1);	
+		adapter = new RequirementListAdapter(getActivity(), R.layout.game_list_requirement_item, R.id.text1);	
 		requirementListView.setAdapter(adapter);
 		requirementListView.setOnItemClickListener(this);
 		
@@ -64,7 +64,7 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 		
 		for(GameRequirementModel req:requirements){
 			Log.d(TAG, "added requirement to list : "+req.getName());
-			adapter.add(req.getName());
+			adapter.add(req);
 		}
 		
 		adapter.notifyDataSetChanged();
@@ -81,6 +81,6 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 	}
 	
 	public interface RequirementListListener{
-		public void requirementSelected(String selection);
+		public void requirementSelected(GameRequirementModel requirement);
 	}
 }

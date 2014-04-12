@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import edu.wpi.cs.team9.planningpoker.Config;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.team9.planningpoker.controller.UpdateGamesController;
@@ -49,7 +50,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private TableLayout table;
 	private Button submit;
 	
-	private boolean selectMultiple = false;
+	private boolean selectMultiple = true;
 	
 	private ArrayList<Card> cards;
 
@@ -82,8 +83,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 			
 			@Override
 			public void onClick(View v) {
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-				String userName = prefs.getString("username", "");
+				String userName = Config.getUserName(getActivity());
 				Log.d(TAG, String.format("submitting estimate for %s : %s", userName, getEstimate()));
 				requirement.addEstimate(new Estimate(CurrentUserController.getInstance().findUser(userName), getEstimate()));
 				if(listener != null){
@@ -133,7 +133,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 		
 		for(Card c:cards){
 			if(c.isCardSelected()){
-				submit.setBackgroundResource(R.drawable.bg_card_highlight);
+				submit.setBackgroundResource(R.drawable.bg_card_button);
 				submit.setEnabled(true);	
 				return;
 			} else {
