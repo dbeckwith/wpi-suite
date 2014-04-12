@@ -14,7 +14,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
-
+/**
+ * This handles updating of games
+ * TODO @author Brett Ammeson
+ *
+ */
 public class UpdateGamesRequestObserver implements RequestObserver {
     
     private final UpdateGamesController controller;
