@@ -11,6 +11,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.ArrayList;
+
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
@@ -22,14 +24,23 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     private String username;
     private int idNum;
     private float estimate;
+    private ArrayList<Integer> cardsSelected;
     
-    public Estimate(User user, float estimate) {
+    public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         this.name = user.getName();
         this.username = user.getUsername();
         this.idNum = user.getIdNum();
         this.estimate = estimate;
+        cardsSelected = cards;
     }
     
+    /**
+     * @return the cardsSelected
+     */
+    public ArrayList<Integer> getCardsSelected() {
+        return cardsSelected;
+    }
+
     public String getName() {
         return name;
     }

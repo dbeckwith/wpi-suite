@@ -25,9 +25,9 @@ public class EstimateTest {
     
     @Test
     public void testCompareMethods() {
-        Estimate est1 = new Estimate(new User("joe", "joe", "password", 1), 20);
-        Estimate est2 = new Estimate(new User("joe", "joe", "password", 2), 15);
-        Estimate est3 = new Estimate(new User("joe", "joe", "password", 3), 20);
+        Estimate est1 = new Estimate(new User("joe", "joe", "password", 1), 20, null);
+        Estimate est2 = new Estimate(new User("joe", "joe", "password", 2), 15, null);
+        Estimate est3 = new Estimate(new User("joe", "joe", "password", 3), 20, null);
         Assert.assertTrue(est1.compareTo(est2) > 0);
         Assert.assertTrue(est1.compareTo(est3) == 0);
         Assert.assertTrue(est2.compareTo(est1) < 0);
@@ -35,7 +35,7 @@ public class EstimateTest {
     
     @Test
     public void testJSON() {
-        Estimate est = new Estimate(new User("joe", "joe", "password", 1), 20);
+        Estimate est = new Estimate(new User("joe", "joe", "password", 1), 20, null);
         Estimate estAfter = est.fromJSON(est.toJSON());
         Assert.assertEquals(est.getIdNum(), estAfter.getIdNum());
         Assert.assertEquals(est.getName(), estAfter.getName());
