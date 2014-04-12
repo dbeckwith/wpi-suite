@@ -32,7 +32,7 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		final ResponseModel response = iReq.getResponse();
+		//final ResponseModel response = iReq.getResponse();
 		GetDecksController.getInstance().retrieveDecks();
 	}
 

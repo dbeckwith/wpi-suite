@@ -15,17 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel;
 
 /**
  * This is a module that implements the Planning Poker technique for estimation
