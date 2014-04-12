@@ -206,13 +206,11 @@ public class VotePanel extends javax.swing.JPanel {
         
         JScrollPane scrollPane_1 = new JScrollPane();
         
-        requirementNameLabel = new JLabel("");
-        
-        JLabel lblDescription = new JLabel("Description:");
+        requirementNameLabel = new JLabel("<name>");
         
         JLabel lblType = new JLabel("Type:");
         
-        requirementType = new JLabel("");
+        requirementType = new JLabel("<type>");
         
         btnSubmit = new JButton("Submit");
         btnSubmit.addActionListener(new ActionListener() {
@@ -233,33 +231,28 @@ public class VotePanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
                         .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lblRequirement)
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(requirementNameLabel))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(249)
-                                    .addComponent(lblType)
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(requirementType))))
-                        .addComponent(lblDescription)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(estimateLabel)
-                            .addPreferredGap(ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(requirementNameLabel))
+                        .addComponent(estimateLabel)
+                        .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblType)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(requirementType)
+                            .addPreferredGap(ComponentPlacement.RELATED, 297, Short.MAX_VALUE)
                             .addComponent(voteField)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(completedVotesField))
-                        .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(lblYouEstimated)
                             .addGap(0)
                             .addComponent(estimationConfirmationLabel)
-                            .addPreferredGap(ComponentPlacement.RELATED, 396, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.RELATED, 347, Short.MAX_VALUE)
                             .addComponent(btnSubmit)))
                     .addContainerGap())
         );
@@ -267,30 +260,29 @@ public class VotePanel extends javax.swing.JPanel {
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblRequirement)
-                        .addComponent(requirementNameLabel)
-                        .addComponent(lblType)
-                        .addComponent(requirementType))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(lblDescription)
+                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(lblRequirement)
+                                .addComponent(requirementNameLabel))
+                            .addGap(20))
+                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                            .addComponent(voteField)
+                            .addComponent(completedVotesField)
+                            .addComponent(lblType)
+                            .addComponent(requirementType))
+                        .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(estimateLabel)
-                        .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(voteField)
-                                .addComponent(completedVotesField))
-                            .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(estimateLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(btnSubmit)
                         .addComponent(lblYouEstimated)
-                        .addComponent(estimationConfirmationLabel))
+                        .addComponent(estimationConfirmationLabel)
+                        .addComponent(btnSubmit))
                     .addContainerGap())
         );
         
@@ -311,6 +303,9 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     protected void setRequirementType(String text_1) {
+        if (text_1.isEmpty()) {
+            text_1 = "<none>";
+        }
         requirementType.setText(text_1);
     }
     

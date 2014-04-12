@@ -5,31 +5,24 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JCheckBox;
-import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
-import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Color;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
 
 /**
  * 
@@ -92,7 +85,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		requirementsTableScrollPane = new javax.swing.JScrollPane();
 		requirementsTable = new javax.swing.JTable();
 		addButton = new javax.swing.JButton();
-		countError = new javax.swing.JLabel();
 
 		requirementsTable.setModel(new DefaultTableModel(
 		    new Object[][] {
@@ -125,9 +117,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 				parent.showPanel("newreqpanel");
 			}
 		});
-
-		countError.setForeground(new java.awt.Color(255, 0, 0));
-		countError.setText("At least one requirement is needed!");
 		
 		btnSelectAll = new JButton("Select All");
 		btnSelectAll.addActionListener(new ActionListener() {
@@ -153,9 +142,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		            .addComponent(btnSelectAll)
 		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(addButton)
-		            .addGap(18)
-		            .addComponent(countError)
-		            .addContainerGap(40, Short.MAX_VALUE))
+		            .addContainerGap(230, Short.MAX_VALUE))
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addComponent(lblGameRequirements)
@@ -163,8 +150,8 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 		);
 		layout.setVerticalGroup(
-		    layout.createParallelGroup(Alignment.LEADING)
-		        .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+		    layout.createParallelGroup(Alignment.TRAILING)
+		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addComponent(lblGameRequirements)
 		            .addPreferredGap(ComponentPlacement.RELATED)
@@ -172,7 +159,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		            .addGap(11)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(addButton)
-		                .addComponent(countError)
 		                .addComponent(btnSelectAll))
 		            .addContainerGap())
 		);
@@ -242,15 +228,21 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 			}
 		}
 
-		countError.setVisible(!hasRequirement);
 		return hasRequirement;
+	}
+	
+	public ArrayList<String> getErrors() {
+	    ArrayList<String> errors = new ArrayList<>();
+	    if (!validateForm()) {
+	        errors.add( "At least one requirement is needed");
+	    }
+	    return errors;
 	}
 
 	private NewGamePanel parent;
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton addButton;
-	private javax.swing.JLabel countError;
 	private javax.swing.JScrollPane requirementsTableScrollPane;
 	protected javax.swing.JTable requirementsTable;
 	private JButton btnSelectAll;

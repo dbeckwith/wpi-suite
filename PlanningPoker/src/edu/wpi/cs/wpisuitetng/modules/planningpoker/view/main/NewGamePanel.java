@@ -148,6 +148,9 @@ public class NewGamePanel extends JPanel {
 		cancelButton.setIcon(ImageLoader.getIcon("Delete.png"));
 
 		newGameRequirementsCard = new JPanel();
+		
+		errorLabel = new JLabel("ERRORS");
+		errorLabel.setForeground(Color.RED);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(
@@ -158,7 +161,9 @@ public class NewGamePanel extends JPanel {
 		                    .addContainerGap()
 		                    .addComponent(saveButton)
 		                    .addGap(16)
-		                    .addComponent(cancelButton))
+		                    .addComponent(cancelButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(errorLabel))
 		                .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE))
 		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
@@ -166,11 +171,12 @@ public class NewGamePanel extends JPanel {
 		layout.setVerticalGroup(
 		    layout.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+		            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
 		            .addGap(18)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(saveButton)
-		                .addComponent(cancelButton))
+		                .addComponent(cancelButton)
+		                .addComponent(errorLabel))
 		            .addContainerGap())
 		        .addComponent(newGameRequirementsCard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
 		);
@@ -359,6 +365,10 @@ public class NewGamePanel extends JPanel {
 	public void check() {
 		saveButton.setEnabled(gameDescription.validateForm()
 				&& newGameRequirementsPanel.validateForm());
+		ArrayList<String> errors = new ArrayList<>();
+		errors.addAll(gameDescription.getErrors());
+		errors.addAll(newGameRequirementsPanel.getErrors());
+        errorLabel.setText(errors.isEmpty()? "" : errors.get(0));
 	}
 
 	/**
@@ -392,4 +402,5 @@ public class NewGamePanel extends JPanel {
 	private JLabel newReqNameError;
 	private JLabel newReqDescError;
 	private JScrollPane scrollPane;
+	private JLabel errorLabel;
 }
