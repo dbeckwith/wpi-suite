@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
@@ -26,6 +26,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 
 	private static final String TAG = GameListActivity.class.getSimpleName();
 
+	private TextView label;
 	private ListView gameListView;
 	private GameListAdapter adapter;
 
@@ -38,6 +39,8 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		
 		String project = getIntent().getStringExtra("project");
 		setTitle(String.format("PlanningPoker : %s", project));
+		
+		label = (TextView)findViewById(R.id.label);
 		
 		gameListView = (ListView) findViewById(R.id.gameList);
 		adapter = new GameListAdapter(this);
@@ -64,6 +67,16 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 
 	@Override
 	public void receivedGames(final GameModel[] games) {
+		runOnUiThread(new Runnable(){
+			@Override
+			public void run(){
+				if(games == null){
+					label.setText("No Games Found");
+					return;
+				}
+				label.setText("Games:");
+			}
+		});
 		
 		Arrays.sort(games, new Comparator<GameModel>() {
 			@Override
