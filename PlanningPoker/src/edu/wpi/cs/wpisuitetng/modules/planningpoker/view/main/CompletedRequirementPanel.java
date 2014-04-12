@@ -104,7 +104,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableModel.addColumn("Estimate");
         for (Estimate e : req.getEstimates()) {
             String row[] = new String[2];
-            row[0] = e.getUser() == null ? "???" : e.getUser().getName();
+            row[0] = e.getName() == null ? "???" : e.getName();
             row[1] = String.format("%.1f", e.getEstimate());
             tableModel.addRow(row);
         }

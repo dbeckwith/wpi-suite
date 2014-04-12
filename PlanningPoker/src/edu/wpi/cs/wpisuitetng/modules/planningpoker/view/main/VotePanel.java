@@ -43,7 +43,11 @@ public class VotePanel extends javax.swing.JPanel {
      */
     
     private static final long serialVersionUID = 6053116033835102214L;
-
+    
+    /**
+     * the user's previous estimate
+     */
+    private Estimate old;
     
     /**
      * Creates new form VotePanel
@@ -55,6 +59,7 @@ public class VotePanel extends javax.swing.JPanel {
         req = null;
         selectMultiple = true;
         cards = new ArrayList<CardButton>();
+        old = null;
     }
     
     public void setRequirement(User currentUser, GameModel parentGame,
@@ -68,17 +73,14 @@ public class VotePanel extends javax.swing.JPanel {
         setRequirementType(req.getType());
         // setRequirementProgress();
         
-        boolean alreadyVoted = false;
+        old = null; //ensure it is erased
         for (Estimate e : req.getEstimates()) {
-            System.out.println(e.getEstimate() + " from " + e.getUser());
-            if (e.getUser() != null
-                    && currentUser != null
-                    && e.getUser().getIdNum() == currentUser.getIdNum()
-                    && e.getUser().getName().equals(currentUser.getName())
-                    && e.getUser().getUsername()
-                            .equals(currentUser.getUsername())) {
-                alreadyVoted = true;
-                btnSubmit.setEnabled(false);
+            System.out.println(e.getEstimate() + " from " + e.getUsername());
+            if (e.getUsername() != null && currentUser != null
+                    && e.getIdNum() == currentUser.getIdNum()
+                    && e.getName().equals(currentUser.getName())
+                    && e.getUsername().equals(currentUser.getUsername())) {
+                old = e;
                 break;
             }
         }
@@ -92,7 +94,11 @@ public class VotePanel extends javax.swing.JPanel {
         deck.add("5");
         deck.add("10");
         
-
+        ArrayList<Integer> selected = new ArrayList<Integer>();
+        if(old != null){
+            selected = old.getCardsSelected();
+        }
+        
         cards.clear();
         estimateCardsPanel.removeAll();
         for (final String estimate : deck) {
@@ -101,32 +107,34 @@ public class VotePanel extends javax.swing.JPanel {
             
             estimateCard.setText(estimate);
             estimateCard.setPreferredSize(new Dimension(80, 120));
+            estimateCard.setCardSelected(selected.contains(new Integer(deck.indexOf(estimate))));
             estimateCard.addActionListener(new ActionListener() {
                 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	if(estimateCard.isCardEnabled()){
-	                	estimateCard.setCardSelected(!estimateCard.isCardSelected());
-	                	if(!selectMultiple){
-	                		deselectOtherCards(estimateCard);
-	                	}
-	            		validateCards();
-                	}
-            		VotePanel.this.repaint();
+                    if (estimateCard.isCardEnabled()) {
+                        estimateCard.setCardSelected(!estimateCard
+                                .isCardSelected());
+                        if (!selectMultiple) {
+                            deselectOtherCards(estimateCard);
+                        }
+                        validateCards();
+                    }
+                    VotePanel.this.repaint();
                 }
             });
-            estimateCard.setEnabled(!alreadyVoted);
             
             estimateCardsPanel.add(estimateCard);
         }
-                
+        
         validate();
         repaint();
     }
     
-
+    
     private void selectEstimateCard() {
-    	
+        
+        boolean alreadyVoted = false;
         new Thread() {
             @Override
             public void run() {
@@ -135,25 +143,31 @@ public class VotePanel extends javax.swing.JPanel {
         }.start();
         
         ArrayList<Estimate> estimates = req.getEstimates();
-        for(Estimate e:estimates){
-        	if(e.getUser().equals(currentUser)){
-        		return;
-        	}
+        for (Estimate e : estimates) {
+            if (e.getUsername().equals(currentUser.getUsername())) {
+                alreadyVoted = true;
+            }
         }
         
+        ArrayList<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
-        for(CardButton c: cards){
-        	c.setCardEnabled(false);
-        	if(c.isCardSelected()){
-        		estimate += c.getEstimateValue(); 
-        	} else {
-        		c.setEnabled(false);
-        	}
+        for (CardButton c : cards) {
+            if (c.isCardSelected()) {
+                estimate += c.getEstimateValue();
+                selected.add(new Integer(cards.indexOf(c)));
+            }
         }
         
-        System.out.println("Estimate = "+estimate);
+        System.out.println("Estimate = " + estimate);
+        Estimate est = new Estimate(currentUser, estimate, selected);
         
-       req.addEstimate(new Estimate(currentUser, estimate));
+        if (alreadyVoted) {
+            req.UpdateEstimate(old, est);
+        }
+        else {
+            req.addEstimate(est);
+        }
+        old = est;
     }
     
     protected void setRequirementProgress(int numCompleted, int total) {
@@ -198,72 +212,120 @@ public class VotePanel extends javax.swing.JPanel {
         requirementType = new JLabel("");
         
         btnSubmit = new JButton("Submit");
-        btnSubmit.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				selectEstimateCard();
-			}
-		});
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectEstimateCard();
+            }
+        });
         btnSubmit.setEnabled(false);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-        				.addComponent(scrollPane)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(lblRequirement)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(requirementNameLabel))
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(249)
-        							.addComponent(lblType)
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(requirementType))))
-        				.addComponent(lblDescription)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(estimateLabel)
-        					.addPreferredGap(ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
-        					.addComponent(voteField)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(completedVotesField))
-        				.addComponent(btnSubmit, Alignment.TRAILING))
-        			.addContainerGap())
-        );
-        layout.setVerticalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(lblRequirement)
-        				.addComponent(requirementNameLabel)
-        				.addComponent(lblType)
-        				.addComponent(requirementType))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(lblDescription)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(estimateLabel)
-        				.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(voteField)
-        						.addComponent(completedVotesField))
-        					.addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(btnSubmit)
-        			.addContainerGap())
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(
+                                                        scrollPane_1,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        430, Short.MAX_VALUE)
+                                                .addComponent(scrollPane)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        lblRequirement)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        requirementNameLabel))
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addGap(249)
+                                                                                                .addComponent(
+                                                                                                        lblType)
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        requirementType))))
+                                                .addComponent(lblDescription)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        estimateLabel)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED,
+                                                                        170,
+                                                                        Short.MAX_VALUE)
+                                                                .addComponent(
+                                                                        voteField)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        votesProgressBar,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        160,
+                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        completedVotesField))
+                                                .addComponent(btnSubmit,
+                                                        Alignment.TRAILING))
+                                .addContainerGap()));
+        layout.setVerticalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(lblRequirement)
+                                                .addComponent(
+                                                        requirementNameLabel)
+                                                .addComponent(lblType)
+                                                .addComponent(requirementType))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(lblDescription)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane,
+                                        GroupLayout.PREFERRED_SIZE, 83,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(estimateLabel)
+                                                .addGroup(
+                                                        layout.createParallelGroup(
+                                                                Alignment.TRAILING)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.BASELINE)
+                                                                                .addComponent(
+                                                                                        voteField)
+                                                                                .addComponent(
+                                                                                        completedVotesField))
+                                                                .addComponent(
+                                                                        votesProgressBar,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane_1,
+                                        GroupLayout.DEFAULT_SIZE, 111,
+                                        Short.MAX_VALUE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(btnSubmit).addContainerGap()));
         
         estimateCardsPanel = new JPanel();
         estimateCardsPanel.setBackground(Color.WHITE);
@@ -301,31 +363,31 @@ public class VotePanel extends javax.swing.JPanel {
         votesProgressBar.setValue(value);
     }
     
-    private void deselectOtherCards(CardButton card){
-    	for(CardButton c:cards){
-    		if(c != card){
-    			c.setCardSelected(false);
-    		}
-    	}
-    	System.out.println("the card "+ card.isCardSelected());
+    private void deselectOtherCards(CardButton card) {
+        for (CardButton c : cards) {
+            if (c != card) {
+                c.setCardSelected(false);
+            }
+        }
+        System.out.println("the card " + card.isCardSelected());
     }
     
-    private void validateCards(){
-    	for(CardButton c:cards){
-    		
-    		System.out.println(c.getEstimateValue()+" " + c.isCardSelected());
-    		if(c.isCardSelected()){
-    			btnSubmit.setEnabled(true);
-    			return;
-    		}
-    	}
-    	btnSubmit.setEnabled(false);
+    private void validateCards() {
+        for (CardButton c : cards) {
+            
+            System.out.println(c.getEstimateValue() + " " + c.isCardSelected());
+            if (c.isCardSelected()) {
+                btnSubmit.setEnabled(true);
+                return;
+            }
+        }
+        btnSubmit.setEnabled(false);
     }
     
-    public void setAllowMultipleCards(boolean allow){
-    	selectMultiple = allow;
+    public void setAllowMultipleCards(boolean allow) {
+        selectMultiple = allow;
     }
-      
+    
     private User currentUser;
     private GameModel parentGame;
     private GameRequirementModel req;
@@ -346,5 +408,5 @@ public class VotePanel extends javax.swing.JPanel {
     private JLabel requirementNameLabel;
     private JLabel requirementType;
     
-
+    
 }
