@@ -122,8 +122,7 @@ public class VotePanel extends javax.swing.JPanel {
             estimateCardsPanel.add(estimateCard);
         }
         
-        lblYouEstimated.setVisible(false);
-        estimationConfirmationLabel.setVisible(false);
+        setEstimationLabel();
         
         validate();
         repaint();
@@ -167,10 +166,7 @@ public class VotePanel extends javax.swing.JPanel {
         }
         old = est;
         
-        estimationConfirmationLabel.setText(Float.toString(old.getEstimate()));
-        
-        lblYouEstimated.setVisible(true);
-        estimationConfirmationLabel.setVisible(true);
+        setEstimationLabel();
     }
     
     protected void setRequirementProgress(int numCompleted, int total) {
@@ -348,6 +344,18 @@ public class VotePanel extends javax.swing.JPanel {
     
     public void setAllowMultipleCards(boolean allow) {
         selectMultiple = allow;
+    }
+    
+    private void setEstimationLabel() {
+        if (old != null) {
+            estimationConfirmationLabel.setText(Float.toString(old.getEstimate()));
+            estimationConfirmationLabel.setVisible(true);
+        }
+        else {
+            estimationConfirmationLabel.setVisible(false);
+        }
+        
+        lblYouEstimated.setVisible(estimationConfirmationLabel.isVisible());
     }
     
     private User currentUser;
