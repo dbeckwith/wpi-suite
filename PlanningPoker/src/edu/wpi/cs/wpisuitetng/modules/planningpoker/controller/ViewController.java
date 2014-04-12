@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
@@ -27,6 +29,11 @@ public class ViewController {
     
     private MainView mainView;
     private ToolbarView toolbar;
+    
+    /**
+     * indicates if admin buttons are being shown if all games panel is selected
+     */
+    private boolean showAdmin;
     
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
@@ -76,7 +83,7 @@ public class ViewController {
     public void saveNewGame(NewGamePanel e) {
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), e.getEndDate(),
-                e.getGameType(), GameStatus.PENDING);
+                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig().getUserName());
         
         new Thread() {
             @Override
@@ -92,13 +99,12 @@ public class ViewController {
     }
     
     public void cancelNewGame(NewGamePanel e) {
-        // int result = JOptionPane.showConfirmDialog(e,
-        // "Are you sure you want to cancel this game?");
-        // if(result == JOptionPane.OK_OPTION) {
-        RequirementsListModel.getInstance().removeListListener(
-                e.getNewGameRequirementsPanel().getRequirementsListObserver());
-        mainView.removeTabAt(mainView.indexOfComponent(e));
-        // }
+         int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?", "Cancel Game", JOptionPane.OK_CANCEL_OPTION);
+         if(result == JOptionPane.OK_OPTION) {
+	        RequirementsListModel.getInstance().removeListListener(
+	                e.getNewGameRequirementsPanel().getRequirementsListObserver());
+	        mainView.removeTabAt(mainView.indexOfComponent(e));
+        }
     }
     
     public MainView getMainView() {
@@ -127,10 +133,28 @@ public class ViewController {
                 && game.getOwner().equals(
                         ConfigManager.getConfig().getUserName())
                 && !game.isEnded()) {
-            toolbar.showAdmin();
+            toolbar.setAdminVisibility(true);
+            showAdmin = true;
         }
         else {
-            toolbar.hideAdmin();
+            toolbar.setAdminVisibility(false);
+            showAdmin = false;
+        }
+    }
+    
+    /**
+     * changes state of admin buttons when a different tab in mainView is
+     * displayed
+     * 
+     * @param index
+     *        the tab now being displayed.
+     */
+    public void tabChanged(int index) {
+        if (showAdmin && index == 0) {
+            toolbar.setAdminVisibility(true);
+        }
+        else {
+            toolbar.setAdminVisibility(false);
         }
     }
     

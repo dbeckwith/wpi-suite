@@ -38,16 +38,12 @@ public class ToolbarView extends DefaultToolbarView {
     }
     
     /**
-     * shows the admin buttons in the toolbar
+     * sets visibility of admin buttons
+     * 
+     * @param b
+     *        whether admin buttons should be visible
      */
-    public void showAdmin() {
-        adminButtons.setVisible(true);
-    }
-    
-    /**
-     * hides the admin buttons
-     */
-    public void hideAdmin() {
-        adminButtons.setVisible(false);
+    public void setAdminVisibility(boolean b) {
+        adminButtons.setVisible(b);
     }
 }
