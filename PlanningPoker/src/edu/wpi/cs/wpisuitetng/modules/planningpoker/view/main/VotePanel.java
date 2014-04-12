@@ -5,14 +5,11 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -29,8 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-import java.awt.Color;
 
 /**
  * 
@@ -127,6 +122,9 @@ public class VotePanel extends javax.swing.JPanel {
             estimateCardsPanel.add(estimateCard);
         }
         
+        lblYouEstimated.setVisible(false);
+        estimationConfirmationLabel.setVisible(false);
+        
         validate();
         repaint();
     }
@@ -168,6 +166,11 @@ public class VotePanel extends javax.swing.JPanel {
             req.addEstimate(est);
         }
         old = est;
+        
+        estimationConfirmationLabel.setText(Float.toString(old.getEstimate()));
+        
+        lblYouEstimated.setVisible(true);
+        estimationConfirmationLabel.setVisible(true);
     }
     
     protected void setRequirementProgress(int numCompleted, int total) {
@@ -220,112 +223,76 @@ public class VotePanel extends javax.swing.JPanel {
         });
         btnSubmit.setEnabled(false);
         
+        lblYouEstimated = new JLabel("You estimated ");
+        
+        estimationConfirmationLabel = new JLabel("<sample estimation>");
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(
-                                                        scrollPane_1,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        430, Short.MAX_VALUE)
-                                                .addComponent(scrollPane)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        lblRequirement)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addComponent(
-                                                                                                        requirementNameLabel))
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addGap(249)
-                                                                                                .addComponent(
-                                                                                                        lblType)
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addComponent(
-                                                                                                        requirementType))))
-                                                .addComponent(lblDescription)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        estimateLabel)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED,
-                                                                        170,
-                                                                        Short.MAX_VALUE)
-                                                                .addComponent(
-                                                                        voteField)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        votesProgressBar,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        160,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        completedVotesField))
-                                                .addComponent(btnSubmit,
-                                                        Alignment.TRAILING))
-                                .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(lblRequirement)
-                                                .addComponent(
-                                                        requirementNameLabel)
-                                                .addComponent(lblType)
-                                                .addComponent(requirementType))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(lblDescription)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(scrollPane,
-                                        GroupLayout.PREFERRED_SIZE, 83,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(estimateLabel)
-                                                .addGroup(
-                                                        layout.createParallelGroup(
-                                                                Alignment.TRAILING)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.BASELINE)
-                                                                                .addComponent(
-                                                                                        voteField)
-                                                                                .addComponent(
-                                                                                        completedVotesField))
-                                                                .addComponent(
-                                                                        votesProgressBar,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(scrollPane_1,
-                                        GroupLayout.DEFAULT_SIZE, 111,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(btnSubmit).addContainerGap()));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblRequirement)
+                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(requirementNameLabel))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(249)
+                                    .addComponent(lblType)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(requirementType))))
+                        .addComponent(lblDescription)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(estimateLabel)
+                            .addPreferredGap(ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
+                            .addComponent(voteField)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(completedVotesField))
+                        .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblYouEstimated)
+                            .addGap(0)
+                            .addComponent(estimationConfirmationLabel)
+                            .addPreferredGap(ComponentPlacement.RELATED, 396, Short.MAX_VALUE)
+                            .addComponent(btnSubmit)))
+                    .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(lblRequirement)
+                        .addComponent(requirementNameLabel)
+                        .addComponent(lblType)
+                        .addComponent(requirementType))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(lblDescription)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(estimateLabel)
+                        .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(voteField)
+                                .addComponent(completedVotesField))
+                            .addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(btnSubmit)
+                        .addComponent(lblYouEstimated)
+                        .addComponent(estimationConfirmationLabel))
+                    .addContainerGap())
+        );
         
         estimateCardsPanel = new JPanel();
         estimateCardsPanel.setBackground(Color.WHITE);
@@ -407,6 +374,6 @@ public class VotePanel extends javax.swing.JPanel {
     private JPanel estimateCardsPanel;
     private JLabel requirementNameLabel;
     private JLabel requirementType;
-    
-    
+    private JLabel lblYouEstimated;
+    private JLabel estimationConfirmationLabel;
 }
