@@ -59,7 +59,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 		cards.add(10.0);
 
 		this.defaultDeck = new DeckModel("Default", cards);
-		deckComboBox.addItem(defaultDeck);
+		//deckComboBox.addItem(defaultDeck);
 
 		GetDecksController.getInstance().retrieveDecks();
 
@@ -144,7 +144,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 		newDeckButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				parent.showPanel("newDeckPanel");
+				parent.showPanel("newdeckpanel");
 			}
 		});
 	}
@@ -214,130 +214,87 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 
 		deadlineError = new JLabel("Invalid date!");
 		deadlineError.setForeground(new java.awt.Color(255, 0, 0));
+		
+		JLabel deckLabel = new JLabel("Deck:");
+		
+		deckComboBox = new JComboBox<DeckModel>();
+		
+		newDeckButton = new JButton("Create Deck");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.LEADING)
-												.addGroup(
-														layout.createParallelGroup(
-																Alignment.LEADING,
-																false)
-																.addComponent(
-																		jScrollPane1,
-																		GroupLayout.DEFAULT_SIZE,
-																		408,
-																		Short.MAX_VALUE)
-																.addGroup(
-																		layout.createSequentialGroup()
-																				.addGroup(
-																						layout.createParallelGroup(
-																								Alignment.LEADING)
-																								.addGroup(
-																										layout.createSequentialGroup()
-																												.addComponent(
-																														selectDeadline)
-																												.addPreferredGap(
-																														ComponentPlacement.UNRELATED)
-																												.addComponent(
-																														deadlineError))
-																								.addComponent(
-																										distributed)
-																								.addComponent(
-																										live))
-																				.addGap(50))
-																.addGroup(
-																		layout.createSequentialGroup()
-																				.addComponent(
-																						nameLabel)
-																				.addPreferredGap(
-																						ComponentPlacement.RELATED)
-																				.addComponent(
-																						nameError))
-																.addGroup(
-																		layout.createSequentialGroup()
-																				.addComponent(
-																						descriptionLabel)
-																				.addPreferredGap(
-																						ComponentPlacement.RELATED)
-																				.addComponent(
-																						descriptionError))
-																.addComponent(
-																		nameField))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addComponent(
-																		lblDate)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		datePicker,
-																		GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		timeSpinner,
-																		GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap(32, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(nameLabel)
-												.addComponent(nameError))
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+							.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+									.addGroup(layout.createSequentialGroup()
+										.addComponent(selectDeadline)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(deadlineError))
+									.addComponent(distributed)
+									.addComponent(live))
+								.addGap(50))
+							.addGroup(layout.createSequentialGroup()
+								.addComponent(nameLabel)
 								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(nameField,
-										GroupLayout.PREFERRED_SIZE,
-										GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(descriptionLabel)
-												.addComponent(descriptionError))
+								.addComponent(nameError))
+							.addGroup(layout.createSequentialGroup()
+								.addComponent(descriptionLabel)
 								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jScrollPane1,
-										GroupLayout.DEFAULT_SIZE, 67,
-										Short.MAX_VALUE)
-								.addComponent(distributed)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(live)
-								.addGap(26)
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(selectDeadline)
-												.addComponent(deadlineError))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														datePicker,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDate)
-												.addComponent(
-														timeSpinner,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addGap(24)));
+								.addComponent(descriptionError))
+							.addComponent(nameField))
+						.addGroup(layout.createSequentialGroup()
+							.addComponent(lblDate)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(timeSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(layout.createSequentialGroup()
+							.addComponent(deckLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(deckComboBox, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(newDeckButton)))
+					.addContainerGap(32, Short.MAX_VALUE))
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(nameLabel)
+						.addComponent(nameError))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(descriptionLabel)
+						.addComponent(descriptionError))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+					.addComponent(distributed)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(live)
+					.addGap(5)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(deckLabel)
+						.addComponent(deckComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(newDeckButton))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(selectDeadline)
+						.addComponent(deadlineError))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDate)
+						.addComponent(timeSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(24))
+		);
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
 
@@ -428,7 +385,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 	private javax.swing.JLabel nameLabel;
 	public javax.swing.JCheckBox selectDeadline;
 	private JLabel deadlineError;
-	private DeckModel defaultDeck;
 	private JComboBox<DeckModel> deckComboBox;
+	private DeckModel defaultDeck;
 	private JButton newDeckButton;
 }

@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.*;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -52,9 +53,10 @@ public class NewGamePanel extends JPanel {
 	public NewGamePanel() {
 
 		initComponents();
-
+		
 		gameDescription.setEditGamePanel(this);
 		newGameRequirementsPanel.setEditGamePanel(this);
+		newDeckPanel.setEditGamePanel(this);
 
 		newReqName.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -208,6 +210,9 @@ public class NewGamePanel extends JPanel {
 		newGameRequirementsPanel = new NewGameRequirementsPanel();
 		newGameRequirementsCard.add(newGameRequirementsPanel, "reqlistpanel");
 
+		newDeckPanel = new NewDeckPanel();
+		newGameRequirementsCard.add(newDeckPanel, "newdeckpanel");
+		
 		newRequirementPanel = new JPanel();
 		newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
 		GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
@@ -406,6 +411,7 @@ public class NewGamePanel extends JPanel {
 	private javax.swing.JButton cancelButton;
 	private JPanel newGameRequirementsCard;
 	private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel newGameRequirementsPanel;
+	private NewDeckPanel newDeckPanel;
 	private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
 	private javax.swing.JButton saveButton;
 	private JPanel newRequirementPanel;
