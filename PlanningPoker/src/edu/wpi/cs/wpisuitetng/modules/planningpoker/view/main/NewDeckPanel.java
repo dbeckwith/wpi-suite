@@ -3,6 +3,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.JTextField;
@@ -14,6 +15,8 @@ import javax.swing.event.DocumentListener;
 
 import java.awt.Color;
 import java.util.regex.Pattern;
+
+import javax.swing.JRadioButton;
 
 public class NewDeckPanel extends JPanel {
 	public NewDeckPanel() {
@@ -148,6 +151,32 @@ public class NewDeckPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, cardsErrorLabel, 6,
 				SpringLayout.EAST, cardLabel);
 		add(cardsErrorLabel);
+		
+		ButtonGroup selectionGroup = new ButtonGroup();
+		
+		JRadioButton singleSelect = new JRadioButton("Single");
+		singleSelect.setSelected(true);
+		springLayout.putConstraint(SpringLayout.WEST, singleSelect, 0, SpringLayout.WEST, deckLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, singleSelect, -19, SpringLayout.NORTH, createDeckButton);
+		add(singleSelect);
+		
+		multipleSelect = new JRadioButton("Multiple");
+		springLayout.putConstraint(SpringLayout.NORTH, multipleSelect, 0, SpringLayout.NORTH, singleSelect);
+		springLayout.putConstraint(SpringLayout.WEST, multipleSelect, 4, SpringLayout.EAST, singleSelect);
+		add(multipleSelect);
+		
+		selectionGroup.add(singleSelect);
+		selectionGroup.add(multipleSelect);
+		
+		JLabel selectionLabel = new JLabel("Selection Mode");
+		springLayout.putConstraint(SpringLayout.WEST, selectionLabel, 0, SpringLayout.WEST, deckLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, selectionLabel, -1, SpringLayout.NORTH, singleSelect);
+		add(selectionLabel);
+		
+		cardHelpLabel = new JLabel("Please enter a list of numbers separated by commas");
+		springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 6, SpringLayout.SOUTH, newDeckCards);
+		springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0, SpringLayout.WEST, deckLabel);
+		add(cardHelpLabel);
 		checkNewDeck();
 	}
 
@@ -182,4 +211,6 @@ public class NewDeckPanel extends JPanel {
 	private JLabel deckNameErrorLabel;
 	private JLabel cardsErrorLabel;
 	private JTextArea newDeckCards;
+	private JRadioButton multipleSelect;
+	private JLabel cardHelpLabel;
 }

@@ -16,15 +16,17 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
 public class DeckModel extends AbstractModel {
     private String name;
     private ArrayList<Double> cards;
+    private boolean selectMultiple;
     
     /**
      * Creates a new deck
      * @param name
      * @param cards
      */
-    public DeckModel(String name, ArrayList<Double> cards) {
+    public DeckModel(String name, ArrayList<Double> cards, boolean selectMultiple) {
         this.name = name;
         this.cards = cards;
+        this.selectMultiple = selectMultiple;
     }
     
     /**
@@ -34,6 +36,7 @@ public class DeckModel extends AbstractModel {
     public DeckModel(String name) {
         this.name = name;
         this.cards = null;
+        this.selectMultiple = false;
     }
 
     /**

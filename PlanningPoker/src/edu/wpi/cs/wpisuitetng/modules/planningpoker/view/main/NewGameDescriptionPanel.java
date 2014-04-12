@@ -58,7 +58,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 		cards.add(5.0);
 		cards.add(10.0);
 
-		this.defaultDeck = new DeckModel("Default", cards);
+		this.defaultDeck = new DeckModel("Default", cards, false);
 		//deckComboBox.addItem(defaultDeck);
 
 		GetDecksController.getInstance().retrieveDecks();
