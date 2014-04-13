@@ -12,6 +12,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -71,8 +72,9 @@ public class CommonButtons extends ToolbarGroupView {
 		});
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		newGameButton.setPreferredSize(new Dimension(200, 200));
 		userPrefsButton.setHorizontalAlignment(SwingConstants.CENTER);
-
+		userPrefsButton.setPreferredSize(new Dimension(150, 200));
 		contentPanel.add(newGameButton);
 		contentPanel.add(userPrefsButton);
 		contentPanel.setOpaque(false);

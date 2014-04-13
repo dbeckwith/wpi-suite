@@ -33,7 +33,6 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * 
  */
 public class GetGamesControllerTest {
-
 	static GetGamesController instance;
 	static GameModel nullGame;
 	static GameModel game1;
@@ -105,17 +104,6 @@ public class GetGamesControllerTest {
 	@Test
 	public void testRetrieveGames() {
 		GetGamesController.getInstance().retrieveGames();
-		MockRequest request = ((MockNetwork) Network.getInstance())
-				.getLastRequestMade();
-		if (request == null) {
-			Assert.fail("request not sent");
-		}
-		Assert.assertTrue(request.isSent());
-	}
-
-	@Test
-	public void testActionPerformed() {
-		GetGamesController.getInstance().actionPerformed(null);
 		MockRequest request = ((MockNetwork) Network.getInstance())
 				.getLastRequestMade();
 		if (request == null) {

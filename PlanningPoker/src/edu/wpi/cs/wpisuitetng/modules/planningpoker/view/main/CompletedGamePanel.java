@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import java.awt.Color;
 
 /**
  * 
@@ -40,7 +41,9 @@ public class CompletedGamePanel extends javax.swing.JPanel {
      * Creates new form DetailPanel
      */
     public CompletedGamePanel() {
+        setBackground(Color.WHITE);
         initComponents();
+        tableScrollPane.getViewport().setBackground(Color.WHITE);
         gameStatusListener = new GameStatusObserver() {
             
             @Override
@@ -114,59 +117,30 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         numRequirements = new JLabel("");
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        jSeparator1,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        lblNumberOfRequirements)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        numRequirements))
-                                                .addComponent(
-                                                        tableScrollPane,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        430, Short.MAX_VALUE))
-                                .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(tableScrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 89,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(
-                                                        jSeparator1,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        10,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(
-                                                        layout.createParallelGroup(
-                                                                Alignment.BASELINE)
-                                                                .addComponent(
-                                                                        lblNumberOfRequirements)
-                                                                .addComponent(
-                                                                        numRequirements)))
-                                .addContainerGap()));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(lblNumberOfRequirements)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(numRequirements)
+                    .addContainerGap(307, Short.MAX_VALUE))
+                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                            .addComponent(lblNumberOfRequirements)
+                            .addComponent(numRequirements)))
+                    .addContainerGap())
+        );
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
