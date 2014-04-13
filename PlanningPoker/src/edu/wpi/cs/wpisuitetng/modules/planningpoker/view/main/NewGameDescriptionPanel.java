@@ -442,7 +442,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 		for (DeckModel deck : decks) {
 			newModel.addElement(deck);
 		}
-		deckComboBox.removeAllItems();
 		deckComboBox.setModel(newModel);
 	}
 

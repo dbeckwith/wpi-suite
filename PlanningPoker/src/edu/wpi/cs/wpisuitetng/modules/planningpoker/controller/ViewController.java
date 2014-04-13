@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
@@ -78,17 +79,15 @@ public class ViewController {
     }
     
     public void saveNewGame(NewGamePanel e) {
+        DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), e.getDeck(),
-                e.getEndDate(), e.getGameType(), GameStatus.PENDING,
-                ConfigManager.getConfig().getUserName());
+                e.getDescription(), e.getRequirements(), new DeckModel(
+                        d.toString(), d.getCards(),
+                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
+                        .getUserName());
         
-        new Thread() {
-            @Override
-            public void run() {
-                AddGameController.getInstance().addGame(newGame);
-            }
-        }.start();
+        AddGameController.getInstance().addGame(newGame);
         
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());

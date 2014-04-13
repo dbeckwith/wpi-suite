@@ -148,4 +148,11 @@ public class DeckModel extends AbstractModel {
 	public String toString() {
 		return name;
 	}
+	
+	/**
+	 * Returns whether multiple card selection is allowed
+	 */
+	public boolean getAllowsMultipleSelection() {
+	    return this.allowsMultipleSelection;
+	}
 }
