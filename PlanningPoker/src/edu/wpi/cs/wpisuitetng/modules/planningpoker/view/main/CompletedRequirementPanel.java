@@ -73,6 +73,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
         });
         
+        checkDisplayFinal();
         
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
