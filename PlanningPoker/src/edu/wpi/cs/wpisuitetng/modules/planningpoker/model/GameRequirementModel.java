@@ -138,18 +138,24 @@ public class GameRequirementModel extends AbstractModel {
      * @return the median
      */
     public float getEstimateMedian() {
+        float toReturn;
         if (estimates.isEmpty()) {
-            return 0;
+            toReturn = 0;
         }
-        final ArrayList<Estimate> estimates_copy = new ArrayList<>(estimates);
-        Collections.sort(estimates_copy);
-        final int count = estimates_copy.size();
-        if (estimates_copy.size() % 2 == 1) {
-            return estimates_copy.get(count / 2).getEstimate();
-        } else {
-            return (estimates_copy.get(count / 2).getEstimate() + estimates_copy
-                    .get(count / 2 - 1).getEstimate()) / 2;
+        else {
+            final ArrayList<Estimate> estimates_copy = new ArrayList<>(
+                    estimates);
+            Collections.sort(estimates_copy);
+            final int count = estimates_copy.size();
+            if (estimates_copy.size() % 2 == 1) {
+                toReturn = estimates_copy.get(count / 2).getEstimate();
+            }
+            else {
+                toReturn = (estimates_copy.get(count / 2).getEstimate() + estimates_copy
+                        .get(count / 2 - 1).getEstimate()) / 2;
+            }
         }
+        return toReturn;
     }
     
     /**
@@ -158,14 +164,13 @@ public class GameRequirementModel extends AbstractModel {
      * @return the mean (average)
      */
     public float getEstimateMean() {
-        if (estimates.isEmpty()) {
-            return 0;
+        float toReturn = 0;
+        if (!estimates.isEmpty()) {
+            for (Estimate e : estimates) {
+                toReturn += e.getEstimate() / (estimates.size());
+            }
         }
-        float mean = 0;
-        for (Estimate e : estimates) {
-            mean += e.getEstimate() / (estimates.size());
-        }
-        return mean;
+        return toReturn;
     }
     
     

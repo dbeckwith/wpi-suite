@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
  */
 public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
-    private final static SimpleDateFormat date_format = new SimpleDateFormat(
+    private static final SimpleDateFormat date_format = new SimpleDateFormat(
             "MM/dd/yyyy hh:mm a");
     
     /**

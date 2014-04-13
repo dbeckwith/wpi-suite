@@ -81,37 +81,37 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 final DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) { 
-                    return; 
-                }
-                
-                currentSelectionGame = null; // reset selected game
-                
-                final Object nodeInfo = node.getUserObject();
-                if (nodeInfo instanceof GameModel) {
-                    ((CardLayout) getRequirementPanel().getLayout()).show(
-                            getRequirementPanel(), "no requirement");
-                    final GameModel game = (GameModel) nodeInfo;
-                    currentSelectionGame = game;
-                    getGameDescriptionPanel().setGame(game);
-                }
-                else if (nodeInfo instanceof GameRequirementModel) {
-                    ((CardLayout) getRequirementPanel().getLayout()).show(
-                            getRequirementPanel(), "requirement");
-                    final GameRequirementModel req = (GameRequirementModel) nodeInfo;
-                    final GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
-                            .getParent())).getUserObject();
-                    getRequirementDescriptionPanel().setData(
-                            CurrentUserController.getInstance().getUser(),
-                            parent_game, req);
+                if (node != null) {
                     
-                    final GameModel game = (GameModel) ((DefaultMutableTreeNode) node
-                            .getParent()).getUserObject();
-                    getGameDescriptionPanel().setGame(game);
-                    currentSelectionGame = game;
+                    currentSelectionGame = null; // reset selected game
+                    
+                    final Object nodeInfo = node.getUserObject();
+                    if (nodeInfo instanceof GameModel) {
+                        ((CardLayout) getRequirementPanel().getLayout()).show(
+                                getRequirementPanel(), "no requirement");
+                        final GameModel game = (GameModel) nodeInfo;
+                        currentSelectionGame = game;
+                        getGameDescriptionPanel().setGame(game);
+                    }
+                    else if (nodeInfo instanceof GameRequirementModel) {
+                        ((CardLayout) getRequirementPanel().getLayout()).show(
+                                getRequirementPanel(), "requirement");
+                        final GameRequirementModel req = (GameRequirementModel) nodeInfo;
+                        final GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
+                                .getParent())).getUserObject();
+                        getRequirementDescriptionPanel().setData(
+                                CurrentUserController.getInstance().getUser(),
+                                parent_game, req);
+                        
+                        final GameModel game = (GameModel) ((DefaultMutableTreeNode) node
+                                .getParent()).getUserObject();
+                        getGameDescriptionPanel().setGame(game);
+                        currentSelectionGame = game;
+                    }
+                    PlanningPoker.getViewController().displayAdmin(
+                            currentSelectionGame);
                 }
-                PlanningPoker.getViewController().displayAdmin(
-                        currentSelectionGame);
+                return;
             }
         });
     }

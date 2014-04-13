@@ -370,15 +370,17 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void validateCards() {
+        boolean btnSubmitFlag = false;
         for (CardButton c : cards) {
             
             System.out.println(c.getEstimateValue() + " " + c.isCardSelected());
             if (c.isCardSelected()) {
-                btnSubmit.setEnabled(true);
-                return;
+                btnSubmitFlag = true;
+                break;
             }
         }
-        btnSubmit.setEnabled(false);
+        btnSubmit.setEnabled(btnSubmitFlag);
+        return;
     }
     
     public void setAllowMultipleCards(boolean allow) {

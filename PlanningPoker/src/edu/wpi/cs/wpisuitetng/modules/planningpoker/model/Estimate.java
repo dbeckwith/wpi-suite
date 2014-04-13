@@ -84,15 +84,17 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
     @Override
     public int compareTo(Estimate arg0) {
+        int toReturn;
         if (theEstimate > arg0.getEstimate()) {
-            return 1;
+            toReturn = 1;
         }
         else if (Math.abs(theEstimate - arg0.getEstimate()) < 0.0001) {
-            return 0;
+            toReturn = 0;
         }
         else {
-            return -1;
+            toReturn = -1;
         }
+        return toReturn;
     }
     
 }

@@ -314,6 +314,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	}// </editor-fold>//GEN-END:initComponents
 
 	public Date getDate() {
+	    Date toReturn = null;
 		// We need to go through all of these incantations because almost every
 		// relevant method in Date is deprecated...
 		final GregorianCalendar date = new GregorianCalendar();
@@ -326,10 +327,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
 
 		if (selectDeadline.isSelected()) {
-			return date.getTime();
-		} else {
-			return null;
-		}
+			toReturn = date.getTime();
+		} 
+		
+		return toReturn;
 	}
 
 	/**
@@ -339,10 +340,11 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 * @return valid
 	 */
 	public boolean isValidDeadline() {
+	    boolean toReturn;
 		if (!selectDeadline.isSelected()) {
 			deadlineError.setVisible(false);
-			return true;
-		}
+			toReturn = true;
+		} else {
 
 		final Date currentDate = new Date();
 		final Date enteredDate = getDate();
@@ -350,7 +352,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		boolean valid = enteredDate.after(currentDate);
 
 		deadlineError.setVisible(!valid);
-		return valid;
+		toReturn = valid;
+		}
+		return toReturn;
 	}
 
 	/**

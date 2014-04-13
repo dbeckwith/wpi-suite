@@ -339,15 +339,18 @@ public class GameModel extends AbstractModel {
     }
     
     public boolean equals(Object other) {
+        boolean toReturn;
         if (this == other) {
-            return true;
+            toReturn = true;
         }
         else if (other instanceof GameModel) {
-            return this.equals((GameModel) other);
+            toReturn = this.equals((GameModel) other);
         }
         else {
-            return super.equals(other);
+            toReturn = super.equals(other);
         }
+        
+        return toReturn;
     }
     
 }

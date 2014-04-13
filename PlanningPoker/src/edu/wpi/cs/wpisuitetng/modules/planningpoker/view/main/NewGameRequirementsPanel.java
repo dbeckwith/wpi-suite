@@ -5,6 +5,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -119,7 +120,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 			}
 		});
 
-		countError.setForeground(new java.awt.Color(255, 0, 0));
+		countError.setForeground(Color.red);
 		countError.setText("At least one requirement is needed!");
 
 		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
