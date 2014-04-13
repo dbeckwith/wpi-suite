@@ -83,7 +83,8 @@ public class ViewController {
     public void saveNewGame(NewGamePanel e) {
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), e.getEndDate(),
-                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig().getUserName());
+                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
+                        .getUserName());
         
         new Thread() {
             @Override
@@ -99,11 +100,14 @@ public class ViewController {
     }
     
     public void cancelNewGame(NewGamePanel e) {
-         int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?", "Cancel Game", JOptionPane.OK_CANCEL_OPTION);
-         if(result == JOptionPane.OK_OPTION) {
-	        RequirementsListModel.getInstance().removeListListener(
-	                e.getNewGameRequirementsPanel().getRequirementsListObserver());
-	        mainView.removeTabAt(mainView.indexOfComponent(e));
+        int result = JOptionPane.showConfirmDialog(e,
+                "Are you sure you want to cancel this game?", "Cancel Game",
+                JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            RequirementsListModel.getInstance().removeListListener(
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
+            mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
     
@@ -132,8 +136,14 @@ public class ViewController {
         if (game != null
                 && game.getOwner().equals(
                         ConfigManager.getConfig().getUserName())
-                && !game.isEnded()) {
+                && !game.isClosed()) {
             toolbar.setAdminVisibility(true);
+            if (game.getStatus() == GameStatus.COMPLETE) {
+                toolbar.setEndGame(false);
+            }
+            else {
+                toolbar.setEndGame(true);
+            }
             showAdmin = true;
         }
         else {
@@ -155,6 +165,17 @@ public class ViewController {
         }
         else {
             toolbar.setAdminVisibility(false);
+        }
+    }
+    
+    /**
+     * closes a game so it can't be edited
+     */
+    public void closeGame() {
+        GameModel curr = mainView.getMainPanel().getSelectedGame();
+        if (curr != null && !curr.isClosed()) {
+            curr.closeGame();
+            UpdateGamesController.getInstance().updateGame(curr);
         }
     }
     
