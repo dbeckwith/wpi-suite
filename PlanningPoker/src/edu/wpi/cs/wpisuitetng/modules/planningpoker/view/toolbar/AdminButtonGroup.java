@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Dan
  * 
  */
-public class AdminButtons extends ToolbarGroupView {
+public class AdminButtonGroup extends ToolbarGroupView {
     /**
      * 
      */
@@ -40,7 +40,7 @@ public class AdminButtons extends ToolbarGroupView {
     
     private final JPanel contentPanel = new JPanel();
     
-    public AdminButtons() {
+    public AdminButtonGroup() {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");

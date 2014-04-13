@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author llhunker, blammeson, nfbrown
  * 
  */
-public class CommonButtons extends ToolbarGroupView {
+public class CommonButtonGroup extends ToolbarGroupView {
 	/**
      * 
      */
@@ -41,7 +41,7 @@ public class CommonButtons extends ToolbarGroupView {
 
 	private final JPanel contentPanel = new JPanel();
 
-	public CommonButtons() {
+	public CommonButtonGroup() {
 		super(""); // not sure if this is needed
 
 		newGameButton = new JButton("<html>Create<br/>Game</html>");

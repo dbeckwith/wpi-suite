@@ -334,7 +334,7 @@ public class GameModel extends AbstractModel {
         return getName();
     }
     
-    public boolean equals(GameModel other) {
+    public boolean equalTo(GameModel other) {
         return other.id == id && other.name.equals(other.name);
     }
     
@@ -344,7 +344,7 @@ public class GameModel extends AbstractModel {
             toReturn = true;
         }
         else if (other instanceof GameModel) {
-            toReturn = this.equals((GameModel) other);
+            toReturn = this.equalTo((GameModel) other);
         }
         else {
             toReturn = super.equals(other);

@@ -13,8 +13,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtons;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.CommonButtons;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtonGroup;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.CommonButtonGroup;
 
 /**
  * This is the main class for the planning poker toolbar
@@ -28,13 +28,13 @@ public class ToolbarView extends DefaultToolbarView {
      * 
      */
     private static final long serialVersionUID = 1142258027071142978L;
-    private final CommonButtons commonButtons = new CommonButtons();
-    private final AdminButtons adminButtons = new AdminButtons();
+    private final CommonButtonGroup commonButtonGroup = new CommonButtonGroup();
+    private final AdminButtonGroup adminButtonGroup = new AdminButtonGroup();
     
     public ToolbarView() {
-        addGroup(commonButtons);
-        addGroup(adminButtons);
-        adminButtons.setVisible(false);
+        addGroup(commonButtonGroup);
+        addGroup(adminButtonGroup);
+        adminButtonGroup.setVisible(false);
     }
     
     /**
@@ -44,7 +44,7 @@ public class ToolbarView extends DefaultToolbarView {
      *        whether admin buttons should be visible
      */
     public void setAdminVisibility(boolean b) {
-        adminButtons.setVisible(b);
+        adminButtonGroup.setVisible(b);
     }
     
     /**
@@ -54,6 +54,6 @@ public class ToolbarView extends DefaultToolbarView {
      *        whether to enable the end estimation button
      */
     public void setEndGame(boolean b) {
-        adminButtons.setEndGameEnabled(b);
+        adminButtonGroup.setEndGameEnabled(b);
     }
 }

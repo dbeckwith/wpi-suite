@@ -380,7 +380,6 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         btnSubmit.setEnabled(btnSubmitFlag);
-        return;
     }
     
     public void setAllowMultipleCards(boolean allow) {

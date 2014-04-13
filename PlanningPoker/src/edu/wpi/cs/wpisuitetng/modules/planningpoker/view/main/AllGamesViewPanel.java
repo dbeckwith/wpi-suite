@@ -111,7 +111,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     PlanningPoker.getViewController().displayAdmin(
                             currentSelectionGame);
                 }
-                return;
             }
         });
     }
