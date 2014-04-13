@@ -55,13 +55,14 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         DeckListModel.getInstance().addObserver(this);
         
         ArrayList<Double> cards = new ArrayList<Double>();
-        cards.add(.5);
+        cards.add(0.0);
+        cards.add(1.0);
         cards.add(1.0);
         cards.add(2.0);
         cards.add(3.0);
-        cards.add(4.0);
         cards.add(5.0);
-        cards.add(10.0);
+        cards.add(8.0);
+        cards.add(13.0);
         
         defaultDeck = new DeckModel("Default", cards, false);
         DeckListModel.getInstance().setDefaultDeck(defaultDeck);
