@@ -16,18 +16,19 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 public class CardButton extends JButton implements MouseListener {
+	
+	private static final DecimalFormat cardFormat = new DecimalFormat("0.#");
 	
 	private static final float MARGIN = 0.03f;
 	private static final float MARGIN_LOGO = 0.05f;
@@ -58,8 +59,8 @@ public class CardButton extends JButton implements MouseListener {
 	private boolean cardEnabled = true;
 	
 	public CardButton(String val){
-		value = val;
-		suitIndex = ((int)(Float.parseFloat(val)))%4;//(int)(Math.random()*suits.length);
+		value = cardFormat.format(Float.parseFloat(val));
+		suitIndex = (int)(Math.random()*suits.length);
 		selected = false;
 		this.addMouseListener(this);
 		

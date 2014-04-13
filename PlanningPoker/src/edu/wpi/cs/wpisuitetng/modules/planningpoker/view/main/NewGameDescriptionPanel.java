@@ -7,12 +7,17 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -24,15 +29,17 @@ import javax.swing.event.DocumentListener;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+
 /**
  * 
  * @author Lukas
  */
-public class NewGameDescriptionPanel extends javax.swing.JPanel {
-
-	/**
-     * 
-     */
+public class NewGameDescriptionPanel extends javax.swing.JPanel implements
+		SimpleListObserver {
 	private static final long serialVersionUID = 4601624442206350512L;
 
 	/**
@@ -40,6 +47,23 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 */
 	public NewGameDescriptionPanel() {
 		initComponents();
+
+		DeckListModel.getInstance().addObserver(this);
+
+		ArrayList<Double> cards = new ArrayList<Double>();
+		cards.add(.5);
+		cards.add(1.0);
+		cards.add(2.0);
+		cards.add(3.0);
+		cards.add(4.0);
+		cards.add(5.0);
+		cards.add(10.0);
+
+		this.defaultDeck = new DeckModel("Default", cards, false);
+		DeckListModel.getInstance().setDefaultDeck(defaultDeck);
+		deckComboBox.addItem(defaultDeck);
+
+		GetDecksController.getInstance().retrieveDecks();
 
 		nameField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -118,6 +142,13 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 				parent.check();
 			}
 		});
+
+		newDeckButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				parent.showPanel("newdeckpanel");
+			}
+		});
 	}
 
 	/**
@@ -185,6 +216,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 
 		deadlineError = new JLabel("Invalid date!");
 		deadlineError.setForeground(new java.awt.Color(255, 0, 0));
+
+		JLabel deckLabel = new JLabel("Deck:");
+
+		deckComboBox = new JComboBox<DeckModel>();
+
+		newDeckButton = new JButton("Create Deck");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(layout
@@ -257,7 +294,22 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 																		timeSpinner,
 																		GroupLayout.PREFERRED_SIZE,
 																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)))
+																		GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		deckLabel)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		deckComboBox,
+																		GroupLayout.PREFERRED_SIZE,
+																		128,
+																		GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		newDeckButton)))
 								.addContainerGap(32, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout
 				.createParallelGroup(Alignment.LEADING)
@@ -282,12 +334,23 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 												.addComponent(descriptionError))
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(jScrollPane1,
-										GroupLayout.DEFAULT_SIZE, 67,
+										GroupLayout.DEFAULT_SIZE, 61,
 										Short.MAX_VALUE)
 								.addComponent(distributed)
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addComponent(live)
-								.addGap(26)
+								.addGap(5)
+								.addGroup(
+										layout.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(deckLabel)
+												.addComponent(
+														deckComboBox,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(newDeckButton))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(
 										layout.createParallelGroup(
 												Alignment.BASELINE)
@@ -331,6 +394,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		}
 	}
 
+	public DeckModel getDeck() {
+		return (DeckModel) deckComboBox.getSelectedItem();
+	}
+
 	/**
 	 * Validates the user-entered deadline. If entered deadline is before the
 	 * current date and time return false and show error.
@@ -362,6 +429,22 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		return valid;
 	}
 
+	/**
+	 * Populates deck combo box with new decks
+	 * 
+	 * @param decks
+	 */
+	@Override
+	public void listUpdated() {
+		ArrayList<DeckModel> decks = DeckListModel.getInstance().getDecks();
+		DefaultComboBoxModel<DeckModel> newModel = new DefaultComboBoxModel<DeckModel>();
+		newModel.addElement(defaultDeck);
+		for (DeckModel deck : decks) {
+			newModel.addElement(deck);
+		}
+		deckComboBox.setModel(newModel);
+	}
+
 	public void setEditGamePanel(NewGamePanel p) {
 		parent = p;
 	}
@@ -384,4 +467,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel nameLabel;
 	public javax.swing.JCheckBox selectDeadline;
 	private JLabel deadlineError;
+	private JComboBox<DeckModel> deckComboBox;
+	private DeckModel defaultDeck;
+	private JButton newDeckButton;
 }
