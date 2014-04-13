@@ -275,23 +275,25 @@ public class NewGamePanel extends JPanel {
 
 		typeLabel = new JLabel("Type:");
 		GridBagConstraints gbc_typeLabel = new GridBagConstraints();
+		gbc_typeLabel.gridheight = 2;
 		gbc_typeLabel.anchor = GridBagConstraints.WEST;
 		gbc_typeLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_typeLabel.gridx = 0;
 		gbc_typeLabel.gridy = 4;
 		newRequirementPanel.add(typeLabel, gbc_typeLabel);
-
-		newReqType = new JComboBox<String>();
-		newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
-				"Epic", "Theme", "User story", "Non-functional dependency",
-				"Scenario" }));
-		GridBagConstraints gbc_newReqType = new GridBagConstraints();
-		gbc_newReqType.gridwidth = 2;
-		gbc_newReqType.anchor = GridBagConstraints.WEST;
-		gbc_newReqType.insets = new Insets(0, 0, 5, 5);
-		gbc_newReqType.gridx = 0;
-		gbc_newReqType.gridy = 5;
-		newRequirementPanel.add(newReqType, gbc_newReqType);
+		
+				newReqType = new JComboBox<String>();
+				newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
+						"Epic", "Theme", "User story", "Non-functional dependency",
+						"Scenario" }));
+				GridBagConstraints gbc_newReqType = new GridBagConstraints();
+				gbc_newReqType.gridheight = 2;
+				gbc_newReqType.gridwidth = 2;
+				gbc_newReqType.anchor = GridBagConstraints.WEST;
+				gbc_newReqType.insets = new Insets(0, 0, 5, 0);
+				gbc_newReqType.gridx = 1;
+				gbc_newReqType.gridy = 4;
+				newRequirementPanel.add(newReqType, gbc_newReqType);
 		GridBagConstraints gbc_saveNewReqButton = new GridBagConstraints();
 		gbc_saveNewReqButton.gridwidth = 2;
 		gbc_saveNewReqButton.insets = new Insets(0, 0, 0, 5);
