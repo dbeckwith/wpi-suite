@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsCo
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * 
@@ -49,6 +50,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         createdRequirements = new ArrayList<>();
 		requirementsTableScrollPane.getViewport().setBackground(Color.WHITE);
 		clearRequirements();
+        GetRequirementsController.getInstance().retrieveRequirements();
 		
 		requirementsListObserver = new SimpleListObserver() {
             
@@ -64,7 +66,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
             }
         };
 		RequirementsListModel.getInstance().addListListener(requirementsListObserver);
-        GetRequirementsController.getInstance().retrieveRequirements();
 	}
 	
 	public SimpleListObserver getRequirementsListObserver() {
@@ -112,33 +113,45 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		});
 		
 		JLabel lblGameRequirements = new JLabel("Game Requirements:");
+		
+		JButton reloadButton = new JButton("Reload from Requirements Manager");
+		reloadButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        GetRequirementsController.getInstance().retrieveRequirements();
+		    }
+		});
+		reloadButton.setIcon(ImageLoader.getIcon("reload.png"));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(
 		    layout.createParallelGroup(Alignment.LEADING)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
-		            .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-		            .addContainerGap(197, Short.MAX_VALUE))
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(reloadButton)
+		            .addContainerGap(168, Short.MAX_VALUE))
+		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addComponent(lblGameRequirements)
-		            .addContainerGap(319, Short.MAX_VALUE))
-		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+		            .addPreferredGap(ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
+		            .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+		            .addContainerGap())
 		);
 		layout.setVerticalGroup(
 		    layout.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
-		            .addComponent(lblGameRequirements)
+		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(lblGameRequirements)
+		                .addComponent(btnSelectAll))
 		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
 		            .addGap(11)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(addButton)
-		                .addComponent(btnSelectAll))
+		                .addComponent(reloadButton))
 		            .addContainerGap())
 		);
 		setLayout(layout);
