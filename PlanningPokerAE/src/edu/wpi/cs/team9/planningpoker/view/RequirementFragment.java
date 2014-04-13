@@ -149,6 +149,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 			}
 		}	
 		
+		
 		estimateText.setText(Card.cardNumberFormat.format(getEstimate()));
 				
 		for(Card c:cards){
@@ -161,7 +162,6 @@ public class RequirementFragment extends Fragment implements CardListener {
 				submit.setEnabled(false);	
 			}
 		}
-
 		
 	}
 	

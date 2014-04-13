@@ -19,7 +19,8 @@ public class Card implements View.OnClickListener{
 		R.drawable.suit_clubs,
 		R.drawable.suit_diamonds,
 		R.drawable.suit_hearts,
-		R.drawable.suit_spades
+		R.drawable.suit_spades,
+		R.drawable.ic_goat
 	};
 	
 	private View view;
