@@ -36,7 +36,7 @@ public class NotificationServer extends Thread {
 	/**
 	 * Constructor
 	 */
-	private NotificationServer(){	
+	private NotificationServer(){
 		try {
 			serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
@@ -45,7 +45,7 @@ public class NotificationServer extends Thread {
 		clientSockets = new ArrayList<Socket>();
 	}
 	
-	public void run(){	
+	public void run(){
 		System.out.println("Notification server started");
 		while(true){
 			try {
@@ -54,7 +54,7 @@ public class NotificationServer extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}		
+		}	
 	}
 	
 	/**

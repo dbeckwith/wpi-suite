@@ -78,7 +78,7 @@ public class CardButton extends JButton implements MouseListener {
 		
 		
 		g2.setColor(new Color(240, 240, 240));
-		g2.fillRect(0, 0, getWidth() - margin * (2), getHeight() - margin * (2));	
+		g2.fillRect(0, 0, getWidth() - margin * (2), getHeight() - margin * (2));
 		
 		
 		if(isEnabled()){
@@ -87,7 +87,7 @@ public class CardButton extends JButton implements MouseListener {
 			//highlight card background
 			if(hover || selected){
 				g2.setColor(Color.WHITE);
-				g2.fillRect(0, 0, getWidth() - margin * (2), getHeight() - margin * (2));					
+				g2.fillRect(0, 0, getWidth() - margin * (2), getHeight() - margin * (2));	
 			}
 			
 			//draw suit logos on the corners

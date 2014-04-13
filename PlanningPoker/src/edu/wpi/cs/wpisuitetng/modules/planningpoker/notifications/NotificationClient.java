@@ -36,7 +36,7 @@ public class NotificationClient extends Thread {
 	/**
 	 * Constructor
 	 */
-	private NotificationClient(){	
+	private NotificationClient(){
 		try {
 			//get ip address of the server
 			serverAddress = InetAddress.getByName(new URL(Network.getInstance().getDefaultNetworkConfiguration().getApiUrl()).getHost());
@@ -45,10 +45,10 @@ public class NotificationClient extends Thread {
 		}
 	}
 	
-	public void run(){	
+	public void run(){
 		System.out.println("Notification client started");
 		while(true){
-			try {				
+			try {	
 				Socket server = new Socket(serverAddress, NotificationServer.PORT); //open a connection to the notification server
 				server.getInputStream().read(); //wait for the one-byte ping
 				server.close(); //close the connection
@@ -56,6 +56,6 @@ public class NotificationClient extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}		
+		}	
 	}
 }
