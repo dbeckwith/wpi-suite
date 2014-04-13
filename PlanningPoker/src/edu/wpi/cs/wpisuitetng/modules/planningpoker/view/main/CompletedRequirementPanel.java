@@ -78,6 +78,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
         
+        finalEstimateField.setText("");
+        
         tableModel = new javax.swing.table.DefaultTableModel() {
             
             /**
