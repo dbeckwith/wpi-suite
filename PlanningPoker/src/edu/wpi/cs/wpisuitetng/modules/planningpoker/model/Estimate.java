@@ -87,7 +87,7 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
         if (estimate > arg0.getEstimate()) {
             return 1;
         }
-        else if (estimate == arg0.getEstimate()) {
+        else if (Math.abs(estimate - arg0.getEstimate()) < 0.0001) {
             return 0;
         }
         else {
