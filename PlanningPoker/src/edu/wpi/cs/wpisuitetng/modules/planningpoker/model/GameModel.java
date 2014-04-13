@@ -229,11 +229,7 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
-     *        <<<<<<< HEAD
      *        whether or not the game should be ended
-     *        =======
-     *        whether or not the game should be ended
-     *        >>>>>>> team9dev
      */
     public void setEnded(boolean fin) {
         GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;

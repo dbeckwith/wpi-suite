@@ -26,47 +26,47 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPan
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
 public class ViewController {
-
-	private MainView mainView;
-	private ToolbarView toolbar;
-
-	/**
-	 * indicates if admin buttons are being shown if all games panel is selected
-	 */
-	private boolean showAdmin;
-
-	public ViewController(MainView mainView, ToolbarView toolbar) {
-		this.mainView = mainView;
-		this.toolbar = toolbar;
-	}
-
-	public void addNewGameTab() {
-		final NewGamePanel editGame = new NewGamePanel();
-		mainView.addTab("New Game", editGame);
-		mainView.setSelectedComponent(editGame);
-
-		mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
-				new ClosableTabComponent(mainView) {
-					/**
+    
+    private MainView mainView;
+    private ToolbarView toolbar;
+    
+    /**
+     * indicates if admin buttons are being shown if all games panel is selected
+     */
+    private boolean showAdmin;
+    
+    public ViewController(MainView mainView, ToolbarView toolbar) {
+        this.mainView = mainView;
+        this.toolbar = toolbar;
+    }
+    
+    public void addNewGameTab() {
+        final NewGamePanel editGame = new NewGamePanel();
+        mainView.addTab("New Game", editGame);
+        mainView.setSelectedComponent(editGame);
+        
+        mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
+                new ClosableTabComponent(mainView) {
+                    /**
                      * 
                      */
-					private static final long serialVersionUID = 7088866301855075603L;
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						cancelNewGame(editGame);
-					}
-				});
-
-	}
-
-	public void addUserPrefsTab() {
-		final UserPreferencesPanel prefsPanel = UserPreferencesPanel.getPanel();
-		mainView.addTab("Preferences", prefsPanel);
-		mainView.setSelectedComponent(prefsPanel);
-
-		mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
-		        new ClosableTabComponent(mainView) {
+                    private static final long serialVersionUID = 7088866301855075603L;
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cancelNewGame(editGame);
+                    }
+                });
+        
+    }
+    
+    public void addUserPrefsTab() {
+        final UserPreferencesPanel prefsPanel = UserPreferencesPanel.getPanel();
+        mainView.addTab("Preferences", prefsPanel);
+        mainView.setSelectedComponent(prefsPanel);
+        
+        mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
+                new ClosableTabComponent(mainView) {
                     private static final long serialVersionUID = 3668078500346186662L;
                     
                     @Override
@@ -79,9 +79,9 @@ public class ViewController {
     
     public void saveNewGame(NewGamePanel e) {
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), e.getDeck(), e.getEndDate(),                    
-                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
-                        .getUserName());
+                e.getDescription(), e.getRequirements(), e.getDeck(),
+                e.getEndDate(), e.getGameType(), GameStatus.PENDING,
+                ConfigManager.getConfig().getUserName());
         
         new Thread() {
             @Override
