@@ -63,16 +63,22 @@ public class CompletedGamePanel extends javax.swing.JPanel {
     
     private void updateGame() {
         if (selectedGame != null) {
-            setNumRequirements(selectedGame.getRequirements().size() + "");
-            DefaultTableModel model = (DefaultTableModel) voteResultTable
-                    .getModel();
-            for (int i = model.getRowCount() - 1; i >= 0; i--) {
-                model.removeRow(i);
+            if (selectedGame.getRequirements() == null) {
+                setNumRequirements(0 + "");
             }
-            for (GameRequirementModel req : selectedGame.getRequirements()) {
-                model.addRow(new Object[] { req.getName(),
-                        req.getEstimateMean(), req.getEstimateMedian(),
-                        req.getFinalEstimate() });
+            else {
+                setNumRequirements(selectedGame.getRequirements().size() + "");
+                
+                DefaultTableModel model = (DefaultTableModel) voteResultTable
+                        .getModel();
+                for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                    model.removeRow(i);
+                }
+                for (GameRequirementModel req : selectedGame.getRequirements()) {
+                    model.addRow(new Object[] { req.getName(),
+                            req.getEstimateMean(), req.getEstimateMedian(),
+                            req.getFinalEstimate() });
+                }
             }
         }
     }

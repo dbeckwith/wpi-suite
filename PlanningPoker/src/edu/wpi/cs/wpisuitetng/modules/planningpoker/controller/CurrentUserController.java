@@ -70,7 +70,7 @@ public class CurrentUserController extends AbstractUserController {
         else {
             System.err.println("No users received!");//TODO remove
         }
-        System.out.println("User = " + user);
+        System.out.println("User = " + user);//TODO remove
     }
     
     /**
