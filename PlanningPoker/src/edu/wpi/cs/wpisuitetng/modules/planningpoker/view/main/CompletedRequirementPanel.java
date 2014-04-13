@@ -64,16 +64,16 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         this.req = req;
         parent = parent_game;
+        parent.addStatusListener(new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
+                checkDisplayFinal();
+            }
+            
+        });
         
-        
-        displayFinalEstimateFields(false);
-        
-        
-        if (ConfigManager.getConfig().getUserName()
-                .equals(parent_game.getOwner())) {
-            displayFinalEstimateFields(true);
-        }
-        
+        checkDisplayFinal();
         
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
@@ -116,6 +116,21 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblNonnegativeIntegersOnly.setVisible(b);
         saveFinalEstimateButton.setVisible(b);
         
+    }
+    
+    /**
+     * checks whether the final estimate field should be set, and changes them
+     * based on it
+     */
+    private void checkDisplayFinal() {
+        displayFinalEstimateFields(false);
+        
+        
+        if (ConfigManager.getConfig().getUserName()
+                .equals(parent.getOwner())
+                && !parent.isClosed()) {
+            displayFinalEstimateFields(true);
+        }
     }
     
     /**
