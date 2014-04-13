@@ -23,8 +23,15 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class RequestThread extends Thread {
     
+    /**
+     * The controller sending a request for a user.
+     */
     private final AbstractUserController controller;
     
+    /**
+     * Responsible for waking the controller when the server sends a response,
+     * otherwise the main thread could get deadlocked.
+     */
     private final RequestObserver observer = new RequestObserver() {
         @Override
         public void responseSuccess(IRequest iReq) {
@@ -45,6 +52,9 @@ public class RequestThread extends Thread {
             notifyController();
         }
         
+        /**
+         * Wakes the controller.
+         */
         private void notifyController() {
             synchronized (controller) {
                 controller.notifyAll();
@@ -64,28 +74,20 @@ public class RequestThread extends Thread {
     
     @Override
     public void run() {
-        try {
-            requestUsers();
-        }
-        catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        requestUsers();
     }
     
     /**
      * Sends the request. This blocks the controller's thread until a response
      * is received.
      */
-    private void requestUsers() throws InterruptedException {
-        synchronized (controller) {
-            final Request request = Network.getInstance().makeRequest(
-                    "core/user", HttpMethod.GET);
-            request.addObserver(observer);
-            request.addObserver(controller.observer);
-            System.out.println("Sending request for user..."); //TODO remove
-            request.send();
-        }
+    private void requestUsers() {
+        final Request request = Network.getInstance().makeRequest("core/user",
+                HttpMethod.GET);
+        request.addObserver(observer);
+        request.addObserver(controller.observer);
+        System.out.println("Sending request for user..."); //TODO remove
+        request.send();
     }
     
 }
