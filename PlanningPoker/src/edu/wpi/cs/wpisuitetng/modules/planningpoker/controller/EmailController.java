@@ -75,9 +75,9 @@ public class EmailController extends AbstractUserController {
      *        the body of the email
      */
     public void sendEmails(String subject, String body) {
-        requestUsers();
         final EmailSenderThread sender = new EmailSenderThread(subject, body);
         senderThreads.add(sender);
+        requestUsers();
     }
     
     /**

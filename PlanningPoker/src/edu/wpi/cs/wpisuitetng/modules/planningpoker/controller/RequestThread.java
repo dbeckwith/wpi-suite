@@ -35,20 +35,16 @@ public class RequestThread extends Thread {
     private final RequestObserver observer = new RequestObserver() {
         @Override
         public void responseSuccess(IRequest iReq) {
-            System.out.println("Got response success, waking controller"); //TODO remove
             notifyController();
         }
         
         @Override
         public void responseError(IRequest iReq) {
-            System.out.println("Got response error, waking controller"); //TODO remove
             notifyController();
         }
         
         @Override
         public void fail(IRequest iReq, Exception exception) {
-            System.out.println("Got response failure, "
-                    + "waking controller to avoid deadlocks"); //TODO remove
             notifyController();
         }
         

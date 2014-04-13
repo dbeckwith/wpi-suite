@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * 
  */
 public class EmailSenderThread extends Thread { // $codepro.audit.disable declareDefaultConstructors
-    
+
     /**
      * Gmail username.
      */
