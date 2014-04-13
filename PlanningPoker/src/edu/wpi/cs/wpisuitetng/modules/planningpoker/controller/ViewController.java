@@ -95,6 +95,7 @@ public class ViewController {
 
 		RequirementsListModel.getInstance().removeListListener(
 				e.getNewGameRequirementsPanel().getRequirementsListObserver());
+		System.out.println("REMOVING TAB!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		mainView.removeTabAt(mainView.indexOfComponent(e));
 
 	}

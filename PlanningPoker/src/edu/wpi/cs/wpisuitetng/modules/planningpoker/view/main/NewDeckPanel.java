@@ -11,16 +11,21 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
@@ -105,6 +110,7 @@ public class NewDeckPanel extends JPanel {
 
 		newDeckCards = new JTextPane();
 		newDeckCards.setForeground(SystemColor.desktop);
+		newDeckCards.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
 				SpringLayout.SOUTH, cardLabel);
 		springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
@@ -194,11 +200,10 @@ public class NewDeckPanel extends JPanel {
 		add(deckNameErrorLabel);
 
 		cardsErrorLabel = new JLabel("*Invalid value!");
+		springLayout.putConstraint(SpringLayout.NORTH, cardsErrorLabel, 0,
+				SpringLayout.NORTH, cardLabel);
+		springLayout.putConstraint(SpringLayout.WEST, cardsErrorLabel, 0, SpringLayout.WEST, deckNameErrorLabel);
 		cardsErrorLabel.setForeground(Color.RED);
-		springLayout.putConstraint(SpringLayout.NORTH, cardsErrorLabel, 6,
-				SpringLayout.SOUTH, newDeckName);
-		springLayout.putConstraint(SpringLayout.WEST, cardsErrorLabel, 6,
-				SpringLayout.EAST, cardLabel);
 		add(cardsErrorLabel);
 
 		ButtonGroup selectionGroup = new ButtonGroup();
