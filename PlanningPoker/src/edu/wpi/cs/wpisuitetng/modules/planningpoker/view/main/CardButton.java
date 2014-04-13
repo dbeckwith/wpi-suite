@@ -77,7 +77,7 @@ public class CardButton extends JButton implements MouseListener {
 		g2.fillRect(margin, margin, getWidth()-margin, getHeight()-margin);
 		
 		
-		g2.setColor(new Color(240,240,240));
+		g2.setColor(new Color(240, 240, 240));
 		g2.fillRect(0, 0, getWidth()-margin*(2), getHeight()-margin*(2));	
 		
 		
@@ -98,7 +98,7 @@ public class CardButton extends JButton implements MouseListener {
 			g2.setColor(Color.BLACK);
 			g2.setFont(new Font(g.getFont().getFontName(), Font.BOLD, (int)(getWidth()*(hover?FONT_SIZE_HOVER:FONT_SIZE))));
 			final Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
-			g2.drawString(value, (int)(getWidth()-r.getWidth())/2,(int)(getHeight() - r.getHeight())/2 + g2.getFontMetrics().getAscent());
+			g2.drawString(value, (int)(getWidth()-r.getWidth())/2, (int)(getHeight() - r.getHeight())/2 + g2.getFontMetrics().getAscent());
 			
 		} else {
 			final int suitSize = (int)(getWidth()*BACK_SUIT_SIZE);

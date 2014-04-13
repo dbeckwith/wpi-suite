@@ -5,6 +5,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -157,10 +158,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		gameType.add(live);
 		live.setText("Live Game");
 
-		nameError.setForeground(new java.awt.Color(255, 0, 0));
+		nameError.setForeground(Color.red);
 		nameError.setText("* Required field!");
 
-		descriptionError.setForeground(new java.awt.Color(255, 0, 0));
+		descriptionError.setForeground(Color.red);
 		descriptionError.setText("* Required field!");
 		descriptionError.setFocusable(false);
 
@@ -184,7 +185,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		});
 
 		deadlineError = new JLabel("Invalid date!");
-		deadlineError.setForeground(new java.awt.Color(255, 0, 0));
+		deadlineError.setForeground(Color.red);
 
 		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(layout
