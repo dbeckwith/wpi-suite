@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  */
 public class PlanningPoker implements IJanewayModule {
 	
-	static ViewController viewController;
+	static ViewController viewController = null;
 	
 	public static ViewController getViewController() {
 		return PlanningPoker.viewController;

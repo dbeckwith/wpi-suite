@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UpdateGamesController {
     
-    private static UpdateGamesController instance;
+    private static UpdateGamesController instance = null;
     private final UpdateGamesRequestObserver observer;
     
     /**

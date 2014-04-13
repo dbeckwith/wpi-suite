@@ -28,7 +28,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetGamesController implements ActionListener {
     private final GetGamesRequestObserver observer;
-    private static GetGamesController instance;
+    private static GetGamesController instance = null;
     
     /**
      * Constructs the controller given a GameModel

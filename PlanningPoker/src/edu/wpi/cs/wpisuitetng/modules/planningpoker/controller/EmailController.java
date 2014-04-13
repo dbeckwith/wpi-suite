@@ -38,7 +38,7 @@ public class EmailController extends AbstractUserController {
     private EmailController() {
     }
     
-    private static EmailController instance;
+    private static EmailController instance = null;
     
     public static EmailController getInstance() {
         if (instance == null)

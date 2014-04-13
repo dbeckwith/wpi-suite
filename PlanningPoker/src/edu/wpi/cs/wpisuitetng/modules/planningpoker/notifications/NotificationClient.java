@@ -18,7 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.Network;
  */
 public class NotificationClient extends Thread {
 		
-	private static NotificationClient instance;
+	private static NotificationClient instance = null;
 	
     /**
      * @return the instance of the NotificationClient or creates one if it does

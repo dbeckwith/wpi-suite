@@ -157,10 +157,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                      * 
                      */
             private static final long serialVersionUID = 3245971487236783965L;
-            Class[] types = new Class[] { java.lang.Boolean.class,
+            private Class[] types = new Class[] { java.lang.Boolean.class,
                     java.lang.Object.class, java.lang.String.class,
                     java.lang.String.class };
-            boolean[] canEdit = new boolean[] { true, false, false, false };
+            private boolean[] canEdit = new boolean[] { true, false, false, false };
 
             @Override
             public Class getColumnClass(int columnIndex) {

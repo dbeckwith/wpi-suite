@@ -162,7 +162,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
              * 
              */
             private static final long serialVersionUID = -5144539907705808611L;
-            boolean[] columnEditables = new boolean[] { false, false };
+            private boolean[] columnEditables = new boolean[] { false, false };
             
             @Override
             public boolean isCellEditable(int row, int column) {

@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class GetRequirementsController {
 
     private final GetRequirementsRequestObserver observer;
-    private static GetRequirementsController instance;
+    private static GetRequirementsController instance = null;
 
     /**
      * Constructs the controller given a RequirementModel
