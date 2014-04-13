@@ -3,9 +3,7 @@ package edu.wpi.cs.team9.planningpoker.view;
 import java.util.ArrayList;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.Config;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
-import edu.wpi.cs.team9.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.team9.planningpoker.model.Estimate;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.team9.planningpoker.view.Card.CardListener;
@@ -30,7 +27,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private static final int COLUMNS = 4;
 	
 	private static final float[] deck = {0.5f, 1, 2, 3, 5, 10, 20, 50, 100};
-	
+		
 	private static final TableLayout.LayoutParams rowLP = new TableLayout.LayoutParams(
 	        TableLayout.LayoutParams.MATCH_PARENT,
 	        TableLayout.LayoutParams.MATCH_PARENT,
@@ -49,6 +46,8 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private TextView descView;
 	private TableLayout table;
 	private Button submit;
+	
+	private TextView estimateText;
 	
 	private boolean selectMultiple = true;
 	
@@ -74,6 +73,12 @@ public class RequirementFragment extends Fragment implements CardListener {
 					
 		nameView = (TextView)root.findViewById(R.id.req_name);
 		descView = (TextView)root.findViewById(R.id.description);			
+		
+		estimateText = (TextView)root.findViewById(R.id.estimateTotal);
+		
+		if(!selectMultiple){
+			estimateText.setText("");
+		}				
 		
 		nameView.setText(requirement.getName());
 		descView.setText(requirement.getDescription());
@@ -142,8 +147,10 @@ public class RequirementFragment extends Fragment implements CardListener {
 					c.setCardSelected(false);
 				}
 			}
-		}
+		}	
 		
+		estimateText.setText(Card.cardNumberFormat.format(getEstimate()));
+				
 		for(Card c:cards){
 			if(c.isCardSelected()){
 				submit.setBackgroundResource(R.drawable.bg_card_button);
@@ -154,6 +161,8 @@ public class RequirementFragment extends Fragment implements CardListener {
 				submit.setEnabled(false);	
 			}
 		}
+
+		
 	}
 	
 	public float getEstimate(){
@@ -170,10 +179,4 @@ public class RequirementFragment extends Fragment implements CardListener {
 		public void updated(GameRequirementModel requirement);
 	}
 }
-
-
-
-
-
-
 

@@ -3,6 +3,7 @@ package edu.wpi.cs.team9.planningpoker.view;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,8 @@ import edu.wpi.cs.team9.planningpoker.model.Estimate;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 
 public class RequirementListAdapter extends ArrayAdapter<GameRequirementModel> {
+	
+	private static final String TAG = RequirementListAdapter.class.getSimpleName();
 
 	public RequirementListAdapter(Context context, int resource, int textViewResourceId) {
 		super(context, resource, textViewResourceId);
@@ -36,12 +39,16 @@ public class RequirementListAdapter extends ArrayAdapter<GameRequirementModel> {
 	public boolean hasUserEstimated(GameRequirementModel m){
 		ArrayList<Estimate> estimates = m.getEstimates();
 		String user = Config.getUserName(getContext());
-		
 		for(Estimate e:estimates){
-			if(e.getUser().getName().equals(user)){
-				return true;
+			try {
+				if(e.getUser().getName().equals(user)){
+					return true;
+				}
+			} catch(Exception ex){
+				ex.printStackTrace();
 			}
 		}
+		
 		return false;		
 	}
 

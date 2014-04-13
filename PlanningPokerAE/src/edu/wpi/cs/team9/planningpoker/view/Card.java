@@ -13,7 +13,7 @@ import edu.wpi.cs.team9.planningpoker.R;
 
 public class Card implements View.OnClickListener{
 	
-	private static DecimalFormat df = new DecimalFormat("0.#");
+	public static final DecimalFormat cardNumberFormat = new DecimalFormat("0.#");
 	
 	private static final int[] SUIT_DRAWABLES = {
 		R.drawable.suit_clubs,
@@ -45,7 +45,7 @@ public class Card implements View.OnClickListener{
 		
 		((ImageView)view.findViewById(R.id.iconTop)).setImageResource(suit);
 		((ImageView)view.findViewById(R.id.iconBottom)).setImageResource(suit);
-		text.setText(df.format(value));
+		text.setText(cardNumberFormat.format(value));
 		
 		view.setOnClickListener(this);		
 	}
