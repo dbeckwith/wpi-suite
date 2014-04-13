@@ -50,8 +50,9 @@ public class UserUpdateController {
     private static UserUpdateController instance;
     
     public static UserUpdateController getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new UserUpdateController();
+        }
         return instance;
     }
     

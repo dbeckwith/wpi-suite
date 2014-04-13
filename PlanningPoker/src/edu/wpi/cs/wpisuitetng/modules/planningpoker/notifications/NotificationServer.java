@@ -17,7 +17,7 @@ public class NotificationServer extends Thread {
 	
 	public static final int PORT = 9797;
 	
-	private static NotificationServer instance;
+	private static NotificationServer instance = null;
 	
     /**
      * @return The instance of the NotificationServer or creates one if it does
