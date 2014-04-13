@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
+import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -31,7 +31,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-import javax.swing.border.LineBorder;
 
 public class NewDeckPanel extends JPanel {
 	/**
@@ -245,6 +244,9 @@ public class NewDeckPanel extends JPanel {
         }
         else if (!areCardsValid) {
             errorLabel.setText("Invalid cards list");
+        }
+        else {
+            errorLabel.setText("");
         }
 		createDeckButton.setEnabled(isNameValid && areCardsValid);
 	}
