@@ -57,7 +57,7 @@ public class EmailController extends AbstractUserController {
     /**
      * Sets the body of the email
      */
-    private void setBody() {
+    private void prepareBody() {
         final String username = ConfigManager.getConfig().getUserName();
         for (User u : getUsers()) {
             if (u.getUsername().equals(username)) {
@@ -75,7 +75,7 @@ public class EmailController extends AbstractUserController {
      * @throws AddressException
      */
     private void sendEmails() {
-        setBody();
+        prepareBody();
         System.setProperty("java.net.preferIPv4Stack", "true");
         try {
             for (User u : getUsers()) {
