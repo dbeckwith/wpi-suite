@@ -48,16 +48,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		initComponents();
         createdRequirements = new ArrayList<>();
 		requirementsTableScrollPane.getViewport().setBackground(Color.WHITE);
-		requirementsTable.getModel().addTableModelListener(
-				new TableModelListener() {
-
-					@Override
-					public void tableChanged(TableModelEvent e) {
-						validateForm();
-						checkAllSelected();
-						parent.check();
-					}
-				});
+		clearRequirements();
 		
 		requirementsListObserver = new SimpleListObserver() {
             
@@ -116,14 +107,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		btnSelectAll = new JButton("Select All");
 		btnSelectAll.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        if (allSelected) {
-		            setAllSelected(false);
-		            btnSelectAll.setText("Select All");
-		        }
-		        else {
-		            setAllSelected(true);
-		            btnSelectAll.setText("Deselect All");
-		        }
+		        setAllSelected(!allSelected);
 		    }
 		});
 		
@@ -134,14 +118,14 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		    layout.createParallelGroup(Alignment.LEADING)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
-		            .addComponent(btnSelectAll)
+		            .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(addButton)
-		            .addContainerGap(230, Short.MAX_VALUE))
+		            .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+		            .addContainerGap(197, Short.MAX_VALUE))
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addComponent(lblGameRequirements)
-		            .addContainerGap(340, Short.MAX_VALUE))
+		            .addContainerGap(319, Short.MAX_VALUE))
 		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 		);
 		layout.setVerticalGroup(
@@ -150,7 +134,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		            .addContainerGap()
 		            .addComponent(lblGameRequirements)
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
 		            .addGap(11)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(addButton)
@@ -164,6 +148,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 
 	private void setAllSelected(boolean select) {
 	    allSelected = select;
+        btnSelectAll.setText(allSelected ? "Deselect All" : "Select All");
         DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -219,6 +204,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                     @Override
                     public void tableChanged(TableModelEvent e) {
                         validateForm();
+                        checkAllSelected();
                         parent.check();
                     }
                 });
