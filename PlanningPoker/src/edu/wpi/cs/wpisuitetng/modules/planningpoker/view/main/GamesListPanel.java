@@ -124,36 +124,35 @@ public class GamesListPanel extends javax.swing.JPanel {
         gameTree.setModel(new DefaultTreeModel(rootNode));
         
         
-         // go through all the new nodes and find ones with a game in the
-          // expandedGames list
-            Enumeration treeEnum = rootNode.depthFirstEnumeration();
-            DefaultMutableTreeNode node;
-            while (treeEnum.hasMoreElements()) {
-                node = (DefaultMutableTreeNode) treeEnum.nextElement();
-                if (node.getUserObject() != null
-                        && ((node.getUserObject() instanceof GameModel && expandedGames
-                                .contains(node.getUserObject()))
-                                || node.getUserObject().equals("Pending Games") || node
-                                .getUserObject().equals("Complete Games"))) {
-                    // if the node's game was in the list,
-                    // or the node is a folder of games, expand it
-                    gameTree.expandPath(new TreePath(node.getPath()));
-                }
-            }
-        
-        
-        {
-            // go through all the new node and find the one with user object
-            // equal to the one that was selected
-            treeEnum = rootNode.depthFirstEnumeration();
-            while (treeEnum.hasMoreElements()) {
-                node = (DefaultMutableTreeNode) treeEnum.nextElement();
-                if (node.getUserObject() != null
-                        && node.getUserObject().equals(selectedNodeUserObject)) {
-                    gameTree.setSelectionPath(new TreePath(node.getPath()));
-                }
+        // go through all the new nodes and find ones with a game in the
+        // expandedGames list
+        Enumeration treeEnum = rootNode.depthFirstEnumeration();
+        DefaultMutableTreeNode node;
+        while (treeEnum.hasMoreElements()) {
+            node = (DefaultMutableTreeNode) treeEnum.nextElement();
+            if (node.getUserObject() != null
+                    && ((node.getUserObject() instanceof GameModel && expandedGames
+                            .contains(node.getUserObject()))
+                            || node.getUserObject().equals("Pending Games") || node
+                            .getUserObject().equals("Complete Games"))) {
+                // if the node's game was in the list,
+                // or the node is a folder of games, expand it
+                gameTree.expandPath(new TreePath(node.getPath()));
             }
         }
+        
+        
+        // go through all the new node and find the one with user object
+        // equal to the one that was selected
+        treeEnum = rootNode.depthFirstEnumeration();
+        while (treeEnum.hasMoreElements()) {
+            node = (DefaultMutableTreeNode) treeEnum.nextElement();
+            if (node.getUserObject() != null
+                    && node.getUserObject().equals(selectedNodeUserObject)) {
+                gameTree.setSelectionPath(new TreePath(node.getPath()));
+            }
+        }
+        
     }
     
     public JTree getTree() {
