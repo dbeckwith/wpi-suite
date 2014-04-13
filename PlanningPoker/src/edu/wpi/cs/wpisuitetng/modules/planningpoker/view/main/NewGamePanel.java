@@ -346,7 +346,7 @@ public class NewGamePanel extends JPanel {
 		}
 
 		PlanningPoker.getViewController().saveNewGame(this);
-		EmailController.getInstance().sendNotifications();
+		EmailController.getInstance().sendGameStartNotifications();
 	}// GEN-LAST:event_saveButtonActionPerformed
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed

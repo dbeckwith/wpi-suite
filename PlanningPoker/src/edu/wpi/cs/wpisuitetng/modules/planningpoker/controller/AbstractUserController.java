@@ -6,15 +6,13 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Contributors:
- * Sam Carlberg
+ * Contributors: Sam Carlberg
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.concurrent.CountDownLatch;
+
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * An abstract class for classes requesting users from the server.
@@ -24,10 +22,21 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public abstract class AbstractUserController {
     
-    private final UserRequestObserver observer;
+    public final CountDownLatch latch = new CountDownLatch(1);
+    
+    final Object lock = new Object();
+    
+    /**
+     * This controller's observer.
+     */
+    final UserRequestObserver observer;
+    
+    /**
+     * The array of users in the project logged onto.
+     */
     private User[] users = null;
     
-    public AbstractUserController() {
+    protected AbstractUserController() {
         observer = new UserRequestObserver(this);
     }
     
@@ -45,12 +54,18 @@ public abstract class AbstractUserController {
      * 
      * @see AbstractUserController#receivedUsers(User[])
      */
-    protected void requestUsers() {
-        final Request request = Network.getInstance().makeRequest("core/user",
-                HttpMethod.GET);
-        request.addObserver(observer); // add an observer to process the
-                                       // response
-        request.send(); // send the request
+    public void requestUsers() {
+        synchronized (this) {
+            new RequestThread(this).start();
+            try {
+                System.out.println("Waiting for response");
+                wait();
+            }
+            catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
     
     /**

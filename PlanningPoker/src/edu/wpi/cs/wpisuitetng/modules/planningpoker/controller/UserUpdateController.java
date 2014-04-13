@@ -11,8 +11,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.ArrayList;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -31,7 +29,10 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UserUpdateController {
     
-    private User user;
+    /**
+     * The current user.
+     */
+    private final User user;
     
     /**
      * Default constructor.
@@ -43,16 +44,24 @@ public class UserUpdateController {
     }
     
     private enum FieldName {
-        IM_NOTIFY, EMAIL_NOTIFY        
+        IM_NOTIFY, EMAIL_NOTIFY
     }
     
+    /**
+     * The instance of the controller.
+     */
+    private static UserUpdateController Instance;
     
-    private static UserUpdateController instance;
-    
+    /**
+     * Gets the instance of the controller.
+     * 
+     * @return the instance of the controller.
+     */
     public static UserUpdateController getInstance() {
-        if (instance == null)
-            instance = new UserUpdateController();
-        return instance;
+        if (Instance == null) {
+            Instance = new UserUpdateController();
+        }
+        return Instance;
     }
     
     /**
@@ -73,6 +82,9 @@ public class UserUpdateController {
     
     /**
      * Sets the user to receive or stop receiving email notifications.
+     * 
+     * @param doNotify
+     *        whether or not to recieve notifications.
      */
     public void setNotifyByEmail(boolean doNotify) {
         sendPostRequest(FieldName.EMAIL_NOTIFY, doNotify);
@@ -80,6 +92,9 @@ public class UserUpdateController {
     
     /**
      * Sets the user to receive or stop receiving IM notifications.
+     * 
+     * @param doNotify
+     *        whether or not to recieve notifications.
      */
     public void setNotifyByIM(boolean doNotify) {
         sendPostRequest(FieldName.IM_NOTIFY, doNotify);
@@ -98,15 +113,12 @@ public class UserUpdateController {
                 user.setNotifyByIM((Boolean) newValue);
                 break;
             default:
-                System.err.println("Invalid notification type "
-                        + fieldToUpdate);
                 return;
         }
-        final Request request = Network.getInstance().makeRequest("core/user",
+        final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
                 HttpMethod.POST);
         request.setBody(user.toJSON());
         request.send();
-        System.out.println("Updated: " + user);// TODO remove
     }
     
     
