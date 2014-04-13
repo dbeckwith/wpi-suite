@@ -104,6 +104,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 				parent.showPanel("newreqpanel");
 			}
 		});
+		addButton.setIcon(ImageLoader.getIcon("newReq.png"));
 		
 		btnSelectAll = new JButton("Select All");
 		btnSelectAll.addActionListener(new ActionListener() {
@@ -127,11 +128,11 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		    layout.createParallelGroup(Alignment.LEADING)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
-		            .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(addButton)
 		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(reloadButton)
-		            .addContainerGap(168, Short.MAX_VALUE))
-		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+		            .addContainerGap(146, Short.MAX_VALUE))
+		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addComponent(lblGameRequirements)
@@ -147,7 +148,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		                .addComponent(lblGameRequirements)
 		                .addComponent(btnSelectAll))
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
 		            .addGap(11)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(addButton)
