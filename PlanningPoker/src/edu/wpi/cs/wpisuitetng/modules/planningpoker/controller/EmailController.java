@@ -61,7 +61,7 @@ public class EmailController extends AbstractUserController {
         final String username = ConfigManager.getConfig().getUserName();
         for (User u : getUsers()) {
             if (u.getUsername().equals(username)) {
-                this.body = u.getName()
+                body = u.getName()
                         + " has created a new Planning Poker game. Please make your estimates!";
                 break;
             }

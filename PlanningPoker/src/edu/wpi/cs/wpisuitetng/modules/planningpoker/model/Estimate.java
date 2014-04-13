@@ -27,9 +27,9 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     private final ArrayList<Integer> cardsSelected;
     
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
-        this.name = user.getName();
-        this.username = user.getUsername();
-        this.idNum = user.getIdNum();
+        name = user.getName();
+        username = user.getUsername();
+        idNum = user.getIdNum();
         this.estimate = estimate;
         cardsSelected = cards;
     }
