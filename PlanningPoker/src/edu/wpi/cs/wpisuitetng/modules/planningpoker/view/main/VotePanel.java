@@ -5,14 +5,14 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.Component;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Rectangle2D;
+
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -29,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
 
 /**
  * 
