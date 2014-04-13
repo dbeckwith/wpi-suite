@@ -44,7 +44,10 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (node.getUserObject() instanceof GameModel) {
             GameModel game = (GameModel) node.getUserObject();
             
-            if (game.isEnded()) {
+            if(game.isClosed()){
+                icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
+            }
+            else if (game.isEnded()) {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
             } else {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));

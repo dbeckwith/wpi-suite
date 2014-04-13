@@ -46,4 +46,14 @@ public class ToolbarView extends DefaultToolbarView {
     public void setAdminVisibility(boolean b) {
         adminButtons.setVisible(b);
     }
+    
+    /**
+     * sets whether the endGame button is shown
+     * 
+     * @param b
+     *        whether to enable the end estimation button
+     */
+    public void setEndGame(boolean b) {
+        adminButtons.setEndGameEnabled(b);
+    }
 }
