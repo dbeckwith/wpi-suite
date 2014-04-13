@@ -23,14 +23,14 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     private final String name;
     private final String username;
     private final int idNum;
-    private final float estimate;
+    private final float theEstimate;
     private final ArrayList<Integer> cardsSelected;
     
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         name = user.getName();
         username = user.getUsername();
         idNum = user.getIdNum();
-        this.estimate = estimate;
+        theEstimate = estimate;
         cardsSelected = cards;
     }
     
@@ -54,7 +54,7 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     }
     
     public float getEstimate() {
-        return estimate;
+        return theEstimate;
     }
     
     @Override
@@ -84,10 +84,10 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
     @Override
     public int compareTo(Estimate arg0) {
-        if (estimate > arg0.getEstimate()) {
+        if (theEstimate > arg0.getEstimate()) {
             return 1;
         }
-        else if (Math.abs(estimate - arg0.getEstimate()) < 0.0001) {
+        else if (Math.abs(theEstimate - arg0.getEstimate()) < 0.0001) {
             return 0;
         }
         else {

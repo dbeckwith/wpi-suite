@@ -105,7 +105,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * @param gs
      *            the list of games to add
      */
-    public void addGames(GameModel[] gs) {
+    public void addMultipleGames(GameModel[] gs) {
         for (GameModel g : gs) {
             addAndRegisterGame(g);
         }
