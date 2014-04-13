@@ -107,15 +107,4 @@ public class GetGamesControllerTest {
         }
         Assert.assertTrue(request.isSent());
     }
-    
-    @Test
-    public void testActionPerformed() {
-        GetGamesController.getInstance().actionPerformed(null);
-        MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
-        if (request == null) {
-            Assert.fail("request not sent");
-        }
-        Assert.assertTrue(request.isSent());
-    }
 }

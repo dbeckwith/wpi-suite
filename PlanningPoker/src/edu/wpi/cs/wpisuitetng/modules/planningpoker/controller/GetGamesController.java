@@ -11,9 +11,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationClient;
@@ -26,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  * @author Brett Ammeson, Andrew Han
  */
-public class GetGamesController implements ActionListener {
+public class GetGamesController {
     private GetGamesRequestObserver observer;
     private static GetGamesController instance;
     
@@ -49,19 +46,6 @@ public class GetGamesController implements ActionListener {
         }
         
         return GetGamesController.instance;
-    }
-    
-    /**
-     * Sends an HTTP request to store a game when the update button is pressed
-     * 
-     * @param e
-     *            ActionEvent
-     * 
-     * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        retrieveGames();
     }
     
     /**
