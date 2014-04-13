@@ -40,7 +40,7 @@ public class NotificationClient extends Thread {
 				server.getInputStream().read();
 				System.out.println("NS client update "+System.currentTimeMillis());
 				server.close();
-				GetGamesController.getInstance().actionPerformed(null);
+				GetGamesController.getInstance().retrieveGames();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

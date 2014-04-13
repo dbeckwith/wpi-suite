@@ -44,8 +44,6 @@ public class AddGameRequestObserver implements RequestObserver {
     public void responseSuccess(IRequest iReq) {
         // Get the response to the given request
         final ResponseModel response = iReq.getResponse();
-
-		GetGamesController.getInstance().retrieveGames();
         
         // Parse the requirement out of the response body
         // final GameModel game = GameModel.fromJson(response.getBody());

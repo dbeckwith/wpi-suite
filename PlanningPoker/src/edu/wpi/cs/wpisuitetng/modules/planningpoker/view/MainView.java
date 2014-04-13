@@ -50,28 +50,21 @@ public class MainView extends JTabbedPane {
         });
         
         addAncestorListener(new AncestorListener() {
-            
-            @Override
-            public void ancestorAdded(AncestorEvent event) {
-                GetGamesController.getInstance().retrieveGames();
-                
-                CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user
-            }
-            
-            @Override
-            public void ancestorRemoved(AncestorEvent event) {
-                // Do Nothing
-                
-            }
-            
-            @Override
-            public void ancestorMoved(AncestorEvent event) {
-                // Do Nothing
-                
-            }
-            
+			@Override
+			public void ancestorAdded(AncestorEvent event) {
+		        GetGamesController.getInstance().retrieveGames();
+		        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
+		        removeAncestorListener(this);
+			}
+			
+			@Override
+			public void ancestorRemoved(AncestorEvent event) {}
+			
+			@Override
+			public void ancestorMoved(AncestorEvent event) {}
+		
         });
-        
+  
     }
     
     /**
