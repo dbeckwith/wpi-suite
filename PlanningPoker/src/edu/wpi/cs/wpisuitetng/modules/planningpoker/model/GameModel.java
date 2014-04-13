@@ -31,6 +31,7 @@ public class GameModel extends AbstractModel {
     
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
+
         
         public String name;
         
@@ -142,7 +143,7 @@ public class GameModel extends AbstractModel {
         this.owner = owner;
         status_observers = new ArrayList<>();
     }
-    
+
     /**
      * @return the name of this game
      */
@@ -168,7 +169,7 @@ public class GameModel extends AbstractModel {
     public String getOwner() {
         return owner;
     }
-    
+
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
@@ -215,7 +216,11 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
+<<<<<<< HEAD
      *        whether or not the game should be ended
+=======
+     *            whether or not the game should be ended
+>>>>>>> team9dev
      */
     public void setEnded(boolean fin) {
         GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
