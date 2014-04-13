@@ -20,6 +20,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
@@ -38,33 +39,32 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	private static final long serialVersionUID = -4252474071295177531L;
 
 	private SimpleListObserver requirementsListObserver;
+	private final ArrayList<GameRequirementModel> createdRequirements;
+	// TODO: remember which requirements were checked off as added when the list updates
 	
 	/**
 	 * Creates new form GameRequirements
 	 */
 	public NewGameRequirementsPanel() {
 		initComponents();
-		requirementsTable.getModel().addTableModelListener(
-				new TableModelListener() {
-
-					@Override
-					public void tableChanged(TableModelEvent e) {
-						validateForm();
-						parent.check();
-					}
-				});
+		createdRequirements = new ArrayList<>();
 		
-		GetRequirementsController.getInstance().retrieveRequirements();
+		
 		requirementsListObserver = new SimpleListObserver() {
             
             @Override
             public void listUpdated() {
+                clearRequirements();
                 for (GameRequirementModel req : RequirementsListModel.getInstance().getAll()) {
+                    addRequirement(req);
+                }
+                for (GameRequirementModel req : createdRequirements) {
                     addRequirement(req);
                 }
             }
         };
 		RequirementsListModel.getInstance().addListListener(requirementsListObserver);
+        GetRequirementsController.getInstance().retrieveRequirements();
 	}
 	
 	public SimpleListObserver getRequirementsListObserver() {
@@ -86,29 +86,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		addButton = new javax.swing.JButton();
 		countError = new javax.swing.JLabel();
 
-		requirementsTable.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-
-				}, new String[] { "Add", "Name", "Description", "Type" }) {
-			/**
-                     * 
-                     */
-			private static final long serialVersionUID = 3245971487236783965L;
-			Class[] types = new Class[] { java.lang.Boolean.class,
-					java.lang.Object.class, java.lang.String.class,
-					java.lang.String.class };
-			boolean[] canEdit = new boolean[] { true, false, false, false };
-
-			@Override
-			public Class getColumnClass(int columnIndex) {
-				return types[columnIndex];
-			}
-
-			@Override
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return canEdit[columnIndex];
-			}
-		});
+		clearRequirements();
 		requirementsTable
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
@@ -170,7 +148,33 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void setAllSelected(boolean select) {
+	private TableModel getEmptyTableModel() {
+	    return new javax.swing.table.DefaultTableModel(
+                new Object[][] {
+
+                }, new String[] { "Add", "Name", "Description", "Type" }) {
+            /**
+                     * 
+                     */
+            private static final long serialVersionUID = 3245971487236783965L;
+            Class[] types = new Class[] { java.lang.Boolean.class,
+                    java.lang.Object.class, java.lang.String.class,
+                    java.lang.String.class };
+            boolean[] canEdit = new boolean[] { true, false, false, false };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+    }
+
+    private void setAllSelected(boolean select) {
 		DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
 		for (int i = 0; i < model.getRowCount(); i++) {
@@ -178,8 +182,26 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		}
 		requirementsTable.setModel(model);
 	}
+	
+	private void clearRequirements() {
+	    requirementsTable.setModel(getEmptyTableModel());
+	    requirementsTable.getModel().addTableModelListener(
+                new TableModelListener() {
 
-	public void addRequirement(GameRequirementModel r) {
+                    @Override
+                    public void tableChanged(TableModelEvent e) {
+                        validateForm();
+                        parent.check();
+                    }
+                });
+	}
+	
+	public void addCustomRequirement(GameRequirementModel r) {
+	    createdRequirements.add(r);
+	    addRequirement(r);
+	}
+
+	private void addRequirement(GameRequirementModel r) {
 		System.out.println("added requirement " + r.toString());
 		DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
