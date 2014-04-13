@@ -66,6 +66,9 @@ public class VotePanel extends javax.swing.JPanel {
         setRequirementType(req.getType());
         // setRequirementProgress();
         
+        setAllowMultipleCards(parentGame.getDeck().getAllowsMultipleSelection());
+        System.out.println("multiple selection : "+parentGame.getDeck().getAllowsMultipleSelection());
+        
         old = null; // ensure it is erased
         for (Estimate e : req.getEstimates()) {
             System.out.println(e.getEstimate() + " from " + e.getUsername());
