@@ -33,6 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * 
@@ -187,6 +188,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         finalEstimateField.setColumns(10);
         saveFinalEstimateButton = new JButton("Save");
         saveFinalEstimateButton.setEnabled(false);
+        saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
         
         finalEstimateField.getDocument().addDocumentListener(
                 new DocumentListener() {
