@@ -59,7 +59,7 @@ public class CardButton extends JButton implements MouseListener {
 	
 	public CardButton(String val){
 		value = val;
-		suitIndex = (int)(Math.random()*suits.length);
+		suitIndex = ((int)(Float.parseFloat(val)))%4;//(int)(Math.random()*suits.length);
 		selected = false;
 		this.addMouseListener(this);
 		
