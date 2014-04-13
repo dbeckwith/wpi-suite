@@ -81,7 +81,9 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 final DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) { return; }
+                if (node == null) { 
+                    return; 
+                }
                 
                 currentSelectionGame = null; // reset selected game
                 
