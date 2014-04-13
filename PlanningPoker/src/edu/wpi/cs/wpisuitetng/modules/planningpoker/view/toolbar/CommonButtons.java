@@ -1,30 +1,28 @@
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
- *    TODO: Contributors' names
+ * TODO: Contributors' names
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * this is an example of buttons
@@ -33,44 +31,53 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
  * 
  */
 public class CommonButtons extends ToolbarGroupView {
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = -2589339467561118867L;
-    
-    private JButton newGameButton;
-    
-    private final JPanel contentPanel = new JPanel();
-    
-    public CommonButtons() {
-        super(""); // not sure if this is needed
-        
-        newGameButton = new JButton("<html>Create<br/>Game</html>");
-        
-		try {
-			ImageIcon icon = new ImageIcon(ImageIO.read(getClass().getResource("NewGame.png")));
-			newGameButton.setIcon(icon);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(350);
-        // Adding functionality to new game button, not sure if this is where
-        // this should go --nfbrown
-        newGameButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-        });
-        
-        newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        contentPanel.add(newGameButton);
-        contentPanel.setOpaque(false);
-        
-        this.add(contentPanel);
-    }
-    
+	private static final long serialVersionUID = -2589339467561118867L;
+
+	private JButton newGameButton;
+	private JButton userPrefsButton;
+
+	private final JPanel contentPanel = new JPanel();
+
+	public CommonButtons() {
+		super(""); // not sure if this is needed
+
+		newGameButton = new JButton("<html>Create<br/>Game</html>");
+		newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
+
+		userPrefsButton = new JButton("<html>Preferences</html>");
+
+		userPrefsButton.setIcon(ImageLoader.getIcon("prefs.png"));
+
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		setPreferredWidth(350);
+		// Adding functionality to new game button, not sure if this is where
+		// this should go --nfbrown
+		newGameButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PlanningPoker.getViewController().addNewGameTab();
+			}
+		});
+
+		userPrefsButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PlanningPoker.getViewController().addUserPrefsTab();
+			}
+		});
+
+		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		userPrefsButton.setHorizontalAlignment(SwingConstants.CENTER);
+
+		contentPanel.add(newGameButton);
+		contentPanel.add(userPrefsButton);
+		contentPanel.setOpaque(false);
+
+		this.add(contentPanel);
+	}
+
 }

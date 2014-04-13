@@ -5,10 +5,22 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import javax.swing.table.DefaultTableModel;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * 
@@ -24,27 +36,129 @@ public class GamesListPanel extends javax.swing.JPanel {
     /**
      * Creates new form GamesListPanel
      */
-    public GamesListPanel(final GameListModel gameList) {
+    public GamesListPanel() {
         initComponents();
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
-        gameList.addListListener(new SimpleListObserver() {
+        gameTree.setCellRenderer(new GamesListTreeCellRenderer());
+        
+        GameListModel.getInstance().addListListener(new SimpleListObserver() {
             
             @Override
             public void listUpdated() {
-                updateTable(gameList);
+                updateTree();
+            }
+        });
+        
+        GameListModel.getInstance().addStatusListener(new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
+                updateTree();
+            }
+        });
+        
+        gameTree.addTreeSelectionListener(new TreeSelectionListener() {
+            
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                gameTree.expandPath(e.getPath());
             }
         });
     }
     
-    private void updateTable(GameListModel gameList) {
-        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-        for (int i = m.getRowCount(); i >= 0; i--) {
-            m.removeRow(i);
+    private void updateTree() {
+        
+        // save an array of games whose nodes were open before the update
+        final ArrayList<GameModel> expandedGames = new ArrayList<>();
+        
+        for (int i = 0; i < gameTree.getRowCount(); i++) {
+            // loop through all the visible nodes
+            TreePath path = gameTree.getPathForRow(i);
+            Object userObject = ((DefaultMutableTreeNode) path
+                    .getLastPathComponent()).getUserObject();
+            if (userObject instanceof GameModel && gameTree.isExpanded(path)) {
+                // if the user object is a GameModel and the node is expanded,
+                // add it to the list
+                expandedGames.add((GameModel) userObject);
+            }
         }
-        for (int i = 0; i < gameList.getNumGames(); i++) {
-            m.addRow(new Object[] { gameList.getStatuses()[i].name(),
-                    gameList.getGames()[i].getName() });
+        
+        // save the selected node
+        Object selectedNodeUserObject = null;
+        try {
+            selectedNodeUserObject = ((DefaultMutableTreeNode) gameTree
+                    .getSelectionPath().getLastPathComponent()).getUserObject();
+        } catch (NullPointerException e) {
         }
+        
+        
+        // rebuild the tree
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode() {
+            private static final long serialVersionUID = 8933074607488306596L;
+            
+            {
+                DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
+                        "Pending Games");
+                DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
+                        "Complete Games");
+                add(pendingFolder);
+                add(completeFolder);
+                for (GameModel gm : GameListModel.getInstance().getGames()) {
+                    DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode();
+                    gameNode.setUserObject(gm);
+                    
+                    if (gm.isEnded()) {
+                        completeFolder.add(gameNode);
+                    } else {
+                        pendingFolder.add(gameNode);
+                    }
+                    if (gm.getRequirements() != null) {
+                        for (GameRequirementModel r : gm.getRequirements()) {
+                            DefaultMutableTreeNode reqNode = new DefaultMutableTreeNode();
+                            reqNode.setUserObject(r);
+                            gameNode.add(reqNode);
+                        }
+                    }
+                }
+            }
+        };
+        gameTree.setModel(new DefaultTreeModel(rootNode));
+        
+        
+        { // go through all the new nodes and find ones with a game in the
+          // expandedGames list
+            Enumeration treeEnum = rootNode.depthFirstEnumeration();
+            DefaultMutableTreeNode node;
+            while (treeEnum.hasMoreElements()) {
+                node = (DefaultMutableTreeNode) treeEnum.nextElement();
+                if (node.getUserObject() != null
+                        && ((node.getUserObject() instanceof GameModel && expandedGames
+                                .contains(node.getUserObject()))
+                                || node.getUserObject().equals("Pending Games") || node
+                                .getUserObject().equals("Complete Games"))) {
+                    // if the node's game was in the list,
+                    // or the node is a folder of games, expand it
+                    gameTree.expandPath(new TreePath(node.getPath()));
+                }
+            }
+        }
+        
+        {
+            // go through all the new node and find the one with user object
+            // equal to the one that was selected
+            Enumeration treeEnum = rootNode.depthFirstEnumeration();
+            DefaultMutableTreeNode node;
+            while (treeEnum.hasMoreElements()) {
+                node = (DefaultMutableTreeNode) treeEnum.nextElement();
+                if (node.getUserObject() != null
+                        && node.getUserObject().equals(selectedNodeUserObject)) {
+                    gameTree.setSelectionPath(new TreePath(node.getPath()));
+                }
+            }
+        }
+    }
+    
+    public JTree getTree() {
+        return gameTree;
     }
     
     /**
@@ -52,61 +166,33 @@ public class GamesListPanel extends javax.swing.JPanel {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        gameTree = new javax.swing.JTree();
+        gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
+        gameTree.setRootVisible(false);
         
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                
-                }, new String[] { "", "Game" }) {
-            /**
-             * 
-             */
-            private static final long serialVersionUID = 3706659002343757832L;
-            Class[] types = new Class[] { java.lang.Object.class,
-                    java.lang.String.class };
-            boolean[] canEdit = new boolean[] { false, false };
-            
-            @Override
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-            
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(30);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(100);
-        }
+        jScrollPane2.setViewportView(gameTree);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-                jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465,
+                jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465,
                 Short.MAX_VALUE));
         layout.setVerticalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-                jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320,
+                jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320,
                 Short.MAX_VALUE));
     }// </editor-fold>//GEN-END:initComponents
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTree gameTree;
     // End of variables declaration//GEN-END:variables
 }

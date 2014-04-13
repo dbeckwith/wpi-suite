@@ -1,6 +1,33 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTree;
+import javax.swing.SwingConstants;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,23 +35,85 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
  * and open the template in the editor.
  */
 /**
- *
+ * 
  * @author dbeckwith
  */
 public class AllGamesViewPanel extends javax.swing.JPanel {
-
+    
     /**
      *
      */
     private static final long serialVersionUID = -6990619499118841478L;
-
+    private GameModel currentSelectionGame;
+    
     /**
      * Creates new form GameViewPanel
      */
     public AllGamesViewPanel() {
         initComponents();
+        final JTree tree = gameTree.getTree();
+        
+        JSplitPane splitPane = new JSplitPane();
+        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        jSplitPane3.setRightComponent(splitPane);
+        
+        gameDescriptionPanel = new GameDescriptionPanel();
+        splitPane.setLeftComponent(gameDescriptionPanel);
+        
+        requirementPanel = new JPanel();
+        splitPane.setRightComponent(requirementPanel);
+        requirementPanel.setLayout(new CardLayout(0, 0));
+        
+        requirementDescriptionPanel = new RequirementDescriptionPanel();
+        requirementPanel.add(requirementDescriptionPanel, "requirement");
+        
+        JPanel noRequirementPanel = new JPanel();
+        requirementPanel.add(noRequirementPanel, "no requirement");
+        noRequirementPanel.setLayout(new BorderLayout(0, 0));
+        
+        JLabel lblSelectARequirement = new JLabel("Select a requirement");
+        lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
+        noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
+                        .getLastSelectedPathComponent();
+                
+                if (node == null) { return; }
+                
+                currentSelectionGame = null; // reset selected game
+                
+                Object nodeInfo = node.getUserObject();
+                if (nodeInfo instanceof GameModel) {
+                    ((CardLayout) getRequirementPanel().getLayout()).show(
+                            getRequirementPanel(), "no requirement");
+                    GameModel game = (GameModel) nodeInfo;
+                    currentSelectionGame = game;
+                    getGameDescriptionPanel().setGame(game);
+                }
+                else if (nodeInfo instanceof GameRequirementModel) {
+                    ((CardLayout) getRequirementPanel().getLayout()).show(
+                            getRequirementPanel(), "requirement");
+                    GameRequirementModel req = (GameRequirementModel) nodeInfo;
+                    GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
+                            .getParent())).getUserObject();
+                    getRequirementDescriptionPanel().setData(
+                            CurrentUserController.getInstance().getUser(),
+                            parent_game, req);
+                    
+                    GameModel game = (GameModel) ((DefaultMutableTreeNode) node
+                            .getParent()).getUserObject();
+                    getGameDescriptionPanel().setGame(game);
+                    currentSelectionGame = game;
+                }
+                PlanningPoker.getViewController().displayAdmin(
+                        currentSelectionGame);
+            }
+        });
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,57 +122,63 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed"
+    // <editor-fold defaultstate="collapsed"
+    // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        
         jSplitPane3 = new javax.swing.JSplitPane();
-        gamesListPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GamesListPanel(new GameListModel());
-        jSplitPane4 = new javax.swing.JSplitPane();
-        requirementsPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.RequirementsPanel();
-        jPanel1 = new javax.swing.JPanel();
-        votePanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel();
-        detailPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DetailPanel();
-
+        
         jSplitPane3.setDividerLocation(190);
-        jSplitPane3.setLeftComponent(gamesListPanel1);
-
-        jSplitPane4.setDividerLocation(250);
-        jSplitPane4.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        jSplitPane4.setTopComponent(requirementsPanel1);
-
-        jPanel1.setLayout(new java.awt.CardLayout());
-        jPanel1.add(votePanel1, "card2");
-        jPanel1.add(detailPanel1, "card3");
-
-        jSplitPane4.setRightComponent(jPanel1);
-
-        jSplitPane3.setRightComponent(jSplitPane4);
-
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        setLayout(layout);
+        layout.setHorizontalGroup(layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSplitPane3,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, 658,
+                                Short.MAX_VALUE).addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSplitPane3,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, 394,
+                                Short.MAX_VALUE).addContainerGap()));
+        
+        gameTree = new GamesListPanel();
+        jSplitPane3.setLeftComponent(gameTree);
     }// </editor-fold>//GEN-END:initComponents
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DetailPanel detailPanel1;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GamesListPanel gamesListPanel1;
-    private javax.swing.JPanel jPanel1;
+    
     private javax.swing.JSplitPane jSplitPane3;
-    private javax.swing.JSplitPane jSplitPane4;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.RequirementsPanel requirementsPanel1;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel votePanel1;
-    // End of variables declaration//GEN-END:variables
+    private GamesListPanel gameTree;
+    private JPanel requirementPanel;
+    private RequirementDescriptionPanel requirementDescriptionPanel;
+    private GameDescriptionPanel gameDescriptionPanel;
+    
+    protected JPanel getRequirementPanel() {
+        return requirementPanel;
+    }
+    
+    protected RequirementDescriptionPanel getRequirementDescriptionPanel() {
+        return requirementDescriptionPanel;
+    }
+    
+    protected GameDescriptionPanel getGameDescriptionPanel() {
+        return gameDescriptionPanel;
+    }
+    
+    /**
+     * gets currently selected game in the tree, either the selected game, or
+     * parent game of the selected requirement
+     * 
+     * @return the currently selected game parent in the tree, null if currently
+     *         selected is note a game or requirement
+     */
+    public GameModel getSelectedGame() {
+        
+        return currentSelectionGame;
+    }
 }

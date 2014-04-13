@@ -27,8 +27,11 @@ public class User extends AbstractModel
 
 	private String name;
 	private String username;
+	private String email;
 	private int idNum;
 	private Role role;
+	private boolean notifyByEmail = false;
+	private boolean notifyByIM = false;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -45,6 +48,16 @@ public class User extends AbstractModel
 		this.password = password;
 		this.idNum = idNum;
 		this.role = Role.USER;
+		this.email = null;
+	}
+	
+	public User(String name, String username, String email, String password, int idNum) {
+	    this.name = name;
+        this.username = username;
+        this.password = password;
+        this.idNum = idNum;
+        this.role = Role.USER;
+        this.email = email;
 	}
 	
 	@Override
@@ -63,6 +76,11 @@ public class User extends AbstractModel
 				{
 					return false;
 				}
+				
+				if(this.email != null && !this.email.equals(((User)other).email))
+                {
+                    return false;
+                }
 				
 				if(this.password != null && !this.password.equals(((User)other).password))
 				{
@@ -105,6 +123,16 @@ public class User extends AbstractModel
 		return this.password;
 	}
 	
+	public String getEmail() 
+	{
+	    return this.email;
+	}
+	
+	public void setEmail(String email) 
+	{
+	    this.email = email;
+	}
+	
 	/* Accessors */
 	public String getName()
 	{
@@ -119,6 +147,14 @@ public class User extends AbstractModel
 	public String getUsername()
 	{
 		return username;
+	}
+	
+	public boolean isNotifyByEmail() {
+		return notifyByEmail;
+	}
+	
+	public boolean isNotifyByIM() {
+		return notifyByIM;
 	}
 	
 	/* database interaction */
@@ -232,6 +268,14 @@ public class User extends AbstractModel
 	public void setRole(Role r)
 	{
 		this.role = r;
+	}
+	
+	public void setNotifyByEmail(boolean notify) {
+		this.notifyByEmail = notify;
+	}
+	
+	public void setNotifyByIM(boolean notify) {
+		this.notifyByIM = notify;
 	}
 
 	

@@ -35,14 +35,14 @@ public class UserTest {
 	{
 		u1 = new User("James Bond", "jbond", null, 7);
 		u2 = new User("Money Penny", "mpenny", null, 2);
-		u3 = new User("Q", "q", "secret", 1);
+		u3 = new User("Q", "q", "q@mi6.co.uk" , "secret", 1);
 		u4 = new User("M", "m", null, 0);
 	}
 	
 	@Test
 	public void testEquals()
 	{
-		User dup3 = new User("Q", "q", "secret", 1);
+		User dup3 = new User("Q", "q", "q@mi6.co.uk", "secret", 1);
 		
 		assertTrue(u3.equals(dup3));
 		assertFalse(u3.equals(u1));
@@ -98,6 +98,16 @@ public class UserTest {
 	}
 	
 	@Test
+	public void testSetEmail() 
+	{
+	    String newEmail = "jbond@mi6.co.uk";
+	    
+	    u1.setEmail(newEmail);
+	    
+	    assertEquals(newEmail, u1.getEmail());
+	}
+	
+	@Test
 	public void testSetName()
 	{
 		String newName = "Bond, James";
@@ -149,6 +159,8 @@ public class UserTest {
 		assertTrue(serialized.contains("1"));
 		assertTrue(serialized.contains("username"));
 		assertTrue(serialized.contains("q"));
+		assertTrue(serialized.contains("email"));
+        assertTrue(serialized.contains("q@mi6.co.uk"));
 		assertTrue(serialized.contains("name"));
 		assertTrue(serialized.contains("Q"));
 	}

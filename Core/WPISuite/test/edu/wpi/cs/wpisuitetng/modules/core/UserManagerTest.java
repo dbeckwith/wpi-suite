@@ -28,10 +28,7 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.DataStore;
 import edu.wpi.cs.wpisuitetng.database.Data;
-import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
-import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
-import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
+import edu.wpi.cs.wpisuitetng.exceptions.*;
 import edu.wpi.cs.wpisuitetng.mockobjects.MockDataStore;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.UserManager;
@@ -48,6 +45,7 @@ public class UserManagerTest {
 	User secondUser;
 	User conflict;
 	Gson json;
+	User goodEmail, badEmail;
 	Session tempSession;
 	Session adminSession;
 	String mockSsid = "abc123";
@@ -62,6 +60,8 @@ public class UserManagerTest {
 		conflict = new User("steve", "steve",null, 0);
 		tempSession = new Session(temp, mockSsid);
 		admin = new User("adam","adam","password",4);
+		goodEmail = new User("testEmail1", "TestingEmail1", "team777@wpi.edu", "password", 9);
+		badEmail = new User("testEmail2", "TestingEmail2", "NotAnEmailAddress.com", "password", 10);
 		admin.setRole(Role.ADMIN);
 		adminSession = new Session(admin, mockSsid);
 		json = new Gson();
@@ -85,6 +85,16 @@ public class UserManagerTest {
 		}
 		
 		assertTrue(u.equals(temp));
+	}
+	
+	@Test(expected = InvalidEmailException.class)
+	public void testInvalidEmailMakeEntity() throws WPISuiteException {    
+	    String jsonUser = badEmail.toJSON();
+	    jsonUser = jsonUser.substring(0, jsonUser.length() - 1);
+	    jsonUser += ", \"password\":\"abcde\"}";
+	    System.out.println(jsonUser);
+
+	    test.makeEntity(tempSession, jsonUser);
 	}
 	
 	@Test(expected = ConflictException.class)

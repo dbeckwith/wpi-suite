@@ -45,3 +45,11 @@ Janeway/janeway.conf
 RequirementManager/build
 RequirementManager/bin
 PlanningPoker/build
+/PlanningPoker/src/nbproject/private/
+/PlanningPoker/nbproject/private/
+/RequirementManager/nbproject/private/
+/Janeway/nbproject/private/
+/Janeway/build/
+PlanningPokerAE/bin/
+PlanningPokerAE/card-web.png
+PlanningPokerAE/ic_card_front-web.png
