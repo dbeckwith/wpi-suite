@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationClient;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -35,6 +36,7 @@ public class GetGamesController implements ActionListener {
     private GetGamesController() {
         
         observer = new GetGamesRequestObserver(this);
+        NotificationClient.getInstance().start();
     }
     
     /**
@@ -59,12 +61,7 @@ public class GetGamesController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Send a request to the core to save this game
-        final Request request = Network.getInstance().makeRequest(
-                "planningpoker/game", HttpMethod.GET); // GET == read
-        request.addObserver(observer); // add an observer to process the
-                                       // response
-        request.send(); // send the request
+        retrieveGames();
     }
     
     /**

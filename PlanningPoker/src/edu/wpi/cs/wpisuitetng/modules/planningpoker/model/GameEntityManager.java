@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
 
 public class GameEntityManager implements EntityManager<GameModel> {
@@ -35,6 +36,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     public GameEntityManager(Data db) {
         this.db = db;
+        NotificationServer.getInstance().start();
     }
     
     /**
@@ -153,6 +155,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException();
         }
+        System.out.println("GEM makeEntity()");
+        NotificationServer.getInstance().sendUpdateNotification();
         return newGameModel;
     }
     
@@ -191,7 +195,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(existingGameModel, s.getProject())) {
             throw new WPISuiteException();
         }
-        
+        System.out.println("GEM update()");
+        NotificationServer.getInstance().sendUpdateNotification();
         return existingGameModel;
     }
     
