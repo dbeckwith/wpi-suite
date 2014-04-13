@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Brett Ammeson, Andrew Han
  */
 public class GetGamesController implements ActionListener {
-    private GetGamesRequestObserver observer;
+    private final GetGamesRequestObserver observer;
     private static GetGamesController instance;
     
     /**

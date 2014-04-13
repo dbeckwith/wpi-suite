@@ -64,7 +64,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
     private void updateGame() {
         if (selectedGame != null) {
             setNumRequirements(selectedGame.getRequirements().size() + "");
-            DefaultTableModel model = (DefaultTableModel) voteResultTable
+            final DefaultTableModel model = (DefaultTableModel) voteResultTable
                     .getModel();
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
                 model.removeRow(i);
@@ -109,11 +109,11 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         });
         tableScrollPane.setViewportView(voteResultTable);
         
-        JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
+        final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
         
         numRequirements = new JLabel("");
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(

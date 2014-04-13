@@ -92,13 +92,13 @@ public class GamesListPanel extends javax.swing.JPanel {
         
         
         // rebuild the tree
-        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode() {
+        final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode() {
             private static final long serialVersionUID = 8933074607488306596L;
             
             {
-                DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
+                final DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
                         "Pending Games");
-                DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
+                final DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
                         "Complete Games");
                 add(pendingFolder);
                 add(completeFolder);
@@ -126,7 +126,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         
         { // go through all the new nodes and find ones with a game in the
           // expandedGames list
-            Enumeration treeEnum = rootNode.depthFirstEnumeration();
+            final Enumeration treeEnum = rootNode.depthFirstEnumeration();
             DefaultMutableTreeNode node;
             while (treeEnum.hasMoreElements()) {
                 node = (DefaultMutableTreeNode) treeEnum.nextElement();
@@ -145,7 +145,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         {
             // go through all the new node and find the one with user object
             // equal to the one that was selected
-            Enumeration treeEnum = rootNode.depthFirstEnumeration();
+            final Enumeration treeEnum = rootNode.depthFirstEnumeration();
             DefaultMutableTreeNode node;
             while (treeEnum.hasMoreElements()) {
                 node = (DefaultMutableTreeNode) treeEnum.nextElement();
@@ -179,7 +179,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         
         jScrollPane2.setViewportView(gameTree);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addComponent(

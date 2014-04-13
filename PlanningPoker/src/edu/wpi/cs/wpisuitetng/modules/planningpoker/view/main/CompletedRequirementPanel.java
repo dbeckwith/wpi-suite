@@ -208,7 +208,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     
                     private void validate() {
                         try {
-                            int finalEstimate = Integer
+                            final int finalEstimate = Integer
                                     .parseInt(finalEstimateField.getText());
                             if (finalEstimate < 0) {
                                 //set error label
@@ -236,7 +236,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
                         .getText()));
                 UpdateGamesController.getInstance().updateGame(parent);
-                ArrayList<GameStatusObserver> gsos = parent
+                final ArrayList<GameStatusObserver> gsos = parent
                         .getStatusObservers();
                 for (GameStatusObserver g : gsos) {
                     g.statusChanged(parent);
@@ -249,7 +249,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblNonnegativeIntegersOnly.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblNonnegativeIntegersOnly.setForeground(Color.RED);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(

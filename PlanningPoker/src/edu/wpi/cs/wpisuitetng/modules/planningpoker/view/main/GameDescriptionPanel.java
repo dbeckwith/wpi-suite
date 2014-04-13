@@ -27,8 +27,8 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
      *
      */
     private static final long serialVersionUID = 7579915917240962935L;
-    private CompletedGamePanel completed;
-    private UncompletedGameDescriptionPanel uncompleted;
+    private final CompletedGamePanel completed;
+    private final UncompletedGameDescriptionPanel uncompleted;
     
     /**
      * Creates new form NewJPanel

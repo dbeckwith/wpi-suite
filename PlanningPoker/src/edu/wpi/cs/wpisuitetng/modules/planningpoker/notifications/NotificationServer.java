@@ -28,7 +28,7 @@ public class NotificationServer extends Thread {
 	}
 	
 	private ServerSocket serverSocket;
-	private ArrayList<Socket> clientSockets;
+	private final ArrayList<Socket> clientSockets;
 	
 	/**
 	 * Constructor
@@ -60,7 +60,7 @@ public class NotificationServer extends Thread {
 	 */
 	public void sendUpdateNotification(){
 		//copy waiting clients, then clear list
-		Socket[] clients = clientSockets.toArray(new Socket[]{});
+		final Socket[] clients = clientSockets.toArray(new Socket[]{});
 		clientSockets.clear();
 		
 		for(Socket s:clients){

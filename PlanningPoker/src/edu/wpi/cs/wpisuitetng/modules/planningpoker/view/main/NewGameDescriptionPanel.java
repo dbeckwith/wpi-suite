@@ -166,11 +166,11 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 
 		datePicker = new JXDatePicker(new Date());
 
-		JLabel lblDate = new JLabel("Date:");
+		final JLabel lblDate = new JLabel("Date:");
 
 		timeSpinner = new JSpinner();
 		timeSpinner.setModel(new SpinnerDateModel());
-		JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
+		final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
 				"h:mm a");
 		timeSpinner.setEditor(dEdit);
 		timeSpinner.setValue(new Date());
@@ -186,7 +186,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		deadlineError = new JLabel("Invalid date!");
 		deadlineError.setForeground(new java.awt.Color(255, 0, 0));
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
@@ -315,10 +315,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	public Date getDate() {
 		// We need to go through all of these incantations because almost every
 		// relevant method in Date is deprecated...
-		GregorianCalendar date = new GregorianCalendar();
+		final GregorianCalendar date = new GregorianCalendar();
 		date.setTime(datePicker.getDate());
 
-		GregorianCalendar time = new GregorianCalendar();
+		final GregorianCalendar time = new GregorianCalendar();
 		time.setTime(((SpinnerDateModel) timeSpinner.getModel()).getDate());
 
 		date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
@@ -343,8 +343,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 			return true;
 		}
 
-		Date currentDate = new Date();
-		Date enteredDate = getDate();
+		final Date currentDate = new Date();
+		final Date enteredDate = getDate();
 
 		boolean valid = enteredDate.after(currentDate);
 
@@ -358,7 +358,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 * @return valid
 	 */
 	public boolean validateForm() {
-		boolean valid = isNameValid && isDescriptionValid && validateDeadline();
+		final boolean valid = isNameValid && isDescriptionValid && validateDeadline();
 		return valid;
 	}
 

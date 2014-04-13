@@ -53,7 +53,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         initComponents();
         final JTree tree = gameTree.getTree();
         
-        JSplitPane splitPane = new JSplitPane();
+        final JSplitPane splitPane = new JSplitPane();
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         jSplitPane3.setRightComponent(splitPane);
         
@@ -67,43 +67,43 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         requirementDescriptionPanel = new RequirementDescriptionPanel();
         requirementPanel.add(requirementDescriptionPanel, "requirement");
         
-        JPanel noRequirementPanel = new JPanel();
+        final JPanel noRequirementPanel = new JPanel();
         requirementPanel.add(noRequirementPanel, "no requirement");
         noRequirementPanel.setLayout(new BorderLayout(0, 0));
         
-        JLabel lblSelectARequirement = new JLabel("Select a requirement");
+        final JLabel lblSelectARequirement = new JLabel("Select a requirement");
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
+                final DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
                 if (node == null) { return; }
                 
                 currentSelectionGame = null; // reset selected game
                 
-                Object nodeInfo = node.getUserObject();
+                final Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "no requirement");
-                    GameModel game = (GameModel) nodeInfo;
+                    final GameModel game = (GameModel) nodeInfo;
                     currentSelectionGame = game;
                     getGameDescriptionPanel().setGame(game);
                 }
                 else if (nodeInfo instanceof GameRequirementModel) {
                     ((CardLayout) getRequirementPanel().getLayout()).show(
                             getRequirementPanel(), "requirement");
-                    GameRequirementModel req = (GameRequirementModel) nodeInfo;
-                    GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
+                    final GameRequirementModel req = (GameRequirementModel) nodeInfo;
+                    final GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
                             .getParent())).getUserObject();
                     getRequirementDescriptionPanel().setData(
                             CurrentUserController.getInstance().getUser(),
                             parent_game, req);
                     
-                    GameModel game = (GameModel) ((DefaultMutableTreeNode) node
+                    final GameModel game = (GameModel) ((DefaultMutableTreeNode) node
                             .getParent()).getUserObject();
                     getGameDescriptionPanel().setGame(game);
                     currentSelectionGame = game;
@@ -131,7 +131,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         
         jSplitPane3.setDividerLocation(190);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -154,9 +154,9 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     
     private javax.swing.JSplitPane jSplitPane3;
     private GamesListPanel gameTree;
-    private JPanel requirementPanel;
-    private RequirementDescriptionPanel requirementDescriptionPanel;
-    private GameDescriptionPanel gameDescriptionPanel;
+    private final JPanel requirementPanel;
+    private final RequirementDescriptionPanel requirementDescriptionPanel;
+    private final GameDescriptionPanel gameDescriptionPanel;
     
     protected JPanel getRequirementPanel() {
         return requirementPanel;

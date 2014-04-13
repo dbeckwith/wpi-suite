@@ -84,7 +84,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
         });
         
-        javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(
+        final javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(
                 notificationsPanel);
         notificationsPanel.setLayout(notificationsPanelLayout);
         notificationsPanelLayout
@@ -119,7 +119,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(emailBox)));
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addGroup(

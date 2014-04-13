@@ -27,8 +27,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 
 public class ViewController {
     
-    private MainView mainView;
-    private ToolbarView toolbar;
+    private final MainView mainView;
+    private final ToolbarView toolbar;
     
     /**
      * indicates if admin buttons are being shown if all games panel is selected
@@ -100,7 +100,7 @@ public class ViewController {
     }
     
     public void cancelNewGame(NewGamePanel e) {
-        int result = JOptionPane.showConfirmDialog(e,
+        final int result = JOptionPane.showConfirmDialog(e,
                 "Are you sure you want to cancel this game?", "Cancel Game",
                 JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
@@ -119,7 +119,7 @@ public class ViewController {
      * Called to manually end estimation on the currently selected game
      */
     public void endEstimation() {
-        GameModel curr = mainView.getMainPanel().getSelectedGame();
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);
@@ -172,7 +172,7 @@ public class ViewController {
      * closes a game so it can't be edited
      */
     public void closeGame() {
-        GameModel curr = mainView.getMainPanel().getSelectedGame();
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isClosed()) {
             curr.closeGame();
             UpdateGamesController.getInstance().updateGame(curr);

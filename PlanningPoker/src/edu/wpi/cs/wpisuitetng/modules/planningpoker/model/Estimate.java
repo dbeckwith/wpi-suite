@@ -20,11 +20,11 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
-    private String name;
-    private String username;
-    private int idNum;
-    private float estimate;
-    private ArrayList<Integer> cardsSelected;
+    private final String name;
+    private final String username;
+    private final int idNum;
+    private final float estimate;
+    private final ArrayList<Integer> cardsSelected;
     
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         this.name = user.getName();

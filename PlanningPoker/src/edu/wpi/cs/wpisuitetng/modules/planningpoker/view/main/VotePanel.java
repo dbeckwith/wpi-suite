@@ -84,7 +84,7 @@ public class VotePanel extends javax.swing.JPanel {
         }
         
         
-        ArrayList<String> deck = new ArrayList<>();
+        final ArrayList<String> deck = new ArrayList<>();
         deck.add("0.5");
         deck.add("1");
         deck.add("2");
@@ -140,14 +140,14 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }.start();
         
-        ArrayList<Estimate> estimates = req.getEstimates();
+        final ArrayList<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 alreadyVoted = true;
             }
         }
         
-        ArrayList<Integer> selected = new ArrayList<Integer>();
+        final ArrayList<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
         for (CardButton c : cards) {
             if (c.isCardSelected()) {
@@ -157,7 +157,7 @@ public class VotePanel extends javax.swing.JPanel {
         }
         
         System.out.println("Estimate = " + estimate);
-        Estimate est = new Estimate(currentUser, estimate, selected);
+        final Estimate est = new Estimate(currentUser, estimate, selected);
         
         if (alreadyVoted) {
             req.UpdateEstimate(old, est);
@@ -195,17 +195,17 @@ public class VotePanel extends javax.swing.JPanel {
         
         completedVotesField.setText("0/0");
         
-        JLabel lblRequirement = new JLabel("Requirement:");
+        final JLabel lblRequirement = new JLabel("Requirement:");
         
-        JScrollPane scrollPane = new JScrollPane();
+        final JScrollPane scrollPane = new JScrollPane();
         
-        JScrollPane scrollPane_1 = new JScrollPane();
+        final JScrollPane scrollPane_1 = new JScrollPane();
         
         requirementNameLabel = new JLabel("");
         
-        JLabel lblDescription = new JLabel("Description:");
+        final JLabel lblDescription = new JLabel("Description:");
         
-        JLabel lblType = new JLabel("Type:");
+        final JLabel lblType = new JLabel("Type:");
         
         requirementType = new JLabel("");
         
@@ -218,7 +218,7 @@ public class VotePanel extends javax.swing.JPanel {
         });
         btnSubmit.setEnabled(false);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(
@@ -393,7 +393,7 @@ public class VotePanel extends javax.swing.JPanel {
     
     private JButton btnSubmit;
     
-    private ArrayList<CardButton> cards;
+    private final ArrayList<CardButton> cards;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel completedVotesField;

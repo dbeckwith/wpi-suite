@@ -36,8 +36,8 @@ public class CommonButtons extends ToolbarGroupView {
      */
 	private static final long serialVersionUID = -2589339467561118867L;
 
-	private JButton newGameButton;
-	private JButton userPrefsButton;
+	private final JButton newGameButton;
+	private final JButton userPrefsButton;
 
 	private final JPanel contentPanel = new JPanel();
 

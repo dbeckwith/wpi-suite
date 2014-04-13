@@ -35,8 +35,8 @@ public class AdminButtons extends ToolbarGroupView {
      * 
      */
     private static final long serialVersionUID = 312905811728893535L;
-    private JButton endGameButton;
-    private JButton closeGameButton;
+    private final JButton endGameButton;
+    private final JButton closeGameButton;
     
     private final JPanel contentPanel = new JPanel();
     

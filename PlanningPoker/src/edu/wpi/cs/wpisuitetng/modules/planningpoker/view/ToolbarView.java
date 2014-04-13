@@ -28,8 +28,8 @@ public class ToolbarView extends DefaultToolbarView {
      * 
      */
     private static final long serialVersionUID = 1142258027071142978L;
-    private CommonButtons commonButtons = new CommonButtons();
-    private AdminButtons adminButtons = new AdminButtons();
+    private final CommonButtons commonButtons = new CommonButtons();
+    private final AdminButtons adminButtons = new AdminButtons();
     
     public ToolbarView() {
         addGroup(commonButtons);
