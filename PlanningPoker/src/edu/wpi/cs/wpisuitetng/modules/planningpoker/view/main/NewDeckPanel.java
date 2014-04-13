@@ -166,6 +166,7 @@ public class NewDeckPanel extends JPanel {
 				}
 				DeckModel newDeck = new DeckModel(newDeckName.getText(), cards,
 						multipleSelect.isSelected());
+				newDeck.sort();
 				AddDeckController.getInstance().addDeck(newDeck);
 				parent.showPanel("reqlistpanel");
 				newDeckName.setText("");

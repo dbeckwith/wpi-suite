@@ -9,6 +9,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.google.gson.Gson;
 
@@ -85,6 +87,15 @@ public class DeckModel extends AbstractModel {
 		cards.remove(card);
 	}
 
+	public void sort() {
+	    Collections.sort(cards, new Comparator<Double>() {
+            public int compare(Double a, Double b) {
+                if (a == b) {return 0;}
+                else if (a > b) {return 1;}
+                else {return -1;}
+            }
+        });
+	}
 	@Override
 	public void delete() {
 	}
