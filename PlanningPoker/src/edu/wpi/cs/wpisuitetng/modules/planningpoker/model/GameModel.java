@@ -28,7 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
  */
 public class GameModel extends AbstractModel {    
     public static enum GameStatus {
-        PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
+        NEW("New"), PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
         
         
         public String name;
@@ -203,6 +203,18 @@ public class GameModel extends AbstractModel {
     }
     
     /**
+     * Sets the game's status to pending if it is new
+     */
+    public void startGame(){
+        if(status == GameStatus.NEW){
+            status = GameStatus.PENDING;
+            for(GameStatusObserver gso: status_observers){
+                gso.statusChanged(this);
+            }
+        }
+    }
+    
+    /**
      * @return The deck for this game
      */
     public DeckModel getDeck() {
@@ -239,6 +251,14 @@ public class GameModel extends AbstractModel {
                 status_observers.get(i).statusChanged(this);
             }
         }
+    }
+    
+    /**
+     * determines if the game has been started
+     * @return true if the game's status is not new
+     */
+    public boolean isStarted(){
+        return !(status == GameStatus.NEW);
     }
     
     /**
