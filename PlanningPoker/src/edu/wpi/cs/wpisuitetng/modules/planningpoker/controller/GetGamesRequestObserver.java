@@ -43,7 +43,7 @@ public class GetGamesRequestObserver implements RequestObserver {
     @Override
     public void responseSuccess(IRequest iReq) {
         // Convert the JSON array of games to a Games object array
-        final GameModel games[] = GameModel.fromJSONArray(iReq.getResponse()
+        final GameModel[] games = GameModel.fromJSONArray(iReq.getResponse()
                 .getBody());
         
         // Pass these Games to the controller

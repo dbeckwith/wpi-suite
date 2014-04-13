@@ -17,10 +17,10 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -101,7 +101,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableModel.addColumn("User");
         tableModel.addColumn("Estimate");
         for (Estimate e : req.getEstimates()) {
-            String row[] = new String[2];
+            String[] row = new String[2];
             row[0] = e.getName() == null ? "???" : e.getName();
             row[1] = String.format("%.1f", e.getEstimate());
             tableModel.addRow(row);
