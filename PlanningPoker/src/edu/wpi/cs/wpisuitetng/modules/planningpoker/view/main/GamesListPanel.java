@@ -124,9 +124,9 @@ public class GamesListPanel extends javax.swing.JPanel {
         gameTree.setModel(new DefaultTreeModel(rootNode));
         
         
-        { // go through all the new nodes and find ones with a game in the
+         // go through all the new nodes and find ones with a game in the
           // expandedGames list
-            final Enumeration treeEnum = rootNode.depthFirstEnumeration();
+            Enumeration treeEnum = rootNode.depthFirstEnumeration();
             DefaultMutableTreeNode node;
             while (treeEnum.hasMoreElements()) {
                 node = (DefaultMutableTreeNode) treeEnum.nextElement();
@@ -140,13 +140,12 @@ public class GamesListPanel extends javax.swing.JPanel {
                     gameTree.expandPath(new TreePath(node.getPath()));
                 }
             }
-        }
+        
         
         {
             // go through all the new node and find the one with user object
             // equal to the one that was selected
-            final Enumeration treeEnum = rootNode.depthFirstEnumeration();
-            DefaultMutableTreeNode node;
+            treeEnum = rootNode.depthFirstEnumeration();
             while (treeEnum.hasMoreElements()) {
                 node = (DefaultMutableTreeNode) treeEnum.nextElement();
                 if (node.getUserObject() != null
