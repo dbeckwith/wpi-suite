@@ -68,7 +68,6 @@ public class GetGamesController implements ActionListener {
      * Sends an HTTP request to retrieve all games
      */
     public void retrieveGames() {
-    	System.out.println("Retrieve Games!");
         final Request request = Network.getInstance().makeRequest(
                 "planningpoker/game", HttpMethod.GET); // GET == read
         request.addObserver(observer); // add an observer to process the

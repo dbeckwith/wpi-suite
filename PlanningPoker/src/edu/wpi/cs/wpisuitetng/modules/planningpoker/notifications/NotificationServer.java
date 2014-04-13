@@ -5,12 +5,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * A server that can notify clients when there is an update
+ * @author Akshay
+ *
+ */
 public class NotificationServer extends Thread {
 	
 	public static final int PORT = 9797;
 	
 	private static NotificationServer instance;
 	
+    /**
+     * @return The instance of the NotificationServer or creates one if it does
+     *         not exist.
+     */
 	public static NotificationServer getInstance() {
 		if(instance == null){
 			instance = new NotificationServer();
@@ -21,45 +30,46 @@ public class NotificationServer extends Thread {
 	private ServerSocket serverSocket;
 	private ArrayList<Socket> clientSockets;
 	
+	/**
+	 * Constructor
+	 */
 	private NotificationServer(){	
 		try {
 			serverSocket = new ServerSocket(PORT);
-			System.out.println("NS socket constructed");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		clientSockets = new ArrayList<Socket>();
 	}
 	
 	public void run(){	
-		System.out.println("NS server started");
+		System.out.println("Notification server started");
 		while(true){
 			try {
 				Socket newClient = serverSocket.accept();
 				clientSockets.add(newClient);
-				System.out.println("NS client :" + newClient.getInetAddress().toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}		
 	}
 	
+	/**
+	 * Notifies all waiting clients of an update, 
+	 * then closes their connection
+	 */
 	public void sendUpdateNotification(){
-		System.out.println("NS send update");
+		//copy waiting clients, then clear list
 		Socket[] clients = clientSockets.toArray(new Socket[]{});
 		clientSockets.clear();
 		
 		for(Socket s:clients){
 			try {
-				s.getOutputStream().write(0);
-				s.close();
-				
-				System.out.println("\tNS notified "+s.getInetAddress().toString());
+				s.getOutputStream().write(0); //notify each client by sending one byte
+				s.close(); //close connection
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
 }
