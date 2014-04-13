@@ -40,9 +40,10 @@ public class RequestThread extends Thread {
             final Request request = Network.getInstance().makeRequest(
                     "core/user", HttpMethod.GET);
             request.addObserver(controller.observer);
-            System.out.println("Sending request for user...");
+            System.out.println("Sending request for user..."); //TODO remove
             request.send();
             controller.notifyAll();
+            System.out.println("Got response, waking controller"); //TODO remove
         }
     }
     

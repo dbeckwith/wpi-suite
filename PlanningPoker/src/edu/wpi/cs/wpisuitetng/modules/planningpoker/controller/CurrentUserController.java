@@ -68,7 +68,7 @@ public class CurrentUserController extends AbstractUserController {
             user = findUser(USER_NAME);
         }
         else {
-            System.err.println("No users received!");
+            System.err.println("No users received!");//TODO remove
         }
         System.out.println("User = " + user);
     }

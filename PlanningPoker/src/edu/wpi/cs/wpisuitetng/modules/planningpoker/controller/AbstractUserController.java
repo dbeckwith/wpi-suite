@@ -58,7 +58,7 @@ public abstract class AbstractUserController {
         synchronized (this) {
             new RequestThread(this).start();
             try {
-                System.out.println("Waiting for response");
+                System.out.println("Waiting for response");//TODO remove
                 wait();
             }
             catch (InterruptedException e) {
