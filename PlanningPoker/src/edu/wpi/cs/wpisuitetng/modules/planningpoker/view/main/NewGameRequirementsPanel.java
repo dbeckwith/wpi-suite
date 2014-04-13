@@ -190,7 +190,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 
                     @Override
                     public void tableChanged(TableModelEvent e) {
-                        validateForm();
+                        isValidForm();
                         parent.check();
                     }
                 });
@@ -208,7 +208,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		model.addRow(new Object[] { false, r, r.getDescription().toString(),
 				r.getType().toString() });
 		requirementsTable.setModel(model);
-		validateForm();
+		isValidForm();
 		parent.check();
 	}
 
@@ -229,7 +229,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		parent = p;
 	}
 
-	public boolean validateForm() {
+	public boolean isValidForm() {
 		boolean hasRequirement = false;
 
 		// make sure at least one requirement is checked

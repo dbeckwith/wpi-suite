@@ -339,8 +339,8 @@ public class NewGamePanel extends JPanel {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
-		if (!(newGameRequirementsPanel.validateForm() && gameDescription
-				.validateForm())) {
+		if (!(newGameRequirementsPanel.isValidForm() && gameDescription
+				.isValidForm())) {
 		    check();
 			return;
 		}
@@ -387,8 +387,8 @@ public class NewGamePanel extends JPanel {
 	 * Checks if game description panel and requirements are properly entered
 	 */
 	public void check() {
-		saveButton.setEnabled(gameDescription.validateForm()
-				&& newGameRequirementsPanel.validateForm());
+		saveButton.setEnabled(gameDescription.isValidForm()
+				&& newGameRequirementsPanel.isValidForm());
 	}
 
 	/**

@@ -96,7 +96,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 		datePicker.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				validateDeadline();
+				isValidDeadline();
 				parent.check();
 			}
 		});
@@ -105,7 +105,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				validateDeadline();
+				isValidDeadline();
 				parent.check();
 			}
 		});
@@ -114,7 +114,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				validateDeadline();
+				isValidDeadline();
 				parent.check();
 			}
 		});
@@ -337,7 +337,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 * 
 	 * @return valid
 	 */
-	public boolean validateDeadline() {
+	public boolean isValidDeadline() {
 		if (!selectDeadline.isSelected()) {
 			deadlineError.setVisible(false);
 			return true;
@@ -357,8 +357,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 	 * 
 	 * @return valid
 	 */
-	public boolean validateForm() {
-		final boolean valid = isNameValid && isDescriptionValid && validateDeadline();
+	public boolean isValidForm() {
+		final boolean valid = isNameValid && isDescriptionValid && isValidDeadline();
 		return valid;
 	}
 

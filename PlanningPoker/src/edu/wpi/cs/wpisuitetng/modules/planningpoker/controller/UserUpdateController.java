@@ -61,14 +61,14 @@ public class UserUpdateController {
      * 
      * @return
      */
-    public boolean getNotifyByEmail() {
+    public boolean canNotifyByEmail() {
         return user.isNotifyByEmail();
     }
     
     /**
      * Gets the user's current IM notification setting.
      */
-    public boolean getNotifyByIM() {
+    public boolean canNotifyByIM() {
         return user.isNotifyByIM();
     }
     
