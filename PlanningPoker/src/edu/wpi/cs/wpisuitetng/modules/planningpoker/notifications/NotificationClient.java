@@ -9,7 +9,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesControlle
 import edu.wpi.cs.wpisuitetng.network.Network;
 
 /**
- * A client that listens for updates from the server
+ * A client that continually listens for updates from the server
  * @author Akshay
  *
  */
