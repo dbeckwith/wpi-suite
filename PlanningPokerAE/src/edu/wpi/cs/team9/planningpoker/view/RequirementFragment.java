@@ -84,8 +84,21 @@ public class RequirementFragment extends Fragment implements CardListener {
 			@Override
 			public void onClick(View v) {
 				String userName = Config.getUserName(getActivity());
-				Log.d(TAG, String.format("submitting estimate for %s : %s", userName, getEstimate()));
-				requirement.addEstimate(new Estimate(CurrentUserController.getInstance().findUser(userName), getEstimate()));
+				
+				Estimate oldEstimate = null;
+				Estimate newEstimate = new Estimate(CurrentUserController.getInstance().findUser(userName), getEstimate()); 
+				for(Estimate e:requirement.getEstimates()){
+					if(e.getUser().getName().equals(userName)){
+						oldEstimate = e;
+					}
+				}
+				
+				if(oldEstimate == null){
+					requirement.addEstimate(newEstimate);
+				} else {
+					requirement.UpdateEstimate(oldEstimate, newEstimate);
+				}
+				
 				if(listener != null){
 					listener.updated(requirement);
 				}

@@ -9,6 +9,7 @@ import java.util.Collections;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * A simplified requirement model for a planning poker game
@@ -32,6 +33,8 @@ public class GameRequirementModel extends AbstractModel {
     /** the estimates for the requirement */
     private ArrayList<Estimate> estimates;
     
+    private int finalEstimate;
+    
     public GameRequirementModel(int parentId, String name, String description,
             String type, ArrayList<Estimate> estimates) {
         this.parentId = parentId;
@@ -39,8 +42,11 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         this.estimates = estimates;
+        
         Collections.sort(this.estimates);
+        finalEstimate = -1;
     }
+    
     
     /**
      * @param parentId
@@ -54,12 +60,14 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         estimates = new ArrayList<Estimate>();
+        finalEstimate = -1;
     }
     
     public GameRequirementModel() {
         this(-1, "", "", "", new ArrayList<Estimate>());
     }
- 
+    
+    
     /**
      * @return the parentId
      */
@@ -105,6 +113,17 @@ public class GameRequirementModel extends AbstractModel {
     
     public void addEstimate(Estimate e) {
         estimates.add(e);
+        Collections.sort(estimates);
+    }
+    
+    /**
+     * Updates an estimate with a new one
+     * @param old the old estimate
+     * @param updated the new estimate
+     */
+    public void UpdateEstimate(Estimate old, Estimate updated){
+        estimates.remove(old);
+        estimates.add(updated);
         Collections.sort(estimates);
     }
     
@@ -181,12 +200,20 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public String toJSON() {
-        return new Gson().toJson(this, GameRequirementModel.class);
+        return new Gson().toJson(this, GameRequirementModel.class);        
     }
     
     @Override
     public String toString() {
         return getName();
+    }
+    
+    public int getFinalEstimate() {
+        return finalEstimate;
+    }
+    
+    public void setFinalEstimate(int finalEstimate) {
+        this.finalEstimate = finalEstimate;
     }
     
 }
