@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import java.io.IOException;
