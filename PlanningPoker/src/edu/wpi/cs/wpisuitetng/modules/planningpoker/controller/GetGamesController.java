@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationClient;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -35,6 +36,7 @@ public class GetGamesController implements ActionListener {
     private GetGamesController() {
         
         observer = new GetGamesRequestObserver(this);
+        NotificationClient.getInstance().start();
     }
     
     /**
