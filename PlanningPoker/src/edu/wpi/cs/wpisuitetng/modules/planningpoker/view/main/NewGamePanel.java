@@ -6,6 +6,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -30,18 +32,16 @@ import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-import java.awt.Color;
-import javax.swing.JScrollPane;
 
 /**
  * 
  * @author Lukas
  */
 public class NewGamePanel extends JPanel {
-
 	/**
      * 
      */
@@ -58,6 +58,7 @@ public class NewGamePanel extends JPanel {
 
 		gameDescription.setEditGamePanel(this);
 		newGameRequirementsPanel.setEditGamePanel(this);
+		newDeckPanel.setEditGamePanel(this);
 
 		newReqName.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -184,6 +185,9 @@ public class NewGamePanel extends JPanel {
 
 		newGameRequirementsPanel = new NewGameRequirementsPanel();
 		newGameRequirementsCard.add(newGameRequirementsPanel, "reqlistpanel");
+
+		newDeckPanel = new NewDeckPanel();
+		newGameRequirementsCard.add(newDeckPanel, "newdeckpanel");
 
 		newRequirementPanel = new JPanel();
 		newRequirementPanel.setBackground(Color.WHITE);
@@ -323,7 +327,7 @@ public class NewGamePanel extends JPanel {
 	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
 		if (!(newGameRequirementsPanel.validateForm() && gameDescription
 				.validateForm())) {
-		    check();
+			check();
 			return;
 		}
 
@@ -343,6 +347,15 @@ public class NewGamePanel extends JPanel {
 	@Override
 	public String getName() {
 		return gameDescription.nameField.getText();
+	}
+
+	/**
+	 * Gets selected deck
+	 * 
+	 * @return
+	 */
+	public DeckModel getDeck() {
+		return gameDescription.getDeck();
 	}
 
 	public String getDescription() {
@@ -383,15 +396,16 @@ public class NewGamePanel extends JPanel {
 	public void checkNewRequirement() {
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
 	}
-	
+
 	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
-	    return newGameRequirementsPanel;
+		return newGameRequirementsPanel;
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton cancelButton;
 	private JPanel newGameRequirementsCard;
 	private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel newGameRequirementsPanel;
+	private NewDeckPanel newDeckPanel;
 	private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
 	private javax.swing.JButton saveButton;
 	private JPanel newRequirementPanel;
