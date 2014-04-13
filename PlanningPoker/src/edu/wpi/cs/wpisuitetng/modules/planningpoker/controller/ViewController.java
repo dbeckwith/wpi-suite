@@ -85,7 +85,8 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), e.getEndDate(),
                 e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
                         .getUserName());
-        
+
+        EmailController.getInstance().sendGameStartNotifications(newGame);
         new Thread() {
             @Override
             public void run() {

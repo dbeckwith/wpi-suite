@@ -14,6 +14,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.util.LinkedList;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * This class controls the sending of email notifications
@@ -100,20 +102,56 @@ public class EmailController extends AbstractUserController {
      * Sends an email notification to all users who have chosen to receive
      * email notifications that a game has ended.
      */
-    public void sendGameEndNotifications() {
-        final String body = "Please check the Planning Poker module for updates on recently ended games."; //$NON-NLS-1$
-        sendEmails(END_GAME_SUBJECT, body);
+    public void sendGameEndNotifications(GameModel game) {
+        sendEmails(END_GAME_SUBJECT, endGameMessageBody(game));
     }
     
     /**
      * Sends an email notification to all users who have chosen to receive
      * email notifications that a game has started.
      */
-    public void sendGameStartNotifications() {
-        final String body = CurrentUserController.getInstance().getUser() // $codepro.audit.disable disallowStringConcatenation
-                .getName()
-                + " has created a new Planning Poker game. Please make your estimates!"; //$NON-NLS-1$
-        sendEmails(NEW_GAME_SUBJECT, body);
+    public void sendGameStartNotifications(GameModel game) {
+        sendEmails(NEW_GAME_SUBJECT, startGameMessageBody(game));
     }
     
+    /**
+     * Generates a email message body for a new game notification.
+     * 
+     * @param game
+     *        the new game to notify people about
+     * @return a String containing the message body
+     */
+    private String startGameMessageBody(GameModel game) {
+        String body = "\n";
+        
+        body += CurrentUserController.getInstance().getUser().getName()
+                + " has created a new Planning Poker game called ";
+        body += game.getName() + ".\n\n";
+        
+        body += "The requirements for this game are:\n";
+        for (GameRequirementModel req : game.getRequirements()) {
+            body += "\t" + req.toString() + "\n";
+        }
+        body += "\n";
+        
+        body += game.getEndTime() == null ? ""
+                : "The deadline for submitting estimations is "
+                        + game.getEndTime();
+        return body;
+    }
+    
+    
+    /**
+     * Generates a email message body for an ended game notification.
+     * 
+     * @param game
+     *        the ended game to notify people about
+     * @return a String containing the message body
+     */
+    private String endGameMessageBody(GameModel game) {
+        String body = "\n";
+        body += "The Planning Poker game " + game.getName()
+                + " has ended and is no longer open for estimation.";
+        return body;
+    }
 }
