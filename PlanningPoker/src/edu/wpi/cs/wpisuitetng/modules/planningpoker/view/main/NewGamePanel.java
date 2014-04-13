@@ -6,7 +6,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,6 +30,7 @@ import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
@@ -40,7 +40,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Lukas
  */
 public class NewGamePanel extends JPanel {
-    
     /**
      * 
      */
@@ -56,6 +55,7 @@ public class NewGamePanel extends JPanel {
         
         gameDescription.setEditGamePanel(this);
         newGameRequirementsPanel.setEditGamePanel(this);
+        newDeckPanel.setEditGamePanel(this);
         
         newReqName.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -147,7 +147,7 @@ public class NewGamePanel extends JPanel {
         
         newGameRequirementsCard = new JPanel();
         
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(
@@ -209,9 +209,12 @@ public class NewGamePanel extends JPanel {
         newGameRequirementsPanel = new NewGameRequirementsPanel();
         newGameRequirementsCard.add(newGameRequirementsPanel, "reqlistpanel");
         
+        newDeckPanel = new NewDeckPanel();
+        newGameRequirementsCard.add(newDeckPanel, "newdeckpanel");
+        
         newRequirementPanel = new JPanel();
         newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
-        final GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
+        GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
         gbl_newRequirementPanel.columnWidths = new int[] { 99, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0 };
         gbl_newRequirementPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0,
@@ -223,7 +226,7 @@ public class NewGamePanel extends JPanel {
         newRequirementPanel.setLayout(gbl_newRequirementPanel);
         
         nameLabel = new JLabel("Name:");
-        final GridBagConstraints gbc_nameLabel = new GridBagConstraints();
+        GridBagConstraints gbc_nameLabel = new GridBagConstraints();
         gbc_nameLabel.anchor = GridBagConstraints.WEST;
         gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
         gbc_nameLabel.gridx = 0;
@@ -232,8 +235,8 @@ public class NewGamePanel extends JPanel {
         
         newReqNameError = new JLabel("* Required field!");
         newReqNameError.setFont(new Font("Dialog", Font.BOLD, 12));
-        newReqNameError.setForeground(Color.red);
-        final GridBagConstraints gbc_newReqNameError = new GridBagConstraints();
+        newReqNameError.setForeground(new java.awt.Color(255, 0, 0));
+        GridBagConstraints gbc_newReqNameError = new GridBagConstraints();
         gbc_newReqNameError.anchor = GridBagConstraints.WEST;
         gbc_newReqNameError.insets = new Insets(0, 0, 5, 5);
         gbc_newReqNameError.gridx = 1;
@@ -241,7 +244,7 @@ public class NewGamePanel extends JPanel {
         newRequirementPanel.add(newReqNameError, gbc_newReqNameError);
         
         newReqName = new JTextField();
-        final GridBagConstraints gbc_newReqName = new GridBagConstraints();
+        GridBagConstraints gbc_newReqName = new GridBagConstraints();
         gbc_newReqName.gridwidth = 11;
         gbc_newReqName.insets = new Insets(0, 0, 5, 5);
         gbc_newReqName.fill = GridBagConstraints.HORIZONTAL;
@@ -251,7 +254,7 @@ public class NewGamePanel extends JPanel {
         newReqName.setColumns(10);
         
         descLabel = new JLabel("Description:");
-        final GridBagConstraints gbc_descLabel = new GridBagConstraints();
+        GridBagConstraints gbc_descLabel = new GridBagConstraints();
         gbc_descLabel.anchor = GridBagConstraints.WEST;
         gbc_descLabel.insets = new Insets(0, 0, 5, 5);
         gbc_descLabel.gridx = 0;
@@ -278,8 +281,8 @@ public class NewGamePanel extends JPanel {
         });
         
         newReqDescError = new JLabel("* Required field!");
-        newReqDescError.setForeground(Color.red);
-        final GridBagConstraints gbc_newReqDescError = new GridBagConstraints();
+        newReqDescError.setForeground(new java.awt.Color(255, 0, 0));
+        GridBagConstraints gbc_newReqDescError = new GridBagConstraints();
         gbc_newReqDescError.anchor = GridBagConstraints.WEST;
         gbc_newReqDescError.insets = new Insets(0, 0, 5, 5);
         gbc_newReqDescError.gridx = 1;
@@ -288,7 +291,7 @@ public class NewGamePanel extends JPanel {
         
         newReqDesc = new JTextArea();
         newReqDesc.setLineWrap(true);
-        final GridBagConstraints gbc_newReqDesc = new GridBagConstraints();
+        GridBagConstraints gbc_newReqDesc = new GridBagConstraints();
         gbc_newReqDesc.gridheight = 5;
         gbc_newReqDesc.gridwidth = 11;
         gbc_newReqDesc.insets = new Insets(0, 0, 5, 5);
@@ -298,7 +301,7 @@ public class NewGamePanel extends JPanel {
         newRequirementPanel.add(newReqDesc, gbc_newReqDesc);
         
         typeLabel = new JLabel("Type:");
-        final GridBagConstraints gbc_typeLabel = new GridBagConstraints();
+        GridBagConstraints gbc_typeLabel = new GridBagConstraints();
         gbc_typeLabel.anchor = GridBagConstraints.WEST;
         gbc_typeLabel.insets = new Insets(0, 0, 5, 5);
         gbc_typeLabel.gridx = 0;
@@ -309,14 +312,14 @@ public class NewGamePanel extends JPanel {
         newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
                 "Epic", "Theme", "User story", "Non-functional dependency",
                 "Scenario" }));
-        final GridBagConstraints gbc_newReqType = new GridBagConstraints();
+        GridBagConstraints gbc_newReqType = new GridBagConstraints();
         gbc_newReqType.gridwidth = 2;
         gbc_newReqType.anchor = GridBagConstraints.WEST;
         gbc_newReqType.insets = new Insets(0, 0, 5, 5);
         gbc_newReqType.gridx = 0;
         gbc_newReqType.gridy = 10;
         newRequirementPanel.add(newReqType, gbc_newReqType);
-        final GridBagConstraints gbc_saveNewReqButton = new GridBagConstraints();
+        GridBagConstraints gbc_saveNewReqButton = new GridBagConstraints();
         gbc_saveNewReqButton.gridwidth = 2;
         gbc_saveNewReqButton.insets = new Insets(0, 0, 0, 5);
         gbc_saveNewReqButton.gridx = 0;
@@ -330,7 +333,7 @@ public class NewGamePanel extends JPanel {
                 showPanel("reqlistpanel");
             }
         });
-        final GridBagConstraints gbc_cancelNewReqButton = new GridBagConstraints();
+        GridBagConstraints gbc_cancelNewReqButton = new GridBagConstraints();
         gbc_cancelNewReqButton.insets = new Insets(0, 0, 0, 5);
         gbc_cancelNewReqButton.gridx = 7;
         gbc_cancelNewReqButton.gridy = 11;
@@ -340,14 +343,14 @@ public class NewGamePanel extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
-        if (!(newGameRequirementsPanel.isValidForm() && gameDescription
-                .isValidForm())) {
+        if (!(newGameRequirementsPanel.validateForm() && gameDescription
+                .validateForm())) {
             check();
+            return;
         }
-        else {
-            PlanningPoker.getViewController().saveNewGame(this);
-            EmailController.getInstance().sendNotifications();
-        }
+        
+        PlanningPoker.getViewController().saveNewGame(this);
+        EmailController.getInstance().sendNotifications();
     }// GEN-LAST:event_saveButtonActionPerformed
     
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
@@ -364,20 +367,26 @@ public class NewGamePanel extends JPanel {
         return gameDescription.nameField.getText();
     }
     
+    /**
+     * Gets selected deck
+     * 
+     * @return
+     */
+    public DeckModel getDeck() {
+        return gameDescription.getDeck();
+    }
+    
     public String getDescription() {
         return gameDescription.descriptionField.getText();
     }
     
     public GameType getGameType() {
-        GameType toReturn;
         if (gameDescription.distributed.isSelected()) {
-            toReturn = GameType.DISTRIBUTED;
+            return GameType.DISTRIBUTED;
         }
         else {
-            toReturn = GameType.LIVE;
+            return GameType.LIVE;
         }
-        
-        return toReturn;
     }
     
     public Date getEndDate() {
@@ -392,8 +401,8 @@ public class NewGamePanel extends JPanel {
      * Checks if game description panel and requirements are properly entered
      */
     public void check() {
-        saveButton.setEnabled(gameDescription.isValidForm()
-                && newGameRequirementsPanel.isValidForm());
+        saveButton.setEnabled(gameDescription.validateForm()
+                && newGameRequirementsPanel.validateForm());
     }
     
     /**
@@ -411,6 +420,7 @@ public class NewGamePanel extends JPanel {
     private javax.swing.JButton cancelButton;
     private JPanel newGameRequirementsCard;
     private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel newGameRequirementsPanel;
+    private NewDeckPanel newDeckPanel;
     private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;

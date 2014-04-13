@@ -24,21 +24,23 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
  * 
  */
 public class GameTest {
-    
-    @Test
-    public void TestRequirementEndsAfterDeadline() {
-        GameModel testgame = new GameModel(1, "Test Game", "something", null,
-                new Date(System.currentTimeMillis() - 100000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
-        Assert.assertTrue(testgame.isEnded());
-    }
-    
-    @Test
-    public void TestRequirementNotCompleteBeforeDeadline() {
-        GameModel testgame = new GameModel(2, "Test Game", "something", null,
-                new Date(System.currentTimeMillis() + 100000000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
-        Assert.assertFalse(testgame.isEnded());
-    }
-    
+
+	@Test
+	public void TestRequirementEndsAfterDeadline() {
+		GameModel testgame = new GameModel(1, "Test Game", "something", null,
+				DeckListModel.getInstance().getDefaultDeck(), new Date(
+						System.currentTimeMillis() - 100000),
+				GameType.DISTRIBUTED, GameStatus.PENDING);
+		Assert.assertTrue(testgame.isEnded());
+	}
+
+	@Test
+	public void TestRequirementNotCompleteBeforeDeadline() {
+		GameModel testgame = new GameModel(2, "Test Game", "something", null,
+				DeckListModel.getInstance().getDefaultDeck(), new Date(
+						System.currentTimeMillis() + 100000000),
+				GameType.DISTRIBUTED, GameStatus.PENDING);
+		Assert.assertFalse(testgame.isEnded());
+	}
+
 }

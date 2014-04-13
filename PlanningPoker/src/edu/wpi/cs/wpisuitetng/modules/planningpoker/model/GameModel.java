@@ -26,8 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
  * @author Akshay
  * 
  */
-public class GameModel extends AbstractModel {
-    
+public class GameModel extends AbstractModel {    
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
         
@@ -53,8 +52,9 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-    private final String owner;
-    
+    private String owner;
+    private DeckModel deck;
+
     /**
      * Default constructor creates instance with invalid id and null fields
      */
@@ -68,6 +68,7 @@ public class GameModel extends AbstractModel {
         status = null;
         status_observers = null;
         owner = null;
+        deck = DeckListModel.getInstance().getDefaultDeck(); 
     }
     
     /**
@@ -77,17 +78,19 @@ public class GameModel extends AbstractModel {
      * @param name
      * @param description
      * @param requirements
+     * @param deck
      * @param end
      * @param type
      * @param status
      */
     public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end,
+            ArrayList<GameRequirementModel> requirements, DeckModel deck, Date end,
             GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
+        this.deck = deck;
         endDate = end;
         this.type = type;
         this.status = status;
@@ -101,17 +104,19 @@ public class GameModel extends AbstractModel {
      * @param name
      * @param description
      * @param requirements
+     * @param deck
      * @param end
      * @param type
      * @param status
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end,
+            ArrayList<GameRequirementModel> requirements, DeckModel deck, Date end,
             GameType type, GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
+        this.deck = deck;
         endDate = end;
         this.type = type;
         this.status = status;
@@ -124,18 +129,20 @@ public class GameModel extends AbstractModel {
      * @param name
      * @param description
      * @param requirements
+     * @param deck
      * @param endDate
      * @param type
      * @param status
      * @param owner
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date endDate,
+            ArrayList<GameRequirementModel> requirements, DeckModel deck, Date endDate,
             GameType type, GameStatus status, String owner) {
         //this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
+        this.deck = deck;
         this.endDate = endDate;
         this.type = type;
         this.status = status;
@@ -168,7 +175,7 @@ public class GameModel extends AbstractModel {
     public String getOwner() {
         return owner;
     }
-    
+
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
@@ -196,6 +203,13 @@ public class GameModel extends AbstractModel {
     }
     
     /**
+     * @return The deck for this game
+     */
+    public DeckModel getDeck() {
+        return deck;
+    }
+
+    /**
      * @return The end time for this game
      */
     public Date getEndTime() {
@@ -215,14 +229,10 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
-     *        <<<<<<< HEAD
      *        whether or not the game should be ended
-     *        =======
-     *        whether or not the game should be ended
-     *        >>>>>>> team9dev
      */
     public void setEnded(boolean fin) {
-        final GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
         if (status != new_status) {
             status = new_status;
             for (int i = 0; i < status_observers.size(); i++) {
@@ -288,14 +298,14 @@ public class GameModel extends AbstractModel {
     
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
-        final GameModel gm = parser.fromJson(json, GameModel.class);
+        GameModel gm = parser.fromJson(json, GameModel.class);
         gm.status_observers = new ArrayList<>();
         return gm;
     }
     
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
-        final GameModel[] gms = parser.fromJson(json, GameModel[].class);
+        GameModel[] gms = parser.fromJson(json, GameModel[].class);
         for (GameModel gm : gms) {
             gm.status_observers = new ArrayList<>();
         }
@@ -334,23 +344,16 @@ public class GameModel extends AbstractModel {
         return getName();
     }
     
-    public boolean equalTo(GameModel other) {
+    public boolean equals(GameModel other) {
         return other.id == id && other.name.equals(other.name);
     }
     
     public boolean equals(Object other) {
-        boolean toReturn;
-        if (this == other) {
-            toReturn = true;
-        }
-        else if (other instanceof GameModel) {
-            toReturn = this.equalTo((GameModel) other);
-        }
-        else {
-            toReturn = super.equals(other);
-        }
-        
-        return toReturn;
+        if (this == other)
+            return true;
+        else if (other instanceof GameModel)
+            return this.equals((GameModel) other);
+        else
+            return super.equals(other);
     }
-    
 }
