@@ -77,17 +77,4 @@ public class PlanningPoker implements IJanewayModule {
 	public List<JanewayTabModel> getTabs() {
 		return tabs;
 	}
-	
-	public static void main(String[] args){
-		JFrame f =  new JFrame();
-		f.setSize(800, 400);
-		VotePanel p = new VotePanel();
-		f.add(p);
-		GameModel gm = new GameModel();
-		GameRequirementModel req = new GameRequirementModel();
-		p.setRequirement(null, gm, req);
-
-		f.setVisible(true);
-	}
-	
 }
