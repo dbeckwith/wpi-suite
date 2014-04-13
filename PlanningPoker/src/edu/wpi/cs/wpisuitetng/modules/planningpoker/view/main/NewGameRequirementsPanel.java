@@ -48,15 +48,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	public NewGameRequirementsPanel() {
 		initComponents();
 		createdRequirements = new ArrayList<>();
-		requirementsTable.getModel().addTableModelListener(
-				new TableModelListener() {
-
-					@Override
-					public void tableChanged(TableModelEvent e) {
-						validateForm();
-						parent.check();
-					}
-				});
+		
 		
 		requirementsListObserver = new SimpleListObserver() {
             
@@ -94,7 +86,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		addButton = new javax.swing.JButton();
 		countError = new javax.swing.JLabel();
 
-		requirementsTable.setModel(getEmptyTableModel());
+		clearRequirements();
 		requirementsTable
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
@@ -193,6 +185,15 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	
 	private void clearRequirements() {
 	    requirementsTable.setModel(getEmptyTableModel());
+	    requirementsTable.getModel().addTableModelListener(
+                new TableModelListener() {
+
+                    @Override
+                    public void tableChanged(TableModelEvent e) {
+                        validateForm();
+                        parent.check();
+                    }
+                });
 	}
 	
 	public void addCustomRequirement(GameRequirementModel r) {
