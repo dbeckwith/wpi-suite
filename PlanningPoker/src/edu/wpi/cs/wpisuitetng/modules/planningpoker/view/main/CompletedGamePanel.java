@@ -99,7 +99,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                      * 
                      */
             private static final long serialVersionUID = -7421202548175051005L;
-            boolean[] columnEditables = new boolean[] { false, false, false,
+            private boolean[] columnEditables = new boolean[] { false, false, false,
                     false };
             
             @Override
