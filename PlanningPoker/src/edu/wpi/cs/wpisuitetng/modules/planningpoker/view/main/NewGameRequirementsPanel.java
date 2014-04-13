@@ -39,6 +39,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 
 	private SimpleListObserver requirementsListObserver;
 	private final ArrayList<GameRequirementModel> createdRequirements;
+    
 	// TODO: remember which requirements were checked off as added when the list updates
 	
 	/**
@@ -56,7 +57,8 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
             @Override
             public void listUpdated() {
                 clearRequirements();
-                for (GameRequirementModel req : RequirementsListModel.getInstance().getAll()) {
+                for (GameRequirementModel req : RequirementsListModel
+                        .getInstance().getAll()) {
                     addRequirement(req);
                 }
                 for (GameRequirementModel req : createdRequirements) {
@@ -64,7 +66,8 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 }
             }
         };
-		RequirementsListModel.getInstance().addListListener(requirementsListObserver);
+        RequirementsListModel.getInstance().addListListener(
+                requirementsListObserver);
 	}
 	
 	public SimpleListObserver getRequirementsListObserver() {
@@ -170,8 +173,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     }
 
 	private TableModel getEmptyTableModel() {
-	    return new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+        return new javax.swing.table.DefaultTableModel(new Object[][] {
 
                 }, new String[] { "Add", "Name", "Description", "Type" }) {
             /**
@@ -234,7 +236,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 				.getModel();
 		model.addRow(new Object[] { false, r, r.getDescription().toString(),
 				r.getType().toString() });
-		requirementsTable.setModel(model);
 		validateForm();
 		parent.check();
 	}

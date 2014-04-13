@@ -245,8 +245,8 @@ public class NewGamePanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO: get new ID incremented off of existing requirements
 				newGameRequirementsPanel
-						.addCustomRequirement(new GameRequirementModel(0, newReqName
-								.getText(), newReqDesc.getText(),
+                        .addCustomRequirement(new GameRequirementModel(0,
+                                newReqName.getText(), newReqDesc.getText(),
 								(String) newReqType.getSelectedItem()));
 				newGameRequirementsPanel.requirementsTable.setValueAt(true,
 						newGameRequirementsPanel.requirementsTable
@@ -365,7 +365,8 @@ public class NewGamePanel extends JPanel {
 	public GameType getGameType() {
 		if (gameDescription.distributed.isSelected()) {
 			return GameType.DISTRIBUTED;
-		} else {
+        }
+        else {
 			return GameType.LIVE;
 		}
 	}
