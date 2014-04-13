@@ -87,4 +87,18 @@ public class GameModelTest {
         Assert.assertEquals(game2.getName(), GameModel.fromJSONArray("["
                 + game2.toJSON() + "]")[0].getName());
     }
+    
+    @Test
+    public void testClosedGame(){
+        game1.closeGame();
+        game2.closeGame();
+        Assert.assertTrue(game1.isEnded());
+        Assert.assertTrue(game2.isEnded());
+        Assert.assertTrue(game3.isEnded());
+        Assert.assertTrue(game4.isEnded());
+        Assert.assertTrue(game1.isClosed());
+        Assert.assertTrue(game2.isClosed());
+        Assert.assertFalse(game3.isClosed());
+        Assert.assertFalse(game4.isClosed());
+    }
 }

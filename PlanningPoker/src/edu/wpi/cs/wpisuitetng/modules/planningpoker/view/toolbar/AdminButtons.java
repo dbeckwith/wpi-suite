@@ -36,6 +36,7 @@ public class AdminButtons extends ToolbarGroupView {
      */
     private static final long serialVersionUID = 312905811728893535L;
     private JButton endGameButton;
+    private JButton closeGameButton;
     
     private final JPanel contentPanel = new JPanel();
     
@@ -45,8 +46,11 @@ public class AdminButtons extends ToolbarGroupView {
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
         endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
         
+        closeGameButton = new JButton("<html>Close<br/>Game</html>");
+        closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
+        
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(175);
+        setPreferredWidth(350);
         
         endGameButton.addActionListener(new ActionListener() {
             @Override
@@ -55,12 +59,33 @@ public class AdminButtons extends ToolbarGroupView {
             }
         });
         
+        closeGameButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                PlanningPoker.getViewController().closeGame();
+                
+            }
+            
+        });
+        
         endGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         
         contentPanel.add(endGameButton);
+        contentPanel.add(closeGameButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
         
+    }
+    
+    /**
+     * sets whether the endGame button is Enabled
+     * 
+     * @param b
+     *        whether the button should be enabled
+     */
+    public void setEndGameEnabled(boolean b) {
+        endGameButton.setEnabled(b);
     }
 }
