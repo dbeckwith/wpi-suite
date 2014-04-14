@@ -16,6 +16,7 @@ import java.util.HashSet;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -36,23 +37,24 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
  */
 public class GameEntityManagerTest {
 
-	MockData db;
-	User existingUser;
-	GameModel existingGame;
-	Session defaultSession;
-	String mockSsid;
-	GameEntityManager manager;
-	GameModel newGame;
-	GameModel goodUpdatedGame;
-	User bob;
-	Session adminSession;
-	Project testProject;
-	Project otherProject;
-	GameModel otherGame;
+	static MockData db;
+	static User existingUser;
+	static GameModel existingGame;
+	static Session defaultSession;
+	static String mockSsid;
+	static GameEntityManager manager;
+	static GameModel newGame;
+	static GameModel goodUpdatedGame;
+	static Session adminSession;
+	static Project testProject;
+	static Project otherProject;
+	static GameModel otherGame;
+	static User admin;
+	static User bob;
 
-	@Before
-	public void setUp() {
-		User admin = new User("admin", "admin", "1234", 27);
+	@BeforeClass
+	static public void setUpBeforeClass() {
+		admin = new User("admin", "admin", "1234", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		otherProject = new Project("other", "2");
@@ -84,6 +86,20 @@ public class GameEntityManagerTest {
 		db.save(admin);
 		manager = new GameEntityManager(db);
 	}
+	
+	@Before
+	public void setUp() {
+	    try {
+            manager.deleteAll(adminSession);
+        }
+        catch (WPISuiteException e) {
+            Assert.fail();
+        }
+	    db.save(existingGame, testProject);
+        db.save(otherGame, otherProject);
+        db.save(existingUser);
+        db.save(admin);
+	}
 
 	@Test
 	public void testMakeEntity() throws WPISuiteException {
@@ -97,6 +113,7 @@ public class GameEntityManagerTest {
 
 	@Test
 	public void testGetEntity() throws NotFoundException {
+	    db.save(existingGame, testProject);
 		GameModel[] games = manager.getEntity(defaultSession, "1");
 		Assert.assertSame(existingGame, games[0]);
 	}
