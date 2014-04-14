@@ -24,7 +24,7 @@ public class Card implements View.OnClickListener{
 	};
 	
 	private View view;
-	private float value;
+	private double value;
 	
 	private LinearLayout contentLayout;
 	private TextView text;
@@ -33,7 +33,7 @@ public class Card implements View.OnClickListener{
 	
 	private boolean selected = false;
 	
-	public Card(Context ctx, float value, CardListener listener){
+	public Card(Context ctx, double value, CardListener listener){
 		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.listener = listener;
 	  	this.value = value;
@@ -70,7 +70,7 @@ public class Card implements View.OnClickListener{
 		return view;
 	}
 	
-	public float getValue(){
+	public double getValue(){
 		return value;
 	}
 

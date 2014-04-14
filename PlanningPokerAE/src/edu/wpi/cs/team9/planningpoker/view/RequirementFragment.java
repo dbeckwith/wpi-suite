@@ -16,6 +16,7 @@ import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.Config;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.team9.planningpoker.model.DeckModel;
 import edu.wpi.cs.team9.planningpoker.model.Estimate;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.team9.planningpoker.view.Card.CardListener;
@@ -25,9 +26,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private static final String TAG = RequirementFragment.class.getSimpleName();
 	
 	private static final int COLUMNS = 4;
-	
-	private static final float[] deck = {0.5f, 1, 2, 3, 5, 10, 20, 50, 100};
-		
+			
 	private static final TableLayout.LayoutParams rowLP = new TableLayout.LayoutParams(
 	        TableLayout.LayoutParams.MATCH_PARENT,
 	        TableLayout.LayoutParams.MATCH_PARENT,
@@ -48,8 +47,8 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private Button submit;
 	
 	private TextView estimateLabel;
-	
-	private boolean selectMultiple = true;
+		
+	private DeckModel deck;
 	
 	private ArrayList<Card> cards;
 
@@ -60,6 +59,10 @@ public class RequirementFragment extends Fragment implements CardListener {
 		this.requirement = req;		
 	}
 	
+	public void setDeck(DeckModel dm){
+		this.deck = dm;
+	}
+			
 	public void setListener(RequirementFragmentListener rfl){
 		listener = rfl;
 	}
@@ -79,7 +82,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 		if(oldEstimate == null){
 			estimateLabel.setText("You have not estimated yet");
 		} else {
-			estimateLabel.setText("Your previous estimate was "+Card.cardNumberFormat.format(oldEstimate.getEstimate()));
+			estimateLabel.setText("Your current estimate is "+Card.cardNumberFormat.format(oldEstimate.getEstimate()));
 		}
 		
 		nameView.setText(requirement.getName());
@@ -102,6 +105,8 @@ public class RequirementFragment extends Fragment implements CardListener {
 					requirement.UpdateEstimate(oldEstimate, newEstimate);
 				}
 				
+				estimateLabel.setText("Your current estimate is "+Card.cardNumberFormat.format(getEstimate()));
+				
 				if(listener != null){
 					listener.updated(requirement);
 				}
@@ -118,13 +123,13 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private void setUpCardTable(){
 		cards.clear();
 		
-		TableRow[] rows = new TableRow[deck.length/COLUMNS + 1];
+		TableRow[] rows = new TableRow[deck.getCards().size()/COLUMNS + 1];
 		for(int i = 0; i < rows.length; i++){
 			rows[i] = new TableRow(getActivity());
 		}
 		
-		for(int i = 0; i < deck.length; i++){
-			Card card = new Card(getActivity(), deck[i], this);
+		for(int i = 0; i < deck.getCards().size(); i++){
+			Card card = new Card(getActivity(), deck.getCards().get(i), this);
 			cards.add(card);
 			rows[i/COLUMNS].addView(card.getView(), cellLP);
 		}		
@@ -139,7 +144,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 
 	@Override
 	public void cardSelected(Card card) {
-		if(!selectMultiple){
+		if(!deck.getAllowsMultipleSelection()){
 			for(Card c:cards){
 				if(c != card){
 					c.setCardSelected(false);
@@ -185,7 +190,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 		ArrayList<Integer> selected = new ArrayList<Integer>();
 		for(Card c:cards){
 			if(c.isCardSelected()){
-				selected.add((int)c.getValue());
+				selected.add(cards.indexOf(c));
 			}
 		}
 		return selected;

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.team9.planningpoker.model;
 
 import java.util.ArrayList;
@@ -5,18 +16,16 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.team9.planningpoker.Config;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 /**
  * Represents a planning poker game
- * 
- * @author Akshay
- * 
  */
-public class GameModel extends AbstractModel {
-    
+public class GameModel extends AbstractModel {    
     public static enum GameStatus {
-        PENDING("Pending"), COMPLETE("Complete");
+        PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
+        
         
         public String name;
         
@@ -30,7 +39,6 @@ public class GameModel extends AbstractModel {
         LIVE, DISTRIBUTED
     };
     
-    private ArrayList<SimpleListObserver> observers;
     
     private int id;
     private String name;
@@ -39,67 +47,8 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-    
-    /**
-     * Default constructor creates instance with invalid id and null fields
-     */
-    public GameModel() {
-        id = -1;
-        name = null;
-        description = null;
-        requirements = null;
-        endDate = null;
-        type = null;
-        status = null;
-        observers = null;
-    }
-    
-    /**
-     * Constructor
-     * 
-     * @param id
-     * @param name
-     * @param description
-     * @param requirements
-     * @param end
-     * @param type
-     * @param status
-     */
-    public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end,
-            GameType type, GameStatus status) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.requirements = requirements;
-        endDate = end;
-        this.type = type;
-        this.status = status;
-        observers = new ArrayList<SimpleListObserver>();
-    }
-    
-    /**
-     * Constructor
-     * 
-     * @param name
-     * @param description
-     * @param requirements
-     * @param end
-     * @param type
-     * @param status
-     */
-    public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end,
-            GameType type, GameStatus status) {
-        id = -1;
-        this.name = name;
-        this.description = description;
-        this.requirements = requirements;
-        endDate = end;
-        this.type = type;
-        this.status = status;
-        observers = new ArrayList<SimpleListObserver>();
-    }
+    private String owner;
+    private DeckModel deck;
     
     /**
      * @return the name of this game
@@ -121,27 +70,10 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * Add a SimpleListObserver that is notified when the list of estimates is
-     * changed
-     * 
-     * @param slo
-     *        The SimpleListObserver to add
+     * @return the owner
      */
-    public void addListListener(SimpleListObserver slo) {
-        if (!observers.contains(slo)) {
-            observers.add(slo);
-        }
-    }
-    
-    /**
-     * Add a user's estimate to the list
-     * 
-     * @param user
-     * @param estimate
-     */
-    public void addEstimate(Estimate e, int reqIndex) {
-        requirements.get(reqIndex).addEstimate(e);
-        updated();
+    public String getOwner() {
+        return owner;
     }
     
     /**
@@ -158,6 +90,13 @@ public class GameModel extends AbstractModel {
         return requirements;
     }
     
+    /**
+     * @return The deck for this game
+     */
+    public DeckModel getDeck() {
+        return deck;
+    }
+
     /**
      * @return The end time for this game
      */
@@ -181,28 +120,41 @@ public class GameModel extends AbstractModel {
      *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
-        status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        if (status != new_status) {
+            status = new_status;
+        }
     }
     
     /**
-     * If the current time is past the end date of the game, set the game as ended.
+     * If the current time is past the end date of the game, set the game as
+     * ended.
      * 
-     * @return whether the game has ended
+     * @return whether the game has ended or is closed
      */
     public boolean isEnded() {
-        if ((endDate.before(new Date(System.currentTimeMillis())))) {
+        if (endDate != null
+                && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
-        return (status == GameStatus.COMPLETE);
+        return (status == GameStatus.COMPLETE || status == GameStatus.CLOSED);
     }
     
     /**
-     * Notifies all observers when that the list has changed
+     * Returns whether the game is closed
+     * 
+     * @return whether the game has been closed
      */
-    private void updated() {
-        for (SimpleListObserver observer : observers) {
-            observer.listUpdated();
-        }
+    public boolean isClosed() {
+        return (status == GameStatus.CLOSED);
+    }
+    
+    /**
+     * sets the game status to closed so that no more edits can be made
+     */
+    public void closeGame() {
+        status = GameStatus.CLOSED;
+        //notify status listeners of the change
     }
     
     @Override
@@ -228,12 +180,14 @@ public class GameModel extends AbstractModel {
     
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
-        return parser.fromJson(json, GameModel.class);
+        GameModel gm = parser.fromJson(json, GameModel.class);
+        return gm;
     }
     
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
-        return parser.fromJson(json, GameModel[].class);
+        GameModel[] gms = parser.fromJson(json, GameModel[].class);
+        return gms;
     }
     
     public int getID() {
@@ -252,20 +206,23 @@ public class GameModel extends AbstractModel {
         endDate = g.endDate;
         type = g.type;
         status = g.status;
-        observers = g.observers;
     }
     
-    /**
-     * 
-     * @return the simplelistobservers for the list of games
-     */
-    public ArrayList<SimpleListObserver> getObservers(){
-        return observers;
-    }
-        
     @Override
     public String toString() {
         return getName();
     }
     
+    public boolean equals(GameModel other) {
+        return other.id == id && other.name.equals(other.name);
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        else if (other instanceof GameModel)
+            return this.equals((GameModel) other);
+        else
+            return super.equals(other);
+    }
 }

@@ -64,6 +64,12 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		GetGamesController.getInstance().requestGames();
 		CurrentUserController.getInstance();
 	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		GetGamesController.getInstance().requestGames();
+	}
 
 	@Override
 	public void receivedGames(final GameModel[] games) {

@@ -117,6 +117,7 @@ public class RequirementActivity extends Activity implements RequirementFragment
 				} else {
 					RequirementFragment rf = new RequirementFragment();
 					rf.setRequirement(game.getRequirements().get(position-1));
+					rf.setDeck(game.getDeck());
 					rf.setListener(reqListener);
 					return rf;
 				}
