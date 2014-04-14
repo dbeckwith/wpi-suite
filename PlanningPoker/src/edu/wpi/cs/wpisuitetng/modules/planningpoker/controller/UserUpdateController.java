@@ -11,7 +11,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.ArrayList;
+
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UserUpdateController {
     
-    private User user;
+    private final User user;
     
     /**
      * Default constructor.
@@ -50,8 +50,9 @@ public class UserUpdateController {
     private static UserUpdateController instance;
     
     public static UserUpdateController getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new UserUpdateController();
+        }
         return instance;
     }
     
@@ -60,14 +61,14 @@ public class UserUpdateController {
      * 
      * @return
      */
-    public boolean getNotifyByEmail() {
+    public boolean canNotifyByEmail() {
         return user.isNotifyByEmail();
     }
     
     /**
      * Gets the user's current IM notification setting.
      */
-    public boolean getNotifyByIM() {
+    public boolean canNotifyByIM() {
         return user.isNotifyByIM();
     }
     

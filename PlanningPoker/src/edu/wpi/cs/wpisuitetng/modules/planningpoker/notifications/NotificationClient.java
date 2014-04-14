@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import java.io.IOException;
@@ -15,7 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.Network;
  */
 public class NotificationClient extends Thread {
 		
-	private static NotificationClient instance;
+	private static NotificationClient instance = null;
 	
     /**
      * @return the instance of the NotificationClient or creates one if it does
@@ -33,7 +36,7 @@ public class NotificationClient extends Thread {
 	/**
 	 * Constructor
 	 */
-	private NotificationClient(){	
+	private NotificationClient(){
 		try {
 			//get ip address of the server
 			serverAddress = InetAddress.getByName(new URL(Network.getInstance().getDefaultNetworkConfiguration().getApiUrl()).getHost());
@@ -42,10 +45,10 @@ public class NotificationClient extends Thread {
 		}
 	}
 	
-	public void run(){	
+	public void run(){
 		System.out.println("Notification client started");
 		while(true){
-			try {				
+			try {	
 				Socket server = new Socket(serverAddress, NotificationServer.PORT); //open a connection to the notification server
 				server.getInputStream().read(); //wait for the one-byte ping
 				server.close(); //close the connection
@@ -53,6 +56,6 @@ public class NotificationClient extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}		
+		}	
 	}
 }

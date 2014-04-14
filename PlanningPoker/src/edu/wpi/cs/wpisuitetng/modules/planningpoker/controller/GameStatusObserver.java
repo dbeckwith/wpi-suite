@@ -15,6 +15,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 public interface GameStatusObserver {
     
-    public void statusChanged(GameModel game);
+    void statusChanged(GameModel game);
     
 }

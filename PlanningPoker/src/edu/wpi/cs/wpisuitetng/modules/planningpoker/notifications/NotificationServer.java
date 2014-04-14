@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import java.io.IOException;
@@ -14,7 +17,7 @@ public class NotificationServer extends Thread {
 	
 	public static final int PORT = 9797;
 	
-	private static NotificationServer instance;
+	private static NotificationServer instance = null;
 	
     /**
      * @return The instance of the NotificationServer or creates one if it does
@@ -28,12 +31,12 @@ public class NotificationServer extends Thread {
 	}
 	
 	private ServerSocket serverSocket;
-	private ArrayList<Socket> clientSockets;
+	private final ArrayList<Socket> clientSockets;
 	
 	/**
 	 * Constructor
 	 */
-	private NotificationServer(){	
+	private NotificationServer(){
 		try {
 			serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
@@ -42,7 +45,7 @@ public class NotificationServer extends Thread {
 		clientSockets = new ArrayList<Socket>();
 	}
 	
-	public void run(){	
+	public void run(){
 		System.out.println("Notification server started");
 		while(true){
 			try {
@@ -51,7 +54,7 @@ public class NotificationServer extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}		
+		}	
 	}
 	
 	/**
@@ -60,7 +63,7 @@ public class NotificationServer extends Thread {
 	 */
 	public void sendUpdateNotification(){
 		//copy waiting clients, then clear list
-		Socket[] clients = clientSockets.toArray(new Socket[]{});
+		final Socket[] clients = clientSockets.toArray(new Socket[]{});
 		clientSockets.clear();
 		
 		for(Socket s:clients){
