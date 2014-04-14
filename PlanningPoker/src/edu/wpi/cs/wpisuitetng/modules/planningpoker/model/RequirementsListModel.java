@@ -27,8 +27,8 @@ public class RequirementsListModel extends
 
     private static RequirementsListModel instance = null;
     
-    private ArrayList<GameRequirementModel> requirements;
-    private ArrayList<SimpleListObserver> observers;
+    private final ArrayList<GameRequirementModel> requirements;
+    private final ArrayList<SimpleListObserver> observers;
     
     private RequirementsListModel() {
         requirements = new ArrayList<GameRequirementModel>();
@@ -85,7 +85,7 @@ public class RequirementsListModel extends
         updated();
     }
     
-    public void addRequirements(GameRequirementModel[] reqs) {
+    public void addMultipleRequirements(GameRequirementModel[] reqs) {
         for (GameRequirementModel req : reqs) {
             requirements.add(req);
         }

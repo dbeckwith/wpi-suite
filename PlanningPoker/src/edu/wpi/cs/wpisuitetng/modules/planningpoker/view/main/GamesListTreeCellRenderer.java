@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
@@ -38,11 +39,13 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
                 row, hasFocus);
         
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+        final DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         ImageIcon icon = null;
         
+        setFont(getFont().deriveFont(Font.PLAIN));
+        
         if (node.getUserObject() instanceof GameModel) {
-            GameModel game = (GameModel) node.getUserObject();
+            final GameModel game = (GameModel) node.getUserObject();
             
             if (game.isClosed()) {
                 icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
@@ -54,12 +57,36 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 icon = new ImageIcon(ImageLoader.getImage("new_req_small.png"));
             }
             else {
-                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
-                //TODO change this icon?
+                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));           
+                if (game.getRequirements() != null) {
+                    boolean hasUnvotedReqs = false;
+                    req_loop: for (GameRequirementModel req : game
+                            .getRequirements()) {
+                        if (req.getEstimates() != null) {
+                            boolean voted = false;
+                            for (Estimate e : req.getEstimates()) {
+                                if (e != null
+                                        && e.getUsername() != null
+                                        && e.getUsername().equals(
+                                                CurrentUserController
+                                                        .getInstance()
+                                                        .getUser()
+                                                        .getUsername())) {
+                                    voted = true;
+                                    break req_loop;
+                                }
+                            }
+                            if (!voted)
+                                hasUnvotedReqs = true;
+                        }
+                    }
+                    if (hasUnvotedReqs) {
+                        setFont(getFont().deriveFont(Font.BOLD));
+                    }
+                }
             }
-        }
-        else if (node.getUserObject() instanceof GameRequirementModel) {
-            GameRequirementModel req = (GameRequirementModel) node
+        } else if (node.getUserObject() instanceof GameRequirementModel) {
+            final GameRequirementModel req = (GameRequirementModel) node
                     .getUserObject();
             
             for (Estimate e : req.getEstimates()) {

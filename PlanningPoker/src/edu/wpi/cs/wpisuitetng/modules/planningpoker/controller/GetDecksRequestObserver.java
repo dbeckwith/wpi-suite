@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,7 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
-import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
  *
@@ -21,6 +20,7 @@ public class GetDecksRequestObserver implements RequestObserver {
     
     /**
      * Creates a new get decks request observer
+     * 
      * @param controller
      */
     public GetDecksRequestObserver(GetDecksController controller) {
@@ -32,7 +32,8 @@ public class GetDecksRequestObserver implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        DeckModel decks[] = DeckModel.fromJSONArray(iReq.getResponse().getBody());
+        DeckModel decks[] = DeckModel.fromJSONArray(iReq.getResponse()
+                .getBody());
         controller.receivedDecks(decks);
     }
     

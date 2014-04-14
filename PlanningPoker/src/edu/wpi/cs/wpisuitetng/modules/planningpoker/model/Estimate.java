@@ -20,17 +20,17 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
-    private String name;
-    private String username;
-    private int idNum;
-    private float estimate;
-    private ArrayList<Integer> cardsSelected;
+    private final String name;
+    private final String username;
+    private final int idNum;
+    private final float theEstimate;
+    private final ArrayList<Integer> cardsSelected;
     
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
-        this.name = user.getName();
-        this.username = user.getUsername();
-        this.idNum = user.getIdNum();
-        this.estimate = estimate;
+        name = user.getName();
+        username = user.getUsername();
+        idNum = user.getIdNum();
+        theEstimate = estimate;
         cardsSelected = cards;
     }
     
@@ -54,7 +54,7 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     }
     
     public float getEstimate() {
-        return estimate;
+        return theEstimate;
     }
     
     @Override
@@ -84,15 +84,17 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
     @Override
     public int compareTo(Estimate arg0) {
-        if (estimate > arg0.getEstimate()) {
-            return 1;
+        int toReturn;
+        if (theEstimate > arg0.getEstimate()) {
+            toReturn = 1;
         }
-        else if (estimate == arg0.getEstimate()) {
-            return 0;
+        else if (Math.abs(theEstimate - arg0.getEstimate()) < 0.0001) {
+            toReturn = 0;
         }
         else {
-            return -1;
+            toReturn = -1;
         }
+        return toReturn;
     }
     
 }
