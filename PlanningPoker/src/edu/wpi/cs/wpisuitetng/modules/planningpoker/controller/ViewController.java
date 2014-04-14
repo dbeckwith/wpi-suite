@@ -79,6 +79,7 @@ public class ViewController {
     }
     
     public void saveNewGame(NewGamePanel e) {
+        //TODO add save as new here
         DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(

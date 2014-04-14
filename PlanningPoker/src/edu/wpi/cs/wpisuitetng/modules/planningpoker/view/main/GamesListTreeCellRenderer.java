@@ -29,7 +29,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
     /**
      * 
      */
-    private static final long serialVersionUID = -2728918517590604079L;  
+    private static final long serialVersionUID = -2728918517590604079L;
     
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -44,21 +44,29 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (node.getUserObject() instanceof GameModel) {
             GameModel game = (GameModel) node.getUserObject();
             
-            if(game.isClosed()){
+            if (game.isClosed()) {
                 icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
             }
             else if (game.isEnded()) {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
-            } else {
-                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
             }
-        } else if (node.getUserObject() instanceof GameRequirementModel) {
+            else if (!game.isStarted()) {
+                icon = new ImageIcon(ImageLoader.getImage("new_req_small.png"));
+            }
+            else {
+                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
+                //TODO change this icon?
+            }
+        }
+        else if (node.getUserObject() instanceof GameRequirementModel) {
             GameRequirementModel req = (GameRequirementModel) node
                     .getUserObject();
             
             for (Estimate e : req.getEstimates()) {
-                if (e.getUsername() != null && e.getUsername().equals(
-                        CurrentUserController.getInstance().getUser().getUsername())) {
+                if (e.getUsername() != null
+                        && e.getUsername().equals(
+                                CurrentUserController.getInstance().getUser()
+                                        .getUsername())) {
                     icon = new ImageIcon(
                             ImageLoader.getImage("GameCompleted.png"));
                     break;
@@ -69,7 +77,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (node.getUserObject() != null) {
             if (node.getUserObject().equals("Pending Games")) {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
-            } else if (node.getUserObject().equals("Complete Games")) {
+            }
+            else if (node.getUserObject().equals("Complete Games")) {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
             }
         }
