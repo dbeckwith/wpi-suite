@@ -31,6 +31,8 @@ public class GameListModelTest {
 	@BeforeClass
 	static public void setUpBeforeClass() {
 		GameListModelTest.instance = GameListModel.getInstance();
+		instance.removeObservers();
+		instance.removeStatusObservers();
 	}
 
 	@Test
