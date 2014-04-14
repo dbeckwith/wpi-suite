@@ -15,6 +15,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtonGroup;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.CommonButtonGroup;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.HelpButtons;
 
 /**
  * This is the main class for the planning poker toolbar
@@ -30,11 +31,13 @@ public class ToolbarView extends DefaultToolbarView {
     private static final long serialVersionUID = 1142258027071142978L;
     private final CommonButtonGroup commonButtonGroup = new CommonButtonGroup();
     private final AdminButtonGroup adminButtonGroup = new AdminButtonGroup();
+    private HelpButtons helpButtons = new HelpButtons();
     
     public ToolbarView() {
         addGroup(commonButtonGroup);
         addGroup(adminButtonGroup);
         adminButtonGroup.setVisible(false);
+        addGroup(helpButtons);
     }
     
     /**

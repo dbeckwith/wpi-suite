@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
 
 /**
@@ -53,6 +54,7 @@ public class MainView extends JTabbedPane {
 			@Override
 			public void ancestorAdded(AncestorEvent event) {
 		        GetGamesController.getInstance().retrieveGames();
+		        GetRequirementsController.getInstance().retrieveRequirements();
 		        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
 		        removeAncestorListener(this);
 			}
