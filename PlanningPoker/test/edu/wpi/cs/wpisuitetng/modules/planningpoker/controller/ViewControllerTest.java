@@ -62,12 +62,12 @@ public class ViewControllerTest {
         Assert.assertEquals(count, mv.getTabCount());
     }
     
-    //@Test
-    //TODO: Test appropriately by implementing MockOptionPanes
+    @Test
     public void testCancelNewGame() {
         int count = mv.getTabCount();
         vc.addNewGameTab();
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
+        vc.setCancelConfirm(new YesMockOptionPane());
         vc.cancelNewGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
     }
