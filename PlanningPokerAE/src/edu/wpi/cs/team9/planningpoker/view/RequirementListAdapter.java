@@ -41,7 +41,7 @@ public class RequirementListAdapter extends ArrayAdapter<GameRequirementModel> {
 		String user = Config.getUserName(getContext());
 		for(Estimate e:estimates){
 			try {
-				if(e.getUser().getName().equals(user)){
+				if(e.getUsername().equals(user)){
 					return true;
 				}
 			} catch(Exception ex){

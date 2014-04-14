@@ -47,7 +47,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private TableLayout table;
 	private Button submit;
 	
-	private TextView estimateText;
+	private TextView estimateLabel;
 	
 	private boolean selectMultiple = true;
 	
@@ -73,12 +73,14 @@ public class RequirementFragment extends Fragment implements CardListener {
 					
 		nameView = (TextView)root.findViewById(R.id.req_name);
 		descView = (TextView)root.findViewById(R.id.description);			
+		estimateLabel = (TextView)root.findViewById(R.id.label);
 		
-		estimateText = (TextView)root.findViewById(R.id.estimateTotal);
-		
-		if(!selectMultiple){
-			estimateText.setText("");
-		}				
+		Estimate oldEstimate = getRecordedEstimate();
+		if(oldEstimate == null){
+			estimateLabel.setText("You have not estimated yet");
+		} else {
+			estimateLabel.setText("Your previous estimate was "+Card.cardNumberFormat.format(oldEstimate.getEstimate()));
+		}
 		
 		nameView.setText(requirement.getName());
 		descView.setText(requirement.getDescription());
@@ -90,13 +92,9 @@ public class RequirementFragment extends Fragment implements CardListener {
 			public void onClick(View v) {
 				String userName = Config.getUserName(getActivity());
 				
-				Estimate oldEstimate = null;
-				Estimate newEstimate = new Estimate(CurrentUserController.getInstance().findUser(userName), getEstimate()); 
-				for(Estimate e:requirement.getEstimates()){
-					if(e.getUser().getName().equals(userName)){
-						oldEstimate = e;
-					}
-				}
+				Estimate oldEstimate = getRecordedEstimate();
+				
+				Estimate newEstimate = new Estimate(CurrentUserController.getInstance().findUser(userName), getEstimate(), getSelectedCards()); 
 				
 				if(oldEstimate == null){
 					requirement.addEstimate(newEstimate);
@@ -148,10 +146,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 				}
 			}
 		}	
-		
-		
-		estimateText.setText(Card.cardNumberFormat.format(getEstimate()));
-				
+						
 		for(Card c:cards){
 			if(c.isCardSelected()){
 				submit.setBackgroundResource(R.drawable.bg_card_button);
@@ -173,6 +168,27 @@ public class RequirementFragment extends Fragment implements CardListener {
 			}
 		}
 		return estimate;
+	}
+	
+	public Estimate getRecordedEstimate(){
+		String userName = Config.getUserName(getActivity());
+		Estimate oldEstimate = null;
+		for(Estimate e:requirement.getEstimates()){
+			if(e.getUsername().equals(userName)){
+				oldEstimate = e;
+			}
+		}
+		return oldEstimate;
+	}
+	
+	public ArrayList<Integer> getSelectedCards(){
+		ArrayList<Integer> selected = new ArrayList<Integer>();
+		for(Card c:cards){
+			if(c.isCardSelected()){
+				selected.add((int)c.getValue());
+			}
+		}
+		return selected;
 	}
 	
 	public interface RequirementFragmentListener{

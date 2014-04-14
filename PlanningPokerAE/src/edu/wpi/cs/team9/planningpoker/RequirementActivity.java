@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import edu.wpi.cs.team9.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.team9.planningpoker.view.CompletedRequirementFragment;
 import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment;
 import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment.RequirementListListener;
 import edu.wpi.cs.team9.planningpoker.view.RequirementFragment;
@@ -108,10 +109,17 @@ public class RequirementActivity extends Activity implements RequirementFragment
 				});
 				return gsf;
 			} else {
-				RequirementFragment rf = new RequirementFragment();
-				rf.setRequirement(game.getRequirements().get(position-1));
-				rf.setListener(reqListener);
-				return rf;
+				if(game.isEnded()){
+					CompletedRequirementFragment crf = new CompletedRequirementFragment();
+					crf.setRequirement(game.getRequirements().get(position-1));
+					return crf;
+					
+				} else {
+					RequirementFragment rf = new RequirementFragment();
+					rf.setRequirement(game.getRequirements().get(position-1));
+					rf.setListener(reqListener);
+					return rf;
+				}
 			}
 		}
 		

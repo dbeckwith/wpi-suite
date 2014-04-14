@@ -1,4 +1,17 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * TODO: Contributors' names
+ ******************************************************************************/
 package edu.wpi.cs.team9.planningpoker.model;
+
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
@@ -7,16 +20,37 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
-    private User user;
+    private String name;
+    private String username;
+    private int idNum;
     private float estimate;
+    private ArrayList<Integer> cardsSelected;
     
-    public Estimate(User user, float estimate) {
-        this.user = user;
+    public Estimate(User user, float estimate, ArrayList<Integer> cards) {
+        this.name = user.getName();
+        this.username = user.getUsername();
+        this.idNum = user.getIdNum();
         this.estimate = estimate;
+        cardsSelected = cards;
     }
     
-    public User getUser() {
-        return user;
+    /**
+     * @return the cardsSelected
+     */
+    public ArrayList<Integer> getCardsSelected() {
+        return cardsSelected;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+    
+    public int getIdNum() {
+        return idNum;
     }
     
     public float getEstimate() {
@@ -43,15 +77,27 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
         return new Gson().toJson(this, Estimate.class);
     }
     
+    public Estimate fromJSON(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, Estimate.class);
+    }
+    
     @Override
     public int compareTo(Estimate arg0) {
         if (estimate > arg0.getEstimate()) {
             return 1;
-        } else if (estimate == arg0.getEstimate()) {
+        }
+        else if (estimate == arg0.getEstimate()) {
             return 0;
-        } else {
+        }
+        else {
             return -1;
         }
+    }
+    
+    @Override 
+    public String toString(){
+    	return getUsername();
     }
     
 }
