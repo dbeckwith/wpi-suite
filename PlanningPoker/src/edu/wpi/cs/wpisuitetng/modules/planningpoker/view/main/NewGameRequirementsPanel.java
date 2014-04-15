@@ -6,6 +6,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -92,7 +93,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		requirementsTable
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
-
+		Font temp_Font;
+		temp_Font = requirementsTable.getTableHeader().getFont();
+		requirementsTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
 		requirementsTableScrollPane.setViewportView(requirementsTable);
 		if (requirementsTable.getColumnModel().getColumnCount() > 0) {
 			requirementsTable.getColumnModel().getColumn(0).setMinWidth(60);
@@ -130,32 +133,30 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		    layout.createParallelGroup(Alignment.LEADING)
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
-		            .addComponent(addButton)
-		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(reloadButton)
-		            .addContainerGap(146, Short.MAX_VALUE))
-		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
-		        .addGroup(layout.createSequentialGroup()
-		            .addContainerGap()
-		            .addComponent(lblGameRequirements)
-		            .addPreferredGap(ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
-		            .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+		                .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+		                .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+		                .addComponent(lblGameRequirements)
+		                .addGroup(layout.createSequentialGroup()
+		                    .addComponent(addButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(reloadButton)))
 		            .addContainerGap())
 		);
 		layout.setVerticalGroup(
-		    layout.createParallelGroup(Alignment.TRAILING)
+		    layout.createParallelGroup(Alignment.LEADING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addContainerGap()
-		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-		                .addComponent(lblGameRequirements)
-		                .addComponent(btnSelectAll))
-		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-		            .addGap(11)
+		            .addGap(20)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(addButton)
 		                .addComponent(reloadButton))
-		            .addContainerGap())
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addComponent(lblGameRequirements)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+		            .addGap(18)
+		            .addComponent(btnSelectAll)
+		            .addGap(13))
 		);
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents

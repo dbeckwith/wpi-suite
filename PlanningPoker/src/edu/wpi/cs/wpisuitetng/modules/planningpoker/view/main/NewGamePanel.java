@@ -192,51 +192,17 @@ public class NewGamePanel extends JPanel {
 		newRequirementPanel = new JPanel();
 		newRequirementPanel.setBackground(Color.WHITE);
 		newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
-		GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
-		gbl_newRequirementPanel.columnWidths = new int[] { 54, 99, 0, 0, 0 };
-		gbl_newRequirementPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_newRequirementPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_newRequirementPanel.rowWeights = new double[] { 0.0, 0.0, 0.0,
-				1.0, 0.0, 0.0, Double.MIN_VALUE };
-		newRequirementPanel.setLayout(gbl_newRequirementPanel);
 
 		nameLabel = new JLabel("Requirement Name:");
-		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
-		gbc_nameLabel.gridwidth = 2;
-		gbc_nameLabel.anchor = GridBagConstraints.WEST;
-		gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_nameLabel.gridx = 0;
-		gbc_nameLabel.gridy = 0;
-		newRequirementPanel.add(nameLabel, gbc_nameLabel);
 
 		newReqNameError = new JLabel("* Required field!");
 		newReqNameError.setFont(new Font("Dialog", Font.BOLD, 12));
 		newReqNameError.setForeground(new java.awt.Color(255, 0, 0));
-		GridBagConstraints gbc_newReqNameError = new GridBagConstraints();
-		gbc_newReqNameError.anchor = GridBagConstraints.WEST;
-		gbc_newReqNameError.insets = new Insets(0, 0, 5, 5);
-		gbc_newReqNameError.gridx = 2;
-		gbc_newReqNameError.gridy = 0;
-		newRequirementPanel.add(newReqNameError, gbc_newReqNameError);
 
 		newReqName = new JTextField();
-		GridBagConstraints gbc_newReqName = new GridBagConstraints();
-		gbc_newReqName.gridwidth = 4;
-		gbc_newReqName.insets = new Insets(0, 0, 5, 0);
-		gbc_newReqName.fill = GridBagConstraints.HORIZONTAL;
-		gbc_newReqName.gridx = 0;
-		gbc_newReqName.gridy = 1;
-		newRequirementPanel.add(newReqName, gbc_newReqName);
 		newReqName.setColumns(10);
 
 		descLabel = new JLabel("Requirement Description:");
-		GridBagConstraints gbc_descLabel = new GridBagConstraints();
-		gbc_descLabel.gridwidth = 2;
-		gbc_descLabel.anchor = GridBagConstraints.WEST;
-		gbc_descLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_descLabel.gridx = 0;
-		gbc_descLabel.gridy = 2;
-		newRequirementPanel.add(descLabel, gbc_descLabel);
 
 		saveNewReqButton = new JButton("Save Requirement");
 		saveNewReqButton.setIcon(ImageLoader.getIcon("Save.png"));
@@ -260,52 +226,19 @@ public class NewGamePanel extends JPanel {
 
 		newReqDescError = new JLabel("* Required field!");
 		newReqDescError.setForeground(new java.awt.Color(255, 0, 0));
-		GridBagConstraints gbc_newReqDescError = new GridBagConstraints();
-		gbc_newReqDescError.anchor = GridBagConstraints.WEST;
-		gbc_newReqDescError.insets = new Insets(0, 0, 5, 5);
-		gbc_newReqDescError.gridx = 2;
-		gbc_newReqDescError.gridy = 2;
-		newRequirementPanel.add(newReqDescError, gbc_newReqDescError);
 		
 		scrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 4;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 3;
-		newRequirementPanel.add(scrollPane, gbc_scrollPane);
-
+		
 		newReqDesc = new JTextArea();
 		scrollPane.setViewportView(newReqDesc);
 		newReqDesc.setLineWrap(true);
 				
 						typeLabel = new JLabel("Type:");
-						GridBagConstraints gbc_typeLabel = new GridBagConstraints();
-						gbc_typeLabel.anchor = GridBagConstraints.WEST;
-						gbc_typeLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_typeLabel.gridx = 0;
-						gbc_typeLabel.gridy = 4;
-						newRequirementPanel.add(typeLabel, gbc_typeLabel);
 		
 				newReqType = new JComboBox<String>();
 				newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
 						"Epic", "Theme", "User story", "Non-functional dependency",
 						"Scenario" }));
-				GridBagConstraints gbc_newReqType = new GridBagConstraints();
-				gbc_newReqType.gridwidth = 2;
-				gbc_newReqType.anchor = GridBagConstraints.WEST;
-				gbc_newReqType.insets = new Insets(0, 0, 5, 5);
-				gbc_newReqType.gridx = 1;
-				gbc_newReqType.gridy = 4;
-				newRequirementPanel.add(newReqType, gbc_newReqType);
-		GridBagConstraints gbc_saveNewReqButton = new GridBagConstraints();
-		gbc_saveNewReqButton.anchor = GridBagConstraints.WEST;
-		gbc_saveNewReqButton.gridwidth = 2;
-		gbc_saveNewReqButton.insets = new Insets(0, 0, 0, 5);
-		gbc_saveNewReqButton.gridx = 1;
-		gbc_saveNewReqButton.gridy = 5;
-		newRequirementPanel.add(saveNewReqButton, gbc_saveNewReqButton);
 
 		cancelNewReqButton = new JButton("Return to List");
 		cancelNewReqButton.setIcon(ImageLoader.getIcon("backArrow.png"));
@@ -315,11 +248,70 @@ public class NewGamePanel extends JPanel {
 				showPanel("reqlistpanel");
 			}
 		});
-		GridBagConstraints gbc_cancelNewReqButton = new GridBagConstraints();
-		gbc_cancelNewReqButton.anchor = GridBagConstraints.WEST;
-		gbc_cancelNewReqButton.gridx = 3;
-		gbc_cancelNewReqButton.gridy = 5;
-		newRequirementPanel.add(cancelNewReqButton, gbc_cancelNewReqButton);
+		GroupLayout gl_newRequirementPanel = new GroupLayout(newRequirementPanel);
+		gl_newRequirementPanel.setHorizontalGroup(
+		    gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		        .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		                .addGroup(Alignment.TRAILING, gl_newRequirementPanel.createParallelGroup(Alignment.TRAILING)
+		                    .addGroup(Alignment.LEADING, gl_newRequirementPanel.createSequentialGroup()
+		                        .addContainerGap()
+		                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE))
+		                    .addGroup(Alignment.LEADING, gl_newRequirementPanel.createSequentialGroup()
+		                        .addContainerGap()
+		                        .addComponent(newReqName, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE))
+		                    .addGroup(Alignment.LEADING, gl_newRequirementPanel.createSequentialGroup()
+		                        .addContainerGap()
+		                        .addComponent(nameLabel)
+		                        .addGap(46)
+		                        .addComponent(newReqNameError))
+		                    .addGroup(Alignment.LEADING, gl_newRequirementPanel.createSequentialGroup()
+		                        .addContainerGap()
+		                        .addComponent(descLabel)
+		                        .addGap(5)
+		                        .addComponent(newReqDescError))
+		                    .addGroup(Alignment.LEADING, gl_newRequirementPanel.createSequentialGroup()
+		                        .addContainerGap()
+		                        .addComponent(saveNewReqButton)
+		                        .addGap(68)
+		                        .addComponent(cancelNewReqButton)))
+		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		                    .addContainerGap()
+		                    .addComponent(typeLabel)
+		                    .addGap(15)
+		                    .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+		            .addContainerGap())
+		);
+		gl_newRequirementPanel.setVerticalGroup(
+		    gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		        .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		            .addContainerGap()
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		                .addComponent(nameLabel)
+		                .addComponent(newReqNameError))
+		            .addGap(5)
+		            .addComponent(newReqName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		                .addComponent(descLabel)
+		                .addComponent(newReqDescError))
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 599, GroupLayout.PREFERRED_SIZE)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		                    .addGap(4)
+		                    .addComponent(typeLabel))
+		                .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		            .addGap(150)
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		                    .addGap(1)
+		                    .addComponent(saveNewReqButton))
+		                .addComponent(cancelNewReqButton))
+		            .addContainerGap())
+		);
+		newRequirementPanel.setLayout(gl_newRequirementPanel);
 
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
