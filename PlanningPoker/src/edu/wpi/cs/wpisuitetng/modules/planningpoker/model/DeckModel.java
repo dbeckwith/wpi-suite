@@ -49,6 +49,13 @@ public class DeckModel extends AbstractModel {
 	}
 	
 	/**
+	 * @return the name of the deck
+	 */
+	public String getName() {
+	    return this.name;
+	}
+	
+	/**
 	 * @return The cards in the deck
 	 */
 	public ArrayList<Double> getCards() {

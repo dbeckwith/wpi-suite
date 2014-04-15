@@ -7,6 +7,11 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 
+/**
+ * 
+ * @author Andrew
+ *
+ */
 public class GetDecksControllerTest {
     
     @Test
