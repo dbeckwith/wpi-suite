@@ -47,13 +47,12 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (node.getUserObject() instanceof GameModel) {
             final GameModel game = (GameModel) node.getUserObject();
             
-            if(game.isClosed()){
-                icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
-            }
-            else if (game.isEnded()) {
-                icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
+            if (game.isClosed()) {
+                icon = ImageLoader.getIcon("archiveTree.png");
+            } else if (game.isEnded()) {
+                icon = ImageLoader.getIcon("GameCompleted.png");
             } else {
-                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
+                icon = ImageLoader.getIcon("GameInProgress.png");
                 
                 if (game.getRequirements() != null) {
                     boolean hasUnvotedReqs = false;
@@ -91,18 +90,23 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                         && e.getUsername().equals(
                                 CurrentUserController.getInstance().getUser()
                                         .getUsername())) {
-                    icon = new ImageIcon(
-                            ImageLoader.getImage("GameCompleted.png"));
+                    icon = ImageLoader.getIcon("GameCompleted.png");
                     break;
                 }
             }
         }
         
-        if (node.getUserObject() != null) {
-            if (node.getUserObject().equals("Pending Games")) {
-                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
-            } else if (node.getUserObject().equals("Complete Games")) {
-                icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
+        if (node.getUserObject() != null
+                && node.getUserObject() instanceof String) {
+            if (((String) node.getUserObject())
+                    .matches("Games in Progress \\(\\d+\\)")) {
+                icon = ImageLoader.getIcon("GameInProgress.png");
+            } else if (((String) node.getUserObject())
+                    .matches("Complete Games \\(\\d+\\)")) {
+                icon = ImageLoader.getIcon("GameCompleted.png");
+            } else if (node.getUserObject().equals("<No complete games>")
+                    || node.getUserObject().equals("<No games in progress>")) {
+                icon = ImageLoader.getIcon("noGames.png");
             }
         }
         
@@ -112,5 +116,4 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         
         return this;
     }
-    
 }
