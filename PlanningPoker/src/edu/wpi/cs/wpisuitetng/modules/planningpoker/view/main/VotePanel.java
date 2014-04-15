@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import java.awt.Color;
 
 /**
  * 
@@ -47,6 +48,7 @@ public class VotePanel extends javax.swing.JPanel {
      * Creates new form VotePanel
      */
     public VotePanel() {
+    	setBackground(Color.WHITE);
         initComponents();
         parentGame = null;
         req = null;
