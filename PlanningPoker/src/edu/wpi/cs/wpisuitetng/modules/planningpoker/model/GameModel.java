@@ -33,6 +33,10 @@ public class GameModel extends AbstractModel {
         
         public String name;
         
+        /**
+         * Creates a new GameStatus
+         * @param stat
+         */
         GameStatus(String stat) {
             name = stat;
         }

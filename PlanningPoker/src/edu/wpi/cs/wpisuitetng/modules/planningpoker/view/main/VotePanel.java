@@ -61,6 +61,12 @@ public class VotePanel extends javax.swing.JPanel {
         old = null;
     }
     
+    /**
+     * Sets the requirement for voting
+     * @param currentUser
+     * @param parentGame
+     * @param req
+     */
     public void setRequirement(User currentUser, GameModel parentGame,
             GameRequirementModel req) {
         this.currentUser = currentUser;
@@ -170,6 +176,11 @@ public class VotePanel extends javax.swing.JPanel {
         old = est;
     }
     
+    /**
+     * Sets the progress for voting on this requirement
+     * @param numCompleted
+     * @param total
+     */
     protected void setRequirementProgress(int numCompleted, int total) {
         setCompletedVotesText(numCompleted + "/" + total);
         setVotesProgressBarValue((int) (100f * numCompleted / total));
@@ -306,26 +317,42 @@ public class VotePanel extends javax.swing.JPanel {
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
+    /**
+     * Sets the requirement name
+     * @param text
+     */
     protected void setRequirementName(String text) {
         requirementNameLabel.setText(text);
     }
     
-    protected void setRequirementType(String text_1) {
-        requirementType.setText(text_1);
+    /**
+     * Sets the requirement type
+     * @param text
+     */
+    protected void setRequirementType(String text) {
+        requirementType.setText(text);
     }
     
     protected String getCompletedVotesText() {
         return completedVotesField.getText();
     }
     
-    protected void setCompletedVotesText(String text_2) {
-        completedVotesField.setText(text_2);
+    /**
+     * Sets the completed votes text
+     * @param text
+     */
+    protected void setCompletedVotesText(String text) {
+        completedVotesField.setText(text);
     }
     
     protected int getVotesProgressBarValue() {
         return votesProgressBar.getValue();
     }
     
+    /**
+     * Sets the progress bar value
+     * @param value
+     */
     protected void setVotesProgressBarValue(int value) {
         votesProgressBar.setValue(value);
     }
