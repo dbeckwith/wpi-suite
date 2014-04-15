@@ -54,7 +54,7 @@ public class AddGameControllerTest {
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
 		AddGameController agc = AddGameController.getInstance();
-		agc.addGame(new GameModel(1, "Test", "Test Description",
+		agc.addGame(new GameModel( "Test", "Test Description",
 				new ArrayList<GameRequirementModel>(), DeckListModel
 						.getInstance().getDefaultDeck(), new Date(),
 				GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE));

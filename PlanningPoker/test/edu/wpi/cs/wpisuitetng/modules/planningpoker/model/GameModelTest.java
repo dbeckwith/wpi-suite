@@ -20,6 +20,8 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * 
@@ -36,6 +38,9 @@ public class GameModelTest {
     
     @Before
     public void setUp() {
+    	 Network.initNetwork(new MockNetwork());
+         Network.getInstance().setDefaultNetworkConfiguration(
+                 new NetworkConfiguration("http://wpisuitetng"));
         reqs = new ArrayList<GameRequirementModel>();
         GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
                 "Req desc", "User Story", new ArrayList<Estimate>());
