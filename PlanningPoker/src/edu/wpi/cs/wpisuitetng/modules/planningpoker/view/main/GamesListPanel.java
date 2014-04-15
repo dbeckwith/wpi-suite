@@ -74,11 +74,9 @@ public class GamesListPanel extends javax.swing.JPanel {
 
 		// save the selected node
 		Object selectedNodeUserObject = null;
-		try {
+		if (gameTree.getSelectionCount() != 0) {
 			selectedNodeUserObject = ((DefaultMutableTreeNode) gameTree
 					.getSelectionPath().getLastPathComponent()).getUserObject();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
 		}
 
 
