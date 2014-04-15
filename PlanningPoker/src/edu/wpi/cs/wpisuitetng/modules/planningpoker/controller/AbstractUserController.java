@@ -41,7 +41,7 @@ public abstract class AbstractUserController {
     }
     
     /**
-     * Called when the UserRequestObserver for this controller recieves users
+     * Called when the UserRequestObserver for this controller receives users
      * from the server.
      * 
      * @param users
