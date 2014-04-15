@@ -20,7 +20,9 @@ import javax.swing.table.DefaultTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  * 
@@ -110,6 +112,9 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                 return columnEditables[column];
             }
         });
+        Font temp_Font;
+        temp_Font = voteResultTable.getTableHeader().getFont();
+        voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         tableScrollPane.setViewportView(voteResultTable);
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
