@@ -21,6 +21,8 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
  * Represents a planning poker game
@@ -140,7 +142,23 @@ public class GameModel extends AbstractModel {
 	public GameModel(String name, String description,
 			ArrayList<GameRequirementModel> requirements, Date endDate,
 			GameType type, GameStatus status, String owner) {
-		// this.id = id;
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.requirements = requirements;
+		this.deck = null;
+		this.endDate = endDate;
+		this.type = type;
+		this.status = status;
+		this.owner = owner;
+		status_observers = new ArrayList<>();
+		users = CurrentUserController.getInstance().getUsers();
+	}
+
+	public GameModel(String name, String description,
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date endDate, GameType type, GameStatus status,
+			String owner) {
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
@@ -150,8 +168,57 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		this.owner = owner;
 		status_observers = new ArrayList<>();
+		users = CurrentUserController.getInstance().getUsers();
+	}
+	
+	public GameModel(int id, String name, String description,
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date endDate, GameType type, GameStatus status,
+			String owner) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.requirements = requirements;
+		this.deck = deck;
+		this.endDate = endDate;
+		this.type = type;
+		this.status = status;
+		this.owner = owner;
+		status_observers = new ArrayList<>();
+		users = CurrentUserController.getInstance().getUsers();
 	}
 
+	public GameModel(String name, String description,
+			ArrayList<GameRequirementModel> requirements, DeckModel deck, Date endDate,
+			GameType type, GameStatus status) {
+		this.name = name;
+		this.description = description;
+		this.requirements = requirements;
+		this.deck = deck;
+		this.endDate = endDate;
+		this.type = type;
+		this.status = status;
+		this.owner = ConfigManager.getConfig().getUserName();
+		status_observers = new ArrayList<>();
+		users = CurrentUserController.getInstance().getUsers();
+	}
+	
+	public GameModel(int id, String name, String description,
+			ArrayList<GameRequirementModel> requirements, DeckModel deck, Date endDate,
+			GameType type, GameStatus status) {
+		this. id = id;
+		this.name = name;
+		this.description = description;
+		this.requirements = requirements;
+		this.deck = deck;
+		this.endDate = endDate;
+		this.type = type;
+		this.status = status;
+		this.owner = ConfigManager.getConfig().getUserName();
+		status_observers = new ArrayList<>();
+		users = CurrentUserController.getInstance().getUsers();
+	}
+	
 	/**
 	 * @return the name of this game
 	 */
