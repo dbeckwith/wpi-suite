@@ -37,6 +37,7 @@ public class GamesListPanel extends javax.swing.JPanel {
 	public GamesListPanel() {
 		initComponents();
 		gameTree.setCellRenderer(new GamesListTreeCellRenderer());
+		gameTree.setLargeModel(true);
 
 		GameListModel.getInstance().addListListener(new SimpleListObserver() {
 
