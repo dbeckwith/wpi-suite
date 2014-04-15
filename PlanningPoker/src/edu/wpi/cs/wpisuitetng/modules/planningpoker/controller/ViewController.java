@@ -89,7 +89,7 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
                         d.getAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
+                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         
         AddGameController.getInstance().addGame(newGame);
@@ -139,6 +139,7 @@ public class ViewController {
                         ConfigManager.getConfig().getUserName())
                 && !game.isClosed()) {
             toolbar.setAdminVisibility(true);
+            toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);
             if (game.getStatus() == GameStatus.COMPLETE) {
                 toolbar.setEndGame(false);
             }
@@ -187,5 +188,14 @@ public class ViewController {
      */
     public void setCancelConfirm(OptionPane o) {
         this.cancelConfirm = o;
+    }
+
+    public void editGame() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public void startGame() {
+        
     }
 }

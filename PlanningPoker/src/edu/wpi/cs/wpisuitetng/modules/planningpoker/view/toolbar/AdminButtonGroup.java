@@ -37,6 +37,8 @@ public class AdminButtonGroup extends ToolbarGroupView {
     private static final long serialVersionUID = 312905811728893535L;
     private final JButton endGameButton;
     private final JButton closeGameButton;
+    private final JButton editGameButton;
+    private final JButton startGameButton;
     
     private final JPanel contentPanel = new JPanel();
     
@@ -48,6 +50,11 @@ public class AdminButtonGroup extends ToolbarGroupView {
         
         closeGameButton = new JButton("<html>Close<br/>Game</html>");
         closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
+        
+        editGameButton = new JButton("<html>Edit<br/>Game</html>");
+        
+        startGameButton = new JButton("<html>Start<br/>Game</html>");
+        
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);
@@ -69,10 +76,29 @@ public class AdminButtonGroup extends ToolbarGroupView {
             
         });
         
+        editGameButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                PlanningPoker.getViewController().editGame();
+                
+            }
+        });
+
+        startGameButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlanningPoker.getViewController().startGame();
+            }
+        });
+        
         endGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         
         contentPanel.add(endGameButton);
         contentPanel.add(closeGameButton);
+        contentPanel.add(editGameButton);
+        contentPanel.add(startGameButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
@@ -87,5 +113,18 @@ public class AdminButtonGroup extends ToolbarGroupView {
      */
     public void setEndGameEnabled(boolean b) {
         endGameButton.setEnabled(b);
+    }
+    
+    /**
+     * Shows the Start Game and Edit Game buttons when passed true
+     *  else shows the End Game and Close Game buttons when passed false
+     * @param b
+     *      The boolean to flip the buttons
+     */
+    public void showNewGameButtons(boolean b) {
+        endGameButton.setVisible(!b);
+        closeGameButton.setVisible(!b);
+        startGameButton.setVisible(b);
+        editGameButton.setVisible(b);
     }
 }
