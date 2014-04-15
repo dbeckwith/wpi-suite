@@ -94,10 +94,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
 
 		requirementsTableScrollPane.setViewportView(requirementsTable);
-		if (requirementsTable.getColumnModel().getColumnCount() > 0) {
-			requirementsTable.getColumnModel().getColumn(0).setMinWidth(60);
-			requirementsTable.getColumnModel().getColumn(0).setMaxWidth(60);
-		}
 
 		addButton.setText("Create Requirement");
 		addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +209,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	
 	private void clearRequirements() {
 	    requirementsTable.setModel(getEmptyTableModel());
+        if (requirementsTable.getColumnModel().getColumnCount() > 0) {
+            requirementsTable.getColumnModel().getColumn(0).setMinWidth(60);
+            requirementsTable.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
 	    requirementsTable.getModel().addTableModelListener(
                 new TableModelListener() {
 
