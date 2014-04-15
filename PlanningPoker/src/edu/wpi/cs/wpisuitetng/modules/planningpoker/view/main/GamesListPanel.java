@@ -100,10 +100,10 @@ public class GamesListPanel extends javax.swing.JPanel {
 						completeFolder.add(gameNode);
 					} else {
 						 if (gm.isStarted()
- +                                || gm.getOwner()
- +                                        .equals(ConfigManager.getConfig()
- +                                                .getUserName()))
- +                            pendingFolder.add(gameNode);
+                                || gm.getOwner()
+                                        .equals(ConfigManager.getConfig()
+                                                .getUserName()))
+                             pendingFolder.add(gameNode);
 					}
 					if (gm.getRequirements() != null) {
 						for (GameRequirementModel r : gm.getRequirements()) {

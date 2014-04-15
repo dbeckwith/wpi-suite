@@ -34,6 +34,7 @@ import javax.swing.event.DocumentListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
@@ -342,6 +343,15 @@ public class NewGamePanel extends JPanel {
         
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
+    
+    /**
+     * fills fields and sets up form in edit mode
+     * @param game the game being edited
+     */
+    public void setGameModel(GameModel game){
+        newGameRequirementsPanel.setupData(game.getRequirements());
+        //TODO call children
+    }
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (!(newGameRequirementsPanel.validateForm() && gameDescription

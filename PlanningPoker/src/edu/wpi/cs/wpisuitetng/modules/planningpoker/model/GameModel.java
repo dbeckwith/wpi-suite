@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -48,7 +49,7 @@ public class GameModel extends AbstractModel {
     private int id;
     private String name;
     private String description;
-    private ArrayList<GameRequirementModel> requirements;
+    private List<GameRequirementModel> requirements;
     private Date endDate;
     private GameType type;
     private GameStatus status;
@@ -84,7 +85,7 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            List<GameRequirementModel> requirements, DeckModel deck,
             Date end, GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
@@ -110,7 +111,7 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            List<GameRequirementModel> requirements, DeckModel deck,
             Date end, GameType type, GameStatus status) {
         id = -1;
         this.name = name;
@@ -136,9 +137,8 @@ public class GameModel extends AbstractModel {
      * @param owner
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            List<GameRequirementModel> requirements, DeckModel deck,
             Date endDate, GameType type, GameStatus status, String owner) {
-        //this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
@@ -191,14 +191,14 @@ public class GameModel extends AbstractModel {
     /**
      * @return an array containing all of the estimates
      */
-    public ArrayList<Estimate> getEstimates(int reqIndex) {
+    public List<Estimate> getEstimates(int reqIndex) {
         return requirements.get(reqIndex).getEstimates();
     }
     
     /**
      * @return The Requirements for this game
      */
-    public ArrayList<GameRequirementModel> getRequirements() {
+    public List<GameRequirementModel> getRequirements() {
         return requirements;
     }
     
