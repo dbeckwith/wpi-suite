@@ -231,4 +231,24 @@ public class GameRequirementModel extends AbstractModel {
         this.finalEstimate = finalEstimate;
     }
     
+    public boolean equals(GameRequirementModel other) {
+        return (name.equals(other.name))
+                && (description.equals(other.description));
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+        boolean toReturn = false;
+        if (this == other) {
+            toReturn = true;
+        }
+        else if (other instanceof GameRequirementModel) {
+            toReturn = this.equals((GameRequirementModel) other);
+        }
+        else {
+            toReturn = super.equals(other);
+        }
+        return toReturn;
+    }
+    
 }
