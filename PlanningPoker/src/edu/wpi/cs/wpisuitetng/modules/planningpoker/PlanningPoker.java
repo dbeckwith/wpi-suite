@@ -15,17 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel;
 
 /**
  * This is a module that implements the Planning Poker technique for estimation
@@ -36,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel;
  */
 public class PlanningPoker implements IJanewayModule {
 	
-	static ViewController viewController;
+	static ViewController viewController = null;
 	
 	public static ViewController getViewController() {
 		return PlanningPoker.viewController;
@@ -50,22 +44,20 @@ public class PlanningPoker implements IJanewayModule {
 		tabs = new ArrayList<JanewayTabModel>();
 		
 		// setup toolbar
-		ToolbarView toolbar = new ToolbarView();
+		final ToolbarView toolbar = new ToolbarView();
 		
 		// setup main panel
-		MainView mainPanel = new MainView();
-		
-		
+		final MainView mainPanel = new MainView();
+				
 		PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
 		
 		// Create a tab model that contains the toolbar panel and the main
 		// content panel
-		JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
+		final JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
 				toolbar, mainPanel);
 		
 		// Add the tab to the list of tabs owned by this module
 		tabs.add(tab1);
-		
 	}
 	
 	@Override

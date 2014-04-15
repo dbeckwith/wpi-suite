@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
  */
 public class GameTimeoutTask extends TimerTask {
     
-    private GameModel game;
+    private final GameModel game;
     
     /**
      * Constructs a new task that will update the given game.

@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
 
 public class GameEntityManager implements EntityManager<GameModel> {
@@ -35,6 +36,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     public GameEntityManager(Data db) {
         this.db = db;
+        NotificationServer.getInstance().start();
     }
     
     /**
@@ -50,7 +52,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     private void ensureRole(Session session, Role role)
             throws WPISuiteException {
-        User user = (User) db.retrieve(User.class, "username",
+        final User user = (User) db.retrieve(User.class, "username",
                 session.getUsername()).get(0);
         if (!user.getRole().equals(role)) {
             throw new UnauthorizedException();
@@ -153,6 +155,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException();
         }
+        System.out.println("GEM makeEntity()");
+        NotificationServer.getInstance().sendUpdateNotification();
         return newGameModel;
     }
     
@@ -170,20 +174,20 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public GameModel update(Session s, String content) throws WPISuiteException {
-        GameModel updatedGameModel = GameModel.fromJSON(content);
+        final GameModel updatedGameModel = GameModel.fromJSON(content);
         /*
          * Because of the disconnected objects problem in db4o, we can't just
          * save GameModels. We have to get the original GameModel from db4o,
          * copy properties from updatedGameModel, then save the original
          * GameModel again.
          */
-        List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
+        final List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
                 updatedGameModel.getID(), s.getProject());
         if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) {
             throw new BadRequestException("GameModel with ID does not exist.");
         }
         
-        GameModel existingGameModel = (GameModel) oldGameModels.get(0);
+        final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
@@ -191,7 +195,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(existingGameModel, s.getProject())) {
             throw new WPISuiteException();
         }
-        
+        System.out.println("GEM update()");
+        NotificationServer.getInstance().sendUpdateNotification();
         return existingGameModel;
     }
     

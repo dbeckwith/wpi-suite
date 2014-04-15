@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
 
 /**
@@ -50,28 +51,22 @@ public class MainView extends JTabbedPane {
         });
         
         addAncestorListener(new AncestorListener() {
-            
-            @Override
-            public void ancestorAdded(AncestorEvent event) {
-                GetGamesController.getInstance().retrieveGames();
-                
-                CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user
-            }
-            
-            @Override
-            public void ancestorRemoved(AncestorEvent event) {
-                // Do Nothing
-                
-            }
-            
-            @Override
-            public void ancestorMoved(AncestorEvent event) {
-                // Do Nothing
-                
-            }
-            
+			@Override
+			public void ancestorAdded(AncestorEvent event) {
+		        GetGamesController.getInstance().retrieveGames();
+		        GetRequirementsController.getInstance().retrieveRequirements();
+		        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
+		        removeAncestorListener(this);
+			}
+			
+			@Override
+			public void ancestorRemoved(AncestorEvent event) {}
+			
+			@Override
+			public void ancestorMoved(AncestorEvent event) {}
+		
         });
-        
+  
     }
     
     /**

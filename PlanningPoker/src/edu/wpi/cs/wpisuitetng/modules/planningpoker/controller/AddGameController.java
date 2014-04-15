@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  */
 public class AddGameController {
-    private static AddGameController instance;
+    private static AddGameController instance = null;
     private AddGameRequestObserver observer;
     
     /**

@@ -15,6 +15,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
@@ -29,17 +30,23 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  */
 public class ViewControllerTest {
     
+    static PlanningPoker pp;
+    static MainView mv;
+    static ViewController vc;
+    
     @BeforeClass
     static public void setUpBeforeClass() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
+        pp = new PlanningPoker();
+        mv = new MainView();
+        vc = new ViewController(mv, new ToolbarView());
     }
     
     @Test
     public void testAddNewGameTab() {
-        MainView mv = new MainView();
-        ViewController vc = new ViewController(mv, new ToolbarView());
+        
         int before = mv.getTabCount();
         vc.addNewGameTab();
         Assert.assertEquals(before + 1, mv.getTabCount());
@@ -48,8 +55,6 @@ public class ViewControllerTest {
     
     @Test
     public void testSaveNewGame() {
-        MainView mv = new MainView();
-        ViewController vc = new ViewController(mv, new ToolbarView());
         int count = mv.getTabCount();
         vc.addNewGameTab();
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
@@ -59,19 +64,16 @@ public class ViewControllerTest {
     
     @Test
     public void testCancelNewGame() {
-        MainView mv = new MainView();
-        ViewController vc = new ViewController(mv, new ToolbarView());
         int count = mv.getTabCount();
         vc.addNewGameTab();
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
+        vc.setCancelConfirm(new YesMockOptionPane());
         vc.cancelNewGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
     }
     
     @Test
     public void testAddUserPrefsTab() {
-        MainView mv = new MainView();
-        ViewController vc = new ViewController(mv, new ToolbarView());
         int before = mv.getTabCount();
         vc.addUserPrefsTab();
         Assert.assertEquals(before + 1, mv.getTabCount());

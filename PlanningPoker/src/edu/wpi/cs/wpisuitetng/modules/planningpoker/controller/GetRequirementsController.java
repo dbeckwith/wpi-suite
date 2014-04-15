@@ -24,8 +24,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetRequirementsController {
 
-    private GetRequirementsRequestObserver observer;
-    private static GetRequirementsController instance;
+    private final GetRequirementsRequestObserver observer;
+    private static GetRequirementsController instance = null;
 
     /**
      * Constructs the controller given a RequirementModel
@@ -65,14 +65,11 @@ public class GetRequirementsController {
      * @param requirements array of requirements received from the server
      */
     public void receivedRequirements(GameRequirementModel[] requirements) {
-        // Empty the local model to eliminate duplications
-        RequirementsListModel.getInstance().emptyModel();
-        
         // Make sure the response was not null
         if (requirements != null) {
             
-            // add the requirements to the local model
-            RequirementsListModel.getInstance().addRequirements(requirements);
+            // set the requirements to the local model
+            RequirementsListModel.getInstance().setRequirements(requirements);
         }
     }
     

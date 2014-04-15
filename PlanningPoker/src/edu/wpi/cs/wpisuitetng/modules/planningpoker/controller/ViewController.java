@@ -16,6 +16,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.DefaultOptionPane;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.OptionPane;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
@@ -27,8 +30,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 
 public class ViewController {
     
-    private MainView mainView;
-    private ToolbarView toolbar;
+    private final MainView mainView;
+    private final ToolbarView toolbar;
+    private OptionPane cancelConfirm;
     
     /**
      * indicates if admin buttons are being shown if all games panel is selected
@@ -38,6 +42,7 @@ public class ViewController {
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
         this.toolbar = toolbar;
+        this.cancelConfirm = new DefaultOptionPane();
     }
     
     public void addNewGameTab() {
@@ -67,9 +72,6 @@ public class ViewController {
         
         mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
                 new ClosableTabComponent(mainView) {
-                    /**
-                     * 
-                     */
                     private static final long serialVersionUID = 3668078500346186662L;
                     
                     @Override
@@ -81,16 +83,15 @@ public class ViewController {
     }
     
     public void saveNewGame(NewGamePanel e) {
+        DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), e.getEndDate(),
-                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig().getUserName());
+                e.getDescription(), e.getRequirements(), new DeckModel(
+                        d.toString(), d.getCards(),
+                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
+                        .getUserName());
         
-        new Thread() {
-            @Override
-            public void run() {
-                AddGameController.getInstance().addGame(newGame);
-            }
-        }.start();
+        AddGameController.getInstance().addGame(newGame);
         
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());
@@ -99,11 +100,14 @@ public class ViewController {
     }
     
     public void cancelNewGame(NewGamePanel e) {
-         int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?", "Cancel Game", JOptionPane.OK_CANCEL_OPTION);
-         if(result == JOptionPane.OK_OPTION) {
-	        RequirementsListModel.getInstance().removeListListener(
-	                e.getNewGameRequirementsPanel().getRequirementsListObserver());
-	        mainView.removeTabAt(mainView.indexOfComponent(e));
+        final int result = cancelConfirm.showConfirmDialog(e,
+                "Are you sure you want to cancel this game?", "Cancel Game",
+                JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            RequirementsListModel.getInstance().removeListListener(
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
+            mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
     
@@ -115,7 +119,7 @@ public class ViewController {
      * Called to manually end estimation on the currently selected game
      */
     public void endEstimation() {
-        GameModel curr = mainView.getMainPanel().getSelectedGame();
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);
@@ -132,8 +136,14 @@ public class ViewController {
         if (game != null
                 && game.getOwner().equals(
                         ConfigManager.getConfig().getUserName())
-                && !game.isEnded()) {
+                && !game.isClosed()) {
             toolbar.setAdminVisibility(true);
+            if (game.getStatus() == GameStatus.COMPLETE) {
+                toolbar.setEndGame(false);
+            }
+            else {
+                toolbar.setEndGame(true);
+            }
             showAdmin = true;
         }
         else {
@@ -158,4 +168,23 @@ public class ViewController {
         }
     }
     
+    /**
+     * closes a game so it can't be edited
+     */
+    public void closeGame() {
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
+        if (curr != null && !curr.isClosed()) {
+            curr.closeGame();
+            UpdateGamesController.getInstance().updateGame(curr);
+        }
+    }
+    
+    /**
+     * Set the type of OptionPane for the cancel game confirmation.
+     * 
+     * @param o the OptionPane to set
+     */
+    public void setCancelConfirm(OptionPane o) {
+        this.cancelConfirm = o;
+    }
 }

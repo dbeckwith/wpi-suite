@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 public class GameModel extends AbstractModel {
 
 	public static enum GameStatus {
-		PENDING("Pending"), COMPLETE("Complete");
+		PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
 
 		public String name;
 
@@ -55,6 +55,7 @@ public class GameModel extends AbstractModel {
 	private GameStatus status;
 	private User[] users;
 	private String owner;
+	private DeckModel deck;
 
 	/**
 	 * Default constructor creates instance with invalid id and null fields
@@ -70,6 +71,7 @@ public class GameModel extends AbstractModel {
 		status_observers = null;
 		users = null;
 		owner = null;
+		deck = DeckListModel.getInstance().getDefaultDeck();
 	}
 
 	/**
@@ -142,6 +144,7 @@ public class GameModel extends AbstractModel {
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
+		this.deck = deck;
 		this.endDate = endDate;
 		this.type = type;
 		this.status = status;
@@ -167,7 +170,14 @@ public class GameModel extends AbstractModel {
 	public String getDescription() {
 		return description;
 	}
-
+	
+	 /**
+     * @return the owner
+     */
+    public String getOwner() {
+        return owner;
+    }
+    
 	public void addStatusListener(GameStatusObserver gso) {
 		if (!status_observers.contains(gso)) {
 			status_observers.add(gso);
@@ -195,6 +205,13 @@ public class GameModel extends AbstractModel {
 	}
 
 	/**
+     * @return The deck for this game
+     */
+    public DeckModel getDeck() {
+        return deck;
+    }
+    
+	/**
 	 * @return The end time for this game
 	 */
 	public Date getEndTime() {
@@ -221,7 +238,7 @@ public class GameModel extends AbstractModel {
 		if (status != new_status) {
 			status = new_status;
 			for (int i = 0; i < status_observers.size(); i++){
-				((GameStatusObserver) status_observers.toArray()[i]).statusChanged(this);
+				status_observers.get(i).statusChanged(this);
 			}
 		}
 	}
@@ -252,11 +269,12 @@ public class GameModel extends AbstractModel {
 	public boolean isEnded() {
 		if (checkVoted() == true) {
 			setEnded(true);
-		} else if (endDate != null
+		}
+		if (endDate != null
 				&& (endDate.before(new Date(System.currentTimeMillis())))) {
 			setEnded(true);
 		}
-		return (status == GameStatus.COMPLETE);
+		return (status == GameStatus.COMPLETE || status == GameStatus.CLOSED);
 	}
 
 	/**
@@ -268,6 +286,26 @@ public class GameModel extends AbstractModel {
 		return users;
 	}
 
+	/**
+     * Returns whether the game is closed
+     * 
+     * @return whether the game has been closed
+     */
+    public boolean isClosed() {
+        return (status == GameStatus.CLOSED);
+    }
+    
+    /**
+     * sets the game status to closed so that no more edits can be made
+     */
+    public void closeGame() {
+        status = GameStatus.CLOSED;
+        //notify status listeners of the change
+        for (int i = 0; i < status_observers.size(); i++) {
+            status_observers.get(i).statusChanged(this);
+        }
+    }
+    
 	@Override
 	public void save() {
 
@@ -323,6 +361,7 @@ public class GameModel extends AbstractModel {
 		status_observers = g.status_observers;
 		users = g.users;
 		owner = g.owner;
+		g.deck = deck;
 	}
 
 	/**
@@ -336,13 +375,6 @@ public class GameModel extends AbstractModel {
 	@Override
 	public String toString() {
 		return getName();
-	}
-
-	/**
-	 * @return the owner
-	 */
-	public String getOwner() {
-		return owner;
 	}
 
 	public boolean equals(GameModel other) {
