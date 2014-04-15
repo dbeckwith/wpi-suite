@@ -52,6 +52,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
         closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
         
         editGameButton = new JButton("<html>Edit<br/>Game</html>");
+        editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
         
         startGameButton = new JButton("<html>Start<br/>Game</html>");
         
@@ -97,8 +98,8 @@ public class AdminButtonGroup extends ToolbarGroupView {
         
         contentPanel.add(endGameButton);
         contentPanel.add(closeGameButton);
-        contentPanel.add(editGameButton);
         contentPanel.add(startGameButton);
+        contentPanel.add(editGameButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
