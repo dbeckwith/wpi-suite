@@ -23,6 +23,8 @@ public class DeckModel extends AbstractModel {
 	private String name;
 	private ArrayList<Double> cards;
 	private boolean allowsMultipleSelection;
+	private Integer maximum;
+	private boolean isNone;
 
 	/**
 	 * Creates a new deck
