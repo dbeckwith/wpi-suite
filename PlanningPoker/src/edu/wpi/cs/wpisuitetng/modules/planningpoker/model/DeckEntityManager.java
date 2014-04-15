@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,6 +26,11 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 public class DeckEntityManager implements EntityManager<DeckModel> {
     private Data db;
     
+    /**
+     * Creates a new DeckEntityManager
+     * 
+     * @param db The database
+     */
     public DeckEntityManager(Data db) {
         this.db = db;
     }
@@ -104,9 +109,7 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
             e.printStackTrace();
         }
         
-        if (deck.length < 1 || deck[0] == null) {
-            throw new NotFoundException();
-        }
+        if (deck.length < 1 || deck[0] == null) { throw new NotFoundException(); }
         return deck;
     }
     
@@ -114,9 +117,7 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
     public DeckModel makeEntity(Session s, String json)
             throws BadRequestException, ConflictException, WPISuiteException {
         final DeckModel newDeck = DeckModel.fromJSON(json);
-        if (!db.save(newDeck, s.getProject())) {
-            throw new WPISuiteException();
-        }
+        if (!db.save(newDeck, s.getProject())) { throw new WPISuiteException(); }
         
         DeckListModel.getInstance().addDeck(newDeck);
         return newDeck;
