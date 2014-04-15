@@ -16,6 +16,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.DefaultOptionPane;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.OptionPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
@@ -30,6 +32,7 @@ public class ViewController {
     
     private final MainView mainView;
     private final ToolbarView toolbar;
+    private OptionPane cancelConfirm;
     
     /**
      * indicates if admin buttons are being shown if all games panel is selected
@@ -39,6 +42,7 @@ public class ViewController {
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
         this.toolbar = toolbar;
+        this.cancelConfirm = new DefaultOptionPane();
     }
     
     public void addNewGameTab() {
@@ -97,7 +101,7 @@ public class ViewController {
     }
     
     public void cancelNewGame(NewGamePanel e) {
-        final int result = JOptionPane.showConfirmDialog(e,
+        final int result = cancelConfirm.showConfirmDialog(e,
                 "Are you sure you want to cancel this game?", "Cancel Game",
                 JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
@@ -174,5 +178,14 @@ public class ViewController {
             curr.closeGame();
             UpdateGamesController.getInstance().updateGame(curr);
         }
+    }
+    
+    /**
+     * Set the type of OptionPane for the cancel game confirmation.
+     * 
+     * @param o the OptionPane to set
+     */
+    public void setCancelConfirm(OptionPane o) {
+        this.cancelConfirm = o;
     }
 }

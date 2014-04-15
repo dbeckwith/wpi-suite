@@ -46,7 +46,7 @@ public class GetGamesControllerTest {
 	static public void setUpBeforeClass() {
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
-				new NetworkConfiguration("http://wpisuitetng"));
+				new NetworkConfiguration("http://localhost"));
 		GetGamesControllerTest.instance = GetGamesController.getInstance();
 		GetGamesControllerTest.nullGame = new GameModel();
 		GetGamesControllerTest.game1 = new GameModel(1, "Test Game 1",
@@ -76,6 +76,8 @@ public class GetGamesControllerTest {
 		GetGamesControllerTest.gamesToAdd = new GameModel[] {
 				GetGamesControllerTest.game1, GetGamesControllerTest.game2,
 				GetGamesControllerTest.game3, GetGamesControllerTest.game4 };
+		list.removeObservers();
+		list.removeStatusObservers();
 	}
 
 	@Test
