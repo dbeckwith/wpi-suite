@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
@@ -29,7 +30,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
     /**
      * 
      */
-    private static final long serialVersionUID = -2728918517590604079L;  
+    private static final long serialVersionUID = -2728918517590604079L;
     
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -38,11 +39,13 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
                 row, hasFocus);
         
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+        final DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         ImageIcon icon = null;
         
+        setFont(getFont().deriveFont(Font.PLAIN));
+        
         if (node.getUserObject() instanceof GameModel) {
-            GameModel game = (GameModel) node.getUserObject();
+            final GameModel game = (GameModel) node.getUserObject();
             
             if(game.isClosed()){
                 icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
@@ -51,14 +54,43 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
             } else {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
+                
+                if (game.getRequirements() != null) {
+                    boolean hasUnvotedReqs = false;
+                    req_loop: for (GameRequirementModel req : game
+                            .getRequirements()) {
+                        if (req.getEstimates() != null) {
+                            boolean voted = false;
+                            for (Estimate e : req.getEstimates()) {
+                                if (e != null
+                                        && e.getUsername() != null
+                                        && e.getUsername().equals(
+                                                CurrentUserController
+                                                        .getInstance()
+                                                        .getUser()
+                                                        .getUsername())) {
+                                    voted = true;
+                                    break req_loop;
+                                }
+                            }
+                            if (!voted)
+                                hasUnvotedReqs = true;
+                        }
+                    }
+                    if (hasUnvotedReqs) {
+                        setFont(getFont().deriveFont(Font.BOLD));
+                    }
+                }
             }
         } else if (node.getUserObject() instanceof GameRequirementModel) {
-            GameRequirementModel req = (GameRequirementModel) node
+            final GameRequirementModel req = (GameRequirementModel) node
                     .getUserObject();
             
             for (Estimate e : req.getEstimates()) {
-                if (e.getUsername() != null && e.getUsername().equals(
-                        CurrentUserController.getInstance().getUser().getUsername())) {
+                if (e.getUsername() != null
+                        && e.getUsername().equals(
+                                CurrentUserController.getInstance().getUser()
+                                        .getUsername())) {
                     icon = new ImageIcon(
                             ImageLoader.getImage("GameCompleted.png"));
                     break;

@@ -25,20 +25,11 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class CurrentUserController extends AbstractUserController {
     
-    /**
-     * The username of the user currently logged in.
-     */
     public static final String USER_NAME = ConfigManager.getConfig()
             .getUserName();
     
-    /**
-     * The current user.
-     */
     private User user = null;
     
-    /**
-     * The instance of the controller.
-     */
     private static CurrentUserController Instance = null;
     
     /**

@@ -12,6 +12,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,18 +31,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author llhunker, blammeson, nfbrown
  * 
  */
-public class CommonButtons extends ToolbarGroupView {
+public class CommonButtonGroup extends ToolbarGroupView {
 	/**
      * 
      */
 	private static final long serialVersionUID = -2589339467561118867L;
 
-	private JButton newGameButton;
-	private JButton userPrefsButton;
+	private final JButton newGameButton;
+	private final JButton userPrefsButton;
 
 	private final JPanel contentPanel = new JPanel();
 
-	public CommonButtons() {
+	public CommonButtonGroup() {
 		super(""); // not sure if this is needed
 
 		newGameButton = new JButton("<html>Create<br/>Game</html>");
@@ -71,8 +72,9 @@ public class CommonButtons extends ToolbarGroupView {
 		});
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		newGameButton.setPreferredSize(new Dimension(200, 200));
 		userPrefsButton.setHorizontalAlignment(SwingConstants.CENTER);
-
+		userPrefsButton.setPreferredSize(new Dimension(150, 200));
 		contentPanel.add(newGameButton);
 		contentPanel.add(userPrefsButton);
 		contentPanel.setOpaque(false);

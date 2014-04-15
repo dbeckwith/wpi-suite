@@ -5,27 +5,26 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JCheckBox;
-import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * 
@@ -40,22 +39,26 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 
 	private SimpleListObserver requirementsListObserver;
 	private final ArrayList<GameRequirementModel> createdRequirements;
+    
 	// TODO: remember which requirements were checked off as added when the list updates
 	
 	/**
 	 * Creates new form GameRequirements
 	 */
 	public NewGameRequirementsPanel() {
+	    setBackground(Color.WHITE);
 		initComponents();
-		createdRequirements = new ArrayList<>();
-		
+        createdRequirements = new ArrayList<>();
+		requirementsTableScrollPane.getViewport().setBackground(Color.WHITE);
+		clearRequirements();
 		
 		requirementsListObserver = new SimpleListObserver() {
             
             @Override
             public void listUpdated() {
                 clearRequirements();
-                for (GameRequirementModel req : RequirementsListModel.getInstance().getAll()) {
+                for (GameRequirementModel req : RequirementsListModel
+                        .getInstance().getAll()) {
                     addRequirement(req);
                 }
                 for (GameRequirementModel req : createdRequirements) {
@@ -63,8 +66,8 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 }
             }
         };
-		RequirementsListModel.getInstance().addListListener(requirementsListObserver);
-        GetRequirementsController.getInstance().retrieveRequirements();
+        RequirementsListModel.getInstance().addListListener(
+                requirementsListObserver);
 	}
 	
 	public SimpleListObserver getRequirementsListObserver() {
@@ -81,31 +84,16 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-		jScrollPane1 = new javax.swing.JScrollPane();
+		requirementsTableScrollPane = new javax.swing.JScrollPane();
 		requirementsTable = new javax.swing.JTable();
 		addButton = new javax.swing.JButton();
-		countError = new javax.swing.JLabel();
 
 		clearRequirements();
 		requirementsTable
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
 
-		addAllSelect = new SelectionTableHeadRenderer();
-		addAllSelect.setText("Add");
-		addAllSelect.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("action in header");
-				setAllSelected(addAllSelect.isSelected());
-
-			}
-		});
-		requirementsTable.getColumnModel().getColumn(0)
-				.setHeaderRenderer(addAllSelect);
-		requirementsTable.getTableHeader().addMouseListener(addAllSelect);
-
-		jScrollPane1.setViewportView(requirementsTable);
+		requirementsTableScrollPane.setViewportView(requirementsTable);
 		if (requirementsTable.getColumnModel().getColumnCount() > 0) {
 			requirementsTable.getColumnModel().getColumn(0).setMinWidth(60);
 			requirementsTable.getColumnModel().getColumn(0).setMaxWidth(60);
@@ -118,39 +106,74 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 				parent.showPanel("newreqpanel");
 			}
 		});
-
-		countError.setForeground(new java.awt.Color(255, 0, 0));
-		countError.setText("At least one requirement is needed!");
+		addButton.setIcon(ImageLoader.getIcon("newReq.png"));
+		
+		btnSelectAll = new JButton("Select All");
+		btnSelectAll.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        setAllSelected(!allSelected);
+		    }
+		});
+		
+		JLabel lblGameRequirements = new JLabel("Game Requirements:");
+		
+		JButton reloadButton = new JButton("Reload from Requirements Manager");
+		reloadButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        GetRequirementsController.getInstance().retrieveRequirements();
+		    }
+		});
+		reloadButton.setIcon(ImageLoader.getIcon("reload.png"));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup().addContainerGap()
-								.addComponent(addButton).addGap(18)
-								.addComponent(countError)
-								.addContainerGap(135, Short.MAX_VALUE))
-				.addComponent(jScrollPane1, Alignment.TRAILING,
-						GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addComponent(jScrollPane1,
-										GroupLayout.DEFAULT_SIZE, 255,
-										Short.MAX_VALUE)
-								.addGap(11)
-								.addGroup(
-										layout.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(addButton)
-												.addComponent(countError))
-								.addContainerGap()));
+		layout.setHorizontalGroup(
+		    layout.createParallelGroup(Alignment.LEADING)
+		        .addGroup(layout.createSequentialGroup()
+		            .addContainerGap()
+		            .addComponent(addButton)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(reloadButton)
+		            .addContainerGap(146, Short.MAX_VALUE))
+		        .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+		        .addGroup(layout.createSequentialGroup()
+		            .addContainerGap()
+		            .addComponent(lblGameRequirements)
+		            .addPreferredGap(ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
+		            .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+		            .addContainerGap())
+		);
+		layout.setVerticalGroup(
+		    layout.createParallelGroup(Alignment.TRAILING)
+		        .addGroup(layout.createSequentialGroup()
+		            .addContainerGap()
+		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(lblGameRequirements)
+		                .addComponent(btnSelectAll))
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+		            .addGap(11)
+		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(addButton)
+		                .addComponent(reloadButton))
+		            .addContainerGap())
+		);
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
 
+	private boolean allSelected = false;
+
+	private void setAllSelected(boolean select) {
+	    allSelected = select;
+        btnSelectAll.setText(allSelected ? "Deselect All" : "Select All");
+        DefaultTableModel model = (DefaultTableModel) requirementsTable
+                .getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            model.setValueAt(select, i, 0);
+        }
+    }
+
 	private TableModel getEmptyTableModel() {
-	    return new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+        return new javax.swing.table.DefaultTableModel(new Object[][] {
 
                 }, new String[] { "Add", "Name", "Description", "Type" }) {
             /**
@@ -173,14 +196,19 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
             }
         };
     }
-
-    private void setAllSelected(boolean select) {
-		DefaultTableModel model = (DefaultTableModel) requirementsTable
-				.getModel();
-		for (int i = 0; i < model.getRowCount(); i++) {
-			model.setValueAt(select, i, 0);
-		}
-		requirementsTable.setModel(model);
+	
+	private void checkAllSelected() {
+	    DefaultTableModel model = (DefaultTableModel) requirementsTable
+                .getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (!(Boolean) model.getValueAt(i, 0)) {
+                allSelected = false;
+                btnSelectAll.setText("Select All");
+                return;
+            }
+        }
+        allSelected = true;
+        btnSelectAll.setText("Deselect All");
 	}
 	
 	private void clearRequirements() {
@@ -191,6 +219,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                     @Override
                     public void tableChanged(TableModelEvent e) {
                         validateForm();
+                        checkAllSelected();
                         parent.check();
                     }
                 });
@@ -207,7 +236,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 				.getModel();
 		model.addRow(new Object[] { false, r, r.getDescription().toString(),
 				r.getType().toString() });
-		requirementsTable.setModel(model);
 		validateForm();
 		parent.check();
 	}
@@ -240,69 +268,22 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 			}
 		}
 
-		countError.setVisible(!hasRequirement);
 		return hasRequirement;
+	}
+	
+	public ArrayList<String> getErrors() {
+	    ArrayList<String> errors = new ArrayList<>();
+	    if (!validateForm()) {
+	        errors.add( "At least one requirement is needed");
+	    }
+	    return errors;
 	}
 
 	private NewGamePanel parent;
-	private SelectionTableHeadRenderer addAllSelect;
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton addButton;
-	private javax.swing.JLabel countError;
-	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JScrollPane requirementsTableScrollPane;
 	protected javax.swing.JTable requirementsTable;
-
-	// End of variables declaration//GEN-END:variables
-
-	private class SelectionTableHeadRenderer extends JCheckBox implements
-			TableCellRenderer, MouseListener {
-
-		/**
-         * 
-         */
-		private static final long serialVersionUID = 2375539707024199617L;
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
-			return this;
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(e);
-			if (requirementsTable.getColumnModel().getColumnIndexAtX(e.getX()) == 0) {
-
-				doClick();
-				requirementsTable.getTableHeader().repaint();
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
+	private JButton btnSelectAll;
 }
