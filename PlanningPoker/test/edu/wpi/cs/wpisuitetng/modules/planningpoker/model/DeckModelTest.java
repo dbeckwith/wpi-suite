@@ -32,8 +32,13 @@ public class DeckModelTest {
         deck.removeCard(2.0);
         assertFalse(deck.getCards().contains(2.0));
         deck.addCard(2.0);
+        deck.addCard(2.0);
+        assertEquals(3, deck.getCards().size());
+        deck.removeCard(4.0);
+        assertEquals(3, deck.getCards().size());
         deck.sort();
         assertEquals(2.0, deck.getCards().get(1), 3);
+        
     }
     
     @Test
