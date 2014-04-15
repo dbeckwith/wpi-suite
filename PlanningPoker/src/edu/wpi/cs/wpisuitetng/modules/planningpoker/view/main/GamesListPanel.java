@@ -111,9 +111,9 @@ public class GamesListPanel extends javax.swing.JPanel {
 					completeFolder.setUserObject("Complete Games (" + completeFolder.getChildCount() + ")");
 				}
 				if (completeFolder.getChildCount() == 0)
-					completeFolder.add(new DefaultMutableTreeNode("<There are no complete games>"));
+					completeFolder.add(new DefaultMutableTreeNode("<No complete games>"));
 				if (pendingFolder.getChildCount() == 0)
-					pendingFolder.add(new DefaultMutableTreeNode("<There are no games in progress>"));
+					pendingFolder.add(new DefaultMutableTreeNode("<No games in progress>"));
 			}
 		};
 		gameTree.setModel(new DefaultTreeModel(rootNode));
