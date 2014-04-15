@@ -54,6 +54,7 @@ public class RequestThread extends Thread {
         private void notifyController() {
             synchronized (controller) {
                 controller.notifyAll();
+                controller.setTimedOut(false);
             }
         }
     };

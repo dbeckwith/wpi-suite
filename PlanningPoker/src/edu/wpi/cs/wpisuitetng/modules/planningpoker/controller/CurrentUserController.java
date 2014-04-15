@@ -53,6 +53,11 @@ public class CurrentUserController extends AbstractUserController {
     }
     
     @Override
+    /**
+     * {@inheritdoc}
+     * <p>
+     * This overwrites any users previously received.
+     */
     public void receivedUsers(User[] users) {
         if (users != null) {
             setUsers(users);

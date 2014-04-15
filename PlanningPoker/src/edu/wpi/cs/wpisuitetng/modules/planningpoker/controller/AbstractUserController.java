@@ -10,8 +10,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.concurrent.CountDownLatch;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
@@ -22,9 +20,12 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public abstract class AbstractUserController {
     
-    public final CountDownLatch latch = new CountDownLatch(1);
+    /**
+     * For testing only.
+     */
+    private boolean timedOut = true;
     
-    final Object lock = new Object();
+    private long timeout = 500;
     
     /**
      * This controller's observer.
@@ -59,7 +60,7 @@ public abstract class AbstractUserController {
             new RequestThread(this).start();
             try {
                 System.out.println("Waiting for response");//TODO remove
-                wait();
+                wait(timeout);
             }
             catch (InterruptedException e) {
                 // TODO Auto-generated catch block
@@ -80,6 +81,27 @@ public abstract class AbstractUserController {
      */
     public User[] getUsers() {
         return users;
+    }
+    
+    /**
+     * For testing only.
+     */
+    protected boolean requestTimedOut() {
+        return timedOut;
+    }
+    
+    /**
+     * For testing only.
+     */
+    protected void setTimedOut(boolean timedOut) {
+        this.timedOut = timedOut;
+    }
+    
+    public void setTimeout(long timeout) {
+        if (timeout < 0)
+            throw new IllegalArgumentException("Timeout must be >= 0");
+        else
+            this.timeout = timeout;
     }
     
 }
