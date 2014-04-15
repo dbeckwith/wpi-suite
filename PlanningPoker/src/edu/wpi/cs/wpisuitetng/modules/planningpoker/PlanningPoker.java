@@ -15,11 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel;
 
 /**
  * This is a module that implements the Planning Poker technique for estimation
@@ -30,7 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  */
 public class PlanningPoker implements IJanewayModule {
 	
-	static ViewController viewController;
+	static ViewController viewController = null;
 	
 	public static ViewController getViewController() {
 		return PlanningPoker.viewController;
@@ -44,20 +50,20 @@ public class PlanningPoker implements IJanewayModule {
 		tabs = new ArrayList<JanewayTabModel>();
 		
 		// setup toolbar
-		ToolbarView toolbar = new ToolbarView();
+		final ToolbarView toolbar = new ToolbarView();
 		
 		// setup main panel
-		MainView mainPanel = new MainView();
+		final MainView mainPanel = new MainView();
 				
 		PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
 		
 		// Create a tab model that contains the toolbar panel and the main
 		// content panel
-		JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
+		final JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
 				toolbar, mainPanel);
 		
 		// Add the tab to the list of tabs owned by this module
-		tabs.add(tab1);			
+		tabs.add(tab1);
 	}
 	
 	@Override
@@ -68,5 +74,31 @@ public class PlanningPoker implements IJanewayModule {
 	@Override
 	public List<JanewayTabModel> getTabs() {
 		return tabs;
+	}
+	
+	/**
+	 * Runs the Planning Poker module
+	 * @param args
+	 */
+	public static void main(String[] args){
+		JFrame f =  new JFrame();
+		f.setSize(800, 400);
+		VotePanel p = new VotePanel();
+		f.add(p);
+		GameModel gm = new GameModel(null,null,null,new DeckModel("", new ArrayList<Double>(){{
+			add(1d);
+			add(3d);
+			add(5d);
+			add(10d);
+			add(15d);
+			add(20d);
+			add(50d);
+			add(100d);
+			}},true),null,null,null);
+		
+		GameRequirementModel req = new GameRequirementModel();
+		p.setRequirement(null, gm, req);
+
+		f.setVisible(true);
 	}
 }

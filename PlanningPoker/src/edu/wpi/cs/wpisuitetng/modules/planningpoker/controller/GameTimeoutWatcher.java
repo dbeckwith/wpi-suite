@@ -28,6 +28,11 @@ public class GameTimeoutWatcher {
     
     private static GameTimeoutWatcher instance = null;
     
+    /**
+     * Returns the instance of this GameTimeoutWatcher or creates a new one
+     * 
+     * @return The instance of this GameTimeoutWatcher
+     */
     public static GameTimeoutWatcher getInstance() {
         if (GameTimeoutWatcher.instance == null) {
             GameTimeoutWatcher.instance = new GameTimeoutWatcher();
@@ -36,8 +41,8 @@ public class GameTimeoutWatcher {
         return GameTimeoutWatcher.instance;
     }
     
-    private Timer timer;
-    private ArrayList<GameTimeoutTask> activeTasks;
+    private final Timer timer;
+    private final ArrayList<GameTimeoutTask> activeTasks;
     
     private GameTimeoutWatcher() {
         timer = new Timer("GameTimeoutWatcher timer");
@@ -51,7 +56,7 @@ public class GameTimeoutWatcher {
      */
     public void watchGame(GameModel game) {
         if (game.getEndTime() != null) {
-            GameTimeoutTask task = new GameTimeoutTask(game);
+            final GameTimeoutTask task = new GameTimeoutTask(game);
             // schedule with timer to run 500 ms after end time
             timer.schedule(task, new Date(game.getEndTime().getTime() + 500));
             // add to list of active tasks

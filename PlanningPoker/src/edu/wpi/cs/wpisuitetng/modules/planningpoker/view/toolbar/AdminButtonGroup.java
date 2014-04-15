@@ -30,17 +30,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Dan
  * 
  */
-public class AdminButtons extends ToolbarGroupView {
+public class AdminButtonGroup extends ToolbarGroupView {
     /**
      * 
      */
     private static final long serialVersionUID = 312905811728893535L;
-    private JButton endGameButton;
-    private JButton closeGameButton;
+    private final JButton endGameButton;
+    private final JButton closeGameButton;
     
     private final JPanel contentPanel = new JPanel();
     
-    public AdminButtons() {
+    public AdminButtonGroup() {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");

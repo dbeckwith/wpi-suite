@@ -32,6 +32,12 @@ public class CurrentUserController extends AbstractUserController {
     
     private static CurrentUserController instance = null;
     
+    /**
+     * 
+     * Return the CurrentUserController or create a new one
+     *
+     * @return The instance of this CurrentUserController
+     */
     public static CurrentUserController getInstance() {
         if (CurrentUserController.instance == null) {
             CurrentUserController.instance = new CurrentUserController();
@@ -67,12 +73,14 @@ public class CurrentUserController extends AbstractUserController {
      *         exists
      */
     public User findUser(String name) {
+        User toReturn = null;
         for (User u : getUsers()) {
             if (u.getUsername().equals(name)) {
-                return u;
+                toReturn = u;
+                break;
             }
         }
-        return null;
+        return toReturn;
     }
     
     /**

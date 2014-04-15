@@ -11,7 +11,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.ArrayList;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
@@ -43,36 +42,48 @@ public class UserUpdateController {
     }
     
     private enum FieldName {
-        IM_NOTIFY, EMAIL_NOTIFY        
+        IM_NOTIFY, EMAIL_NOTIFY
     }
     
     
     private static UserUpdateController instance;
     
+    /**
+     * Returns the instance of this UserUpdateController or creates a new one
+     * 
+     * @return The instance of this UserUpdateController
+     */
     public static UserUpdateController getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new UserUpdateController();
+        }
         return instance;
     }
     
     /**
      * Gets the user's current email notification setting.
      * 
-     * @return
+     * @return The User class email notification setting
      */
-    public boolean getNotifyByEmail() {
+    public boolean canNotifyByEmail() {
         return user.isNotifyByEmail();
     }
     
     /**
      * Gets the user's current IM notification setting.
+     * 
+     * @return The User class IM notification setting
      */
-    public boolean getNotifyByIM() {
+    public boolean canNotifyByIM() {
         return user.isNotifyByIM();
     }
     
     /**
      * Sets the user to receive or stop receiving email notifications.
+     * 
+     * @param doNotify
+     *        Boolean representing whether or not a User would like to receive
+     *        email notifications
      */
     public void setNotifyByEmail(boolean doNotify) {
         sendPostRequest(FieldName.EMAIL_NOTIFY, doNotify);
@@ -80,6 +91,10 @@ public class UserUpdateController {
     
     /**
      * Sets the user to receive or stop receiving IM notifications.
+     * 
+     * @param doNotify
+     *        Boolean representing whether or not a User would like to receive
+     *        IM notifications
      */
     public void setNotifyByIM(boolean doNotify) {
         sendPostRequest(FieldName.IM_NOTIFY, doNotify);
@@ -88,6 +103,12 @@ public class UserUpdateController {
     /**
      * A helper method for setting notification preference in the user's
      * preferences.
+     * 
+     * @param fieldToUpdate
+     *        Enum representing the different fields that a user can update from
+     *        the preferences panel
+     * @param newValue
+     *        The new value of the field being updated
      */
     private <T> void sendPostRequest(FieldName fieldToUpdate, T newValue) {
         switch (fieldToUpdate) {
@@ -98,8 +119,8 @@ public class UserUpdateController {
                 user.setNotifyByIM((Boolean) newValue);
                 break;
             default:
-                System.err.println("Invalid notification type "
-                        + fieldToUpdate);
+                System.err
+                        .println("Invalid notification type " + fieldToUpdate);
                 return;
         }
         final Request request = Network.getInstance().makeRequest("core/user",
@@ -109,5 +130,12 @@ public class UserUpdateController {
         System.out.println("Updated: " + user);// TODO remove
     }
     
-    
+    /**
+     * A method that sets the current user for testing purposes..
+     * 
+     * @param user
+     */
+    public void setUser(User user){
+        this.user = user;
+    }
 }

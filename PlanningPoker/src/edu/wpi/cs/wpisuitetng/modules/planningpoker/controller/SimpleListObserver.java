@@ -19,6 +19,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
  */
 public interface SimpleListObserver {
     
-    public void listUpdated();
+    /**
+     * Gets notified when a list is updated
+     */
+    void listUpdated();
     
 }

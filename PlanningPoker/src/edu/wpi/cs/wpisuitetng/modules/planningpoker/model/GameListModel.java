@@ -43,10 +43,10 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     private static final long serialVersionUID = -4216338772150454616L;
     
-    private ArrayList<GameModel> games;
-    private ArrayList<SimpleListObserver> observers;
-    private ArrayList<GameStatusObserver> status_observers;
-    private GameStatusObserver game_observer;
+    private final ArrayList<GameModel> games;
+    private final ArrayList<SimpleListObserver> observers;
+    private final ArrayList<GameStatusObserver> status_observers;
+    private final GameStatusObserver game_observer;
     
     /**
      * Constructor that initializes list of games, list of observers, a
@@ -81,6 +81,11 @@ public class GameListModel extends AbstractListModel<GameModel> {
         }
     }
     
+    /**
+     * Adds a GameStatusObserver to the list of status observers
+     *
+     * @param gso
+     */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
@@ -105,7 +110,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * @param gs
      *            the list of games to add
      */
-    public void addGames(GameModel[] gs) {
+    public void addMultipleGames(GameModel[] gs) {
         for (GameModel g : gs) {
             addAndRegisterGame(g);
         }
@@ -130,7 +135,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Empties the list of games.
      */
     public void emptyModel() {
-        int numGames = games.size();
+        final int numGames = games.size();
         for (int i = 0; i < numGames; i++) {
             removeAndUnregisterGame(games.get(0));
         }
@@ -146,7 +151,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      *            the games to be included in the list model
      */
     public void setGames(GameModel[] gs) {
-        int numGames = games.size();
+        final int numGames = games.size();
         for (int i = 0; i < numGames; i++) {
             removeAndUnregisterGame(games.get(0));
         }
@@ -224,6 +229,20 @@ public class GameListModel extends AbstractListModel<GameModel> {
      */
     public ArrayList<SimpleListObserver> getObservers() {
         return observers;
+    }
+    
+    /**
+     * Remove all observers for the model
+     */
+    public void removeObservers(){
+        observers.clear();
+    }
+    
+    /**
+     * Remove all game status observers for the model
+     */
+    public void removeStatusObservers(){
+        status_observers.clear();
     }
     
 }

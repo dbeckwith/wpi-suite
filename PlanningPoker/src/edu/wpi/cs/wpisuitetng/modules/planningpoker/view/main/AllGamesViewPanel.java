@@ -27,6 +27,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
+import java.awt.Color;
 
 
 /*
@@ -53,9 +56,23 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         initComponents();
         final JTree tree = gameTree.getTree();
         
-        JSplitPane splitPane = new JSplitPane();
+        descriptionCard = new JPanel();
+        descriptionCard.setLayout(new CardLayout(0, 0));
+        jSplitPane3.setRightComponent(descriptionCard);
+        
+        emptyDescriptionPanel = new JPanel();
+        emptyDescriptionPanel.setBackground(Color.WHITE);
+        descriptionCard.add(emptyDescriptionPanel, "empty");
+        emptyDescriptionPanel.setLayout(new BorderLayout(0, 0));
+        
+        emptyDescriptionLabel = new JLabel("Select a Game");
+        emptyDescriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        emptyDescriptionLabel.setIcon(ImageLoader.getIcon("leftArrow.png"));
+        emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
+        
+        final JSplitPane splitPane = new JSplitPane();
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        jSplitPane3.setRightComponent(splitPane);
+        descriptionCard.add(splitPane, "description");
         
         gameDescriptionPanel = new GameDescriptionPanel();
         splitPane.setLeftComponent(gameDescriptionPanel);
@@ -67,49 +84,57 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         requirementDescriptionPanel = new RequirementDescriptionPanel();
         requirementPanel.add(requirementDescriptionPanel, "requirement");
         
-        JPanel noRequirementPanel = new JPanel();
+        final JPanel noRequirementPanel = new JPanel();
+        noRequirementPanel.setBackground(Color.WHITE);
         requirementPanel.add(noRequirementPanel, "no requirement");
         noRequirementPanel.setLayout(new BorderLayout(0, 0));
         
-        JLabel lblSelectARequirement = new JLabel("Select a requirement");
+        final JLabel lblSelectARequirement = new JLabel("Select a Requirement");
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
+        lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
+                final DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) { return; }
-                
-                currentSelectionGame = null; // reset selected game
-                
-                Object nodeInfo = node.getUserObject();
-                if (nodeInfo instanceof GameModel) {
-                    ((CardLayout) getRequirementPanel().getLayout()).show(
-                            getRequirementPanel(), "no requirement");
-                    GameModel game = (GameModel) nodeInfo;
-                    currentSelectionGame = game;
-                    getGameDescriptionPanel().setGame(game);
-                }
-                else if (nodeInfo instanceof GameRequirementModel) {
-                    ((CardLayout) getRequirementPanel().getLayout()).show(
-                            getRequirementPanel(), "requirement");
-                    GameRequirementModel req = (GameRequirementModel) nodeInfo;
-                    GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
-                            .getParent())).getUserObject();
-                    getRequirementDescriptionPanel().setData(
-                            CurrentUserController.getInstance().getUser(),
-                            parent_game, req);
+                if (node != null) {
                     
-                    GameModel game = (GameModel) ((DefaultMutableTreeNode) node
-                            .getParent()).getUserObject();
-                    getGameDescriptionPanel().setGame(game);
-                    currentSelectionGame = game;
+                    currentSelectionGame = null; // reset selected game
+                    
+                    final Object nodeInfo = node.getUserObject();
+                    if (nodeInfo instanceof GameModel) {
+                        ((CardLayout) getRequirementPanel().getLayout()).show(
+                                getRequirementPanel(), "no requirement");
+                        final GameModel game = (GameModel) nodeInfo;
+                        currentSelectionGame = game;
+                        getGameDescriptionPanel().setGame(game);
+                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
+                    }
+                    else if (nodeInfo instanceof GameRequirementModel) {
+                        ((CardLayout) getRequirementPanel().getLayout()).show(
+                                getRequirementPanel(), "requirement");
+                        final GameRequirementModel req = (GameRequirementModel) nodeInfo;
+                        final GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
+                                .getParent())).getUserObject();
+                        getRequirementDescriptionPanel().setData(
+                                CurrentUserController.getInstance().getUser(),
+                                parent_game, req);
+                        
+                        final GameModel game = (GameModel) ((DefaultMutableTreeNode) node
+                                .getParent()).getUserObject();
+                        getGameDescriptionPanel().setGame(game);
+                        currentSelectionGame = game;
+                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
                 }
-                PlanningPoker.getViewController().displayAdmin(
-                        currentSelectionGame);
+                else {
+                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "empty");
+                    }
+                    PlanningPoker.getViewController().displayAdmin(
+                            currentSelectionGame);
+                }
             }
         });
     }
@@ -131,7 +156,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         
         jSplitPane3.setDividerLocation(190);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -154,9 +179,12 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     
     private javax.swing.JSplitPane jSplitPane3;
     private GamesListPanel gameTree;
-    private JPanel requirementPanel;
-    private RequirementDescriptionPanel requirementDescriptionPanel;
-    private GameDescriptionPanel gameDescriptionPanel;
+    private final JPanel requirementPanel;
+    private final RequirementDescriptionPanel requirementDescriptionPanel;
+    private final GameDescriptionPanel gameDescriptionPanel;
+    private JPanel emptyDescriptionPanel;
+    private JLabel emptyDescriptionLabel;
+    private JPanel descriptionCard;
     
     protected JPanel getRequirementPanel() {
         return requirementPanel;
@@ -180,5 +208,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     public GameModel getSelectedGame() {
         
         return currentSelectionGame;
+    }
+    protected JPanel getDescriptionCard() {
+        return descriptionCard;
     }
 }

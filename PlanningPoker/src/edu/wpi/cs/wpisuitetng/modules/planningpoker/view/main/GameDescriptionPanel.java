@@ -27,8 +27,8 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
      *
      */
     private static final long serialVersionUID = 7579915917240962935L;
-    private CompletedGamePanel completed;
-    private UncompletedGameDescriptionPanel uncompleted;
+    private final CompletedGamePanel completed;
+    private final UncompletedGameDescriptionPanel uncompleted;
     
     /**
      * Creates new form NewJPanel
@@ -44,6 +44,10 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    /**
+     * Sets the game to the input GameModel
+     * @param game
+     */
     public void setGame(GameModel game) {
         if (game.isEnded()) {
             ((CardLayout) getLayout()).show(this, "completed");

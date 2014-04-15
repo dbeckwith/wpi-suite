@@ -8,41 +8,45 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Color;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.JPanel;
-import javax.swing.SpringLayout;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SpringLayout;
+import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import java.awt.Color;
-
-import javax.swing.JRadioButton;
-import javax.swing.JTextPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-
-import java.awt.SystemColor;
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import javax.swing.border.EtchedBorder;
 
 public class NewDeckPanel extends JPanel {
-	public NewDeckPanel() {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4631372194324496204L;
+    
+    public NewDeckPanel() {
+        setBackground(Color.WHITE);
 		GetDecksController.getInstance().retrieveDecks();
 		
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
-		JLabel deckLabel = new JLabel("Deck Name:");
+		JLabel deckLabel = new JLabel("Deck Name: *");
 		springLayout.putConstraint(SpringLayout.NORTH, deckLabel, 10,
 				SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, deckLabel, 10,
@@ -82,22 +86,20 @@ public class NewDeckPanel extends JPanel {
 				for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
 					if (deck.toString().equals(newDeckName.getText()) || newDeckName.getText().equals("Default")) {
 						isNameValid = false;
-						deckNameErrorLabel.setText("Name already in use!");
-						deckNameErrorLabel.setVisible(true);
+						nameInUse = true;
 						checkNewDeck();
 						return;
 					}
 				}
+				nameInUse = false;
 				
 				isNameValid = newDeckName.getText() != null
 						&& !newDeckName.getText().isEmpty();
-				deckNameErrorLabel.setText("Required field!");
-				deckNameErrorLabel.setVisible(!isNameValid);
 				checkNewDeck();
 			}
 		});
 
-		JLabel cardLabel = new JLabel("Cards:");
+		JLabel cardLabel = new JLabel("Cards: *");
 		springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 6,
 				SpringLayout.SOUTH, newDeckName);
 		springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0,
@@ -106,7 +108,7 @@ public class NewDeckPanel extends JPanel {
 
 		newDeckCards = new JTextPane();
 		newDeckCards.setForeground(SystemColor.desktop);
-		newDeckCards.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		newDeckCards.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
 				SpringLayout.SOUTH, cardLabel);
 		springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
@@ -141,7 +143,6 @@ public class NewDeckPanel extends JPanel {
 				areCardsValid = newDeckCards.getText() != null
 						&& !newDeckCards.getText().isEmpty()
 						&& Pattern.matches(pattern, newDeckCards.getText());
-				cardsErrorLabel.setVisible(!areCardsValid);
 				checkNewDeck();
 			}
 		});
@@ -188,24 +189,10 @@ public class NewDeckPanel extends JPanel {
 				-10, SpringLayout.EAST, this);
 		add(cancelCreationButton);
 
-		deckNameErrorLabel = new JLabel("*Required Field");
-		springLayout.putConstraint(SpringLayout.NORTH, deckNameErrorLabel, 0,
-				SpringLayout.NORTH, deckLabel);
-		springLayout.putConstraint(SpringLayout.WEST, deckNameErrorLabel, 6,
-				SpringLayout.EAST, deckLabel);
-		deckNameErrorLabel.setForeground(Color.RED);
-		add(deckNameErrorLabel);
-
-		cardsErrorLabel = new JLabel("*Invalid value!");
-		springLayout.putConstraint(SpringLayout.NORTH, cardsErrorLabel, 0,
-				SpringLayout.NORTH, cardLabel);
-		springLayout.putConstraint(SpringLayout.WEST, cardsErrorLabel, 0, SpringLayout.WEST, deckNameErrorLabel);
-		cardsErrorLabel.setForeground(Color.RED);
-		add(cardsErrorLabel);
-
 		ButtonGroup selectionGroup = new ButtonGroup();
 
 		JRadioButton singleSelect = new JRadioButton("Single");
+		singleSelect.setBackground(Color.WHITE);
 		singleSelect.setSelected(true);
 		springLayout.putConstraint(SpringLayout.WEST, singleSelect, 0,
 				SpringLayout.WEST, deckLabel);
@@ -214,6 +201,7 @@ public class NewDeckPanel extends JPanel {
 		add(singleSelect);
 
 		multipleSelect = new JRadioButton("Multiple");
+		multipleSelect.setBackground(Color.WHITE);
 		springLayout.putConstraint(SpringLayout.NORTH, multipleSelect, 0,
 				SpringLayout.NORTH, singleSelect);
 		springLayout.putConstraint(SpringLayout.WEST, multipleSelect, 4,
@@ -237,20 +225,31 @@ public class NewDeckPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0,
 				SpringLayout.WEST, deckLabel);
 		add(cardHelpLabel);
+		
+		errorLabel = new JLabel("<errors>");
+		errorLabel.setForeground(Color.RED);
+		springLayout.putConstraint(SpringLayout.NORTH, errorLabel, 5, SpringLayout.NORTH, createDeckButton);
+		springLayout.putConstraint(SpringLayout.WEST, errorLabel, 6, SpringLayout.EAST, createDeckButton);
+		add(errorLabel);
 		checkNewDeck();
 	}
 
 	private void checkNewDeck() {
+        if (!isNameValid) {
+            if (nameInUse) {
+                errorLabel.setText("Name already in use");
+            }
+            else {
+                errorLabel.setText("Name is required");
+            }
+        }
+        else if (!areCardsValid) {
+            errorLabel.setText("Invalid cards list");
+        }
+        else {
+            errorLabel.setText("");
+        }
 		createDeckButton.setEnabled(isNameValid && areCardsValid);
-	}
-
-	/**
-	 * Ensures everything filled out properly
-	 * 
-	 * @return
-	 */
-	private boolean validateForm() {
-		return isNameValid && areCardsValid;
 	}
 
 	/**
@@ -268,9 +267,9 @@ public class NewDeckPanel extends JPanel {
 	private JButton cancelCreationButton;
 	private boolean isNameValid = false;
 	private boolean areCardsValid = false;
-	private JLabel deckNameErrorLabel;
-	private JLabel cardsErrorLabel;
+	private boolean nameInUse = false;
 	private JTextPane newDeckCards;
 	private JRadioButton multipleSelect;
 	private JLabel cardHelpLabel;
+	private JLabel errorLabel;
 }

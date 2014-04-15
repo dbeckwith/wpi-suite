@@ -11,6 +11,9 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.awt.Component;
+
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -20,6 +23,7 @@ import javax.swing.event.ChangeListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
 
 /**
@@ -34,6 +38,9 @@ public class MainView extends JTabbedPane {
      */
     private static final long serialVersionUID = 7802378837976895569L;
     private final AllGamesViewPanel mainPanel;
+    private boolean updated = false;
+    
+    private JFrame window = null;
     
     public MainView() {
         mainPanel = new AllGamesViewPanel();
@@ -52,13 +59,26 @@ public class MainView extends JTabbedPane {
         addAncestorListener(new AncestorListener() {
 			@Override
 			public void ancestorAdded(AncestorEvent event) {
-		        GetGamesController.getInstance().retrieveGames();
-		        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
-		        removeAncestorListener(this);
+				if(!updated){
+			        GetGamesController.getInstance().retrieveGames();
+			        GetRequirementsController.getInstance().retrieveRequirements();
+			        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
+			        
+			        Component parent = MainView.this;
+			        while(!((parent = parent.getParent()) instanceof JFrame)){
+			        	System.out.println(parent);
+			        }
+			        window = (JFrame)parent;
+			        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			       
+				}
+				
+		        
 			}
 			
 			@Override
 			public void ancestorRemoved(AncestorEvent event) {}
+			
 			
 			@Override
 			public void ancestorMoved(AncestorEvent event) {}

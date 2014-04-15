@@ -23,13 +23,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 /**
  * Represents a planning poker game
  */
-public class GameModel extends AbstractModel {    
+public class GameModel extends AbstractModel {
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
         
         
         public String name;
         
+        /**
+         * Creates a new GameStatus
+         * @param stat
+         */
         GameStatus(String stat) {
             name = stat;
         }
@@ -51,7 +55,7 @@ public class GameModel extends AbstractModel {
     private GameStatus status;
     private String owner;
     private DeckModel deck;
-
+    
     /**
      * Default constructor creates instance with invalid id and null fields
      */
@@ -65,7 +69,7 @@ public class GameModel extends AbstractModel {
         status = null;
         status_observers = null;
         owner = null;
-        deck = DeckListModel.getInstance().getDefaultDeck(); 
+        deck = DeckListModel.getInstance().getDefaultDeck();
     }
     
     /**
@@ -81,8 +85,8 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, DeckModel deck, Date end,
-            GameType type, GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            Date end, GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -107,8 +111,8 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, DeckModel deck, Date end,
-            GameType type, GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            Date end, GameType type, GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
@@ -122,7 +126,6 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * @param id
      * @param name
      * @param description
      * @param requirements
@@ -133,8 +136,8 @@ public class GameModel extends AbstractModel {
      * @param owner
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, DeckModel deck, Date endDate,
-            GameType type, GameStatus status, String owner) {
+            ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            Date endDate, GameType type, GameStatus status, String owner) {
         //this.id = id;
         this.name = name;
         this.description = description;
@@ -172,13 +175,25 @@ public class GameModel extends AbstractModel {
     public String getOwner() {
         return owner;
     }
-
+    
+    /**
+     * Adds a GameStatusObserver to the list of status observers
+     * 
+     * @param gso
+     *        The GameStatusObserver to add
+     */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
         }
     }
     
+    /**
+     * Removes a GameStatusObserver from the list of status observer
+     * 
+     * @param gso
+     *        The GameStatusObserver to remove
+     */
     public void removeStatusListener(GameStatusObserver gso) {
         if (status_observers.contains(gso)) {
             status_observers.remove(gso);
@@ -186,6 +201,10 @@ public class GameModel extends AbstractModel {
     }
     
     /**
+     * Returns the list of estimates for a given requirement
+     * 
+     * @param reqIndex
+     *        The index of the requirement in the list of requirements
      * @return an array containing all of the estimates
      */
     public ArrayList<Estimate> getEstimates(int reqIndex) {
@@ -205,7 +224,7 @@ public class GameModel extends AbstractModel {
     public DeckModel getDeck() {
         return deck;
     }
-
+    
     /**
      * @return The end time for this game
      */
@@ -245,7 +264,7 @@ public class GameModel extends AbstractModel {
      * @return whether the game has ended or is closed
      */
     public boolean isEnded() {
-        if (endDate != null
+        if (endDate != null && status == GameStatus.PENDING
                 && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
@@ -292,7 +311,11 @@ public class GameModel extends AbstractModel {
         return null;
     }
     
-    
+    /**
+     * Creates a GameModel from a JSON string
+     * @param json
+     * @return GameModel object from JSON string
+     */
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
         GameModel gm = parser.fromJson(json, GameModel.class);
@@ -300,6 +323,12 @@ public class GameModel extends AbstractModel {
         return gm;
     }
     
+    /**
+     * Creates an array of GameModels from a JSON array
+     *
+     * @param json
+     * @return Array of GameModels from the JSON array
+     */
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
         GameModel[] gms = parser.fromJson(json, GameModel[].class);
@@ -317,6 +346,11 @@ public class GameModel extends AbstractModel {
         return status;
     }
     
+    /**
+     * Copies the information from the given GameModel into this GameModel
+     *
+     * @param g
+     */
     public void copyFrom(GameModel g) {
         id = g.id;
         name = g.name;
@@ -338,13 +372,20 @@ public class GameModel extends AbstractModel {
     
     @Override
     public String toString() {
-        return getName();
+        return name;
     }
     
+    /**
+     * Returns whether the input GameModel is equal to this one
+     *
+     * @param other
+     * @return True if this GameModel is equal to the input GameModel
+     */
     public boolean equals(GameModel other) {
         return other.id == id && other.name.equals(other.name);
     }
     
+    @Override
     public boolean equals(Object other) {
         if (this == other)
             return true;

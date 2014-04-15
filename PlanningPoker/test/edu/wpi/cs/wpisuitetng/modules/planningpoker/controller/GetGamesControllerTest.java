@@ -33,7 +33,6 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * 
  */
 public class GetGamesControllerTest {
-
 	static GetGamesController instance;
 	static GameModel nullGame;
 	static GameModel game1;
@@ -47,7 +46,7 @@ public class GetGamesControllerTest {
 	static public void setUpBeforeClass() {
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
-				new NetworkConfiguration("http://wpisuitetng"));
+				new NetworkConfiguration("http://localhost"));
 		GetGamesControllerTest.instance = GetGamesController.getInstance();
 		GetGamesControllerTest.nullGame = new GameModel();
 		GetGamesControllerTest.game1 = new GameModel(1, "Test Game 1",
@@ -77,6 +76,8 @@ public class GetGamesControllerTest {
 		GetGamesControllerTest.gamesToAdd = new GameModel[] {
 				GetGamesControllerTest.game1, GetGamesControllerTest.game2,
 				GetGamesControllerTest.game3, GetGamesControllerTest.game4 };
+		list.removeObservers();
+		list.removeStatusObservers();
 	}
 
 	@Test
@@ -105,17 +106,6 @@ public class GetGamesControllerTest {
 	@Test
 	public void testRetrieveGames() {
 		GetGamesController.getInstance().retrieveGames();
-		MockRequest request = ((MockNetwork) Network.getInstance())
-				.getLastRequestMade();
-		if (request == null) {
-			Assert.fail("request not sent");
-		}
-		Assert.assertTrue(request.isSent());
-	}
-
-	@Test
-	public void testActionPerformed() {
-		GetGamesController.getInstance().actionPerformed(null);
 		MockRequest request = ((MockNetwork) Network.getInstance())
 				.getLastRequestMade();
 		if (request == null) {

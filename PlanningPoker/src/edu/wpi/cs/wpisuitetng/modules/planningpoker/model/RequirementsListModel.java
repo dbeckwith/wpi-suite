@@ -24,17 +24,22 @@ public class RequirementsListModel extends
      * 
      */
     private static final long serialVersionUID = -972873964063134055L;
-
+    
     private static RequirementsListModel instance = null;
     
-    private ArrayList<GameRequirementModel> requirements;
-    private ArrayList<SimpleListObserver> observers;
+    private final ArrayList<GameRequirementModel> requirements;
+    private final ArrayList<SimpleListObserver> observers;
     
     private RequirementsListModel() {
         requirements = new ArrayList<GameRequirementModel>();
         observers = new ArrayList<SimpleListObserver>();
     }
     
+    /**
+     * Returns the instance of this RequirementsListModel or creates a new one
+     * 
+     * @return The instance of this RequirementsListModel
+     */
     public static RequirementsListModel getInstance() {
         if (instance == null) {
             instance = new RequirementsListModel();
@@ -48,7 +53,7 @@ public class RequirementsListModel extends
      * changed
      * 
      * @param slo
-     *            The SimpleListObserver to add
+     *        The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -56,15 +61,26 @@ public class RequirementsListModel extends
         }
     }
     
+    /**
+     * Removes a SimpleListObserver from the list of SimpleListObservers
+     *
+     * @param slo The SimpleListObserver to be removed
+     */
     public void removeListListener(SimpleListObserver slo) {
         if (observers.contains(slo)) {
             observers.remove(slo);
         }
     }
     
+    /**
+     * Returns the list of SimpleListObservers
+     *
+     * @return ArrayList of SimpleListObservers
+     */
     public ArrayList<SimpleListObserver> getObservers() {
         return observers;
     }
+    
     
     private void updated() {
         for (SimpleListObserver observer : observers) {
@@ -72,6 +88,9 @@ public class RequirementsListModel extends
         }
     }
     
+    /**
+     * @param reqs The array of GameRequirementModels
+     */
     public void setRequirements(GameRequirementModel[] reqs) {
         requirements.clear();
         for (GameRequirementModel req : reqs) {
@@ -80,28 +99,46 @@ public class RequirementsListModel extends
         updated();
     }
     
+    /**
+     * Adds a requirement to the list of requirements
+     * @param req The GameRequirementModel to add
+     */
     public void addRequirement(GameRequirementModel req) {
         requirements.add(req);
         updated();
     }
     
-    public void addRequirements(GameRequirementModel[] reqs) {
+    /**
+     * Adds multiple requirements to the list of requirements
+     * @param reqs The array of GameRequirementModels to add
+     */
+    public void addMultipleRequirements(GameRequirementModel[] reqs) {
         for (GameRequirementModel req : reqs) {
             requirements.add(req);
         }
         updated();
     }
     
+    /**
+     * Removes a requirement from the list of requirements
+     * @param req The GameRequirementModel to remove
+     */
     public void removeRequirement(GameRequirementModel req) {
         requirements.remove(req);
         updated();
     }
     
+    /**
+     * Empties the list of requirements
+     */
     public void emptyModel() {
         requirements.clear();
         updated();
     }
     
+    /**
+     * @return The list of requirements
+     */
     public ArrayList<GameRequirementModel> getAll() {
         return requirements;
     }

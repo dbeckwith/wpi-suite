@@ -39,7 +39,7 @@ public class ImageLoader {
      * Returns a BufferedImage loaded from a file
      * 
      * @param file
-     * @return
+     * @return The BufferedImage from file
      */
     public static BufferedImage getImage(String file) {
         BufferedImage bImg = null;
@@ -49,7 +49,7 @@ public class ImageLoader {
             bImg = ImageLoader.images.get(file); //get the image from the list
         } else {
             try {
-                URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
+                final URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
                 System.out.println(u.toString());
                 bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
                 if (bImg != null) {
@@ -68,11 +68,11 @@ public class ImageLoader {
      * 
      * @param file
      *            the file to load from
-     * @return
+     * @return The ImageIcon from file
      */
     public static ImageIcon getIcon(String file) {
         ImageIcon icon = null;
-        BufferedImage image = ImageLoader.getImage(file);
+        final BufferedImage image = ImageLoader.getImage(file);
         if (image != null) {
             icon = new ImageIcon(image);
         }
