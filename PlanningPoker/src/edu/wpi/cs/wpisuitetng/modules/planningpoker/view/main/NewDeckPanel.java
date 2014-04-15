@@ -31,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import javax.swing.border.EtchedBorder;
 
 public class NewDeckPanel extends JPanel {
 	/**
@@ -107,7 +108,7 @@ public class NewDeckPanel extends JPanel {
 
 		newDeckCards = new JTextPane();
 		newDeckCards.setForeground(SystemColor.desktop);
-		newDeckCards.setBorder(new LineBorder(Color.BLACK));
+		newDeckCards.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
 				SpringLayout.SOUTH, cardLabel);
 		springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,

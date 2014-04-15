@@ -39,12 +39,23 @@ public class ViewController {
      */
     private boolean showAdmin;
     
+    /**
+     * Creates a new ViewController
+     * 
+     * @param mainView
+     *        The MainView for this ViewController to control
+     * @param toolbar
+     *        The ToolbarView for this ViewController to control
+     */
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
         this.toolbar = toolbar;
         this.cancelConfirm = new DefaultOptionPane();
     }
     
+    /**
+     * Adds a new tab for a new game
+     */
     public void addNewGameTab() {
         final NewGamePanel editGame = new NewGamePanel();
         mainView.addTab("New Game", editGame);
@@ -65,6 +76,9 @@ public class ViewController {
         
     }
     
+    /**
+     * Adds a user preferences tab
+     */
     public void addUserPrefsTab() {
         final UserPreferencesPanel prefsPanel = UserPreferencesPanel.getPanel();
         mainView.addTab("Preferences", prefsPanel);
@@ -82,6 +96,12 @@ public class ViewController {
                 });
     }
     
+    /**
+     * Saves a GameModel based on the information in the NewGamePanel
+     * 
+     * @param e
+     *        The NewGamePanel to create a game from
+     */
     public void saveNewGame(NewGamePanel e) {
         //TODO add save as new here
         DeckModel d = e.getDeck();
@@ -100,6 +120,11 @@ public class ViewController {
         
     }
     
+    /**
+     * Cancels creation of a new game
+     *
+     * @param e The NewGamePanel to cancel
+     */
     public void cancelNewGame(NewGamePanel e) {
         final int result = cancelConfirm.showConfirmDialog(e,
                 "Are you sure you want to cancel this game?", "Cancel Game",
@@ -112,6 +137,11 @@ public class ViewController {
         }
     }
     
+    /**
+     * Returns the MainView object for this ViewController
+     *
+     * @return The MainView object
+     */
     public MainView getMainView() {
         return mainView;
     }
@@ -184,7 +214,8 @@ public class ViewController {
     /**
      * Set the type of OptionPane for the cancel game confirmation.
      * 
-     * @param o the OptionPane to set
+     * @param o
+     *        the OptionPane to set
      */
     public void setCancelConfirm(OptionPane o) {
         this.cancelConfirm = o;

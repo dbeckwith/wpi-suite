@@ -35,6 +35,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     /**
      * Gets the single instance of the panel.
+     * @return the instance of the UserPreferencesPanel
      */
     public static UserPreferencesPanel getPanel() {
         if (instance == null) {
