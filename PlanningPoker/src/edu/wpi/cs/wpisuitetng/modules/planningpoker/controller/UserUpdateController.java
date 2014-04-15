@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UserUpdateController {
     
-    private final User user;
+    private User user;
     
     /**
      * Default constructor.
@@ -130,5 +130,12 @@ public class UserUpdateController {
         System.out.println("Updated: " + user);// TODO remove
     }
     
-    
+    /**
+     * A method that sets the current user for testing purposes..
+     * 
+     * @param user
+     */
+    public void setUser(User user){
+        this.user = user;
+    }
 }

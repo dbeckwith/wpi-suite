@@ -20,78 +20,89 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  *
  */
 public class DeckModel extends AbstractModel {
-    private String name;
-    private ArrayList<Double> cards;
-    private boolean allowsMultipleSelection;
-    
-    /**
-     * Creates a new deck
-     * 
-     * @param name
-     *        The name of the deck
-     * @param cards
-     *        List of cards for the deck
-     * @param allowsMultipleSelection
-     *        Whether or not this deck should allow multiple selection
-     */
-    public DeckModel(String name, ArrayList<Double> cards,
-            boolean allowsMultipleSelection) {
-        this.name = name;
-        this.cards = cards;
-        this.allowsMultipleSelection = allowsMultipleSelection;
-    }
-    
-    /**
-     * Also creates a new deck
-     * 
-     * @param name
-     */
-    public DeckModel(String name) {
-        this.name = name;
-        this.cards = null;
-        this.allowsMultipleSelection = false;
-    }
-    
-    /**
-     * @return The cards in the deck
-     */
-    public ArrayList<Double> getCards() {
-        return this.cards;
-    }
-    
-    /**
-     * Still creating a new deck, but THIS ONE is empty
-     */
-    public DeckModel() {
-        this.name = null;
-        this.cards = null;
-    }
-    
-    /**
-     * Adds a card to this deck
-     * 
-     * @param newCard
-     */
-    public void addCard(Double newCard) {
-        if (cards.contains(newCard)) { return; }
-        cards.add(newCard);
-    }
-    
-    /**
-     * Removes a card from this deck
-     * 
-     * @param card
-     */
-    public void removeCard(Double card) {
-        if (!cards.contains(card)) { return; }
-        cards.remove(card);
-    }
-    
-    /**
+	private String name;
+	private ArrayList<Double> cards;
+	private boolean allowsMultipleSelection;
+
+	/**
+	 * Creates a new deck
+	 * 
+	 * @param name
+	 *         The name of the deck
+	 * @param cards
+	 *         List of cards for the deck
+	 * @param allowsMultipleSelection
+	 *         Whether or not this deck should allow multiple selection
+	 */
+	public DeckModel(String name, ArrayList<Double> cards,
+			boolean allowsMultipleSelection) {
+		this.name = name;
+		this.cards = cards;
+		this.allowsMultipleSelection = allowsMultipleSelection;
+	}
+
+	/**
+	 * Also creates a new deck
+	 * 
+	 * @param name
+	 */
+	public DeckModel(String name) {
+		this.name = name;
+		this.cards = null;
+		this.allowsMultipleSelection = false;
+	}
+	
+	/**
+	 * @return the name of the deck
+	 */
+	public String getName() {
+	    return this.name;
+	}
+	
+	/**
+	 * @return The cards in the deck
+	 */
+	public ArrayList<Double> getCards() {
+		return this.cards;
+	}
+
+	/**
+	 * Still creating a new deck, but THIS ONE is empty
+	 */
+	public DeckModel() {
+		this.name = null;
+		this.cards = null;
+	}
+
+	/**
+	 * Adds a card to this deck
+	 * 
+	 * @param newCard
+	 */
+	public void addCard(Double newCard) {
+		if (cards.contains(newCard)) {
+			return;
+		}
+		cards.add(newCard);
+	}
+
+	/**
+	 * Removes a card from this deck
+	 * 
+	 * @param card
+	 */
+	public void removeCard(Double card) {
+		if (!cards.contains(card)) {
+			return;
+		}
+		cards.remove(card);
+	}
+
+	/**
      * Sorts the cards in the deck in ascending order
      */
-    public void sort() {
-        Collections.sort(cards, new Comparator<Double>() {
+	public void sort() {
+	    Collections.sort(cards, new Comparator<Double>() {
             public int compare(Double a, Double b) {
                 if (a == b) {
                     return 0;
