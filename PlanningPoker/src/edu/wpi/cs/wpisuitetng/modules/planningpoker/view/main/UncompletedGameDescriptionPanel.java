@@ -53,6 +53,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setGameName(game.getName());
         setDescriptionText(game.getDescription());
         setEndDate(game.getEndTime());
+        setDeckName(game.getDeck().toString());
         // DefaultListModel<String> listModel = new DefaultListModel<>();
         // listModel.addElement(element);
         // getParticipantsList().setModel(listModel);

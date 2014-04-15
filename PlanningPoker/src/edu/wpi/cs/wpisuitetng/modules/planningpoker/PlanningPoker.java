@@ -57,7 +57,7 @@ public class PlanningPoker implements IJanewayModule {
 				toolbar, mainPanel);
 		
 		// Add the tab to the list of tabs owned by this module
-		tabs.add(tab1);	
+		tabs.add(tab1);
 	}
 	
 	@Override

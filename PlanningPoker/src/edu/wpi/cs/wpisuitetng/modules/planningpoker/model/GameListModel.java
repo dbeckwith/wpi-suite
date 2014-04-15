@@ -226,4 +226,18 @@ public class GameListModel extends AbstractListModel<GameModel> {
         return observers;
     }
     
+    /**
+     * Remove all observers for the model
+     */
+    public void removeObservers(){
+        observers.clear();
+    }
+    
+    /**
+     * Remove all game status observers for the model
+     */
+    public void removeStatusObservers(){
+        status_observers.clear();
+    }
+    
 }
