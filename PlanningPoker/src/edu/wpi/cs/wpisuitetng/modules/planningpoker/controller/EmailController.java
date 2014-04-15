@@ -40,6 +40,11 @@ public class EmailController extends AbstractUserController {
     
     private static EmailController instance = null;
     
+    /**
+     * Returns the instance of this EmailController or creates a new one
+     *
+     * @return The instance of this EmailController
+     */
     public static EmailController getInstance() {
         if (instance == null) {
             instance = new EmailController();
