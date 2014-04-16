@@ -103,12 +103,13 @@ public class ViewController {
      *        The NewGamePanel to create a game from
      */
     public void saveNewGame(NewGamePanel e) {
+        //TODO add save as new here
         DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
                         d.getAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.PENDING, ConfigManager.getConfig()
+                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         
         AddGameController.getInstance().addGame(newGame);
@@ -168,6 +169,7 @@ public class ViewController {
                         ConfigManager.getConfig().getUserName())
                 && !game.isClosed()) {
             toolbar.setAdminVisibility(true);
+            toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);
             if (game.getStatus() == GameStatus.COMPLETE) {
                 toolbar.setEndGame(false);
             }
@@ -217,5 +219,18 @@ public class ViewController {
      */
     public void setCancelConfirm(OptionPane o) {
         this.cancelConfirm = o;
+    }
+
+    public void editGame() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public void startGame() {
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
+        if (curr != null && !curr.isStarted()) {
+            curr.startGame();
+            UpdateGamesController.getInstance().updateGame(curr);
+        }
     }
 }

@@ -48,12 +48,16 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             final GameModel game = (GameModel) node.getUserObject();
             
             if (game.isClosed()) {
-                icon = ImageLoader.getIcon("archiveTree.png");
-            } else if (game.isEnded()) {
-                icon = ImageLoader.getIcon("GameCompleted.png");
-            } else {
-                icon = ImageLoader.getIcon("GameInProgress.png");
-                
+                icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
+            }
+            else if (game.isEnded()) {
+                icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
+            }
+            else if (!game.isStarted()) {
+                icon = new ImageIcon(ImageLoader.getImage("new_req_small.png"));
+            }
+            else {
+                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
                 if (game.getRequirements() != null) {
                     boolean hasUnvotedReqs = false;
                     req_loop: for (GameRequirementModel req : game

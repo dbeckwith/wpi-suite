@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -37,6 +38,8 @@ public class AdminButtonGroup extends ToolbarGroupView {
     private static final long serialVersionUID = 312905811728893535L;
     private final JButton endGameButton;
     private final JButton closeGameButton;
+    private final JButton editGameButton;
+    private final JButton startGameButton;
     
     private final JPanel contentPanel = new JPanel();
     
@@ -44,10 +47,18 @@ public class AdminButtonGroup extends ToolbarGroupView {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
-        endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
+        endGameButton.setIcon(ImageLoader.getIcon("EndEstimation.png"));
         
         closeGameButton = new JButton("<html>Close<br/>Game</html>");
         closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
+        
+        editGameButton = new JButton("<html>Edit<br/>Game</html>");
+        editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
+        editGameButton.setEnabled(false);   //making it look nice for presentation
+        
+        startGameButton = new JButton("<html>Start<br/>Game</html>");
+        startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
+        
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);
@@ -69,10 +80,30 @@ public class AdminButtonGroup extends ToolbarGroupView {
             
         });
         
+        editGameButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                PlanningPoker.getViewController().editGame();
+                
+            }
+        });
+
+        startGameButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlanningPoker.getViewController().startGame();
+                EmailController.getInstance().sendNotifications();
+            }
+        });
+        
         endGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         
         contentPanel.add(endGameButton);
         contentPanel.add(closeGameButton);
+        contentPanel.add(startGameButton);
+        contentPanel.add(editGameButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
@@ -87,5 +118,18 @@ public class AdminButtonGroup extends ToolbarGroupView {
      */
     public void setEndGameEnabled(boolean b) {
         endGameButton.setEnabled(b);
+    }
+    
+    /**
+     * Shows the Start Game and Edit Game buttons when passed true
+     *  else shows the End Game and Close Game buttons when passed false
+     * @param b
+     *      The boolean to flip the buttons
+     */
+    public void showNewGameButtons(boolean b) {
+        endGameButton.setVisible(!b);
+        closeGameButton.setVisible(!b);
+        startGameButton.setVisible(b);
+        editGameButton.setVisible(b);
     }
 }

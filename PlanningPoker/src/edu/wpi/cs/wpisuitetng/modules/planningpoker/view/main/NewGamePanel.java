@@ -27,7 +27,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -36,9 +35,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 /**
  * 
  * @author Lukas
+ * @version 1.0
  */
 public class NewGamePanel extends JPanel {
-	/**
+    /**
      * 
      */
 	private static final long serialVersionUID = 6206697919180272913L;
@@ -158,8 +158,7 @@ public class NewGamePanel extends JPanel {
 		                    .addPreferredGap(ComponentPlacement.RELATED)
 		                    .addComponent(cancelButton)
 		                    .addPreferredGap(ComponentPlacement.RELATED)
-		                    .addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-		                    .addGap(105))
+		                    .addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
 		                .addGroup(layout.createSequentialGroup()
 		                    .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
 		                    .addGap(6)))
@@ -298,7 +297,6 @@ public class NewGamePanel extends JPanel {
 		}
 
 		PlanningPoker.getViewController().saveNewGame(this);
-		EmailController.getInstance().sendNotifications();
 	}// GEN-LAST:event_saveButtonActionPerformed
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed

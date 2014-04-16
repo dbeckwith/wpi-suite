@@ -51,6 +51,16 @@ public class ToolbarView extends DefaultToolbarView {
     }
     
     /**
+     * Shows the edit game buttons and start game buttons when passed true
+     *  else shows the end estimation buttons and close game button
+     * @param b
+     *      Boolean being passed in to show the start game buttons
+     */
+    public void showStartButtonGroup(boolean b) {
+        adminButtonGroup.showNewGameButtons(b);
+    }
+    
+    /**
      * sets whether the endGame button is shown
      * 
      * @param b

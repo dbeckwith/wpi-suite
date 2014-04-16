@@ -133,7 +133,7 @@ public class NewDeckPanel extends JPanel {
 			}
 
 			public void validate() {
-				String pattern = "( *\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
+				String pattern = "( *[0-9]{0,3}, ?)*[0-9]{0,3}";
 				areCardsValid = newDeckCards.getText() != null
 						&& !newDeckCards.getText().isEmpty()
 						&& Pattern.matches(pattern, newDeckCards.getText());
@@ -213,10 +213,11 @@ public class NewDeckPanel extends JPanel {
 		add(selectionLabel);
 
 		cardHelpLabel = new JLabel(
-				"Please enter a list of numbers separated by commas");
-		springLayout.putConstraint(SpringLayout.SOUTH, newDeckCards, -6, SpringLayout.NORTH, cardHelpLabel);
-		springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0, SpringLayout.WEST, deckLabel);
-		springLayout.putConstraint(SpringLayout.SOUTH, cardHelpLabel, -6, SpringLayout.NORTH, selectionLabel);
+				"Please enter a list of integers (up to 3 digits) separated by commas");
+		springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 2,
+				SpringLayout.SOUTH, newDeckCards);
+		springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0,
+				SpringLayout.WEST, deckLabel);
 		add(cardHelpLabel);
 		
 		errorLabel = new JLabel("<errors>");
