@@ -16,8 +16,9 @@ public class LoginController {
 	private static final String TAG = LoginController.class.getSimpleName();
 	
 	public static void sendLoginRequest(String user, String pass, String url, RequestObserver ob){
-		
+		try {
 		Network.getInstance().setDefaultNetworkConfiguration(new NetworkConfiguration(url));
+
 		
 		// Form the basic auth string
 		String basicAuth = "Basic ";
@@ -30,6 +31,9 @@ public class LoginController {
 		request.addHeader("Authorization", basicAuth);
 		request.addObserver(ob);
 		request.send();	
+		} catch(Exception e){
+			ob.fail(null, new Exception("Bad url"));
+		}
 	}
 	
 	public static void loginSuccessful(ResponseModel response, String proj, RequestObserver ob) {

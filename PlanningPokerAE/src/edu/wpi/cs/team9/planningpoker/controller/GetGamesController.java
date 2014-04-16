@@ -51,11 +51,6 @@ public class GetGamesController implements RequestObserver {
         GameModel games[] = GameModel.fromJSONArray(iReq.getResponse()
                 .getBody());
         
-        for(GameModel game:games){
-        	Log.d(TAG, game.getEndTime().toString());
-        	Log.d(TAG, new Gson().toJson(game.getEndTime()));
-        }
-        
         // Pass these Games to the controller
         observer.receivedGames(games);
 	}

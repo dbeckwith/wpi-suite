@@ -149,8 +149,9 @@ public class LoginActivity extends Activity {
 		
 		@Override
 		public void fail(IRequest iReq, Exception exception) {
+			
 			setError("Unable to complete request: "+exception.getMessage());
-			Log.e(TAG, exception.getMessage());	
+			//Log.e(TAG, exception.getMessage());	
 
 
 			hideProgress();
