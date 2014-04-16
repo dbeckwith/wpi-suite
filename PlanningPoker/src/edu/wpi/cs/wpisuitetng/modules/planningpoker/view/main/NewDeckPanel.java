@@ -32,6 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import javax.swing.UIManager;
+import javax.swing.border.EtchedBorder;
 
 public class NewDeckPanel extends JPanel {
     /**
@@ -54,8 +55,10 @@ public class NewDeckPanel extends JPanel {
         add(deckLabel);
         
         newDeckName = new JTextField();
-        springLayout.putConstraint(SpringLayout.NORTH, newDeckName, 6, SpringLayout.SOUTH, deckLabel);
-        springLayout.putConstraint(SpringLayout.WEST, newDeckName, 0, SpringLayout.WEST, deckLabel);
+        springLayout.putConstraint(SpringLayout.NORTH, newDeckName, 6,
+                SpringLayout.SOUTH, deckLabel);
+        springLayout.putConstraint(SpringLayout.WEST, newDeckName, 10,
+                SpringLayout.WEST, this);
         springLayout.putConstraint(SpringLayout.EAST, newDeckName, -10,
                 SpringLayout.EAST, this);
         add(newDeckName);
@@ -101,7 +104,8 @@ public class NewDeckPanel extends JPanel {
         });
         
         JLabel cardLabel = new JLabel("Cards: *");
-        springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 6, SpringLayout.SOUTH, newDeckName);
+        springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 6,
+                SpringLayout.SOUTH, newDeckName);
         springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0,
                 SpringLayout.WEST, deckLabel);
         add(cardLabel);
@@ -111,6 +115,8 @@ public class NewDeckPanel extends JPanel {
                 SpringLayout.SOUTH, cardLabel);
         newDeckCards.setForeground(SystemColor.desktop);
         newDeckCards.setBorder(new LineBorder(SystemColor.inactiveCaption));
+        springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
+                SpringLayout.SOUTH, cardLabel);
         springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
                 SpringLayout.WEST, this);
         springLayout.putConstraint(SpringLayout.SOUTH, newDeckCards, -137,
@@ -220,7 +226,8 @@ public class NewDeckPanel extends JPanel {
         
         cardHelpLabel = new JLabel(
                 "Please enter a list of numbers separated by commas");
-        springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 2, SpringLayout.SOUTH, newDeckCards);
+        springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 2,
+                SpringLayout.SOUTH, newDeckCards);
         springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0,
                 SpringLayout.WEST, deckLabel);
         add(cardHelpLabel);

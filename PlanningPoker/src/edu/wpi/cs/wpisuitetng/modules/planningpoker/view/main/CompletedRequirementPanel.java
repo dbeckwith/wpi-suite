@@ -61,6 +61,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableScrollPane.getViewport().setBackground(Color.WHITE);
     }
     
+    /**
+     * Sets the requirement
+     * @param parent_game
+     * @param req
+     */
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         this.req = req;
         parent = parent_game;

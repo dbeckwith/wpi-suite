@@ -26,6 +26,7 @@ public class AddDeckController {
     
     /**
      * Return the add deck controller or creates a new one
+     * @return The instance of this AddDeckController
      */
     public static AddDeckController getInstance() {
         if (AddDeckController.instance == null) {

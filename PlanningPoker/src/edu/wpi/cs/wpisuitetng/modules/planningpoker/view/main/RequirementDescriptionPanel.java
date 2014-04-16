@@ -42,6 +42,13 @@ public class RequirementDescriptionPanel extends JPanel {
         
     }
     
+    /**
+     * Sets the data for the RequirementDescriptionPanel
+     *
+     * @param current_user
+     * @param parent_game
+     * @param req
+     */
     public void setData(User current_user, GameModel parent_game, GameRequirementModel req) {
         if (parent_game.isEnded()) {
             completedPanel.setRequirement(parent_game, req);
