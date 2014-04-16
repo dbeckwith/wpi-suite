@@ -124,8 +124,13 @@ public class EmailController extends AbstractUserController {
     private String startGameMessageBody(GameModel game) {
         String body = "\n";
         
-        body += CurrentUserController.getInstance().getUser().getName()
-                + " has created a new Planning Poker game called ";
+        if (CurrentUserController.getInstance().getUser() == null) {
+            body += "An unknown user has created a new Planning Poker game called ";
+        }
+        else {
+            body += CurrentUserController.getInstance().getUser().getName()
+                    + " has created a new Planning Poker game called ";
+        }
         body += game.getName() + ".\n\n";
         
         body += "The requirements for this game are:\n";

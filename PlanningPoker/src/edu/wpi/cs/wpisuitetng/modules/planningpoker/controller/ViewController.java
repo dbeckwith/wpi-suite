@@ -112,6 +112,7 @@ public class ViewController {
                         .getUserName());
         
         AddGameController.getInstance().addGame(newGame);
+        EmailController.getInstance().sendGameStartNotifications(newGame);
         
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());
@@ -153,6 +154,7 @@ public class ViewController {
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);
+            EmailController.getInstance().sendGameEndNotifications(curr);
         }
     }
     

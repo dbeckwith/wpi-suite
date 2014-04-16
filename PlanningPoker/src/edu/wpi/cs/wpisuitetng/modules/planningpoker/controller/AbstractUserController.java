@@ -25,7 +25,7 @@ public abstract class AbstractUserController {
      */
     private boolean timedOut = true;
     
-    private long timeout = 500;
+    private long timeout = 1500;
     
     /**
      * This controller's observer.
