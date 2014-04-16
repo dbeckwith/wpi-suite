@@ -287,6 +287,7 @@ SimpleListObserver {
             
             public void validate() {
                 getErrors();
+                parent.check();
             }
         });
         
