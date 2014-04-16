@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -346,7 +347,7 @@ public class NewGamePanel extends JPanel {
 		return gameDescription.getDate();
 	}
 
-	public ArrayList<GameRequirementModel> getRequirements() {
+	public List<GameRequirementModel> getRequirements() {
 		return newGameRequirementsPanel.getRequirementsFromTable();
 	}
 
