@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.JanewayFrame;
 import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginController;
@@ -44,16 +43,6 @@ public class Janeway {
 	 * Instantiate the main GUI frame
 	 */
 	public static void main(final String[] args) {
-		
-		// Set the look and feel to cross-platform so the UI looks
-		// the same across operating systems 
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} 
-		catch (Exception e) {
-			System.out.println("Error setting UI manager to cross-platform!");
-			e.printStackTrace();
-		}
 		
 		// Load modules
 		ModuleLoader<IJanewayModule> moduleLoader = new ModuleLoader<IJanewayModule>("./modules.conf");
