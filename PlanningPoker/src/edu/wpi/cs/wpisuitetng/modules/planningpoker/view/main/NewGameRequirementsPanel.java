@@ -52,7 +52,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         initComponents();
         createdRequirements = new ArrayList<>();
         requirementsTableScrollPane.getViewport().setBackground(Color.WHITE);
-        clearRequirements();
         
         requirementsListObserver = new SimpleListObserver() {
             
