@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -46,7 +47,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
-        endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
+        endGameButton.setIcon(ImageLoader.getIcon("EndEstimation.png"));
         
         closeGameButton = new JButton("<html>Close<br/>Game</html>");
         closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
@@ -55,6 +56,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
         editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
         
         startGameButton = new JButton("<html>Start<br/>Game</html>");
+        startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
         
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
@@ -91,6 +93,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PlanningPoker.getViewController().startGame();
+                EmailController.getInstance().sendNotifications();
             }
         });
         

@@ -227,6 +227,10 @@ public class ViewController {
     }
     
     public void startGame() {
-        
+        final GameModel curr = mainView.getMainPanel().getSelectedGame();
+        if (curr != null && !curr.isStarted()) {
+            curr.startGame();
+            UpdateGamesController.getInstance().updateGame(curr);
+        }
     }
 }
