@@ -130,7 +130,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-		                .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+		                .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
 		                .addGroup(layout.createSequentialGroup()
 		                    .addComponent(addButton)
 		                    .addPreferredGap(ComponentPlacement.RELATED)
@@ -149,10 +149,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addComponent(lblGameRequirements)
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(requirementsTableScrollPane, GroupLayout.PREFERRED_SIZE, 573, GroupLayout.PREFERRED_SIZE)
-		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(btnSelectAll)
-		            .addContainerGap(83, Short.MAX_VALUE))
+		            .addContainerGap())
 		);
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents

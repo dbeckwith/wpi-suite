@@ -8,9 +8,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -155,33 +152,32 @@ public class NewGamePanel extends JPanel {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(
-		    layout.createParallelGroup(Alignment.LEADING)
+		    layout.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-		                .addGroup(layout.createSequentialGroup()
-		                    .addGap(217)
-		                    .addComponent(errorLabel))
-		                .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE)
-		                .addGroup(layout.createSequentialGroup()
-		                    .addContainerGap()
-		                    .addComponent(saveButton)
-		                    .addGap(16)
-		                    .addComponent(cancelButton)))
+		            .addContainerGap()
+		            .addComponent(saveButton)
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
+		            .addComponent(cancelButton)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+		            .addGap(699))
+		        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
+		            .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 512, GroupLayout.PREFERRED_SIZE)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
 		);
 		layout.setVerticalGroup(
 		    layout.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 822, GroupLayout.PREFERRED_SIZE)
-		            .addGap(43)
+		            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+		                .addComponent(newGameRequirementsCard, GroupLayout.PREFERRED_SIZE, 384, Short.MAX_VALUE)
+		                .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(saveButton)
-		                .addComponent(cancelButton))
-		            .addPreferredGap(ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-		            .addComponent(errorLabel)
+		                .addComponent(cancelButton)
+		                .addComponent(errorLabel))
 		            .addContainerGap())
-		        .addComponent(newGameRequirementsCard, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 997, Short.MAX_VALUE)
 		);
 		newGameRequirementsCard.setLayout(new CardLayout(0, 0));
 
@@ -379,7 +375,12 @@ public class NewGamePanel extends JPanel {
 		ArrayList<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());
-        errorLabel.setText(errors.isEmpty()? "" : errors.get(0));
+        if (!errors.isEmpty()) {
+    		errorLabel.setText(errors.get(0));
+        }
+        else {
+            errorLabel.setText("");
+        }
 	}
 
 	/**

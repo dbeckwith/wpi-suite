@@ -106,7 +106,12 @@ public class VotePanel extends javax.swing.JPanel {
         ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
             selected = old.getCardsSelected();
+            lblYouVoted.setVisible(true);
             prevVoteLabel.setText(NUM_FORMAT.format(old.getEstimate()));
+        }
+        else {
+            lblYouVoted.setVisible(false);
+            prevVoteLabel.setText("");
         }
         
         cards.clear();
@@ -171,6 +176,7 @@ public class VotePanel extends javax.swing.JPanel {
         System.out.println("Estimate = " + estimate);
         Estimate est = new Estimate(currentUser, estimate, selected);
 
+        lblYouVoted.setVisible(true);
         prevVoteLabel.setText(NUM_FORMAT.format(est.getEstimate()));
         
         if (alreadyVoted) {
@@ -208,7 +214,7 @@ public class VotePanel extends javax.swing.JPanel {
         completedVotesField = new javax.swing.JLabel();
         votesProgressBar = new javax.swing.JProgressBar();
         
-        estimateLabel.setText("Estimate:");
+        estimateLabel.setText("Please select your Estimate:");
         
         voteField.setText("Votes:");
         
@@ -254,7 +260,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         estimateCardsPanel.setMaximumSize(new Dimension(0, 0));
         
-        JLabel lblYouVoted = new JLabel("You voted: ");
+        lblYouVoted = new JLabel("You voted: ");
         
         prevVoteLabel = new JLabel("<previous vote>");
         
@@ -415,4 +421,5 @@ public class VotePanel extends javax.swing.JPanel {
     private JLabel requirementNameLabel;
     private JLabel requirementType;
     private JLabel prevVoteLabel;
+    private JLabel lblYouVoted;
 }
