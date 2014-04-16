@@ -91,17 +91,17 @@ public class GamesListPanel extends javax.swing.JPanel {
 			{
 				add(pendingFolder);
 				add(completeFolder);
-				for (GameModel gm : GameListModel.getInstance().getGames()) {
+				for (int i = 0; i < GameListModel.getInstance().getGames().size(); i++) {
 					DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode();
-					gameNode.setUserObject(gm);
+					gameNode.setUserObject(GameListModel.getInstance().getGames().get(i));
 
-					if (gm.isEnded()) {
+					if (GameListModel.getInstance().getGames().get(i).isEnded()) {
 						completeFolder.add(gameNode);
 					} else {
 						pendingFolder.add(gameNode);
 					}
-					if (gm.getRequirements() != null) {
-						for (GameRequirementModel r : gm.getRequirements()) {
+					if (GameListModel.getInstance().getGames().get(i).getRequirements() != null) {
+						for (GameRequirementModel r : GameListModel.getInstance().getGames().get(i).getRequirements()) {
 							DefaultMutableTreeNode reqNode = new DefaultMutableTreeNode();
 							reqNode.setUserObject(r);
 							gameNode.add(reqNode);
