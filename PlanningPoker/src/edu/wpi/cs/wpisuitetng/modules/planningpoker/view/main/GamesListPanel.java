@@ -100,8 +100,8 @@ public class GamesListPanel extends javax.swing.JPanel {
 					if (GameListModel.getInstance().getGames().get(i).isEnded()) {
 						completeFolder.add(gameNode);
 					} else {
-						 if (gm.isStarted()
-                                || gm.getOwner()
+						 if (GameListModel.getInstance().getGames().get(i).isStarted()
+                                || GameListModel.getInstance().getGames().get(i).getOwner()
                                         .equals(ConfigManager.getConfig()
                                                 .getUserName()))
                              pendingFolder.add(gameNode);
