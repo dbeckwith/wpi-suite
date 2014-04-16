@@ -14,6 +14,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
@@ -25,8 +26,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
  * @author Sonaxaton
  */
 public class GamesListPanel extends javax.swing.JPanel {
-
-	/**
+    
+    /**
 	 *
 	 */
 	private static final long serialVersionUID = 4257983013648294131L;
@@ -99,7 +100,11 @@ public class GamesListPanel extends javax.swing.JPanel {
 					if (GameListModel.getInstance().getGames().get(i).isEnded()) {
 						completeFolder.add(gameNode);
 					} else {
-						pendingFolder.add(gameNode);
+						 if (gm.isStarted()
+                                || gm.getOwner()
+                                        .equals(ConfigManager.getConfig()
+                                                .getUserName()))
+                             pendingFolder.add(gameNode);
 					}
 					if (GameListModel.getInstance().getGames().get(i).getRequirements() != null) {
 						for (GameRequirementModel r : GameListModel.getInstance().getGames().get(i).getRequirements()) {

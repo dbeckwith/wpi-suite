@@ -11,7 +11,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -45,8 +44,10 @@ public class UserUpdateController {
         IM_NOTIFY, EMAIL_NOTIFY
     }
     
-    
-    private static UserUpdateController instance;
+    /**
+     * The instance of the controller.
+     */
+    private static UserUpdateController Instance;
     
     /**
      * Returns the instance of this UserUpdateController or creates a new one
@@ -54,10 +55,10 @@ public class UserUpdateController {
      * @return The instance of this UserUpdateController
      */
     public static UserUpdateController getInstance() {
-        if (instance == null) {
-            instance = new UserUpdateController();
+        if (Instance == null) {
+            Instance = new UserUpdateController();
         }
-        return instance;
+        return Instance;
     }
     
     /**
@@ -123,11 +124,10 @@ public class UserUpdateController {
                         .println("Invalid notification type " + fieldToUpdate);
                 return;
         }
-        final Request request = Network.getInstance().makeRequest("core/user",
+        final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
                 HttpMethod.POST);
         request.setBody(user.toJSON());
         request.send();
-        System.out.println("Updated: " + user);// TODO remove
     }
     
     /**

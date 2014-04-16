@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -26,14 +27,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
  * Represents a planning poker game
- * 
- * @author Akshay
- * 
  */
 public class GameModel extends AbstractModel {
+    public static enum GameStatus {
+        NEW("New"), PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
 
-	public static enum GameStatus {
-		PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
 
 		public String name;
 
@@ -55,7 +53,7 @@ public class GameModel extends AbstractModel {
 	private int id;
 	private String name;
 	private String description;
-	private ArrayList<GameRequirementModel> requirements;
+    private List<GameRequirementModel> requirements;
 	private Date endDate;
 	private GameType type;
 	private GameStatus status;
@@ -94,7 +92,7 @@ public class GameModel extends AbstractModel {
 	 * @param users
 	 */
 	public GameModel(int id, String name, String description,
-			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            List<GameRequirementModel> requirements, DeckModel deck,
 			Date end, GameType type, GameStatus status) {
 		this.id = id;
 		this.name = name;
@@ -122,7 +120,7 @@ public class GameModel extends AbstractModel {
 	 * @param users
 	 */
 	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            List<GameRequirementModel> requirements, DeckModel deck,
 			Date end, GameType type, GameStatus status) {
 		id = -1;
 		this.name = name;
@@ -149,7 +147,7 @@ public class GameModel extends AbstractModel {
 	 * @param owner
 	 */
 	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+            List<GameRequirementModel> requirements, DeckModel deck,
 			Date endDate, GameType type, GameStatus status,
 			String owner) {
 		this.name = name;
@@ -238,18 +236,30 @@ public class GameModel extends AbstractModel {
      *        The index of the requirement in the list of requirements
      * @return an array containing all of the estimates
      */
-	public ArrayList<Estimate> getEstimates(int reqIndex) {
+    public List<Estimate> getEstimates(int reqIndex) {
 		return requirements.get(reqIndex).getEstimates();
 	}
 
 	/**
 	 * @return The Requirements for this game
 	 */
-	public ArrayList<GameRequirementModel> getRequirements() {
+    public List<GameRequirementModel> getRequirements() {
 		return requirements;
 	}
 
 	/**
+     * Sets the game's status to pending if it is new
+     */
+    public void startGame(){
+        if(status == GameStatus.NEW){
+            status = GameStatus.PENDING;
+            for(GameStatusObserver gso: status_observers){
+                gso.statusChanged(this);
+            }
+        }
+    }
+    
+    /**
      * @return The deck for this game
      */
     public DeckModel getDeck() {
@@ -349,6 +359,14 @@ public class GameModel extends AbstractModel {
         for (int i = 0; i < status_observers.size(); i++) {
             status_observers.get(i).statusChanged(this);
         }
+    }
+
+/**
+     * determines if the game has been started
+     * @return true if the game's status is not new
+     */
+    public boolean isStarted(){
+        return !(status == GameStatus.NEW);
     }
     
 	@Override
