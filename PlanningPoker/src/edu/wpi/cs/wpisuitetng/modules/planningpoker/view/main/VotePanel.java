@@ -148,15 +148,8 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void selectEstimateCard() {
-        
-        boolean alreadyVoted = false;
-        new Thread() {
-            @Override
-            public void run() {
-                UpdateGamesController.getInstance().updateGame(parentGame);
-            }
-        }.start();
-        
+
+        boolean alreadyVoted = false;        
         ArrayList<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
@@ -185,7 +178,9 @@ public class VotePanel extends javax.swing.JPanel {
         else {
             req.addEstimate(est);
         }
-        old = est;
+        old = est;        
+
+        UpdateGamesController.getInstance().updateGame(parentGame);
     }
     
     /**

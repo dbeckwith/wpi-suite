@@ -23,9 +23,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 
 /**
  * Represents a planning poker game
- * 
- * @author Akshay
- * 
  */
 public class GameModel extends AbstractModel {
     public static enum GameStatus {
