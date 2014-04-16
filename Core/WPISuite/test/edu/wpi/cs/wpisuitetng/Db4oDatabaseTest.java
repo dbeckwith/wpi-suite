@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.database.Data;
@@ -29,7 +30,12 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class Db4oDatabaseTest {
 	
-
+    @Before
+    public void setup() {
+        Data db = DataStore.getDataStore();
+        db.deleteAll(new User("Name", "username", "password", 22));
+    }
+    
 	@Test
 	public void testSaveandRetrieve() throws WPISuiteException {
 		Data db = DataStore.getDataStore();
