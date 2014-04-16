@@ -302,6 +302,9 @@ SimpleListObserver {
 		return new Date(currentDate.getTime() + 1000 * 60 * 60);
 	}
 
+	/**
+	 * @return The end date for this game
+	 */
 	public Date getDate() {
 		// We need to go through all of these incantations because almost every
 		// relevant method in Date is deprecated...
@@ -407,6 +410,9 @@ SimpleListObserver {
 		}
 	}
 
+	/**
+	 * @return the list of errors when creating a new game
+	 */
 	public ArrayList<String> getErrors() {
 		ArrayList<String> errors = new ArrayList<>();
 		if (!isNameValid) {

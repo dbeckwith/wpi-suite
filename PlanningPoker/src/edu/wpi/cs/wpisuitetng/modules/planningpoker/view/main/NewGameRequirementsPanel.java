@@ -225,6 +225,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 });
 	}
 	
+	/**
+	 * Adds a custom GameRequirementModel
+	 * @param r
+	 */
 	public void addCustomRequirement(GameRequirementModel r) {
 	    createdRequirements.add(r);
 	    addRequirement(r);
@@ -240,6 +244,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		parent.check();
 	}
 
+	/**
+	 * @return the requirements in the requirement table
+	 */
 	public ArrayList<GameRequirementModel> getRequirementsFromTable() {
 		DefaultTableModel model = (DefaultTableModel) requirementsTable
 				.getModel();
@@ -257,6 +264,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		parent = p;
 	}
 
+	/**
+	 * Validates the requirements for a new game
+	 * @return True if at least one requirement is checked
+	 */
 	public boolean validateForm() {
 		boolean hasRequirement = false;
 
@@ -271,6 +282,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		return hasRequirement;
 	}
 	
+	/**
+	 * @return The list of errors for NewGameRequirementPanel
+	 */
 	public ArrayList<String> getErrors() {
 	    ArrayList<String> errors = new ArrayList<>();
 	    if (!validateForm()) {

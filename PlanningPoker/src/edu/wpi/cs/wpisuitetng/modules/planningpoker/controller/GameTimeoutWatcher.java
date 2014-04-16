@@ -28,6 +28,11 @@ public class GameTimeoutWatcher {
     
     private static GameTimeoutWatcher instance = null;
     
+    /**
+     * Returns the instance of this GameTimeoutWatcher or creates a new one
+     * 
+     * @return The instance of this GameTimeoutWatcher
+     */
     public static GameTimeoutWatcher getInstance() {
         if (GameTimeoutWatcher.instance == null) {
             GameTimeoutWatcher.instance = new GameTimeoutWatcher();

@@ -49,6 +49,10 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    /**
+     * Sets the game for the UncompletedGameDescriptionPanel
+     * @param game
+     */
     public void setGame(GameModel game) {
         setGameName(game.getName());
         setDescriptionText(game.getDescription());
@@ -59,6 +63,11 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         // getParticipantsList().setModel(listModel);
     }
     
+    /**
+     * Sets the end date for this uncompleted game
+     *
+     * @param date
+     */
     protected void setEndDate(Date date) {
         if (date == null) {
             setNoDeadline(true);
@@ -227,40 +236,72 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         return gameName.getText();
     }
     
+    /**
+     * Sets the game name for this uncompleted game
+     * @param text
+     */
     protected void setGameName(String text) {
         gameName.setText(text);
     }
     
+    /**
+     * @return The description text for this uncompleted game
+     */
     protected String getDescriptionText() {
         return descriptionText.getText();
     }
     
-    protected void setDescriptionText(String text_1) {
-        descriptionText.setText(text_1);
+    /**
+     * Sets the description text for this uncompleted game
+     * @param text
+     */
+    protected void setDescriptionText(String text) {
+        descriptionText.setText(text);
     }
     
+    /**
+     * @return the progress bar value
+     */
     protected int getProgressBarValue() {
         return progressBar.getValue();
     }
     
+    /**
+     * Sets the progress bar value
+     * @param value
+     */
     protected void setProgressBarValue(int value) {
         progressBar.setValue(value);
     }
     
+    /**
+     * @return The progress bar label text
+     */
     protected String getProgressLabelText() {
         return progressLabel.getText();
     }
     
-    protected void setProgressLabelText(String text_2) {
-        progressLabel.setText(text_2);
+    /**
+     * Sets the progress bar label text
+     * @param text
+     */
+    protected void setProgressLabelText(String text) {
+        progressLabel.setText(text);
     }
     
+    /**
+     * @return The game deadline text
+     */
     protected String getGameDeadlineText() {
         return gameDeadline.getText();
     }
     
-    protected void setGameDeadlineText(String text_3) {
-        gameDeadline.setText(text_3);
+    /**
+     * Sets the game deadline text
+     * @param text
+     */
+    protected void setGameDeadlineText(String text) {
+        gameDeadline.setText(text);
     }
     
     /**
@@ -280,11 +321,18 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * @return the name of the deck for this game
+     */
     protected String getDeckName() {
         return deckName.getText();
     }
     
-    protected void setDeckName(String text_4) {
-        deckName.setText(text_4);
+    /**
+     * Sets the name of the deck for this game
+     * @param text
+     */
+    protected void setDeckName(String text) {
+        deckName.setText(text);
     }
 }

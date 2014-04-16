@@ -37,6 +37,10 @@ public class GameModel extends AbstractModel {
 
 		public String name;
 
+		/**
+         * Creates a new GameStatus
+         * @param stat
+         */
 		GameStatus(String stat) {
 			name = stat;
 		}
@@ -83,18 +87,20 @@ public class GameModel extends AbstractModel {
 	 * @param name
 	 * @param description
 	 * @param requirements
+	 * @param deck
 	 * @param end
 	 * @param type
 	 * @param status
 	 * @param users
 	 */
 	public GameModel(int id, String name, String description,
-			ArrayList<GameRequirementModel> requirements, Date end,
-			GameType type, GameStatus status) {
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date end, GameType type, GameStatus status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
+		this.deck = deck;
 		endDate = end;
 		this.type = type;
 		this.status = status;
@@ -109,18 +115,20 @@ public class GameModel extends AbstractModel {
 	 * @param name
 	 * @param description
 	 * @param requirements
+	 * @param deck
 	 * @param end
 	 * @param type
 	 * @param status
 	 * @param users
 	 */
 	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, Date end,
-			GameType type, GameStatus status) {
+			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+			Date end, GameType type, GameStatus status) {
 		id = -1;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
+		this.deck = deck;
 		endDate = end;
 		this.type = type;
 		this.status = status;
@@ -134,28 +142,13 @@ public class GameModel extends AbstractModel {
 	 * @param name
 	 * @param description
 	 * @param requirements
+	 * @param deck
 	 * @param endDate
 	 * @param type
 	 * @param status
 	 * @param owner
 	 */
 	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, Date endDate,
-			GameType type, GameStatus status, String owner) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.requirements = requirements;
-		this.deck = null;
-		this.endDate = endDate;
-		this.type = type;
-		this.status = status;
-		this.owner = owner;
-		status_observers = new ArrayList<>();
-		users = CurrentUserController.getInstance().getUsers();
-	}
-
-	public GameModel(String name, String description,
 			ArrayList<GameRequirementModel> requirements, DeckModel deck,
 			Date endDate, GameType type, GameStatus status,
 			String owner) {
@@ -184,37 +177,6 @@ public class GameModel extends AbstractModel {
 		this.type = type;
 		this.status = status;
 		this.owner = owner;
-		status_observers = new ArrayList<>();
-		users = CurrentUserController.getInstance().getUsers();
-	}
-
-	public GameModel(String name, String description,
-			ArrayList<GameRequirementModel> requirements, DeckModel deck, Date endDate,
-			GameType type, GameStatus status) {
-		this.name = name;
-		this.description = description;
-		this.requirements = requirements;
-		this.deck = deck;
-		this.endDate = endDate;
-		this.type = type;
-		this.status = status;
-		this.owner = ConfigManager.getConfig().getUserName();
-		status_observers = new ArrayList<>();
-		users = CurrentUserController.getInstance().getUsers();
-	}
-	
-	public GameModel(int id, String name, String description,
-			ArrayList<GameRequirementModel> requirements, DeckModel deck, Date endDate,
-			GameType type, GameStatus status) {
-		this. id = id;
-		this.name = name;
-		this.description = description;
-		this.requirements = requirements;
-		this.deck = deck;
-		this.endDate = endDate;
-		this.type = type;
-		this.status = status;
-		this.owner = ConfigManager.getConfig().getUserName();
 		status_observers = new ArrayList<>();
 		users = CurrentUserController.getInstance().getUsers();
 	}
@@ -245,12 +207,24 @@ public class GameModel extends AbstractModel {
         return owner;
     }
     
+/**
+ * Adds a GameStatusObserver to the list of status observers
+ * 
+ * @param gso
+ *        The GameStatusObserver to add
+ */
 	public void addStatusListener(GameStatusObserver gso) {
 		if (!status_observers.contains(gso)) {
 			status_observers.add(gso);
 		}
 	}
 
+/**
+ * Removes a GameStatusObserver from the list of status observer
+ * 
+ * @param gso
+ *        The GameStatusObserver to remove
+ */
 	public void removeStatusListener(GameStatusObserver gso) {
 		if (status_observers.contains(gso)) {
 			status_observers.remove(gso);
@@ -258,8 +232,12 @@ public class GameModel extends AbstractModel {
 	}
 
 	/**
-	 * @return an array containing all of the estimates
-	 */
+     * Returns the list of estimates for a given requirement
+     * 
+     * @param reqIndex
+     *        The index of the requirement in the list of requirements
+     * @return an array containing all of the estimates
+     */
 	public ArrayList<Estimate> getEstimates(int reqIndex) {
 		return requirements.get(reqIndex).getEstimates();
 	}
@@ -393,6 +371,11 @@ public class GameModel extends AbstractModel {
 		return null;
 	}
 
+	/**
+     * Creates a GameModel from a JSON string
+     * @param json
+     * @return GameModel object from JSON string
+     */
 	public static GameModel fromJSON(String json) {
 		final Gson parser = new Gson();
 		GameModel gm = parser.fromJson(json, GameModel.class);
@@ -400,6 +383,12 @@ public class GameModel extends AbstractModel {
 		return gm;
 	}
 
+	/**
+     * Creates an array of GameModels from a JSON array
+     *
+     * @param json
+     * @return Array of GameModels from the JSON array
+     */
 	public static GameModel[] fromJSONArray(String json) {
 		final Gson parser = new Gson();
 		GameModel[] gms = parser.fromJson(json, GameModel[].class);
@@ -417,6 +406,11 @@ public class GameModel extends AbstractModel {
 		return status;
 	}
 
+	/**
+     * Copies the information from the given GameModel into this GameModel
+     *
+     * @param g
+     */
 	public void copyFrom(GameModel g) {
 		id = g.id;
 		name = g.name;
@@ -444,6 +438,12 @@ public class GameModel extends AbstractModel {
 		return getName();
 	}
 
+	/**
+     * Returns whether the input GameModel is equal to this one
+     *
+     * @param other
+     * @return True if this GameModel is equal to the input GameModel
+     */
 	public boolean equals(GameModel other) {
 		return other.id == id && other.name.equals(other.name);
 	}

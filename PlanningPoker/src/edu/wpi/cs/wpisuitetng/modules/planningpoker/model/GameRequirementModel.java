@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,6 +42,15 @@ public class GameRequirementModel extends AbstractModel {
 
 	private int finalEstimate;
 
+	/**
+     * Creates a new GameRequirementModel
+     * 
+     * @param parentId
+     * @param name
+     * @param description
+     * @param type
+     * @param estimates
+     */
 	public GameRequirementModel(int parentId, String name, String description,
 			String type, ArrayList<Estimate> estimates) {
 		this.parentId = parentId;
@@ -58,6 +67,7 @@ public class GameRequirementModel extends AbstractModel {
 	 * @param parentId
 	 * @param name
 	 * @param description
+	 * @param type
 	 */
 	public GameRequirementModel(int parentId, String name, String description,
 			String type) {
@@ -73,6 +83,12 @@ public class GameRequirementModel extends AbstractModel {
 		this(-1, "", "", "", new ArrayList<Estimate>());
 	}
 
+	/**
+     * Creates a new GameRequirementModel from a requirement from
+     * RequirementManager
+     * 
+     * @param r
+     */
 	public GameRequirementModel(Requirement r) {
 		this(r.getId(), r.getName(), r.getDescription(),
 				r.getType().toString(), new ArrayList<Estimate>());
@@ -121,6 +137,10 @@ public class GameRequirementModel extends AbstractModel {
 		return estimates;
 	}
 
+	/**
+     * Adds an estimate to the list of estimates
+     * @param e
+     */
 	public void addEstimate(Estimate e) {
 		estimates.add(e);
 		Collections.sort(estimates);
@@ -149,14 +169,16 @@ public class GameRequirementModel extends AbstractModel {
 		float toReturn;
 		if (estimates.isEmpty()) {
 			toReturn = 0;
-		} else {
+		} 
+		else {
 			final ArrayList<Estimate> estimates_copy = new ArrayList<>(
 					estimates);
 			Collections.sort(estimates_copy);
 			final int count = estimates_copy.size();
 			if (estimates_copy.size() % 2 == 1) {
 				toReturn = estimates_copy.get(count / 2).getEstimate();
-			} else {
+			}
+			else {
 				toReturn = (estimates_copy.get(count / 2).getEstimate() + estimates_copy
 						.get(count / 2 - 1).getEstimate()) / 2;
 			}
@@ -261,5 +283,4 @@ public class GameRequirementModel extends AbstractModel {
 	public void setFinalEstimate(int finalEstimate) {
 		this.finalEstimate = finalEstimate;
 	}
-
 }
