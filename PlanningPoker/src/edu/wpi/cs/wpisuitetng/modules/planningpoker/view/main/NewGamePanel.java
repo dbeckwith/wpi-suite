@@ -7,7 +7,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -78,7 +77,6 @@ public class NewGamePanel extends JPanel {
 
 				newReqNameValid = (newReqName.getText() != null && !newReqName
 						.getText().isEmpty());
-				newReqNameError.setVisible(!newReqNameValid);
 				checkNewRequirement();
 			}
 		});
@@ -104,7 +102,6 @@ public class NewGamePanel extends JPanel {
 
 				newReqDescValid = (newReqDesc.getText() != null && !newReqDesc
 						.getText().isEmpty());
-				newReqDescError.setVisible(!newReqDescValid);
 				checkNewRequirement();
 			}
 		});
@@ -152,32 +149,34 @@ public class NewGamePanel extends JPanel {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		layout.setHorizontalGroup(
-		    layout.createParallelGroup(Alignment.TRAILING)
+		    layout.createParallelGroup(Alignment.LEADING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addContainerGap()
-		            .addComponent(saveButton)
+		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+		                .addGroup(layout.createSequentialGroup()
+		                    .addContainerGap()
+		                    .addComponent(saveButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(cancelButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+		                    .addGap(105))
+		                .addGroup(layout.createSequentialGroup()
+		                    .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+		                    .addGap(6)))
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(cancelButton)
-		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-		            .addGap(699))
-		        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
-		            .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 512, GroupLayout.PREFERRED_SIZE)
-		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
+		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
 		);
 		layout.setVerticalGroup(
 		    layout.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-		                .addComponent(newGameRequirementsCard, GroupLayout.PREFERRED_SIZE, 384, Short.MAX_VALUE)
-		                .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+		            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(saveButton)
 		                .addComponent(cancelButton)
 		                .addComponent(errorLabel))
 		            .addContainerGap())
+		        .addComponent(newGameRequirementsCard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
 		);
 		newGameRequirementsCard.setLayout(new CardLayout(0, 0));
 
@@ -191,16 +190,12 @@ public class NewGamePanel extends JPanel {
 		newRequirementPanel.setBackground(Color.WHITE);
 		newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
 
-		nameLabel = new JLabel("Requirement Name:");
-
-		newReqNameError = new JLabel("* Required field!");
-		newReqNameError.setFont(new Font("Dialog", Font.BOLD, 12));
-		newReqNameError.setForeground(new java.awt.Color(255, 0, 0));
+		nameLabel = new JLabel("Requirement Name: *");
 
 		newReqName = new JTextField();
 		newReqName.setColumns(10);
 
-		descLabel = new JLabel("Requirement Description:");
+		descLabel = new JLabel("Requirement Description: *");
 
 		saveNewReqButton = new JButton("Save Requirement");
 		saveNewReqButton.setIcon(ImageLoader.getIcon("Save.png"));
@@ -221,9 +216,6 @@ public class NewGamePanel extends JPanel {
 				showPanel("reqlistpanel");
 			}
 		});
-
-		newReqDescError = new JLabel("* Required field!");
-		newReqDescError.setForeground(new java.awt.Color(255, 0, 0));
 		
 		scrollPane = new JScrollPane();
 		
@@ -246,58 +238,52 @@ public class NewGamePanel extends JPanel {
 				showPanel("reqlistpanel");
 			}
 		});
+		
+		newReqErrorsLabel = new JLabel("ERRORS");
+		newReqErrorsLabel.setForeground(Color.RED);
 		GroupLayout gl_newRequirementPanel = new GroupLayout(newRequirementPanel);
 		gl_newRequirementPanel.setHorizontalGroup(
-		    gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		    gl_newRequirementPanel.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(gl_newRequirementPanel.createSequentialGroup()
 		            .addContainerGap()
 		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
 		                .addComponent(scrollPane)
-		                .addComponent(newReqName, GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
-		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
-		                    .addComponent(nameLabel)
-		                    .addGap(46)
-		                    .addComponent(newReqNameError))
-		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
-		                    .addComponent(descLabel)
-		                    .addGap(5)
-		                    .addComponent(newReqDescError))
-		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
-		                    .addComponent(saveNewReqButton)
-		                    .addGap(18)
-		                    .addComponent(cancelNewReqButton))
+		                .addComponent(newReqName, GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+		                .addComponent(nameLabel)
+		                .addComponent(descLabel)
 		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
 		                    .addComponent(typeLabel)
-		                    .addGap(15)
-		                    .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		                    .addComponent(cancelNewReqButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(saveNewReqButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(newReqErrorsLabel)))
 		            .addContainerGap())
 		);
 		gl_newRequirementPanel.setVerticalGroup(
 		    gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
 		        .addGroup(gl_newRequirementPanel.createSequentialGroup()
 		            .addContainerGap()
-		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
-		                .addComponent(nameLabel)
-		                .addComponent(newReqNameError))
+		            .addComponent(nameLabel)
 		            .addGap(5)
 		            .addComponent(newReqName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
-		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
-		                .addComponent(descLabel)
-		                .addComponent(newReqDescError))
+		            .addComponent(descLabel)
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 571, GroupLayout.PREFERRED_SIZE)
-		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
-		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
-		                    .addGap(4)
-		                    .addComponent(typeLabel))
-		                .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-		            .addGap(179)
+		            .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(typeLabel)
+		                .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(cancelNewReqButton)
 		                .addComponent(saveNewReqButton)
-		                .addComponent(cancelNewReqButton))
-		            .addGap(107))
+		                .addComponent(newReqErrorsLabel))
+		            .addGap(5))
 		);
 		newRequirementPanel.setLayout(gl_newRequirementPanel);
 
@@ -387,6 +373,17 @@ public class NewGamePanel extends JPanel {
 	 * Checks that name and description for new requirement are properly entered
 	 */
 	public void checkNewRequirement() {
+	    if (!newReqNameValid) {
+	        newReqErrorsLabel.setVisible(true);
+	        newReqErrorsLabel.setText("Name field is required");
+	    }
+	    else if (!newReqDescValid) {
+	        newReqErrorsLabel.setVisible(true);
+            newReqErrorsLabel.setText("Description field is required");
+	    }
+	    else {
+	        newReqErrorsLabel.setVisible(false);
+	    }
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
 	}
 
@@ -412,8 +409,7 @@ public class NewGamePanel extends JPanel {
 	private JTextArea newReqDesc;
 	private Boolean newReqNameValid = false;
 	private Boolean newReqDescValid = false;
-	private JLabel newReqNameError;
-	private JLabel newReqDescError;
 	private JScrollPane scrollPane;
 	private JLabel errorLabel;
+	private JLabel newReqErrorsLabel;
 }

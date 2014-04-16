@@ -69,6 +69,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         };
         RequirementsListModel.getInstance().addListListener(
                 requirementsListObserver);
+        GetRequirementsController.getInstance().retrieveRequirements();
 	}
 	
 	public SimpleListObserver getRequirementsListObserver() {
