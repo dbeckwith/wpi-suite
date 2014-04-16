@@ -69,7 +69,7 @@ SimpleListObserver {
 		cards.add(8.0);
 		cards.add(13.0);
 
-		defaultDeck = new DeckModel("Default", cards, false);
+		defaultDeck = new DeckModel("Default", cards, true);
 		DeckListModel.getInstance().setDefaultDeck(defaultDeck);
 		deckComboBox.addItem(defaultDeck);
 

@@ -258,17 +258,14 @@ public class VotePanel extends javax.swing.JPanel {
         
         estimateCardsPanel = new JPanel(){
         	@Override
-        	public void paint(Graphics g){
+        	public void paintComponent(Graphics g){
+        		//super.paintComponent(g);
         		BufferedImage texture = ImageLoader.getImage("felt.png");
         		for(int x = 0; x < getWidth(); x += texture.getWidth()){
         			for(int y = 0; y < getHeight(); y+= texture.getHeight()){
         				g.drawImage(texture, x, y, null);
         			}
-        		}
-        		for(CardButton card:cards){
-        			card.repaint();
-        		}
-        		
+        		}        		
         	}        	
         };
         estimateCardsPanel.setBackground(Color.WHITE);
