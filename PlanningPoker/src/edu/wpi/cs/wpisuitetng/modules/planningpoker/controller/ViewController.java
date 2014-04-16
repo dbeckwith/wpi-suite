@@ -155,6 +155,7 @@ public class ViewController {
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);
+            EmailController.getInstance().sendGameEndNotifications(curr);
         }
     }
     
@@ -232,7 +233,7 @@ public class ViewController {
         if (curr != null && !curr.isStarted()) {
             curr.startGame();
             UpdateGamesController.getInstance().updateGame(curr);
-            EmailController.getInstance().sendGameEndNotifications(curr);
+            EmailController.getInstance().sendGameStartNotifications(curr);
         }
     }
 }
