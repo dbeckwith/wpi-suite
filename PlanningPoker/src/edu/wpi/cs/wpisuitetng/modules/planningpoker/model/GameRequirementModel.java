@@ -41,6 +41,14 @@ public class GameRequirementModel extends AbstractModel {
 	private ArrayList<Estimate> estimates;
 
 	private int finalEstimate;
+	
+	/**
+	 * A unique id for this instance of the requirement
+	 */
+	private int id;
+	
+	private static int nextId = 0;
+	
 
 	/**
      * Creates a new GameRequirementModel
@@ -61,6 +69,8 @@ public class GameRequirementModel extends AbstractModel {
 
 		Collections.sort(this.estimates);
 		finalEstimate = -1;
+		id = nextId;
+		nextId++;
 	}
 
 	/**
@@ -77,6 +87,8 @@ public class GameRequirementModel extends AbstractModel {
 		this.type = type;
 		estimates = new ArrayList<Estimate>();
 		finalEstimate = -1;
+		id = nextId;
+        nextId++;
 	}
 
 	public GameRequirementModel() {
@@ -95,6 +107,13 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
 	 * @return the parentId
 	 */
 	public int getParentId() {

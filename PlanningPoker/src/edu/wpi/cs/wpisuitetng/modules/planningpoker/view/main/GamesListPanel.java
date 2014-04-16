@@ -76,9 +76,16 @@ public class GamesListPanel extends javax.swing.JPanel {
 
 		// save the selected node
 		Object selectedNodeUserObject = null;
+		boolean requirement = false;
+		boolean game = false;
 		if (gameTree.getSelectionCount() != 0) {
 			selectedNodeUserObject = ((DefaultMutableTreeNode) gameTree
 					.getSelectionPath().getLastPathComponent()).getUserObject();
+			if (selectedNodeUserObject instanceof GameRequirementModel){
+			    requirement = true;
+			}else if (selectedNodeUserObject instanceof GameModel){
+			    game = true;
+			}
 		}
 
 
@@ -148,9 +155,9 @@ public class GamesListPanel extends javax.swing.JPanel {
 		treeEnum = rootNode.depthFirstEnumeration();
 		while (treeEnum.hasMoreElements()) {
 			node = (DefaultMutableTreeNode) treeEnum.nextElement();
-			if (node.getUserObject() != null
-					&& node.getUserObject().equals(selectedNodeUserObject)) {
-				gameTree.setSelectionPath(new TreePath(node.getPath()));
+			if (node.getUserObject() != null && node.getUserObject() instanceof GameRequirementModel){
+			    if(requirement && ((GameRequirementModel) node.getUserObject()).getId() == ((GameRequirementModel) selectedNodeUserObject).getId())
+			        gameTree.setSelectionPath(new TreePath(node.getPath()));
 
 			}
 		}
