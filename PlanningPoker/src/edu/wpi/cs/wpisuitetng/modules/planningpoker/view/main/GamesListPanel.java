@@ -93,21 +93,21 @@ public class GamesListPanel extends javax.swing.JPanel {
 			{
 				add(pendingFolder);
 				add(completeFolder);
-				for (GameModel gm : GameListModel.getInstance().getGames()) {
+				for (int i = 0; i < GameListModel.getInstance().getGames().size(); i++) {
 					DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode();
-					gameNode.setUserObject(gm);
+					gameNode.setUserObject(GameListModel.getInstance().getGames().get(i));
 
-					if (gm.isEnded()) {
+					if (GameListModel.getInstance().getGames().get(i).isEnded()) {
 						completeFolder.add(gameNode);
 					} else {
-						 if (gm.isStarted()
-                                || gm.getOwner()
+						 if (GameListModel.getInstance().getGames().get(i).isStarted()
+                                || GameListModel.getInstance().getGames().get(i).getOwner()
                                         .equals(ConfigManager.getConfig()
                                                 .getUserName()))
                              pendingFolder.add(gameNode);
 					}
-					if (gm.getRequirements() != null) {
-						for (GameRequirementModel r : gm.getRequirements()) {
+					if (GameListModel.getInstance().getGames().get(i).getRequirements() != null) {
+						for (GameRequirementModel r : GameListModel.getInstance().getGames().get(i).getRequirements()) {
 							DefaultMutableTreeNode reqNode = new DefaultMutableTreeNode();
 							reqNode.setUserObject(r);
 							gameNode.add(reqNode);
@@ -117,9 +117,9 @@ public class GamesListPanel extends javax.swing.JPanel {
 					completeFolder.setUserObject("Complete Games (" + completeFolder.getChildCount() + ")");
 				}
 				if (completeFolder.getChildCount() == 0)
-					completeFolder.add(new DefaultMutableTreeNode("<There are no complete games>"));
+					completeFolder.add(new DefaultMutableTreeNode("<No complete games>"));
 				if (pendingFolder.getChildCount() == 0)
-					pendingFolder.add(new DefaultMutableTreeNode("<There are no games in progress>"));
+					pendingFolder.add(new DefaultMutableTreeNode("<No games in progress>"));
 			}
 		};
 		gameTree.setModel(new DefaultTreeModel(rootNode));

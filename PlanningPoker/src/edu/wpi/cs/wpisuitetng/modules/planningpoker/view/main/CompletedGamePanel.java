@@ -20,7 +20,9 @@ import javax.swing.table.DefaultTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  * 
@@ -72,6 +74,15 @@ public class CompletedGamePanel extends javax.swing.JPanel {
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
                 model.removeRow(i);
             }
+        }
+        else {
+            setNumRequirements(selectedGame.getRequirements().size() + "");
+            
+            DefaultTableModel model = (DefaultTableModel) voteResultTable
+                    .getModel();
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
             for (GameRequirementModel req : selectedGame.getRequirements()) {
                 model.addRow(new Object[] { req.getName(),
                         req.getEstimateMean(), req.getEstimateMedian(),
@@ -110,30 +121,42 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                 return columnEditables[column];
             }
         });
+        Font temp_Font;
+        temp_Font = voteResultTable.getTableHeader().getFont();
+        voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         tableScrollPane.setViewportView(voteResultTable);
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
         
-        numRequirements = new JLabel("");
+        numRequirements = new JLabel("<num reqs>");
+        
+        JLabel lblRequirements = new JLabel("Requirements:");
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
+                    .addContainerGap()
                     .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(lblNumberOfRequirements)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(numRequirements)
-                    .addContainerGap(307, Short.MAX_VALUE))
+                    .addContainerGap(247, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lblRequirements)
+                    .addContainerGap(370, Short.MAX_VALUE))
                 .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(Alignment.TRAILING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
+                    .addContainerGap()
+                    .addComponent(lblRequirements)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
                         .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(Alignment.BASELINE)

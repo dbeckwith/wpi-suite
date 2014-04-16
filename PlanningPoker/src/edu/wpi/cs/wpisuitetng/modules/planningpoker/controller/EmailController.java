@@ -11,12 +11,11 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import javax.mail.internet.AddressException;
+import java.util.LinkedList;
 
-import org.apache.commons.mail.*;
-
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * This class controls the sending of email notifications
@@ -26,84 +25,61 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class EmailController extends AbstractUserController {
     
-    private final String username = "team9wpi";
-    private final String from = "team9wpi@gmail.com"; // GMail user name
-    private final String password = "team9ftw"; // GMail password
-    private final String subject = "A new Planning Poker game has begun!";
-    private String body;
+    /**
+     * Subject line for a new game email.
+     */
+    private static final String NEW_GAME_SUBJECT = "A new Planning Poker game has begun!"; //$NON-NLS-1$
     
     /**
-     * Creates a new EmailController class
+     * Subject line for an ended game email.
      */
-    private EmailController() {
+    private static final String END_GAME_SUBJECT = "A Planning Poker game has ended."; //$NON-NLS-1$
+    
+    /**
+     * A list of all threads used to send email notifications. Threads are added
+     * to the list when {@link #sendEmails(String, String)} is called and are
+     * run when the controller recieves users from the server to avoid sending
+     * to users who have chosen not to recieve emails or not sending to users
+     * who have.
+     */
+    private final LinkedList<EmailSenderThread> senderThreads = new LinkedList<>();
+    
+    /**
+     * Creates a new EmailController class. Private to avoid instansiation.
+     */
+    private EmailController() { // $codepro.audit.disable emptyMethod    
     }
     
-    private static EmailController instance = null;
+    /**
+     * The instance of the controller.
+     */
+    private static EmailController Instance;
     
     /**
-     * Returns the instance of this EmailController or creates a new one
-     *
-     * @return The instance of this EmailController
+     * Gets the instance of the controller.
+     * 
+     * @return the instance of the controller.
      */
     public static EmailController getInstance() {
-        if (instance == null) {
-            instance = new EmailController();
+        if (Instance == null) {
+            Instance = new EmailController();
         }
-        return instance;
+        return Instance;
     }
     
     /**
-     * Gets all users, then sends email notifications to all users with email
-     * addresses on file
-     */
-    public void sendNotifications() {
-        requestUsers();
-    }
-    
-    /**
-     * Sets the body of the email
-     */
-    private void prepareBody() {
-        final String username = ConfigManager.getConfig().getUserName();
-        for (User u : getUsers()) {
-            if (u.getUsername().equals(username)) {
-                body = u.getName()
-                        + " has created a new Planning Poker game. Please make your estimates!";
-                break;
-            }
-        }
-    }
-    
-    /**
-     * Sends an email to all users
+     * Sends an email with the given subject and body to all users who have
+     * chosen to receive email notifications.
      * 
-     * @throws EmailException
-     * @throws AddressException
+     * @param subject
+     *        the subject line of the email
+     * @param body
+     *        the body of the email
      */
-    private void sendEmails() {
-        prepareBody();
-        System.setProperty("java.net.preferIPv4Stack", "true");
-        try {
-            for (User u : getUsers()) {
-                if (u.getEmail() != null && u.isNotifyByEmail()) {
-                    Email email = new SimpleEmail();
-                    email.setHostName("smtp.gmail.com");
-                    email.setSmtpPort(587);
-                    email.setAuthenticator(new DefaultAuthenticator(username,
-                            password));
-                    email.setSSLOnConnect(true);
-                    email.addTo(u.getEmail());
-                    email.setSubject(subject);
-                    email.setFrom(from);
-                    email.setMsg("Dear " + u.getName() + ",\n" + body);
-                    email.send();
-                }
-            }
-        }
-        catch (EmailException e) {
-            System.err.println("Email failed to send");
-            e.printStackTrace();
-        }
+    public void sendEmails(String subject, String body) {
+        final EmailSenderThread sender = new EmailSenderThread(subject, body);
+        senderThreads.add(sender);
+        requestUsers();
     }
     
     /**
@@ -116,11 +92,71 @@ public class EmailController extends AbstractUserController {
     public void receivedUsers(User[] users) {
         if (users != null) {
             setUsers(users);
-            sendEmails();
-        }
-        else {
-            System.err.println("Users not received properly");
+            while (!senderThreads.isEmpty()) { // $codepro.audit.disable methodInvocationInLoopCondition
+                senderThreads.pop().start();
+            }
         }
     }
     
+    /**
+     * Sends an email notification to all users who have chosen to receive
+     * email notifications that a game has ended.
+     */
+    public void sendGameEndNotifications(GameModel game) {
+        sendEmails(END_GAME_SUBJECT, endGameMessageBody(game));
+    }
+    
+    /**
+     * Sends an email notification to all users who have chosen to receive
+     * email notifications that a game has started.
+     */
+    public void sendGameStartNotifications(GameModel game) {
+        sendEmails(NEW_GAME_SUBJECT, startGameMessageBody(game));
+    }
+    
+    /**
+     * Generates a email message body for a new game notification.
+     * 
+     * @param game
+     *        the new game to notify people about
+     * @return a String containing the message body
+     */
+    private String startGameMessageBody(GameModel game) {
+        String body = "\n";
+        
+        if (CurrentUserController.getInstance().getUser() == null) {
+            body += "An unknown user has created a new Planning Poker game called ";
+        }
+        else {
+            body += CurrentUserController.getInstance().getUser().getName()
+                    + " has created a new Planning Poker game called ";
+        }
+        body += game.getName() + ".\n\n";
+        
+        body += "The requirements for this game are:\n";
+        for (GameRequirementModel req : game.getRequirements()) {
+            body += "\t" + req.toString() + "\n";
+        }
+        body += "\n";
+        
+        body += game.getEndTime() == null ? ""
+                : "The deadline for submitting estimations is "
+                        + game.getEndTime();
+        return body;
+    }
+    
+    
+    /**
+     * Generates a email message body for an ended game notification.
+     * 
+     * @param game
+     *        the ended game to notify people about
+     * @return a String containing the message body
+     */
+    private String endGameMessageBody(GameModel game) {
+        String body = "\n";
+        body += "The Planning Poker game " + game.getName()
+                + " has ended and is no longer open for estimation.";
+        return body;
+    }
 }
