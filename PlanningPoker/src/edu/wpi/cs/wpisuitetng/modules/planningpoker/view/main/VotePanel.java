@@ -30,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 import java.awt.BorderLayout;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * 
@@ -72,7 +73,17 @@ public class VotePanel extends javax.swing.JPanel {
         this.currentUser = currentUser;
         this.parentGame = parentGame;
         this.req = req;
-        
+          
+        boolean voted = false;
+        ArrayList<Integer> selectedCards = null;
+        ArrayList<Estimate> estimates = req.getEstimates();
+        for (Estimate e : estimates) {
+            if (e.getUsername().equals(currentUser.getUsername())) {
+            	selectedCards = e.getCardsSelected();
+                voted = true;
+            }
+        }
+                
         reqDescriptionTextArea.setText(req.getDescription());
         setRequirementName(req.getName());
         setRequirementType(req.getType());
@@ -132,6 +143,13 @@ public class VotePanel extends javax.swing.JPanel {
             });
             
             estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
+        }
+        
+        if(voted){
+        	for(Integer i:selectedCards){
+        		cards.get(i).setCardSelected(true);
+        	}
+        	
         }
         
         validate();
@@ -206,6 +224,8 @@ public class VotePanel extends javax.swing.JPanel {
         JLabel lblRequirement = new JLabel("Requirement:");
         
         JScrollPane scrollPane = new JScrollPane();
+        JScrollPane estimateScrollPane = new JScrollPane();
+        estimateScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         //JScrollPane scrollPane_1 = new JScrollPane();
         
@@ -250,7 +270,7 @@ public class VotePanel extends javax.swing.JPanel {
         		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(estimateCardsPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+        				.addComponent(estimateScrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
         				.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
         				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
         					.addComponent(lblRequirement)
@@ -297,13 +317,15 @@ public class VotePanel extends javax.swing.JPanel {
         						.addComponent(completedVotesField))
         					.addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(estimateCardsPanel, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+        			.addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(btnSubmit)
         			.addContainerGap())
         );
         FlowLayout fl_estimateCardsPanel = new FlowLayout(FlowLayout.CENTER, 5, 5);
         estimateCardsPanel.setLayout(fl_estimateCardsPanel);
+        
+        estimateScrollPane.setViewportView(estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();
         reqDescriptionTextArea.setEditable(false);
@@ -396,5 +418,4 @@ public class VotePanel extends javax.swing.JPanel {
     private JPanel estimateCardsPanel;
     private JLabel requirementNameLabel;
     private JLabel requirementType;
-    
 }
