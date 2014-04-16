@@ -248,8 +248,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 UpdateGamesController.getInstance().updateGame(parent);
                 final ArrayList<GameStatusObserver> gsos = parent
                         .getStatusObservers();
-                for (GameStatusObserver g : gsos) {
-                    g.statusChanged(parent);
+                for (int i = 0; i < gsos.size(); i++) {
+                    gsos.get(i).statusChanged(parent);
                 }
             }
         });
