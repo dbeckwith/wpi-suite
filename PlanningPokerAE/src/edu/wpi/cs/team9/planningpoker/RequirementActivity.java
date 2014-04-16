@@ -1,6 +1,7 @@
 package edu.wpi.cs.team9.planningpoker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -125,7 +126,7 @@ public class RequirementActivity extends Activity implements RequirementFragment
 		}
 		
 		public int getTitleIndex(String s){
-			ArrayList<GameRequirementModel> reqs = game.getRequirements();
+			List<GameRequirementModel> reqs = game.getRequirements();
 			for(GameRequirementModel r:reqs){
 				if(r.getName().equals(s)){
 					return reqs.indexOf(r) + 1;

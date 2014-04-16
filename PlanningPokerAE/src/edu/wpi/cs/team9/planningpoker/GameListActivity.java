@@ -87,7 +87,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		Arrays.sort(games, new Comparator<GameModel>() {
 			@Override
 			public int compare(GameModel lhs, GameModel rhs) {
-				if(lhs.getStatus().equals(GameStatus.PENDING)){
+				if(lhs.getStatus() == GameStatus.PENDING){
 					return -1;
 				} else return 1;
 			}

@@ -1,6 +1,7 @@
 package edu.wpi.cs.team9.planningpoker.view;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 		nameText.setText(game.getName());
 		descriptionText.setText(game.getDescription());
 		
-		ArrayList<GameRequirementModel> requirements = game.getRequirements();
+		List<GameRequirementModel> requirements = game.getRequirements();
 		
 		for(GameRequirementModel req:requirements){
 			Log.d(TAG, "added requirement to list : "+req.getName());
