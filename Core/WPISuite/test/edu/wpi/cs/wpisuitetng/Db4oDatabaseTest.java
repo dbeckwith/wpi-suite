@@ -16,8 +16,10 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.database.Data;
@@ -29,7 +31,12 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class Db4oDatabaseTest {
 	
-
+    @Before
+    public void setup() {
+        Data db = DataStore.getDataStore();
+        db.deleteAll(new User("Name", "username", "password", 22));
+    }
+    
 	@Test
 	public void testSaveandRetrieve() throws WPISuiteException {
 		Data db = DataStore.getDataStore();
@@ -49,7 +56,7 @@ public class Db4oDatabaseTest {
 		db.save(firstUser);
 		db.delete(firstUser);
 		User me = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
-		assertEquals(me, null);
+		assertNull(me);
 	}
 	
 	@Test
@@ -62,6 +69,7 @@ public class Db4oDatabaseTest {
 		User Mjolnir = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
 		assertEquals(firstUser, Mjolnir);
 		db.delete(Mjolnir);
+		
 		
 		
 	}
@@ -157,7 +165,7 @@ public class Db4oDatabaseTest {
 		
 		User[] arr = new User[2];
 		User firstUser = new User("Ryan", "rchamer", "password", 0);
-		User secondUser = new User("Bryan", "rchamer", "pword", 1);
+		User secondUser = new User("Bryan", "bgaffey", "pword", 1);
 		List<User> first = new ArrayList<User>();
 		first.add(firstUser);
 		db.deleteAll(firstUser);
@@ -180,7 +188,7 @@ Data db = DataStore.getDataStore();
 		
 		User[] arr = new User[2];
 		User firstUser = new User("Ryan", "rchamer", "password", 0);
-		User secondUser = new User("Bryan", "rchamer", "pword", 1);
+		User secondUser = new User("Bryan", "bgaffey", "pword", 1);
 		User thirdUser = new User("Tyler", "twack", "word", 2);
 		List<User> first = new ArrayList<User>();
 		db.deleteAll(firstUser);
