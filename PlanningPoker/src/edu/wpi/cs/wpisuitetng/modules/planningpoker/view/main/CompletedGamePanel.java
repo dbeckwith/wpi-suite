@@ -72,6 +72,15 @@ public class CompletedGamePanel extends javax.swing.JPanel {
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
                 model.removeRow(i);
             }
+        }
+        else {
+            setNumRequirements(selectedGame.getRequirements().size() + "");
+            
+            DefaultTableModel model = (DefaultTableModel) voteResultTable
+                    .getModel();
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
             for (GameRequirementModel req : selectedGame.getRequirements()) {
                 model.addRow(new Object[] { req.getName(),
                         req.getEstimateMean(), req.getEstimateMedian(),

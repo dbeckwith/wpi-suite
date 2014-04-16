@@ -94,7 +94,6 @@ public class AdminButtonGroup extends ToolbarGroupView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PlanningPoker.getViewController().startGame();
-                EmailController.getInstance().sendNotifications();
             }
         });
         
