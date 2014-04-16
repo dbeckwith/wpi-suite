@@ -294,7 +294,7 @@ public class GameModel extends AbstractModel {
 	 */
 	public void setEnded(boolean fin) {
 		GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
-		if (status != new_status) {
+		if (status != new_status && status == GameStatus.PENDING) {
 			status = new_status;
 			for (int i = 0; i < status_observers.size(); i++){
 				status_observers.get(i).statusChanged(this);
