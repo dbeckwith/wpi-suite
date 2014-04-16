@@ -47,14 +47,17 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (node.getUserObject() instanceof GameModel) {
             final GameModel game = (GameModel) node.getUserObject();
             
-            if(game.isClosed()){
+            if (game.isClosed()) {
                 icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
             }
             else if (game.isEnded()) {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
-            } else {
-                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
-                
+            }
+            else if (!game.isStarted()) {
+                icon = new ImageIcon(ImageLoader.getImage("new_req_small.png"));
+            }
+            else {
+                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));           
                 if (game.getRequirements() != null) {
                     boolean hasUnvotedReqs = false;
                     req_loop: for (GameRequirementModel req : game
@@ -101,7 +104,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (node.getUserObject() != null) {
             if (node.getUserObject().equals("Pending Games")) {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
-            } else if (node.getUserObject().equals("Complete Games")) {
+            }
+            else if (node.getUserObject().equals("Complete Games")) {
                 icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
             }
         }
