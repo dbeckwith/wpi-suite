@@ -29,6 +29,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * Tests for GameEntityManager
@@ -54,6 +56,9 @@ public class GameEntityManagerTest {
 
 	@BeforeClass
 	static public void setUpBeforeClass() {
+	    Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
 		admin = new User("admin", "admin", "1234", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");

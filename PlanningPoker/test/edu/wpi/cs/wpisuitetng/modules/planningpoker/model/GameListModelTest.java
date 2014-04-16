@@ -19,6 +19,8 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * 
@@ -30,6 +32,9 @@ public class GameListModelTest {
 
 	@BeforeClass
 	static public void setUpBeforeClass() {
+	    Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
 		GameListModelTest.instance = GameListModel.getInstance();
 		instance.removeObservers();
 		instance.removeStatusObservers();

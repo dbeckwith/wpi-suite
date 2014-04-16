@@ -14,10 +14,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * @author Lukas, Dan
@@ -25,6 +28,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
  */
 public class GameTest {
 
+    @BeforeClass
+    static public void setUpBeforeClass() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
+    }
+    
 	@Test
 	public void TestRequirementEndsAfterDeadline() {
 		GameModel testgame = new GameModel(1, "Test Game", "something", null,

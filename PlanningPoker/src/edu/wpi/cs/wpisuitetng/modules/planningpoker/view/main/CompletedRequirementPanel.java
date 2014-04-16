@@ -246,7 +246,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
                         .getText()));
                 UpdateGamesController.getInstance().updateGame(parent);
-                final ArrayList<GameStatusObserver> gsos = parent
+                final ArrayList<GameStatusObserver> gsos = (ArrayList<GameStatusObserver>) parent
                         .getStatusObservers();
                 for (int i = 0; i < gsos.size(); i++) {
                     gsos.get(i).statusChanged(parent);
