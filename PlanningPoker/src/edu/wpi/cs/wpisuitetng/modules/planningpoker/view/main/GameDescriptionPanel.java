@@ -44,6 +44,10 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    /**
+     * Sets the game to the input GameModel
+     * @param game
+     */
     public void setGame(GameModel game) {
         if (game.isEnded()) {
             ((CardLayout) getLayout()).show(this, "completed");

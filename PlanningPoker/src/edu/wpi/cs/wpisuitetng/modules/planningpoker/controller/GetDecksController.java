@@ -31,7 +31,7 @@ public class GetDecksController {
     /**
      * Returns the GetDecksController instance
      * 
-     * @return
+     * @return The instance of this GetDecksController
      */
     public static GetDecksController getInstance() {
         if (GetDecksController.instance == null) {
@@ -51,6 +51,12 @@ public class GetDecksController {
         request.send();
     }
     
+    /**
+     * Adds received decks to the DeskListModel. This is called from the
+     * GetDecksRequestObserver.
+     * 
+     * @param decks
+     */
     public void receivedDecks(DeckModel[] decks) {
         DeckListModel.getInstance().emptyModel();
         if (decks != null) {

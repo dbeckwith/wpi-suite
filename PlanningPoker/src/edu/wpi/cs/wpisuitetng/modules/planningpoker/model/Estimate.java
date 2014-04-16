@@ -26,6 +26,13 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     private final float theEstimate;
     private final ArrayList<Integer> cardsSelected;
     
+    /**
+     * Creates a new Estimate
+     *
+     * @param user
+     * @param estimate
+     * @param cards
+     */
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         name = user.getName();
         username = user.getUsername();
@@ -77,6 +84,12 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
         return new Gson().toJson(this, Estimate.class);
     }
     
+    /**
+     * Creates an Estimate object from a JSON string
+     *
+     * @param json
+     * @return Estimate from the JSON string
+     */
     public Estimate fromJSON(String json) {
         final Gson parser = new Gson();
         return parser.fromJson(json, Estimate.class);

@@ -76,6 +76,10 @@ public class PlanningPoker implements IJanewayModule {
 		return tabs;
 	}
 	
+	/**
+	 * Runs the Planning Poker module
+	 * @param args
+	 */
 	public static void main(String[] args){
 		JFrame f =  new JFrame();
 		f.setSize(800, 400);

@@ -81,6 +81,11 @@ public class GameListModel extends AbstractListModel<GameModel> {
         }
     }
     
+    /**
+     * Adds a GameStatusObserver to the list of status observers
+     *
+     * @param gso
+     */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
             status_observers.add(gso);
