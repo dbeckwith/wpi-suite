@@ -52,7 +52,7 @@ import javax.swing.JTextField;
  * @author Lukas
  */
 public class NewGameDescriptionPanel extends javax.swing.JPanel implements
-        SimpleListObserver {
+SimpleListObserver {
     private static final DecimalFormat cardFormat = new DecimalFormat("0.#");
     private static final long serialVersionUID = 4601624442206350512L;
     
@@ -298,153 +298,148 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(
+                                layout.createParallelGroup(
+                                        Alignment.LEADING)
+                                        .addGroup(
+                                                layout.createSequentialGroup()
                                                 .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addComponent(
-                                                                                        jScrollPane1,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        418,
-                                                                                        Short.MAX_VALUE)
-                                                                                .addComponent(
-                                                                                        nameLabel)
+                                                        layout.createParallelGroup(
+                                                                Alignment.LEADING)
+                                                                .addComponent(
+                                                                        jScrollPane1,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        418,
+                                                                        Short.MAX_VALUE)
+                                                                        .addComponent(
+                                                                                nameLabel)
                                                                                 .addComponent(
                                                                                         descriptionLabel)
-                                                                                .addComponent(
-                                                                                        nameField,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        418,
-                                                                                        Short.MAX_VALUE)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
+                                                                                        .addComponent(
+                                                                                                nameField,
+                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                418,
+                                                                                                Short.MAX_VALUE)
                                                                                                 .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                                .addGroup(
-                                                                                                                        layout.createSequentialGroup()
+                                                                                                        layout.createSequentialGroup()
+                                                                                                        .addGroup(
+                                                                                                                layout.createParallelGroup(
+                                                                                                                        Alignment.LEADING)
+                                                                                                                        .addGroup(
+                                                                                                                                layout.createSequentialGroup()
                                                                                                                                 .addComponent(
                                                                                                                                         deckLabel)
-                                                                                                                                .addPreferredGap(
-                                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        deckComboBox,
-                                                                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                                                                        186,
-                                                                                                                                        GroupLayout.PREFERRED_SIZE))
-                                                                                                                .addComponent(
-                                                                                                                        selectDeadline)
-                                                                                                                .addComponent(
-                                                                                                                        distributed)
-                                                                                                                .addComponent(
-                                                                                                                        live))
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                                .addGroup(
-                                                                                                                        layout.createSequentialGroup()
-                                                                                                                                .addComponent(
-                                                                                                                                        maximumValue,
-                                                                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                                                                        31,
-                                                                                                                                        Short.MAX_VALUE)
-                                                                                                                                .addPreferredGap(
-                                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        newDeckButton)
-                                                                                                                                .addGap(12))
-                                                                                                                .addComponent(
-                                                                                                                        maxValueLabel))))
-                                                                .addGap(13))
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        lblDate)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        datePicker,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        timeSpinner,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap()))));
+                                                                                                                                        .addPreferredGap(
+                                                                                                                                                ComponentPlacement.RELATED)
+                                                                                                                                                .addComponent(
+                                                                                                                                                        deckComboBox,
+                                                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                        175,
+                                                                                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                                                                                        .addComponent(
+                                                                                                                                                                live))
+                                                                                                                                                                .addPreferredGap(
+                                                                                                                                                                        ComponentPlacement.RELATED)
+                                                                                                                                                                        .addGroup(
+                                                                                                                                                                                layout.createParallelGroup(
+                                                                                                                                                                                        Alignment.LEADING)
+                                                                                                                                                                                        .addGroup(
+                                                                                                                                                                                                layout.createSequentialGroup()
+                                                                                                                                                                                                .addComponent(
+                                                                                                                                                                                                        maximumValue,
+                                                                                                                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                        42,
+                                                                                                                                                                                                        Short.MAX_VALUE)
+                                                                                                                                                                                                        .addPreferredGap(
+                                                                                                                                                                                                                ComponentPlacement.RELATED)
+                                                                                                                                                                                                                .addComponent(
+                                                                                                                                                                                                                        newDeckButton)
+                                                                                                                                                                                                                        .addGap(12))
+                                                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                                                maxValueLabel)))
+                                                                                                                                                                                                                                .addComponent(
+                                                                                                                                                                                                                                        selectDeadline)
+                                                                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                                                                distributed))
+                                                                                                                                                                                                                                                .addGap(13))
+                                                                                                                                                                                                                                                .addGroup(
+                                                                                                                                                                                                                                                        layout.createSequentialGroup()
+                                                                                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                                                                                lblDate)
+                                                                                                                                                                                                                                                                .addPreferredGap(
+                                                                                                                                                                                                                                                                        ComponentPlacement.RELATED)
+                                                                                                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                                                                                                datePicker,
+                                                                                                                                                                                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                                                                                                                                                                                                .addPreferredGap(
+                                                                                                                                                                                                                                                                                        ComponentPlacement.RELATED)
+                                                                                                                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                                                                                                                timeSpinner,
+                                                                                                                                                                                                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                                                                                                                                                                                                                .addContainerGap()))));
         layout.setVerticalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(nameLabel)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(nameField,
-                                        GroupLayout.PREFERRED_SIZE,
-                                        GroupLayout.DEFAULT_SIZE,
-                                        GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addComponent(nameLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(nameField,
+                                GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(ComponentPlacement.UNRELATED)
                                 .addComponent(descriptionLabel)
                                 .addPreferredGap(ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1,
                                         GroupLayout.DEFAULT_SIZE, 152,
                                         Short.MAX_VALUE)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.TRAILING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        distributed)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.UNRELATED)
-                                                                .addComponent(
-                                                                        live))
-                                                .addComponent(maxValueLabel))
-                                .addGap(5)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(deckLabel)
-                                                .addComponent(
-                                                        deckComboBox,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(
-                                                        maximumValue,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(newDeckButton))
-                                .addGap(18)
-                                .addComponent(selectDeadline)
-                                .addGap(8)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(lblDate)
-                                                .addComponent(
-                                                        datePicker,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(
-                                                        timeSpinner,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE))
-                                .addGap(6)));
+                                        .addComponent(distributed)
+                                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                                        .addGroup(
+                                                layout.createParallelGroup(
+                                                        Alignment.BASELINE)
+                                                        .addComponent(live)
+                                                        .addComponent(maxValueLabel))
+                                                        .addGap(5)
+                                                        .addGroup(
+                                                                layout.createParallelGroup(
+                                                                        Alignment.BASELINE)
+                                                                        .addComponent(deckLabel)
+                                                                        .addComponent(
+                                                                                deckComboBox,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(newDeckButton)
+                                                                                .addComponent(
+                                                                                        maximumValue,
+                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                        .addGap(18)
+                                                                                        .addComponent(selectDeadline)
+                                                                                        .addGap(8)
+                                                                                        .addGroup(
+                                                                                                layout.createParallelGroup(
+                                                                                                        Alignment.BASELINE)
+                                                                                                        .addComponent(lblDate)
+                                                                                                        .addComponent(
+                                                                                                                datePicker,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                                .addComponent(
+                                                                                                                        timeSpinner,
+                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                                                        .addGap(6)));
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
@@ -509,7 +504,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
      * @return valid@return valid
      */
     public boolean validateMaximum() {
-        return Pattern.matches(maximumValue.getText(), "[1-9][0-9]?");
+        return !deckComboBox.getSelectedItem().toString()
+                .equals("Generated deck")
+                || Pattern.matches("[1-9][0-9]*", maximumValue.getText());
     }
     
     /**
@@ -611,7 +608,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             errors.add("Deadline is invalid");
         }
         if (!validateMaximum()) {
-            errors.add("Maximum value must be a positive integer");
+            errors.add("Maximum value is invalid");
         }
         return errors;
     }
