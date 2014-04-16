@@ -338,6 +338,10 @@ public class NewGamePanel extends JPanel {
 		PlanningPoker.getViewController().cancelNewGame(this);
 	}// GEN-LAST:event_cancelButtonActionPerformed
 
+	/**
+	 * Shows the NewGamePanel
+	 * @param panel
+	 */
 	protected void showPanel(String panel) {
 		((CardLayout) newGameRequirementsCard.getLayout()).show(
 				newGameRequirementsCard, panel);
@@ -361,6 +365,9 @@ public class NewGamePanel extends JPanel {
 		return gameDescription.descriptionField.getText();
 	}
 
+	/**
+	 * @return the GameType of this game
+	 */
 	public GameType getGameType() {
 		if (gameDescription.distributed.isSelected()) {
 			return GameType.DISTRIBUTED;

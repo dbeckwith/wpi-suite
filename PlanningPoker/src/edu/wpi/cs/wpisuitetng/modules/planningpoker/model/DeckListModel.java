@@ -24,6 +24,11 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	private static final long serialVersionUID = 3193186441179194894L;
 	private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
 
+	/**
+	 * Returns the instance of this DeckListModel or creates a new one
+	 * 
+	 * @return The instance of this DeckListModel
+	 */
 	public static DeckListModel getInstance() {
 		if (DeckListModel.instance == null) {
 			DeckListModel.instance = new DeckListModel();
@@ -32,6 +37,9 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 		return DeckListModel.instance;
 	}
 
+	/**
+	 * Empties the list of decks
+	 */
 	public void emptyModel() {
 		decks.clear();
 	}
@@ -84,6 +92,7 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 
 	/**
 	 * Returns all decks[]
+	 * @return The list of decks
 	 */
 	public ArrayList<DeckModel> getDecks() {
 		return decks;
@@ -91,6 +100,7 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 
 	/**
 	 * Gets length of decks
+	 * @return The size of the list of decks
 	 */
 	@Override
 	public int getSize() {

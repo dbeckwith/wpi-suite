@@ -15,6 +15,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 public interface GameStatusObserver {
     
+    /**
+     * Gets called when a game's status changes
+     * @param game
+     */
     void statusChanged(GameModel game);
     
 }

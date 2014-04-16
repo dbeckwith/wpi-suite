@@ -159,10 +159,17 @@ public class CompletedGamePanel extends javax.swing.JPanel {
     private javax.swing.JTable voteResultTable;
     private JLabel numRequirements;
     
+    /**
+     * @return The number of requirements
+     */
     protected String getNumRequirements() {
         return numRequirements.getText();
     }
     
+    /**
+     * Sets the number of requirements
+     * @param text
+     */
     protected void setNumRequirements(String text) {
         numRequirements.setText(text);
     }

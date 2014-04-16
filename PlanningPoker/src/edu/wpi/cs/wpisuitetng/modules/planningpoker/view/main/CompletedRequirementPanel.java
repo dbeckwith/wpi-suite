@@ -61,6 +61,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableScrollPane.getViewport().setBackground(Color.WHITE);
     }
     
+    /**
+     * Sets the requirement
+     * @param parent_game
+     * @param req
+     */
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         this.req = req;
         parent = parent_game;
@@ -243,8 +248,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 UpdateGamesController.getInstance().updateGame(parent);
                 final ArrayList<GameStatusObserver> gsos = parent
                         .getStatusObservers();
-                for (GameStatusObserver g : gsos) {
-                    g.statusChanged(parent);
+                for (int i = 0; i < gsos.size(); i++) {
+                    gsos.get(i).statusChanged(parent);
                 }
             }
         });
