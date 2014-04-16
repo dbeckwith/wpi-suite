@@ -23,7 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -31,7 +31,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-import javax.swing.border.EtchedBorder;
 
 public class NewDeckPanel extends JPanel {
 	/**
@@ -100,21 +99,16 @@ public class NewDeckPanel extends JPanel {
 		});
 
 		JLabel cardLabel = new JLabel("Cards: *");
-		springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 6,
-				SpringLayout.SOUTH, newDeckName);
-		springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0,
-				SpringLayout.WEST, deckLabel);
+		springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 13, SpringLayout.SOUTH, newDeckName);
+		springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0, SpringLayout.WEST, deckLabel);
 		add(cardLabel);
 
 		newDeckCards = new JTextPane();
+		springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 6, SpringLayout.SOUTH, cardLabel);
 		newDeckCards.setForeground(SystemColor.desktop);
 		newDeckCards.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
-				SpringLayout.SOUTH, cardLabel);
 		springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
 				SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, newDeckCards, -137,
-				SpringLayout.SOUTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, newDeckCards, -10,
 				SpringLayout.EAST, this);
 		add(newDeckCards);

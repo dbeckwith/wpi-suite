@@ -178,6 +178,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 return columnEditables[column];
             }
         });
+        Font temp_Font;
+        temp_Font = voteResultTable.getTableHeader().getFont();
+        voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
