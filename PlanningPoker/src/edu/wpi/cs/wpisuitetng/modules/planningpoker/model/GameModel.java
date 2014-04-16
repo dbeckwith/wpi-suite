@@ -60,12 +60,14 @@ public class GameModel extends AbstractModel {
 	private User[] users;
 	private String owner;
 	private DeckModel deck;
+	private static int nextId = 0;
 
 	/**
 	 * Default constructor creates instance with invalid id and null fields
 	 */
 	public GameModel() {
-		id = -1;
+		id = nextId;
+		nextId++;
 		name = null;
 		description = null;
 		requirements = null;
@@ -122,7 +124,8 @@ public class GameModel extends AbstractModel {
 	public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
 			Date end, GameType type, GameStatus status) {
-		id = -1;
+	    id = nextId;
+        nextId++;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
@@ -166,7 +169,8 @@ public class GameModel extends AbstractModel {
 			ArrayList<GameRequirementModel> requirements, DeckModel deck,
 			Date endDate, GameType type, GameStatus status,
 			String owner) {
-		this.id = id;
+	    id = nextId;
+        nextId++;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;

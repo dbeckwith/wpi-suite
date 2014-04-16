@@ -158,7 +158,9 @@ public class GamesListPanel extends javax.swing.JPanel {
 			if (node.getUserObject() != null && node.getUserObject() instanceof GameRequirementModel){
 			    if(requirement && ((GameRequirementModel) node.getUserObject()).getId() == ((GameRequirementModel) selectedNodeUserObject).getId())
 			        gameTree.setSelectionPath(new TreePath(node.getPath()));
-
+			} else if (node.getUserObject() != null && node.getUserObject() instanceof GameModel){
+			    if(game && ((GameModel) node.getUserObject()).getID() == ((GameModel) selectedNodeUserObject).getID())
+                    gameTree.setSelectionPath(new TreePath(node.getPath()));
 			}
 		}
 
