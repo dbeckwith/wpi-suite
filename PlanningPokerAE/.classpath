@@ -9,7 +9,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="/WPISuite/gson/gson-2.2.2-javadoc.jar"/>
 	<classpathentry exported="true" kind="lib" path="/WPISuite/gson/gson-2.2.2-sources.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Janeway"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/PlanningPoker"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

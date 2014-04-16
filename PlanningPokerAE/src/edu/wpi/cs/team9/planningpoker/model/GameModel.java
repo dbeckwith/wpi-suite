@@ -11,24 +11,18 @@
  ******************************************************************************/
 package edu.wpi.cs.team9.planningpoker.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+
 
 /**
  * Represents a planning poker game
  */
-public class GameModel extends AbstractModel {
+public class GameModel{
     public static enum GameStatus {
         NEW("New"), PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
 
@@ -218,22 +212,22 @@ public class GameModel extends AbstractModel {
         return !(status == GameStatus.NEW);
     }
     
-	@Override
+	
 	public void save() {
 
 	}
 
-	@Override
+	
 	public void delete() {
 
 	}
 
-	@Override
+	
 	public String toJSON() {
 		return new Gson().toJson(this, GameModel.class);
 	}
 
-	@Override
+	
 	public Boolean identify(Object o) {
 		return null;
 	}
