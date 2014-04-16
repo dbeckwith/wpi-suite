@@ -320,7 +320,7 @@ public class GameModel extends AbstractModel {
 			return false;
 		}
 		for (GameRequirementModel r : requirements) {
-			if (r.allVoted(this) == false) {
+			if (r.allVoted() == false) {
 				return false;
 			}
 		}
