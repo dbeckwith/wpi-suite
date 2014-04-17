@@ -41,7 +41,7 @@ public class UserUpdateController {
     }
     
     private enum FieldName {
-        IM_NOTIFY, EMAIL_NOTIFY
+        IM_NOTIFY, EMAIL_NOTIFY, EMAIL
     }
     
     /**
@@ -102,6 +102,16 @@ public class UserUpdateController {
     }
     
     /**
+     * Sets the user's email address for receiving notifications.
+     * 
+     * @param newEmail
+     *        the email address to receive email notifications
+     */
+    public void setEmail(String newEmail) {
+        sendPostRequest(FieldName.EMAIL, newEmail);
+    }
+    
+    /**
      * A helper method for setting notification preference in the user's
      * preferences.
      * 
@@ -119,6 +129,9 @@ public class UserUpdateController {
             case IM_NOTIFY:
                 user.setNotifyByIM((Boolean) newValue);
                 break;
+            case EMAIL:
+                user.setEmail((String) newValue);
+                break;
             default:
                 System.err
                         .println("Invalid notification type " + fieldToUpdate);
@@ -135,7 +148,7 @@ public class UserUpdateController {
      * 
      * @param user
      */
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 }
