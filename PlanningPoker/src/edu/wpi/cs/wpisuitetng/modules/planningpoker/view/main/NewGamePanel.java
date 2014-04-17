@@ -391,7 +391,7 @@ public class NewGamePanel extends JPanel {
 	 */
 	public void check() {
 		saveButton.setEnabled(gameDescription.validateForm()
-				&& newGameRequirementsPanel.validateForm());
+				&& newGameRequirementsPanel.validateForm() && gameDescription.validateMaximum());
 		ArrayList<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());
