@@ -229,11 +229,6 @@ public class GameRequirementModel extends AbstractModel {
 		ArrayList<User> estimateUsers = new ArrayList<User>();
 		User[] users = CurrentUserController.getInstance().getUsers();
 
-		// waits for users to be populated
-		while (users == null) {
-			users = CurrentUserController.getInstance().getUsers();
-		}
-
 		// checks to see if an all users have voted
 		for (Estimate e : estimates) {
 			for (User u : users) {

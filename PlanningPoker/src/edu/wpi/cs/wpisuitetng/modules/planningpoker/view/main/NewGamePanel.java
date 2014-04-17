@@ -347,7 +347,7 @@ public class NewGamePanel extends JPanel {
 		return gameDescription.getDate();
 	}
 
-	public List<GameRequirementModel> getRequirements() {
+	public ArrayList<GameRequirementModel> getRequirements() {
 		return newGameRequirementsPanel.getRequirementsFromTable();
 	}
 

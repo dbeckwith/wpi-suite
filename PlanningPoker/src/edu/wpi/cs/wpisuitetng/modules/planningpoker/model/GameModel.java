@@ -57,7 +57,6 @@ public class GameModel extends AbstractModel {
 	private Date endDate;
 	private GameType type;
 	private GameStatus status;
-	private User[] users;
 	private String owner;
 	private DeckModel deck;
 	private static int nextId = 0;
@@ -75,7 +74,6 @@ public class GameModel extends AbstractModel {
 		type = null;
 		status = null;
 		status_observers = null;
-		users = null;
 		owner = null;
 		deck = DeckListModel.getInstance().getDefaultDeck();
 	}
@@ -106,7 +104,6 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		status_observers = new ArrayList<>();
 		owner = ConfigManager.getConfig().getUserName();
-		users = CurrentUserController.getInstance().getUsers();
 	}
 
 	/**
@@ -135,7 +132,6 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		status_observers = new ArrayList<>();
 		owner = ConfigManager.getConfig().getUserName();
-		users = CurrentUserController.getInstance().getUsers();
 	}
 
 	/**
@@ -162,7 +158,6 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		this.owner = owner;
 		status_observers = new ArrayList<>();
-		users = CurrentUserController.getInstance().getUsers();
 	}
 	
 	public GameModel(int id, String name, String description,
@@ -180,7 +175,6 @@ public class GameModel extends AbstractModel {
 		this.status = status;
 		this.owner = owner;
 		status_observers = new ArrayList<>();
-		users = CurrentUserController.getInstance().getUsers();
 	}
 	
 	/**
@@ -337,15 +331,6 @@ public class GameModel extends AbstractModel {
 	}
 
 	/**
-	 * Gets the array of users
-	 * 
-	 * @return users
-	 */
-	public User[] getUsers() {
-		return users;
-	}
-
-	/**
      * Returns whether the game is closed
      * 
      * @return whether the game has been closed
@@ -442,7 +427,6 @@ public class GameModel extends AbstractModel {
 		type = g.type;
 		status = g.status;
 		status_observers = g.status_observers;
-		users = g.users;
 		owner = g.owner;
 		g.deck = deck;
 	}
