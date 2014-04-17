@@ -408,6 +408,10 @@ public class NewGamePanel extends JPanel {
 	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
 		return newGameRequirementsPanel;
 	}
+	
+	public int getMaximumCardValue() {
+		return gameDescription.getMaxCardValue();
+	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton cancelButton;

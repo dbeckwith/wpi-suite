@@ -296,7 +296,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 			}
 		});
 
-		maxValueLabel = new JLabel("Max value *");
+		maxValueLabel = new JLabel("Max value (< 99)");
 		maxValueLabel.setEnabled(false);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -514,6 +514,13 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
 		return !deckComboBox.getSelectedItem().toString()
 				.equals("Generated deck")
 				|| Pattern.matches("[1-9][0-9]*", maximumValue.getText());
+	}
+
+	/**
+	 * Return maximum value
+	 */
+	public int getMaxCardValue() {
+		return Integer.parseInt(maximumValue.getText());
 	}
 
 	/**
