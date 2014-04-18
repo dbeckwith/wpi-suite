@@ -50,6 +50,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -187,6 +189,37 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         });
         
         validateDeadline();
+    }
+    
+    /**
+     * Set the panel's contents from the given game for editing
+     * 
+     * @param game
+     *        the game to load information from
+     */
+    public void setGame(GameModel game) {
+        this.game = game;
+        nameField.setText(game.getName());
+        descriptionField.setText(game.getDescription());
+        distributed.setSelected(game.getType() == GameType.DISTRIBUTED);
+        live.setSelected(game.getType() == GameType.LIVE);
+        
+        DefaultComboBoxModel<DeckModel> decks = (DefaultComboBoxModel<DeckModel>) deckComboBox
+                .getModel();
+        
+        for (int i = 0; i < decks.getSize(); i++) {
+            DeckModel deck = decks.getElementAt(i);
+            if (deck.getName().equals(game.getDeck())) {
+                deckComboBox.setSelectedItem(deck);
+            }
+        }
+        
+        if (game.getEndTime() != null) {
+            selectDeadline.setSelected(true);
+            datePicker.setDate(game.getEndTime());
+            timeSpinner.setValue(game.getEndTime());
+        }
+        
     }
     
     /**
@@ -571,6 +604,17 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             newModel.addElement(deck);
         }
         deckComboBox.setModel(newModel);
+        
+        if (game != null) {
+            for (int i = 0; i < newModel.getSize(); i++) {
+                DeckModel deck = newModel.getElementAt(i);
+                System.out.println(i + " deck  " + deck.getName());
+                if (deck != null
+                        && deck.getName().equals(game.getDeck().getName())) {
+                    deckComboBox.setSelectedItem(deck);
+                }
+            }
+        }
     }
     
     public class JTextFieldLimit extends PlainDocument {
@@ -636,6 +680,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         }
     }
     
+    /**
+     * @return the list of errors when creating a new game
+     */
     public ArrayList<String> getErrors() {
         ArrayList<String> errors = new ArrayList<>();
         if (!isNameValid) {
@@ -673,6 +720,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
     public void setEditGamePanel(NewGamePanel p) {
         parent = p;
     }
+    
+    private GameModel game;
     
     private boolean isNameValid = false;
     private boolean isDescriptionValid = false;

@@ -54,7 +54,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
         
         editGameButton = new JButton("<html>Edit<br/>Game</html>");
         editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
-        editGameButton.setEnabled(false);   //making it look nice for presentation
+        //editGameButton.setEnabled(false);   //making it look nice for presentation
         
         startGameButton = new JButton("<html>Start<br/>Game</html>");
         startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
