@@ -11,11 +11,15 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
@@ -63,12 +67,33 @@ public class ViewControllerTest {
     }
     
     @Test
+    public void testUpdateGame() {
+        int count = mv.getTabCount();
+        mv.getMainPanel().setSelectedGame(new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null, null, null));
+        vc.editGame();
+        NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
+        vc.updateGame(new GameModel(), ngp);
+        Assert.assertEquals(count, mv.getTabCount());
+    }
+    
+    @Test
     public void testCancelNewGame() {
         int count = mv.getTabCount();
         vc.addNewGameTab();
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
         vc.setCancelConfirm(new YesMockOptionPane());
         vc.cancelNewGame(ngp);
+        Assert.assertEquals(count, mv.getTabCount());
+    }
+    
+    @Test
+    public void testCancelEditGame() {
+        int count = mv.getTabCount();
+        mv.getMainPanel().setSelectedGame(new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null, null, null));
+        vc.editGame();
+        NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
+        vc.setCancelConfirm(new YesMockOptionPane());
+        vc.cancelEditGame(ngp);
         Assert.assertEquals(count, mv.getTabCount());
     }
     
