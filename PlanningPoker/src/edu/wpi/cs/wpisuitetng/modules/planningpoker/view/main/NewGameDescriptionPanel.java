@@ -72,6 +72,7 @@ SimpleListObserver {
 				now.get(Calendar.YEAR),
 				now.get(Calendar.HOUR_OF_DAY),
 				now.get(Calendar.MINUTE)));
+		isNameValid = true;
 		
 		setErrorBorder(descriptionField, false);
 
