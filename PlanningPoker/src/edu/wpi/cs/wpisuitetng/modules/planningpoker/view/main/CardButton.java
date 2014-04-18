@@ -34,7 +34,7 @@ public class CardButton extends JButton implements MouseListener {
      */
     private static final long serialVersionUID = 2543023112833273691L;
     
-    private static final DecimalFormat cardFormat = new DecimalFormat("0.#");
+    public static final DecimalFormat cardFormat = new DecimalFormat("0.#");
     
     private static final float MARGIN = 0.03f;
     private static final float MARGIN_LOGO = 0.05f;
