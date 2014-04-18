@@ -38,6 +38,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 import java.awt.Color;
@@ -61,7 +62,17 @@ SimpleListObserver {
 		setBackground(Color.WHITE);
 		initComponents();
 		
-		setErrorBorder(nameField, false);
+		Calendar now = new GregorianCalendar();
+		int gameCount = GameListModel.getInstance().getGames().size();
+		nameField.setText(String.format(
+				"Game %d - %d/%d/%d %d:%d", 
+				gameCount+1, 
+				now.get(Calendar.MONTH),
+				now.get(Calendar.DAY_OF_MONTH),
+				now.get(Calendar.YEAR),
+				now.get(Calendar.HOUR_OF_DAY),
+				now.get(Calendar.MINUTE)));
+		
 		setErrorBorder(descriptionField, false);
 
 		DeckListModel.getInstance().addObserver(this);
