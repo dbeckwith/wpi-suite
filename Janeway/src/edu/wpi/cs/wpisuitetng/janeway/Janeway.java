@@ -44,7 +44,6 @@ public class Janeway {
 	 * Instantiate the main GUI frame
 	 */
 	public static void main(final String[] args) {
-		
 		// Set the look and feel to cross-platform so the UI looks
 		// the same across operating systems 
 		try {
@@ -54,6 +53,7 @@ public class Janeway {
 			System.out.println("Error setting UI manager to cross-platform!");
 			e.printStackTrace();
 		}
+		
 		
 		// Load modules
 		ModuleLoader<IJanewayModule> moduleLoader = new ModuleLoader<IJanewayModule>("./modules.conf");

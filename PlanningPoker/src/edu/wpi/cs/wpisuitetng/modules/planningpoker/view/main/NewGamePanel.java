@@ -7,20 +7,18 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,7 +29,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -40,9 +37,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 /**
  * 
  * @author Lukas
+ * @version 1.0
  */
 public class NewGamePanel extends JPanel {
-	/**
+    /**
      * 
      */
 	private static final long serialVersionUID = 6206697919180272913L;
@@ -55,6 +53,9 @@ public class NewGamePanel extends JPanel {
 	    setBackground(Color.WHITE);
 
 		initComponents();
+		
+		setErrorBorder(newReqName, false);
+		setErrorBorder(newReqDesc, false);
 
 		gameDescription.setEditGamePanel(this);
 		newGameRequirementsPanel.setEditGamePanel(this);
@@ -81,7 +82,7 @@ public class NewGamePanel extends JPanel {
 
 				newReqNameValid = (newReqName.getText() != null && !newReqName
 						.getText().isEmpty());
-				newReqNameError.setVisible(!newReqNameValid);
+				setErrorBorder(newReqName, newReqNameValid);
 				checkNewRequirement();
 			}
 		});
@@ -107,7 +108,7 @@ public class NewGamePanel extends JPanel {
 
 				newReqDescValid = (newReqDesc.getText() != null && !newReqDesc
 						.getText().isEmpty());
-				newReqDescError.setVisible(!newReqDescValid);
+				setErrorBorder(newReqDesc, newReqDescValid);	
 				checkNewRequirement();
 			}
 		});
@@ -161,19 +162,21 @@ public class NewGamePanel extends JPanel {
 		                .addGroup(layout.createSequentialGroup()
 		                    .addContainerGap()
 		                    .addComponent(saveButton)
-		                    .addGap(16)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
 		                    .addComponent(cancelButton)
 		                    .addPreferredGap(ComponentPlacement.RELATED)
-		                    .addComponent(errorLabel))
-		                .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE))
+		                    .addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+		                .addGroup(layout.createSequentialGroup()
+		                    .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+		                    .addGap(6)))
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
+		            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
 		);
 		layout.setVerticalGroup(
 		    layout.createParallelGroup(Alignment.TRAILING)
 		        .addGroup(layout.createSequentialGroup()
-		            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-		            .addGap(18)
+		            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(saveButton)
 		                .addComponent(cancelButton)
@@ -192,51 +195,13 @@ public class NewGamePanel extends JPanel {
 		newRequirementPanel = new JPanel();
 		newRequirementPanel.setBackground(Color.WHITE);
 		newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
-		GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
-		gbl_newRequirementPanel.columnWidths = new int[] { 54, 99, 0, 0, 0 };
-		gbl_newRequirementPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_newRequirementPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_newRequirementPanel.rowWeights = new double[] { 0.0, 0.0, 0.0,
-				1.0, 0.0, 0.0, Double.MIN_VALUE };
-		newRequirementPanel.setLayout(gbl_newRequirementPanel);
 
-		nameLabel = new JLabel("Requirement Name:");
-		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
-		gbc_nameLabel.gridwidth = 2;
-		gbc_nameLabel.anchor = GridBagConstraints.WEST;
-		gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_nameLabel.gridx = 0;
-		gbc_nameLabel.gridy = 0;
-		newRequirementPanel.add(nameLabel, gbc_nameLabel);
-
-		newReqNameError = new JLabel("* Required field!");
-		newReqNameError.setFont(new Font("Dialog", Font.BOLD, 12));
-		newReqNameError.setForeground(new java.awt.Color(255, 0, 0));
-		GridBagConstraints gbc_newReqNameError = new GridBagConstraints();
-		gbc_newReqNameError.anchor = GridBagConstraints.WEST;
-		gbc_newReqNameError.insets = new Insets(0, 0, 5, 5);
-		gbc_newReqNameError.gridx = 2;
-		gbc_newReqNameError.gridy = 0;
-		newRequirementPanel.add(newReqNameError, gbc_newReqNameError);
+		nameLabel = new JLabel("Requirement Name: *");
 
 		newReqName = new JTextField();
-		GridBagConstraints gbc_newReqName = new GridBagConstraints();
-		gbc_newReqName.gridwidth = 4;
-		gbc_newReqName.insets = new Insets(0, 0, 5, 0);
-		gbc_newReqName.fill = GridBagConstraints.HORIZONTAL;
-		gbc_newReqName.gridx = 0;
-		gbc_newReqName.gridy = 1;
-		newRequirementPanel.add(newReqName, gbc_newReqName);
 		newReqName.setColumns(10);
 
-		descLabel = new JLabel("Requirement Description:");
-		GridBagConstraints gbc_descLabel = new GridBagConstraints();
-		gbc_descLabel.gridwidth = 2;
-		gbc_descLabel.anchor = GridBagConstraints.WEST;
-		gbc_descLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_descLabel.gridx = 0;
-		gbc_descLabel.gridy = 2;
-		newRequirementPanel.add(descLabel, gbc_descLabel);
+		descLabel = new JLabel("Requirement Description: *");
 
 		saveNewReqButton = new JButton("Save Requirement");
 		saveNewReqButton.setIcon(ImageLoader.getIcon("Save.png"));
@@ -257,55 +222,19 @@ public class NewGamePanel extends JPanel {
 				showPanel("reqlistpanel");
 			}
 		});
-
-		newReqDescError = new JLabel("* Required field!");
-		newReqDescError.setForeground(new java.awt.Color(255, 0, 0));
-		GridBagConstraints gbc_newReqDescError = new GridBagConstraints();
-		gbc_newReqDescError.anchor = GridBagConstraints.WEST;
-		gbc_newReqDescError.insets = new Insets(0, 0, 5, 5);
-		gbc_newReqDescError.gridx = 2;
-		gbc_newReqDescError.gridy = 2;
-		newRequirementPanel.add(newReqDescError, gbc_newReqDescError);
 		
 		scrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 4;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 3;
-		newRequirementPanel.add(scrollPane, gbc_scrollPane);
-
+		
 		newReqDesc = new JTextArea();
 		scrollPane.setViewportView(newReqDesc);
 		newReqDesc.setLineWrap(true);
 				
 						typeLabel = new JLabel("Type:");
-						GridBagConstraints gbc_typeLabel = new GridBagConstraints();
-						gbc_typeLabel.anchor = GridBagConstraints.WEST;
-						gbc_typeLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_typeLabel.gridx = 0;
-						gbc_typeLabel.gridy = 4;
-						newRequirementPanel.add(typeLabel, gbc_typeLabel);
 		
 				newReqType = new JComboBox<String>();
 				newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
 						"Epic", "Theme", "User story", "Non-functional dependency",
 						"Scenario" }));
-				GridBagConstraints gbc_newReqType = new GridBagConstraints();
-				gbc_newReqType.gridwidth = 2;
-				gbc_newReqType.anchor = GridBagConstraints.WEST;
-				gbc_newReqType.insets = new Insets(0, 0, 5, 5);
-				gbc_newReqType.gridx = 1;
-				gbc_newReqType.gridy = 4;
-				newRequirementPanel.add(newReqType, gbc_newReqType);
-		GridBagConstraints gbc_saveNewReqButton = new GridBagConstraints();
-		gbc_saveNewReqButton.anchor = GridBagConstraints.WEST;
-		gbc_saveNewReqButton.gridwidth = 2;
-		gbc_saveNewReqButton.insets = new Insets(0, 0, 0, 5);
-		gbc_saveNewReqButton.gridx = 1;
-		gbc_saveNewReqButton.gridy = 5;
-		newRequirementPanel.add(saveNewReqButton, gbc_saveNewReqButton);
 
 		cancelNewReqButton = new JButton("Return to List");
 		cancelNewReqButton.setIcon(ImageLoader.getIcon("backArrow.png"));
@@ -315,11 +244,54 @@ public class NewGamePanel extends JPanel {
 				showPanel("reqlistpanel");
 			}
 		});
-		GridBagConstraints gbc_cancelNewReqButton = new GridBagConstraints();
-		gbc_cancelNewReqButton.anchor = GridBagConstraints.WEST;
-		gbc_cancelNewReqButton.gridx = 3;
-		gbc_cancelNewReqButton.gridy = 5;
-		newRequirementPanel.add(cancelNewReqButton, gbc_cancelNewReqButton);
+		
+		newReqErrorsLabel = new JLabel("ERRORS");
+		newReqErrorsLabel.setForeground(Color.RED);
+		GroupLayout gl_newRequirementPanel = new GroupLayout(newRequirementPanel);
+		gl_newRequirementPanel.setHorizontalGroup(
+		    gl_newRequirementPanel.createParallelGroup(Alignment.TRAILING)
+		        .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		            .addContainerGap()
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		                .addComponent(scrollPane)
+		                .addComponent(newReqName, GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+		                .addComponent(nameLabel)
+		                .addComponent(descLabel)
+		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		                    .addComponent(typeLabel)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		                    .addComponent(cancelNewReqButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(saveNewReqButton)
+		                    .addPreferredGap(ComponentPlacement.RELATED)
+		                    .addComponent(newReqErrorsLabel)))
+		            .addContainerGap())
+		);
+		gl_newRequirementPanel.setVerticalGroup(
+		    gl_newRequirementPanel.createParallelGroup(Alignment.LEADING)
+		        .addGroup(gl_newRequirementPanel.createSequentialGroup()
+		            .addContainerGap()
+		            .addComponent(nameLabel)
+		            .addGap(5)
+		            .addComponent(newReqName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addComponent(descLabel)
+		            .addPreferredGap(ComponentPlacement.RELATED)
+		            .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(typeLabel)
+		                .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		            .addPreferredGap(ComponentPlacement.UNRELATED)
+		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.BASELINE)
+		                .addComponent(cancelNewReqButton)
+		                .addComponent(saveNewReqButton)
+		                .addComponent(newReqErrorsLabel))
+		            .addGap(5))
+		);
+		newRequirementPanel.setLayout(gl_newRequirementPanel);
 
 		setLayout(layout);
 	}// </editor-fold>//GEN-END:initComponents
@@ -332,7 +304,6 @@ public class NewGamePanel extends JPanel {
 		}
 
 		PlanningPoker.getViewController().saveNewGame(this);
-		EmailController.getInstance().sendNotifications();
 	}// GEN-LAST:event_saveButtonActionPerformed
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
@@ -395,14 +366,43 @@ public class NewGamePanel extends JPanel {
 		ArrayList<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());
-        errorLabel.setText(errors.isEmpty()? "" : errors.get(0));
+        if (!errors.isEmpty()) {
+    		errorLabel.setText(errors.get(0));
+        }
+        else {
+            errorLabel.setText("");
+        }
 	}
 
 	/**
 	 * Checks that name and description for new requirement are properly entered
 	 */
 	public void checkNewRequirement() {
+	    if (!newReqNameValid) {
+	        newReqErrorsLabel.setVisible(true);
+	        newReqErrorsLabel.setText("Name field is required");
+	    }
+	    else if (!newReqDescValid) {
+	        newReqErrorsLabel.setVisible(true);
+            newReqErrorsLabel.setText("Description field is required");
+	    }
+	    else {
+	        newReqErrorsLabel.setVisible(false);
+	    }
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
+	}
+	
+	/**
+	 * Set a components border color to indicate and error
+	 * @param c the component
+	 * @param valid whether or not it is valid
+	 */
+	private void setErrorBorder(JComponent c, boolean valid){
+		if(!valid){
+			c.setBorder(BorderFactory.createLineBorder(Color.RED));
+		} else {
+			c.setBorder(BorderFactory.createEtchedBorder());
+		}	
 	}
 
 	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
@@ -431,8 +431,7 @@ public class NewGamePanel extends JPanel {
 	private JTextArea newReqDesc;
 	private Boolean newReqNameValid = false;
 	private Boolean newReqDescValid = false;
-	private JLabel newReqNameError;
-	private JLabel newReqDescError;
 	private JScrollPane scrollPane;
 	private JLabel errorLabel;
+	private JLabel newReqErrorsLabel;
 }

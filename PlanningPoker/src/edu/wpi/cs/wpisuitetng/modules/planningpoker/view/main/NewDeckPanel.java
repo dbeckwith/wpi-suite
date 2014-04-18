@@ -15,15 +15,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -31,8 +33,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-import javax.swing.UIManager;
-import javax.swing.border.EtchedBorder;
 
 public class NewDeckPanel extends JPanel {
     /**
@@ -99,12 +99,15 @@ public class NewDeckPanel extends JPanel {
                 
                 isNameValid = newDeckName.getText() != null
                         && !newDeckName.getText().isEmpty();
+                
+                setErrorBorder(newDeckName, isNameValid);
+                
                 checkNewDeck();
             }
         });
         
         JLabel cardLabel = new JLabel("Cards: *");
-        springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 6,
+        springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 13,
                 SpringLayout.SOUTH, newDeckName);
         springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0,
                 SpringLayout.WEST, deckLabel);
@@ -114,13 +117,10 @@ public class NewDeckPanel extends JPanel {
         springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 6,
                 SpringLayout.SOUTH, cardLabel);
         newDeckCards.setForeground(SystemColor.desktop);
-        newDeckCards.setBorder(new LineBorder(SystemColor.inactiveCaption));
-        springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 2,
-                SpringLayout.SOUTH, cardLabel);
+        newDeckCards.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+                null));
         springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
                 SpringLayout.WEST, this);
-        springLayout.putConstraint(SpringLayout.SOUTH, newDeckCards, -137,
-                SpringLayout.SOUTH, this);
         springLayout.putConstraint(SpringLayout.EAST, newDeckCards, -10,
                 SpringLayout.EAST, this);
         add(newDeckCards);
@@ -149,6 +149,9 @@ public class NewDeckPanel extends JPanel {
                 areCardsValid = newDeckCards.getText() != null
                         && !newDeckCards.getText().isEmpty()
                         && Pattern.matches(pattern, newDeckCards.getText());
+                
+                setErrorBorder(newDeckCards, areCardsValid);
+                
                 checkNewDeck();
             }
         });
@@ -225,7 +228,7 @@ public class NewDeckPanel extends JPanel {
         add(selectionLabel);
         
         cardHelpLabel = new JLabel(
-                "Please enter a list of numbers separated by commas");
+                "Please enter a list of integers (up to 3 digits) separated by commas");
         springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 2,
                 SpringLayout.SOUTH, newDeckCards);
         springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0,
@@ -240,6 +243,9 @@ public class NewDeckPanel extends JPanel {
                 SpringLayout.EAST, createDeckButton);
         add(errorLabel);
         checkNewDeck();
+        
+        setErrorBorder(newDeckName, false);
+        setErrorBorder(newDeckCards, false);
     }
     
     private void checkNewDeck() {
@@ -261,12 +267,29 @@ public class NewDeckPanel extends JPanel {
     }
     
     /**
+     * Set a components border color to indicate and error
+     * 
+     * @param c
+     *        the component
+     * @param valid
+     *        whether or not it is valid
+     */
+    private void setErrorBorder(JComponent c, boolean valid) {
+        if (!valid) {
+            c.setBorder(BorderFactory.createLineBorder(Color.RED));
+        }
+        else {
+            c.setBorder(BorderFactory.createEtchedBorder());
+        }
+    }
+    
+    /**
      * Set parent panel
      * 
      * @param p
      */
     public void setEditGamePanel(NewGamePanel p) {
-        this.parent = p;
+        parent = p;
     }
     
     private NewGamePanel parent;

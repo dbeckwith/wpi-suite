@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -30,12 +31,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 import java.awt.BorderLayout;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * 
  * @author nfbrown
  */
 public class VotePanel extends javax.swing.JPanel {
+    
+    private static final DecimalFormat NUM_FORMAT = new DecimalFormat("#.#");
     
     /**
      *
@@ -72,7 +76,17 @@ public class VotePanel extends javax.swing.JPanel {
         this.currentUser = currentUser;
         this.parentGame = parentGame;
         this.req = req;
-        
+          
+        boolean voted = false;
+        ArrayList<Integer> selectedCards = null;
+        ArrayList<Estimate> estimates = req.getEstimates();
+        for (Estimate e : estimates) {
+            if (e.getUsername().equals(currentUser.getUsername())) {
+            	selectedCards = e.getCardsSelected();
+                voted = true;
+            }
+        }
+                
         reqDescriptionTextArea.setText(req.getDescription());
         setRequirementName(req.getName());
         setRequirementType(req.getType());
@@ -80,7 +94,8 @@ public class VotePanel extends javax.swing.JPanel {
         
         setAllowMultipleCards(parentGame.getDeck().getAllowsMultipleSelection());
         System.out.println("multiple selection : "+parentGame.getDeck().getAllowsMultipleSelection());
-        
+       
+               
         old = null; // ensure it is erased
         for (Estimate e : req.getEstimates()) {
             System.out.println(e.getEstimate() + " from " + e.getUsername());
@@ -103,6 +118,12 @@ public class VotePanel extends javax.swing.JPanel {
         ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
             selected = old.getCardsSelected();
+            lblYouVoted.setVisible(true);
+            prevVoteLabel.setText(NUM_FORMAT.format(old.getEstimate()));
+        }
+        else {
+            lblYouVoted.setVisible(false);
+            prevVoteLabel.setText("");
         }
         
         cards.clear();
@@ -127,6 +148,7 @@ public class VotePanel extends javax.swing.JPanel {
                         }
                         validateCards();
                     }
+                    updateTotal();
                     VotePanel.this.repaint();
                 }
             });
@@ -134,20 +156,21 @@ public class VotePanel extends javax.swing.JPanel {
             estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
         }
         
+        if(voted){
+        	for(Integer i:selectedCards){
+        		cards.get(i).setCardSelected(true);
+        	}        	
+        }
+        
+        updateTotal();
+        
         validate();
         repaint();
     }
     
     private void selectEstimateCard() {
-        
-        boolean alreadyVoted = false;
-        new Thread() {
-            @Override
-            public void run() {
-                UpdateGamesController.getInstance().updateGame(parentGame);
-            }
-        }.start();
-        
+
+        boolean alreadyVoted = false;        
         ArrayList<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
@@ -166,6 +189,9 @@ public class VotePanel extends javax.swing.JPanel {
         
         System.out.println("Estimate = " + estimate);
         Estimate est = new Estimate(currentUser, estimate, selected);
+
+        lblYouVoted.setVisible(true);
+        prevVoteLabel.setText(NUM_FORMAT.format(est.getEstimate()));
         
         if (alreadyVoted) {
             req.UpdateEstimate(old, est);
@@ -173,7 +199,9 @@ public class VotePanel extends javax.swing.JPanel {
         else {
             req.addEstimate(est);
         }
-        old = est;
+        old = est;        
+
+        UpdateGamesController.getInstance().updateGame(parentGame);
     }
     
     /**
@@ -202,7 +230,7 @@ public class VotePanel extends javax.swing.JPanel {
         completedVotesField = new javax.swing.JLabel();
         votesProgressBar = new javax.swing.JProgressBar();
         
-        estimateLabel.setText("Estimate:");
+        estimateLabel.setText("Please select your Estimate:");
         
         voteField.setText("Votes:");
         
@@ -211,12 +239,12 @@ public class VotePanel extends javax.swing.JPanel {
         JLabel lblRequirement = new JLabel("Requirement:");
         
         JScrollPane scrollPane = new JScrollPane();
+        JScrollPane estimateScrollPane = new JScrollPane();
+        estimateScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         //JScrollPane scrollPane_1 = new JScrollPane();
         
         requirementNameLabel = new JLabel("<requirement>");
-        
-        JLabel lblDescription = new JLabel("Description:");
         
         JLabel lblType = new JLabel("Type:");
         
@@ -233,82 +261,100 @@ public class VotePanel extends javax.swing.JPanel {
         
         estimateCardsPanel = new JPanel(){
         	@Override
-        	public void paint(Graphics g){
+        	public void paintComponent(Graphics g){
+        		//super.paintComponent(g);
         		BufferedImage texture = ImageLoader.getImage("felt.png");
         		for(int x = 0; x < getWidth(); x += texture.getWidth()){
         			for(int y = 0; y < getHeight(); y+= texture.getHeight()){
         				g.drawImage(texture, x, y, null);
         			}
-        		}
-        		for(CardButton card:cards){
-        			card.repaint();
-        		}
-        		
+        		}        		
         	}        	
         };
+        estimateCardsPanel.setBackground(Color.WHITE);
         
         estimateCardsPanel.setMaximumSize(new Dimension(0, 0));
         
+        lblYouVoted = new JLabel("You voted: ");
+        
+        prevVoteLabel = new JLabel("<previous vote>");
+        
+        JLabel lblSelectedTotal = new JLabel("Selected Total:");
+        
+        lblTotal = new JLabel("<total>");
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(Alignment.LEADING, layout.createSequentialGroup()
         			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(estimateCardsPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-        				.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-        				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+        				.addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+        				.addGroup(layout.createSequentialGroup()
         					.addComponent(lblRequirement)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(requirementNameLabel))
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(249)
-        							.addComponent(lblType)
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(requirementType))))
-        				.addComponent(lblDescription, Alignment.LEADING)
-        				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
-        					.addComponent(estimateLabel)
-        					.addPreferredGap(ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(requirementNameLabel)
+        					.addPreferredGap(ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
         					.addComponent(voteField)
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(completedVotesField))
-        				.addComponent(btnSubmit))
+        				.addComponent(estimateLabel)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(btnSubmit)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(lblSelectedTotal)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(lblTotal)
+        					.addPreferredGap(ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+        					.addComponent(lblYouVoted)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(prevVoteLabel))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(lblType)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(requirementType)))
         			.addContainerGap())
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(lblRequirement)
-        				.addComponent(requirementNameLabel)
-        				.addComponent(lblType)
-        				.addComponent(requirementType))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(lblDescription)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(estimateLabel)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(lblRequirement)
+        						.addComponent(requirementNameLabel))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(lblType)
+        						.addComponent(requirementType)))
         				.addGroup(layout.createParallelGroup(Alignment.TRAILING)
         					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         						.addComponent(voteField)
         						.addComponent(completedVotesField))
         					.addComponent(votesProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(estimateCardsPanel, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(btnSubmit)
+        			.addComponent(estimateLabel)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btnSubmit)
+        				.addComponent(lblYouVoted)
+        				.addComponent(prevVoteLabel)
+        				.addComponent(lblSelectedTotal)
+        				.addComponent(lblTotal))
         			.addContainerGap())
         );
         FlowLayout fl_estimateCardsPanel = new FlowLayout(FlowLayout.CENTER, 5, 5);
         estimateCardsPanel.setLayout(fl_estimateCardsPanel);
+        
+        estimateScrollPane.setViewportView(estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();
         reqDescriptionTextArea.setEditable(false);
@@ -378,6 +424,19 @@ public class VotePanel extends javax.swing.JPanel {
         btnSubmit.setEnabled(false);
     }
     
+    /**
+     * Updates the selected total displayed next to the submit button
+     */
+    private void updateTotal(){
+    	float total = 0;
+    	for(CardButton card:cards){
+    		if(card.isCardSelected()){
+    			total += card.getEstimateValue();
+    		}
+    	}
+    	lblTotal.setText(CardButton.cardFormat.format(total));
+    }
+    
     public void setAllowMultipleCards(boolean allow) {
         selectMultiple = allow;
     }
@@ -389,7 +448,7 @@ public class VotePanel extends javax.swing.JPanel {
     private boolean selectMultiple;
     
     private JButton btnSubmit;
-    
+    private JLabel lblTotal;
     private ArrayList<CardButton> cards;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -401,5 +460,7 @@ public class VotePanel extends javax.swing.JPanel {
     private JPanel estimateCardsPanel;
     private JLabel requirementNameLabel;
     private JLabel requirementType;
-    
+
+    private JLabel prevVoteLabel;
+    private JLabel lblYouVoted;
 }

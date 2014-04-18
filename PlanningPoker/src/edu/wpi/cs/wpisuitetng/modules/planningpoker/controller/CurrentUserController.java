@@ -1,3 +1,5 @@
+// $codepro.audit.disable
+// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
  * 
@@ -23,70 +25,68 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class CurrentUserController extends AbstractUserController {
     
-    /**
-     * The username of the user currently logged in.
-     */
     public static final String USER_NAME = ConfigManager.getConfig()
             .getUserName();
+    
     private User user = null;
     
-    private static CurrentUserController instance = null;
+    private static CurrentUserController Instance = null;
     
     /**
+     * Gets the instance of the controller.
      * 
-     * Return the CurrentUserController or create a new one
-     *
-     * @return The instance of this CurrentUserController
+     * @return the instance of the controller.
      */
     public static CurrentUserController getInstance() {
-        if (CurrentUserController.instance == null) {
-            CurrentUserController.instance = new CurrentUserController();
+        if (Instance == null) {
+            Instance = new CurrentUserController();
         }
         
-        return CurrentUserController.instance;
+        return Instance;
     }
     
     /**
      * Creates a new controller and requests users from the database.
      */
-    protected CurrentUserController() {
+    private CurrentUserController() {
         requestUsers();
     }
     
     @Override
+    /**
+     * {@inheritdoc}
+     * <p>
+     * This overwrites any users previously received.
+     */
     public void receivedUsers(User[] users) {
-        if (users == null) {
-            System.err.println("No users received");
-        } else {
+        if (users != null) {
             setUsers(users);
-            user = findUser(CurrentUserController.USER_NAME);
-            System.out.println("Set user to " + user); // TODO remove
+            user = findUser(USER_NAME);
         }
+        else {
+            System.err.println("No users received!");//TODO remove
+        }
+        System.out.println("User = " + user);//TODO remove
     }
     
     /**
      * Finds the user with the given username.
      * 
      * @param name
-     *            the username to search for
+     *        the username to search for
      * @return the user in the array with the given user name, or null if none
      *         exists
      */
     public User findUser(String name) {
-        User toReturn = null;
         for (User u : getUsers()) {
-            if (u.getUsername().equals(name)) {
-                toReturn = u;
-                break;
-            }
+            if (u.getUsername().equals(name))
+                return u;
         }
-        return toReturn;
+        return null;
     }
     
     /**
      * Gets the currently logged in user.
-     * 
-     * @return
      */
     public User getUser() {
         return user;

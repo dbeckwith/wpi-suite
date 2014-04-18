@@ -6,15 +6,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Contributors:
- * Sam Carlberg
+ * Contributors: Sam Carlberg
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * An abstract class for classes requesting users from the server.
@@ -24,10 +20,24 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public abstract class AbstractUserController {
     
-    private final UserRequestObserver observer;
+    /**
+     * For testing only.
+     */
+    private boolean timedOut = true;
+    
+    private long timeout = 1500;
+    
+    /**
+     * This controller's observer.
+     */
+    final UserRequestObserver observer;
+    
+    /**
+     * The array of users in the project logged onto.
+     */
     private User[] users = null;
     
-    public AbstractUserController() {
+    protected AbstractUserController() {
         observer = new UserRequestObserver(this);
     }
     
@@ -45,12 +55,18 @@ public abstract class AbstractUserController {
      * 
      * @see AbstractUserController#receivedUsers(User[])
      */
-    protected void requestUsers() {
-        final Request request = Network.getInstance().makeRequest("core/user",
-                HttpMethod.GET);
-        request.addObserver(observer); // add an observer to process the
-                                       // response
-        request.send(); // send the request
+    public void requestUsers() {
+        synchronized (this) {
+            new RequestThread(this).start();
+            try {
+                System.out.println("Waiting for response");//TODO remove
+                wait(timeout);
+            }
+            catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
     
     /**
@@ -65,6 +81,27 @@ public abstract class AbstractUserController {
      */
     public User[] getUsers() {
         return users;
+    }
+    
+    /**
+     * For testing only.
+     */
+    protected boolean requestTimedOut() {
+        return timedOut;
+    }
+    
+    /**
+     * For testing only.
+     */
+    protected void setTimedOut(boolean timedOut) {
+        this.timedOut = timedOut;
+    }
+    
+    public void setTimeout(long timeout) {
+        if (timeout < 0)
+            throw new IllegalArgumentException("Timeout must be >= 0");
+        else
+            this.timeout = timeout;
     }
     
 }

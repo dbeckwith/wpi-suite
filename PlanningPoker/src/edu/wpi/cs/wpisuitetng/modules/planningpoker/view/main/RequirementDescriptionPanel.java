@@ -27,6 +27,7 @@ public class RequirementDescriptionPanel extends JPanel {
     private static final long serialVersionUID = 6869910614623975734L;
     private final VotePanel votePanel;
     private final CompletedRequirementPanel completedPanel;
+    private final RequirementDescriptionOnlyPanel newReq;
     
     /**
      * Create the panel.
@@ -39,6 +40,9 @@ public class RequirementDescriptionPanel extends JPanel {
         
         completedPanel = new CompletedRequirementPanel();
         add(completedPanel, "complete");
+        
+        newReq = new RequirementDescriptionOnlyPanel();
+        add(newReq, "new");
         
     }
     
@@ -53,9 +57,12 @@ public class RequirementDescriptionPanel extends JPanel {
         if (parent_game.isEnded()) {
             completedPanel.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "complete");
-        } else {
+        } else if (parent_game.isStarted()){
             votePanel.setRequirement(current_user, parent_game, req);
             ((CardLayout) getLayout()).show(this, "vote");
+        } else{
+            newReq.setRequirement(parent_game, req);
+            ((CardLayout) getLayout()).show(this, "new");
         }
     }
     

@@ -21,6 +21,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import javax.swing.JButton;
 
@@ -33,7 +34,7 @@ public class CardButton extends JButton implements MouseListener {
      */
     private static final long serialVersionUID = 2543023112833273691L;
     
-    private static final DecimalFormat cardFormat = new DecimalFormat("0.#");
+    public static final DecimalFormat cardFormat = new DecimalFormat("0.#");
     
     private static final float MARGIN = 0.03f;
     private static final float MARGIN_LOGO = 0.05f;
@@ -42,6 +43,7 @@ public class CardButton extends JButton implements MouseListener {
     private static final float FONT_SIZE = 0.3f;
     private static final float FONT_SIZE_HOVER = 0.4f;
     private static BufferedImage[] suits;
+    private static Random rand;
     
     static {
         CardButton.suits = new BufferedImage[4];
@@ -53,6 +55,8 @@ public class CardButton extends JButton implements MouseListener {
         CardButton.suits[2] = allSuits.getSubimage(0, sHeight, sWidth, sHeight);
         CardButton.suits[3] = allSuits.getSubimage(sWidth, sHeight, sWidth,
                 sHeight);
+        
+        rand = new Random();
         
     }
     
@@ -66,38 +70,39 @@ public class CardButton extends JButton implements MouseListener {
     
     public CardButton(String val) {
         value = CardButton.cardFormat.format(Float.parseFloat(val));
-        suitIndex = (int) (Math.random() * CardButton.suits.length);
+        suitIndex = ((int)getEstimateValue()+1)%4;//(int) (Math.random() * CardButton.suits.length);
         selected = false;
         addMouseListener(this);
         
     }
     
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         
         int margin = (int) (getWidth() * CardButton.MARGIN);
         int suitMargin = (int) (getWidth() * CardButton.MARGIN_LOGO);
+        g2.setBackground(new Color(0,0,0,0));
+        g2.clearRect(0, 0, getWidth(), getHeight());
         
         //draw drop shadow
         g2.setColor(Color.GRAY);
         g2.fillRect(margin, margin, getWidth() - margin, getHeight() - margin);
         
         
-        g2.setColor(new Color(240, 240, 240));
+        g2.setColor(new Color(230, 230, 230));
         g2.fillRect(0, 0, getWidth() - margin * (2), getHeight() - margin * (2));
         
         
         if (isEnabled()) {
             int suitSize = (int) (getWidth() * CardButton.FRONT_SUIT_SIZE);
-            
             //highlight card background
             if (hover || selected) {
                 g2.setColor(Color.WHITE);
-                g2.fillRect(0, 0, getWidth() - margin * (2), getHeight()
-                        - margin * (2));
+                g2.fillRect(0, 0, getWidth() - margin * (2), getHeight()- margin * (2));
+
             }
             
             //draw suit logos on the corners
@@ -128,10 +133,11 @@ public class CardButton extends JButton implements MouseListener {
         //draw card outline
         g2.setColor(Color.BLACK);
         if (selected) {
-            g2.setColor(Color.GREEN);
+            g2.setColor(Color.BLUE);
+            g2.drawRect(1, 1, getWidth() - margin*3, getHeight() - margin*3);
+            g2.drawRect(2, 2, getWidth() - margin*4, getHeight() - margin*4);
         }
-        g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
-        g2.drawRect(1, 1, getWidth() - 2, getHeight() - 2);
+        g2.drawRect(0, 0, getWidth() - margin*2, getHeight() - margin*2);
     }
     
     public float getEstimateValue() {
