@@ -15,8 +15,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -94,6 +96,9 @@ public class NewDeckPanel extends JPanel {
 				
 				isNameValid = newDeckName.getText() != null
 						&& !newDeckName.getText().isEmpty();
+				
+				setErrorBorder(newDeckName, isNameValid);
+				
 				checkNewDeck();
 			}
 		});
@@ -137,6 +142,9 @@ public class NewDeckPanel extends JPanel {
 				areCardsValid = newDeckCards.getText() != null
 						&& !newDeckCards.getText().isEmpty()
 						&& Pattern.matches(pattern, newDeckCards.getText());
+				
+				setErrorBorder(newDeckCards, areCardsValid);
+				
 				checkNewDeck();
 			}
 		});
@@ -226,6 +234,9 @@ public class NewDeckPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, errorLabel, 6, SpringLayout.EAST, createDeckButton);
 		add(errorLabel);
 		checkNewDeck();
+
+		setErrorBorder(newDeckName, false);
+		setErrorBorder(newDeckCards, false);
 	}
 
 	private void checkNewDeck() {
@@ -244,6 +255,19 @@ public class NewDeckPanel extends JPanel {
             errorLabel.setText("");
         }
 		createDeckButton.setEnabled(isNameValid && areCardsValid);
+	}
+	
+	/**
+	 * Set a components border color to indicate and error
+	 * @param c the component
+	 * @param valid whether or not it is valid
+	 */
+	private void setErrorBorder(JComponent c, boolean valid){
+		if(!valid){
+			c.setBorder(BorderFactory.createLineBorder(Color.RED));
+		} else {
+			c.setBorder(BorderFactory.createEtchedBorder());
+		}	
 	}
 
 	/**

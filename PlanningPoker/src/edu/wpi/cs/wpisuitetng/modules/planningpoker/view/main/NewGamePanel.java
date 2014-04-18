@@ -12,11 +12,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -51,6 +53,9 @@ public class NewGamePanel extends JPanel {
 	    setBackground(Color.WHITE);
 
 		initComponents();
+		
+		setErrorBorder(newReqName, false);
+		setErrorBorder(newReqDesc, false);
 
 		gameDescription.setEditGamePanel(this);
 		newGameRequirementsPanel.setEditGamePanel(this);
@@ -77,6 +82,7 @@ public class NewGamePanel extends JPanel {
 
 				newReqNameValid = (newReqName.getText() != null && !newReqName
 						.getText().isEmpty());
+				setErrorBorder(newReqName, newReqNameValid);
 				checkNewRequirement();
 			}
 		});
@@ -102,6 +108,7 @@ public class NewGamePanel extends JPanel {
 
 				newReqDescValid = (newReqDesc.getText() != null && !newReqDesc
 						.getText().isEmpty());
+				setErrorBorder(newReqDesc, newReqDescValid);	
 				checkNewRequirement();
 			}
 		});
@@ -383,6 +390,19 @@ public class NewGamePanel extends JPanel {
 	        newReqErrorsLabel.setVisible(false);
 	    }
 		saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
+	}
+	
+	/**
+	 * Set a components border color to indicate and error
+	 * @param c the component
+	 * @param valid whether or not it is valid
+	 */
+	private void setErrorBorder(JComponent c, boolean valid){
+		if(!valid){
+			c.setBorder(BorderFactory.createLineBorder(Color.RED));
+		} else {
+			c.setBorder(BorderFactory.createEtchedBorder());
+		}	
 	}
 
 	public NewGameRequirementsPanel getNewGameRequirementsPanel() {

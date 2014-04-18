@@ -14,11 +14,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JSpinner;
@@ -41,6 +43,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 import java.awt.Color;
 import java.awt.Insets;
 
+import javax.swing.border.EtchedBorder;
+
 /**
  * 
  * @author Lukas
@@ -56,6 +60,9 @@ SimpleListObserver {
 	public NewGameDescriptionPanel() {
 		setBackground(Color.WHITE);
 		initComponents();
+		
+		setErrorBorder(nameField, false);
+		setErrorBorder(descriptionField, false);
 
 		DeckListModel.getInstance().addObserver(this);
 
@@ -95,6 +102,7 @@ SimpleListObserver {
 			private void validate() {
 				isNameValid = (nameField.getText() != null && !nameField
 						.getText().isEmpty());
+				setErrorBorder(nameField, isNameValid);			
 				parent.check();
 			}
 		});
@@ -121,6 +129,7 @@ SimpleListObserver {
 
 						isDescriptionValid = (descriptionField.getText() != null && !descriptionField
 								.getText().isEmpty());
+						setErrorBorder(descriptionField, isDescriptionValid);	
 						parent.check();
 					}
 				});
@@ -173,9 +182,13 @@ SimpleListObserver {
 		gameType = new javax.swing.ButtonGroup();
 		nameLabel = new javax.swing.JLabel();
 		nameField = new javax.swing.JTextField();
+		nameField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		descriptionLabel = new javax.swing.JLabel();
 		jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPane1.setBorder(null);
+		jScrollPane1.setViewportBorder(null);
 		descriptionField = new javax.swing.JTextPane();
+		descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		selectDeadline = new javax.swing.JCheckBox();
 		selectDeadline.setBackground(Color.WHITE);
 		distributed = new javax.swing.JRadioButton();
@@ -422,6 +435,19 @@ SimpleListObserver {
 			errors.add("Deadline is invalid");
 		}
 		return errors;
+	}
+	
+	/**
+	 * Set a components border color to indicate and error
+	 * @param c the component
+	 * @param valid whether or not it is valid
+	 */
+	private void setErrorBorder(JComponent c, boolean valid){
+		if(!valid){
+			c.setBorder(BorderFactory.createLineBorder(Color.RED));
+		} else {
+			c.setBorder(BorderFactory.createEtchedBorder());
+		}	
 	}
 
 	public void setEditGamePanel(NewGamePanel p) {
