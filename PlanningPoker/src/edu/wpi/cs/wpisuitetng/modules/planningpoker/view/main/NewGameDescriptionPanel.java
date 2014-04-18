@@ -427,11 +427,13 @@ SimpleListObserver {
 		}
 		deckComboBox.setModel(newModel);
 		
-		for(int i = 0; i < newModel.getSize(); i++){
-			DeckModel deck = newModel.getElementAt(i);
-			System.out.println(i+" deck  "+deck.getName());
-			if(deck != null && deck.getName().equals(game.getDeck().getName())){
-				deckComboBox.setSelectedItem(deck);
+		if(game != null){
+			for(int i = 0; i < newModel.getSize(); i++){
+				DeckModel deck = newModel.getElementAt(i);
+				System.out.println(i+" deck  "+deck.getName());
+				if(deck != null && deck.getName().equals(game.getDeck().getName())){
+					deckComboBox.setSelectedItem(deck);
+				}
 			}
 		}
 		

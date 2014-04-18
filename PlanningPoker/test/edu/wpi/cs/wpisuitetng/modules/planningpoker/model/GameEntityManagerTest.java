@@ -84,13 +84,13 @@ public class GameEntityManagerTest {
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		
-		goodUpdatedGame = new GameModel("Updated Game", "Some updates",
+		GameModel gameUpdates = new GameModel("Updated Game", "Some updates",
 				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
-		
+		goodUpdatedGame = new GameModel();
 		goodUpdatedGame.copyFrom(existingGame);
-		//goodUpdatedGame. TODO:EditCopyFrom
+		goodUpdatedGame.editCopyFrom(gameUpdates);
 
 		db = new MockData(new HashSet<Object>());
 		db.save(existingGame, testProject);
