@@ -303,18 +303,18 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             public void actionPerformed(ActionEvent e) {
                 if (((DeckModel) deckComboBox.getSelectedItem()).toString()
                         .equals("Generated deck")) {
-                    maximumValue.setEnabled(true);
-                    maximumValue.setEditable(true);
-                    maxValueLabel.setEnabled(true);
+                    maximumValue.setVisible(true);
+                    maxValueLabel.setVisible(true);
+                    newDeckButton.setEnabled(false);
                     getErrors();
                     if (parent != null) {
                         parent.check();
                     }
                 }
                 else {
-                    maximumValue.setEnabled(false);
-                    maximumValue.setEditable(false);
-                    maxValueLabel.setEnabled(false);
+                    maximumValue.setVisible(false);
+                    maxValueLabel.setVisible(false);
+                    newDeckButton.setEnabled(true);
                     getErrors();
                     if (parent != null) {
                         parent.check();
@@ -322,12 +322,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
                 }
             }
         });
-        newDeckButton = new JButton("Create Deck");
+        newDeckButton = new JButton("New Deck");
         
         maximumValue = new JTextField();
         maximumValue.setDocument(new JTextFieldLimit(2));
-        maximumValue.setEditable(false);
-        maximumValue.setEnabled(false);
         maximumValue.setColumns(10);
         
         maximumValue.getDocument().addDocumentListener(new DocumentListener() {
@@ -353,7 +351,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         });
         
         maxValueLabel = new JLabel("Max value (< 99)");
-        maxValueLabel.setEnabled(false);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
