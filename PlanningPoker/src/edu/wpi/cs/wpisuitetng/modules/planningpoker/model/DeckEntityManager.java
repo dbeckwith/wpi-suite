@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
- *
+ * An Entity Manager for storing DeckModels on the server.
  */
 public class DeckEntityManager implements EntityManager<DeckModel> {
     private Data db;
@@ -29,7 +29,7 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
     /**
      * Creates a new DeckEntityManager
      * 
-     * @param db The database
+     * @param db The database that decks will be stored in.
      */
     public DeckEntityManager(Data db) {
         this.db = db;
@@ -39,12 +39,12 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
      * Ensures that a user is of the specified role
      * 
      * @param session
-     *        the session
+     *        the current session
      * @param role
      *        the role being verified
      * 
      * @throws WPISuiteException
-     *         user isn't authorized for the given role
+     *         if the user isn't authorized for the given role
      */
     private void ensureRole(Session session, Role role)
             throws WPISuiteException {

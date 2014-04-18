@@ -15,7 +15,7 @@ import javax.swing.AbstractListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
- *
+ * A model for storing all the decks currently in the database.
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
 	private DeckModel defaultDeck;
@@ -27,7 +27,7 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	/**
 	 * Returns the instance of this DeckListModel or creates a new one
 	 * 
-	 * @return The instance of this DeckListModel
+	 * @return the instance of this DeckListModel
 	 */
 	public static DeckListModel getInstance() {
 		if (DeckListModel.instance == null) {
@@ -38,30 +38,30 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	}
 
 	/**
-	 * Empties the list of decks
+	 * Empties the list of decks.
 	 */
 	public void emptyModel() {
 		decks.clear();
 	}
 
 	/**
-	 * Adds default deck
+	 * Sets the default deck which will be automatically selected when a new game is created.
 	 */
 	public void setDefaultDeck(DeckModel defaultDeck) {
 		this.defaultDeck = defaultDeck;
 	}
 
 	/**
-	 * Gets default deck
+	 * Gets the default deck.
 	 */
 	public DeckModel getDefaultDeck() {
 		return defaultDeck;
 	}
 
 	/**
-	 * Adds a new deck to the list
+	 * Adds a new deck to the list.
 	 * 
-	 * @param deck
+	 * @param deck the deck to add
 	 */
 	public void addDeck(DeckModel deck) {
 		decks.add(deck);
@@ -72,35 +72,30 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	}
 
 	/**
-	 * Adds an observer to this model
+	 * Adds an observer to this model which will be notified whenever a deck is added or removed.
 	 * 
-	 * @param o
+	 * @param o the observer to add
 	 */
 	public void addObserver(SimpleListObserver o) {
 		observers.add(o);
 	}
 
-	/**
-	 * Gets element at index
-	 * 
-	 * @param index
-	 */
 	@Override
 	public DeckModel getElementAt(int index) {
 		return decks.get(index);
 	}
 
 	/**
-	 * Returns all decks[]
-	 * @return The list of decks
+	 * Gets the list of all decks currently being stored.
+	 * @return the list of decks
 	 */
 	public ArrayList<DeckModel> getDecks() {
 		return decks;
 	}
 
 	/**
-	 * Gets length of decks
-	 * @return The size of the list of decks
+	 * Gets the number of deck currently being stored.
+	 * @return the size of the list of decks
 	 */
 	@Override
 	public int getSize() {
