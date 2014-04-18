@@ -23,22 +23,24 @@ public class DeckModel extends AbstractModel {
 	private String name;
 	private ArrayList<Double> cards;
 	private boolean allowsMultipleSelection;
+	private boolean isNone;
 
 	/**
 	 * Creates a new deck
 	 * 
 	 * @param name
-	 *         The name of the deck
+	 *            The name of the deck
 	 * @param cards
-	 *         List of cards for the deck
+	 *            List of cards for the deck
 	 * @param allowsMultipleSelection
-	 *         Whether or not this deck should allow multiple selection
+	 *            Whether or not this deck should allow multiple selection
 	 */
 	public DeckModel(String name, ArrayList<Double> cards,
 			boolean allowsMultipleSelection) {
 		this.name = name;
 		this.cards = cards;
 		this.allowsMultipleSelection = allowsMultipleSelection;
+		this.isNone = false;
 	}
 
 	/**
@@ -51,14 +53,14 @@ public class DeckModel extends AbstractModel {
 		this.cards = null;
 		this.allowsMultipleSelection = false;
 	}
-	
+
 	/**
 	 * @return the name of the deck
 	 */
 	public String getName() {
-	    return this.name;
+		return this.name;
 	}
-	
+
 	/**
 	 * @return The cards in the deck
 	 */
@@ -99,84 +101,89 @@ public class DeckModel extends AbstractModel {
 	}
 
 	/**
-     * Sorts the cards in the deck in ascending order
-     */
+	 * Sorts the cards in the deck in ascending order
+	 */
 	public void sort() {
-	    Collections.sort(cards, new Comparator<Double>() {
-            public int compare(Double a, Double b) {
-                if (a == b) {
-                    return 0;
-                }
-                else if (a > b) {
-                    return 1;
-                }
-                else {
-                    return -1;
-                }
-            }
-        });
-    }
-    
-    @Override
-    public void delete() {
-    }
-    
-    @Override
-    public Boolean identify(Object arg0) {
-        return null;
-    }
-    
-    @Override
-    public void save() {
-    }
-    
-    /**
-     * Turns this into a JSON object
-     * 
-     * @return The JSON string for this object
-     */
-    @Override
-    public String toJSON() {
-        return new Gson().toJson(this, DeckModel.class);
-    }
-    
-    /**
-     * Creates a deck from a JSON object
-     * 
-     * @param json
-     *        The JSON string
-     * @return The DeckModel from the JSON string
-     */
-    public static DeckModel fromJSON(String json) {
-        final Gson parser = new Gson();
-        DeckModel deck = parser.fromJson(json, DeckModel.class);
-        return deck;
-    }
-    
-    /**
-     * Creates an array of deck models
-     * 
-     * @param json
-     * @return Array of DeckModels from the JSON array
-     */
-    public static DeckModel[] fromJSONArray(String json) {
-        final Gson parser = new Gson();
-        DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
-        return decks;
-    }
-    
-    /**
-     * Returns the name of the deck
-     */
-    @Override
-    public String toString() {
-        return name;
-    }
-    
-    /**
-     * Returns whether multiple card selection is allowed
-     */
-    public boolean getAllowsMultipleSelection() {
-        return this.allowsMultipleSelection;
-    }
+		Collections.sort(cards, new Comparator<Double>() {
+			public int compare(Double a, Double b) {
+				if (a == b) {
+					return 0;
+				} else if (a > b) {
+					return 1;
+				} else {
+					return -1;
+				}
+			}
+		});
+	}
+
+	@Override
+	public void delete() {
+	}
+
+	@Override
+	public Boolean identify(Object arg0) {
+		return null;
+	}
+
+	@Override
+	public void save() {
+	}
+
+	/**
+	 * Turns this into a JSON object
+	 * 
+	 * @return The JSON string for this object
+	 */
+	@Override
+	public String toJSON() {
+		return new Gson().toJson(this, DeckModel.class);
+	}
+
+	/**
+	 * Creates a deck from a JSON object
+	 * 
+	 * @param json
+	 *            The JSON string
+	 * @return The DeckModel from the JSON string
+	 */
+	public static DeckModel fromJSON(String json) {
+		final Gson parser = new Gson();
+		DeckModel deck = parser.fromJson(json, DeckModel.class);
+		return deck;
+	}
+
+	/**
+	 * Creates an array of deck models
+	 * 
+	 * @param json
+	 * @return Array of DeckModels from the JSON array
+	 */
+	public static DeckModel[] fromJSONArray(String json) {
+		final Gson parser = new Gson();
+		DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
+		return decks;
+	}
+
+	/**
+	 * Returns the name of the deck
+	 */
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	/**
+	 * Returns if deck is None
+	 */
+	public boolean getIsNone() {
+		return isNone;
+	}
+
+	/**
+	 * Returns whether multiple card selection is allowed
+	 */
+	public boolean getAllowsMultipleSelection() {
+		return this.allowsMultipleSelection;
+	}
 }

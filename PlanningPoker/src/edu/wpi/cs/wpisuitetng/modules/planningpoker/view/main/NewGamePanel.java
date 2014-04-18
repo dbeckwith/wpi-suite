@@ -387,7 +387,7 @@ public class NewGamePanel extends JPanel {
 	 */
 	public void check() {
 		saveButton.setEnabled(gameDescription.validateForm()
-				&& newGameRequirementsPanel.validateForm());
+				&& newGameRequirementsPanel.validateForm() && gameDescription.validateMaximum());
 		ArrayList<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());
@@ -432,6 +432,10 @@ public class NewGamePanel extends JPanel {
 
 	public NewGameRequirementsPanel getNewGameRequirementsPanel() {
 		return newGameRequirementsPanel;
+	}
+	
+	public int getMaximumCardValue() {
+		return gameDescription.getMaxCardValue();
 	}
 
 	private GameModel game = null;

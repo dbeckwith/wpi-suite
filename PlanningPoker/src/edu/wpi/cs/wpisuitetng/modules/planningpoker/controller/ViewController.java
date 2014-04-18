@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -50,7 +51,7 @@ public class ViewController {
     public ViewController(MainView mainView, ToolbarView toolbar) {
         this.mainView = mainView;
         this.toolbar = toolbar;
-        this.cancelConfirm = new DefaultOptionPane();
+        cancelConfirm = new DefaultOptionPane();
     }
     
     /**
@@ -63,9 +64,6 @@ public class ViewController {
         
         mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
                 new ClosableTabComponent(mainView) {
-                    /**
-                     * 
-                     */
                     private static final long serialVersionUID = 7088866301855075603L;
                     
                     @Override
@@ -103,8 +101,17 @@ public class ViewController {
      *        The NewGamePanel to create a game from
      */
     public void saveNewGame(NewGamePanel e) {
-        //TODO add save as new here
         DeckModel d = e.getDeck();
+        ArrayList<Double> newCards = new ArrayList<Double>();
+        if (d.toString().equals("Generated deck")) {
+            for (int i = 1; i <= e.getMaximumCardValue(); i++) {
+                newCards.add((double) i);
+            }
+            
+            d = new DeckModel(d.toString(), newCards,
+                    d.getAllowsMultipleSelection());
+        }
+        
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
@@ -123,11 +130,12 @@ public class ViewController {
     
     /**
      * Updates a game model based in the information in the NewGamePanel
+     * 
      * @param game
      * @param e
      */
-    public void updateGame(GameModel game, NewGamePanel e){
-    	DeckModel d = e.getDeck();
+    public void updateGame(GameModel game, NewGamePanel e) {
+        DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
@@ -143,8 +151,9 @@ public class ViewController {
     
     /**
      * Cancels creation of a new game
-     *
-     * @param e The NewGamePanel to cancel
+     * 
+     * @param e
+     *        The NewGamePanel to cancel
      */
     public void cancelNewGame(NewGamePanel e) {
         final int result = cancelConfirm.showConfirmDialog(e,
@@ -160,25 +169,28 @@ public class ViewController {
     
     /**
      * Cancels the editing of a game
-     * @param e the NewGamePanel to cancel
+     * 
+     * @param e
+     *        the NewGamePanel to cancel
      */
-    public void cancelEditGame(NewGamePanel e){
-    	final int result = cancelConfirm.showConfirmDialog(e,
-    			"Are you sure you would like cancel editing this game? (changes will not be saved)", 
-    			"Cancel Edit", JOptionPane.YES_NO_OPTION);
-    	if(result == JOptionPane.YES_OPTION){
+    public void cancelEditGame(NewGamePanel e) {
+        final int result = cancelConfirm
+                .showConfirmDialog(
+                        e,
+                        "Are you sure you would like cancel editing this game? (changes will not be saved)",
+                        "Cancel Edit", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
             RequirementsListModel.getInstance().removeListListener(
                     e.getNewGameRequirementsPanel()
                             .getRequirementsListObserver());
             mainView.removeTabAt(mainView.indexOfComponent(e));
-    	}
+        }
     }
-    
     
     
     /**
      * Returns the MainView object for this ViewController
-     *
+     * 
      * @return The MainView object
      */
     public MainView getMainView() {
@@ -258,16 +270,16 @@ public class ViewController {
      *        the OptionPane to set
      */
     public void setCancelConfirm(OptionPane o) {
-        this.cancelConfirm = o;
+        cancelConfirm = o;
     }
-
+    
     /**
      * Opens a new tab to edit the currently selected game
      */
     public void editGame() {
         final GameModel current = mainView.getMainPanel().getSelectedGame();
         final NewGamePanel editGame = new NewGamePanel(current);
-        mainView.addTab("Edit "+current.getName(), editGame);
+        mainView.addTab("Edit " + current.getName(), editGame);
         mainView.setSelectedComponent(editGame);
         
         mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
@@ -278,7 +290,7 @@ public class ViewController {
                     public void actionPerformed(ActionEvent e) {
                         cancelEditGame(editGame);
                     }
-                });        
+                });
     }
     
     public void startGame() {
