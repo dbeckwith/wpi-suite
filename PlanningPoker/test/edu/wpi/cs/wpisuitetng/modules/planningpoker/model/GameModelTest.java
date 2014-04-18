@@ -46,16 +46,15 @@ public class GameModelTest {
                 "Req desc", "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();
-        game1 = new GameModel(1, "Test Game 1", "Live Game that just ended",
+        game1 = new GameModel("Test Game 1", "Live Game that just ended",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(),
                 GameType.LIVE, GameStatus.COMPLETE);
-        game2 = new GameModel(2, "Test Game 2",
+        game2 = new GameModel("Test Game 2",
                 "Distributed Game that will end in 5 seconds", reqs,
                 DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() + 5000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         game3 = new GameModel(
-                3,
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
@@ -76,7 +75,7 @@ public class GameModelTest {
         game2.setEnded(true);
         Assert.assertEquals(GameStatus.COMPLETE, game2.getStatus());
         game3.setEnded(false);
-        Assert.assertEquals(GameStatus.PENDING, game3.getStatus());
+        Assert.assertEquals(GameStatus.COMPLETE, game3.getStatus());
     }
     
    // @Test

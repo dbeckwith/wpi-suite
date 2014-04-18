@@ -49,24 +49,22 @@ public class GetGamesControllerTest {
 				new NetworkConfiguration("http://localhost"));
 		GetGamesControllerTest.instance = GetGamesController.getInstance();
 		GetGamesControllerTest.nullGame = new GameModel();
-		GetGamesControllerTest.game1 = new GameModel(1, "Test Game 1",
+		GetGamesControllerTest.game1 = new GameModel("Test Game 1",
 				"Live Game that just ended", null, DeckListModel.getInstance()
 						.getDefaultDeck(), new Date(), GameType.LIVE,
 				GameStatus.COMPLETE);
-		GetGamesControllerTest.game2 = new GameModel(2, "Test Game 2",
+		GetGamesControllerTest.game2 = new GameModel("Test Game 2",
 				"Distributed Game that will end in 5 seconds", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() + 5000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		GetGamesControllerTest.game3 = new GameModel(
-				3,
 				"Test Game 3",
 				"Live Game with end time in 10 seconds, but already manually ended",
 				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() + 10000), GameType.LIVE,
 				GameStatus.COMPLETE);
 		GetGamesControllerTest.game4 = new GameModel(
-				4,
 				"Test Game 4",
 				"Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
 				null, DeckListModel.getInstance().getDefaultDeck(), new Date(

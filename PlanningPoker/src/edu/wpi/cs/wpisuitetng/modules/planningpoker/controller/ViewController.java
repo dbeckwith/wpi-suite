@@ -122,6 +122,26 @@ public class ViewController {
     }
     
     /**
+     * Updates a game model based in the information in the NewGamePanel
+     * @param game
+     * @param e
+     */
+    public void updateGame(GameModel game, NewGamePanel e){
+    	DeckModel d = e.getDeck();
+        final GameModel newGame = new GameModel(e.getName(),
+                e.getDescription(), e.getRequirements(), new DeckModel(
+                        d.toString(), d.getCards(),
+                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
+                        .getUserName());
+        game.editCopyFrom(newGame);
+        UpdateGamesController.getInstance().updateGame(game);
+        RequirementsListModel.getInstance().removeListListener(
+                e.getNewGameRequirementsPanel().getRequirementsListObserver());
+        mainView.removeTabAt(mainView.indexOfComponent(e));
+    }
+    
+    /**
      * Cancels creation of a new game
      *
      * @param e The NewGamePanel to cancel
@@ -137,6 +157,24 @@ public class ViewController {
             mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
+    
+    /**
+     * Cancels the editing of a game
+     * @param e the NewGamePanel to cancel
+     */
+    public void cancelEditGame(NewGamePanel e){
+    	final int result = cancelConfirm.showConfirmDialog(e,
+    			"Are you sure you would like cancel editing this game? (changes will not be saved)", 
+    			"Cancel Edit", JOptionPane.YES_NO_OPTION);
+    	if(result == JOptionPane.YES_OPTION){
+            RequirementsListModel.getInstance().removeListListener(
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
+            mainView.removeTabAt(mainView.indexOfComponent(e));
+    	}
+    }
+    
+    
     
     /**
      * Returns the MainView object for this ViewController
@@ -223,9 +261,24 @@ public class ViewController {
         this.cancelConfirm = o;
     }
 
+    /**
+     * Opens a new tab to edit the currently selected game
+     */
     public void editGame() {
-        // TODO Auto-generated method stub
+        final GameModel current = mainView.getMainPanel().getSelectedGame();
+        final NewGamePanel editGame = new NewGamePanel(current);
+        mainView.addTab("Edit "+current.getName(), editGame);
+        mainView.setSelectedComponent(editGame);
         
+        mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
+                new ClosableTabComponent(mainView) {
+                    private static final long serialVersionUID = 7088866301855075603L;
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cancelEditGame(editGame);
+                    }
+                });        
     }
     
     public void startGame() {

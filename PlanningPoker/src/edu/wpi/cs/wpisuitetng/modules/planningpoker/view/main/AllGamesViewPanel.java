@@ -105,15 +105,17 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     currentSelectionGame = null; // reset selected game
                     
                     final Object nodeInfo = node.getUserObject();
+                    
                     if (nodeInfo instanceof GameModel) {
                         ((CardLayout) getRequirementPanel().getLayout()).show(
                                 getRequirementPanel(), "no requirement");
                         final GameModel game = (GameModel) nodeInfo;
                         currentSelectionGame = game;
                         getGameDescriptionPanel().setGame(game);
-                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
-                    }
-                    else if (nodeInfo instanceof GameRequirementModel) {
+                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
+                    
+                    } else if (nodeInfo instanceof GameRequirementModel) {
+                    	
                         ((CardLayout) getRequirementPanel().getLayout()).show(
                                 getRequirementPanel(), "requirement");
                         final GameRequirementModel req = (GameRequirementModel) nodeInfo;
@@ -127,13 +129,12 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                                 .getParent()).getUserObject();
                         getGameDescriptionPanel().setGame(game);
                         currentSelectionGame = game;
-                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
-                }
-                else {
-                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "empty");
-                    }
-                    PlanningPoker.getViewController().displayAdmin(
-                            currentSelectionGame);
+                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
+	                } else {
+	                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "empty");
+	                }
+               
+                    PlanningPoker.getViewController().displayAdmin(currentSelectionGame);
                 }
             }
         });

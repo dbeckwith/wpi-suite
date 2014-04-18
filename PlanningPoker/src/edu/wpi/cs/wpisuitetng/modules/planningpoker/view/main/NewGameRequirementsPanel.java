@@ -24,6 +24,7 @@ import javax.swing.table.TableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
@@ -70,6 +71,18 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 requirementsListObserver);
         GetRequirementsController.getInstance().retrieveRequirements();
 	}
+    
+    /**
+     * Sets the game for editing
+     * @param game the GameModel to load requirements from
+     */
+    public void setGame(GameModel game){
+    	this.game = game;
+    	List<GameRequirementModel> gameReqs = game.getRequirements();
+    	for(GameRequirementModel req : gameReqs){
+    		addRequirement(req, true);
+    	}
+    }
 	
 	public SimpleListObserver getRequirementsListObserver() {
 	    return requirementsListObserver;
@@ -247,14 +260,19 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     }
     
     private void addRequirement(GameRequirementModel r) {
+        addRequirement(r, false);
+    }
+    
+    private void addRequirement(GameRequirementModel r, boolean selected) {
         System.out.println("added requirement " + r.toString());
         DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
-        model.addRow(new Object[] { false, r, r.getDescription().toString(),
+        model.addRow(new Object[] { selected, r, r.getDescription().toString(),
                 r.getType().toString() });
         validateForm();
         parent.check();
     }
+    
     
     /**
      * gets all selected requirements from the table
@@ -308,6 +326,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         return errors;
     }
     
+    private GameModel game;
     private NewGamePanel parent;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
