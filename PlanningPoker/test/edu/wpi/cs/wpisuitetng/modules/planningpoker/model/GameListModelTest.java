@@ -64,10 +64,10 @@ public class GameListModelTest {
 
 	@Test
 	public void testGameManipulation() {
-		GameModel game1 = new GameModel(1, "Test Game",
+		GameModel game1 = new GameModel("Test Game",
 				"Test Game Description", null, DeckListModel.getInstance()
 						.getDefaultDeck(), new Date(), null, GameStatus.PENDING);
-		GameModel game2 = new GameModel(2, "Test Game 2",
+		GameModel game2 = new GameModel("Test Game 2",
 				"Test Game Description 2", null, DeckListModel.getInstance()
 						.getDefaultDeck(), new Date(), null,
 				GameStatus.COMPLETE);

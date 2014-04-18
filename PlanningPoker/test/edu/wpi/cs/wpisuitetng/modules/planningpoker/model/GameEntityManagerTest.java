@@ -42,10 +42,12 @@ public class GameEntityManagerTest {
 	static MockData db;
 	static User existingUser;
 	static GameModel existingGame;
+	static int existingGameID;
 	static Session defaultSession;
 	static String mockSsid;
 	static GameEntityManager manager;
 	static GameModel newGame;
+	static int newGameID;
 	static GameModel goodUpdatedGame;
 	static Session adminSession;
 	static Project testProject;
@@ -66,23 +68,29 @@ public class GameEntityManagerTest {
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
 		existingUser = new User("joe", "joe", "1234", 2);
-		existingGame = new GameModel(1, "Existing Game", "something", null,
+		existingGame = new GameModel("Existing Game", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
+		existingGameID = existingGame.getID();
 		defaultSession = new Session(existingUser, testProject, mockSsid);
-		newGame = new GameModel(-1, "New Game", "A new game", null,
+		newGame = new GameModel("New Game", "A new game", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
-		otherGame = new GameModel(3, "Other Game", "something", null,
+		newGameID = newGame.getID();
+		otherGame = new GameModel("Other Game", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
-		goodUpdatedGame = new GameModel(1, "Updated Game", "Some updates",
+		
+		goodUpdatedGame = new GameModel("Updated Game", "Some updates",
 				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
+		
+		goodUpdatedGame.copyFrom(existingGame);
+		//goodUpdatedGame. TODO:EditCopyFrom
 
 		db = new MockData(new HashSet<Object>());
 		db.save(existingGame, testProject);
@@ -110,16 +118,16 @@ public class GameEntityManagerTest {
 	public void testMakeEntity() throws WPISuiteException {
 		GameModel created = manager
 				.makeEntity(defaultSession, newGame.toJSON());
-		Assert.assertEquals(2, created.getID()); // IDs are unique across
+		Assert.assertEquals(newGameID, created.getID()); // IDs are unique across
 													// projects
 		Assert.assertEquals("New Game", created.getName());
-		Assert.assertSame(db.retrieve(GameModel.class, "id", 2).get(0), created);
+		Assert.assertSame(db.retrieve(GameModel.class, "id", newGameID).get(0), created);
 	}
 
 	@Test
 	public void testGetEntity() throws NotFoundException {
 	    db.save(existingGame, testProject);
-		GameModel[] games = manager.getEntity(defaultSession, "1");
+		GameModel[] games = manager.getEntity(defaultSession, ""+existingGameID);
 		Assert.assertSame(existingGame, games[0]);
 	}
 
@@ -142,21 +150,22 @@ public class GameEntityManagerTest {
 
 	@Test
 	public void testSave() throws WPISuiteException {
-		GameModel game = new GameModel(4, "Save Test", "something", null,
+		GameModel game = new GameModel("Save Test", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
+		int saveTestGameID = game.getID();
 		manager.save(defaultSession, game);
-		Assert.assertSame(game, db.retrieve(GameModel.class, "id", 4).get(0));
+		Assert.assertSame(game, db.retrieve(GameModel.class, "id", saveTestGameID).get(0));
 		Assert.assertSame(testProject, game.getProject());
 	}
 
 	@Test
 	public void testDelete() throws WPISuiteException {
-		Assert.assertSame(existingGame, db.retrieve(GameModel.class, "id", 1)
+		Assert.assertSame(existingGame, db.retrieve(GameModel.class, "id", existingGameID)
 				.get(0));
-		Assert.assertTrue(manager.deleteEntity(adminSession, "1"));
-		Assert.assertEquals(0, db.retrieve(GameModel.class, "id", 1).size());
+		Assert.assertTrue(manager.deleteEntity(adminSession, existingGameID+""));
+		Assert.assertEquals(0, db.retrieve(GameModel.class, "id", existingGameID).size());
 	}
 
 	@Test(expected = NotFoundException.class)
@@ -177,7 +186,7 @@ public class GameEntityManagerTest {
 
 	@Test
 	public void testDeleteAll() throws WPISuiteException {
-		GameModel anotherGame = new GameModel(-1, "a title", "a description",
+		GameModel anotherGame = new GameModel("a title", "a description",
 				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);

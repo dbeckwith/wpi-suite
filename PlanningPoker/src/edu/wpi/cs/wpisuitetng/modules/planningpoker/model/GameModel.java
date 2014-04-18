@@ -65,45 +65,14 @@ public class GameModel extends AbstractModel {
 	 * Default constructor creates instance with invalid id and null fields
 	 */
 	public GameModel() {
-		id = nextId;
-		nextId++;
-		name = null;
-		description = null;
-		requirements = null;
-		endDate = null;
-		type = null;
-		status = null;
-		status_observers = null;
-		owner = null;
-		deck = DeckListModel.getInstance().getDefaultDeck();
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param id
-	 * @param name
-	 * @param description
-	 * @param requirements
-	 * @param deck
-	 * @param end
-	 * @param type
-	 * @param status
-	 * @param users
-	 */
-	public GameModel(int id, String name, String description,
-            List<GameRequirementModel> requirements, DeckModel deck,
-			Date end, GameType type, GameStatus status) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.requirements = requirements;
-		this.deck = deck;
-		endDate = end;
-		this.type = type;
-		this.status = status;
-		status_observers = new ArrayList<>();
-		owner = ConfigManager.getConfig().getUserName();
+		this(null, // name
+				null, // description
+				null, // requirements
+				DeckListModel.getInstance().getDefaultDeck(), // deck
+				null, // end date
+				null, // type
+				null,// status
+				null); // owner
 	}
 
 	/**
@@ -121,51 +90,16 @@ public class GameModel extends AbstractModel {
 	public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
 			Date end, GameType type, GameStatus status) {
-	    id = nextId;
-        nextId++;
-		this.name = name;
-		this.description = description;
-		this.requirements = requirements;
-		this.deck = deck;
-		endDate = end;
-		this.type = type;
-		this.status = status;
-		status_observers = new ArrayList<>();
-		owner = ConfigManager.getConfig().getUserName();
+        this(name, description, requirements, deck, end, type, status,
+        		ConfigManager.getConfig().getUserName());
 	}
 
-	/**
-	 * @param id
-	 * @param name
-	 * @param description
-	 * @param requirements
-	 * @param deck
-	 * @param endDate
-	 * @param type
-	 * @param status
-	 * @param owner
-	 */
-	public GameModel(String name, String description,
-            List<GameRequirementModel> requirements, DeckModel deck,
-			Date endDate, GameType type, GameStatus status,
-			String owner) {
-		this.name = name;
-		this.description = description;
-		this.requirements = requirements;
-		this.deck = deck;
-		this.endDate = endDate;
-		this.type = type;
-		this.status = status;
-		this.owner = owner;
-		status_observers = new ArrayList<>();
-	}
 	
-	public GameModel(int id, String name, String description,
-			ArrayList<GameRequirementModel> requirements, DeckModel deck,
+	public GameModel(String name, String description,
+			List<GameRequirementModel> requirements, DeckModel deck,
 			Date endDate, GameType type, GameStatus status,
 			String owner) {
-	    id = nextId;
-        nextId++;
+	    this.id = nextId++;
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
