@@ -428,7 +428,24 @@ public class GameModel extends AbstractModel {
 		status = g.status;
 		status_observers = g.status_observers;
 		owner = g.owner;
-		g.deck = deck;
+		deck = g.deck;
+	}
+	
+	/**
+     * Copies the information from the given GameModel into this GameModel
+     * This version is for editing a game, so it does not copy status observers or the id
+     *
+     * @param g
+     */
+	public void editCopyFrom(GameModel g) {
+		name = g.name;
+		description = g.description;
+		requirements = g.requirements;
+		endDate = g.endDate;
+		type = g.type;
+		status = g.status;
+		owner = g.owner;
+		deck = g.deck;
 	}
 
 	/**

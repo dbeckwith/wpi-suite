@@ -30,6 +30,7 @@ import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
@@ -115,6 +116,18 @@ public class NewGamePanel extends JPanel {
 
 		check();
 		checkNewRequirement();
+	}
+	
+	public NewGamePanel(GameModel game){
+		this();
+		this.game = game;
+		
+		this.gameDescription.setGame(game);
+		this.newGameRequirementsPanel.setGame(game);
+		
+		check();
+		checkNewRequirement();
+		
 	}
 
 	/**
@@ -302,12 +315,19 @@ public class NewGamePanel extends JPanel {
 			check();
 			return;
 		}
-
-		PlanningPoker.getViewController().saveNewGame(this);
+		if(game == null){
+			PlanningPoker.getViewController().saveNewGame(this);
+		} else {
+			PlanningPoker.getViewController().updateGame(game, this);
+		}
 	}// GEN-LAST:event_saveButtonActionPerformed
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
-		PlanningPoker.getViewController().cancelNewGame(this);
+		if(game == null){
+			PlanningPoker.getViewController().cancelNewGame(this);
+		} else {
+			PlanningPoker.getViewController().cancelEditGame(this);
+		}
 	}// GEN-LAST:event_cancelButtonActionPerformed
 
 	/**
@@ -409,6 +429,8 @@ public class NewGamePanel extends JPanel {
 		return newGameRequirementsPanel;
 	}
 
+	private GameModel game = null;
+	
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton cancelButton;
 	private JPanel newGameRequirementsCard;
