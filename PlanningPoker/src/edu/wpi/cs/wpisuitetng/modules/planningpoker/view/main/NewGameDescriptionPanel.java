@@ -184,6 +184,10 @@ SimpleListObserver {
 		validateDeadline();
 	}
 	
+	/**
+	 * Set the panel's contents from the given game for editing
+	 * @param game the game to load information from
+	 */
 	public void setGame(GameModel game){
 		this.game = game;
 		nameField.setText(game.getName());

@@ -118,6 +118,11 @@ public class NewGamePanel extends JPanel {
 		checkNewRequirement();
 	}
 	
+	/**
+	 * Constructor for editing a game
+	 * Fills all fields with information from the given game
+	 * @param game the GameModel to load from
+	 */
 	public NewGamePanel(GameModel game){
 		this();
 		this.game = game;
