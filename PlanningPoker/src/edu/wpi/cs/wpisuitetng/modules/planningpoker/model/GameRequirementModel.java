@@ -36,6 +36,8 @@ public class GameRequirementModel extends AbstractModel {
 	private ArrayList<Estimate> estimates;
 	private int finalEstimate;
 	
+	private String estimateNote;
+	
 	/**
 	 * A unique id for this instance of the requirement
 	 */
@@ -73,6 +75,7 @@ public class GameRequirementModel extends AbstractModel {
 		finalEstimate = 0;
 		id = nextId;
 		nextId++;
+		estimateNote = "";
 	}
 
     /**
@@ -114,7 +117,24 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Gets the unique ID of this game requirement.
+=======
+     * @return the estimateNote
+     */
+    public String getEstimateNote() {
+        return estimateNote;
+    }
+
+    /**
+     * @param estimateNote the estimateNote to set
+     */
+    public void setEstimateNote(String estimateNote) {
+        this.estimateNote = estimateNote;
+    }
+
+    /**
+>>>>>>> origin/team9dev
      * @return the id
      */
     public long getId() {
