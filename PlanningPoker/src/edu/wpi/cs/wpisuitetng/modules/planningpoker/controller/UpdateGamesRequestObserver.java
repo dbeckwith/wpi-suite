@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -19,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 /**
  * This observer is called when a response is received from a request
  * to the server to update games.
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class UpdateGamesRequestObserver implements RequestObserver {
