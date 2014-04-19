@@ -22,9 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * This handles requests for games
- * 
- * @author Brett Ammeson, Andrew Han
+ * This controller responds by sending request to get games from remote server.
  */
 public class GetGamesController implements ActionListener {
     private final GetGamesRequestObserver observer;
@@ -40,8 +38,9 @@ public class GetGamesController implements ActionListener {
     }
     
     /**
-     * @return the instance of the GetGameController or creates one if it does
+     * get the instance of the GetGameControlleror creates one if it does
      *         not exist.
+     * @return the instance of the GetGameController
      */
     public static GetGamesController getInstance() {
         if (GetGamesController.instance == null) {
@@ -55,7 +54,7 @@ public class GetGamesController implements ActionListener {
      * Sends an HTTP request to store a game when the update button is pressed
      * 
      * @param e
-     *            ActionEvent
+     *        ActionEvent
      * 
      * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
      */
@@ -80,7 +79,7 @@ public class GetGamesController implements ActionListener {
      * core). This method is called by the GetGamesRequestObserver
      * 
      * @param games
-     *            array of games received from the server
+     *        array of games received from the server
      */
     public void receivedGames(GameModel[] games) {
         // Make sure the response was not null

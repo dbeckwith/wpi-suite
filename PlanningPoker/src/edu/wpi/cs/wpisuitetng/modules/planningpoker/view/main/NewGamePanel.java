@@ -316,7 +316,7 @@ public class NewGamePanel extends JPanel {
 
 	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
 		if (!(newGameRequirementsPanel.validateForm() && gameDescription
-				.validateForm())) {
+				.canValidateForm())) {
 			check();
 			return;
 		}
@@ -346,7 +346,7 @@ public class NewGamePanel extends JPanel {
 
 	@Override
 	public String getName() {
-		return gameDescription.nameField.getText();
+		return gameDescription.getNameField().getText();
 	}
 
 	/**
@@ -359,14 +359,14 @@ public class NewGamePanel extends JPanel {
 	}
 
 	public String getDescription() {
-		return gameDescription.descriptionField.getText();
+		return gameDescription.getDescriptionField().getText();
 	}
 
 	/**
 	 * @return the GameType of this game
 	 */
 	public GameType getGameType() {
-		if (gameDescription.distributed.isSelected()) {
+		if (gameDescription.getDistributed().isSelected()) {
 			return GameType.DISTRIBUTED;
         }
         else {
@@ -386,8 +386,8 @@ public class NewGamePanel extends JPanel {
 	 * Checks if game description panel and requirements are properly entered
 	 */
 	public void check() {
-		saveButton.setEnabled(gameDescription.validateForm()
-				&& newGameRequirementsPanel.validateForm() && gameDescription.validateMaximum());
+		saveButton.setEnabled(gameDescription.canValidateForm()
+				&& newGameRequirementsPanel.validateForm() && gameDescription.canValidateMaximum());
 		ArrayList<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());

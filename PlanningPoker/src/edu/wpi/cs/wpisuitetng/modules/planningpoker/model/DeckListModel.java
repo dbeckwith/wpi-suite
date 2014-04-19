@@ -15,7 +15,10 @@ import javax.swing.AbstractListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
- *
+ * A model for storing all the decks currently in the database.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
 	private DeckModel defaultDeck;
@@ -24,11 +27,11 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	private static final long serialVersionUID = 3193186441179194894L;
 	private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
 
-	/**
-	 * Returns the instance of this DeckListModel or creates a new one
-	 * 
-	 * @return The instance of this DeckListModel
-	 */
+    /**
+     * Returns the instance of this DeckListModel or creates a new one
+     * 
+     * @return the instance of this DeckListModel
+     */
 	public static DeckListModel getInstance() {
 		if (DeckListModel.instance == null) {
 			DeckListModel.instance = new DeckListModel();
@@ -38,31 +41,32 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	}
 
 	/**
-	 * Empties the list of decks
+	 * Empties the list of decks.
 	 */
 	public void emptyModel() {
 		decks.clear();
 	}
 
 	/**
-	 * Adds default deck
+	 * Sets the default deck which will be automatically selected when a new game is created.
 	 */
 	public void setDefaultDeck(DeckModel defaultDeck) {
 		this.defaultDeck = defaultDeck;
 	}
 
 	/**
-	 * Gets default deck
+	 * Gets the default deck.
 	 */
 	public DeckModel getDefaultDeck() {
 		return defaultDeck;
 	}
-
-	/**
-	 * Adds a new deck to the list
-	 * 
-	 * @param deck
-	 */
+    
+    /**
+     * Adds a new deck to the list.
+     * 
+     * @param deck
+     *            the deck to add
+     */
 	public void addDeck(DeckModel deck) {
 		decks.add(deck);
 
@@ -77,38 +81,31 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	public void removeObservers(){
         observers.clear();
     }
-
-	/**
-	 * Adds an observer to this model
-	 * 
-	 * @param o
-	 */
+    
+    /**
+     * Adds an observer to this model which will be notified whenever a deck is
+     * added or removed.
+     * 
+     * @param o
+     *            the observer to add
+     */
 	public void addObserver(SimpleListObserver o) {
 		observers.add(o);
 	}
 
-	/**
-	 * Gets element at index
-	 * 
-	 * @param index
-	 */
 	@Override
 	public DeckModel getElementAt(int index) {
 		return decks.get(index);
 	}
 
 	/**
-	 * Returns all decks[]
-	 * @return The list of decks
+	 * Gets the list of all decks currently being stored.
+	 * @return the list of decks
 	 */
 	public ArrayList<DeckModel> getDecks() {
 		return decks;
 	}
 
-	/**
-	 * Gets length of decks
-	 * @return The size of the list of decks
-	 */
 	@Override
 	public int getSize() {
 		return decks.size();

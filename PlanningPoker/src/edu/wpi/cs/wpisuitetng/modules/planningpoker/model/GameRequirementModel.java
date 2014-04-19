@@ -21,26 +21,22 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 /**
  * A simplified requirement model for a planning poker game
  * 
- * @author Lukas
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameRequirementModel extends AbstractModel {
-	/** the id of the parent requirement in requirements manager */
-	private int parentId;
-
-	/** the requirement name */
+    /**
+     * the id of the parent requirement in requirements manager
+     */
+    private int parentId;
+    
 	private String name;
-
-	/** the requirement description */
 	private String description;
-
-	/** the type of requirement */
 	private String type;
-
-	/** the estimates for the requirement */
 	private ArrayList<Estimate> estimates;
-
 	private int finalEstimate;
+	
+	private String estimateNote;
 	
 	/**
 	 * A unique id for this instance of the requirement
@@ -50,14 +46,22 @@ public class GameRequirementModel extends AbstractModel {
 	private static int nextId = 0;
 	
 
-	/**
-     * Creates a new GameRequirementModel
+    /**
+     * Creates a new GameRequirementModel.<br>
+     * The list of estimates passed in is sorted.
      * 
      * @param parentId
+     *            the ID number of this requirement's parent requirement in
+     *            requirements manager
      * @param name
+     *            the name of the requirement
      * @param description
+     *            the requirement's description
      * @param type
+     *            the type of requirement
      * @param estimates
+     *            the list of estimates that have been made so far for this
+     *            requirement
      */
 	public GameRequirementModel(int parentId, String name, String description,
 			String type, ArrayList<Estimate> estimates) {
@@ -71,35 +75,41 @@ public class GameRequirementModel extends AbstractModel {
 		finalEstimate = 0;
 		id = nextId;
 		nextId++;
+		estimateNote = "";
 	}
 
-	/**
-	 * @param parentId
-	 * @param name
-	 * @param description
-	 * @param type
-	 */
+    /**
+     * Creates a new GameRequirementModel with no estimates made so far.
+     * 
+     * @param parentId
+     *            the ID number of this requirement's parent requirement in
+     *            requirements manager
+     * @param name
+     *            the name of the requirement
+     * @param description
+     *            the requirement's description
+     * @param type
+     *            the type of requirement
+     */
 	public GameRequirementModel(int parentId, String name, String description,
 			String type) {
-		this.parentId = parentId;
-		this.name = name;
-		this.description = description;
-		this.type = type;
-		estimates = new ArrayList<Estimate>();
-		finalEstimate = 0;
-		id = nextId;
-        nextId++;
+	    this(parentId, name, description, type, new ArrayList<Estimate>());
 	}
 
+    /**
+     * Creates a new GameRequirementModel with all blank fields. This
+     * constructor should not generally be used except in database queries.
+     */
 	public GameRequirementModel() {
 		this(0, "", "", "", new ArrayList<Estimate>());
 	}
 
-	/**
+    /**
      * Creates a new GameRequirementModel from a requirement from
-     * RequirementManager
+     * RequirementManager.
      * 
      * @param r
+     *            the Requirement to model this GameRequirementModel off of
      */
 	public GameRequirementModel(Requirement r) {
 		this(r.getId(), r.getName(), r.getDescription(),
@@ -107,6 +117,24 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * Gets the unique ID of this game requirement.
+=======
+     * @return the estimateNote
+     */
+    public String getEstimateNote() {
+        return estimateNote;
+    }
+
+    /**
+     * @param estimateNote the estimateNote to set
+     */
+    public void setEstimateNote(String estimateNote) {
+        this.estimateNote = estimateNote;
+    }
+
+    /**
+>>>>>>> origin/team9dev
      * @return the id
      */
     public long getId() {
@@ -114,6 +142,7 @@ public class GameRequirementModel extends AbstractModel {
     }
 
     /**
+     * Gets the unique ID of this requirement's parent requirement.
 	 * @return the parentId
 	 */
 	public int getParentId() {
@@ -121,6 +150,7 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+	 * Sets the parent ID of this requirement.
 	 * @param parentId
 	 *            the parentId to set
 	 */
@@ -129,6 +159,7 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+	 * Gets the type of requirement this is.
 	 * @return the type
 	 */
 	public String getType() {
@@ -136,6 +167,7 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+	 * Gets the name of this requirement.
 	 * @return the name
 	 */
 	public String getName() {
@@ -143,6 +175,7 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+	 * Gets the description of this requirement.
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -150,41 +183,47 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+	 * Gets the list of estimates made so far for this requirement.
 	 * @return the estimates
 	 */
 	public ArrayList<Estimate> getEstimates() {
 		return estimates;
 	}
-
-	/**
-     * Adds an estimate to the list of estimates
+    
+    /**
+     * Adds an estimate to the list of estimates for this requirement.<br>
+     * This method also sorts the list of estimates after adding an estimate, so
+     * the list is always kept sorted.
+     * 
      * @param e
+     *            the estimate to add
      */
 	public void addEstimate(Estimate e) {
 		estimates.add(e);
 		Collections.sort(estimates);
 	}
 
-	/**
-	 * Updates an estimate with a new one
-	 * 
-	 * @param old
-	 *            the old estimate
-	 * @param updated
-	 *            the new estimate
-	 */
-	public void UpdateEstimate(Estimate old, Estimate updated) {
+    /**
+     * Updates an estimate with a new one by removing the old estimate and
+     * adding the new one.
+     * 
+     * @param old
+     *            the old estimate
+     * @param updated
+     *            the new estimate
+     */
+    public void UpdateEstimate(Estimate old, Estimate updated) {
 		estimates.remove(old);
 		estimates.add(updated);
 		Collections.sort(estimates);
 	}
 
-	/**
-	 * Computes the median of all of the estimates
-	 * 
-	 * @return the median
-	 */
-	public float getEstimateMedian() {
+    /**
+     * Computes the median value of all of the estimates.
+     * 
+     * @return the median
+     */
+    public float getEstimateMedian() {
 		float toReturn;
 		if (estimates.isEmpty()) {
 			toReturn = 0;
@@ -203,16 +242,16 @@ public class GameRequirementModel extends AbstractModel {
 			}
 		}
 		return toReturn;
-	}
-
-	/**
-	 * Computes the numerical average of all of the estimates
-	 * 
-	 * @return the mean (average)
-	 */
-	public float getEstimateMean() {
-		float toReturn = 0;
-		if (!estimates.isEmpty()) {
+    }
+    
+    /**
+     * Computes the numerical average of all of the estimates.
+     * 
+     * @return the mean (average)
+     */
+    public float getEstimateMean() {
+        float toReturn = 0;
+        if (!estimates.isEmpty()) {
 			for (Estimate e : estimates) {
 				toReturn += e.getEstimate() / (estimates.size());
 			}
@@ -220,12 +259,12 @@ public class GameRequirementModel extends AbstractModel {
 		return toReturn;
 	}
 
-	/**
-	 * Determines if all users have voted on a requirement
-	 * 
-	 * @return whether all users have voted on a requirement
-	 */
-	public boolean allVoted() {
+    /**
+     * Determines if all users have voted on a requirement.
+     * 
+     * @return true if all users have voted on a requirement, false otherwise
+     */
+    public boolean allVoted() {
 		ArrayList<User> estimateUsers = new ArrayList<User>();
 		User[] users = CurrentUserController.getInstance().getUsers();
 
@@ -246,40 +285,20 @@ public class GameRequirementModel extends AbstractModel {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
-	 */
 	@Override
 	public void delete() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(java.lang.Object)
-	 */
 	@Override
 	public Boolean identify(Object arg0) {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#save()
-	 */
 	@Override
 	public void save() {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
-	 */
 	@Override
 	public String toJSON() {
 		return new Gson().toJson(this, Requirement.class);
@@ -290,14 +309,36 @@ public class GameRequirementModel extends AbstractModel {
 		return getName();
 	}
 
+    /**
+     * Gets the final estimate made for this requirement.<br>
+     * The final estimate is meant to be creater of the game's final decision as
+     * to what the value of the requirement should be.
+     * 
+     * @return the final estimate
+     */
 	public int getFinalEstimate() {
 		return finalEstimate;
 	}
-
+    
+    /**
+     * Sets the final estimate of this requirement.
+     * 
+     * @param finalEstimate
+     *            the final estimate
+     */
 	public void setFinalEstimate(int finalEstimate) {
 		this.finalEstimate = finalEstimate;
     }
     
+    /**
+     * Tests to see if this requirement is equivalent to another. Two
+     * requirements are equivalent if they have the same name and description.
+     * 
+     * @param other
+     *            the other requirement to compare to
+     * @return true if the two requirements are considered equal, false
+     *         otherwise
+     */
     public boolean equals(GameRequirementModel other) {
         return (name.equals(other.name))
                 && (description.equals(other.description));

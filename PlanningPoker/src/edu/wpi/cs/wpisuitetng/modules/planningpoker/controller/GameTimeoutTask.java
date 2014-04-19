@@ -16,9 +16,10 @@ import java.util.TimerTask;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 /**
- * The purpose of this class is to define a TimerTask that updates the completed status of games once they have passed their end date.
- * @author dbeckwith
- *
+ * The purpose of this class is to define a TimerTask that updates the completed
+ * status of games once they have passed their end date.
+ * @author team9
+ * @version 1.0
  */
 public class GameTimeoutTask extends TimerTask {
     
@@ -26,7 +27,9 @@ public class GameTimeoutTask extends TimerTask {
     
     /**
      * Constructs a new task that will update the given game.
+     * 
      * @param game
+     *        the game to be updated
      */
     public GameTimeoutTask(GameModel game) {
         this.game = game;
@@ -41,7 +44,8 @@ public class GameTimeoutTask extends TimerTask {
     
     /**
      * Get the game that this task is associated with.
-     * @return
+     * 
+     * @return the game that this task is associated with.
      */
     public GameModel getGame() {
         return game;
