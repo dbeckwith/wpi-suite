@@ -29,6 +29,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
+// who is author?
+/**
+ * This controller is used to control GUI display
+ */
 public class ViewController {
     
     private final MainView mainView;
@@ -102,7 +106,7 @@ public class ViewController {
      */
     public void saveNewGame(NewGamePanel e) {
         DeckModel d = e.getDeck();
-        ArrayList<Double> newCards = new ArrayList<Double>();
+        final ArrayList<Double> newCards = new ArrayList<Double>();
         if (d.toString().equals("Generated deck")) {
             for (int i = 1; i <= e.getMaximumCardValue(); i++) {
                 newCards.add((double) i);
@@ -132,10 +136,12 @@ public class ViewController {
      * Updates a game model based in the information in the NewGamePanel
      * 
      * @param game
+     *        the game to be updated
      * @param e
+     *        the panel used to update the game
      */
     public void updateGame(GameModel game, NewGamePanel e) {
-        DeckModel d = e.getDeck();
+        final DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
@@ -293,6 +299,9 @@ public class ViewController {
                 });
     }
     
+    /**
+     * starts a game so it allows uses to vote its requirements
+     */
     public void startGame() {
         final GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isStarted()) {

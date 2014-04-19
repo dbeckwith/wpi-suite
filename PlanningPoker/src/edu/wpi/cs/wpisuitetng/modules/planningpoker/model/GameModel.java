@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -19,16 +16,19 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
- * Represents a planning poker game
+ * This class represents a planning poker game
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameModel extends AbstractModel {
+    
+    /**
+     * An enumeration representing the different states of a game.
+     */
     public static enum GameStatus {
         NEW("New"), PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
 
@@ -37,13 +37,16 @@ public class GameModel extends AbstractModel {
 
 		/**
          * Creates a new GameStatus
-         * @param stat
+         * @param stat the name of the status
          */
 		GameStatus(String stat) {
 			name = stat;
 		}
 	};
 
+	/**
+	 * An enumeration representing the different types of games.
+	 */
 	public static enum GameType {
 		LIVE, DISTRIBUTED
 	};
@@ -61,10 +64,12 @@ public class GameModel extends AbstractModel {
 	private DeckModel deck;
 	private static int nextId = 0;
 
-	/**
-	 * Default constructor creates instance with invalid id and null fields
-	 */
-	public GameModel() {
+    /**
+     * Default constructor creates instance with invalid id and null fields.
+     * This constructor should generally not be used except for database
+     * queries.
+     */
+    public GameModel() {
 		this(null, // name
 				null, // description
 				null, // requirements
@@ -75,26 +80,53 @@ public class GameModel extends AbstractModel {
 				null); // owner
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param name
-	 * @param description
-	 * @param requirements
-	 * @param deck
-	 * @param end
-	 * @param type
-	 * @param status
-	 * @param users
-	 */
+    /**
+     * Creates a new planning poker game.
+     * 
+     * @param name
+     *            the game's name
+     * @param description
+     *            the description of the game
+     * @param requirements
+     *            a list of the requirements to be estimated for this game
+     * @param deck
+     *            the deck of cards users can use to estimate requirements for
+     *            this game
+     * @param end
+     *            the deadline for this game
+     * @param type
+     *            what kind of game this is
+     * @param status
+     *            what the current status of this game should be
+     */
 	public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
 			Date end, GameType type, GameStatus status) {
         this(name, description, requirements, deck, end, type, status,
         		ConfigManager.getConfig().getUserName());
 	}
-
-	
+    
+    /**
+     * Creates a new planning poker game.
+     * 
+     * @param name
+     *            the game's name
+     * @param description
+     *            the description of the game
+     * @param requirements
+     *            a list of the requirements to be estimated for this game
+     * @param deck
+     *            the deck of cards users can use to estimate requirements for
+     *            this game
+     * @param endDate
+     *            the deadline for this game
+     * @param type
+     *            what kind of game this is
+     * @param status
+     *            what the current status of this game should be
+     * @param owner
+     *            the name of the user who created this game
+     */
 	public GameModel(String name, String description,
 			List<GameRequirementModel> requirements, DeckModel deck,
 			Date endDate, GameType type, GameStatus status,
@@ -110,51 +142,62 @@ public class GameModel extends AbstractModel {
 		this.owner = owner;
 		status_observers = new ArrayList<>();
 	}
-	
-	/**
-	 * @return the name of this game
-	 */
-	public String getName() {
-		return name;
-	}
-
+    
+    /**
+     * Gets the name of this game.
+     * 
+     * @return the name of this game
+     */
+    public String getName() {
+        return name;
+    }
+    
+    /**
+     * Sets the unique ID number of this game.
+     * 
+     * @param id
+     *            the new ID number
+     */
 	public void setID(int id) {
 		this.id = id;
 	}
 
 	/**
+	 * Gets the description of this game.
 	 * 
-	 * @return the name of this game
+	 * @return the description of this game
 	 */
 	public String getDescription() {
 		return description;
 	}
-	
-	 /**
+    
+    /**
+     * Gets the name of the user who created this game.
+     * 
      * @return the owner
      */
     public String getOwner() {
         return owner;
     }
     
-/**
- * Adds a GameStatusObserver to the list of status observers
- * 
- * @param gso
- *        The GameStatusObserver to add
- */
+    /**
+     * Adds a GameStatusObserver to the list of status observers
+     * 
+     * @param gso
+     *            The GameStatusObserver to add
+     */
 	public void addStatusListener(GameStatusObserver gso) {
 		if (!status_observers.contains(gso)) {
 			status_observers.add(gso);
 		}
 	}
 
-/**
- * Removes a GameStatusObserver from the list of status observer
- * 
- * @param gso
- *        The GameStatusObserver to remove
- */
+    /**
+     * Removes a GameStatusObserver from the list of status observers
+     * 
+     * @param gso
+     *            The GameStatusObserver to remove
+     */
 	public void removeStatusListener(GameStatusObserver gso) {
 		if (status_observers.contains(gso)) {
 			status_observers.remove(gso);
@@ -165,18 +208,20 @@ public class GameModel extends AbstractModel {
      * Returns the list of estimates for a given requirement
      * 
      * @param reqIndex
-     *        The index of the requirement in the list of requirements
+     *        the index of the requirement in the list of requirements
      * @return an array containing all of the estimates
      */
     public List<Estimate> getEstimates(int reqIndex) {
 		return requirements.get(reqIndex).getEstimates();
 	}
 
-	/**
-	 * @return The Requirements for this game
-	 */
+    /**
+     * Gets the list of requirements for this game.
+     * 
+     * @return the Requirements for this game
+     */
     public List<GameRequirementModel> getRequirements() {
-		return requirements;
+        return requirements;
 	}
 
 	/**
@@ -192,14 +237,18 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * @return The deck for this game
+     * Gets the deck that users can use to estimate requirements of this game.
+     * 
+     * @return the deck for this game
      */
     public DeckModel getDeck() {
         return deck;
     }
     
 	/**
-	 * @return The end time for this game
+	 * Gets the deadline time for this game.
+	 * 
+	 * @return the end time for this game
 	 */
 	public Date getEndTime() {
 		return endDate;
@@ -208,7 +257,7 @@ public class GameModel extends AbstractModel {
 	/**
 	 * Returns which type of game this is
 	 * 
-	 * @return Either TYPE_LIVE or TYPE_DISTRIBUTED
+	 * @return the game's type
 	 */
 	public GameType getType() {
 		return type;
@@ -274,7 +323,7 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * sets the game status to closed so that no more edits can be made
+     * Sets the game status to closed so that no more edits can be made.
      */
     public void closeGame() {
         status = GameStatus.CLOSED;
@@ -283,9 +332,10 @@ public class GameModel extends AbstractModel {
             status_observers.get(i).statusChanged(this);
         }
     }
-
-/**
+    
+    /**
      * determines if the game has been started
+     * 
      * @return true if the game's status is not new
      */
     public boolean isStarted(){
@@ -405,6 +455,7 @@ public class GameModel extends AbstractModel {
 		return other.id == id && other.name.equals(other.name);
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (this == other)
 			return true;
