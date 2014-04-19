@@ -243,9 +243,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         saveFinalEstimateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 lblError.setVisible(false);
+                if (req.getFinalEstimate() != 0) {
+                    req.setEstimateNote("Manual change: \n" + notePane.getText());
+                } else {
+                    req.setEstimateNote(notePane.getText());
+                }
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
                         .getText()));
-                req.setEstimateNote(notePane.getText());
                 UpdateGamesController.getInstance().updateGame(parent);
                 final ArrayList<GameStatusObserver> gsos = (ArrayList<GameStatusObserver>) parent
                         .getStatusObservers();
@@ -477,7 +481,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         try {
             final int finalEstimate = Integer.parseInt(finalEstimateField
                     .getText());
-            if (finalEstimate <= 0) {
+            if (finalEstimate == req.getFinalEstimate()) {
+                lblError.setVisible(false);
+                saveFinalEstimateButton.setEnabled(false);
+            } else if (finalEstimate <= 0) {
                 //set error label
                 lblError.setText("* Positive Integers Only!");
                 lblError.setVisible(true);
