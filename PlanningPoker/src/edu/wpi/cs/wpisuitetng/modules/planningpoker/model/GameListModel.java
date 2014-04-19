@@ -173,7 +173,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
         if (!g.isEnded()) {
             // if the game is still going
             // watch for when it ends
-            GameTimeoutWatcher.getInstance().watchGame(g);
+//            GameTimeoutWatcher.getInstance().watchGame(g);
         }
     }
     
@@ -186,7 +186,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     private void removeAndUnregisterGame(GameModel g) {
         games.remove(g);
         g.removeStatusListener(game_observer);
-        GameTimeoutWatcher.getInstance().stopWatchingGame(g);
+//        GameTimeoutWatcher.getInstance().stopWatchingGame(g);
     }
     
     /**

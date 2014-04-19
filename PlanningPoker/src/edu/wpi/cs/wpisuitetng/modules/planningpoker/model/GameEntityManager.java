@@ -24,39 +24,46 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
 
 public class GameEntityManager implements EntityManager<GameModel> {
     
-    Data db;
+    private Data db;
+    
+    private static GameEntityManager instance;
     
     /**
+     * Only for use by the ManagerLayer in WPI-Suite
      * @param db
      */
     public GameEntityManager(Data db) {
         this.db = db;
         NotificationServer.getInstance().start();
+        instance = this;
+    }
+    
+    public static GameEntityManager getInstance() {
+        return instance;
     }
     
     /**
      * Ensures that a user is of the specified role
      * 
      * @param session
-     *            the session
+     *        the session
      * @param role
-     *            the role being verified
+     *        the role being verified
      * 
      * @throws WPISuiteException
-     *             user isn't authorized for the given role
+     *         user isn't authorized for the given role
      */
     private void ensureRole(Session session, Role role)
             throws WPISuiteException {
         final User user = (User) db.retrieve(User.class, "username",
                 session.getUsername()).get(0);
-        if (!user.getRole().equals(role)) {
-            throw new UnauthorizedException();
-        }
+        if (!user.getRole().equals(role)) { throw new UnauthorizedException(); }
     }
     
     /**
@@ -127,9 +134,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     @Override
     public GameModel[] getEntity(Session s, String id) throws NotFoundException {
         final int intId = Integer.parseInt(id);
-        if (intId < 1) {
-            throw new NotFoundException();
-        }
+        if (intId < 1) { throw new NotFoundException(); }
         GameModel[] GameModels = null;
         try {
             GameModels = db.retrieve(GameModel.class, "id", intId,
@@ -138,9 +143,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
         catch (WPISuiteException e) {
             e.printStackTrace();
         }
-        if (GameModels.length < 1 || GameModels[0] == null) {
-            throw new NotFoundException();
-        }
+        if (GameModels.length < 1 || GameModels[0] == null) { throw new NotFoundException(); }
         return GameModels;
     }
     
@@ -152,11 +155,10 @@ public class GameEntityManager implements EntityManager<GameModel> {
             throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
         newGameModel.setID(getNextID(s));
-        if (!db.save(newGameModel, s.getProject())) {
-            throw new WPISuiteException();
-        }
+        if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
         System.out.println("GEM makeEntity()");
         NotificationServer.getInstance().sendUpdateNotification();
+        new GameTimeoutObserver(s, newGameModel).start();
         return newGameModel;
     }
     
@@ -165,6 +167,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public void save(Session s, GameModel GameModel) throws WPISuiteException {
+        System.out.println("GEM save()");
         db.save(GameModel, s.getProject());
         
     }
@@ -183,18 +186,15 @@ public class GameEntityManager implements EntityManager<GameModel> {
          */
         final List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
                 updatedGameModel.getID(), s.getProject());
-        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) {
-            throw new BadRequestException("GameModel with ID does not exist.");
-        }
+        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) { throw new BadRequestException(
+                "GameModel with ID does not exist."); }
         
         final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
         
-        if (!db.save(existingGameModel, s.getProject())) {
-            throw new WPISuiteException();
-        }
+        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
         System.out.println("GEM update()");
         NotificationServer.getInstance().sendUpdateNotification();
         return existingGameModel;
