@@ -22,6 +22,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 /**
  * This class waits for response from the server based on the
  * request sent by its UserController
+ * @author team9
+ * @version 1.0
  */
 public class UserRequestObserver implements RequestObserver { // $codepro.audit.disable declareDefaultConstructors
 

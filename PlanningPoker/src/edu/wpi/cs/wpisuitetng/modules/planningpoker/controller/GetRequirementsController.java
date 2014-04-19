@@ -21,6 +21,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 /**
  * This controller responds by sending request to get requirements from remote
  * server.
+ * @author team9
+ * @version 1.0
  */
 public class GetRequirementsController {
     

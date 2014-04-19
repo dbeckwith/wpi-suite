@@ -16,6 +16,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 /**
  * This observer is called when a response is received from a request
  * to the server to get decks.
+ * @author team9
+ * @version 1.0
  */
 public class GetDecksRequestObserver implements RequestObserver {
     GetDecksController controller;
