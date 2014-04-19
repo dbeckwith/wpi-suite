@@ -10,87 +10,105 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 /**
- *
+ * This class is meant to represent a deck of cards that the user can pick from
+ * for making estimates to a game.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class DeckModel extends AbstractModel {
 	private String name;
 	private ArrayList<Double> cards;
 	private boolean allowsMultipleSelection;
-
-	/**
-	 * Creates a new deck
-	 * 
-	 * @param name
-	 *         The name of the deck
-	 * @param cards
-	 *         List of cards for the deck
-	 * @param allowsMultipleSelection
-	 *         Whether or not this deck should allow multiple selection
-	 */
+	private boolean isNone;
+    
+    /**
+     * Creates a new deck.
+     * 
+     * @param name
+     *            the name of the deck
+     * @param cards
+     *            list of cards for the deck
+     * @param allowsMultipleSelection
+     *            whether or not this deck should allow multiple selection
+     */
 	public DeckModel(String name, ArrayList<Double> cards,
 			boolean allowsMultipleSelection) {
 		this.name = name;
 		this.cards = cards;
 		this.allowsMultipleSelection = allowsMultipleSelection;
+		this.isNone = false;
 	}
 
-	/**
-	 * Also creates a new deck
-	 * 
-	 * @param name
-	 */
+    /**
+     * Creates a new deck without any cards that does not allow multiple
+     * selection.
+     * 
+     * @param name
+     *            the name of the deck
+     */
 	public DeckModel(String name) {
 		this.name = name;
 		this.cards = null;
 		this.allowsMultipleSelection = false;
+        this.isNone = false;
 	}
-	
+    
+    /**
+     * Creates a new prototype empty deck without a name. This constructor
+     * should generally not be used except in databse queries.
+     */
+    public DeckModel() {
+        this.name = null;
+        this.cards = null;
+        this.allowsMultipleSelection = false;
+        this.isNone = false;
+    }
+
 	/**
+	 * Gets the name of this deck.
+	 * 
 	 * @return the name of the deck
 	 */
 	public String getName() {
-	    return this.name;
+		return this.name;
 	}
-	
+
 	/**
+	 * Gets the list of cards in this deck.
+	 * 
 	 * @return The cards in the deck
 	 */
 	public ArrayList<Double> getCards() {
 		return this.cards;
 	}
-
-	/**
-	 * Still creating a new deck, but THIS ONE is empty
-	 */
-	public DeckModel() {
-		this.name = null;
-		this.cards = null;
-	}
-
-	/**
-	 * Adds a card to this deck
-	 * 
-	 * @param newCard
-	 */
+    
+    /**
+     * Adds a card to this deck. Duplicates are not allowed, so if the given
+     * value is already in this deck, this method does nothing
+     * 
+     * @param newCard
+     *            the value of the card to add
+     */
 	public void addCard(Double newCard) {
 		if (cards.contains(newCard)) {
 			return;
 		}
 		cards.add(newCard);
 	}
-
-	/**
-	 * Removes a card from this deck
-	 * 
-	 * @param card
-	 */
+    
+    /**
+     * Removes a card from this deck.
+     * 
+     * @param card
+     *            the value to remove, if it is in the deck
+     */
 	public void removeCard(Double card) {
 		if (!cards.contains(card)) {
 			return;
@@ -99,84 +117,79 @@ public class DeckModel extends AbstractModel {
 	}
 
 	/**
-     * Sorts the cards in the deck in ascending order
-     */
+	 * Sorts the cards in the deck in ascending order.
+	 */
 	public void sort() {
-	    Collections.sort(cards, new Comparator<Double>() {
-            public int compare(Double a, Double b) {
-                if (a == b) {
-                    return 0;
-                }
-                else if (a > b) {
-                    return 1;
-                }
-                else {
-                    return -1;
-                }
-            }
-        });
-    }
-    
-    @Override
-    public void delete() {
-    }
-    
-    @Override
-    public Boolean identify(Object arg0) {
-        return null;
-    }
-    
-    @Override
-    public void save() {
-    }
-    
+		Collections.sort(cards);
+	}
+
+	@Override
+	public void delete() {
+	}
+
+	@Override
+	public Boolean identify(Object arg0) {
+		return null;
+	}
+
+	@Override
+	public void save() {
+	}
+
+	@Override
+	public String toJSON() {
+		return new Gson().toJson(this, DeckModel.class);
+	}
+
+	/**
+	 * Creates a deck from a JSON object.
+	 * 
+	 * @param json
+	 *            The JSON string
+	 * @return The DeckModel from the JSON string
+	 */
+	public static DeckModel fromJSON(String json) {
+		final Gson parser = new Gson();
+		DeckModel deck = parser.fromJson(json, DeckModel.class);
+		return deck;
+	}
+
+	/**
+	 * Creates an array of deck models from a JSONArray.
+	 * 
+	 * @param json
+	 * @return Array of DeckModels from the JSON array
+	 */
+	public static DeckModel[] fromJSONArray(String json) {
+		final Gson parser = new Gson();
+		DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
+		return decks;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+
     /**
-     * Turns this into a JSON object
+     * Gets whether this deck is a None deck or not. A None deck has no cards in
+     * it, but should instead allow the user to enter whatever estimate they
+     * want.
      * 
-     * @return The JSON string for this object
+     * @return true if this deck is a None deck, false otherwise
      */
-    @Override
-    public String toJSON() {
-        return new Gson().toJson(this, DeckModel.class);
-    }
-    
+	public boolean getIsNone() {
+		return isNone;
+	}
+
     /**
-     * Creates a deck from a JSON object
+     * Gets whether multiple card selection is allowed for this deck. This means
+     * that the user can select mutiple cards from the deck and sum their values
+     * to make their estimate.
      * 
-     * @param json
-     *        The JSON string
-     * @return The DeckModel from the JSON string
+     * @return true if this deck allows multiple selection, false otherwise
      */
-    public static DeckModel fromJSON(String json) {
-        final Gson parser = new Gson();
-        DeckModel deck = parser.fromJson(json, DeckModel.class);
-        return deck;
-    }
-    
-    /**
-     * Creates an array of deck models
-     * 
-     * @param json
-     * @return Array of DeckModels from the JSON array
-     */
-    public static DeckModel[] fromJSONArray(String json) {
-        final Gson parser = new Gson();
-        DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
-        return decks;
-    }
-    
-    /**
-     * Returns the name of the deck
-     */
-    @Override
-    public String toString() {
-        return name;
-    }
-    
-    /**
-     * Returns whether multiple card selection is allowed
-     */
-    public boolean getAllowsMultipleSelection() {
-        return this.allowsMultipleSelection;
-    }
+	public boolean getAllowsMultipleSelection() {
+		return this.allowsMultipleSelection;
+	}
 }

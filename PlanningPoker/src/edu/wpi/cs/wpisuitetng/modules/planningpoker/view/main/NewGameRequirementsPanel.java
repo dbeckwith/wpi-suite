@@ -30,14 +30,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
- * 
- * @author Lukas
+ * This is a class to show the sub panel within NewGamePanel. The sub panel contains all requirements candidate for the user to add to the new game.
+ * @author team9
+ * @version 1.0
  */
 public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = -4252474071295177531L;
     
     private SimpleListObserver requirementsListObserver;
@@ -84,6 +82,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     	}
     }
 	
+    /**
+     * Get a list of requirement observers
+     * @return a list of requirement observers
+     */
 	public SimpleListObserver getRequirementsListObserver() {
 	    return requirementsListObserver;
 	}
@@ -254,6 +256,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 });
     }
     
+    /**
+     * This method add the requirement created by user in planning poker game (not in requirement manager)
+     * @param r the requirement to be add
+     */
     public void addCustomRequirement(GameRequirementModel r) {
         createdRequirements.add(r);
         addRequirement(r);
@@ -300,10 +306,18 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         return requirements;
     }
     
+    /**
+     * set the parent panel for this sub panel 
+     * @param p the parent panel
+     */
     public void setEditGamePanel(NewGamePanel p) {
         parent = p;
     }
     
+    /**
+     * make sure that there is at least one checked requirement to create a game
+     * @return
+     */
     public boolean validateForm() {
         boolean hasRequirement = false;
         
@@ -318,6 +332,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         return hasRequirement;
     }
     
+    /**
+     * get the list of errors about filling the form 
+     * @return the list of errors
+     */
     public ArrayList<String> getErrors() {
         ArrayList<String> errors = new ArrayList<>();
         if (!validateForm()) {

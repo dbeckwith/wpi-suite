@@ -20,9 +20,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Controller for updating games
- * 
- * @author Brett Ammeson
- * 
+ * @author team9
+ * @version 1.0
  */
 public class UpdateGamesController {
     
@@ -37,9 +36,10 @@ public class UpdateGamesController {
     }
     
     /**
+     * Get the instance of the UpdateGamesController or creates one if it
+     * does not exist.
      * 
-     * @return the instance of the UpdateGamesController or creates one if it
-     *         does not exist.
+     * @return the instance of the UpdateGamesController
      */
     public static UpdateGamesController getInstance() {
         if (UpdateGamesController.instance == null) {
@@ -53,7 +53,7 @@ public class UpdateGamesController {
      * This method updates a game on the server.
      * 
      * @param newGame
-     *            is the game to be updated on the server.
+     *        is the game to be updated on the server.
      */
     public void updateGame(GameModel newGame) {
         final Request request = Network.getInstance().makeRequest(
