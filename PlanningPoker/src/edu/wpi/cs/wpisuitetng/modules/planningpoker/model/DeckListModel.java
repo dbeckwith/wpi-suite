@@ -24,11 +24,11 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	private static final long serialVersionUID = 3193186441179194894L;
 	private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
 
-	/**
-	 * Returns the instance of this DeckListModel or creates a new one
-	 * 
-	 * @return the instance of this DeckListModel
-	 */
+    /**
+     * Returns the instance of this DeckListModel or creates a new one
+     * 
+     * @return the instance of this DeckListModel
+     */
 	public static DeckListModel getInstance() {
 		if (DeckListModel.instance == null) {
 			DeckListModel.instance = new DeckListModel();
@@ -57,25 +57,28 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	public DeckModel getDefaultDeck() {
 		return defaultDeck;
 	}
-
-	/**
-	 * Adds a new deck to the list.
-	 * 
-	 * @param deck the deck to add
-	 */
+    
+    /**
+     * Adds a new deck to the list.
+     * 
+     * @param deck
+     *            the deck to add
+     */
 	public void addDeck(DeckModel deck) {
 		decks.add(deck);
 
 		for (int i = 0; i < observers.size(); i++){
 			observers.get(i).listUpdated();
 		}
-	}
-
-	/**
-	 * Adds an observer to this model which will be notified whenever a deck is added or removed.
-	 * 
-	 * @param o the observer to add
-	 */
+    }
+    
+    /**
+     * Adds an observer to this model which will be notified whenever a deck is
+     * added or removed.
+     * 
+     * @param o
+     *            the observer to add
+     */
 	public void addObserver(SimpleListObserver o) {
 		observers.add(o);
 	}

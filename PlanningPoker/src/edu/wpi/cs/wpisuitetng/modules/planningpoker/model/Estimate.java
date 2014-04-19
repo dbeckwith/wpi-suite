@@ -29,10 +29,13 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
     /**
      * Creates a new Estimate.
-     *
-     * @param user the user who made the estimate
-     * @param estimate the user's estimate value
-     * @param cards the cards that the user selected to make their estimate
+     * 
+     * @param user
+     *            the user who made the estimate
+     * @param estimate
+     *            the user's estimate value
+     * @param cards
+     *            the cards that the user selected to make their estimate
      */
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         name = user.getName();
@@ -43,16 +46,18 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     }
     
     /**
-     * Gets the list of cards that the user selected in order to make this estimate.
+     * Gets the list of cards that the user selected in order to make this
+     * estimate.
+     * 
      * @return the list of card values
      */
     public ArrayList<Integer> getCardsSelected() {
         return cardsSelected;
     }
-
+    
     /**
      * Gets the name of the user that made this estimate.
-     *
+     * 
      * @see User
      * @return the user's name
      */

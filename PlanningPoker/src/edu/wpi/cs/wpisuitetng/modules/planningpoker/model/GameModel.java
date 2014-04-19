@@ -77,35 +77,52 @@ public class GameModel extends AbstractModel {
 				null); // owner
 	}
 
-	/**
-	 * Creates a new planning poker game.
-	 * 
-	 * @param name the game's name
-	 * @param description the description of the game
-	 * @param requirements a list of the requirements to be estimated for this game
-	 * @param deck the deck of cards users can use to estimate requirements for this game
-	 * @param end the deadline for this game
-	 * @param type what kind of game this is
-	 * @param status what the current status of this game should be
-	 */
+    /**
+     * Creates a new planning poker game.
+     * 
+     * @param name
+     *            the game's name
+     * @param description
+     *            the description of the game
+     * @param requirements
+     *            a list of the requirements to be estimated for this game
+     * @param deck
+     *            the deck of cards users can use to estimate requirements for
+     *            this game
+     * @param end
+     *            the deadline for this game
+     * @param type
+     *            what kind of game this is
+     * @param status
+     *            what the current status of this game should be
+     */
 	public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
 			Date end, GameType type, GameStatus status) {
         this(name, description, requirements, deck, end, type, status,
         		ConfigManager.getConfig().getUserName());
 	}
-
+    
     /**
      * Creates a new planning poker game.
      * 
-     * @param name the game's name
-     * @param description the description of the game
-     * @param requirements a list of the requirements to be estimated for this game
-     * @param deck the deck of cards users can use to estimate requirements for this game
-     * @param endDate the deadline for this game
-     * @param type what kind of game this is
-     * @param status what the current status of this game should be
-     * @param owner the name of the user who created this game
+     * @param name
+     *            the game's name
+     * @param description
+     *            the description of the game
+     * @param requirements
+     *            a list of the requirements to be estimated for this game
+     * @param deck
+     *            the deck of cards users can use to estimate requirements for
+     *            this game
+     * @param endDate
+     *            the deadline for this game
+     * @param type
+     *            what kind of game this is
+     * @param status
+     *            what the current status of this game should be
+     * @param owner
+     *            the name of the user who created this game
      */
 	public GameModel(String name, String description,
 			List<GameRequirementModel> requirements, DeckModel deck,
@@ -130,12 +147,13 @@ public class GameModel extends AbstractModel {
      */
     public String getName() {
         return name;
-	}
-
+    }
+    
     /**
      * Sets the unique ID number of this game.
      * 
-     * @param id the new ID number
+     * @param id
+     *            the new ID number
      */
 	public void setID(int id) {
 		this.id = id;

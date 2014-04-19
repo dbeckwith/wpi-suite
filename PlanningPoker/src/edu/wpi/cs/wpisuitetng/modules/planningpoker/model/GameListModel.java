@@ -75,7 +75,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * notified when any of the games in the list of games changes its status.
      * 
      * @see GameModel#addStatusListener(GameStatusObserver)
-     * @param gso the status observer to add
+     * @param gso
+     *            the status observer to add
      */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {

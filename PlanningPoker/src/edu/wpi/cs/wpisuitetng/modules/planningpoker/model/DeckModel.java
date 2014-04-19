@@ -99,12 +99,13 @@ public class DeckModel extends AbstractModel {
 		}
 		cards.add(newCard);
 	}
-
-	/**
-	 * Removes a card from this deck.
-	 * 
-	 * @param card the value to remove, if it is in the deck
-	 */
+    
+    /**
+     * Removes a card from this deck.
+     * 
+     * @param card
+     *            the value to remove, if it is in the deck
+     */
 	public void removeCard(Double card) {
 		if (!cards.contains(card)) {
 			return;
