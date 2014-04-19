@@ -32,6 +32,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 // who is author?
 /**
  * This controller is used to control GUI display
+ * @author team9
+ * @version 1.0
  */
 public class ViewController {
     

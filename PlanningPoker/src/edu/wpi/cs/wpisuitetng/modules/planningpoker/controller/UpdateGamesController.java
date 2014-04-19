@@ -20,6 +20,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Controller for updating games
+ * @author team9
+ * @version 1.0
  */
 public class UpdateGamesController {
     

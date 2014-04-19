@@ -27,18 +27,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 /**
  * The requirements panel of the planning poker GUI
- * <p>
  * 
- * @author llhunker, dbtrue
+ * @author team9
+ * @version 1.0
  */
 public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     private static final SimpleDateFormat date_format = new SimpleDateFormat(
             "MM/dd/yyyy hh:mm a");
     
-    /**
-     *
-     */
     private static final long serialVersionUID = 7579915917240962935L;
     
     /**
@@ -51,7 +48,9 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the game for the UncompletedGameDescriptionPanel
+     * 
      * @param game
+     *        the game to be set
      */
     public void setGame(GameModel game) {
         setGameName(game.getName());
@@ -65,8 +64,9 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the end date for this uncompleted game
-     *
+     * 
      * @param date
+     *        the end date to be set
      */
     protected void setEndDate(Date date) {
         if (date == null) {
@@ -232,19 +232,28 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     private JLabel lblDeck;
     private JLabel deckName;
     
+    /**
+     * get the name of the game
+     * 
+     * @return the name of the game
+     */
     protected String getGameName() {
         return gameName.getText();
     }
     
     /**
      * Sets the game name for this uncompleted game
+     * 
      * @param text
+     *        the name to be set for the game
      */
     protected void setGameName(String text) {
         gameName.setText(text);
     }
     
     /**
+     * gets the description of the game
+     * 
      * @return The description text for this uncompleted game
      */
     protected String getDescriptionText() {
@@ -253,13 +262,17 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the description text for this uncompleted game
+     * 
      * @param text
+     *        the description to be set
      */
     protected void setDescriptionText(String text) {
         descriptionText.setText(text);
     }
     
     /**
+     * get the progress bar value
+     * 
      * @return the progress bar value
      */
     protected int getProgressBarValue() {
@@ -268,13 +281,17 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the progress bar value
+     * 
      * @param value
+     *        progress bar value
      */
     protected void setProgressBarValue(int value) {
         progressBar.setValue(value);
     }
     
     /**
+     * get the progress label text
+     * 
      * @return The progress bar label text
      */
     protected String getProgressLabelText() {
@@ -283,6 +300,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the progress bar label text
+     * 
      * @param text
      */
     protected void setProgressLabelText(String text) {
@@ -290,6 +308,8 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     }
     
     /**
+     * get the game deadline text
+     * 
      * @return The game deadline text
      */
     protected String getGameDeadlineText() {
@@ -298,7 +318,9 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the game deadline text
+     * 
      * @param text
+     *        the game deadline text to be set
      */
     protected void setGameDeadlineText(String text) {
         gameDeadline.setText(text);
@@ -322,6 +344,8 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     }
     
     /**
+     * get the name of the deck
+     * 
      * @return the name of the deck for this game
      */
     protected String getDeckName() {
@@ -330,7 +354,9 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
     /**
      * Sets the name of the deck for this game
+     * 
      * @param text
+     *        the name of the deck to be set
      */
     protected void setDeckName(String text) {
         deckName.setText(text);
