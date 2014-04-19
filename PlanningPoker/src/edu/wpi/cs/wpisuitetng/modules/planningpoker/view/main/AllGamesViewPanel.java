@@ -163,9 +163,9 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private final JPanel requirementPanel;
     private final RequirementDescriptionPanel requirementDescriptionPanel;
     private final GameDescriptionPanel gameDescriptionPanel;
-    private JPanel emptyDescriptionPanel;
-    private JLabel emptyDescriptionLabel;
-    private JPanel descriptionCard;
+    private final JPanel emptyDescriptionPanel;
+    private final JLabel emptyDescriptionLabel;
+    private final JPanel descriptionCard;
     
     protected JPanel getRequirementPanel() {
         return requirementPanel;
@@ -197,7 +197,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      * @param game the game to set
      */
     public void setSelectedGame(GameModel game) {
-        this.currentSelectionGame = game;
+        currentSelectionGame = game;
     }
     
     protected JPanel getDescriptionCard() {
