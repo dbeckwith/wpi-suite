@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -191,4 +192,13 @@ public class GamesListPanel extends javax.swing.JPanel {
 	
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JTree gameTree;
+
+	/**
+	 * Gets a reference to this panel's tree
+	 *
+	 * @return the tree
+	 */
+    public JTree getTree() {
+        return gameTree;
+    }
 }

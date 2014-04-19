@@ -52,7 +52,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private DefaultTableModel tableModel;
     
     private GameRequirementModel req;
-    private GameModel parent;
+    private GameModel parentModel;
     
     /**
      * Creates a new CompletedRequirementPanel
@@ -75,8 +75,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         this.req = req;
-        parent = parent_game;
-        parent.addStatusListener(new GameStatusObserver() {
+        parentModel = parent_game;
+        parentModel.addStatusListener(new GameStatusObserver() {
             
             @Override
             public void statusChanged(GameModel game) {
@@ -146,8 +146,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     private void checkDisplayFinal() {
         displayFinalEstimateFields(ConfigManager.getConfig().getUserName()
-                .equals(parent.getOwner())
-                && !parent.isClosed());
+                .equals(parentModel.getOwner())
+                && !parentModel.isClosed());
     }
     
     private void initComponents() {
@@ -173,14 +173,14 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
              * 
              */
             private static final long serialVersionUID = -5144539907705808611L;
-            private boolean[] columnEditables = new boolean[] { false, false };
+            private final boolean[] columnEditables = new boolean[] { false, false };
             
             @Override
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];
             }
         });
-        Font temp_Font;
+        final Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(
                 temp_Font.deriveFont(Font.BOLD));
@@ -239,11 +239,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 }
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
                         .getText()));
-                UpdateGamesController.getInstance().updateGame(parent);
-                final ArrayList<GameStatusObserver> gsos = (ArrayList<GameStatusObserver>) parent
+                UpdateGamesController.getInstance().updateGame(parentModel);
+                final ArrayList<GameStatusObserver> gsos = parentModel
                         .getStatusObservers();
                 for (int i = 0; i < gsos.size(); i++) {
-                    gsos.get(i).statusChanged(parent);
+                    gsos.get(i).statusChanged(parentModel);
                 }
             }
         });
@@ -253,14 +253,14 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblError.setForeground(Color.RED);
         
-        JLabel lblGameStatistics = new JLabel("Game Statistics:");
+        final JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
         
-        JLabel votedUsersLabel = new JLabel("Users Voted:");
+        final JLabel votedUsersLabel = new JLabel("Users Voted:");
         
         votedUsersValueLabel = new JLabel("123");
         
-        JLabel lblNote = new JLabel("Note: ");
+        final JLabel lblNote = new JLabel("Note: ");
         
         notePane = new JTextPane();
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -282,11 +282,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 validate();
             }
             
-            public void validate() {
+            private void validate() {
                 validatePanel();
             }
         });
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 879,
@@ -469,7 +469,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      * Validates the user inputs so the GUI can react accordingly
      */
     private void validatePanel() {
-        String pattern = "^[\\s]*$";
+        final String pattern = "^[\\s]*$";
         try {
             final int finalEstimate = Integer.parseInt(finalEstimateField
                     .getText());
@@ -481,7 +481,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 lblError.setText("* Positive Integers Only!");
                 lblError.setVisible(true);
                 saveFinalEstimateButton.setEnabled(false);
-            } else if (Pattern.matches(pattern, notePane.getText()) && req.getFinalEstimate() != 0) {
+            } else if (Pattern.matches(pattern, notePane.getText()) 
+                    && req.getFinalEstimate() != 0) {
                 lblError.setText("* You Must Add a Note!");
                 lblError.setVisible(true);
                 saveFinalEstimateButton.setEnabled(false);
