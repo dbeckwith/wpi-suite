@@ -1,7 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
@@ -10,7 +9,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 /**
  * 
  * @author Andrew
- *
+ * 
  */
 public class GetDecksControllerTest {
     
@@ -20,9 +19,11 @@ public class GetDecksControllerTest {
         DeckModel deck1 = new DeckModel("Deck 1");
         DeckModel deck2 = new DeckModel("Deck 2");
         DeckListModel.getInstance().removeObservers();
-        gdc.receivedDecks(new DeckModel[] {deck1, deck2});
-        assertTrue(DeckListModel.getInstance().getDecks().contains(deck1));
-        assertTrue(DeckListModel.getInstance().getDecks().contains(deck2));
+        gdc.receivedDecks(new DeckModel[] { deck1, deck2 });
+        Assert.assertTrue(DeckListModel.getInstance().getDecks()
+                .contains(deck1));
+        Assert.assertTrue(DeckListModel.getInstance().getDecks()
+                .contains(deck2));
     }
     
 }
