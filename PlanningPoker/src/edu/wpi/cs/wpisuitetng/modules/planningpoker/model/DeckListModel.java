@@ -73,6 +73,13 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 		for (int i = 0; i < observers.size(); i++){
 			observers.get(i).listUpdated();
 		}
+	}
+	
+	/**
+	 * Remove all observers for the model
+	 */
+	public void removeObservers(){
+        observers.clear();
     }
     
     /**

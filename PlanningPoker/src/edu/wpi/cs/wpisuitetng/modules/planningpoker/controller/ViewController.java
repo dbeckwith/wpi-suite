@@ -312,4 +312,12 @@ public class ViewController {
             EmailController.getInstance().sendGameStartNotifications(curr);
         }
     }
+    
+    /**
+     * @return true if admin controls are visible
+     */
+    public boolean getAdminVisibility() {
+        return showAdmin;
+    }
+    
 }

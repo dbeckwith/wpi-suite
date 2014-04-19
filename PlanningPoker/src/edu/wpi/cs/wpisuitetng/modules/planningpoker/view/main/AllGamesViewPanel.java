@@ -190,6 +190,16 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         
         return currentSelectionGame;
     }
+    
+    /**
+     * sets the currently selected game in the tree for testing purposes
+     * 
+     * @param game the game to set
+     */
+    public void setSelectedGame(GameModel game) {
+        this.currentSelectionGame = game;
+    }
+    
     protected JPanel getDescriptionCard() {
         return descriptionCard;
     }
