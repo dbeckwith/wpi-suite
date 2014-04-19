@@ -119,9 +119,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     }
     
     private void displayFinalEstimateFields(boolean b) {
-        lblFinalEstimate.setVisible(b);
-        finalEstimateField.setVisible(b);
-        lblNonnegativeIntegersOnly.setVisible(b);
+        finalEstimateField.setEditable(b);
+        lblNonnegativeIntegersOnly.setVisible(b);   //TODO maybe change this
         saveFinalEstimateButton.setVisible(b);
         
     }
@@ -223,7 +222,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                         try {
                             final int finalEstimate = Integer
                                     .parseInt(finalEstimateField.getText());
-                            if (finalEstimate < 0) {
+                            if (finalEstimate <= 0) {
                                 //set error label
                                 lblNonnegativeIntegersOnly.setVisible(true);
                                 saveFinalEstimateButton.setEnabled(false);
@@ -257,7 +256,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         
-        lblNonnegativeIntegersOnly = new JLabel("* Non-negative Integers Only!");
+        lblNonnegativeIntegersOnly = new JLabel("* Positive Integers Only!");
         lblNonnegativeIntegersOnly.setVisible(false);
         lblNonnegativeIntegersOnly.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblNonnegativeIntegersOnly.setForeground(Color.RED);

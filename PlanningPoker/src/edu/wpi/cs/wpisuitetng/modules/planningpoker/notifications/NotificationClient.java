@@ -54,7 +54,7 @@ public class NotificationClient extends Thread {
 				server.close(); //close the connection
 				GetGamesController.getInstance().retrieveGames(); //update the games
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}	
 	}
