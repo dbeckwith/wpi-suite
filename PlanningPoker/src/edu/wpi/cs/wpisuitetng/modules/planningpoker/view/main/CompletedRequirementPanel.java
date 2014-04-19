@@ -476,6 +476,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
+    /**
+     * validates the user inputs so the GUI can react accordingly
+     */
     private void validatePanel() {
         String pattern = "^[\\s]*$";
         try {
