@@ -30,6 +30,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
@@ -87,8 +88,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
-        
-        finalEstimateField.setText((int)(req.getEstimateMean() + 0.5) + "");
+        if (parent_game.getOwner().equals(CurrentUserController.USER_NAME) && req.getFinalEstimate() == 0){
+            finalEstimateField.setText((int)(req.getEstimateMean() + 0.5) + "");
+        } else{
+            finalEstimateField.setText(req.getFinalEstimate() + "");
+        }
         
         tableModel = new javax.swing.table.DefaultTableModel() {
             
@@ -120,13 +124,14 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.setModel(tableModel);
         
         votedUsersValueLabel.setText(Integer.toString(tableModel.getRowCount()));
+        notePane.setText(req.getEstimateNote());
     }
     
     private void displayFinalEstimateFields(boolean b) {
         finalEstimateField.setEditable(b);
         lblNonnegativeIntegersOnly.setVisible(b);   //TODO maybe change this
         saveFinalEstimateButton.setVisible(b);
-        
+        notePane.setEditable(b);
     }
     
     /**
@@ -251,6 +256,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 lblNonnegativeIntegersOnly.setVisible(false);
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
                         .getText()));
+                req.setEstimateNote(notePane.getText());
                 UpdateGamesController.getInstance().updateGame(parent);
                 final ArrayList<GameStatusObserver> gsos = (ArrayList<GameStatusObserver>) parent
                         .getStatusObservers();
@@ -274,7 +280,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         JLabel lblNote = new JLabel("Note: ");
         
-        JTextPane notePane = new JTextPane();
+        notePane = new JTextPane();
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -373,4 +379,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JLabel lblNonnegativeIntegersOnly;
     private JButton saveFinalEstimateButton;
     private JLabel votedUsersValueLabel;
+    private JTextPane notePane;
 }
