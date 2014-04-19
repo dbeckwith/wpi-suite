@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 /**
  * Notified when a list changes
+ * @author team9
+ * @version 1.0
  */
 public interface SimpleListObserver {
     

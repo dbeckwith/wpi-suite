@@ -55,8 +55,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
+ * The panel to show the form when the user click create game button. The user
+ * can fill out this form to set the name of the game, the description for the
+ * game, end date of the game, and type of the game
  * 
- * @author Lukas
+ * @author team9
+ * @version 1.0
  */
 public class NewGameDescriptionPanel extends javax.swing.JPanel implements SimpleListObserver {
     private static final DecimalFormat cardFormat = new DecimalFormat("0.#");
@@ -486,6 +490,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     }
     
     /**
+     * get the date and time set by the user
+     * 
      * @return selected date and time
      */
     public Date getDate() {
@@ -511,6 +517,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     }
     
     /**
+     * get the deck for this game
+     * 
      * @return deck for this game
      */
     public DeckModel getDeck() {
@@ -521,7 +529,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
      * Validates the user-entered deadline. If entered deadline is before the
      * current date and time return false and show error.
      * 
-     * @return valid
+     * @return valid the boolean value to indicate if the game is still valid
+     *         (whether or not pass the deadline)
      */
     public boolean canValidateDeadline() {
         datePicker.setEnabled(selectDeadline.isSelected());
@@ -541,7 +550,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     /**
      * Makes sure maximum value is a positive integer
      * 
-     * @return valid@return valid
+     * @return valid the boolean to determine if maximum value is a positive
+     *         integer
      */
     public boolean canValidateMaximum() {
         return !deckComboBox.getSelectedItem().toString().equals("Generated deck")
@@ -558,7 +568,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     /**
      * Check whether the name, description, and date have valid data
      * 
-     * @return valid
+     * @return valid the boolean value to determine if the form is properly
+     *         filled.
      */
     public boolean canValidateForm() {
         final boolean valid = isNameValid && isDescriptionValid && canValidateDeadline();
@@ -567,8 +578,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     
     /**
      * Populates deck combo box with new decks
-     * 
-     * @param decks
      */
     @Override
     public void listUpdated() {
@@ -593,13 +602,21 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         }
     }
     
+    /**
+     * a class to set the limit for the JTextField
+     * 
+     * @author team9
+     * @version 1.0
+     */
     public class JTextFieldLimit extends PlainDocument {
-        /**
-         * 
-         */
         private static final long serialVersionUID = 1859032164698771516L;
         private final int limit;
         
+        /**
+         * construct an object to set the limit for the JTextField
+         * 
+         * @param limit
+         */
         JTextFieldLimit(int limit) {
             this.limit = limit;
         }
@@ -619,6 +636,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     
     /**
      * Renders tooltips for deck selection combobox
+     * 
+     * @author team9
+     * @version 1.0
+     * 
      */
     class DeckComboBoxRenderer extends BasicComboBoxRenderer {
         private static final long serialVersionUID = -6654798255103649031L;
@@ -657,6 +678,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     }
     
     /**
+     * get a list of errors when creating a new game
+     * 
      * @return the list of errors when creating a new game
      */
     public ArrayList<String> getErrors() {
@@ -693,6 +716,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         }
     }
     
+    /**
+     * set the parent panel for this subpanel
+     * 
+     * @param p
+     *        the parent panel for this subpanel
+     */
     public void setEditGamePanel(NewGamePanel p) {
         parentPanel = p;
     }
