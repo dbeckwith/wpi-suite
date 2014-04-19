@@ -19,9 +19,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 /**
  * This controller responds when the user clicks the Create Game button by
  * storing new game to remote server's database.
- * 
- * @author Brett Ammeson
- * 
+ * @author team9
+ * @version 1.0
  */
 public class AddGameController {
     private static AddGameController instance = null;

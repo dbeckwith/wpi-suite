@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-// who's author?
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -17,9 +16,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 /**
  * This controller responds when the user clicks the Create Deck button by
  * storing new deck to remote server's database.
- * 
- * @author ?
- * 
+ * @author team9
+ * @version 1.0
  */
 public class AddDeckController {
     private static AddDeckController instance;

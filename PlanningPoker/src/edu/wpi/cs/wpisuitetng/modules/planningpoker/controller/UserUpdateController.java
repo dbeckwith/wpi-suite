@@ -23,9 +23,6 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * the future.
  * 
  * @see UserPreferencesPanel
- * 
- * @author Sam Carlberg
- * 
  */
 public class UserUpdateController {
     
@@ -135,7 +132,7 @@ public class UserUpdateController {
      * 
      * @param user
      */
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 }

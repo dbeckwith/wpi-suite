@@ -11,13 +11,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
-// who is author?
 /**
  * This observer is called when a response is received from a request
  * to the server to add a deck.
- * 
- * @author ?
- * 
+ * @author team9
+ * @version 1.0
  */
 public class AddDeckRequestObserver implements RequestObserver {
     private AddDeckController controller;

@@ -15,8 +15,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 /**
  * An abstract class for classes requesting users from the server.
  * 
- * @author Sam Carlberg
- * 
+ * @author team9
+ * @version 1.0
  */
 public abstract class AbstractUserController {
     
@@ -92,6 +92,8 @@ public abstract class AbstractUserController {
     
     /**
      * For testing only.
+     * 
+     * @return timeOut value
      */
     protected boolean requestTimedOut() {
         return timedOut;

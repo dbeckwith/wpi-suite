@@ -23,8 +23,6 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This controller responds by sending request to get games from remote server.
- * 
- * @author Brett Ammeson, Andrew Han
  */
 public class GetGamesController implements ActionListener {
     private final GetGamesRequestObserver observer;

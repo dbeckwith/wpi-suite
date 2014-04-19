@@ -14,12 +14,11 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
-// who is author?
+
 /**
  * This controller is used to get decks from server
- * 
- * @author ?
- * 
+ * @author team9
+ * @version 1.0
  */
 public class GetDecksController {
     private GetDecksRequestObserver observer;

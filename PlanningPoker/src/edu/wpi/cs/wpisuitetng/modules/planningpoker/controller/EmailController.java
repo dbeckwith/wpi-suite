@@ -20,9 +20,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 /**
  * This controller responds when a game is started or ended by sending email
  * notifications
- * 
- * @author nfbrown, szhou, dcwethern
- * 
+ * @author team9
+ * @version 1.0
  */
 public class EmailController extends AbstractUserController {
     

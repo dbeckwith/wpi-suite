@@ -18,9 +18,6 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * This controller responds to request currently logged-in user from the server.
- * 
- * @author Sam Carlberg
- * 
  */
 public class CurrentUserController extends AbstractUserController {
     

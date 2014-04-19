@@ -18,9 +18,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 /**
  * The purpose of this class is to define a TimerTask that updates the completed
  * status of games once they have passed their end date.
- * 
- * @author dbeckwith
- * 
+ * @author team9
+ * @version 1.0
  */
 public class GameTimeoutTask extends TimerTask {
     
