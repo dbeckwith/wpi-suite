@@ -53,6 +53,7 @@ public class GameTimeoutWatcher {
      * Adds a game to be watched for completion at its end date.
      * 
      * @param game
+     *        the game to be watched
      */
     public void watchGame(GameModel game) {
         if (game.getEndTime() != null) {
@@ -68,6 +69,7 @@ public class GameTimeoutWatcher {
      * Stop watching a game and forget about it.
      * 
      * @param game
+     *        the game to be stopped watching
      */
     public void stopWatchingGame(GameModel game) {
         // look for the task that is watching the given game

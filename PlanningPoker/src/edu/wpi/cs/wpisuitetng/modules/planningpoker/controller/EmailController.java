@@ -57,13 +57,9 @@ public class EmailController extends AbstractUserController {
     private static EmailController Instance;
     
     /**
-     * Gets the instance of the controller.
+     * Gets the instance of the EmailController.
      * 
-     * @return the instance of the controller.
-     */
-    /**
-     * 
-     * @return
+     * @return the instance of the EmailController.
      */
     public static EmailController getInstance() {
         if (Instance == null) {
@@ -106,6 +102,9 @@ public class EmailController extends AbstractUserController {
     /**
      * Sends an email notification to all users who have chosen to receive
      * email notifications that a game has ended.
+     * 
+     * @param game
+     *        the game has ended
      */
     public void sendGameEndNotifications(GameModel game) {
         sendEmails(END_GAME_SUBJECT, endGameMessageBody(game));
@@ -114,6 +113,9 @@ public class EmailController extends AbstractUserController {
     /**
      * Sends an email notification to all users who have chosen to receive
      * email notifications that a game has started.
+     * 
+     * @param game
+     *        the game has started
      */
     public void sendGameStartNotifications(GameModel game) {
         sendEmails(NEW_GAME_SUBJECT, startGameMessageBody(game));
