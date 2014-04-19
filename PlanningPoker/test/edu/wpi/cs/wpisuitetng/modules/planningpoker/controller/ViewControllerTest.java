@@ -144,4 +144,14 @@ public class ViewControllerTest {
         }
         Assert.assertTrue(request.isSent());
     }
+    
+    @Test
+    public void testDisplayAdmin() {
+        vc.displayAdmin(new GameModel("", "", new ArrayList<GameRequirementModel>(), null, null, GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, ""));
+        Assert.assertTrue(vc.getAdminVisibility());
+        vc.displayAdmin(new GameModel("", "", new ArrayList<GameRequirementModel>(), null, null, GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, "Me"));
+        Assert.assertFalse(vc.getAdminVisibility());
+        vc.displayAdmin(new GameModel("", "", new ArrayList<GameRequirementModel>(), null, null, GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE, ""));
+        Assert.assertTrue(vc.getAdminVisibility());
+    }
 }

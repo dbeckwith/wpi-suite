@@ -302,4 +302,11 @@ public class ViewController {
         }
     }
     
+    /**
+     * @return true if admin controls are visible
+     */
+    public boolean getAdminVisibility() {
+        return showAdmin;
+    }
+    
 }
