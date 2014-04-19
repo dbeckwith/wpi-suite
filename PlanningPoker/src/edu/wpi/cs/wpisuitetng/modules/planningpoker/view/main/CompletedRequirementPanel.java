@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -68,6 +69,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     /**
      * Sets the requirement
+     * 
      * @param parent_game
      * @param req
      */
@@ -88,9 +90,12 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
-        if (parent_game.getOwner().equals(CurrentUserController.USER_NAME) && req.getFinalEstimate() == 0){
-            finalEstimateField.setText((int)(req.getEstimateMean() + 0.5) + "");
-        } else{
+        if (parent_game.getOwner().equals(CurrentUserController.USER_NAME)
+                && req.getFinalEstimate() == 0) {
+            finalEstimateField
+                    .setText((int) (req.getEstimateMean() + 0.5) + "");
+        }
+        else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
         
@@ -123,13 +128,14 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         }
         voteResultTable.setModel(tableModel);
         
-        votedUsersValueLabel.setText(Integer.toString(tableModel.getRowCount()));
+        votedUsersValueLabel
+                .setText(Integer.toString(tableModel.getRowCount()));
         notePane.setText(req.getEstimateNote());
     }
     
     private void displayFinalEstimateFields(boolean b) {
         finalEstimateField.setEditable(b);
-        lblNonnegativeIntegersOnly.setVisible(b);   //TODO maybe change this
+        lblError.setVisible(b);   //TODO maybe change this
         saveFinalEstimateButton.setVisible(b);
         notePane.setEditable(b);
     }
@@ -142,8 +148,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         displayFinalEstimateFields(false);
         
         
-        if (ConfigManager.getConfig().getUserName()
-                .equals(parent.getOwner())
+        if (ConfigManager.getConfig().getUserName().equals(parent.getOwner())
                 && !parent.isClosed()) {
             displayFinalEstimateFields(true);
         }
@@ -188,7 +193,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         });
         Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
-        voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
+        voteResultTable.getTableHeader().setFont(
+                temp_Font.deriveFont(Font.BOLD));
         voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -228,24 +234,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     }
                     
                     private void validate() {
-                        try {
-                            final int finalEstimate = Integer
-                                    .parseInt(finalEstimateField.getText());
-                            if (finalEstimate <= 0) {
-                                //set error label
-                                lblNonnegativeIntegersOnly.setVisible(true);
-                                saveFinalEstimateButton.setEnabled(false);
-                            }
-                            else {
-                                lblNonnegativeIntegersOnly.setVisible(false);
-                                saveFinalEstimateButton.setEnabled(true);
-                            }
-                        }
-                        catch (NumberFormatException e) {
-                            //set error label
-                            lblNonnegativeIntegersOnly.setVisible(true);
-                            saveFinalEstimateButton.setEnabled(false);
-                        }
+                        validatePanel();
                     }
                     
                 });
@@ -253,7 +242,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         saveFinalEstimateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                lblNonnegativeIntegersOnly.setVisible(false);
+                lblError.setVisible(false);
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
                         .getText()));
                 req.setEstimateNote(notePane.getText());
@@ -266,10 +255,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         
-        lblNonnegativeIntegersOnly = new JLabel("* Positive Integers Only!");
-        lblNonnegativeIntegersOnly.setVisible(false);
-        lblNonnegativeIntegersOnly.setFont(new Font("Tahoma", Font.BOLD, 12));
-        lblNonnegativeIntegersOnly.setForeground(Color.RED);
+        lblError = new JLabel("* Positive Integers Only!");
+        lblError.setVisible(false);
+        lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblError.setForeground(Color.RED);
         
         JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -283,88 +272,232 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         notePane = new JTextPane();
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
+        notePane.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent arg0) {
+                validate();
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent arg0) {
+                validate();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                validate();
+            }
+            
+            public void validate() {
+                validatePanel();
+            }
+        });
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(meanLabel)
-                    .addContainerGap(839, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(lblGameStatistics)
-                                .addComponent(medianLabel))
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(51)
-                                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                        .addComponent(meanValueLabel)
-                                        .addComponent(medianValueLabel)
-                                        .addComponent(votedUsersValueLabel)))))
-                        .addComponent(votedUsersLabel))
-                    .addGap(224)
-                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(lblFinalEstimate)
-                        .addComponent(lblNote))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(notePane, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                .addComponent(saveFinalEstimateButton)
-                                .addComponent(lblNonnegativeIntegersOnly)))
-                        .addComponent(finalEstimateField, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblGameStatistics))
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(votedUsersLabel)
-                                        .addComponent(votedUsersValueLabel))
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(meanLabel)
-                                        .addComponent(meanValueLabel)))
-                                .addComponent(lblNonnegativeIntegersOnly))
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                    .addComponent(medianLabel)
-                                    .addComponent(medianValueLabel))
-                                .addComponent(saveFinalEstimateButton))
-                            .addContainerGap())
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(18)
-                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(finalEstimateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblFinalEstimate))
-                            .addPreferredGap(ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(notePane, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNote))
-                            .addGap(32))))
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 879,
+                        Short.MAX_VALUE)
+                .addGroup(
+                        layout.createSequentialGroup().addContainerGap()
+                                .addComponent(meanLabel)
+                                .addContainerGap(839, Short.MAX_VALUE))
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addComponent(
+                                                                                        lblGameStatistics)
+                                                                                .addComponent(
+                                                                                        medianLabel))
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        jSeparator1,
+                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addGap(51)
+                                                                                                .addGroup(
+                                                                                                        layout.createParallelGroup(
+                                                                                                                Alignment.TRAILING)
+                                                                                                                .addComponent(
+                                                                                                                        meanValueLabel)
+                                                                                                                .addComponent(
+                                                                                                                        medianValueLabel)
+                                                                                                                .addComponent(
+                                                                                                                        votedUsersValueLabel)))))
+                                                .addComponent(votedUsersLabel))
+                                .addGap(224)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.TRAILING)
+                                                .addComponent(lblFinalEstimate)
+                                                .addComponent(lblNote))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addGroup(
+                                                        Alignment.TRAILING,
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        notePane,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        209,
+                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED,
+                                                                        36,
+                                                                        Short.MAX_VALUE)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.TRAILING)
+                                                                                .addComponent(
+                                                                                        saveFinalEstimateButton)
+                                                                                .addComponent(
+                                                                                        lblError)))
+                                                .addComponent(
+                                                        finalEstimateField,
+                                                        GroupLayout.PREFERRED_SIZE,
+                                                        106,
+                                                        GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap()));
+        layout.setVerticalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addComponent(tableScrollPane,
+                                        GroupLayout.DEFAULT_SIZE, 186,
+                                        Short.MAX_VALUE)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED,
+                                                                        45,
+                                                                        Short.MAX_VALUE)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.TRAILING)
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addGroup(
+                                                                                                        layout.createParallelGroup(
+                                                                                                                Alignment.LEADING)
+                                                                                                                .addComponent(
+                                                                                                                        jSeparator1,
+                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                        10,
+                                                                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                                                                .addComponent(
+                                                                                                                        lblGameStatistics))
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addGroup(
+                                                                                                        layout.createParallelGroup(
+                                                                                                                Alignment.BASELINE)
+                                                                                                                .addComponent(
+                                                                                                                        votedUsersLabel)
+                                                                                                                .addComponent(
+                                                                                                                        votedUsersValueLabel))
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addGroup(
+                                                                                                        layout.createParallelGroup(
+                                                                                                                Alignment.BASELINE)
+                                                                                                                .addComponent(
+                                                                                                                        meanLabel)
+                                                                                                                .addComponent(
+                                                                                                                        meanValueLabel)))
+                                                                                .addComponent(
+                                                                                        lblError))
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addGroup(
+                                                                                        layout.createParallelGroup(
+                                                                                                Alignment.BASELINE)
+                                                                                                .addComponent(
+                                                                                                        medianLabel)
+                                                                                                .addComponent(
+                                                                                                        medianValueLabel))
+                                                                                .addComponent(
+                                                                                        saveFinalEstimateButton))
+                                                                .addContainerGap())
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addGap(18)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.BASELINE)
+                                                                                .addComponent(
+                                                                                        finalEstimateField,
+                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(
+                                                                                        lblFinalEstimate))
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.UNRELATED)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addComponent(
+                                                                                        notePane,
+                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                        62,
+                                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(
+                                                                                        lblNote))
+                                                                .addGap(32)))));
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void validatePanel() {
+        String pattern = "^[\\s]*$";
+        try {
+            final int finalEstimate = Integer.parseInt(finalEstimateField
+                    .getText());
+            if (finalEstimate <= 0) {
+                //set error label
+                lblError.setText("* Positive Integers Only!");
+                lblError.setVisible(true);
+                saveFinalEstimateButton.setEnabled(false);
+            } else if (Pattern.matches(pattern, notePane.getText()) && req.getFinalEstimate() != 0) {
+                lblError.setText("* You Must Add a Note!");
+                lblError.setVisible(true);
+                saveFinalEstimateButton.setEnabled(false);
+            } else {
+                lblError.setVisible(false);
+                saveFinalEstimateButton.setEnabled(true);
+            }
+        }
+        catch (NumberFormatException e) {
+            //set error label
+            lblError.setText("* Positive Integers Only!");
+            lblError.setVisible(true);
+            saveFinalEstimateButton.setEnabled(false);
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
@@ -376,7 +509,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private javax.swing.JTable voteResultTable;
     private JLabel lblFinalEstimate;
     private JTextField finalEstimateField;
-    private JLabel lblNonnegativeIntegersOnly;
+    private JLabel lblError;
     private JButton saveFinalEstimateButton;
     private JLabel votedUsersValueLabel;
     private JTextPane notePane;
