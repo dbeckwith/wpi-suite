@@ -145,7 +145,7 @@ public class NewDeckPanel extends JPanel {
             }
             
             public void validate() {
-                String pattern = "( *\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
+                String pattern = "([0-9][0-9]?[0-9]?, ?)*[0-9][0-9]?[0-9]?";
                 areCardsValid = newDeckCards.getText() != null
                         && !newDeckCards.getText().isEmpty()
                         && Pattern.matches(pattern, newDeckCards.getText());
