@@ -5,11 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Sam Carlberg
  ******************************************************************************/
-
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
@@ -24,7 +20,7 @@ import javax.swing.GroupLayout;
  * A panel for changing user preferences. Right now it only includes
  * notification methods, but other functionality may be added in the future.
  * 
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class UserPreferencesPanel extends javax.swing.JPanel {

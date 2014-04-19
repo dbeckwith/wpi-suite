@@ -5,15 +5,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Akshay
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 /**
  * Notified when a list changes
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public interface SimpleListObserver {
