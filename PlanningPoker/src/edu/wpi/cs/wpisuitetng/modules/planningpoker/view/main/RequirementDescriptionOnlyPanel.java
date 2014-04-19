@@ -22,13 +22,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * Panel to show requirement description for new games
- * 
+ * @author team9
+ * @version 1.0
  */
 public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
-    
-    /**
-     *
-     */
     
     private static final long serialVersionUID = 6053116033835102214L;
     
@@ -171,7 +168,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
     /**
      * Sets the requirement name
      * 
-     * @param text
+     * @param text the name of the requirement  
      */
     protected void setRequirementName(String text) {
         requirementNameLabel.setText(text);
@@ -180,7 +177,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
     /**
      * Sets the requirement type
      * 
-     * @param text
+     * @param text the name of the type of the requirement 
      */
     protected void setRequirementType(String text) {
         requirementType.setText(text);
