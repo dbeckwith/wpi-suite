@@ -12,8 +12,12 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
@@ -54,6 +58,11 @@ public class GameTimeoutObserver extends Thread {
      */
     private Date endDate;
     
+    private final SimpleDateFormat dateFormatGMT = new SimpleDateFormat(
+            "yyyy-MMM-dd HH:mm:ss");
+    private final SimpleDateFormat dateFormatLocal = new SimpleDateFormat(
+            "yyyy-MMM-dd HH:mm:ss");
+    
     /**
      * Creates a new {@link GameTimeoutObserver}. Called when the
      * GameEntityManager creates a new GameModel on the server.
@@ -62,6 +71,8 @@ public class GameTimeoutObserver extends Thread {
      */
     public GameTimeoutObserver(Session session, GameModel game) {
         super("GameTimeoutObserver-" + game.getID());
+        dateFormatGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
+        
         this.session = session;
         this.game = game;
         OBSERVERS.add(this);
@@ -71,7 +82,7 @@ public class GameTimeoutObserver extends Thread {
     
     @Override
     public void run() {
-        endDate = game.getEndTime();
+        endDate = toGMT(game.getEndTime());
         System.out.println("Game: \"" + game + "\"\n\tends at: " + endDate);
         if (game.getStatus().equals(GameStatus.PENDING) && game.hasDeadline()) {
             while (!finished()) {
@@ -103,7 +114,7 @@ public class GameTimeoutObserver extends Thread {
      * Check to see if the game has finished.
      */
     private boolean finished() {
-        return new Date().after(endDate);
+        return toGMT(new Date()).after(endDate);
     }
     
     /**
@@ -112,6 +123,22 @@ public class GameTimeoutObserver extends Thread {
     public static GameTimeoutObserver getObserver(GameModel game) {
         for (GameTimeoutObserver o : OBSERVERS) {
             if (o.game.equals(game)) { return o; }
+        }
+        return null;
+    }
+    
+    /**
+     * Converts a date to GMT.
+     * 
+     * @param date
+     * @return
+     */
+    private Date toGMT(Date date) {
+        try {
+            return dateFormatLocal.parse(dateFormatGMT.format(date));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
         }
         return null;
     }
