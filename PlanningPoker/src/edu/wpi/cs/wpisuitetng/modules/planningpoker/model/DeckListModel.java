@@ -66,8 +66,8 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	public void addDeck(DeckModel deck) {
 		decks.add(deck);
 
-		for (SimpleListObserver o : observers) {
-			o.listUpdated();
+		for (int i = 0; i < observers.size(); i++){
+			observers.get(i).listUpdated();
 		}
 	}
 	
