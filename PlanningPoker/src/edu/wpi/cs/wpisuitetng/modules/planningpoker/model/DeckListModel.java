@@ -93,10 +93,6 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 		return decks;
 	}
 
-	/**
-	 * Gets the number of deck currently being stored.
-	 * @return the size of the list of decks
-	 */
 	@Override
 	public int getSize() {
 		return decks.size();
