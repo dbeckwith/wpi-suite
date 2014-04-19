@@ -37,7 +37,7 @@ public class NotificationClient extends Thread {
         return instance;
     }
     
-    private final InetAddress serverAddress;
+    private InetAddress serverAddress = null;
     
     /**
      * Constructor

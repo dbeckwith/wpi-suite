@@ -36,7 +36,7 @@ public class NotificationServer extends Thread {
 		return instance;
 	}
 	
-	private final ServerSocket serverSocket;
+	private ServerSocket serverSocket = null;
 	private final ArrayList<Socket> clientSockets;
 	
 	/**

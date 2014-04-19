@@ -123,7 +123,7 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
      * @param json
      * @return Estimate from the JSON string
      */
-    public Estimate fromJSON(String json) {
+    public static Estimate fromJSON(String json) {
         final Gson parser = new Gson();
         return parser.fromJson(json, Estimate.class);
     }
