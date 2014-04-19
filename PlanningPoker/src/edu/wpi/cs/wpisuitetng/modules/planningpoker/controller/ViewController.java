@@ -289,4 +289,5 @@ public class ViewController {
             EmailController.getInstance().sendGameStartNotifications(curr);
         }
     }
+    
 }

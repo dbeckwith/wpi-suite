@@ -11,16 +11,20 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
@@ -50,7 +54,6 @@ public class ViewControllerTest {
     
     @Test
     public void testAddNewGameTab() {
-        
         int before = mv.getTabCount();
         vc.addNewGameTab();
         Assert.assertEquals(before + 1, mv.getTabCount());
@@ -71,6 +74,7 @@ public class ViewControllerTest {
         int count = mv.getTabCount();
         mv.getMainPanel().setSelectedGame(new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null, null, null));
         vc.editGame();
+        Assert.assertEquals("Edit Test", mv.getTitleAt(count));
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
         vc.updateGame(new GameModel(), ngp);
         Assert.assertEquals(count, mv.getTabCount());
@@ -103,5 +107,41 @@ public class ViewControllerTest {
         vc.addUserPrefsTab();
         Assert.assertEquals(before + 1, mv.getTabCount());
         Assert.assertSame("Preferences", mv.getTitleAt(before));
+    }
+    
+    @Test
+    public void testStartGame() {
+        mv.getMainPanel().setSelectedGame(new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null, null, GameModel.GameStatus.NEW));
+        vc.startGame();
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
+    }
+    
+    @Test
+    public void testEndEstimation() {
+        mv.getMainPanel().setSelectedGame(new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null, null, GameModel.GameStatus.NEW));
+        vc.endEstimation();
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
+    }
+    
+    @Test
+    public void testCloseGame() {
+        mv.getMainPanel().setSelectedGame(new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null, null, GameModel.GameStatus.NEW));
+        vc.closeGame();
+        MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
     }
 }
