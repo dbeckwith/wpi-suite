@@ -62,7 +62,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
                 if (game.getRequirements() != null) {
                     boolean hasUnvotedReqs = false;
-                    req_loop: for (GameRequirementModel req : game
+                    req_loop:
+                    for (GameRequirementModel req : game
                             .getRequirements()) {
                         if (req.getEstimates() != null) {
                             boolean voted = false;
@@ -78,8 +79,9 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                                     break req_loop;
                                 }
                             }
-                            if (!voted)
+                            if (!voted){
                                 hasUnvotedReqs = true;
+                            }
                         }
                     }
                     if (hasUnvotedReqs) {
