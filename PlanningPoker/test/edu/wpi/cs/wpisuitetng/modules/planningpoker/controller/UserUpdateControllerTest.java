@@ -11,7 +11,6 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * 
- * @author Andrew
  *
  */
 public class UserUpdateControllerTest {
@@ -26,16 +25,23 @@ public class UserUpdateControllerTest {
         uuc.setUser(steve);
         
         assertFalse(steve.isNotifyByEmail());
+        assertFalse(uuc.canNotifyByEmail());
         uuc.setNotifyByEmail(true);
         assertTrue(steve.isNotifyByEmail());
+        assertTrue(uuc.canNotifyByEmail());
         uuc.setNotifyByEmail(false);
         assertFalse(steve.isNotifyByEmail());
+        assertFalse(uuc.canNotifyByEmail());
+        
         
         assertFalse(steve.isNotifyByIM());
+        assertFalse(uuc.canNotifyByIM());
         uuc.setNotifyByIM(true);
         assertTrue(steve.isNotifyByIM());
+        assertTrue(uuc.canNotifyByIM());
         uuc.setNotifyByIM(false);
         assertFalse(steve.isNotifyByIM());
+        assertFalse(uuc.canNotifyByIM());
         
     }
     
