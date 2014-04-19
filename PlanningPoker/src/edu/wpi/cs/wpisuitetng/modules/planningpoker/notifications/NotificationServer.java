@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 /**
  * A server that can notify clients when there is an update
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class NotificationServer extends Thread {
 	

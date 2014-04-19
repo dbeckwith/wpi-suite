@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 /**
  * This class is meant to represent a deck of cards that the user can pick from
  * for making estimates to a game.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class DeckModel extends AbstractModel {
 	private String name;

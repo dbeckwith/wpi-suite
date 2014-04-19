@@ -22,6 +22,9 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * An Entity Manager for storing DeckModels on the server.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class DeckEntityManager implements EntityManager<DeckModel> {
     private Data db;

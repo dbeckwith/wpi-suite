@@ -16,6 +16,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
 
 /**
  * A model for storing all the decks currently in the database.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
 	private DeckModel defaultDeck;

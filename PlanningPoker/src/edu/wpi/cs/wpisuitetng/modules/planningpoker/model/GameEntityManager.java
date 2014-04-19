@@ -26,6 +26,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationSe
 
 /**
  * This class is an Entity Manager for storing GameModels on the server.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameEntityManager implements EntityManager<GameModel> {
     

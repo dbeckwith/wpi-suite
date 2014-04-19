@@ -16,6 +16,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
 
 /**
  * A list model for keeping track of all of the requirements in the database.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class RequirementsListModel extends
         AbstractListModel<GameRequirementModel> {

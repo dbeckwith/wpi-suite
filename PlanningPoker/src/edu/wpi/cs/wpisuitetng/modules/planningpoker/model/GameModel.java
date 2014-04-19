@@ -20,6 +20,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 
 /**
  * This class represents a planning poker game
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameModel extends AbstractModel {
     

@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 /**
  * This class represents an estimate made by a user for a requirement of how
  * much value they think a requirement should be worth.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class Estimate extends AbstractModel implements Comparable<Estimate> {
     

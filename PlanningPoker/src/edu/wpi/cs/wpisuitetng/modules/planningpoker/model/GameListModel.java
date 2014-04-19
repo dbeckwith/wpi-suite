@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
 
 /**
  * A model for keeping track of all the games in the database as a list of GameModels.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameListModel extends AbstractListModel<GameModel> {
     

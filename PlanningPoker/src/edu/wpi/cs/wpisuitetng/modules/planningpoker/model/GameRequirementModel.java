@@ -20,6 +20,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * A simplified requirement model for a planning poker game
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameRequirementModel extends AbstractModel {
     /**

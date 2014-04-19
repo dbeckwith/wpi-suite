@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 
 /**
  * A client that continually listens for updates from the server
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class NotificationClient extends Thread {
 		
