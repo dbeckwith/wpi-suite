@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
@@ -20,19 +17,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.HelpButtons;
 /**
  * This is the main class for the planning poker toolbar
  * 
- * @author llhunker, blammeson
+ * @author Team 9
+ * @version 1.0
  * 
  */
 public class ToolbarView extends DefaultToolbarView {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1142258027071142978L;
     private final CommonButtonGroup commonButtonGroup = new CommonButtonGroup();
     private final AdminButtonGroup adminButtonGroup = new AdminButtonGroup();
     private HelpButtons helpButtons = new HelpButtons();
     
+    /**
+     * Creates a new ToolbarView
+     *
+     */
     public ToolbarView() {
         addGroup(commonButtonGroup);
         addGroup(adminButtonGroup);

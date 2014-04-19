@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Brett Ammeson, Andrew Han
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -23,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This controller responds by sending request to get games from remote server.
- * @author team9
+ * @author Team9
  * @version 1.0
  */
 public class GetGamesController implements ActionListener {

@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
@@ -38,7 +41,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 /**
  * This is a class to show the panel when the user clicks create game button.
  * 
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class NewGamePanel extends JPanel {

@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -29,10 +26,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
-// who is author?
 /**
  * This controller is used to control GUI display
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class ViewController {
