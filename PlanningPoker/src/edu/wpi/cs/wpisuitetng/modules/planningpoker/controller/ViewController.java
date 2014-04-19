@@ -111,13 +111,13 @@ public class ViewController {
             }
             
             d = new DeckModel(d.toString(), newCards,
-                    d.getAllowsMultipleSelection());
+                    d.canAllowsMultipleSelection());
         }
         
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
-                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         
@@ -143,7 +143,7 @@ public class ViewController {
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
-                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         game.editCopyFrom(newGame);
