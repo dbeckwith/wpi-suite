@@ -36,6 +36,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     
     /**
      * Only for use by the ManagerLayer in WPI-Suite
+     * 
      * @param db
      */
     public GameEntityManager(Data db) {
@@ -156,9 +157,10 @@ public class GameEntityManager implements EntityManager<GameModel> {
         final GameModel newGameModel = GameModel.fromJSON(content);
         newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
+        new GameTimeoutObserver(s, newGameModel);
+        System.out.println("New game status: " + newGameModel.getStatus());
         System.out.println("GEM makeEntity()");
         NotificationServer.getInstance().sendUpdateNotification();
-        new GameTimeoutObserver(s, newGameModel).start();
         return newGameModel;
     }
     
@@ -178,6 +180,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     @Override
     public GameModel update(Session s, String content) throws WPISuiteException {
         final GameModel updatedGameModel = GameModel.fromJSON(content);
+        System.out.println("Updating game " + updatedGameModel);
         /*
          * Because of the disconnected objects problem in db4o, we can't just
          * save GameModels. We have to get the original GameModel from db4o,
@@ -193,6 +196,20 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
+        
+        if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
+            // start observer only when the game is live
+            System.out.println("Getting observer for game");
+            GameTimeoutObserver obs = GameTimeoutObserver
+                    .getObserver(updatedGameModel);
+            if (obs == null) {
+                System.out.println("Could not find observer for game");
+            }
+            else if (!obs.isAlive()) {
+                System.out.println("Starting observer");
+                obs.start();
+            }
+        }
         
         if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
         System.out.println("GEM update()");

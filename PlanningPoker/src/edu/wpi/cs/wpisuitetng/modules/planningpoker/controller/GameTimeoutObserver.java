@@ -12,13 +12,14 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 
 /**
  * Used to notify all clients at once that a game has ended. This runs on the
@@ -31,13 +32,27 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationSe
  */
 public class GameTimeoutObserver extends Thread {
     
+    private static final ArrayList<GameTimeoutObserver> OBSERVERS = new ArrayList<>();
+    
+    /**
+     * The game to end once the deadline has passed.
+     */
     private final GameModel game;
+    
+    /**
+     * The session we're in.
+     */
     private final Session session;
+    
+    /**
+     * How long to sleep before checking again if the game is over.
+     */
+    private final long sleepTime = 1000;
     
     /**
      * Signifies the time when a game ends on the server.
      */
-    private final Date endDate;
+    private Date endDate;
     
     /**
      * Creates a new {@link GameTimeoutObserver}. Called when the
@@ -46,20 +61,22 @@ public class GameTimeoutObserver extends Thread {
      * @see GameEntityManager#makeEntity(Session, String)
      */
     public GameTimeoutObserver(Session session, GameModel game) {
+        super("GameTimeoutObserver-" + game.getID());
         this.session = session;
         this.game = game;
-        endDate = new Date();
-        endDate.setTime(endDate.getTime() + game.timeAlive());
-        System.out.println("Game " + game + "\n\tends at: " + endDate);
-        System.out.println("\tTime alive = " + game.timeAlive() + "ms");
+        OBSERVERS.add(this);
+        setDaemon(true);
+        System.out.println("Created timeout observer for " + game);
     }
     
     @Override
     public void run() {
-        if (game.timeAlive() > 0) {
+        endDate = game.getEndTime();
+        System.out.println("Game: \"" + game + "\"\n\tends at: " + endDate);
+        if (game.getStatus().equals(GameStatus.PENDING) && game.hasDeadline()) {
             while (!finished()) {
                 try {
-                    sleep(1000);
+                    sleep(sleepTime);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
@@ -70,7 +87,6 @@ public class GameTimeoutObserver extends Thread {
                         + game.toString());
                 game.setEnded(true);
                 GameEntityManager.getInstance().update(session, game.toJSON());
-                NotificationServer.getInstance().sendUpdateNotification();
             }
             catch (WPISuiteException e) {
                 System.err.println("Could not save ended game to database");
@@ -79,7 +95,7 @@ public class GameTimeoutObserver extends Thread {
         }
         else {
             System.out
-                    .println("Game has no deadline, not running timeout observer.");
+                    .println("Game has no deadline or is not live, not running timeout observer.");
         }
     }
     
@@ -88,6 +104,16 @@ public class GameTimeoutObserver extends Thread {
      */
     private boolean finished() {
         return new Date().after(endDate);
+    }
+    
+    /**
+     * Gets the observer associated with the given game.
+     */
+    public static GameTimeoutObserver getObserver(GameModel game) {
+        for (GameTimeoutObserver o : OBSERVERS) {
+            if (o.game.equals(game)) { return o; }
+        }
+        return null;
     }
     
 }
