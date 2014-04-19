@@ -68,7 +68,7 @@ public class GameRequirementModel extends AbstractModel {
 		this.estimates = estimates;
 
 		Collections.sort(this.estimates);
-		finalEstimate = -1;
+		finalEstimate = 0;
 		id = nextId;
 		nextId++;
 	}
@@ -86,13 +86,13 @@ public class GameRequirementModel extends AbstractModel {
 		this.description = description;
 		this.type = type;
 		estimates = new ArrayList<Estimate>();
-		finalEstimate = -1;
+		finalEstimate = 0;
 		id = nextId;
         nextId++;
 	}
 
 	public GameRequirementModel() {
-		this(-1, "", "", "", new ArrayList<Estimate>());
+		this(0, "", "", "", new ArrayList<Estimate>());
 	}
 
 	/**
