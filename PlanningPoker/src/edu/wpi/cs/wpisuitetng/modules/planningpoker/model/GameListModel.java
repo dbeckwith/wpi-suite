@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -20,10 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutWatche
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
- * Stores a list of games and their statuses
- * 
- * @author Akshay, Andrew
- * 
+ * A model for keeping track of all the games in the database as a list of GameModels.
  */
 public class GameListModel extends AbstractListModel<GameModel> {
     
@@ -48,12 +42,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     private final ArrayList<GameStatusObserver> status_observers;
     private final GameStatusObserver game_observer;
     
-    /**
-     * Constructor that initializes list of games, list of observers, a
-     * controller to service DB retrieval requests, and a timer to periodically
-     * refresh the list of games.
-     */
-    public GameListModel() {
+    private GameListModel() {
         games = new ArrayList<>();
         observers = new ArrayList<>();
         status_observers = new ArrayList<>();
@@ -70,7 +59,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     /**
      * Add a SimpleListObserver that is notified when the list of games is
-     * changed
+     * changed.
      * 
      * @param slo
      *            The SimpleListObserver to add
@@ -82,9 +71,11 @@ public class GameListModel extends AbstractListModel<GameModel> {
     }
     
     /**
-     * Adds a GameStatusObserver to the list of status observers
-     *
-     * @param gso
+     * Adds a GameStatusObserver to the list of status observers which will be
+     * notified when any of the games in the list of games changes its status.
+     * 
+     * @see GameModel#addStatusListener(GameStatusObserver)
+     * @param gso the status observer to add
      */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
@@ -119,7 +110,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     /**
      * Removes a game from the list. Doesn't do anything if the game is not in
-     * the list
+     * the list.
      * 
      * @param g
      *            The game to remove
@@ -190,6 +181,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
     }
     
     /**
+     * Gets a list of all the games currently in the database.
+     * 
      * @return the list of games
      */
     public ArrayList<GameModel> getGames() {
@@ -206,25 +199,17 @@ public class GameListModel extends AbstractListModel<GameModel> {
     }
     
     @Override
-    /**
-     * @return the size of the list of games
-     */
     public int getSize() {
         return games.size();
     }
     
     @Override
-    /**
-     * @param index
-     *      the index of the element to retrieve in the list of games
-     * @return the game in the list at index
-     */
     public GameModel getElementAt(int index) {
         return games.get(index);
     }
     
     /**
-     * 
+     * Gets all the list observers currently registered with the list model.
      * @return the simplelistobservers for the list of games
      */
     public ArrayList<SimpleListObserver> getObservers() {
@@ -232,14 +217,14 @@ public class GameListModel extends AbstractListModel<GameModel> {
     }
     
     /**
-     * Remove all observers for the model
+     * Remove all observers from the model.
      */
     public void removeObservers(){
         observers.clear();
     }
     
     /**
-     * Remove all game status observers for the model
+     * Remove all game status observers from the model.
      */
     public void removeStatusObservers(){
         status_observers.clear();
