@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 public class GetRequirementsRequestObserver implements RequestObserver {
     
-    private final GetRequirementsController controller;
+    private final AbstractRequirementController controller;
     
     /**
      * Constructs the observer given a GetRequirementsController
@@ -35,7 +35,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
      * @param controller
      *            the controller used to retrieve requirements
      */
-    public GetRequirementsRequestObserver(GetRequirementsController controller) {
+    public GetRequirementsRequestObserver(AbstractRequirementController controller) {
         this.controller = controller;
     }
     
@@ -51,16 +51,8 @@ public class GetRequirementsRequestObserver implements RequestObserver {
         final Requirement[] requirements = Requirement.fromJsonArray(iReq
                 .getResponse().getBody());
         
-        final ArrayList<GameRequirementModel> game_reqs = new ArrayList<>();
-        
-        for (Requirement req : requirements) {
-            if (req.getIteration().equals("Backlog")) {
-                game_reqs.add(new GameRequirementModel(req));
-            }
-        }
-        
         // Pass these Requirements to the controller
-        controller.receivedRequirements(game_reqs.toArray(new GameRequirementModel[0]));
+        controller.receivedRequirements(requirements);
     }
     
     /**
@@ -79,8 +71,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {
-        final GameRequirementModel[] errorRequirement = { new GameRequirementModel(
-                new Requirement(6, "Error", "error desc")) };
+        final Requirement[] errorRequirement = { new Requirement(6, "Error", "error desc") };
         controller.receivedRequirements(errorRequirement);
     }
     

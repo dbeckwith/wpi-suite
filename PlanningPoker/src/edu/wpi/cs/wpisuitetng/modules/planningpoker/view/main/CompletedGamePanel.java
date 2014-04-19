@@ -16,6 +16,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -82,6 +83,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         }
     }
     
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,14 +100,14 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
         
         voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
-                null, null, null }, }, new String[] { "Requirement", "Mean",
-                "Median", "Final Estimate" }) {
-            /**
-                     * 
-                     */
+                null, null, null, null }, }, new String[] { "Requirement", "Mean",
+                "Median", "Final Estimate"}) {
+
             private static final long serialVersionUID = -7421202548175051005L;
+            
             private boolean[] columnEditables = new boolean[] { false, false, false,
-                    false };
+                    false, true };
+            
             
             @Override
             public boolean isCellEditable(int row, int column) {

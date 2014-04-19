@@ -11,8 +11,11 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -22,17 +25,15 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * TODO: @author 
  *
  */
-public class GetRequirementsController {
+public class GetRequirementsController extends AbstractRequirementController {
 
-    private final GetRequirementsRequestObserver observer;
     private static GetRequirementsController instance = null;
 
     /**
      * Constructs the controller given a RequirementModel
      */
     private GetRequirementsController() {
-        
-        observer = new GetRequirementsRequestObserver(this);
+        super();
     }
     
     /**
@@ -49,14 +50,6 @@ public class GetRequirementsController {
         return instance;
     }
     
-    /**
-     * Sends an HTTP request to retrieve all requirements
-     */
-    public void retrieveRequirements() {
-        final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); // GET == read
-        request.addObserver(observer); // add an observer to process the response
-        request.send(); // send the request
-    }
 
     /**
      * Add the given requirements to the local model (they were received from the core).
@@ -64,12 +57,16 @@ public class GetRequirementsController {
      * 
      * @param requirements array of requirements received from the server
      */
-    public void receivedRequirements(GameRequirementModel[] requirements) {
-        // Make sure the response was not null
+    public void receivedRequirements(Requirement[] requirements) {
+     // Make sure the response was not null
         if (requirements != null) {
+            GameRequirementModel[] gameReqs = new GameRequirementModel[requirements.length];
+            for (int i = 0; i < requirements.length; i++) {
+                gameReqs[i] = new GameRequirementModel(requirements[i]);
+            }
             
             // set the requirements to the local model
-            RequirementsListModel.getInstance().setRequirements(requirements);
+            RequirementsListModel.getInstance().setRequirements(gameReqs);
         }
     }
     

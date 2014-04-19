@@ -86,6 +86,12 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         finalEstimateField.setText("");
         
+        if (!req.isFromRequirementManager()) {
+            sendToRequirementManager.setEnabled(false);
+        } else {
+            sendToRequirementManager.setEnabled(true);
+        }
+        
         tableModel = new javax.swing.table.DefaultTableModel() {
             
             /**
@@ -269,16 +275,24 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         votedUsersValueLabel = new JLabel("123");
         
+        
+        sendToRequirementManager = new JButton("Send to Requirement Manager");
+        sendToRequirementManager.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                req.updateParentEstimate();
+            }
+        });
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.LEADING)
-                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 1073, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
+                    .addContainerGap()
                     .addComponent(meanLabel)
-                    .addContainerGap(717, Short.MAX_VALUE))
+                    .addContainerGap(1030, Short.MAX_VALUE))
                 .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
+                    .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -301,32 +315,34 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addComponent(finalEstimateField, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
                                 .addComponent(lblNonnegativeIntegersOnly, Alignment.TRAILING))
-                            .addPreferredGap(ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                            .addComponent(saveFinalEstimateButton))
+                            .addPreferredGap(ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                            .addComponent(saveFinalEstimateButton)
+                            .addPreferredGap(ComponentPlacement.UNRELATED)
+                            .addComponent(sendToRequirementManager))
                         .addComponent(votedUsersLabel))
                     .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                    .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
                         .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblGameStatistics))
-                                .addPreferredGap(ComponentPlacement.RELATED)
+                    .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(votedUsersLabel)
                         .addComponent(votedUsersValueLabel))
-                                .addPreferredGap(ComponentPlacement.RELATED)
+                    .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                                .addComponent(meanLabel)
+                        .addComponent(meanLabel)
                         .addComponent(meanValueLabel))
-                                .addPreferredGap(ComponentPlacement.RELATED)
+                    .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                                .addComponent(medianLabel)
-                                                .addComponent(medianValueLabel))
+                            .addComponent(medianLabel)
+                            .addComponent(medianValueLabel))
                         .addGroup(layout.createParallelGroup(Alignment.TRAILING)
                             .addComponent(lblNonnegativeIntegersOnly)
                             .addGroup(layout.createSequentialGroup()
@@ -334,7 +350,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                     .addComponent(finalEstimateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblFinalEstimate))
                                 .addGap(21))
-                            .addComponent(saveFinalEstimateButton)))
+                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(sendToRequirementManager)
+                                .addComponent(saveFinalEstimateButton))))
                     .addContainerGap())
         );
         setLayout(layout);
@@ -353,4 +371,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JLabel lblNonnegativeIntegersOnly;
     private JButton saveFinalEstimateButton;
     private JLabel votedUsersValueLabel;
+    private JButton sendToRequirementManager;
 }
