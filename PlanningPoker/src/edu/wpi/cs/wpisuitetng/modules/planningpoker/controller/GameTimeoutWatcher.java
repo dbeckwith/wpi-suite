@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * dbeckwith
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -20,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 /**
  * The purpose of this class is to schedule tasks in the future for checking
  * games to see if they have passed their end date.
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class GameTimeoutWatcher {

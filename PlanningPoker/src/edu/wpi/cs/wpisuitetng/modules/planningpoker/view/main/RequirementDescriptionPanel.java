@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
@@ -21,7 +18,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * Depending on the requirement and game status, this is the panel to show requirement description of the requirement or vote GUI or result of estimates 
- * @author team9
+ * @author Team 9
  * @version 1.0
  *
  */

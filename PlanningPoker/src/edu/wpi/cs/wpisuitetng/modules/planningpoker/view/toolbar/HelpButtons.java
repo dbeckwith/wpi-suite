@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
@@ -25,18 +22,22 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 /**
  * This is the button panel that allows the user to access the documentation
  *
+ * @author Team 9
+ * @version 1.0
  */
 public class HelpButtons extends ToolbarGroupView {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1902038690593121709L;
     
     private JButton helpButton;
     
     private final JPanel contentPanel = new JPanel();
     
+    /**
+     * 
+     * Creates a new HelpButtons
+     *
+     */
     public HelpButtons() {
         super(""); // not sure if this is needed
         
