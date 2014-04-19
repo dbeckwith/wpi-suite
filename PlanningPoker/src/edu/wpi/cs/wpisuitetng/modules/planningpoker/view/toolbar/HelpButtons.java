@@ -33,7 +33,7 @@ public class HelpButtons extends ToolbarGroupView {
      */
     private static final long serialVersionUID = 1902038690593121709L;
     
-    private JButton helpButton;
+    private final JButton helpButton;
     
     private final JPanel contentPanel = new JPanel();
     

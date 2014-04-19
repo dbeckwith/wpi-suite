@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -54,7 +53,6 @@ public class AdminButtonGroup extends ToolbarGroupView {
         
         editGameButton = new JButton("<html>Edit<br/>Game</html>");
         editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
-        //editGameButton.setEnabled(false);   //making it look nice for presentation
         
         startGameButton = new JButton("<html>Start<br/>Game</html>");
         startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
