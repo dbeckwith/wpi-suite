@@ -96,9 +96,9 @@ public class VotePanel extends javax.swing.JPanel {
         setRequirementName(req.getName());
         setRequirementType(req.getType());
         
-        setAllowMultipleCards(parentGame.getDeck().getAllowsMultipleSelection());
+        setAllowMultipleCards(parentGame.getDeck().canAllowsMultipleSelection());
         System.out.println("multiple selection : "
-                + parentGame.getDeck().getAllowsMultipleSelection());
+                + parentGame.getDeck().canAllowsMultipleSelection());
         
         
         old = null; // ensure it is erased

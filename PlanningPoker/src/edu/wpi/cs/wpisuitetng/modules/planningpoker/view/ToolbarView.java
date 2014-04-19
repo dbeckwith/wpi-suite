@@ -26,7 +26,7 @@ public class ToolbarView extends DefaultToolbarView {
     private static final long serialVersionUID = 1142258027071142978L;
     private final CommonButtonGroup commonButtonGroup = new CommonButtonGroup();
     private final AdminButtonGroup adminButtonGroup = new AdminButtonGroup();
-    private HelpButtons helpButtons = new HelpButtons();
+    private final HelpButtons helpButtons = new HelpButtons();
     
     /**
      * Creates a new ToolbarView
