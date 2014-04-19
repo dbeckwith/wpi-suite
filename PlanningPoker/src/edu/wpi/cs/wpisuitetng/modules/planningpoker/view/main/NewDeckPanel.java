@@ -54,10 +54,10 @@ public class NewDeckPanel extends JPanel {
         setBackground(Color.WHITE);
         GetDecksController.getInstance().retrieveDecks();
         
-        SpringLayout springLayout = new SpringLayout();
+        final SpringLayout springLayout = new SpringLayout();
         setLayout(springLayout);
         
-        JLabel deckLabel = new JLabel("Deck Name: *");
+        final JLabel deckLabel = new JLabel("Deck Name: *");
         springLayout.putConstraint(SpringLayout.NORTH, deckLabel, 10,
                 SpringLayout.NORTH, this);
         springLayout.putConstraint(SpringLayout.WEST, deckLabel, 10,
@@ -93,7 +93,7 @@ public class NewDeckPanel extends JPanel {
                 
             }
             
-            public void validate() {
+            private void validate() {
                 for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
                     if (deck.toString().equals(newDeckName.getText())
                             || newDeckName.getText().equals("Default")
@@ -116,7 +116,7 @@ public class NewDeckPanel extends JPanel {
             }
         });
         
-        JLabel cardLabel = new JLabel("Cards: *");
+        final JLabel cardLabel = new JLabel("Cards: *");
         springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 13,
                 SpringLayout.SOUTH, newDeckName);
         springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0,
@@ -154,8 +154,8 @@ public class NewDeckPanel extends JPanel {
                 
             }
             
-            public void validate() {
-                String pattern = "( *\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
+            private void validate() {
+                final String pattern = "( *\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
                 areCardsValid = newDeckCards.getText() != null
                         && !newDeckCards.getText().isEmpty()
                         && Pattern.matches(pattern, newDeckCards.getText());
@@ -176,19 +176,19 @@ public class NewDeckPanel extends JPanel {
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                String newCards = newDeckCards.getText();
-                String newCardArray[] = newCards.split("[ ,]+");
-                ArrayList<Double> cards = new ArrayList<Double>();
+                final String newCards = newDeckCards.getText();
+                final String[] newCardArray = newCards.split("[ ,]+");
+                final ArrayList<Double> cards = new ArrayList<Double>();
                 for (String newCard : newCardArray) {
                     if (!newCard.isEmpty() && !newCard.equals(null)) {
                         cards.add(Double.parseDouble(newCard));
                     }
                 }
-                DeckModel newDeck = new DeckModel(newDeckName.getText(), cards,
+                final DeckModel newDeck = new DeckModel(newDeckName.getText(), cards,
                         multipleSelect.isSelected());
                 newDeck.sort();
                 AddDeckController.getInstance().addDeck(newDeck);
-                parent.showPanel("reqlistpanel");
+                parentPanel.showPanel("reqlistpanel");
                 newDeckName.setText("");
                 newDeckCards.setText("");
             }
@@ -198,7 +198,7 @@ public class NewDeckPanel extends JPanel {
         cancelCreationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                parent.showPanel("reqlistpanel");
+                parentPanel.showPanel("reqlistpanel");
             }
         });
         
@@ -208,9 +208,9 @@ public class NewDeckPanel extends JPanel {
                 -10, SpringLayout.EAST, this);
         add(cancelCreationButton);
         
-        ButtonGroup selectionGroup = new ButtonGroup();
+        final ButtonGroup selectionGroup = new ButtonGroup();
         
-        JRadioButton singleSelect = new JRadioButton("Single");
+        final JRadioButton singleSelect = new JRadioButton("Single");
         singleSelect.setBackground(Color.WHITE);
         singleSelect.setSelected(true);
         springLayout.putConstraint(SpringLayout.WEST, singleSelect, 0,
@@ -230,7 +230,7 @@ public class NewDeckPanel extends JPanel {
         selectionGroup.add(singleSelect);
         selectionGroup.add(multipleSelect);
         
-        JLabel selectionLabel = new JLabel("Selection Mode");
+        final JLabel selectionLabel = new JLabel("Selection Mode");
         springLayout.putConstraint(SpringLayout.WEST, selectionLabel, 0,
                 SpringLayout.WEST, deckLabel);
         springLayout.putConstraint(SpringLayout.SOUTH, selectionLabel, -1,
@@ -284,7 +284,7 @@ public class NewDeckPanel extends JPanel {
      * @param valid
      *        whether or not it is valid
      */
-    private void setErrorBorder(JComponent c, boolean valid) {
+    private static void setErrorBorder(JComponent c, boolean valid) {
         if (!valid) {
             c.setBorder(BorderFactory.createLineBorder(Color.RED));
         }
@@ -299,18 +299,18 @@ public class NewDeckPanel extends JPanel {
      * @param p
      */
     public void setEditGamePanel(NewGamePanel p) {
-        parent = p;
+        parentPanel = p;
     }
     
-    private NewGamePanel parent;
-    private JButton createDeckButton;
-    private JTextField newDeckName;
-    private JButton cancelCreationButton;
+    private NewGamePanel parentPanel;
+    private final JButton createDeckButton;
+    private final JTextField newDeckName;
+    private final JButton cancelCreationButton;
     private boolean isNameValid = false;
     private boolean areCardsValid = false;
     private boolean nameInUse = false;
-    private JTextPane newDeckCards;
-    private JRadioButton multipleSelect;
-    private JLabel cardHelpLabel;
-    private JLabel errorLabel;
+    private final JTextPane newDeckCards;
+    private final JRadioButton multipleSelect;
+    private final JLabel cardHelpLabel;
+    private final JLabel errorLabel;
 }

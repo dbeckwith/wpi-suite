@@ -104,7 +104,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                      * 
                      */
             private static final long serialVersionUID = -7421202548175051005L;
-            private boolean[] columnEditables = new boolean[] { false, false, false,
+            private final boolean[] columnEditables = new boolean[] { false, false, false,
                     false };
             
             @Override
@@ -112,7 +112,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                 return columnEditables[column];
             }
         });
-        Font temp_Font;
+        final Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         tableScrollPane.setViewportView(voteResultTable);
@@ -121,7 +121,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         numRequirements = new JLabel("<num reqs>");
         
-        JLabel lblRequirements = new JLabel("Requirements:");
+        final JLabel lblRequirements = new JLabel("Requirements:");
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
