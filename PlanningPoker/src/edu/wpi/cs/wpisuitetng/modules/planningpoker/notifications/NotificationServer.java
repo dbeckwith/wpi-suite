@@ -36,7 +36,7 @@ public class NotificationServer extends Thread {
 		return instance;
 	}
 	
-	private ServerSocket serverSocket;
+	private final ServerSocket serverSocket;
 	private final ArrayList<Socket> clientSockets;
 	
 	/**
@@ -61,7 +61,7 @@ public class NotificationServer extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}	
+		}
 	}
 	
 	/**
