@@ -42,6 +42,8 @@ public class GameRequirementModel extends AbstractModel {
 
 	private int finalEstimate;
 	
+	private String estimateNote;
+	
 	/**
 	 * A unique id for this instance of the requirement
 	 */
@@ -68,9 +70,10 @@ public class GameRequirementModel extends AbstractModel {
 		this.estimates = estimates;
 
 		Collections.sort(this.estimates);
-		finalEstimate = -1;
+		finalEstimate = 0;
 		id = nextId;
 		nextId++;
+		estimateNote = "";
 	}
 
 	/**
@@ -86,13 +89,14 @@ public class GameRequirementModel extends AbstractModel {
 		this.description = description;
 		this.type = type;
 		estimates = new ArrayList<Estimate>();
-		finalEstimate = -1;
+		finalEstimate = 0;
 		id = nextId;
         nextId++;
+        estimateNote = "";
 	}
 
 	public GameRequirementModel() {
-		this(-1, "", "", "", new ArrayList<Estimate>());
+		this(0, "", "", "", new ArrayList<Estimate>());
 	}
 
 	/**
@@ -107,6 +111,20 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
+     * @return the estimateNote
+     */
+    public String getEstimateNote() {
+        return estimateNote;
+    }
+
+    /**
+     * @param estimateNote the estimateNote to set
+     */
+    public void setEstimateNote(String estimateNote) {
+        this.estimateNote = estimateNote;
+    }
+
+    /**
      * @return the id
      */
     public long getId() {
