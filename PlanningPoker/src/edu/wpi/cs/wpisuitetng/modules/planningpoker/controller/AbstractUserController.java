@@ -104,4 +104,11 @@ public abstract class AbstractUserController {
             this.timeout = timeout;
     }
     
+    /**
+     * @return timeout the request timeout
+     */
+    public long getTimeout() {
+        return this.timeout;
+    }
+    
 }
