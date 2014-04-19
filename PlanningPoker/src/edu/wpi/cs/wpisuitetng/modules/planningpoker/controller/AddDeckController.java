@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,11 +8,19 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+// who's author?
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
+/**
+ * This controller responds when the user clicks the Create Deck button by
+ * storing new deck to remote server's database.
+ * 
+ * @author ?
+ * 
+ */
 public class AddDeckController {
     private static AddDeckController instance;
     private AddDeckRequestObserver observer;
@@ -26,6 +34,7 @@ public class AddDeckController {
     
     /**
      * Return the add deck controller or creates a new one
+     * 
      * @return The instance of this AddDeckController
      */
     public static AddDeckController getInstance() {
@@ -37,9 +46,10 @@ public class AddDeckController {
     }
     
     /**
-     * Adds a new deck
+     * Adds a new deck to the server
      * 
      * @param deck
+     *        deck to be added
      */
     public void addDeck(DeckModel deck) {
         // PUT creates a new object
@@ -53,12 +63,18 @@ public class AddDeckController {
     /**
      * Returns observer for AddDeckController
      * 
-     * @return
+     * @return observer of AddDeckController
      */
     public AddDeckRequestObserver getObserver() {
         return observer;
     }
     
+    /**
+     * Sets observer for AddDeckController
+     * 
+     * @param observer
+     *        observer to be set for AddDeckController
+     */
     public void setObserver(AddDeckRequestObserver observer) {
         this.observer = observer;
     }

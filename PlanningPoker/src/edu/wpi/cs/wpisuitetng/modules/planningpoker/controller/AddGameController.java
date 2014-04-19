@@ -17,7 +17,8 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * This handles game creation requests
+ * This controller responds when the user clicks the Create Game button by
+ * storing new game to remote server's database.
  * 
  * @author Brett Ammeson
  * 
@@ -38,6 +39,12 @@ public class AddGameController {
      * @return the instance of the AddGameController or creates one if it does
      *         not exist.
      */
+    /**
+     * Gets instance of the AddGameController or creates one if it does not
+     * exist.
+     * 
+     * @return the instance of the AddGameController
+     */
     public static AddGameController getInstance() {
         if (AddGameController.instance == null) {
             AddGameController.instance = new AddGameController();
@@ -50,7 +57,7 @@ public class AddGameController {
      * This method adds a game to the server.
      * 
      * @param newGame
-     *            is the game to be added to the server.
+     *        game to be added.
      */
     public void addGame(GameModel newGame) {
         final Request request = Network.getInstance().makeRequest(
@@ -64,15 +71,20 @@ public class AddGameController {
     }
     
     /**
-     * @return the observer
+     * Get the observer for the controller
+     * 
+     * @return observer for the controller
      */
     public AddGameRequestObserver getObserver() {
         return observer;
     }
     
+    
     /**
+     * Set the observer for the controller
+     * 
      * @param observer
-     *            the observer to set
+     *        observer to be set
      */
     public void setObserver(AddGameRequestObserver observer) {
         this.observer = observer;
