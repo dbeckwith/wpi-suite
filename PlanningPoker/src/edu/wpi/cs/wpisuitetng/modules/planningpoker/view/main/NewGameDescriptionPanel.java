@@ -203,6 +203,14 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         descriptionField.setText(game.getDescription());
         distributed.setSelected(game.getType() == GameType.DISTRIBUTED);
         live.setSelected(game.getType() == GameType.LIVE);
+
+        nameField.setEditable(false);
+        nameField.setEnabled(false);
+        descriptionField.setEditable(false);
+        descriptionField.setEnabled(false);
+        
+        distributed.setEnabled(false);
+        live.setEnabled(false);
         
         DefaultComboBoxModel<DeckModel> decks = (DefaultComboBoxModel<DeckModel>) deckComboBox
                 .getModel();
