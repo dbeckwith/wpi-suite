@@ -55,9 +55,7 @@ public class GameModel extends AbstractModel {
     private String name;
     private String description;
     private List<GameRequirementModel> requirements;
-    private Date startDate;
     private Date endDate;
-    private long timeAlive = 0;
     private GameType type;
     private GameStatus status;
     private String owner;
@@ -106,9 +104,7 @@ public class GameModel extends AbstractModel {
         this.description = description;
         this.requirements = requirements;
         this.deck = deck;
-        this.startDate = new Date();
         this.endDate = endDate;
-        this.timeAlive = endDate == null ? 0 : endDate.getTime() - startDate.getTime();
         this.type = type;
         this.status = status;
         this.owner = owner;
@@ -203,26 +199,10 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * @return The start time for this game
-     */
-    public Date getStartTime() {
-        return startDate;
-    }
-    
-    /**
      * @return The end time for this game
      */
     public Date getEndTime() {
         return endDate;
-    }
-    
-    /**
-     * Returns how much time the game is alive for, in milliseconds.
-     * 
-     * @return how long the game is alive.
-     */
-    public long timeAlive() {
-        return timeAlive;
     }
     
     /**
@@ -410,6 +390,7 @@ public class GameModel extends AbstractModel {
         return getName();
     }
     
+    
     /**
      * Returns whether the input GameModel is equal to this one
      * 
@@ -417,7 +398,7 @@ public class GameModel extends AbstractModel {
      * @return True if this GameModel is equal to the input GameModel
      */
     public boolean equals(GameModel other) {
-        return other.id == id && other.name.equals(other.name);
+        return other.id == id && other.name.equals(name);
     }
     
     public boolean equals(Object other) {
@@ -427,5 +408,12 @@ public class GameModel extends AbstractModel {
             return this.equals((GameModel) other);
         else
             return super.equals(other);
+    }
+    
+    /**
+     * Checks to see if this game has a deadline.
+     */
+    public boolean hasDeadline() {
+        return endDate != null;
     }
 }

@@ -21,11 +21,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * A controller for allowing the current user to change personal preferences.
  * Currently only allows for notification preferences, but can be expanded in
  * the future.
- * 
+ * @author team9
+ * @version 1.0
  * @see UserPreferencesPanel
- * 
- * @author Sam Carlberg
- * 
  */
 public class UserUpdateController {
     
@@ -135,7 +133,7 @@ public class UserUpdateController {
      * 
      * @param user
      */
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 }

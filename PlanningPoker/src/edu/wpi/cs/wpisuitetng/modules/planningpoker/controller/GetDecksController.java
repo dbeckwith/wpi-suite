@@ -14,8 +14,11 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
+
 /**
- *
+ * This controller is used to get decks from server
+ * @author team9
+ * @version 1.0
  */
 public class GetDecksController {
     private GetDecksRequestObserver observer;
@@ -56,6 +59,7 @@ public class GetDecksController {
      * GetDecksRequestObserver.
      * 
      * @param decks
+     *        decks received
      */
     public void receivedDecks(DeckModel[] decks) {
         DeckListModel.getInstance().emptyModel();

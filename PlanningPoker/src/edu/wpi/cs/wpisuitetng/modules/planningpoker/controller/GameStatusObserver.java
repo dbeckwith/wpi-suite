@@ -13,11 +13,19 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
+/**
+ * This observer is called when a response is received from a request
+ * to the server to check game status.
+ * @author team9
+ * @version 1.0
+ */
 public interface GameStatusObserver {
     
     /**
      * Gets called when a game's status changes
+     * 
      * @param game
+     *        the game whose status changes
      */
     void statusChanged(GameModel game);
     

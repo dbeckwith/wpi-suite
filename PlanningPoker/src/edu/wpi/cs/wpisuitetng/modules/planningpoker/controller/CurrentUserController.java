@@ -17,11 +17,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
- * A class for getting the User object associated with the user currently logged
- * into Janeway.
- * 
- * @author Sam Carlberg
- * 
+ * This controller responds to request currently logged-in user from the server.
  */
 public class CurrentUserController extends AbstractUserController {
     
@@ -33,9 +29,9 @@ public class CurrentUserController extends AbstractUserController {
     private static CurrentUserController Instance = null;
     
     /**
-     * Gets the instance of the controller.
+     * Gets the instance of the CurrentUserController.
      * 
-     * @return the instance of the controller.
+     * @return the instance of the CurrentUserController.
      */
     public static CurrentUserController getInstance() {
         if (Instance == null) {
@@ -53,11 +49,6 @@ public class CurrentUserController extends AbstractUserController {
     }
     
     @Override
-    /**
-     * {@inheritdoc}
-     * <p>
-     * This overwrites any users previously received.
-     */
     public void receivedUsers(User[] users) {
         if (users != null) {
             setUsers(users);
@@ -86,7 +77,7 @@ public class CurrentUserController extends AbstractUserController {
     }
     
     /**
-     * Gets the currently logged in user.
+     * Gets the currently logged-in user.
      */
     public User getUser() {
         return user;

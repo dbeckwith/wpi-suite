@@ -18,8 +18,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
  * A class for requesting users from the server.
- * 
- * @author Sam Carlberg
+ * @author team9
+ * @version 1.0
  */
 public class RequestThread extends Thread {
     

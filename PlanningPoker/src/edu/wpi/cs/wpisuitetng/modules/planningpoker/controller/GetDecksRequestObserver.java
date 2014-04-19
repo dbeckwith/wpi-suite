@@ -12,8 +12,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
+// who is author?
 /**
- *
+ * This observer is called when a response is received from a request
+ * to the server to get decks.
+ * @author team9
+ * @version 1.0
  */
 public class GetDecksRequestObserver implements RequestObserver {
     GetDecksController controller;
@@ -22,13 +26,15 @@ public class GetDecksRequestObserver implements RequestObserver {
      * Creates a new get decks request observer
      * 
      * @param controller
+     *        GetDecksRequestObserver to be created
      */
     public GetDecksRequestObserver(GetDecksController controller) {
         this.controller = controller;
     }
     
     /**
-     * Parse the deck that was received from the server
+     * Parse the deck when a response is received with a success (2xx) status
+     * code.
      */
     @Override
     public void responseSuccess(IRequest iReq) {
@@ -38,7 +44,8 @@ public class GetDecksRequestObserver implements RequestObserver {
     }
     
     /**
-     * Prints an error if addition unsuccessful
+     * Prints an error when a response is received with an client error (4xx) or
+     * server error (5xx) status code.
      */
     @Override
     public void responseError(IRequest iReq) {
@@ -46,7 +53,7 @@ public class GetDecksRequestObserver implements RequestObserver {
     }
     
     /**
-     * If addition fails
+     * print an error if an attempt to make a request fails.
      */
     @Override
     public void fail(IRequest iReq, Exception e) {
@@ -56,7 +63,7 @@ public class GetDecksRequestObserver implements RequestObserver {
     /**
      * Gets add deck controller
      * 
-     * @return
+     * @return controller to be get
      */
     public GetDecksController getController() {
         return controller;
@@ -66,6 +73,7 @@ public class GetDecksRequestObserver implements RequestObserver {
      * Sets add deck controller
      * 
      * @param c
+     *        controller to be set
      */
     public void setController(GetDecksController c) {
         controller = c;

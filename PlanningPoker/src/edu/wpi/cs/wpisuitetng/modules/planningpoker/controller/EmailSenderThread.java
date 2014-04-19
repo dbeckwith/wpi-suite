@@ -19,10 +19,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * A class for handling email sending to users.
- * 
- * @author Sam Carlberg
- * @author Nick Brown
- * 
+ * @author team9
+ * @version 1.0
  */
 public class EmailSenderThread extends Thread { // $codepro.audit.disable declareDefaultConstructors
 
