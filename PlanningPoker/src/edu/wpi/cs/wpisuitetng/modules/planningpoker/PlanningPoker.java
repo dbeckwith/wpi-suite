@@ -85,16 +85,18 @@ public class PlanningPoker implements IJanewayModule {
 		f.setSize(800, 400);
 		VotePanel p = new VotePanel();
 		f.add(p);
-		GameModel gm = new GameModel(null,null,null,new DeckModel("", new ArrayList<Double>(){{
-			add(1d);
-			add(3d);
-			add(5d);
-			add(10d);
-			add(15d);
-			add(20d);
-			add(50d);
-			add(100d);
-			}},true),null,null,null);
+//		GameModel gm = new GameModel(null,null,null,new DeckModel("", new ArrayList<Double>(){{
+//			add(1d);
+//			add(3d);
+//			add(5d);
+//			add(10d);
+//			add(15d);
+//			add(20d);
+//			add(50d);
+//			add(100d);
+//			}},true),null,null,null);
+		
+		GameModel gm = new GameModel(null,null,null,new DeckModel(""),null,null,null);
 		
 		GameRequirementModel req = new GameRequirementModel();
 		p.setRequirement(null, gm, req);

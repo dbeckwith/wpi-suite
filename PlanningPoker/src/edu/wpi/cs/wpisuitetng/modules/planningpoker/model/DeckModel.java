@@ -52,6 +52,7 @@ public class DeckModel extends AbstractModel {
 		this.name = name;
 		this.cards = null;
 		this.allowsMultipleSelection = false;
+		isNone = true;
 	}
 
 	/**
@@ -66,6 +67,13 @@ public class DeckModel extends AbstractModel {
 	 */
 	public ArrayList<Double> getCards() {
 		return this.cards;
+	}
+	
+	/**
+	 * @return whether the deck has cards or not
+	 */
+	public boolean isNone(){
+		return isNone;
 	}
 
 	/**

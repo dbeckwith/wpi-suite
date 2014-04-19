@@ -12,18 +12,29 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
@@ -68,7 +79,12 @@ public class CardButton extends JButton implements MouseListener {
     private boolean hover;
     private boolean cardEnabled = true;
     
+    private boolean textInput = false;
+    
+    JTextField input;
+    
     public CardButton(String val) {
+    	textInput = false;
         value = CardButton.cardFormat.format(Float.parseFloat(val));
         suitIndex = ((int)getEstimateValue()+1)%4;//(int) (Math.random() * CardButton.suits.length);
         selected = false;
@@ -76,8 +92,48 @@ public class CardButton extends JButton implements MouseListener {
         
     }
     
+    public CardButton(){
+    	textInput = true;
+    	value = "";
+    	GridBagLayout layout = new GridBagLayout();
+    	this.setLayout(layout);
+    	GridBagConstraints rc = new GridBagConstraints();
+    	rc.anchor = GridBagConstraints.CENTER;
+    	rc.weightx = 1;
+    	rc.fill = GridBagConstraints.HORIZONTAL;
+    
+    	input = new JTextField();
+    	input.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+    	input.setBorder(BorderFactory.createEmptyBorder());
+    	input.setOpaque(false);
+    	input.setMinimumSize(new Dimension(100, 0));
+    	add(input, rc);
+    	cardEnabled = true;
+    	selected = true;
+    }
+        
     @Override
     public void paintComponent(Graphics g) {
+    	
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);

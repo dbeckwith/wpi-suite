@@ -108,13 +108,7 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        ArrayList<String> deck = new ArrayList<>();
-        
-        // Add card values from the game's deck
-        for (Double cardVal : parentGame.getDeck().getCards()) {
-            deck.add(cardVal.toString());
-        }
-        
+
         ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
             selected = old.getCardsSelected();
@@ -127,40 +121,59 @@ public class VotePanel extends javax.swing.JPanel {
         }
         
         cards.clear();
-        estimateCardsPanel.removeAll();
-        for (final String estimate : deck) {
-            final CardButton estimateCard = new CardButton(estimate);
-            cards.add(estimateCard);
+        if(parentGame.getDeck().isNone()){
+        	estimateCardsPanel.removeAll();
+        	CardButton estimateInput = new CardButton();
+        	estimateInput.setPreferredSize(new Dimension(80, 120));
+        	estimateCardsPanel.add(estimateInput);
+        } else {
+        	
+            ArrayList<String> deck = new ArrayList<>();
             
-            estimateCard.setText(estimate);
-            estimateCard.setPreferredSize(new Dimension(80, 120));
-            estimateCard.setCardSelected(selected.contains(new Integer(deck
-                    .indexOf(estimate))));
-            estimateCard.addActionListener(new ActionListener() {
-                
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (estimateCard.isCardEnabled()) {
-                        estimateCard.setCardSelected(!estimateCard
-                                .isCardSelected());
-                        if (!selectMultiple) {
-                            deselectOtherCards(estimateCard);
-                        }
-                        validateCards();
-                    }
-                    updateTotal();
-                    VotePanel.this.repaint();
-                }
-            });
+            // Add card values from the game's deck
+            for (Double cardVal : parentGame.getDeck().getCards()) {
+                deck.add(cardVal.toString());
+            }
             
-            estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
+        	
+	        estimateCardsPanel.removeAll();
+	        for (final String estimate : deck) {
+	            final CardButton estimateCard = new CardButton(estimate);
+	      
+	            cards.add(estimateCard);
+	            
+	            estimateCard.setPreferredSize(new Dimension(80, 120));
+	            estimateCard.setCardSelected(selected.contains(new Integer(deck
+	                    .indexOf(estimate))));
+	            estimateCard.addActionListener(new ActionListener() {
+	                
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    if (estimateCard.isCardEnabled()) {
+	                        estimateCard.setCardSelected(!estimateCard
+	                                .isCardSelected());
+	                        if (!selectMultiple) {
+	                            deselectOtherCards(estimateCard);
+	                        }
+	                        validateCards();
+	                    }
+	                    updateTotal();
+	                    VotePanel.this.repaint();
+	                }
+	            });
+	            
+	            estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
+	        }
+	        
+	        if(voted){
+	        	for(Integer i:selectedCards){
+	        		cards.get(i).setCardSelected(true);
+	        	}        	
+	        }
+	        
         }
         
-        if(voted){
-        	for(Integer i:selectedCards){
-        		cards.get(i).setCardSelected(true);
-        	}        	
-        }
+
         
         updateTotal();
         
