@@ -75,7 +75,7 @@ public class GameModel extends AbstractModel implements Serializable {
     private static int nextId = 0;
     
     /**
-     * Default constructor creates instance with invalid id and null fields
+     * Default constructor creates instance with invalid id and null fields.
      * This constructor should generally not be used except for database
      * queries.
      */
@@ -193,7 +193,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Adds a GameStatusObserver to the list of status observers
      * 
      * @param gso
-     *        The GameStatusObserver to add
+     *        the GameStatusObserver to add
      */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
@@ -205,7 +205,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Removes a GameStatusObserver from the list of status observers
      * 
      * @param gso
-     *        The GameStatusObserver to remove
+     *        the GameStatusObserver to remove
      */
     public void removeStatusListener(GameStatusObserver gso) {
         if (status_observers.contains(gso)) {
@@ -217,7 +217,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Returns the list of estimates for a given requirement
      * 
      * @param reqIndex
-     *        The index of the requirement in the list of requirements
+     *        the index of the requirement in the list of requirements
      * @return an array containing all of the estimates
      */
     public List<Estimate> getEstimates(int reqIndex) {
@@ -227,7 +227,7 @@ public class GameModel extends AbstractModel implements Serializable {
     /**
      * Gets the list of requirements for this game.
      * 
-     * @return The Requirements for this game
+     * @return the requirements for this game
      */
     public List<GameRequirementModel> getRequirements() {
         return requirements;
@@ -248,7 +248,7 @@ public class GameModel extends AbstractModel implements Serializable {
     /**
      * Gets the deck that users can use to estimate requirements of this game.
      * 
-     * @return The deck for this game
+     * @return the deck for this game
      */
     public DeckModel getDeck() {
         return deck;
@@ -297,11 +297,11 @@ public class GameModel extends AbstractModel implements Serializable {
     public boolean checkVoted() {
         if (requirements == null) {
             return false;
-            }
+        }
         for (GameRequirementModel r : requirements) {
             if (!r.allVoted()) {
                 return false;
-                }
+            }
         }
         return true;
     }
@@ -329,7 +329,7 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
-     * sets the game status to closed so that no more edits can be made.
+     * Sets the game status to closed so that no more edits can be made.
      */
     public void closeGame() {
         status = GameStatus.CLOSED;
