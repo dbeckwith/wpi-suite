@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version 1.0
  */
 public class AddDeckController {
-    private static AddDeckController instance;
+    private static AddDeckController instance = null;
     private AddDeckRequestObserver observer;
     
     /**

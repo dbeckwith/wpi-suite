@@ -67,7 +67,7 @@ public class GetGamesController implements ActionListener {
      */
     public void retrieveGames() {
         final Request request = Network.getInstance().makeRequest(
-                "planningpoker/game", HttpMethod.GET); // GET == read
+                "planningpoker/game", HttpMethod.GET); 
         request.addObserver(observer); // add an observer to process the
                                        // response
         request.send(); // send the request
@@ -80,13 +80,11 @@ public class GetGamesController implements ActionListener {
      * @param games
      *        array of games received from the server
      */
-    public void receivedGames(GameModel[] games) {
+    public static void receivedGames(GameModel[] games) {
         // Make sure the response was not null
         if (games != null) {
-            // if (games[0].getID() != -1) {
             // add the games to the local model
             GameListModel.getInstance().setGames(games);
-            // }
         }
     }
 }

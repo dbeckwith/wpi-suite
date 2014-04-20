@@ -53,7 +53,7 @@ public class UpdateGamesController {
      */
     public void updateGame(GameModel newGame) {
         final Request request = Network.getInstance().makeRequest(
-                "planningpoker/game", HttpMethod.POST); // POST == update
+                "planningpoker/game", HttpMethod.POST);
         request.setBody(newGame.toJSON()); // put the new game in the body of
         // the request
         request.addObserver(observer); // add an observer to process the

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -43,7 +51,7 @@ public class GetRequirementsController {
      * Sends an HTTP request to retrieve all requirements
      */
     public void retrieveRequirements() {
-        final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); // GET == read
+        final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET);
         request.addObserver(observer); // add an observer to process the response
         request.send(); // send the request
     }
@@ -56,7 +64,7 @@ public class GetRequirementsController {
      * @param requirements
      *        array of requirements received from the server
      */
-    public void receivedRequirements(GameRequirementModel[] requirements) {
+    public static void receivedRequirements(GameRequirementModel[] requirements) {
         // Make sure the response was not null
         if (requirements != null) {
             
