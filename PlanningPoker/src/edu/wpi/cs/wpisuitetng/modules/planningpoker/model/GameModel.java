@@ -24,14 +24,16 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
  * 
  * @author Team 9
  * @version 1.0
+ * 
+ * Represents a planning poker game
  */
-public class GameModel extends AbstractModel implements Serializable{
+public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * 
      */
     private static final long serialVersionUID = -1255801057004044696L;
-
+    
     /**
      * An enumeration representing the different states of a game.
      */
@@ -117,10 +119,11 @@ public class GameModel extends AbstractModel implements Serializable{
      * @param status
      *        what the current status of this game should be
      */
-    public GameModel(String name, String description, List<GameRequirementModel> requirements,
-            DeckModel deck, Date end, GameType type, GameStatus status) {
-        this(name, description, requirements, deck, end, type, status, ConfigManager.getConfig()
-                .getUserName());
+    public GameModel(String name, String description,
+            List<GameRequirementModel> requirements, DeckModel deck, Date end,
+            GameType type, GameStatus status) {
+        this(name, description, requirements, deck, end, type, status,
+                ConfigManager.getConfig().getUserName());
     }
     
     /**
@@ -144,9 +147,10 @@ public class GameModel extends AbstractModel implements Serializable{
      * @param owner
      *        the name of the user who created this game
      */
-    public GameModel(String name, String description, List<GameRequirementModel> requirements,
-            DeckModel deck, Date endDate, GameType type, GameStatus status, String owner) {
-        id = nextId++;
+    public GameModel(String name, String description,
+            List<GameRequirementModel> requirements, DeckModel deck,
+            Date endDate, GameType type, GameStatus status, String owner) {
+        id = GameModel.nextId++;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
@@ -160,7 +164,7 @@ public class GameModel extends AbstractModel implements Serializable{
     
     /**
      * Gets the name of this game.
-     * 
+     *
      * @return the name of this game
      */
     public String getName() {
@@ -199,7 +203,7 @@ public class GameModel extends AbstractModel implements Serializable{
      * Adds a GameStatusObserver to the list of status observers
      * 
      * @param gso
-     *        The GameStatusObserver to add
+     *        the GameStatusObserver to add
      */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
@@ -211,7 +215,7 @@ public class GameModel extends AbstractModel implements Serializable{
      * Removes a GameStatusObserver from the list of status observers
      * 
      * @param gso
-     *        The GameStatusObserver to remove
+     *        the GameStatusObserver to remove
      */
     public void removeStatusListener(GameStatusObserver gso) {
         if (status_observers.contains(gso)) {
@@ -233,7 +237,7 @@ public class GameModel extends AbstractModel implements Serializable{
     /**
      * Gets the list of requirements for this game.
      * 
-     * @return the Requirements for this game
+     * @return the requirements for this game
      */
     public List<GameRequirementModel> getRequirements() {
         return requirements;
@@ -285,7 +289,8 @@ public class GameModel extends AbstractModel implements Serializable{
      *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
-        final GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        final GameStatus new_status = fin ? GameStatus.COMPLETE
+                : GameStatus.PENDING;
         if (status != new_status && status == GameStatus.PENDING) {
             status = new_status;
             for (int i = 0; i < status_observers.size(); i++) {
@@ -319,9 +324,6 @@ public class GameModel extends AbstractModel implements Serializable{
      */
     public boolean isEnded() {
         if (checkVoted()) {
-            setEnded(true);
-        }
-        if (endDate != null && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE || status == GameStatus.CLOSED);
@@ -484,5 +486,12 @@ public class GameModel extends AbstractModel implements Serializable{
             ret = super.equals(other);
         }
         return ret;
+    }
+    
+    /**
+     * Checks to see if this game has a deadline.
+     */
+    public boolean hasDeadline() {
+        return endDate != null;
     }
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
+ * Copyright (c) 2013 -- WPI Suite
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
 
@@ -34,6 +35,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
     
     private final Data db;
     
+    private static GameEntityManager instance;
+    
     /**
      * Creates a new GameEntityManager attatched to the given database.
      * 
@@ -41,7 +44,14 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     public GameEntityManager(Data db) {
         this.db = db;
-        NotificationServer.getInstance().start();
+        if(NotificationServer.getInstance().getState() == Thread.State.NEW){
+                NotificationServer.getInstance().start();
+        }
+        instance = this;
+    }
+    
+    public static GameEntityManager getInstance() {
+        return instance;
     }
     
     /**
@@ -62,45 +72,69 @@ public class GameEntityManager implements EntityManager<GameModel> {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int Count() {
         return db.retrieveAll(new GameModel()).size();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String advancedGet(Session arg0, String[] arg1) throws NotImplementedException {
         throw new NotImplementedException();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String advancedPost(Session arg0, String arg1, String arg2)
             throws NotImplementedException {
         throw new NotImplementedException();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String advancedPut(Session arg0, String[] arg1, String arg2)
             throws NotImplementedException {
         throw new NotImplementedException();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteAll(Session s) throws WPISuiteException {
         ensureRole(s, Role.ADMIN);
         db.deleteAll(new GameModel(), s.getProject());
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteEntity(Session s, String id) throws WPISuiteException {
         ensureRole(s, Role.ADMIN);
         return db.delete(getEntity(s, id)[0]) != null;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameModel[] getAll(Session s) {
         return db.retrieveAll(new GameModel(), s.getProject()).toArray(new GameModel[0]);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameModel[] getEntity(Session s, String id) throws NotFoundException {
         final int intId = Integer.parseInt(id);
@@ -121,6 +155,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
         return GameModels;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameModel makeEntity(Session s, String content) throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
@@ -128,20 +165,28 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
         }
+        new GameTimeoutObserver(s, newGameModel);
         System.out.println("GEM makeEntity()");
         NotificationServer.getInstance().sendUpdateNotification();
         return newGameModel;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save(Session s, GameModel GameModel){
         db.save(GameModel, s.getProject());
         
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameModel update(Session s, String content) throws WPISuiteException {
         final GameModel updatedGameModel = GameModel.fromJSON(content);
+        System.out.println("Updating game " + updatedGameModel);
         /*
          * Because of the disconnected objects problem in db4o, we can't just
          * save GameModels. We have to get the original GameModel from db4o,
@@ -159,9 +204,21 @@ public class GameEntityManager implements EntityManager<GameModel> {
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
         
-        if (!db.save(existingGameModel, s.getProject())) {
-            throw new WPISuiteException("");
+        if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
+            // start observer only when the game is live
+            System.out.println("Getting observer for game");
+            GameTimeoutObserver obs = GameTimeoutObserver
+                    .getObserver(updatedGameModel);
+            if (obs == null) {
+                System.out.println("Could not find observer for game");
+            }
+            else if (!obs.isAlive()) {
+                System.out.println("Starting observer");
+                obs.start();
+            }
         }
+        
+        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
         System.out.println("GEM update()");
         NotificationServer.getInstance().sendUpdateNotification();
         return existingGameModel;
@@ -170,7 +227,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     /**
      * Gets the next available unique ID for a GameModel
      */
-    private int getNextID(Session s) {
+    private int getNextID(Session s) throws WPISuiteException{
         int max = 0;
         for (GameModel g : getAll(s)) {
             if (g.getID() > max) {

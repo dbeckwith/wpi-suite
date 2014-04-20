@@ -42,8 +42,10 @@ public class DeckModel extends AbstractModel {
 			boolean allowsMultipleSelection) {
 		this.name = name;
 		this.cards = cards;
+		isNone = (cards == null || cards.size() == 0);
+		
 		this.allowsMultipleSelection = allowsMultipleSelection;
-		isNone = false;
+
 	}
 
     /**
@@ -55,9 +57,9 @@ public class DeckModel extends AbstractModel {
      */
 	public DeckModel(String name) {
 		this.name = name;
-		cards = null;
-		allowsMultipleSelection = false;
-        isNone = false;
+		this.cards = null;
+		this.allowsMultipleSelection = false;
+		isNone = true;
 	}
     
     /**
@@ -86,7 +88,14 @@ public class DeckModel extends AbstractModel {
 	 * @return The cards in the deck
 	 */
 	public ArrayList<Double> getCards() {
-		return cards;
+		return this.cards;
+	}
+	
+	/**
+	 * @return whether the deck has cards or not
+	 */
+	public boolean isNone(){
+		return isNone;
 	}
     
     /**
