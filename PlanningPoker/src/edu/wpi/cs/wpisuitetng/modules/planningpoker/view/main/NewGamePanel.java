@@ -357,6 +357,9 @@ public class NewGamePanel extends JPanel {
      *        name of the panel to be shown
      */
 	protected void showPanel(String panel) {
+	    if (panel.equals("newdeckpanel")) {
+	        newDeckPanel.resetFields();
+	    }
 		((CardLayout) newGameRequirementsCard.getLayout()).show(
 				newGameRequirementsCard, panel);
 	}
