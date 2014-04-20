@@ -97,7 +97,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         defaultDeck = new DeckModel("Default", cards, true);
         DeckListModel.getInstance().setDefaultDeck(defaultDeck);
         deckComboBox.addItem(defaultDeck);
-        noDeck = new DeckModel("No deck", new ArrayList<Double>(), false);
+        noDeck = new DeckModel("No deck");
         deckComboBox.addItem(noDeck);
         generatedDeck = new DeckModel("Generated deck", new ArrayList<Double>(), false);
         deckComboBox.addItem(generatedDeck);
