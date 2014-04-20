@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import static org.junit.Assert.*;
@@ -9,16 +17,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Tests the DeckModel class
  * 
- * @author Andrew
- *
+ * @author Team 9
+ * @version 1.0
  */
 public class DeckModelTest {
     ArrayList<Double> cards;
     DeckModel deck;
     
     @Before
-    public void setUp(){
+    public void prepare(){
         cards = new ArrayList<Double>();
         cards.add(1.0);
         cards.add(2.0);

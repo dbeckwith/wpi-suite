@@ -23,8 +23,10 @@ public class MockNetwork extends Network {
     
     @Override
     public Request makeRequest(String path, HttpMethod requestMethod) {
-        if (requestMethod == null) { throw new NullPointerException(
-                "requestMethod may not be null"); }
+        if (requestMethod == null) { 
+            throw new NullPointerException(
+                "requestMethod may not be null"); 
+            }
         
         lastRequestMade = new MockRequest(defaultNetworkConfiguration, path,
                 requestMethod);

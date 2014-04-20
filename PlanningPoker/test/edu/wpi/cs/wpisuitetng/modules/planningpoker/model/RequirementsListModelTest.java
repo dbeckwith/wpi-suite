@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -32,7 +29,7 @@ public class RequirementsListModelTest {
     PrintStream oldOut = System.out;
     
     @Before
-    public void setUpStreams() {
+    public void prepareStreams() {
         System.setOut(new PrintStream(outStream));
     }
     
@@ -43,8 +40,8 @@ public class RequirementsListModelTest {
     
     @Test
     public void testObserverManipulation() {
-        RequirementsListModel rlm = RequirementsListModel.getInstance();
-        SimpleListObserver mySLO = new SimpleListObserver() {
+        final RequirementsListModel rlm = RequirementsListModel.getInstance();
+        final SimpleListObserver mySLO = new SimpleListObserver() {
             
             @Override
             public void listUpdated() {

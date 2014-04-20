@@ -17,8 +17,12 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+
+
+
+
+
+
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -27,30 +31,30 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * 
  */
 public class GameTest {
-
+    
     @BeforeClass
-    static public void setUpBeforeClass() {
+    static public void prepare() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
     }
     
-	@Test
-	public void TestRequirementEndsAfterDeadline() {
-		GameModel testgame = new GameModel("Test Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
-						System.currentTimeMillis() - 100000),
-				GameType.DISTRIBUTED, GameStatus.PENDING);
-		Assert.assertTrue(testgame.isEnded());
-	}
-
-	@Test
-	public void TestRequirementNotCompleteBeforeDeadline() {
-		GameModel testgame = new GameModel("Test Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
-						System.currentTimeMillis() + 100000000),
-				GameType.DISTRIBUTED, GameStatus.PENDING);
-		Assert.assertFalse(testgame.isEnded());
-	}
-
+    @Test
+    public void TestRequirementEndsAfterDeadline() {
+        final GameModel testgame = new GameModel("Test Game", "something", null,
+                DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() - 100000),
+                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+        Assert.assertTrue(testgame.isEnded());
+    }
+    
+    @Test
+    public void TestRequirementNotCompleteBeforeDeadline() {
+        final GameModel testgame = new GameModel("Test Game", "something", null,
+                DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() + 100000000),
+                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+        Assert.assertFalse(testgame.isEnded());
+    }
+    
 }

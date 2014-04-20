@@ -91,8 +91,8 @@ public class GameRequirementModelTest {
         final GameRequirementModel grmDifferent3 = new GameRequirementModel(6,
                 "C requirement", "D description", "Z type");
         final GameRequirementModel blank = new GameRequirementModel();
-        int anInteger = 5;
-        String aString = "A String";
+        final int anInteger = 5;
+        final String aString = "A String";
         
         Assert.assertTrue(grm.equals(grm));
         Assert.assertFalse(grm.equals(blank));

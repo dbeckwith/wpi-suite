@@ -13,13 +13,25 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+
+
+
+
+
+
+
+
+
+
+
+
+
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -34,51 +46,51 @@ public class GameModelTest {
     GameModel game2;
     GameModel game3;
     GameModel game4;
-    ArrayList<GameRequirementModel> reqs;
+    List<GameRequirementModel> reqs;
     
     @Before
-    public void setUp() {
-    	 Network.initNetwork(new MockNetwork());
-         Network.getInstance().setDefaultNetworkConfiguration(
-                 new NetworkConfiguration("http://wpisuitetng"));
+    public void prepare() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
         reqs = new ArrayList<GameRequirementModel>();
-        GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
+        final GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
                 "Req desc", "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();
         game1 = new GameModel("Test Game 1", "Live Game that just ended",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(),
-                GameType.LIVE, GameStatus.COMPLETE);
+                GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
                 "Distributed Game that will end in 5 seconds", reqs,
                 DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() + 5000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
-                        System.currentTimeMillis() + 10000), GameType.LIVE,
-                GameStatus.COMPLETE);
+                        System.currentTimeMillis() + 10000), GameModel.GameType.LIVE,
+                        GameModel.GameStatus.COMPLETE);
         game4 = new GameModel(
                 "Test Game 4",
                 "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() - 10000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
     }
     
     @Test
     public void testSetEnded() {
         game1.setEnded(true);
-        Assert.assertEquals(GameStatus.COMPLETE, game1.getStatus());
+        Assert.assertEquals(GameModel.GameStatus.COMPLETE, game1.getStatus());
         game2.setEnded(true);
-        Assert.assertEquals(GameStatus.COMPLETE, game2.getStatus());
+        Assert.assertEquals(GameModel.GameStatus.COMPLETE, game2.getStatus());
         game3.setEnded(false);
-        Assert.assertEquals(GameStatus.COMPLETE, game3.getStatus());
+        Assert.assertEquals(GameModel.GameStatus.COMPLETE, game3.getStatus());
     }
     
-   // @Test
+    // @Test
     public void testIsEnded() {
         Assert.assertTrue(game1.isEnded());
         Assert.assertFalse(game2.isEnded());
@@ -94,7 +106,7 @@ public class GameModelTest {
                 + game2.toJSON() + "]")[0].getName());
     }
     
-   // @Test
+    // @Test
     public void testClosedGame() {
         game1.closeGame();
         game2.closeGame();
