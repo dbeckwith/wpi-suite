@@ -11,6 +11,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -24,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
@@ -158,7 +160,6 @@ public class GameEntityManager implements EntityManager<GameModel> {
         newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
         new GameTimeoutObserver(s, newGameModel);
-        System.out.println("New game status: " + newGameModel.getStatus());
         System.out.println("GEM makeEntity()");
         NotificationServer.getInstance().sendUpdateNotification();
         return newGameModel;
@@ -194,16 +195,34 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
         final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
+        sendEmails(s, existingGameModel, updatedGameModel);
+        
+        startObserver(updatedGameModel);
+        
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
         
+        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
+        System.out.println("GEM update()");
+        NotificationServer.getInstance().sendUpdateNotification();
+        return existingGameModel;
+    }
+    
+    /**
+     * Starts the timeout observer for a game
+     * 
+     * @param updatedGameModel
+     *        the game to start
+     */
+    private void startObserver(GameModel updatedGameModel) {
         if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
             // start observer only when the game is live
-            System.out.println("Getting observer for game");
+            System.out.println("Getting observer for " + updatedGameModel);
             GameTimeoutObserver obs = GameTimeoutObserver
                     .getObserver(updatedGameModel);
             if (obs == null) {
-                System.out.println("Could not find observer for game");
+                System.out.println("Could not find observer for "
+                        + updatedGameModel);
             }
             else if (!obs.isAlive()) {
                 System.out.println("Starting observer");
@@ -211,10 +230,54 @@ public class GameEntityManager implements EntityManager<GameModel> {
             }
         }
         
-        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
-        System.out.println("GEM update()");
-        NotificationServer.getInstance().sendUpdateNotification();
-        return existingGameModel;
+    }
+    
+    /**
+     * Sends emails on a game update
+     * 
+     * @param s
+     *        the session containing the current project
+     * @param existingGameModel
+     *        the old game model
+     * @param updatedGameModel
+     *        the updated game model
+     */
+    private void sendEmails(Session s, GameModel existingGameModel,
+            GameModel updatedGameModel) {
+        // send emails based on updated status
+        if (!updatedGameModel.getStatus().equals(existingGameModel.getStatus())) {
+            
+            /*
+             * KNOWN BUG: the team is not deserialzed on server start, so this
+             * line will only work after users have been added to the project
+             * and before the server is stopped.
+             */
+            EmailController.getInstance().setUsers(s.getProject().getTeam());
+            switch (updatedGameModel.getStatus()) {
+                case NEW:
+                    // don't send an email
+                    break;
+                case PENDING:
+                    // send game start email
+                    EmailController.getInstance().sendGameStartNotifications(
+                            updatedGameModel);
+                    break;
+                case COMPLETE:
+                    // send ended game email
+                    EmailController.getInstance().sendGameEndNotifications(
+                            updatedGameModel);
+                    break;
+                case CLOSED:
+                    // don't send an email
+                    break;
+            }
+        }
+        else {
+            System.out.print("No status change, not sending emails.");
+            System.out.println("\t(" + existingGameModel.getStatus() + "|"
+                    + updatedGameModel.getStatus() + ")");
+        }
+        
     }
     
     private int getNextID(Session s) throws WPISuiteException {

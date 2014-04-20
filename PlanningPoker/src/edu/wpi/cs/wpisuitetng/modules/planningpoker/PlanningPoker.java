@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -97,6 +98,7 @@ public class PlanningPoker implements IJanewayModule {
 			}},true),null,null,null);
 		
 		GameRequirementModel req = new GameRequirementModel();
+		CurrentUserController.getInstance();
 		p.setRequirement(null, gm, req);
 
 		f.setVisible(true);

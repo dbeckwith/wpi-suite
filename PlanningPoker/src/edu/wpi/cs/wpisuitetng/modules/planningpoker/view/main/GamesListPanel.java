@@ -18,6 +18,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
@@ -26,41 +27,42 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * 
- * This panel shows a list of the currently available games, allowing access to them and showing simple status information about them.
- *
+ * This panel shows a list of the currently available games, allowing access to
+ * them and showing simple status information about them.
+ * 
  * @author Team 9
  * @version 1.0
  */
 public class GamesListPanel extends javax.swing.JPanel {
     
-	private static final long serialVersionUID = 4257983013648294131L;
-
-	/**
-	 * Creates a new GamesListPanel
-	 */
-	public GamesListPanel() {
-		initComponents();
-		gameTree.setCellRenderer(new GamesListTreeCellRenderer());
-		gameTree.setLargeModel(true);
-
-		GameListModel.getInstance().addListListener(new SimpleListObserver() {
-
-			@Override
-			public void listUpdated() {
-				updateTree();
-			}
-		});
-
-		GameListModel.getInstance().addStatusListener(new GameStatusObserver() {
-
-			@Override
-			public void statusChanged(GameModel game) {
-				updateTree();
-			}
-		});
-	}
-
-	private void updateTree() {
+    private static final long serialVersionUID = 4257983013648294131L;
+    
+    /**
+     * Creates a new GamesListPanel
+     */
+    public GamesListPanel() {
+        initComponents();
+        gameTree.setCellRenderer(new GamesListTreeCellRenderer());
+        gameTree.setLargeModel(true);
+        
+        GameListModel.getInstance().addListListener(new SimpleListObserver() {
+            
+            @Override
+            public void listUpdated() {
+                updateTree();
+            }
+        });
+        
+        GameListModel.getInstance().addStatusListener(new GameStatusObserver() {
+            
+            @Override
+            public void statusChanged(GameModel game) {
+                updateTree();
+            }
+        });
+    }
+    
+    private void updateTree() {
 
 		// save an array of games whose nodes were open before the update
 		final ArrayList<GameModel> expandedGames = new ArrayList<>();
@@ -112,8 +114,7 @@ public class GamesListPanel extends javax.swing.JPanel {
 					} else {
 						 if (GameListModel.getInstance().getGames().get(i).isStarted()
                                 || GameListModel.getInstance().getGames().get(i).getOwner()
-                                        .equals(ConfigManager.getConfig()
-                                                .getUserName()))
+                                        .equals(CurrentUserController.getInstance().getUser()))
                              pendingFolder.add(gameNode);
 					}
 					if (GameListModel.getInstance().getGames().get(i).getRequirements() != null) {
@@ -168,36 +169,36 @@ public class GamesListPanel extends javax.swing.JPanel {
 		}
 
 	}
-
-	private void initComponents() {
-
-		jScrollPane2 = new javax.swing.JScrollPane();
-		gameTree = new javax.swing.JTree();
-		gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
-		gameTree.setRootVisible(false);
-
-		jScrollPane2.setViewportView(gameTree);
-
-		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-						jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465,
-						Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-						jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320,
-						Short.MAX_VALUE));
-	}
-	
-	private javax.swing.JScrollPane jScrollPane2;
-	private javax.swing.JTree gameTree;
-
-	/**
-	 * Gets a reference to this panel's tree
-	 *
-	 * @return the tree
-	 */
+    
+    private void initComponents() {
+        
+        jScrollPane2 = new javax.swing.JScrollPane();
+        gameTree = new javax.swing.JTree();
+        gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
+        gameTree.setRootVisible(false);
+        
+        jScrollPane2.setViewportView(gameTree);
+        
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        setLayout(layout);
+        layout.setHorizontalGroup(layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+                jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465,
+                Short.MAX_VALUE));
+        layout.setVerticalGroup(layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+                jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320,
+                Short.MAX_VALUE));
+    }
+    
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTree gameTree;
+    
+    /**
+     * Gets a reference to this panel's tree
+     * 
+     * @return the tree
+     */
     public JTree getTree() {
         return gameTree;
     }

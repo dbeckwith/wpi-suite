@@ -58,7 +58,7 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-    private String owner;
+    private User owner;
     private DeckModel deck;
     private static int nextId = 0;
     
@@ -92,13 +92,13 @@ public class GameModel extends AbstractModel {
             List<GameRequirementModel> requirements, DeckModel deck, Date end,
             GameType type, GameStatus status) {
         this(name, description, requirements, deck, end, type, status,
-                ConfigManager.getConfig().getUserName());
+                CurrentUserController.getInstance().getUser());
     }
     
     
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
-            Date endDate, GameType type, GameStatus status, String owner) {
+            Date endDate, GameType type, GameStatus status, User owner) {
         this.id = nextId++;
         this.name = name;
         this.description = description;
@@ -133,7 +133,7 @@ public class GameModel extends AbstractModel {
     /**
      * @return the owner
      */
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
     

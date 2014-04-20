@@ -53,6 +53,7 @@ public class RequestThread extends Thread {
          */
         private void notifyController() {
             synchronized (controller) {
+                System.out.println("Got response");
                 controller.notifyAll();
                 controller.setTimedOut(false);
             }

@@ -90,7 +90,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
-        if (parent_game.getOwner().equals(CurrentUserController.USER_NAME)
+        if (parent_game.getOwner().equals(CurrentUserController.getInstance().getUser())
                 && req.getFinalEstimate() == 0) {
             finalEstimateField
                     .setText((int) (req.getEstimateMean() + 0.5) + "");
@@ -145,7 +145,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      * based on it.
      */
     private void checkDisplayFinal() {
-        displayFinalEstimateFields(ConfigManager.getConfig().getUserName()
+        displayFinalEstimateFields(CurrentUserController.getInstance().getUser()
                 .equals(parentModel.getOwner())
                 && !parentModel.isClosed());
     }
