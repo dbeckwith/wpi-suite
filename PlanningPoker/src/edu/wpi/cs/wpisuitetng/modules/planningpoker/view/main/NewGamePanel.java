@@ -170,62 +170,53 @@ public class NewGamePanel extends JPanel {
         
         newGameRequirementsCard = new JPanel();
         
-        errorLabel = new JLabel("ERRORS");
+        errorLabel = new JLabel("At least one requirement is needed");
         errorLabel.setForeground(Color.RED);
         
+        undoButton = new JButton("Undo Changes");
+        undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
+        undoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                //TODO add stuff here
+            }
+        });
+        
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(
-                                                                        saveButton)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        cancelButton)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        errorLabel,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        189,
-                                                                        Short.MAX_VALUE))
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        gameDescription,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        400,
-                                                                        Short.MAX_VALUE)
-                                                                .addGap(6)))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(newGameRequirementsCard,
-                                        GroupLayout.DEFAULT_SIZE, 707,
-                                        Short.MAX_VALUE)));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.TRAILING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addComponent(gameDescription,
-                                        GroupLayout.DEFAULT_SIZE, 384,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(saveButton)
-                                                .addComponent(cancelButton)
-                                                .addComponent(errorLabel))
-                                .addContainerGap())
-                .addComponent(newGameRequirementsCard, Alignment.LEADING,
-                        GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(saveButton)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(undoButton, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(cancelButton))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(6))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                    .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(errorLabel)
+                    .addGap(12)
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(saveButton)
+                        .addComponent(cancelButton)
+                        .addComponent(undoButton))
+                    .addContainerGap())
+                .addComponent(newGameRequirementsCard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+        );
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -518,4 +509,5 @@ public class NewGamePanel extends JPanel {
     private JScrollPane scrollPane;
     private JLabel errorLabel;
     private JLabel newReqErrorsLabel;
+    private JButton undoButton;
 }
