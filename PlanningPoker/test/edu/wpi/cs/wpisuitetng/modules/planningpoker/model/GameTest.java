@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -20,6 +21,7 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
+import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
@@ -59,11 +61,17 @@ public class GameTest {
 		GameModel testgame = new GameModel("Test Game", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() + 1000),
-				GameType.DISTRIBUTED, GameStatus.PENDING);
+				GameType.DISTRIBUTED, GameStatus.NEW);
 		GameModel created = new GameModel();
 		try {
             created = manager
                     .makeEntity(defaultSession, testgame.toJSON());
+            final List<Model> oldGameModels = db.retrieve(GameModel.class, "id", created.getID());
+            System.out.println(oldGameModels.size());
+            System.out.println("Hi" + oldGameModels.get(0));
+            created.startGame();
+            created = manager
+                    .update(defaultSession, created.toJSON());
         }
         catch (WPISuiteException e1) {
         }

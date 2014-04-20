@@ -41,7 +41,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     public GameEntityManager(Data db) {
         this.db = db;
-        NotificationServer.getInstance().start();
+        if(NotificationServer.getInstance().getState() == Thread.State.NEW){
+                NotificationServer.getInstance().start();
+        }
         instance = this;
     }
     
