@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -27,7 +24,12 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
-
+/**
+ * This class is an Entity Manager for storing GameModels on the server.
+ * 
+ * @author Team 9
+ * @version 1.0
+ */
 public class GameEntityManager implements EntityManager<GameModel> {
     
     private final Data db;
@@ -192,8 +194,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
          */
         final List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
                 updatedGameModel.getID(), s.getProject());
-        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) { throw new BadRequestException(
-                "GameModel with ID does not exist."); }
+        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) {
+            throw new BadRequestException("GameModel with ID does not exist.");
+            }
         
         final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         

@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -23,6 +20,11 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
 /**
+ * This class represents a planning poker game
+ * 
+ * @author Team 9
+ * @version 1.0
+ * 
  * Represents a planning poker game
  */
 public class GameModel extends AbstractModel implements Serializable {
@@ -74,6 +76,8 @@ public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * Default constructor creates instance with invalid id and null fields
+     * This constructor should generally not be used except for database
+     * queries.
      */
     public GameModel() {
         this(null, // name
@@ -87,7 +91,7 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
-     * Constructor
+     * Creates a new planning poker game.
      * 
      * @param name
      *        the game's name
@@ -149,6 +153,8 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
+     * Gets the name of this game.
+     *
      * @return the name of this game
      */
     public String getName() {
@@ -156,6 +162,7 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
+     * Sets the unique ID number of this game.
      * 
      * @param id
      *        the new ID number
@@ -174,6 +181,8 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
+     * Gets the name of the user who created this game.
+     * 
      * @return the owner
      */
     public String getOwner() {
@@ -193,7 +202,7 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
-     * Removes a GameStatusObserver from the list of status observer
+     * Removes a GameStatusObserver from the list of status observers
      * 
      * @param gso
      *        The GameStatusObserver to remove
@@ -216,6 +225,8 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
+     * Gets the list of requirements for this game.
+     * 
      * @return The Requirements for this game
      */
     public List<GameRequirementModel> getRequirements() {
@@ -235,6 +246,8 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
+     * Gets the deck that users can use to estimate requirements of this game.
+     * 
      * @return The deck for this game
      */
     public DeckModel getDeck() {
@@ -282,9 +295,13 @@ public class GameModel extends AbstractModel implements Serializable {
      * @return whether all users have voted on all requirements
      */
     public boolean checkVoted() {
-        if (requirements == null) { return false; }
+        if (requirements == null) {
+            return false;
+            }
         for (GameRequirementModel r : requirements) {
-            if (!r.allVoted()) { return false; }
+            if (!r.allVoted()) {
+                return false;
+                }
         }
         return true;
     }
@@ -312,7 +329,7 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
-     * sets the game status to closed so that no more edits can be made
+     * sets the game status to closed so that no more edits can be made.
      */
     public void closeGame() {
         status = GameStatus.CLOSED;
