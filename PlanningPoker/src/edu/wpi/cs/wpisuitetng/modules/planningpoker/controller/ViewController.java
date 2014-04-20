@@ -102,6 +102,7 @@ public class ViewController {
      */
     public void saveNewGame(NewGamePanel e) {
         DeckModel d = e.getDeck();
+        System.out.println(d);
         ArrayList<Double> newCards = new ArrayList<Double>();
         if (d.toString().equals("Generated deck")) {
             for (int i = 1; i <= e.getMaximumCardValue(); i++) {
@@ -111,6 +112,7 @@ public class ViewController {
             d = new DeckModel(d.toString(), newCards,
                     d.getAllowsMultipleSelection());
         }
+        System.out.println(d);
         
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(

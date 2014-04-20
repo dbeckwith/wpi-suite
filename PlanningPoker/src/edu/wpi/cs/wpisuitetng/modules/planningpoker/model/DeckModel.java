@@ -39,8 +39,9 @@ public class DeckModel extends AbstractModel {
 			boolean allowsMultipleSelection) {
 		this.name = name;
 		this.cards = cards;
+		isNone = (cards == null || cards.size() == 0);
+		
 		this.allowsMultipleSelection = allowsMultipleSelection;
-		this.isNone = false;
 	}
 
 	/**

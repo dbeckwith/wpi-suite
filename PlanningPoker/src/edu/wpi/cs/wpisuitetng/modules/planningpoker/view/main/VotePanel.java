@@ -78,12 +78,14 @@ public class VotePanel extends javax.swing.JPanel {
         this.req = req;
           
         boolean voted = false;
+        old = null;
         ArrayList<Integer> selectedCards = null;
         ArrayList<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
             	selectedCards = e.getCardsSelected();
                 voted = true;
+                old = e;
             }
         }
                 
@@ -94,20 +96,6 @@ public class VotePanel extends javax.swing.JPanel {
         
         setAllowMultipleCards(parentGame.getDeck().getAllowsMultipleSelection());
         System.out.println("multiple selection : "+parentGame.getDeck().getAllowsMultipleSelection());
-       
-               
-        old = null; // ensure it is erased
-        for (Estimate e : req.getEstimates()) {
-            System.out.println(e.getEstimate() + " from " + e.getUsername());
-            if (e.getUsername() != null && currentUser != null
-                    && e.getIdNum() == currentUser.getIdNum()
-                    && e.getName().equals(currentUser.getName())
-                    && e.getUsername().equals(currentUser.getUsername())) {
-                old = e;
-                break;
-            }
-        }
-        
 
         ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
@@ -124,8 +112,23 @@ public class VotePanel extends javax.swing.JPanel {
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
         	CardButton estimateInput = new CardButton();
-        	estimateInput.setPreferredSize(new Dimension(80, 120));
+        	
+            estimateInput.addActionListener(new ActionListener() {					
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					updateTotal();	
+					validateCards();
+				}
+			});
+            cards.add(estimateInput);
+            updateTotal();
+        	validateCards();
+        	estimateInput.setPreferredSize(new Dimension(120, 160));
         	estimateCardsPanel.add(estimateInput);
+        	
+        	if(voted && old != null){
+        		cards.get(0).setValue(old.getEstimate());
+        	}
         } else {
         	
             ArrayList<String> deck = new ArrayList<>();
@@ -139,7 +142,7 @@ public class VotePanel extends javax.swing.JPanel {
 	        estimateCardsPanel.removeAll();
 	        for (final String estimate : deck) {
 	            final CardButton estimateCard = new CardButton(estimate);
-	      
+	            
 	            cards.add(estimateCard);
 	            
 	            estimateCard.setPreferredSize(new Dimension(80, 120));
@@ -166,10 +169,11 @@ public class VotePanel extends javax.swing.JPanel {
 	        }
 	        
 	        if(voted){
-	        	for(Integer i:selectedCards){
+	        		for(Integer i:selectedCards){
 	        		cards.get(i).setCardSelected(true);
 	        	}        	
-	        }
+	        	
+        	}
 	        
         }
         
@@ -426,9 +430,13 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void validateCards() {
+    	
+    	if(parentGame.getDeck().isNone()){
+    		btnSubmit.setEnabled(true);
+    		return;
+    	}
+    	
         for (CardButton c : cards) {
-            
-            System.out.println(c.getEstimateValue() + " " + c.isCardSelected());
             if (c.isCardSelected()) {
                 btnSubmit.setEnabled(true);
                 return;
@@ -443,7 +451,7 @@ public class VotePanel extends javax.swing.JPanel {
     private void updateTotal(){
     	float total = 0;
     	for(CardButton card:cards){
-    		if(card.isCardSelected()){
+    		if(card.isCardSelected() || parentGame.getDeck().isNone()){
     			total += card.getEstimateValue();
     		}
     	}
