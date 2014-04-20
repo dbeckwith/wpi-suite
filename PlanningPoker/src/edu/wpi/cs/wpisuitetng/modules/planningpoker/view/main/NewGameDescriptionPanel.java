@@ -216,7 +216,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         
         for (int i = 0; i < decks.getSize(); i++) {
             DeckModel deck = decks.getElementAt(i);
-            if (deck.getName().equals(game.getDeck())) {
+            if (deck.getName().equals(game.getDeck().getName())) {
                 deckComboBox.setSelectedItem(deck);
             }
         }
