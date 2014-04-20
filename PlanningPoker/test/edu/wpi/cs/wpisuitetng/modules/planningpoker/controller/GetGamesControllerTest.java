@@ -28,87 +28,92 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the GetGamesController class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GetGamesControllerTest {
-	static GetGamesController instance;
-	static GameModel nullGame;
-	static GameModel game1;
-	static GameModel game2;
-	static GameModel game3;
-	static GameModel game4;
-	static GameListModel list;
-	static GameModel[] gamesToAdd;
-
-	@BeforeClass
-	static public void setUpBeforeClass() {
-		Network.initNetwork(new MockNetwork());
-		Network.getInstance().setDefaultNetworkConfiguration(
-				new NetworkConfiguration("http://localhost"));
-		GetGamesControllerTest.instance = GetGamesController.getInstance();
-		GetGamesControllerTest.nullGame = new GameModel();
-		GetGamesControllerTest.game1 = new GameModel("Test Game 1",
-				"Live Game that just ended", null, DeckListModel.getInstance()
-						.getDefaultDeck(), new Date(), GameType.LIVE,
-				GameStatus.COMPLETE);
-		GetGamesControllerTest.game2 = new GameModel("Test Game 2",
-				"Distributed Game that will end in 5 seconds", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
-						System.currentTimeMillis() + 5000),
-				GameType.DISTRIBUTED, GameStatus.PENDING);
-		GetGamesControllerTest.game3 = new GameModel(
-				"Test Game 3",
-				"Live Game with end time in 10 seconds, but already manually ended",
-				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
-						System.currentTimeMillis() + 10000), GameType.LIVE,
-				GameStatus.COMPLETE);
-		GetGamesControllerTest.game4 = new GameModel(
-				"Test Game 4",
-				"Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
-						System.currentTimeMillis() - 10000),
-				GameType.DISTRIBUTED, GameStatus.PENDING);
-		GetGamesControllerTest.list = GameListModel.getInstance();
-		GetGamesControllerTest.gamesToAdd = new GameModel[] {
-				GetGamesControllerTest.game1, GetGamesControllerTest.game2,
-				GetGamesControllerTest.game3, GetGamesControllerTest.game4 };
-		list.removeObservers();
-		list.removeStatusObservers();
-	}
-
-	@Test
-	public void testGetInstance() {
-		Assert.assertEquals(
-				"A new instance is not the same as the previous instance",
-				GetGamesControllerTest.instance,
-				GetGamesController.getInstance());
-	}
-
-	@Test
-	public void testReceivedGames() {
-		GetGamesControllerTest.instance.receivedGames(new GameModel[] {
-				GetGamesControllerTest.game1, GetGamesControllerTest.game2,
-				GetGamesControllerTest.game3, GetGamesControllerTest.game4 });
-		Assert.assertTrue(GameListModel.getInstance().getGames()
-				.contains(GetGamesControllerTest.game1));
-		Assert.assertTrue(GameListModel.getInstance().getGames()
-				.contains(GetGamesControllerTest.game2));
-		Assert.assertTrue(GameListModel.getInstance().getGames()
-				.contains(GetGamesControllerTest.game3));
-		Assert.assertTrue(GameListModel.getInstance().getGames()
-				.contains(GetGamesControllerTest.game4));
-	}
-
-	@Test
-	public void testRetrieveGames() {
-		GetGamesController.getInstance().retrieveGames();
-		MockRequest request = ((MockNetwork) Network.getInstance())
-				.getLastRequestMade();
-		if (request == null) {
-			Assert.fail("request not sent");
-		}
-		Assert.assertTrue(request.isSent());
-	}
+    static GetGamesController instance = GetGamesController.getInstance();
+    static GameModel nullGame = new GameModel();
+    static GameModel game1 = new GameModel("Test Game 1",
+            "Live Game that just ended", null, DeckListModel.getInstance()
+            .getDefaultDeck(), new Date(), GameType.LIVE,
+            GameStatus.COMPLETE);
+    static GameModel game2 = new GameModel("Test Game 2",
+            "Distributed Game that will end in 5 seconds", null, DeckListModel
+            .getInstance().getDefaultDeck(), new Date(
+                    System.currentTimeMillis() + 5000), GameType.DISTRIBUTED,
+                    GameStatus.PENDING);
+    static GameModel game3 = new GameModel(
+            "Test Game 3",
+            "Live Game with end time in 10 seconds, but already manually ended",
+            null, DeckListModel.getInstance().getDefaultDeck(), new Date(System
+                    .currentTimeMillis() + 10000), GameType.LIVE,
+                    GameStatus.COMPLETE);
+    static GameModel game4 = new GameModel(
+            "Test Game 4",
+            "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
+            null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                    System.currentTimeMillis() - 10000),
+                    GameType.DISTRIBUTED, GameStatus.PENDING);
+    static GameListModel list = GameListModel.getInstance();
+    static GameModel[] gamesToAdd = new GameModel[] {
+        GetGamesControllerTest.game1, GetGamesControllerTest.game2,
+        GetGamesControllerTest.game3, GetGamesControllerTest.game4 };
+    
+    /**
+     * Initiates the mock network and removes status observers from the game list
+     */
+    @BeforeClass
+    static public void prepare() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://localhost"));
+        list.removeObservers();
+        list.removeStatusObservers();
+    }
+    
+    /**
+     * Tests that getInstance returns the same instance
+     */
+    @Test
+    public void testGetInstance() {
+        Assert.assertEquals(
+                "A new instance is not the same as the previous instance",
+                GetGamesControllerTest.instance,
+                GetGamesController.getInstance());
+    }
+    
+    /**
+     * Tests that GameListModel is correctly populated after receiving games
+     */
+    @Test
+    public void testReceivedGames() {
+        GetGamesControllerTest.instance.receivedGames(new GameModel[] {
+                GetGamesControllerTest.game1, GetGamesControllerTest.game2,
+                GetGamesControllerTest.game3, GetGamesControllerTest.game4 });
+        Assert.assertTrue(GameListModel.getInstance().getGames()
+                .contains(GetGamesControllerTest.game1));
+        Assert.assertTrue(GameListModel.getInstance().getGames()
+                .contains(GetGamesControllerTest.game2));
+        Assert.assertTrue(GameListModel.getInstance().getGames()
+                .contains(GetGamesControllerTest.game3));
+        Assert.assertTrue(GameListModel.getInstance().getGames()
+                .contains(GetGamesControllerTest.game4));
+    }
+    
+    /**
+     * Tests that retrieveGames makes a network request
+     */
+    @Test
+    public void testRetrieveGames() {
+        GetGamesController.getInstance().retrieveGames();
+        final MockRequest request = ((MockNetwork) Network.getInstance())
+                .getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
+    }
 }
