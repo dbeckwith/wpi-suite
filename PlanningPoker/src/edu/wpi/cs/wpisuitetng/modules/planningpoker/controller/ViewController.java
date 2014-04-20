@@ -28,6 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 
 /**
  * This controller is used to control GUI display
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -64,15 +65,15 @@ public class ViewController {
         mainView.addTab("New Game", editGame);
         mainView.setSelectedComponent(editGame);
         
-        mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
-                new ClosableTabComponent(mainView) {
-                    private static final long serialVersionUID = 7088866301855075603L;
-                    
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        cancelNewGame(editGame);
-                    }
-                });
+        mainView.setTabComponentAt(mainView.indexOfComponent(editGame), new ClosableTabComponent(
+                mainView) {
+            private static final long serialVersionUID = 7088866301855075603L;
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelNewGame(editGame);
+            }
+        });
         
     }
     
@@ -84,16 +85,15 @@ public class ViewController {
         mainView.addTab("Preferences", prefsPanel);
         mainView.setSelectedComponent(prefsPanel);
         
-        mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
-                new ClosableTabComponent(mainView) {
-                    private static final long serialVersionUID = 3668078500346186662L;
-                    
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mainView.removeTabAt(mainView
-                                .indexOfComponent(prefsPanel));
-                    }
-                });
+        mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel), new ClosableTabComponent(
+                mainView) {
+            private static final long serialVersionUID = 3668078500346186662L;
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainView.removeTabAt(mainView.indexOfComponent(prefsPanel));
+            }
+        });
     }
     
     /**
@@ -110,16 +110,13 @@ public class ViewController {
                 newCards.add((double) i);
             }
             
-            d = new DeckModel(d.toString(), newCards,
-                    d.canAllowsMultipleSelection());
+            d = new DeckModel(d.toString(), newCards, d.canAllowsMultipleSelection());
         }
         
-        final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), new DeckModel(
-                        d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
-                        .getUserName());
+        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
+                e.getRequirements(), new DeckModel(d.toString(), d.getCards(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(), e.getGameType(),
+                GameStatus.NEW, ConfigManager.getConfig().getUserName());
         
         AddGameController.getInstance().addGame(newGame);
         EmailController.getInstance().sendGameStartNotifications(newGame);
@@ -140,12 +137,10 @@ public class ViewController {
      */
     public void updateGame(GameModel game, NewGamePanel e) {
         final DeckModel d = e.getDeck();
-        final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), new DeckModel(
-                        d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
-                        .getUserName());
+        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
+                e.getRequirements(), new DeckModel(d.toString(), d.getCards(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(), e.getGameType(),
+                GameStatus.NEW, ConfigManager.getConfig().getUserName());
         game.editCopyFrom(newGame);
         UpdateGamesController.getInstance().updateGame(game);
         RequirementsListModel.getInstance().removeListListener(
@@ -165,8 +160,7 @@ public class ViewController {
                 JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             RequirementsListModel.getInstance().removeListListener(
-                    e.getNewGameRequirementsPanel()
-                            .getRequirementsListObserver());
+                    e.getNewGameRequirementsPanel().getRequirementsListObserver());
             mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
@@ -185,8 +179,7 @@ public class ViewController {
                         "Cancel Edit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             RequirementsListModel.getInstance().removeListListener(
-                    e.getNewGameRequirementsPanel()
-                            .getRequirementsListObserver());
+                    e.getNewGameRequirementsPanel().getRequirementsListObserver());
             mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
@@ -220,10 +213,8 @@ public class ViewController {
      *        the currently displayed game
      */
     public void displayAdmin(GameModel game) {
-        if (game != null
-                && game.getOwner().equals(
-                        ConfigManager.getConfig().getUserName())
-                && !game.isClosed()) {
+        if (game != null && game.getOwner().equals(ConfigManager.getConfig().getUserName())
+                && !game.isClosed() && mainView.getSelectedIndex() == 0) {
             toolbar.setAdminVisibility(true);
             toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);
             if (game.getStatus() == GameStatus.COMPLETE) {
@@ -248,6 +239,7 @@ public class ViewController {
      *        the tab now being displayed.
      */
     public void tabChanged(int index) {
+        
         if (showAdmin && index == 0) {
             toolbar.setAdminVisibility(true);
         }
@@ -286,15 +278,15 @@ public class ViewController {
         mainView.addTab("Edit " + current.getName(), editGame);
         mainView.setSelectedComponent(editGame);
         
-        mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
-                new ClosableTabComponent(mainView) {
-                    private static final long serialVersionUID = 7088866301855075603L;
-                    
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        cancelEditGame(editGame);
-                    }
-                });
+        mainView.setTabComponentAt(mainView.indexOfComponent(editGame), new ClosableTabComponent(
+                mainView) {
+            private static final long serialVersionUID = 7088866301855075603L;
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelEditGame(editGame);
+            }
+        });
     }
     
     /**
