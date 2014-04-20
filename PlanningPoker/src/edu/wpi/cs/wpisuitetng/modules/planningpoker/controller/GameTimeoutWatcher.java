@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * dbeckwith
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -20,9 +17,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 /**
  * The purpose of this class is to schedule tasks in the future for checking
  * games to see if they have passed their end date.
- * 
- * @author dbeckwith
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameTimeoutWatcher {
     
@@ -53,6 +49,7 @@ public class GameTimeoutWatcher {
      * Adds a game to be watched for completion at its end date.
      * 
      * @param game
+     *        the game to be watched
      */
     public void watchGame(GameModel game) {
         if (game.getEndTime() != null) {
@@ -68,6 +65,7 @@ public class GameTimeoutWatcher {
      * Stop watching a game and forget about it.
      * 
      * @param game
+     *        the game to be stopped watching
      */
     public void stopWatchingGame(GameModel game) {
         // look for the task that is watching the given game

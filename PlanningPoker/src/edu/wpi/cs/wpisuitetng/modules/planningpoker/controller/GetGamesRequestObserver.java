@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Brett Ammeson
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -16,10 +13,10 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
- * This handles all requests for games
- * 
- * @author Brett Ammeson
- * 
+ * This observer is called when a response is received from a request
+ * to the server to get games.
+ * @author Team 9
+ * @version 1.0
  */
 public class GetGamesRequestObserver implements RequestObserver {
     
@@ -29,7 +26,7 @@ public class GetGamesRequestObserver implements RequestObserver {
      * Constructs the observer given a GetGamesController
      * 
      * @param controller
-     *            the controller used to retrieve games
+     *        the controller used to retrieve games
      */
     public GetGamesRequestObserver(GetGamesController controller) {
         this.controller = controller;
@@ -37,6 +34,7 @@ public class GetGamesRequestObserver implements RequestObserver {
     
     /**
      * Parse the games out of the response body and pass them to the controller
+     * when a response is received with a success (2xx) status code.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
@@ -51,6 +49,10 @@ public class GetGamesRequestObserver implements RequestObserver {
     }
     
     /**
+     * Reports an error when a response is received with an client error (4xx)
+     * or
+     * server error (5xx) status code.
+     * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
@@ -59,7 +61,8 @@ public class GetGamesRequestObserver implements RequestObserver {
     }
     
     /**
-     * Put an error games in the PostBoardPanel if the request fails.
+     * Put an error games in the PostBoardPanel if an attempt to make a request
+     * fails.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest,
      *      java.lang.Exception)

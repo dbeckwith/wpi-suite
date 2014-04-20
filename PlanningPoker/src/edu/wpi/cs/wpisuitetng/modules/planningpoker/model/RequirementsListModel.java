@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -17,12 +14,15 @@ import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
+/**
+ * A list model for keeping track of all of the requirements in the database.
+ * 
+ * @author Team 9
+ * @version 1.0
+ */
 public class RequirementsListModel extends
         AbstractListModel<GameRequirementModel> {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = -972873964063134055L;
     
     private static RequirementsListModel instance = null;
@@ -63,8 +63,9 @@ public class RequirementsListModel extends
     
     /**
      * Removes a SimpleListObserver from the list of SimpleListObservers
-     *
-     * @param slo The SimpleListObserver to be removed
+     * 
+     * @param slo
+     *            The SimpleListObserver to be removed
      */
     public void removeListListener(SimpleListObserver slo) {
         if (observers.contains(slo)) {
@@ -74,14 +75,16 @@ public class RequirementsListModel extends
     
     /**
      * Returns the list of SimpleListObservers
-     *
+     * 
      * @return ArrayList of SimpleListObservers
      */
     public ArrayList<SimpleListObserver> getObservers() {
         return observers;
     }
     
-    
+    /**
+     * Notifies all of the list observers that the list has changed.
+     */
     private void updated() {
         for (SimpleListObserver observer : observers) {
             observer.listUpdated();
@@ -89,7 +92,12 @@ public class RequirementsListModel extends
     }
     
     /**
-     * @param reqs The array of GameRequirementModels
+     * Sets the list of requirements to the given list. The purpose of this
+     * method is to be able to clear the list and add a number of requirements
+     * while only triggering one list updated event.
+     * 
+     * @param reqs
+     *            The array of GameRequirementModels
      */
     public void setRequirements(GameRequirementModel[] reqs) {
         requirements.clear();
@@ -100,8 +108,10 @@ public class RequirementsListModel extends
     }
     
     /**
-     * Adds a requirement to the list of requirements
-     * @param req The GameRequirementModel to add
+     * Adds a requirement to the list of requirements.
+     * 
+     * @param req
+     *            The GameRequirementModel to add
      */
     public void addRequirement(GameRequirementModel req) {
         requirements.add(req);
@@ -109,8 +119,12 @@ public class RequirementsListModel extends
     }
     
     /**
-     * Adds multiple requirements to the list of requirements
-     * @param reqs The array of GameRequirementModels to add
+     * Adds multiple requirements to the list of requirements. The purpose of
+     * this method is to be able to add a number of requirements to the list
+     * model and only trigger one list changed event.
+     * 
+     * @param reqs
+     *            The array of GameRequirementModels to add
      */
     public void addMultipleRequirements(GameRequirementModel[] reqs) {
         for (GameRequirementModel req : reqs) {
@@ -121,7 +135,9 @@ public class RequirementsListModel extends
     
     /**
      * Removes a requirement from the list of requirements
-     * @param req The GameRequirementModel to remove
+     * 
+     * @param req
+     *            The GameRequirementModel to remove
      */
     public void removeRequirement(GameRequirementModel req) {
         requirements.remove(req);
@@ -137,6 +153,7 @@ public class RequirementsListModel extends
     }
     
     /**
+     * Gets the full list of current requirements.
      * @return The list of requirements
      */
     public ArrayList<GameRequirementModel> getAll() {
