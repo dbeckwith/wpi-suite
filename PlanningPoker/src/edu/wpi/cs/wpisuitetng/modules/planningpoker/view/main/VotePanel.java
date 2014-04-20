@@ -244,8 +244,6 @@ public class VotePanel extends javax.swing.JPanel {
         
         final JScrollPane scrollPane = new JScrollPane();
         final JScrollPane estimateScrollPane = new JScrollPane();
-        estimateScrollPane
-                .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         //JScrollPane scrollPane_1 = new JScrollPane();
         
