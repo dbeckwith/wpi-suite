@@ -234,7 +234,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         saveFinalEstimateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 lblError.setVisible(false);
-                if (req.getFinalEstimate() != 0) {
+                if (req.getFinalEstimate() != 0
+                        && !req.getEstimateNote().startsWith("Manual change: \n")) {
                     req.setEstimateNote("Manual change: \n" + notePane.getText());
                 } else {
                     req.setEstimateNote(notePane.getText());
