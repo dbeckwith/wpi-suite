@@ -37,9 +37,9 @@ public class GetDecksRequestObserver implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        DeckModel decks[] = DeckModel.fromJSONArray(iReq.getResponse()
+        final DeckModel[] decks = DeckModel.fromJSONArray(iReq.getResponse()
                 .getBody());
-        controller.receivedDecks(decks);
+        GetDecksController.receivedDecks(decks);
     }
     
     /**

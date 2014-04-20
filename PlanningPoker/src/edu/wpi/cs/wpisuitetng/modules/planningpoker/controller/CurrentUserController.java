@@ -68,8 +68,9 @@ public class CurrentUserController extends AbstractUserController {
      */
     public User findUser(String name) {
         for (User u : getUsers()) {
-            if (u.getUsername().equals(name))
+            if (u.getUsername().equals(name)){
                 return u;
+            }
         }
         return null;
     }
