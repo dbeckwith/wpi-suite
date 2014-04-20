@@ -5,19 +5,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
+
+
 /**
- * This handles updating of games
- * TODO @author Brett Ammeson
- *
+ * This observer is called when a response is received from a request
+ * to the server to update games.
+ * @author Team 9
+ * @version 1.0
  */
 public class UpdateGamesRequestObserver implements RequestObserver {
     
@@ -27,7 +27,7 @@ public class UpdateGamesRequestObserver implements RequestObserver {
      * Constructs the observer given an UpdateGamesController
      * 
      * @param controller
-     *            the controller used to add games
+     *        the controller used to add games
      */
     public UpdateGamesRequestObserver(UpdateGamesController controller) {
         this.controller = controller;
@@ -35,7 +35,7 @@ public class UpdateGamesRequestObserver implements RequestObserver {
     
     /**
      * Parse the game that was received from the server then pass them to the
-     * controller.
+     * controller when a response is received with a success (2xx) status code.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
@@ -49,11 +49,11 @@ public class UpdateGamesRequestObserver implements RequestObserver {
     }
     
     /**
-     * Takes an action if the response results in an error. Specifically,
-     * outputs that the request failed.
+     * Reports an error when a response is received with an client error (4xx)
+     * or server error (5xx) status code.
      * 
      * @param iReq
-     *            IRequest
+     *        IRequest
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest)
      */
@@ -64,13 +64,12 @@ public class UpdateGamesRequestObserver implements RequestObserver {
     }
     
     /**
-     * Takes an action if the response fails. Specifically, outputs that the
-     * request failed.
+     * Report an error if an attempt to make a request fails.
      * 
      * @param iReq
-     *            IRequest
+     *        IRequest
      * @param exception
-     *            Exception
+     *        Exception
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest,
      *      Exception)

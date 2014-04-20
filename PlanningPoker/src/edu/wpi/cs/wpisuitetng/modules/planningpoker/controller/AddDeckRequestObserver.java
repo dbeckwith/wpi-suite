@@ -1,33 +1,39 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
+ * Copyright (c) 2013 -- WPI Suite
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
- * 
+ * This observer is called when a response is received from a request
+ * to the server to add a deck.
+ * @author Team 9
+ * @version 1.0
  */
 public class AddDeckRequestObserver implements RequestObserver {
     private AddDeckController controller;
     
     /**
-     * Creates a request observer for new decks
+     * Construct an observer for an AddDeckRequestController
      * 
      * @param controller
+     *        the controller that the observer serves
      */
     public AddDeckRequestObserver(AddDeckController controller) {
         setController(controller);
     }
     
+    
     /**
-     * Parse the deck that was received from the server
+     * Parse the deck when a response is received with a success (2xx) status
+     * code.
      */
     @Override
     public void responseSuccess(IRequest iReq) {
@@ -36,7 +42,8 @@ public class AddDeckRequestObserver implements RequestObserver {
     }
     
     /**
-     * Prints an error if addition unsuccessful
+     * Prints an error when a response is received with an client error (4xx) or
+     * server error (5xx) status code.
      */
     @Override
     public void responseError(IRequest iReq) {
@@ -44,7 +51,7 @@ public class AddDeckRequestObserver implements RequestObserver {
     }
     
     /**
-     * If addition fails
+     * Prints an error if an attempt to make a request fails.
      */
     @Override
     public void fail(IRequest iReq, Exception e) {
@@ -52,18 +59,19 @@ public class AddDeckRequestObserver implements RequestObserver {
     }
     
     /**
-     * Gets add deck controller
+     * Gets AddDeckController
      * 
-     * @return
+     * @return AddDeckController served by this observer
      */
     public AddDeckController getController() {
         return controller;
     }
     
     /**
-     * Sets add deck controller
+     * Sets AddDeckController
      * 
      * @param c
+     *        AddDeckController to be set
      */
     public void setController(AddDeckController c) {
         controller = c;

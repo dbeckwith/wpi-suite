@@ -44,6 +44,8 @@ public class GameRequirementModel extends AbstractModel {
     
     private boolean isFromRequirementManager;
     
+    private String estimateNote;
+    
     /**
      * A unique id for this instance of the requirement
      */
@@ -336,6 +338,14 @@ public class GameRequirementModel extends AbstractModel {
      */
     public void updateParentEstimate() {
         // TODO: Drew, implement this
+    }
+
+    public String getEstimateNote() {
+        return estimateNote;
+    }
+    
+    public void setEstimateNote(String estimateNote) {
+        this.estimateNote = estimateNote;
     }
     
     

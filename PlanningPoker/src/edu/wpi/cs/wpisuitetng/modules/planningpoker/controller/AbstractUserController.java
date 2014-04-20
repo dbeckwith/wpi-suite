@@ -5,8 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Sam Carlberg
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -15,8 +13,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 /**
  * An abstract class for classes requesting users from the server.
  * 
- * @author Sam Carlberg
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public abstract class AbstractUserController {
     
@@ -37,13 +35,15 @@ public abstract class AbstractUserController {
      */
     private User[] users = null;
     
+    /**
+     * constructor for AbstractUserController
+     */
     protected AbstractUserController() {
         observer = new UserRequestObserver(this);
     }
     
     /**
      * Called when the UserRequestObserver for this controller receives users
-     * from the server.
      * 
      * @param users
      *        an array of users on the server. May be null.
@@ -53,7 +53,6 @@ public abstract class AbstractUserController {
     /**
      * Requests query of all users related to the project.
      * 
-     * @see AbstractUserController#receivedUsers(User[])
      */
     public void requestUsers() {
         synchronized (this) {
@@ -71,6 +70,10 @@ public abstract class AbstractUserController {
     
     /**
      * Set the array of users in the current project.
+     * 
+     * @param users
+     *        an array of users in the current project.
+     * 
      */
     public void setUsers(User[] users) {
         this.users = users;
@@ -78,6 +81,8 @@ public abstract class AbstractUserController {
     
     /**
      * Gets the array of users in the current project.
+     * 
+     * @return an array of users in the curren project.
      */
     public User[] getUsers() {
         return users;
@@ -85,6 +90,8 @@ public abstract class AbstractUserController {
     
     /**
      * For testing only.
+     * 
+     * @return timeOut value
      */
     protected boolean requestTimedOut() {
         return timedOut;
@@ -97,11 +104,25 @@ public abstract class AbstractUserController {
         this.timedOut = timedOut;
     }
     
+    
+    /**
+     * Set timeout value for user request
+     * 
+     * @param timeout
+     *        a variable to hold timeout value
+     */
     public void setTimeout(long timeout) {
         if (timeout < 0)
             throw new IllegalArgumentException("Timeout must be >= 0");
         else
             this.timeout = timeout;
+    }
+    
+    /**
+     * @return timeout the request timeout
+     */
+    public long getTimeout() {
+        return this.timeout;
     }
     
 }

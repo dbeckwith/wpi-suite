@@ -1,5 +1,3 @@
-// $codepro.audit.disable
-// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
  * 
@@ -7,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Sam Carlberg
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -17,11 +12,10 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
- * A class for getting the User object associated with the user currently logged
- * into Janeway.
+ * This controller responds to request currently logged-in user from the server.
  * 
- * @author Sam Carlberg
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class CurrentUserController extends AbstractUserController {
     
@@ -33,9 +27,9 @@ public class CurrentUserController extends AbstractUserController {
     private static CurrentUserController Instance = null;
     
     /**
-     * Gets the instance of the controller.
+     * Gets the instance of the CurrentUserController.
      * 
-     * @return the instance of the controller.
+     * @return the instance of the CurrentUserController.
      */
     public static CurrentUserController getInstance() {
         if (Instance == null) {
@@ -53,11 +47,6 @@ public class CurrentUserController extends AbstractUserController {
     }
     
     @Override
-    /**
-     * {@inheritdoc}
-     * <p>
-     * This overwrites any users previously received.
-     */
     public void receivedUsers(User[] users) {
         if (users != null) {
             setUsers(users);
@@ -86,7 +75,7 @@ public class CurrentUserController extends AbstractUserController {
     }
     
     /**
-     * Gets the currently logged in user.
+     * Gets the currently logged-in user.
      */
     public User getUser() {
         return user;

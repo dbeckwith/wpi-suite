@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Brett Ammeson
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -16,26 +13,28 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
- * This handles all game creation requests
+ * This observer is called when a response is received from a request
+ * to the server to add a game.
  * 
- * @author Brett Ammeson
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class AddGameRequestObserver implements RequestObserver {
     private AddGameController controller;
     
     /**
-     * Constructs the observer given an AddRequirementController
+     * Constructs the observer for an AddRequirementController
      * 
      * @param controller
-     *            the controller used to add requirements
+     *        the controller used to add requirements
      */
     public AddGameRequestObserver(AddGameController controller) {
         setController(controller);
     }
     
     /**
-     * Parse the requirement that was received from the server then pass them to
+     * Parse the requirement when a response is received with a success (2xx)
+     * status code. Then pass them to
      * the controller.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
@@ -50,11 +49,11 @@ public class AddGameRequestObserver implements RequestObserver {
     }
     
     /**
-     * Takes an action if the response results in an error. Specifically,
-     * outputs that the request failed.
+     * Report error when a response is received with an client error (4xx) or
+     * server error (5xx) status code.
      * 
      * @param iReq
-     *            IRequest
+     *        IRequest
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest)
      */
@@ -64,13 +63,12 @@ public class AddGameRequestObserver implements RequestObserver {
     }
     
     /**
-     * Takes an action if the response fails. Specifically, outputs that the
-     * request failed.
+     * Report error Takes an action if an attempt to make a request fails.
      * 
      * @param iReq
-     *            IRequest
+     *        IRequest
      * @param exception
-     *            Exception
+     *        Exception
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest,
      *      Exception)
@@ -81,15 +79,19 @@ public class AddGameRequestObserver implements RequestObserver {
     }
     
     /**
-     * @return the controller
+     * Gets AddGameController
+     * 
+     * @return the controller served by this observer
      */
     public AddGameController getController() {
         return controller;
     }
     
     /**
+     * Sets AddGameController
+     * 
      * @param controller
-     *            the controller to set
+     *        the controller to be set
      */
     public void setController(AddGameController controller) {
         this.controller = controller;

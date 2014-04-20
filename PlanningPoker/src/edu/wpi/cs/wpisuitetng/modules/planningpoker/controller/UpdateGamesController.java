@@ -5,11 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Brett Ammeson
  ******************************************************************************/
-
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -20,9 +16,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Controller for updating games
- * 
- * @author Brett Ammeson
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class UpdateGamesController {
     
@@ -37,9 +32,10 @@ public class UpdateGamesController {
     }
     
     /**
+     * Get the instance of the UpdateGamesController or creates one if it
+     * does not exist.
      * 
-     * @return the instance of the UpdateGamesController or creates one if it
-     *         does not exist.
+     * @return the instance of the UpdateGamesController
      */
     public static UpdateGamesController getInstance() {
         if (UpdateGamesController.instance == null) {
@@ -53,7 +49,7 @@ public class UpdateGamesController {
      * This method updates a game on the server.
      * 
      * @param newGame
-     *            is the game to be updated on the server.
+     *        is the game to be updated on the server.
      */
     public void updateGame(GameModel newGame) {
         final Request request = Network.getInstance().makeRequest(

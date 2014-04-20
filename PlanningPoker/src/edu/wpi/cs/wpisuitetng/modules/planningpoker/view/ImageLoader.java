@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
@@ -22,7 +19,8 @@ import javax.swing.ImageIcon;
  * Loads images given the file name keeping track of loaded images so that they
  * don't need to be loaded multiple times.
  * 
- * @author Akshay
+ * @author Team 9
+ * @version 1.0
  * 
  */
 public class ImageLoader {
@@ -39,6 +37,7 @@ public class ImageLoader {
      * Returns a BufferedImage loaded from a file
      * 
      * @param file
+     *        the name of the file to load from the resources folder
      * @return The BufferedImage from file
      */
     public static BufferedImage getImage(String file) {
@@ -67,7 +66,7 @@ public class ImageLoader {
      * Returns an ImageIcon loaded from a file
      * 
      * @param file
-     *            the file to load from
+     *        the name of the file to load from the resources folder
      * @return The ImageIcon from file
      */
     public static ImageIcon getIcon(String file) {
