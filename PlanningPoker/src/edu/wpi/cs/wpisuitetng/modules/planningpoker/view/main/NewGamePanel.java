@@ -133,7 +133,7 @@ public class NewGamePanel extends JPanel {
         setData(game);
         check();
         checkNewRequirement();
-        
+        undoButton.setEnabled(false);
     }
     
     public void setData (GameModel g){
