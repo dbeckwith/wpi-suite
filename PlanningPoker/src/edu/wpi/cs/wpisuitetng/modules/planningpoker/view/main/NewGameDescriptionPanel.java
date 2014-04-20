@@ -225,6 +225,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             selectDeadline.setSelected(true);
             datePicker.setDate(game.getEndTime());
             timeSpinner.setValue(game.getEndTime());
+        }else {
+            selectDeadline.setSelected(false);
+            datePicker.setDate(getDefaultDate());
+            timeSpinner.setValue(getDefaultDate());
         }
         
     }
