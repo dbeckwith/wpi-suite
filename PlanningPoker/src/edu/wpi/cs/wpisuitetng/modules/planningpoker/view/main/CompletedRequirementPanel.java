@@ -197,6 +197,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         finalEstimateField = new JTextField();
         finalEstimateField.setColumns(10);
+        finalEstimateField.setBackground(Color.WHITE);
+        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         saveFinalEstimateButton = new JButton("Save");
         saveFinalEstimateButton.setEnabled(false);
         saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
