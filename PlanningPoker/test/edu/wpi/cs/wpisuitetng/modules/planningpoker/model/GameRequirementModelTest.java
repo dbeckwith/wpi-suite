@@ -110,4 +110,36 @@ public class GameRequirementModelTest {
         
     }
     
+    @Test
+    public void testUpdateEstimate(){
+        final GameRequirementModel grm = new GameRequirementModel(-1,
+                "A requirement", "A Description", "A type");
+        Estimate old = new Estimate(new User("Bob", "Bob", "password", 0), 25, null);
+        Estimate updated = new Estimate(new User("Bob", "Bob", "password", 0), 5, null);
+        grm.addEstimate(old);
+        grm.UpdateEstimate(old, updated);
+        
+        Assert.assertTrue(grm.getEstimates().contains(updated));
+        Assert.assertFalse(grm.getEstimates().contains(old));
+        
+    }
+    
+   //@Test
+    public void testAllVoted(){
+        final GameRequirementModel grm = new GameRequirementModel(-1,
+                "A requirement", "A Description", "A type");
+        grm.addEstimate(new Estimate(new User("User", "Username", "Password", 1), 25, null));
+        grm.addEstimate(new Estimate(new User("B", "B", "password", 3), 20, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
+        
+       //  CurrentUserController cuc = CurrentUserController.getInstance();
+        User e = new User("User", "Username", "Password", 6);
+        User a = new User("Bob", "Bob", "password", 5);
+        User b = new User("B", "B", "password", 4);
+        User[] users = {e, a,b};
+       // cuc.receivedUsers(users);
+          
+        Assert.assertTrue(grm.allVoted()); 
+    }
+    
 }

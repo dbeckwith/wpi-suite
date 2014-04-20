@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * 
- * @author Andrew
+ * @author Andrew, Shan
  * 
  */
 public class GameModelTest {
@@ -34,6 +34,9 @@ public class GameModelTest {
     GameModel game2;
     GameModel game3;
     GameModel game4;
+    GameModel game5;
+    GameModel game6;
+    
     ArrayList<GameRequirementModel> reqs;
     
     @Before
@@ -53,7 +56,7 @@ public class GameModelTest {
                 "Distributed Game that will end in 5 seconds", reqs,
                 DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() + 5000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                GameType.DISTRIBUTED, GameStatus.COMPLETE);
         game3 = new GameModel(
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
@@ -66,6 +69,16 @@ public class GameModelTest {
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() - 10000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
+        game5 = new GameModel(
+                "Test Game 5",
+                "New Live Game with end time in 10 seconds, but already manually ended",
+                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() + 10000), GameType.LIVE, GameStatus.NEW);
+        game6 = new GameModel(
+                "Test Game 6",
+                "New Live Game with end time in 10 seconds, but already manually ended",
+                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() + 10000), GameType.LIVE, GameStatus.NEW);
     }
     
     @Test
@@ -80,7 +93,7 @@ public class GameModelTest {
     
    // @Test
     public void testIsEnded() {
-        Assert.assertTrue(game1.isEnded());
+       Assert.assertTrue(game1.isEnded());
         Assert.assertFalse(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
         Assert.assertTrue(game4.isEnded());
@@ -107,4 +120,21 @@ public class GameModelTest {
         Assert.assertFalse(game3.isClosed());
         Assert.assertFalse(game4.isClosed());
     }
+    
+    @Test
+    public void testStartGame(){
+    	game5.startGame();
+    	Assert.assertTrue(game1.isStarted());
+    	Assert.assertTrue(game2.isStarted());
+    	Assert.assertTrue(game3.isStarted());
+    	Assert.assertTrue(game4.isStarted());
+    	Assert.assertTrue(game5.isStarted());
+    	Assert.assertFalse(game6.isStarted());
+    }
+    
+    public void testCheckVoted(){
+    	
+    }
+    
+    
 }
