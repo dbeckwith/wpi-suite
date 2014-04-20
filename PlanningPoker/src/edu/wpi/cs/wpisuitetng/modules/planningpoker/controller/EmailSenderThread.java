@@ -5,8 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Sam Carlberg, Nick Brown
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -19,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * A class for handling email sending to users.
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class EmailSenderThread extends Thread { // $codepro.audit.disable declareDefaultConstructors
@@ -37,7 +35,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
     /**
      * Gmail password.
      */
-    private static final transient String PASSWORD = "team9ftw";  //$NON-NLS-1$
+    private static final String PASSWORD = "team9ftw";  //$NON-NLS-1$
     
     /**
      * The SMTP port to connect to on the googlemail server.

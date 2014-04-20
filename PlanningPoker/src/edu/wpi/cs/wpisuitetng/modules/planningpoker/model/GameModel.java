@@ -11,6 +11,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,32 +20,41 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
  * Represents a planning poker game
  */
-public class GameModel extends AbstractModel {
+public class GameModel extends AbstractModel implements Serializable {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1255801057004044696L;
+    
+    /**
+     * An enumeration representing the different states of a game.
+     */
     public static enum GameStatus {
         NEW("New"), PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
         
         
-        public String name;
+        private final String name;
         
         /**
          * Creates a new GameStatus
          * 
          * @param stat
+         *        the name of the status
          */
         GameStatus(String stat) {
             name = stat;
         }
     };
     
+    /**
+     * An enumeration representing the different types of games.
+     */
     public static enum GameType {
         LIVE, DISTRIBUTED
     };
@@ -72,7 +82,7 @@ public class GameModel extends AbstractModel {
                 DeckListModel.getInstance().getDefaultDeck(), // deck
                 null, // end date
                 null, // type
-                null,// status
+                null, // status
                 null); // owner
     }
     
@@ -80,13 +90,20 @@ public class GameModel extends AbstractModel {
      * Constructor
      * 
      * @param name
+     *        the game's name
      * @param description
+     *        the description of the game
      * @param requirements
+     *        a list of the requirements to be estimated for this game
      * @param deck
+     *        the deck of cards users can use to estimate requirements for
+     *        this game
      * @param end
+     *        the deadline for this game
      * @param type
+     *        what kind of game this is
      * @param status
-     * @param users
+     *        what the current status of this game should be
      */
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck, Date end,
@@ -95,11 +112,31 @@ public class GameModel extends AbstractModel {
                 ConfigManager.getConfig().getUserName());
     }
     
-    
+    /**
+     * Creates a new planning poker game.
+     * 
+     * @param name
+     *        the game's name
+     * @param description
+     *        the description of the game
+     * @param requirements
+     *        a list of the requirements to be estimated for this game
+     * @param deck
+     *        the deck of cards users can use to estimate requirements for
+     *        this game
+     * @param endDate
+     *        the deadline for this game
+     * @param type
+     *        what kind of game this is
+     * @param status
+     *        what the current status of this game should be
+     * @param owner
+     *        the name of the user who created this game
+     */
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
             Date endDate, GameType type, GameStatus status, String owner) {
-        this.id = nextId++;
+        id = GameModel.nextId++;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
@@ -118,13 +155,19 @@ public class GameModel extends AbstractModel {
         return name;
     }
     
+    /**
+     * 
+     * @param id
+     *        the new ID number
+     */
     public void setID(int id) {
         this.id = id;
     }
     
     /**
+     * Gets the description of this game.
      * 
-     * @return the name of this game
+     * @return the description of this game
      */
     public String getDescription() {
         return description;
@@ -199,7 +242,9 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * @return The end time for this game
+     * Gets the deadline time for this game.
+     * 
+     * @return the end time for this game
      */
     public Date getEndTime() {
         return endDate;
@@ -208,7 +253,7 @@ public class GameModel extends AbstractModel {
     /**
      * Returns which type of game this is
      * 
-     * @return Either TYPE_LIVE or TYPE_DISTRIBUTED
+     * @return the game's type
      */
     public GameType getType() {
         return type;
@@ -221,7 +266,8 @@ public class GameModel extends AbstractModel {
      *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
-        GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
+        final GameStatus new_status = fin ? GameStatus.COMPLETE
+                : GameStatus.PENDING;
         if (status != new_status && status == GameStatus.PENDING) {
             status = new_status;
             for (int i = 0; i < status_observers.size(); i++) {
@@ -238,7 +284,7 @@ public class GameModel extends AbstractModel {
     public boolean checkVoted() {
         if (requirements == null) { return false; }
         for (GameRequirementModel r : requirements) {
-            if (r.allVoted() == false) { return false; }
+            if (!r.allVoted()) { return false; }
         }
         return true;
     }
@@ -250,7 +296,7 @@ public class GameModel extends AbstractModel {
      * @return whether the game has ended
      */
     public boolean isEnded() {
-        if (checkVoted() == true) {
+        if (checkVoted()) {
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE || status == GameStatus.CLOSED);
@@ -313,7 +359,7 @@ public class GameModel extends AbstractModel {
      */
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
-        GameModel gm = parser.fromJson(json, GameModel.class);
+        final GameModel gm = parser.fromJson(json, GameModel.class);
         gm.status_observers = new ArrayList<>();
         return gm;
     }
@@ -326,7 +372,7 @@ public class GameModel extends AbstractModel {
      */
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
-        GameModel[] gms = parser.fromJson(json, GameModel[].class);
+        final GameModel[] gms = parser.fromJson(json, GameModel[].class);
         for (GameModel gm : gms) {
             gm.status_observers = new ArrayList<>();
         }
@@ -387,9 +433,8 @@ public class GameModel extends AbstractModel {
     
     @Override
     public String toString() {
-        return getName();
+        return name;
     }
-    
     
     /**
      * Returns whether the input GameModel is equal to this one
@@ -398,16 +443,22 @@ public class GameModel extends AbstractModel {
      * @return True if this GameModel is equal to the input GameModel
      */
     public boolean equals(GameModel other) {
-        return other.id == id && other.name.equals(name);
+        return other.id == id && other.name.equals(other.name);
     }
     
+    @Override
     public boolean equals(Object other) {
-        if (this == other)
-            return true;
-        else if (other instanceof GameModel)
-            return this.equals((GameModel) other);
-        else
-            return super.equals(other);
+        boolean ret;
+        if (this == other) {
+            ret = true;
+        }
+        else if (other instanceof GameModel) {
+            ret = this.equals((GameModel) other);
+        }
+        else {
+            ret = super.equals(other);
+        }
+        return ret;
     }
     
     /**

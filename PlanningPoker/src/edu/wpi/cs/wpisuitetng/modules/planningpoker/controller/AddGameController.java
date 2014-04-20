@@ -34,11 +34,6 @@ public class AddGameController {
     }
     
     /**
-     * 
-     * @return the instance of the AddGameController or creates one if it does
-     *         not exist.
-     */
-    /**
      * Gets instance of the AddGameController or creates one if it does not
      * exist.
      * 

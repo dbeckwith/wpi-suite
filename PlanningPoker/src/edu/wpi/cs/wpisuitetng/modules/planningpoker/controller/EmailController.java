@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * nfbrown, szhou, dcwethern
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -20,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 /**
  * This controller responds when a game is started or ended by sending email
  * notifications
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class EmailController extends AbstractUserController {
@@ -53,7 +50,7 @@ public class EmailController extends AbstractUserController {
     /**
      * The instance of the controller.
      */
-    private static EmailController Instance;
+    private static EmailController Instance = null;
     
     /**
      * Gets the instance of the EmailController.
@@ -127,7 +124,7 @@ public class EmailController extends AbstractUserController {
      *        the new game to notify people about
      * @return a String containing the message body
      */
-    private String startGameMessageBody(GameModel game) {
+    private static String startGameMessageBody(GameModel game) {
         String body = "\n";
         
         if (CurrentUserController.getInstance().getUser() == null) {
@@ -159,7 +156,7 @@ public class EmailController extends AbstractUserController {
      *        the ended game to notify people about
      * @return a String containing the message body
      */
-    private String endGameMessageBody(GameModel game) {
+    private static String endGameMessageBody(GameModel game) {
         String body = "\n";
         body += "The Planning Poker game " + game.getName()
                 + " has ended and is no longer open for estimation.";

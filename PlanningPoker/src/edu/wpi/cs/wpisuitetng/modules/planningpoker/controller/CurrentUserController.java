@@ -1,5 +1,3 @@
-// $codepro.audit.disable
-// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
  * 
@@ -7,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Sam Carlberg
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -18,6 +13,9 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * This controller responds to request currently logged-in user from the server.
+ * 
+ * @author Team 9
+ * @version 1.0
  */
 public class CurrentUserController extends AbstractUserController {
     
@@ -70,8 +68,9 @@ public class CurrentUserController extends AbstractUserController {
      */
     public User findUser(String name) {
         for (User u : getUsers()) {
-            if (u.getUsername().equals(name))
+            if (u.getUsername().equals(name)){
                 return u;
+            }
         }
         return null;
     }

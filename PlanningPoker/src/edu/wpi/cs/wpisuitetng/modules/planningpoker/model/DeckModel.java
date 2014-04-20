@@ -23,10 +23,10 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  * @version 1.0
  */
 public class DeckModel extends AbstractModel {
-	private String name;
-	private ArrayList<Double> cards;
-	private boolean allowsMultipleSelection;
-	private boolean isNone;
+	private final String name;
+	private final ArrayList<Double> cards;
+	private final boolean allowsMultipleSelection;
+	private final boolean isNone;
     
     /**
      * Creates a new deck.
@@ -43,7 +43,7 @@ public class DeckModel extends AbstractModel {
 		this.name = name;
 		this.cards = cards;
 		this.allowsMultipleSelection = allowsMultipleSelection;
-		this.isNone = false;
+		isNone = false;
 	}
 
     /**
@@ -55,9 +55,9 @@ public class DeckModel extends AbstractModel {
      */
 	public DeckModel(String name) {
 		this.name = name;
-		this.cards = null;
-		this.allowsMultipleSelection = false;
-        this.isNone = false;
+		cards = null;
+		allowsMultipleSelection = false;
+        isNone = false;
 	}
     
     /**
@@ -65,10 +65,10 @@ public class DeckModel extends AbstractModel {
      * should generally not be used except in databse queries.
      */
     public DeckModel() {
-        this.name = null;
-        this.cards = null;
-        this.allowsMultipleSelection = false;
-        this.isNone = false;
+        name = null;
+        cards = null;
+        allowsMultipleSelection = false;
+        isNone = false;
     }
 
 	/**
@@ -77,7 +77,7 @@ public class DeckModel extends AbstractModel {
 	 * @return the name of the deck
 	 */
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class DeckModel extends AbstractModel {
 	 * @return The cards in the deck
 	 */
 	public ArrayList<Double> getCards() {
-		return this.cards;
+		return cards;
 	}
     
     /**
@@ -150,7 +150,7 @@ public class DeckModel extends AbstractModel {
 	 */
 	public static DeckModel fromJSON(String json) {
 		final Gson parser = new Gson();
-		DeckModel deck = parser.fromJson(json, DeckModel.class);
+		final DeckModel deck = parser.fromJson(json, DeckModel.class);
 		return deck;
 	}
 
@@ -162,7 +162,7 @@ public class DeckModel extends AbstractModel {
 	 */
 	public static DeckModel[] fromJSONArray(String json) {
 		final Gson parser = new Gson();
-		DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
+		final DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
 		return decks;
 	}
 	
@@ -178,7 +178,7 @@ public class DeckModel extends AbstractModel {
      * 
      * @return true if this deck is a None deck, false otherwise
      */
-	public boolean getIsNone() {
+	public boolean canGetIsNone() {
 		return isNone;
 	}
 
@@ -189,7 +189,7 @@ public class DeckModel extends AbstractModel {
      * 
      * @return true if this deck allows multiple selection, false otherwise
      */
-	public boolean getAllowsMultipleSelection() {
-		return this.allowsMultipleSelection;
+	public boolean canAllowsMultipleSelection() {
+		return allowsMultipleSelection;
 	}
 }

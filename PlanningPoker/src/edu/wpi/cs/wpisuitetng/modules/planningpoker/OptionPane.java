@@ -14,7 +14,8 @@ import java.awt.Component;
  * OptionPane interface allows testing to simulate yes or no selections on
  * confirmation dialogs.
  * 
- * @author Andrew
+ * @author Team 9
+ * @version 1.0
  */
 public interface OptionPane {
     /**
