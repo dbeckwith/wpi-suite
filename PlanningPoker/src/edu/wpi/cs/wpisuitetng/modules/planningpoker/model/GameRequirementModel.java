@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -337,9 +339,14 @@ public class GameRequirementModel extends AbstractModel {
      * the final estimate from Planning Poker
      */
     public void updateParentEstimate() {
-        // TODO: Drew, implement this
+        Requirement r = GetParentRequirementController.getInstance()
+                .getParentRequirement(parentId);
+        if (r != null) {
+            r.setEstimate(finalEstimate);
+            UpdateRequirementController.getInstance().updateRequirement(r);
+        }
     }
-
+    
     public String getEstimateNote() {
         return estimateNote;
     }
