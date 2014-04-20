@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutWatcher;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -165,11 +164,6 @@ public class GameListModel extends AbstractListModel<GameModel> {
     private void addAndRegisterGame(GameModel g) {
         games.add(g);
         g.addStatusListener(game_observer);
-        if (!g.isEnded()) {
-            // if the game is still going
-            // watch for when it ends
-            GameTimeoutWatcher.getInstance().watchGame(g);
-        }
     }
     
     /**
@@ -181,7 +175,6 @@ public class GameListModel extends AbstractListModel<GameModel> {
     private void removeAndUnregisterGame(GameModel g) {
         games.remove(g);
         g.removeStatusListener(game_observer);
-        GameTimeoutWatcher.getInstance().stopWatchingGame(g);
     }
     
     /**
