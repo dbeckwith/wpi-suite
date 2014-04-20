@@ -364,25 +364,28 @@ public class NewGamePanel extends JPanel {
      * @param panel
      *        name of the panel to be shown
      */
-    protected void showPanel(String panel) {
-        ((CardLayout) newGameRequirementsCard.getLayout()).show(
-                newGameRequirementsCard, panel);
-    }
-    
-    @Override
-    public String getName() {
-        return gameDescription.getNameField().getText();
-    }
-    
-    /**
-     * Gets selected deck
-     * 
-     * @return
-     */
-    public DeckModel getDeck() {
-        return gameDescription.getDeck();
-    }
-    
+	protected void showPanel(String panel) {
+	    if (panel.equals("newdeckpanel")) {
+	        newDeckPanel.resetFields();
+	    }
+		((CardLayout) newGameRequirementsCard.getLayout()).show(
+				newGameRequirementsCard, panel);
+	}
+
+	@Override
+	public String getName() {
+		return gameDescription.getNameField().getText();
+	}
+
+	/**
+	 * Gets selected deck
+	 * 
+	 * @return
+	 */
+	public DeckModel getDeck() {
+		return gameDescription.getDeck();
+	}
+
     /**
      * Gets game description
      * 

@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -33,8 +34,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-import java.awt.BorderLayout;
-import javax.swing.ScrollPaneConstants;
 
 /**
  * the panel to show vote GUI
@@ -263,6 +262,11 @@ public class VotePanel extends javax.swing.JPanel {
         btnSubmit.setEnabled(false);
         
         estimateCardsPanel = new JPanel() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 2543832513784794212L;
+
             @Override
             public void paintComponent(Graphics g) {
                 final BufferedImage texture = ImageLoader.getImage("felt.png");

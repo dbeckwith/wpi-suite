@@ -50,6 +50,16 @@ public class GameModel extends AbstractModel implements Serializable{
         GameStatus(String stat) {
             name = stat;
         }
+        
+        /**
+         * 
+         * Gets the name of this status
+         *
+         * @return the name
+         */
+        public String getName() {
+            return name;
+        }
     };
     
     /**

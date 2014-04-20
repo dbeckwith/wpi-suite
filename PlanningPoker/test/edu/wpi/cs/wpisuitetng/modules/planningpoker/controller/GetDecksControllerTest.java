@@ -15,11 +15,10 @@ public class GetDecksControllerTest {
     
     @Test
     public void test() {
-        GetDecksController gdc = GetDecksController.getInstance();
         DeckModel deck1 = new DeckModel("Deck 1");
         DeckModel deck2 = new DeckModel("Deck 2");
         DeckListModel.getInstance().removeObservers();
-        gdc.receivedDecks(new DeckModel[] { deck1, deck2 });
+        GetDecksController.receivedDecks(new DeckModel[] { deck1, deck2 });
         Assert.assertTrue(DeckListModel.getInstance().getDecks()
                 .contains(deck1));
         Assert.assertTrue(DeckListModel.getInstance().getDecks()
