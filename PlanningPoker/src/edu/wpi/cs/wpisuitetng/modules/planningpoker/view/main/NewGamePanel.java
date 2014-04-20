@@ -80,7 +80,7 @@ public class NewGamePanel extends JPanel {
 			}
 
 			private void validate() {
-
+	            hasChanged = true;
 				newReqNameValid = (newReqName.getText() != null && !newReqName
 						.getText().isEmpty());
 				setErrorBorder(newReqName, newReqNameValid);
@@ -106,7 +106,7 @@ public class NewGamePanel extends JPanel {
 			}
 
 			private void validate() {
-
+			    hasChanged = true;
 				newReqDescValid = (newReqDesc.getText() != null && !newReqDesc
 						.getText().isEmpty());
 				setErrorBorder(newReqDesc, newReqDescValid);	
@@ -143,6 +143,7 @@ public class NewGamePanel extends JPanel {
 	// <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
+	    hasChanged = false;
 
 		saveButton = new javax.swing.JButton();
 		cancelButton = new javax.swing.JButton();
@@ -329,9 +330,9 @@ public class NewGamePanel extends JPanel {
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
 		if(game == null){
-			PlanningPoker.getViewController().cancelNewGame(this);
+			PlanningPoker.getViewController().cancelNewGame(this, hasChanged);
 		} else {
-			PlanningPoker.getViewController().cancelEditGame(this);
+			PlanningPoker.getViewController().cancelEditGame(this, hasChanged);
 		}
 	}// GEN-LAST:event_cancelButtonActionPerformed
 
@@ -437,6 +438,14 @@ public class NewGamePanel extends JPanel {
 	public int getMaximumCardValue() {
 		return gameDescription.getMaxCardValue();
 	}
+	
+	public void setHasChanged(boolean b) {
+	    hasChanged = b;
+	}
+	
+	public boolean getHasChanged() {
+	    return hasChanged;
+	}
 
 	private GameModel game = null;
 	
@@ -461,4 +470,5 @@ public class NewGamePanel extends JPanel {
 	private JScrollPane scrollPane;
 	private JLabel errorLabel;
 	private JLabel newReqErrorsLabel;
+	private boolean hasChanged;
 }

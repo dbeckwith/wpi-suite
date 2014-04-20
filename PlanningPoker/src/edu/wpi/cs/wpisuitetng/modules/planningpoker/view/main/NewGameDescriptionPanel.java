@@ -121,8 +121,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             }
             
             private void validate() {
+                
                 isNameValid = (nameField.getText() != null && !nameField
                         .getText().isEmpty());
+                if(isNameValid) {
+                    parent.setHasChanged(true);
+                }
                 setErrorBorder(nameField, isNameValid);
                 parent.check();
             }
@@ -150,6 +154,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
                         
                         isDescriptionValid = (descriptionField.getText() != null && !descriptionField
                                 .getText().isEmpty());
+                        if(isDescriptionValid) {
+                            parent.setHasChanged(true);
+                        }
                         setErrorBorder(descriptionField, isDescriptionValid);
                         parent.check();
                     }
@@ -160,6 +167,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             public void actionPerformed(ActionEvent e) {
                 validateDeadline();
                 parent.check();
+                parent.setHasChanged(true);
             }
         });
         
@@ -169,6 +177,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             public void stateChanged(ChangeEvent e) {
                 validateDeadline();
                 parent.check();
+                parent.setHasChanged(true);
             }
         });
         
@@ -177,6 +186,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
             @Override
             public void actionPerformed(ActionEvent e) {
                 validateDeadline();
+                parent.setHasChanged(true);
                 parent.check();
             }
         });
@@ -210,7 +220,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         descriptionField.setEnabled(false);
         
         distributed.setEnabled(false);
+
+        
         live.setEnabled(false);
+
         
         DefaultComboBoxModel<DeckModel> decks = (DefaultComboBoxModel<DeckModel>) deckComboBox
                 .getModel();
@@ -229,7 +242,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         }
         
     }
-    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -254,8 +267,26 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         selectDeadline.setBackground(Color.WHITE);
         distributed = new javax.swing.JRadioButton();
         distributed.setBackground(Color.WHITE);
+        distributed.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.setHasChanged(true);
+                
+            }
+        }
+        );
         live = new javax.swing.JRadioButton();
         live.setBackground(Color.WHITE);
+        live.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.setHasChanged(true);
+                
+            }
+        }
+        );
         
         nameLabel.setText("Game Name: *");
         
@@ -309,6 +340,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
         deckComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(parent != null) {
+                    parent.setHasChanged(true);
+                }
                 if (((DeckModel) deckComboBox.getSelectedItem()).toString()
                         .equals("Generated deck")) {
                     maximumValue.setVisible(true);
@@ -317,6 +351,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
                     getErrors();
                     if (parent != null) {
                         parent.check();
+                        
                     }
                 }
                 else {
@@ -724,6 +759,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements
     
     public void setEditGamePanel(NewGamePanel p) {
         parent = p;
+        parent.setHasChanged(false);
     }
     
     private GameModel game;

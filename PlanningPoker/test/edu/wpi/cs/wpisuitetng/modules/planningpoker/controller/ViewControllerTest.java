@@ -68,7 +68,7 @@ public class ViewControllerTest {
         vc.addNewGameTab();
         NewGamePanel ngp = (NewGamePanel) mv.getComponentAt(count);
         vc.setCancelConfirm(new YesMockOptionPane());
-        vc.cancelNewGame(ngp);
+        vc.cancelNewGame(ngp, false);
         Assert.assertEquals(count, mv.getTabCount());
     }
     
