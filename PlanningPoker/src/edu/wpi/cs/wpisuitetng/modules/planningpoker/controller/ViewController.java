@@ -65,15 +65,15 @@ public class ViewController {
         mainView.addTab("New Game", editGame);
         mainView.setSelectedComponent(editGame);
         
-        mainView.setTabComponentAt(mainView.indexOfComponent(editGame), new ClosableTabComponent(
-                mainView) {
-            private static final long serialVersionUID = 7088866301855075603L;
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelNewGame(editGame);
-            }
-        });
+        mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
+                new ClosableTabComponent(mainView) {
+                    private static final long serialVersionUID = 7088866301855075603L;
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cancelNewGame(editGame, editGame.getHasChanged());
+                    }
+                });
         
     }
     
@@ -85,15 +85,16 @@ public class ViewController {
         mainView.addTab("Preferences", prefsPanel);
         mainView.setSelectedComponent(prefsPanel);
         
-        mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel), new ClosableTabComponent(
-                mainView) {
-            private static final long serialVersionUID = 3668078500346186662L;
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainView.removeTabAt(mainView.indexOfComponent(prefsPanel));
-            }
-        });
+        mainView.setTabComponentAt(mainView.indexOfComponent(prefsPanel),
+                new ClosableTabComponent(mainView) {
+                    private static final long serialVersionUID = 3668078500346186662L;
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mainView.removeTabAt(mainView
+                                .indexOfComponent(prefsPanel));
+                    }
+                });
     }
     
     /**
@@ -110,14 +111,17 @@ public class ViewController {
                 newCards.add((double) i);
             }
             
-            d = new DeckModel(d.toString(), newCards, d.canAllowsMultipleSelection());
+            d = new DeckModel(d.toString(), newCards,
+                    d.canAllowsMultipleSelection());
         }
         System.out.println(d);
         
-        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
-                e.getRequirements(), new DeckModel(d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(), e.getGameType(),
-                GameStatus.NEW, ConfigManager.getConfig().getUserName());
+        final GameModel newGame = new GameModel(e.getName(),
+                e.getDescription(), e.getRequirements(), new DeckModel(
+                        d.toString(), d.getCards(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(),
+                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
+                        .getUserName());
         
         AddGameController.getInstance().addGame(newGame);
         EmailController.getInstance().sendGameStartNotifications(newGame);
@@ -138,10 +142,12 @@ public class ViewController {
      */
     public void updateGame(GameModel game, NewGamePanel e) {
         final DeckModel d = e.getDeck();
-        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
-                e.getRequirements(), new DeckModel(d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(), e.getGameType(),
-                GameStatus.NEW, ConfigManager.getConfig().getUserName());
+        final GameModel newGame = new GameModel(e.getName(),
+                e.getDescription(), e.getRequirements(), new DeckModel(
+                        d.toString(), d.getCards(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(),
+                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
+                        .getUserName());
         game.editCopyFrom(newGame);
         UpdateGamesController.getInstance().updateGame(game);
         RequirementsListModel.getInstance().removeListListener(
@@ -155,13 +161,22 @@ public class ViewController {
      * @param e
      *        The NewGamePanel to cancel
      */
-    public void cancelNewGame(NewGamePanel e) {
-        final int result = cancelConfirm.showConfirmDialog(e,
-                "Are you sure you want to cancel this game?", "Cancel Game",
-                JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
+    public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
+        if (hasChanged) {
+            final int result = cancelConfirm.showConfirmDialog(e,
+                    "Are you sure you want to cancel this game?",
+                    "Cancel Game", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                RequirementsListModel.getInstance().removeListListener(
+                        e.getNewGameRequirementsPanel()
+                                .getRequirementsListObserver());
+                mainView.removeTabAt(mainView.indexOfComponent(e));
+            }
+        }
+        else {
             RequirementsListModel.getInstance().removeListListener(
-                    e.getNewGameRequirementsPanel().getRequirementsListObserver());
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
             mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
@@ -172,15 +187,24 @@ public class ViewController {
      * @param e
      *        the NewGamePanel to cancel
      */
-    public void cancelEditGame(NewGamePanel e) {
-        final int result = cancelConfirm
-                .showConfirmDialog(
-                        e,
-                        "Are you sure you would like cancel editing this game? (changes will not be saved)",
-                        "Cancel Edit", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
+    public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
+        if (hasChanged) {
+            final int result = cancelConfirm
+                    .showConfirmDialog(
+                            e,
+                            "Are you sure you would like cancel editing this game? (changes will not be saved)",
+                            "Cancel Edit", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                RequirementsListModel.getInstance().removeListListener(
+                        e.getNewGameRequirementsPanel()
+                                .getRequirementsListObserver());
+                mainView.removeTabAt(mainView.indexOfComponent(e));
+            }
+        }
+        else {
             RequirementsListModel.getInstance().removeListListener(
-                    e.getNewGameRequirementsPanel().getRequirementsListObserver());
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
             mainView.removeTabAt(mainView.indexOfComponent(e));
         }
     }
@@ -214,7 +238,9 @@ public class ViewController {
      *        the currently displayed game
      */
     public void displayAdmin(GameModel game) {
-        if (game != null && game.getOwner().equals(ConfigManager.getConfig().getUserName())
+        if (game != null
+                && game.getOwner().equals(
+                        ConfigManager.getConfig().getUserName())
                 && !game.isClosed() && mainView.getSelectedIndex() == 0) {
             toolbar.setAdminVisibility(true);
             toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);
@@ -279,15 +305,15 @@ public class ViewController {
         mainView.addTab("Edit " + current.getName(), editGame);
         mainView.setSelectedComponent(editGame);
         
-        mainView.setTabComponentAt(mainView.indexOfComponent(editGame), new ClosableTabComponent(
-                mainView) {
-            private static final long serialVersionUID = 7088866301855075603L;
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelEditGame(editGame);
-            }
-        });
+        mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
+                new ClosableTabComponent(mainView) {
+                    private static final long serialVersionUID = 7088866301855075603L;
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cancelEditGame(editGame, editGame.getHasChanged());
+                    }
+                });
     }
     
     /**

@@ -122,6 +122,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             }
             
             private void validate() {
+                parentPanel.setHasChanged(true);
                 isNameValid = (nameField.getText() != null && !nameField.getText().isEmpty());
                 setErrorBorder(nameField, isNameValid);
                 parentPanel.check();
@@ -146,7 +147,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             }
             
             private void validate() {
-                
+                parentPanel.setHasChanged(true);
                 isDescriptionValid = (descriptionField.getText() != null && !descriptionField
                         .getText().isEmpty());
                 setErrorBorder(descriptionField, isDescriptionValid);
@@ -175,6 +176,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             
             @Override
             public void actionPerformed(ActionEvent e) {
+                parentPanel.setHasChanged(true);
                 canValidateDeadline();
                 parentPanel.check();
             }
@@ -256,8 +258,26 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         selectDeadline.setBackground(Color.WHITE);
         distributed = new javax.swing.JRadioButton();
         distributed.setBackground(Color.WHITE);
+        distributed.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parentPanel.setHasChanged(true);
+                
+            }
+            
+        });
         live = new javax.swing.JRadioButton();
         live.setBackground(Color.WHITE);
+        live.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                parentPanel.setHasChanged(true);
+                
+            }
+            
+        });
         
         nameLabel.setText("Game Name: *");
         
@@ -310,6 +330,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         deckComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (parentPanel != null) {
+                    parentPanel.setHasChanged(true);
+                }
                 if (((DeckModel) deckComboBox.getSelectedItem()).toString()
                         .equals("Generated deck")) {
                     maximumValue.setVisible(true);
