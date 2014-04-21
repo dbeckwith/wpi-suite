@@ -18,6 +18,15 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
+/**
+ * This is a thread that handles making a request for requirements. It blocks
+ * the main thread until a response is received or a timeout occurs in the main
+ * thread. If a response is received before the timeout, it notifies the main
+ * thread to continue executing.
+ * 
+ * @author nfbrown
+ * @version Apr 21, 2014
+ */
 public class RequirementRequestThread extends Thread {
     
     /**
@@ -32,28 +41,24 @@ public class RequirementRequestThread extends Thread {
     private final RequestObserver observer = new RequestObserver() {
         @Override
         public void responseSuccess(IRequest iReq) {
-            notifyController(iReq);
+            notifyController();
         }
         
         @Override
         public void responseError(IRequest iReq) {
-            notifyController(iReq);
+            notifyController();
         }
         
         @Override
         public void fail(IRequest iReq, Exception exception) {
-            notifyController(iReq);
+            notifyController();
         }
         
         /**
          * Wakes the controller.
          */
-        private void notifyController(IRequest iReq) {
+        private void notifyController() {
             synchronized (controller) {
-                final Requirement[] reqs = Requirement.fromJsonArray(iReq.getResponse()
-                        .getBody());
-                controller.receivedRequirements(reqs);
-                
                 controller.notifyAll();
                 controller.setTimedOut(false);
             }
@@ -80,8 +85,8 @@ public class RequirementRequestThread extends Thread {
      * is received.
      */
     private void requestRequirements() {
-        final Request request = Network.getInstance().makeRequest("requirementmanager/requirement",
-                HttpMethod.GET);
+        final Request request = Network.getInstance().makeRequest(
+                "requirementmanager/requirement", HttpMethod.GET);
         request.addObserver(observer);
         request.addObserver(controller.observer);
         System.out.println("Sending request for requirements..."); //TODO remove

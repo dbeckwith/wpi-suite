@@ -13,6 +13,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
+/**
+ * This controller is used to get the parent requirement for a
+ * GameRequirementModel
+ * 
+ * @author nfbrown
+ * @version Apr 21, 2014
+ */
 public class GetParentRequirementController extends
         AbstractRequirementController {
     
@@ -69,19 +76,14 @@ public class GetParentRequirementController extends
     public Requirement getParentRequirement(int id) {
         requestRequirements();
         if (getRequirements() == null) {
-            System.out.println("Requirement list is null");
             return null;
         }
         else {
             for (Requirement r : getRequirements()) {
-                if (r.getId() == id) {
-                    System.out.println("Found requirement " + r);
-                    return r; 
-                }
+                if (r.getId() == id) { return r; }
             }
+            return null;
         }
-        System.out.println("Did not find requirement");
-        return null;
     }
     
 }

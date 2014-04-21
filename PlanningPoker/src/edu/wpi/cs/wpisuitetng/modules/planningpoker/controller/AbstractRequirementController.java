@@ -32,15 +32,20 @@ public abstract class AbstractRequirementController {
     
     private long timeout = 1500;
     
-    final GetRequirementsRequestObserver observer;
-    
     private Requirement[] reqs = null;
+    
+    final GetRequirementsRequestObserver observer;
     
     protected AbstractRequirementController() {
         observer = new GetRequirementsRequestObserver(this);
     }
     
-    
+    /**
+     * This method is called by a RequirementRequestThread when it received a
+     * response from the server
+     * 
+     * @param reqs The received requirements
+     */
     public abstract void receivedRequirements(Requirement[] reqs);
     
     /**
@@ -60,23 +65,23 @@ public abstract class AbstractRequirementController {
     }
     
     /**
-     * Set the array of users in the current project.
+     * Set the array of requirements in the current project.
      * 
-     * @param users
-     *        an array of users in the current project.
+     * @param reqs
+     *        an array of requirements in the current project.
      * 
      */
-    public void setUsers(Requirement[] reqs) {
-        this.setRequirements(reqs);
+    public void setRequirements(Requirement[] reqs) {
+        this.reqs = reqs;
     }
     
     /**
-     * Gets the array of users in the current project.
+     * Gets the array of requirements in the current project.
      * 
-     * @return an array of users in the curren project.
+     * @return the array of requirements in the current project.
      */
-    public Requirement[] getRequirement() {
-        return getRequirements();
+    public Requirement[] getRequirements() {
+        return reqs;
     }
     
     /**
@@ -103,10 +108,10 @@ public abstract class AbstractRequirementController {
      *        a variable to hold timeout value
      */
     public void setTimeout(long timeout) {
-        if (timeout < 0){
+        if (timeout < 0) {
             throw new IllegalArgumentException("Timeout must be >= 0");
         }
-        else{
+        else {
             this.timeout = timeout;
         }
     }
@@ -117,15 +122,6 @@ public abstract class AbstractRequirementController {
     public long getTimeout() {
         return timeout;
     }
-
-
-    public Requirement[] getRequirements() {
-        return reqs;
-    }
-
-
-    public void setRequirements(Requirement[] reqs) {
-        this.reqs = reqs;
-    }
+    
     
 }

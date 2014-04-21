@@ -39,32 +39,24 @@ public class UserRequestThread extends Thread {
     private final RequestObserver observer = new RequestObserver() {
         @Override
         public void responseSuccess(IRequest iReq) {
-            notifyController(iReq);
+            notifyController();
         }
         
         @Override
         public void responseError(IRequest iReq) {
-            notifyController(iReq);
+            notifyController();
         }
         
         @Override
         public void fail(IRequest iReq, Exception exception) {
-            notifyController(iReq);
+            notifyController();
         }
         
         /**
          * Wakes the controller.
          */
-        private void notifyController(IRequest iReq) {
+        private void notifyController() {
             synchronized (controller) {
-                final Gson gson;
-                final GsonBuilder builder = new GsonBuilder();
-                builder.registerTypeAdapter(User.class, new UserDeserializer());
-                gson = builder.create();
-                
-                final String response = iReq.getResponse().getBody();
-                final User[] users = gson.fromJson(response, User[].class);
-                controller.receivedUsers(users);
                 controller.notifyAll();
                 controller.setTimedOut(false);
             }
