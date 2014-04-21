@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 /**
  * Default implementation of OptionPane that just refers to JOptionPane
  * 
- * @author Andrew
- *
+ * @author Team 9
+ * @version 1.0
  */
 public class DefaultOptionPane implements OptionPane {
     

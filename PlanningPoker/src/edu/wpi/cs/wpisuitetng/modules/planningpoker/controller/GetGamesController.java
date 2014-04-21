@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Brett Ammeson, Andrew Han
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -22,9 +19,9 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * This handles requests for games
- * 
- * @author Brett Ammeson, Andrew Han
+ * This controller responds by sending request to get games from remote server.
+ * @author Team9
+ * @version 1.0
  */
 public class GetGamesController implements ActionListener {
     private final GetGamesRequestObserver observer;
@@ -40,8 +37,9 @@ public class GetGamesController implements ActionListener {
     }
     
     /**
-     * @return the instance of the GetGameController or creates one if it does
+     * get the instance of the GetGameControlleror creates one if it does
      *         not exist.
+     * @return the instance of the GetGameController
      */
     public static GetGamesController getInstance() {
         if (GetGamesController.instance == null) {
@@ -55,7 +53,7 @@ public class GetGamesController implements ActionListener {
      * Sends an HTTP request to store a game when the update button is pressed
      * 
      * @param e
-     *            ActionEvent
+     *        ActionEvent
      * 
      * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
      */
@@ -69,7 +67,7 @@ public class GetGamesController implements ActionListener {
      */
     public void retrieveGames() {
         final Request request = Network.getInstance().makeRequest(
-                "planningpoker/game", HttpMethod.GET); // GET == read
+                "planningpoker/game", HttpMethod.GET); 
         request.addObserver(observer); // add an observer to process the
                                        // response
         request.send(); // send the request
@@ -80,15 +78,13 @@ public class GetGamesController implements ActionListener {
      * core). This method is called by the GetGamesRequestObserver
      * 
      * @param games
-     *            array of games received from the server
+     *        array of games received from the server
      */
     public void receivedGames(GameModel[] games) {
         // Make sure the response was not null
         if (games != null) {
-            // if (games[0].getID() != -1) {
             // add the games to the local model
             GameListModel.getInstance().setGames(games);
-            // }
         }
     }
 }

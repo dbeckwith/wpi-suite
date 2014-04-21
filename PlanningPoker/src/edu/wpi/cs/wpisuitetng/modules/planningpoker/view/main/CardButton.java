@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
@@ -26,7 +23,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -39,11 +35,16 @@ import javax.swing.text.NumberFormatter;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
+/**
+ * A card button is a button that is used to select a card from a deck for
+ * estimating a requirement. It represents one value of a deck and may be
+ * toggled on and off.
+ * 
+ * @author Team 9
+ * @version 1.0
+ */ 
 public class CardButton extends JPanel implements MouseListener, ChangeListener {
-    
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 2543023112833273691L;
     
     public static final DecimalFormat cardFormat = new DecimalFormat("0.#");
@@ -55,7 +56,6 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     private static final float FONT_SIZE = 0.3f;
     private static final float FONT_SIZE_HOVER = 0.4f;
     private static BufferedImage[] suits;
-    private static Random rand;
     
     static {
         CardButton.suits = new BufferedImage[4];
@@ -67,8 +67,6 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
         CardButton.suits[2] = allSuits.getSubimage(0, sHeight, sWidth, sHeight);
         CardButton.suits[3] = allSuits.getSubimage(sWidth, sHeight, sWidth,
                 sHeight);
-        
-        rand = new Random();
         
     }
     
@@ -86,6 +84,12 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     
     private ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
     
+    /**
+     * Creates a new CardButton representing the given value.
+     * 
+     * @param val
+     *            the value of this card
+     */
     public CardButton(String val) {
     	textInput = false;
         value = CardButton.cardFormat.format(Float.parseFloat(val));
@@ -198,6 +202,11 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
         g2.drawRect(1, 1, getWidth() -3, getHeight() -3 );
     }
     
+    /**
+     * Gets the estimate value represented by this button.
+     * 
+     * @return the estimate value
+     */
     public float getEstimateValue() {
     	if(textInput){
     		return ((Double)(input.getModel().getValue())).floatValue();
@@ -206,10 +215,21 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     	}
     }
     
+    /**
+     * Sets whether or not this card is selected and its value should be
+     * considered in the total estimation.
+     * 
+     * @param selected
+     *            true if the card should be selected, false otherwise
+     */
     public void setCardSelected(boolean selected) {
         this.selected = selected;
     }
     
+    /**
+     * sets the value of the card button
+     * @param val
+     */
     public void setValue(float val){
     	value = cardFormat.format(val);
     	if(input != null){
@@ -217,14 +237,30 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     	}
     }
     
+    /**
+     * Sets whether or not this card should be enabled and selectable.
+     * 
+     * @param enabled
+     *            true if this card is enabled, false otherwise
+     */
     public void setCardEnabled(boolean enabled) {
         cardEnabled = enabled;
     }
     
+    /**
+     * Gets whether this card is selected or not.
+     * 
+     * @return true if this card is selected, false otherwise
+     */
     public boolean isCardSelected() {
         return selected;
     }
     
+    /**
+     * Gets whether this card is enabled or not.
+     * 
+     * @return true if this card is enabled, false otherwise
+     */
     public boolean isCardEnabled() {
         return cardEnabled;
     }
@@ -239,14 +275,10 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
     }
     
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
     }
     
     @Override

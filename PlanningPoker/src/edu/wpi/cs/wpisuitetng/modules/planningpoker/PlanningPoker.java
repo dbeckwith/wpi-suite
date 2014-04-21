@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker;
 
@@ -15,24 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
+
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel;
+
 
 /**
  * This is a module that implements the Planning Poker technique for estimation
  * on how long a project requirement will take.
  * 
- * @author TODO: Authors' names
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class PlanningPoker implements IJanewayModule {
 	
@@ -74,33 +71,5 @@ public class PlanningPoker implements IJanewayModule {
 	@Override
 	public List<JanewayTabModel> getTabs() {
 		return tabs;
-	}
-	
-	/**
-	 * Runs the Planning Poker module
-	 * @param args
-	 */
-	public static void main(String[] args){
-		JFrame f =  new JFrame();
-		f.setSize(800, 400);
-		VotePanel p = new VotePanel();
-		f.add(p);
-//		GameModel gm = new GameModel(null,null,null,new DeckModel("", new ArrayList<Double>(){{
-//			add(1d);
-//			add(3d);
-//			add(5d);
-//			add(10d);
-//			add(15d);
-//			add(20d);
-//			add(50d);
-//			add(100d);
-//			}},true),null,null,null);
-		
-		GameModel gm = new GameModel(null,null,null,new DeckModel(""),null,null,null);
-		
-		GameRequirementModel req = new GameRequirementModel();
-		p.setRequirement(null, gm, req);
-
-		f.setVisible(true);
 	}
 }

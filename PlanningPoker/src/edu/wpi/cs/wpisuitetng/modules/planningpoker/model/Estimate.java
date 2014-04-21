@@ -1,14 +1,11 @@
 /*******************************************************************************
- * Copyright (c) 2013 -- WPI Suite
+ * Copyright (c) 2012-2014 -- WPI Suite
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
- ******************************************************************************/
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
@@ -18,6 +15,13 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
+/**
+ * This class represents an estimate made by a user for a requirement of how
+ * much value they think a requirement should be worth.
+ * 
+ * @author Team 9
+ * @version 1.0
+ */
 public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
     private final String name;
@@ -27,11 +31,14 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     private final ArrayList<Integer> cardsSelected;
     
     /**
-     * Creates a new Estimate
-     *
+     * Creates a new Estimate.
+     * 
      * @param user
+     *            the user who made the estimate
      * @param estimate
+     *            the user's estimate value
      * @param cards
+     *            the cards that the user selected to make their estimate
      */
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         name = user.getName();
@@ -42,24 +49,50 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     }
     
     /**
-     * @return the cardsSelected
+     * Gets the list of cards that the user selected in order to make this
+     * estimate.
+     * 
+     * @return the list of card values
      */
     public ArrayList<Integer> getCardsSelected() {
         return cardsSelected;
     }
-
+    
+    /**
+     * Gets the name of the user that made this estimate.
+     * 
+     * @see User
+     * @return the user's name
+     */
     public String getName() {
         return name;
     }
-    
+
+    /**
+     * Gets the username of the user that made this estimate.
+     *
+     * @see User
+     * @return the user's username
+     */
     public String getUsername() {
         return username;
     }
-    
+
+    /**
+     * Gets the ID number of the user that made this estimate.
+     *
+     * @see User
+     * @return the user's ID number
+     */
     public int getIdNum() {
         return idNum;
     }
     
+    /**
+     * Gets the estimate value that was made by the user.
+     * 
+     * @return the estimate value
+     */
     public float getEstimate() {
         return theEstimate;
     }
@@ -90,7 +123,7 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
      * @param json
      * @return Estimate from the JSON string
      */
-    public Estimate fromJSON(String json) {
+    public static Estimate fromJSON(String json) {
         final Gson parser = new Gson();
         return parser.fromJson(json, Estimate.class);
     }

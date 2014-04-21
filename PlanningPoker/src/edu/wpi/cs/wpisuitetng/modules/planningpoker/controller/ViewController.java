@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -29,6 +26,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
+/**
+ * This controller is used to control GUI display
+ * @author Team 9
+ * @version 1.0
+ */
 public class ViewController {
     
     private final MainView mainView;
@@ -102,22 +104,21 @@ public class ViewController {
      */
     public void saveNewGame(NewGamePanel e) {
         DeckModel d = e.getDeck();
-        System.out.println(d);
-        ArrayList<Double> newCards = new ArrayList<Double>();
+        final ArrayList<Double> newCards = new ArrayList<Double>();
         if (d.toString().equals("Generated deck")) {
             for (int i = 1; i <= e.getMaximumCardValue(); i++) {
                 newCards.add((double) i);
             }
             
             d = new DeckModel(d.toString(), newCards,
-                    d.getAllowsMultipleSelection());
+                    d.canAllowsMultipleSelection());
         }
         System.out.println(d);
         
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
-                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         
@@ -134,14 +135,16 @@ public class ViewController {
      * Updates a game model based in the information in the NewGamePanel
      * 
      * @param game
+     *        the game to be updated
      * @param e
+     *        the panel used to update the game
      */
     public void updateGame(GameModel game, NewGamePanel e) {
-        DeckModel d = e.getDeck();
+        final DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
-                        d.getAllowsMultipleSelection()), e.getEndDate(),
+                        d.canAllowsMultipleSelection()), e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         game.editCopyFrom(newGame);
@@ -295,6 +298,9 @@ public class ViewController {
                 });
     }
     
+    /**
+     * starts a game so it allows uses to vote its requirements
+     */
     public void startGame() {
         final GameModel curr = mainView.getMainPanel().getSelectedGame();
         if (curr != null && !curr.isStarted()) {
@@ -303,4 +309,12 @@ public class ViewController {
             EmailController.getInstance().sendGameStartNotifications(curr);
         }
     }
+    
+    /**
+     * @return true if admin controls are visible
+     */
+    public boolean getAdminVisibility() {
+        return showAdmin;
+    }
+    
 }
