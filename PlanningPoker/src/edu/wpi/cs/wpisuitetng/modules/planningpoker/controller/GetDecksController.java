@@ -21,8 +21,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version 1.0
  */
 public class GetDecksController {
-    private GetDecksRequestObserver observer;
-    private static GetDecksController instance;
+    private final GetDecksRequestObserver observer;
+    private static GetDecksController instance = null;
     
     /**
      * Returns a controller for getting decks
@@ -61,7 +61,7 @@ public class GetDecksController {
      * @param decks
      *        decks received
      */
-    public void receivedDecks(DeckModel[] decks) {
+    public static void receivedDecks(DeckModel[] decks) {
         DeckListModel.getInstance().emptyModel();
         if (decks != null) {
             for (DeckModel deck : decks) {

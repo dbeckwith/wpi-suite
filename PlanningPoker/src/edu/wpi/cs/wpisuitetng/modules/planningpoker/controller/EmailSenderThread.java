@@ -35,7 +35,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
     /**
      * Gmail password.
      */
-    private static final transient String PASSWORD = "team9ftw";  //$NON-NLS-1$
+    private static final String PASSWORD = "team9ftw";  //$NON-NLS-1$
     
     /**
      * The SMTP port to connect to on the googlemail server.

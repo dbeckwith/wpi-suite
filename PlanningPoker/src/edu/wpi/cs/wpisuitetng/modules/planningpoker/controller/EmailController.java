@@ -50,7 +50,7 @@ public class EmailController extends AbstractUserController {
     /**
      * The instance of the controller.
      */
-    private static EmailController Instance;
+    private static EmailController Instance = null;
     
     /**
      * Gets the instance of the EmailController.
@@ -124,7 +124,7 @@ public class EmailController extends AbstractUserController {
      *        the new game to notify people about
      * @return a String containing the message body
      */
-    private String startGameMessageBody(GameModel game) {
+    private static String startGameMessageBody(GameModel game) {
         String body = "\n";
         
         if (CurrentUserController.getInstance().getUser() == null) {
@@ -156,7 +156,7 @@ public class EmailController extends AbstractUserController {
      *        the ended game to notify people about
      * @return a String containing the message body
      */
-    private String endGameMessageBody(GameModel game) {
+    private static String endGameMessageBody(GameModel game) {
         String body = "\n";
         body += "The Planning Poker game " + game.getName()
                 + " has ended and is no longer open for estimation.";

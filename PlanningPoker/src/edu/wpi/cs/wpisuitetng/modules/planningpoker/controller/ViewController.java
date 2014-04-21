@@ -113,6 +113,7 @@ public class ViewController {
             d = new DeckModel(d.toString(), newCards,
                     d.canAllowsMultipleSelection());
         }
+        System.out.println(d);
         
         final GameModel newGame = new GameModel(e.getName(),
                 e.getDescription(), e.getRequirements(), new DeckModel(

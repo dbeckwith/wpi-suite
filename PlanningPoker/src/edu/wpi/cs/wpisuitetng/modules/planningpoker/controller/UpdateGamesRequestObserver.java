@@ -45,7 +45,6 @@ public class UpdateGamesRequestObserver implements RequestObserver {
         final ResponseModel response = iReq.getResponse();
         
         // Parse the game out of the response body
-        // final GameModel game = GameModel.fromJson(response.getBody());
     }
     
     /**
