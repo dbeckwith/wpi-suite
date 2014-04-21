@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
  * A simplified requirement model for a planning poker game
@@ -247,6 +248,9 @@ public class GameRequirementModel extends AbstractModel {
         ArrayList<User> estimateUsers = new ArrayList<User>();
         User[] users = CurrentUserController.getInstance().getUsers();
         
+        if (users == null) {
+            System.out.println("Users array is null");
+        }
         // checks to see if an all users have voted
         for (Estimate e : estimates) {
             for (User u : users) {
@@ -343,7 +347,10 @@ public class GameRequirementModel extends AbstractModel {
                 .getParentRequirement(parentId);
         if (r != null) {
             r.setEstimate(finalEstimate);
+            RequirementModel.getInstance().getRequirement(parentId);
             UpdateRequirementController.getInstance().updateRequirement(r);
+        } else {
+            System.err.println("Parent requirement is null");
         }
     }
     

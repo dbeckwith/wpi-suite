@@ -8,18 +8,24 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
+import edu.wpi.cs.wpisuitetng.network.models.RequestModel;
 
 /**
  * A class for requesting users from the server.
  * @author Team 9
  * @version 1.0
  */
-public class RequestThread extends Thread {
+public class UserRequestThread extends Thread {
     
     /**
      * The controller sending a request for a user.
@@ -33,24 +39,32 @@ public class RequestThread extends Thread {
     private final RequestObserver observer = new RequestObserver() {
         @Override
         public void responseSuccess(IRequest iReq) {
-            notifyController();
+            notifyController(iReq);
         }
         
         @Override
         public void responseError(IRequest iReq) {
-            notifyController();
+            notifyController(iReq);
         }
         
         @Override
         public void fail(IRequest iReq, Exception exception) {
-            notifyController();
+            notifyController(iReq);
         }
         
         /**
          * Wakes the controller.
          */
-        private void notifyController() {
+        private void notifyController(IRequest iReq) {
             synchronized (controller) {
+                final Gson gson;
+                final GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(User.class, new UserDeserializer());
+                gson = builder.create();
+                
+                final String response = iReq.getResponse().getBody();
+                final User[] users = gson.fromJson(response, User[].class);
+                controller.receivedUsers(users);
                 controller.notifyAll();
                 controller.setTimedOut(false);
             }
@@ -63,7 +77,7 @@ public class RequestThread extends Thread {
      * @param controller
      *        the controller to nofity
      */
-    public RequestThread(AbstractUserController controller) {
+    public UserRequestThread(AbstractUserController controller) {
         this.controller = controller;
     }
     

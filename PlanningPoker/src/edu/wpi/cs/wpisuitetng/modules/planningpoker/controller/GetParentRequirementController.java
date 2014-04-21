@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * nfbrown
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -6,14 +17,13 @@ public class GetParentRequirementController extends
         AbstractRequirementController {
     
     private static GetParentRequirementController instance = null;
-    private Requirement[] requirements;
     
     /**
      * Constructs the controller given a RequirementModel
      */
     private GetParentRequirementController() {
         super();
-        retrieveRequirements();
+        requestRequirements();
     }
     
     /**
@@ -39,7 +49,12 @@ public class GetParentRequirementController extends
      *        array of requirements received from the server
      */
     public void receivedRequirements(Requirement[] requirements) {
-        this.requirements = requirements;
+        if (requirements != null) {
+            setRequirements(requirements);
+        }
+        else {
+            System.out.println("Requirements list is null");
+        }
     }
     
     /**
@@ -52,12 +67,13 @@ public class GetParentRequirementController extends
      *         requirement does not exist in the requirement manager
      */
     public Requirement getParentRequirement(int id) {
-        if (requirements == null) {
+        requestRequirements();
+        if (getRequirements() == null) {
             System.out.println("Requirement list is null");
             return null;
         }
         else {
-            for (Requirement r : requirements) {
+            for (Requirement r : getRequirements()) {
                 if (r.getId() == id) {
                     System.out.println("Found requirement " + r);
                     return r; 

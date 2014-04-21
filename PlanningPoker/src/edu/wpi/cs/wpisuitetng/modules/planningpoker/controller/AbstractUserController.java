@@ -56,7 +56,7 @@ public abstract class AbstractUserController {
      */
     public void requestUsers() {
         synchronized (this) {
-            new RequestThread(this).start();
+            new UserRequestThread(this).start();
             try {
                 System.out.println("Waiting for response");//TODO remove
                 wait(timeout);

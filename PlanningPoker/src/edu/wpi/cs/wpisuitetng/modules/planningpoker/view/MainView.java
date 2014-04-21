@@ -62,7 +62,7 @@ public class MainView extends JTabbedPane {
 			public void ancestorAdded(AncestorEvent event) {
 				if(!updated){
 			        GetGamesController.getInstance().retrieveGames();
-			        GetRequirementsController.getInstance().retrieveRequirements();
+			        GetRequirementsController.getInstance().requestRequirements();
 			        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
 			        
 			        Component parent = MainView.this;
