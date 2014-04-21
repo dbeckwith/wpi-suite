@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirem
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 
 /**
  * A simplified requirement model for a planning poker game
@@ -347,8 +348,8 @@ public class GameRequirementModel extends AbstractModel {
                 .getParentRequirement(parentId);
         if (r != null) {
             r.setEstimate(finalEstimate);
-            RequirementModel.getInstance().getRequirement(parentId);
             UpdateRequirementController.getInstance().updateRequirement(r);
+            ViewEventController.getInstance().refreshTable();
         } else {
             System.err.println("Parent requirement is null");
         }
