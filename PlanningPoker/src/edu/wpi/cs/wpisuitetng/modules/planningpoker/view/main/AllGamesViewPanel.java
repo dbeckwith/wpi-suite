@@ -62,6 +62,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
         
         final JSplitPane splitPane = new JSplitPane();
+        splitPane.setResizeWeight(0.5);
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         descriptionCard.add(splitPane, "description");
         

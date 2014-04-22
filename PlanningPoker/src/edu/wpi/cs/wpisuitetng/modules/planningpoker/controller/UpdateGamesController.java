@@ -28,7 +28,7 @@ public class UpdateGamesController {
      * Construct an UpdateGamesController for the given model, view pair
      */
     private UpdateGamesController() {
-        observer = new UpdateGamesRequestObserver(this);
+        observer = new UpdateGamesRequestObserver();
     }
     
     /**

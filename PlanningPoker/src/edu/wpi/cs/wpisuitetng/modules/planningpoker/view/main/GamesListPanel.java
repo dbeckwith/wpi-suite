@@ -142,6 +142,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         
         // go through all the new nodes and find ones with a game in the
         // expandedGames list
+        @SuppressWarnings("rawtypes")
         Enumeration treeEnum = rootNode.depthFirstEnumeration();
         DefaultMutableTreeNode node;
         while (treeEnum.hasMoreElements()) {

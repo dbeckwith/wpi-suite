@@ -52,6 +52,16 @@ public class GameModel extends AbstractModel implements Serializable {
         GameStatus(String stat) {
             name = stat;
         }
+        
+        /**
+         * 
+         * Gets the name of this status
+         *
+         * @return the name
+         */
+        public String getName() {
+            return name;
+        }
     };
     
     /**
@@ -261,6 +271,16 @@ public class GameModel extends AbstractModel implements Serializable {
      */
     public Date getEndTime() {
         return endDate;
+    }
+    
+    /**
+     * Checks if the deadline for this game has passed
+     * 
+     * @return if the deadline for this game has passed
+     */
+    public boolean deadlinePassed(){
+        Date currDate = new Date();
+        return ((endDate != null) && endDate.before(currDate));
     }
     
     /**
