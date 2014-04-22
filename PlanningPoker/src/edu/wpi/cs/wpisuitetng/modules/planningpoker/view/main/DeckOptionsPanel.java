@@ -192,7 +192,6 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
         
         DeckModel selected = (DeckModel) savedDecks.getSelectedItem();
         if(selected == null){
-        	System.out.println("selected was null");
         	selected = DeckModel.DEFAULT_DECK;
         }
         
@@ -201,8 +200,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
         for (int i = 0; i < newModel.getSize(); i++) {
             DeckModel deck = newModel.getElementAt(i);
             if (deck != null && deck.getName() != null && deck.getName().equals(selected.getName())) {
-            	System.out.println("lu() selecting deck "+deck);
-                savedDecks.setSelectedItem(deck);
+                //savedDecks.setSelectedItem(deck);
                 break;
             }
         }        

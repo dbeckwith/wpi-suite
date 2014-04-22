@@ -27,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabCompone
 
 /**
  * This controller is used to control GUI display
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -69,7 +70,7 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        cancelNewGame(editGame, true);
+                    	cancelNewGame(editGame, editGame.getHasChanged());
                     }
                 });
         
@@ -110,7 +111,6 @@ public class ViewController {
                         .getUserName());
         
         AddGameController.getInstance().addGame(newGame);
-        EmailController.getInstance().sendGameStartNotifications(newGame);
         
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());
@@ -146,19 +146,19 @@ public class ViewController {
      *        The NewGamePanel to cancel
      */
     public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
-        
-        
-        if(hasChanged) {
-        final int result = cancelConfirm.showConfirmDialog(e,
-                "Are you sure you want to cancel this game?", "Cancel Game",
-                JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            RequirementsListModel.getInstance().removeListListener(
-                    e.getNewGameRequirementsPanel()
-                            .getRequirementsListObserver());
-            mainView.removeTabAt(mainView.indexOfComponent(e));
+
+        if (hasChanged) {
+            final int result = cancelConfirm.showConfirmDialog(e,
+                    "Are you sure you want to cancel this game?",
+                    "Cancel Game", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                RequirementsListModel.getInstance().removeListListener(
+                        e.getNewGameRequirementsPanel()
+                                .getRequirementsListObserver());
+                mainView.removeTabAt(mainView.indexOfComponent(e));
+            }
         }
-        } else {
+        else {
             RequirementsListModel.getInstance().removeListListener(
                     e.getNewGameRequirementsPanel()
                             .getRequirementsListObserver());
@@ -173,19 +173,21 @@ public class ViewController {
      *        the NewGamePanel to cancel
      */
     public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
-        if(hasChanged) {
-        final int result = cancelConfirm
-                .showConfirmDialog(
-                        e,
-                        "Are you sure you would like cancel editing this game? (changes will not be saved)",
-                        "Cancel Edit", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            RequirementsListModel.getInstance().removeListListener(
-                    e.getNewGameRequirementsPanel()
-                            .getRequirementsListObserver());
-            mainView.removeTabAt(mainView.indexOfComponent(e));
+
+        if (hasChanged) {
+            final int result = cancelConfirm
+                    .showConfirmDialog(
+                            e,
+                            "Are you sure you would like cancel editing this game? (changes will not be saved)",
+                            "Cancel Edit", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                RequirementsListModel.getInstance().removeListListener(
+                        e.getNewGameRequirementsPanel()
+                                .getRequirementsListObserver());
+                mainView.removeTabAt(mainView.indexOfComponent(e));
+            }
         }
-        } else {
+        else {
             RequirementsListModel.getInstance().removeListListener(
                     e.getNewGameRequirementsPanel()
                             .getRequirementsListObserver());
@@ -225,7 +227,7 @@ public class ViewController {
         if (game != null
                 && game.getOwner().equals(
                         ConfigManager.getConfig().getUserName())
-                && !game.isClosed()) {
+                && !game.isClosed() && mainView.getSelectedIndex() == 0) {
             toolbar.setAdminVisibility(true);
             toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);
             if (game.getStatus() == GameStatus.COMPLETE) {
@@ -250,6 +252,7 @@ public class ViewController {
      *        the tab now being displayed.
      */
     public void tabChanged(int index) {
+        
         if (showAdmin && index == 0) {
             toolbar.setAdminVisibility(true);
         }
@@ -294,8 +297,8 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        
-                        cancelEditGame(editGame, true);
+
+                        cancelEditGame(editGame, editGame.getHasChanged());
                     }
                 });
     }
@@ -305,11 +308,24 @@ public class ViewController {
      */
     public void startGame() {
         final GameModel curr = mainView.getMainPanel().getSelectedGame();
-        if (curr != null && !curr.isStarted()) {
+        if (curr.deadlinePassed()){
+            Object[] options = {"OK"};
+            JOptionPane.showOptionDialog(
+                    mainView, 
+                    "Game deadline has passed, edit game deadline before starting game.",
+                    "Deadline Passed Error",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+        }
+        else if (curr != null && !curr.isStarted()) {
             curr.startGame();
             UpdateGamesController.getInstance().updateGame(curr);
             EmailController.getInstance().sendGameStartNotifications(curr);
         }
+        
     }
     
     /**
