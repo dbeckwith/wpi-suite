@@ -148,15 +148,10 @@ public class ViewController {
     public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
 
         if (hasChanged) {
-            final int result = cancelConfirm.showConfirmDialog(e,
-                    "Are you sure you want to cancel this game?",
-                    "Cancel Game", JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                RequirementsListModel.getInstance().removeListListener(
-                        e.getNewGameRequirementsPanel()
-                                .getRequirementsListObserver());
-                mainView.removeTabAt(mainView.indexOfComponent(e));
-            }
+            RequirementsListModel.getInstance().removeListListener(
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
+            mainView.removeTabAt(mainView.indexOfComponent(e));
         }
         else {
             RequirementsListModel.getInstance().removeListListener(
