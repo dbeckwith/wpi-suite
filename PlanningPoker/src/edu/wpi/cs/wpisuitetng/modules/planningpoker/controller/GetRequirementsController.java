@@ -30,7 +30,7 @@ public class GetRequirementsController {
      */
     private GetRequirementsController() {
         
-        observer = new GetRequirementsRequestObserver(this);
+        observer = new GetRequirementsRequestObserver();
     }
     
     /**

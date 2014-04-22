@@ -95,12 +95,13 @@ public class NewDeckPanel extends JPanel {
             
             private void validate() {
                 for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
-                    if (deck.toString().equals(newDeckName.getText())
+                    if (deck.toString().equals(newDeckName.getText().trim())
                             || newDeckName.getText().equals("Default")
                             || newDeckName.getText().equals("No deck")
                             || newDeckName.getText().equals("Generated deck")) {
                         isNameValid = false;
                         nameInUse = true;
+                        setErrorBorder(newDeckName, isNameValid);
                         checkNewDeck();
                         return;
                     }
@@ -108,7 +109,7 @@ public class NewDeckPanel extends JPanel {
                 nameInUse = false;
                 
                 isNameValid = newDeckName.getText() != null
-                        && !newDeckName.getText().isEmpty();
+                        && !newDeckName.getText().trim().isEmpty();
                 
                 setErrorBorder(newDeckName, isNameValid);
                 
@@ -155,7 +156,7 @@ public class NewDeckPanel extends JPanel {
             }
             
             private void validate() {
-                final String pattern = "( *\\.?[0-9][0-9.]*,? ?)*\\.?[0-9][0-9.]*";
+                final String pattern = " *([0-9]{1,3} *, *)*[0-9]{1,3} *";
                 areCardsValid = newDeckCards.getText() != null
                         && !newDeckCards.getText().isEmpty()
                         && Pattern.matches(pattern, newDeckCards.getText());
@@ -184,13 +185,11 @@ public class NewDeckPanel extends JPanel {
                         cards.add(Double.parseDouble(newCard));
                     }
                 }
-                final DeckModel newDeck = new DeckModel(newDeckName.getText(), cards,
+                final DeckModel newDeck = new DeckModel(newDeckName.getText().trim(), cards,
                         multipleSelect.isSelected());
                 newDeck.sort();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
-                newDeckName.setText("");
-                newDeckCards.setText("");
             }
         });
         
@@ -252,10 +251,23 @@ public class NewDeckPanel extends JPanel {
         springLayout.putConstraint(SpringLayout.WEST, errorLabel, 6,
                 SpringLayout.EAST, createDeckButton);
         add(errorLabel);
+
+        newDeckName.setText(makeNewDeckName());
+        
         checkNewDeck();
         
-        setErrorBorder(newDeckName, false);
+        setErrorBorder(newDeckName, true);
         setErrorBorder(newDeckCards, false);
+    }
+    
+    /**
+     * 
+     * Resets the fields in the form to their default values.
+     *
+     */
+    public void resetFields() {
+        newDeckName.setText(makeNewDeckName());
+        newDeckCards.setText("");
     }
     
     private void checkNewDeck() {
@@ -291,6 +303,40 @@ public class NewDeckPanel extends JPanel {
         else {
             c.setBorder(BorderFactory.createEtchedBorder());
         }
+    }
+    
+    private static String makeNewDeckName() {
+        // deck name prefix
+        final String defaultName = "New Deck";
+        // the number that will go after the prefix
+        int deckNum = 0;
+        
+        // go through all the current decks and find the largest number
+        // already in the names
+        for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
+            String name = deck.getName();
+            // if the name looks like the prefix with a number after it
+            if (name.matches(defaultName + "( \\d+)?")) {
+                int newNum;
+                if (name.matches(defaultName + " \\d+")) {
+                    // name has a number after it
+                    newNum = Integer.parseInt(name.substring(defaultName
+                            .length() + 1)) + 1;
+                }
+                else {
+                    // name has no number after it, so the number was 0
+                    newNum = 1;
+                }
+                // if the number in the name was bigger than the current number,
+                // use this one
+                if (newNum > deckNum) {
+                    deckNum = newNum;
+                }
+            }
+        }
+        
+        // only show the number if it wasn't 0
+        return defaultName + (deckNum == 0 ? "" : " " + deckNum);
     }
     
     /**

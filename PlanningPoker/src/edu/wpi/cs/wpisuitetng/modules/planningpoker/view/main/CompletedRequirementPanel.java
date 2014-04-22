@@ -197,6 +197,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         finalEstimateField = new JTextField();
         finalEstimateField.setColumns(10);
+        finalEstimateField.setBackground(Color.WHITE);
+        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         saveFinalEstimateButton = new JButton("Save");
         saveFinalEstimateButton.setEnabled(false);
         saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
@@ -232,7 +234,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         saveFinalEstimateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 lblError.setVisible(false);
-                if (req.getFinalEstimate() != 0) {
+                if (req.getFinalEstimate() != 0
+                        && !req.getEstimateNote().startsWith("Manual change: \n")) {
                     req.setEstimateNote("Manual change: \n" + notePane.getText());
                 } else {
                     req.setEstimateNote(notePane.getText());

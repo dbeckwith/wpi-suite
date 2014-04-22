@@ -104,7 +104,7 @@ public class ViewControllerTest {
         final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
-        ViewControllerTest.vc.cancelNewGame(ngp);
+        ViewControllerTest.vc.cancelNewGame(ngp, false);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
@@ -122,7 +122,7 @@ public class ViewControllerTest {
         final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
-        ViewControllerTest.vc.cancelEditGame(ngp);
+        ViewControllerTest.vc.cancelEditGame(ngp, false);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
