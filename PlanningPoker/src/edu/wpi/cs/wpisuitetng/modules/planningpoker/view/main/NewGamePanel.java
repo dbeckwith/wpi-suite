@@ -135,6 +135,7 @@ public class NewGamePanel extends JPanel {
         check();
         checkNewRequirement();
         undoButton.setEnabled(false);
+        saveButton.setEnabled(false);
     }
     
     public void setData (GameModel g){
@@ -144,6 +145,7 @@ public class NewGamePanel extends JPanel {
         newGameRequirementsPanel.setGame(game);
         
         undoButton.setVisible(true);
+        saveButton.setEnabled(false);
         undoButton.setEnabled(false);
     }
     
@@ -444,6 +446,7 @@ public class NewGamePanel extends JPanel {
             errorLabel.setText("");
         }
         undoButton.setEnabled(true);
+        saveButton.setEnabled(true);
     }
     
     /**
