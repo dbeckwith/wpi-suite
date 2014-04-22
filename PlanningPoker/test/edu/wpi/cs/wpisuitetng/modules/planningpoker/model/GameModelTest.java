@@ -13,79 +13,87 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the GameModel class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameModelTest {
     GameModel nullGame;
     GameModel game1;
     GameModel game2;
     GameModel game3;
-    GameModel game4;
-    ArrayList<GameRequirementModel> reqs;
+    List<GameRequirementModel> reqs;
     
+    /**
+     * Initializes the mock network and other variables
+     */
     @Before
-    public void setUp() {
-    	 Network.initNetwork(new MockNetwork());
-         Network.getInstance().setDefaultNetworkConfiguration(
-                 new NetworkConfiguration("http://wpisuitetng"));
+    public void prepare() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
         reqs = new ArrayList<GameRequirementModel>();
-        GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
-                "Req desc", "User Story", new ArrayList<Estimate>());
+        final GameRequirementModel aReq = new GameRequirementModel(1,
+                "Req name", "Req desc", "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();
-        game1 = new GameModel("Test Game 1", "Live Game that just ended",
-                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(),
-                GameType.LIVE, GameStatus.COMPLETE);
+        game1 = new GameModel("Test Game 1", "Live Game that just ended", reqs,
+                DeckListModel.getInstance().getDefaultDeck(), new Date(),
+                GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
                 "Distributed Game that will end in 5 seconds", reqs,
                 DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() + 5000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
-                        System.currentTimeMillis() + 10000), GameType.LIVE,
-                GameStatus.COMPLETE);
-        game4 = new GameModel(
-                "Test Game 4",
-                "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
-                        System.currentTimeMillis() - 10000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                        System.currentTimeMillis() + 10000),
+                GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
     }
     
+    /**
+     * Tests that setting the ended status of a game works correctly
+     */
     @Test
     public void testSetEnded() {
         game1.setEnded(true);
-        Assert.assertEquals(GameStatus.COMPLETE, game1.getStatus());
+        Assert.assertEquals(GameModel.GameStatus.COMPLETE, game1.getStatus());
         game2.setEnded(true);
-        Assert.assertEquals(GameStatus.COMPLETE, game2.getStatus());
+        Assert.assertEquals(GameModel.GameStatus.COMPLETE, game2.getStatus());
         game3.setEnded(false);
-        Assert.assertEquals(GameStatus.COMPLETE, game3.getStatus());
+        Assert.assertEquals(GameModel.GameStatus.COMPLETE, game3.getStatus());
     }
     
-   // @Test
+    /**
+     * Tests that the isEnded method returns the appropriate boolean
+     */
+    @Test
     public void testIsEnded() {
+        CurrentUserController.getInstance().receivedUsers(
+                new User[] { new User("Name", "Username", "Pass", 1) });
         Assert.assertTrue(game1.isEnded());
         Assert.assertFalse(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
-        Assert.assertTrue(game4.isEnded());
     }
     
+    /**
+     * Tests that an object is the same after being transformed to and from JSON
+     */
     @Test
     public void testJSON() {
         Assert.assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON())
@@ -94,17 +102,20 @@ public class GameModelTest {
                 + game2.toJSON() + "]")[0].getName());
     }
     
-   // @Test
+    /**
+     * Tests the status of a games after closing or not closing them
+     */
+    @Test
     public void testClosedGame() {
+        CurrentUserController.getInstance().receivedUsers(
+                new User[] { new User("Name", "Username", "Pass", 1) });
         game1.closeGame();
         game2.closeGame();
         Assert.assertTrue(game1.isEnded());
         Assert.assertTrue(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
-        Assert.assertTrue(game4.isEnded());
         Assert.assertTrue(game1.isClosed());
         Assert.assertTrue(game2.isClosed());
         Assert.assertFalse(game3.isClosed());
-        Assert.assertFalse(game4.isClosed());
     }
 }

@@ -20,12 +20,16 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
+ * Tests the GameRequirementModel class
  * 
- * @author Lukas, Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameRequirementModelTest {
     
+    /**
+     * Tests that mean calculation of estimates works correctly
+     */
     @Test
     public void testMean() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
@@ -36,6 +40,9 @@ public class GameRequirementModelTest {
         Assert.assertEquals("testing mean failed", 25, grm.getEstimateMean(), 3);
     }
     
+    /**
+     * Tests that median calculation of estimates works correctly
+     */
     @Test
     public void testMedian() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
@@ -51,6 +58,9 @@ public class GameRequirementModelTest {
         
     }
     
+    /**
+     * Tests that mean and median return 0 for an empty model
+     */
     @Test
     public void testEmptyModel() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
@@ -60,6 +70,9 @@ public class GameRequirementModelTest {
         Assert.assertEquals(0, grm.getEstimateMedian(), 3);
     }
     
+    /**
+     * Tests that other constructors for GameRequirementModel work correctly
+     */
     @Test
     public void testOtherConstructors() {
         final GameRequirementModel blank = new GameRequirementModel();
@@ -76,6 +89,9 @@ public class GameRequirementModelTest {
         
     }
     
+    /**
+     * Tests that the equals method for GameRequirementModels works correctly
+     */
     @Test
     public void testEqualsMethod() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
@@ -91,8 +107,8 @@ public class GameRequirementModelTest {
         final GameRequirementModel grmDifferent3 = new GameRequirementModel(6,
                 "C requirement", "D description", "Z type");
         final GameRequirementModel blank = new GameRequirementModel();
-        int anInteger = 5;
-        String aString = "A String";
+        final int anInteger = 5;
+        final String aString = "A String";
         
         Assert.assertTrue(grm.equals(grm));
         Assert.assertFalse(grm.equals(blank));
