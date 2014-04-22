@@ -35,30 +35,26 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  */
 public class GameTest {
     
-    static Session defaultSession;
-    static GameEntityManager manager;
-    static User existingUser;
-    static Project testProject;
-    static String mockSsid;
-    static MockData db;
+    
+   
+    static User existingUser = new User("joe", "joe", "1234", 2);
+    static Project testProject = new Project("test", "1");
+    static String mockSsid = "abc123";
+    static MockData db = new MockData(new HashSet<Object>());
+    static GameEntityManager manager = new GameEntityManager(db);
+    static Session defaultSession = new Session(existingUser, testProject, mockSsid);
 
     @BeforeClass
     static public void prepare() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        mockSsid = "abc123";
-        testProject = new Project("test", "1");
-        existingUser = new User("joe", "joe", "1234", 2);
-        defaultSession = new Session(existingUser, testProject, mockSsid);
-        db = new MockData(new HashSet<Object>());
         db.save(existingUser);
-        manager = new GameEntityManager(db);
     }
     
 	@Test
 	public void TestRequirementEndsAfterDeadline() {
-		GameModel testgame = new GameModel("Test Game", "something", null,
+		final GameModel testgame = new GameModel("Test Game", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() + 1000),
 				GameType.DISTRIBUTED, GameStatus.NEW);
@@ -74,18 +70,20 @@ public class GameTest {
                     .update(defaultSession, created.toJSON());
         }
         catch (WPISuiteException e1) {
+            System.out.print("");
         }
 		try {
             Thread.sleep(3000);
         }
         catch (InterruptedException e) {
+            System.out.print("");
         }
 		Assert.assertTrue(created.isEnded());
 	}
 
 	@Test
 	public void TestRequirementNotCompleteBeforeDeadline() {
-		GameModel testgame = new GameModel("Test Game", "something", null,
+		final GameModel testgame = new GameModel("Test Game", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() + 100000000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);

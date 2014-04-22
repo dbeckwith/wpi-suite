@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -23,13 +20,17 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the GameListModel class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameListModelTest {
     static GameListModel instance;
     
+    /**
+     * Initializes the mock network and the instance of the GameListModel
+     */
     @BeforeClass
     static public void prepare() {
         Network.initNetwork(new MockNetwork());
@@ -40,6 +41,9 @@ public class GameListModelTest {
         instance.removeStatusObservers();
     }
     
+    /**
+     * Tests that the instance returned by getInstance is the same as a previous instance
+     */
     @Test
     public void testGetInstance() {
         Assert.assertEquals(
@@ -47,6 +51,9 @@ public class GameListModelTest {
                 GameListModelTest.instance, GameListModel.getInstance());
     }
     
+    /**
+     * Tests that adding a list listener works correctly
+     */
     @Test
     public void testAddListListener() {
         final SimpleListObserver slo = new SimpleListObserver() {
@@ -62,6 +69,9 @@ public class GameListModelTest {
                 slo));
     }
     
+    /**
+     * Tests that adding and removing games works correctly
+     */
     @Test
     public void testGameManipulation() {
         final GameModel game1 = new GameModel("Test Game",

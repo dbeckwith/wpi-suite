@@ -48,6 +48,9 @@ public class GameModelTest {
     GameModel game4;
     List<GameRequirementModel> reqs;
     
+    /**
+     * Initializes the mock network and other variables
+     */
     @Before
     public void prepare() {
         Network.initNetwork(new MockNetwork());
@@ -80,6 +83,9 @@ public class GameModelTest {
                         GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
     }
     
+    /**
+     * Tests that setting the ended status of a game works correctly
+     */
     @Test
     public void testSetEnded() {
         game1.setEnded(true);
@@ -90,6 +96,9 @@ public class GameModelTest {
         Assert.assertEquals(GameModel.GameStatus.COMPLETE, game3.getStatus());
     }
     
+    /**
+     * Tests that the isEnded method returns the appropriate boolean
+     */
     // @Test
     public void testIsEnded() {
         Assert.assertTrue(game1.isEnded());
@@ -98,6 +107,9 @@ public class GameModelTest {
         Assert.assertTrue(game4.isEnded());
     }
     
+    /**
+     * Tests that an object is the same after being transformed to and from JSON
+     */
     @Test
     public void testJSON() {
         Assert.assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON())
@@ -106,6 +118,9 @@ public class GameModelTest {
                 + game2.toJSON() + "]")[0].getName());
     }
     
+    /**
+     * Tests the status of a games after closing or not closing them
+     */
     // @Test
     public void testClosedGame() {
         game1.closeGame();

@@ -62,6 +62,9 @@ public class GameEntityManagerTest {
                     System.currentTimeMillis() - 100000),
                     GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
     
+    /**
+     * Initializes the mock network and prepares other variables
+     */
     @BeforeClass
     static public void prepareFirst() {
         Network.initNetwork(new MockNetwork());
@@ -81,6 +84,9 @@ public class GameEntityManagerTest {
         db.save(admin);
     }
     
+    /**
+     * Clears the database then repopulates it to create the test environment
+     */
     @Before
     public void prepare() {
         try {
@@ -95,6 +101,11 @@ public class GameEntityManagerTest {
         db.save(admin);
     }
     
+    /**
+     * Tests that make entity properly stores an object in the database
+     * 
+     * @throws WPISuiteException
+     */
     @Test
     public void testMakeEntity() throws WPISuiteException {
         final GameModel created = manager
@@ -105,6 +116,11 @@ public class GameEntityManagerTest {
         Assert.assertSame(db.retrieve(GameModel.class, "id", newGameID).get(0), created);
     }
     
+    /**
+     * Tests that database retrieval works correctly
+     * 
+     * @throws NotFoundException
+     */
     @Test
     public void testGetEntity() throws NotFoundException {
         db.save(existingGame, testProject);
@@ -112,16 +128,30 @@ public class GameEntityManagerTest {
         Assert.assertSame(existingGame, games[0]);
     }
     
+    /**
+     * Tests that trying to retrieve an entity with a bad ID returns the appropriate exception
+     * 
+     * @throws NotFoundException
+     */
     @Test(expected = NotFoundException.class)
     public void testGetBadId() throws NotFoundException {
         manager.getEntity(defaultSession, "-1");
     }
     
+    /**
+     * Tests that trying to retrieve an entity with an ID that doesn't exist throws
+     * the appropriate exception
+     * 
+     * @throws NotFoundException
+     */
     @Test(expected = NotFoundException.class)
     public void testGetMissingEntity() throws NotFoundException {
         manager.getEntity(defaultSession, "2");
     }
     
+    /**
+     * Tests retrieval of all items from the database
+     */
     @Test
     public void testGetAll() {
         final GameModel[] received = manager.getAll(defaultSession);
@@ -129,6 +159,9 @@ public class GameEntityManagerTest {
         Assert.assertSame(existingGame, received[0]);
     }
     
+    /**
+     * Tests that save properly saves to the database.
+     */
     @Test
     public void testSave() {
         final GameModel game = new GameModel("Save Test", "something", null,
@@ -141,6 +174,11 @@ public class GameEntityManagerTest {
         Assert.assertSame(testProject, game.getProject());
     }
     
+    /**
+     * Tests that delete works correctly with the database
+     * 
+     * @throws WPISuiteException
+     */
     @Test
     public void testDelete() throws WPISuiteException {
         Assert.assertSame(existingGame, db.retrieve(GameModel.class, "id", existingGameID)
@@ -149,22 +187,40 @@ public class GameEntityManagerTest {
         Assert.assertEquals(0, db.retrieve(GameModel.class, "id", existingGameID).size());
     }
     
+    /**
+     * Tests that trying to delete an entity that doesn't exist throws the appropriate exception.
+     * 
+     * @throws WPISuiteException
+     */
     @Test(expected = NotFoundException.class)
     public void testDeleteMissing() throws WPISuiteException {
         manager.deleteEntity(adminSession, "4534");
     }
     
+    /**
+     * Tests to ensure that you can't delete an entity from another project
+     * 
+     * @throws WPISuiteException
+     */
     @Test(expected = NotFoundException.class)
     public void testDeleteFromOtherProject() throws WPISuiteException {
         manager.deleteEntity(adminSession, Integer.toString(otherGame.getID()));
     }
     
+    /**
+     * Tests to ensure you can't delete without privileges
+     * @throws WPISuiteException
+     */
     @Test(expected = UnauthorizedException.class)
     public void testDeleteNotAllowed() throws WPISuiteException {
         manager.deleteEntity(defaultSession,
                 Integer.toString(existingGame.getID()));
     }
     
+    /**
+     * Tests that delete all the entities from the database works correctly
+     * @throws WPISuiteException
+     */
     @Test
     public void testDeleteAll() throws WPISuiteException {
         final GameModel anotherGame = new GameModel("a title", "a description",
@@ -182,11 +238,21 @@ public class GameEntityManagerTest {
                 .size());
     }
     
+    /**
+     * Ensures you can't delete all without the proper privileges
+     * 
+     * @throws WPISuiteException
+     */
     @Test(expected = UnauthorizedException.class)
     public void testDeleteAllNotAllowed() throws WPISuiteException {
         manager.deleteAll(defaultSession);
     }
     
+    /**
+     * Ensures delete all works even when there are no objects
+     * 
+     * @throws WPISuiteException
+     */
     @Test
     public void testDeleteAllWhenEmpty() throws WPISuiteException {
         manager.deleteAll(adminSession);
@@ -194,11 +260,19 @@ public class GameEntityManagerTest {
         // no exceptions
     }
     
+    /**
+     * Tests that count method works correctly
+     */
     @Test
     public void testCount() {
         Assert.assertEquals(2, manager.Count());
     }
     
+    /**
+     * Tests that the update method works correctly
+     * 
+     * @throws WPISuiteException
+     */
     @Test
     public void testUpdate() throws WPISuiteException {
         final GameModel updated = manager.update(defaultSession,
@@ -211,16 +285,31 @@ public class GameEntityManagerTest {
         // used
     }
     
+    /**
+     * Tests that the unimplemented advancedGet throws the appropriate exception
+     * 
+     * @throws NotImplementedException
+     */
     @Test(expected = NotImplementedException.class)
     public void testAdvancedGet() throws NotImplementedException {
         manager.advancedGet(defaultSession, new String[0]);
     }
     
+    /**
+     * Tests that the unimplemented advancedPost throws the appropriate exception
+     * 
+     * @throws NotImplementedException
+     */
     @Test(expected = NotImplementedException.class)
     public void testAdvancedPost() throws NotImplementedException {
         manager.advancedPost(defaultSession, "", "");
     }
     
+    /**
+     * Tests that the unimplemented advancedPut throws the appropriate exception
+     * 
+     * @throws NotImplementedException
+     */
     @Test(expected = NotImplementedException.class)
     public void testAdvancedPut() throws NotImplementedException {
         manager.advancedPut(defaultSession, new String[0], "");

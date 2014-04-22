@@ -26,6 +26,9 @@ public class DeckModelTest {
     ArrayList<Double> cards;
     DeckModel deck;
     
+    /**
+     * Creates a deck out of an array of two cards
+     */
     @Before
     public void prepare(){
         cards = new ArrayList<Double>();
@@ -34,6 +37,9 @@ public class DeckModelTest {
         deck = new DeckModel("Test Deck", cards, true);
     }
     
+    /**
+     * Tests that add and remove card functions work correctly
+     */
     @Test
     public void testCardManipulation() {
         deck.addCard(3.0);
@@ -50,6 +56,9 @@ public class DeckModelTest {
         
     }
     
+    /**
+     * Tests that an object is equivalent after being transformed to JSON and back
+     */
     @Test
     public void testJSON() {
         Assert.assertEquals(deck.getName(), DeckModel.fromJSON(deck.toJSON())

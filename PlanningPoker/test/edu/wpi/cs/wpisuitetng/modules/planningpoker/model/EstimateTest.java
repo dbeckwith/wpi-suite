@@ -23,6 +23,9 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class EstimateTest {
     
+    /**
+     * Tests that the compare methods work correctly
+     */
     @Test
     public void testCompareMethods() {
         final Estimate est1 = new Estimate(new User("joe", "joe", "password", 1), 20, null);
@@ -33,6 +36,9 @@ public class EstimateTest {
         Assert.assertTrue(est2.compareTo(est1) < 0);
     }
     
+    /**
+     * Tests that the Estimate is the same after being transformed to JSON and back
+     */
     @Test
     public void testJSON() {
         final Estimate est = new Estimate(new User("joe", "joe", "password", 1), 20, null);
