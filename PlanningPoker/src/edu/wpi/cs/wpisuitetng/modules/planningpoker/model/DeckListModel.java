@@ -21,7 +21,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  * @version 1.0
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
-	private DeckModel defaultDeck;
 	private static DeckListModel instance = null;
 	private final ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
 	private static final long serialVersionUID = 3193186441179194894L;
@@ -47,19 +46,7 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 		decks.clear();
 	}
 
-	/**
-	 * Sets the default deck which will be automatically selected when a new game is created.
-	 */
-	public void setDefaultDeck(DeckModel defaultDeck) {
-		this.defaultDeck = defaultDeck;
-	}
 
-	/**
-	 * Gets the default deck.
-	 */
-	public DeckModel getDefaultDeck() {
-		return defaultDeck;
-	}
     
     /**
      * Adds a new deck to the list.
@@ -70,6 +57,16 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	public void addDeck(DeckModel deck) {
 		decks.add(deck);
 
+		for (int i = 0; i < observers.size(); i++){
+			observers.get(i).listUpdated();
+		}
+	}
+	
+	public void addAllDecks(DeckModel[] newDecks){
+		for(int i = 0; i < newDecks.length; i++){
+			decks.add(newDecks[i]);
+		}
+		
 		for (int i = 0; i < observers.size(); i++){
 			observers.get(i).listUpdated();
 		}

@@ -9,7 +9,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -71,7 +70,7 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        cancelNewGame(editGame, editGame.getHasChanged());
+                    	cancelNewGame(editGame, editGame.getHasChanged());
                     }
                 });
         
@@ -104,22 +103,10 @@ public class ViewController {
      *        The NewGamePanel to create a game from
      */
     public void saveNewGame(NewGamePanel e) {
-        DeckModel d = e.getDeck();
-        final ArrayList<Double> newCards = new ArrayList<Double>();
-        if (d.toString().equals("Generated deck")) {
-            for (int i = 1; i <= e.getMaximumCardValue(); i++) {
-                newCards.add((double) i);
-            }
-            
-            d = new DeckModel(d.toString(), newCards,
-                    d.canAllowsMultipleSelection());
-        }
-        System.out.println(d);
+
         
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), new DeckModel(
-                        d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(),
+                e.getDescription(), e.getRequirements(), e.getDeck(), e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         
@@ -142,9 +129,7 @@ public class ViewController {
     public void updateGame(GameModel game, NewGamePanel e) {
         final DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), new DeckModel(
-                        d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(),
+                e.getDescription(), e.getRequirements(), d, e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         game.editCopyFrom(newGame);
@@ -161,6 +146,7 @@ public class ViewController {
      *        The NewGamePanel to cancel
      */
     public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
+
         if (hasChanged) {
             final int result = cancelConfirm.showConfirmDialog(e,
                     "Are you sure you want to cancel this game?",
@@ -187,6 +173,7 @@ public class ViewController {
      *        the NewGamePanel to cancel
      */
     public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
+
         if (hasChanged) {
             final int result = cancelConfirm
                     .showConfirmDialog(
@@ -310,6 +297,7 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
                         cancelEditGame(editGame, editGame.getHasChanged());
                     }
                 });

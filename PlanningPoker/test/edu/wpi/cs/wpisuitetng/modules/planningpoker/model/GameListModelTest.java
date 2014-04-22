@@ -36,6 +36,7 @@ public class GameListModelTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
+
         GameListModelTest.instance = GameListModel.getInstance();
         instance.removeObservers();
         instance.removeStatusObservers();
@@ -75,11 +76,9 @@ public class GameListModelTest {
     @Test
     public void testGameManipulation() {
         final GameModel game1 = new GameModel("Test Game",
-                "Test Game Description", null, DeckListModel.getInstance()
-                .getDefaultDeck(), new Date(), null, GameModel.GameStatus.PENDING);
+                "Test Game Description", null, DeckModel.DEFAULT_DECK, new Date(), null, GameModel.GameStatus.PENDING);
         final GameModel game2 = new GameModel("Test Game 2",
-                "Test Game Description 2", null, DeckListModel.getInstance()
-                .getDefaultDeck(), new Date(), null,
+                "Test Game Description 2", null, DeckModel.DEFAULT_DECK, new Date(), null,
                 GameModel.GameStatus.COMPLETE);
         GameListModelTest.instance.addGame(game1);
         GameListModelTest.instance.addGame(game2);

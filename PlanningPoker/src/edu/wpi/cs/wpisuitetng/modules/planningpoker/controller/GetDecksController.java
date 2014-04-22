@@ -64,9 +64,7 @@ public class GetDecksController {
     public static void receivedDecks(DeckModel[] decks) {
         DeckListModel.getInstance().emptyModel();
         if (decks != null) {
-            for (DeckModel deck : decks) {
-                DeckListModel.getInstance().addDeck(deck);
-            }
+            DeckListModel.getInstance().addAllDecks(decks);
         }
     }
 }
