@@ -36,7 +36,7 @@ public class UserUpdateController {
     }
     
     private enum FieldName {
-        IM_NOTIFY, EMAIL_NOTIFY
+        IM_NOTIFY, EMAIL_NOTIFY, EMAIL_UPDATE
     }
     
     /**
@@ -96,6 +96,10 @@ public class UserUpdateController {
         sendPostRequest(FieldName.IM_NOTIFY, doNotify);
     }
     
+    public void updateEmail(String e){
+        sendPostRequest(FieldName.EMAIL_UPDATE, e);
+    }
+    
     /**
      * A helper method for setting notification preference in the user's
      * preferences.
@@ -113,6 +117,9 @@ public class UserUpdateController {
                 break;
             case IM_NOTIFY:
                 user.setNotifyByIM((Boolean) newValue);
+                break;
+            case EMAIL_UPDATE:
+                user.setEmail((String) newValue);
                 break;
             default:
                 System.err

@@ -25,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -113,17 +115,17 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         emailField = new JTextField();
         emailField.setColumns(10);
         emailField.getDocument().addDocumentListener(new DocumentListener(){
-
+            
             @Override
             public void changedUpdate(DocumentEvent arg0) {
                 validate();
             }
-
+            
             @Override
             public void insertUpdate(DocumentEvent arg0) {
                 validate(); 
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent arg0) {
                 validate();
@@ -154,6 +156,14 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         });
         
         saveButton = new JButton("Save");
+        saveButton.addActionListener(new ActionListener(){
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                updateEmail();
+            }
+            
+        });
         
         errorLabel = new JLabel("Invalid Email!");
         errorLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -163,55 +173,55 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         final javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(
                 notificationsPanel);
         notificationsPanelLayout.setHorizontalGroup(
-            notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
+                notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(notificationsPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(notificationsPanelLayout.createSequentialGroup()
-                            .addComponent(imBox)
-                            .addGap(199)
-                            .addComponent(errorLabel))
-                        .addGroup(notificationsPanelLayout.createSequentialGroup()
-                            .addComponent(emailBox)
-                            .addPreferredGap(ComponentPlacement.UNRELATED)
-                            .addComponent(lblEmail)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(saveButton)))
-                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                        .addContainerGap()
+                        .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(notificationsPanelLayout.createSequentialGroup()
+                                        .addComponent(imBox)
+                                        .addGap(199)
+                                        .addComponent(errorLabel))
+                                        .addGroup(notificationsPanelLayout.createSequentialGroup()
+                                                .addComponent(emailBox)
+                                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                                .addComponent(lblEmail)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(saveButton)))
+                                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
         notificationsPanelLayout.setVerticalGroup(
-            notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
+                notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(notificationsPanelLayout.createSequentialGroup()
-                    .addContainerGap(17, Short.MAX_VALUE)
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(imBox)
-                        .addComponent(errorLabel))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(emailBox)
-                        .addComponent(lblEmail)
-                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(saveButton)))
-        );
+                        .addContainerGap(17, Short.MAX_VALUE)
+                        .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(imBox)
+                                .addComponent(errorLabel))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(emailBox)
+                                        .addComponent(lblEmail)
+                                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(saveButton)))
+                );
         notificationsPanel.setLayout(notificationsPanelLayout);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
+                layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(notificationsPanel, 133, 410, GroupLayout.PREFERRED_SIZE) //manually change min to 133
-                    .addContainerGap(85, Short.MAX_VALUE))
-        );
+                        .addContainerGap()
+                        .addComponent(notificationsPanel, 133, 410, GroupLayout.PREFERRED_SIZE) //manually change min to 133
+                        .addContainerGap(85, Short.MAX_VALUE))
+                );
         layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
+                layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(203, Short.MAX_VALUE))
-        );
+                        .addContainerGap()
+                        .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(203, Short.MAX_VALUE))
+                );
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
@@ -230,6 +240,12 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void imBoxActionPerformed(java.awt.event.ActionEvent evt) {
         UserUpdateController.getInstance().setNotifyByIM(imBox.isSelected());
+    }
+    
+    private void updateEmail(){
+        String email =  emailField.getText();
+        UserUpdateController.getInstance().updateEmail(email);
+        saveButton.setEnabled(false);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
