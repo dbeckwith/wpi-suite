@@ -274,6 +274,16 @@ public class GameModel extends AbstractModel implements Serializable {
     }
     
     /**
+     * Checks if the deadline for this game has passed
+     * 
+     * @return if the deadline for this game has passed
+     */
+    public boolean deadlinePassed(){
+        Date currDate = new Date();
+        return endDate.before(currDate);
+    }
+    
+    /**
      * Returns which type of game this is
      * 
      * @return the game's type

@@ -321,11 +321,24 @@ public class ViewController {
      */
     public void startGame() {
         final GameModel curr = mainView.getMainPanel().getSelectedGame();
-        if (curr != null && !curr.isStarted()) {
+        if (curr.deadlinePassed()){
+            Object[] options = {"OK"};
+            JOptionPane.showOptionDialog(
+                    mainView, 
+                    "Game deadline has passed, edit game deadline before starting game.",
+                    "Deadline Passed Error",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+        }
+        else if (curr != null && !curr.isStarted()) {
             curr.startGame();
             UpdateGamesController.getInstance().updateGame(curr);
             EmailController.getInstance().sendGameStartNotifications(curr);
         }
+        
     }
     
     /**
