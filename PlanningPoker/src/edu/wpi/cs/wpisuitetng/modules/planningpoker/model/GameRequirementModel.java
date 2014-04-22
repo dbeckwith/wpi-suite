@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -18,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
@@ -349,8 +351,10 @@ public class GameRequirementModel extends AbstractModel {
                 .getParentRequirement(parentId);
         if (r != null) {
             r.setEstimate(finalEstimate);
+            RequirementModel.getInstance().getRequirement(parentId).setEstimate(finalEstimate);
             UpdateRequirementController.getInstance().updateRequirement(r);
             ViewEventController.getInstance().refreshTable();
+            ViewEventController.getInstance().refreshTree();
         } else {
             System.err.println("Parent requirement is null");
         }
