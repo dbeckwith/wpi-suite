@@ -10,16 +10,23 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
+
 import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.Font;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -62,6 +69,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             lblEmail.setVisible(b);
             emailField.setVisible(b);
             saveButton.setVisible(b);
+            emailField.setText(CurrentUserController.getInstance().getUser().getEmail());
+            saveButton.setEnabled(false);
         }
     }
     
@@ -103,8 +112,53 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         emailField = new JTextField();
         emailField.setColumns(10);
+        emailField.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                validate();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent arg0) {
+                validate(); 
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent arg0) {
+                validate();
+            }
+            
+            public void validate(){
+                String email = emailField.getText();
+                errorLabel.setVisible(false);
+                if(email.equals(CurrentUserController.getInstance().getUser().getEmail())){
+                    saveButton.setEnabled(false);
+                }else{
+                    saveButton.setEnabled(false);
+                    Pattern emailPattern;
+                    Matcher emailMatcher;
+                    final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                    emailPattern = Pattern.compile(EMAIL_PATTERN);
+                    emailMatcher = emailPattern.matcher(email);
+                    
+                    if(emailMatcher.matches()){
+                        saveButton.setEnabled(true);
+                    }else{
+                        errorLabel.setVisible(true);
+                    }
+                }
+            }
+            
+        });
         
         saveButton = new JButton("Save");
+        
+        errorLabel = new JLabel("Invalid Email!");
+        errorLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
         
         final javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(
                 notificationsPanel);
@@ -113,13 +167,16 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 .addGroup(notificationsPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(imBox)
+                        .addGroup(notificationsPanelLayout.createSequentialGroup()
+                            .addComponent(imBox)
+                            .addGap(199)
+                            .addComponent(errorLabel))
                         .addGroup(notificationsPanelLayout.createSequentialGroup()
                             .addComponent(emailBox)
                             .addPreferredGap(ComponentPlacement.UNRELATED)
                             .addComponent(lblEmail)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(saveButton)))
                     .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -127,8 +184,10 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanelLayout.setVerticalGroup(
             notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(notificationsPanelLayout.createSequentialGroup()
-                    .addContainerGap(19, Short.MAX_VALUE)
-                    .addComponent(imBox)
+                    .addContainerGap(17, Short.MAX_VALUE)
+                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(imBox)
+                        .addComponent(errorLabel))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(emailBox)
@@ -143,7 +202,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(notificationsPanel, 133, 400, GroupLayout.PREFERRED_SIZE) //manually change min to 133
+                    .addComponent(notificationsPanel, 133, 410, GroupLayout.PREFERRED_SIZE) //manually change min to 133
                     .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,6 +222,10 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         lblEmail.setVisible(b);
         emailField.setVisible(b);
         saveButton.setVisible(b);
+        errorLabel.setVisible(false);
+        if(b){
+            emailField.setText(CurrentUserController.getInstance().getUser().getEmail());
+        }
     }
     
     private void imBoxActionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,4 +239,5 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private JTextField emailField;
     private JLabel lblEmail;
     private JButton saveButton;
+    private JLabel errorLabel;
 }
