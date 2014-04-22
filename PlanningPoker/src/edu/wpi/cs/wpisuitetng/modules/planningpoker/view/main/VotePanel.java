@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
@@ -36,7 +39,7 @@ import javax.swing.ScrollPaneConstants;
 /**
  * the panel to show vote GUI
  * 
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class VotePanel extends javax.swing.JPanel {
@@ -80,23 +83,25 @@ public class VotePanel extends javax.swing.JPanel {
         this.req = req;
         
         boolean voted = false;
+        old = null;
         ArrayList<Integer> selectedCards = null;
-        ArrayList<Estimate> estimates = req.getEstimates();
+        final ArrayList<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 selectedCards = e.getCardsSelected();
                 voted = true;
+                old = e;
             }
         }
         
         reqDescriptionTextArea.setText(req.getDescription());
         setRequirementName(req.getName());
         setRequirementType(req.getType());
-        // setRequirementProgress();
         
-        setAllowMultipleCards(parentGame.getDeck().getAllowsMultipleSelection());
+
+        setAllowMultipleCards(parentGame.getDeck().canAllowsMultipleSelection());
         System.out.println("multiple selection : "
-                + parentGame.getDeck().getAllowsMultipleSelection());
+                + parentGame.getDeck().canAllowsMultipleSelection());
         
         
         old = null; // ensure it is erased
@@ -111,12 +116,9 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        ArrayList<String> deck = new ArrayList<>();
+        final ArrayList<String> deck = new ArrayList<>();
         
-        // Add card values from the game's deck
-        for (Double cardVal : parentGame.getDeck().getCards()) {
-            deck.add(cardVal.toString());
-        }
+        
         
         ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
@@ -130,39 +132,70 @@ public class VotePanel extends javax.swing.JPanel {
         }
         
         cards.clear();
-        estimateCardsPanel.removeAll();
-        for (final String estimate : deck) {
-            final CardButton estimateCard = new CardButton(estimate);
-            cards.add(estimateCard);
-            
-            estimateCard.setText(estimate);
-            estimateCard.setPreferredSize(new Dimension(80, 120));
-            estimateCard.setCardSelected(selected.contains(new Integer(deck
-                    .indexOf(estimate))));
-            estimateCard.addActionListener(new ActionListener() {
-                
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (estimateCard.isCardEnabled()) {
-                        estimateCard.setCardSelected(!estimateCard
-                                .isCardSelected());
-                        if (!selectMultiple) {
-                            deselectOtherCards(estimateCard);
-                        }
-                        validateCards();
-                    }
-                    updateTotal();
-                    VotePanel.this.repaint();
-                }
-            });
-            
-            estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
-        }
-        
-        if (voted) {
-            for (Integer i : selectedCards) {
-                cards.get(i).setCardSelected(true);
+        if(parentGame.getDeck().isNone()){
+        	estimateCardsPanel.removeAll();
+        	CardButton estimateInput = new CardButton();
+        	
+            estimateInput.addActionListener(new ActionListener() {					
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					updateTotal();	
+					validateCards();
+				}
+			});
+            cards.add(estimateInput);
+            updateTotal();
+        	validateCards();
+        	estimateInput.setPreferredSize(new Dimension(120, 160));
+        	estimateCardsPanel.add(estimateInput);
+        	
+        	if(voted && old != null){
+        		cards.get(0).setValue(old.getEstimate());
+        	}
+        } else {
+        	            
+            // Add card values from the game's deck
+            for (Double cardVal : parentGame.getDeck().getCards()) {
+                deck.add(cardVal.toString());
             }
+            
+        	
+	        estimateCardsPanel.removeAll();
+	        for (final String estimate : deck) {
+	            final CardButton estimateCard = new CardButton(estimate);
+	            
+	            cards.add(estimateCard);
+	            
+	            estimateCard.setPreferredSize(new Dimension(80, 120));
+	            estimateCard.setCardSelected(selected.contains(new Integer(deck
+	                    .indexOf(estimate))));
+	            estimateCard.addActionListener(new ActionListener() {
+	                
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    if (estimateCard.isCardEnabled()) {
+	                        estimateCard.setCardSelected(!estimateCard
+	                                .isCardSelected());
+	                        if (!selectMultiple) {
+	                            deselectOtherCards(estimateCard);
+	                        }
+	                        validateCards();
+	                    }
+	                    updateTotal();
+	                    VotePanel.this.repaint();
+	                }
+	            });
+	            
+	            estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
+	        }
+	        
+	        if(voted){
+	        		for(Integer i:selectedCards){
+	        		cards.get(i).setCardSelected(true);
+	        	}        	
+	        	
+        	}
+	        
         }
         
         updateTotal();
@@ -174,14 +207,14 @@ public class VotePanel extends javax.swing.JPanel {
     private void selectEstimateCard() {
         
         boolean alreadyVoted = false;
-        ArrayList<Estimate> estimates = req.getEstimates();
+        final ArrayList<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 alreadyVoted = true;
             }
         }
         
-        ArrayList<Integer> selected = new ArrayList<Integer>();
+        final ArrayList<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
         for (CardButton c : cards) {
             if (c.isCardSelected()) {
@@ -191,7 +224,7 @@ public class VotePanel extends javax.swing.JPanel {
         }
         
         System.out.println("Estimate = " + estimate);
-        Estimate est = new Estimate(currentUser, estimate, selected);
+        final Estimate est = new Estimate(currentUser, estimate, selected);
         
         lblYouVoted.setVisible(true);
         prevVoteLabel.setText(NUM_FORMAT.format(est.getEstimate()));
@@ -225,10 +258,6 @@ public class VotePanel extends javax.swing.JPanel {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    // <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed"
-    // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         
         estimateLabel = new javax.swing.JLabel();
@@ -242,10 +271,10 @@ public class VotePanel extends javax.swing.JPanel {
         
         completedVotesField.setText("0/0");
         
-        JLabel lblRequirement = new JLabel("Requirement:");
+        final JLabel lblRequirement = new JLabel("Requirement:");
         
-        JScrollPane scrollPane = new JScrollPane();
-        JScrollPane estimateScrollPane = new JScrollPane();
+        final JScrollPane scrollPane = new JScrollPane();
+        final JScrollPane estimateScrollPane = new JScrollPane();
         estimateScrollPane
                 .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
@@ -253,7 +282,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         requirementNameLabel = new JLabel("<requirement>");
         
-        JLabel lblType = new JLabel("Type:");
+        final JLabel lblType = new JLabel("Type:");
         
         requirementType = new JLabel("<type>");
         
@@ -269,8 +298,7 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                //super.paintComponent(g);
-                BufferedImage texture = ImageLoader.getImage("felt.png");
+                final BufferedImage texture = ImageLoader.getImage("felt.png");
                 for (int x = 0; x < getWidth(); x += texture.getWidth()) {
                     for (int y = 0; y < getHeight(); y += texture.getHeight()) {
                         g.drawImage(texture, x, y, null);
@@ -286,11 +314,11 @@ public class VotePanel extends javax.swing.JPanel {
         
         prevVoteLabel = new JLabel("<previous vote>");
         
-        JLabel lblSelectedTotal = new JLabel("Selected Total:");
+        final JLabel lblSelectedTotal = new JLabel("Selected Total:");
         
         lblTotal = new JLabel("<total>");
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.TRAILING)
                 .addGroup(
@@ -426,7 +454,7 @@ public class VotePanel extends javax.swing.JPanel {
                                                 .addComponent(lblSelectedTotal)
                                                 .addComponent(lblTotal))
                                 .addContainerGap()));
-        FlowLayout fl_estimateCardsPanel = new FlowLayout(FlowLayout.CENTER, 5,
+        final FlowLayout fl_estimateCardsPanel = new FlowLayout(FlowLayout.CENTER, 5,
                 5);
         estimateCardsPanel.setLayout(fl_estimateCardsPanel);
         
@@ -507,9 +535,13 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void validateCards() {
+    	
+    	if(parentGame.getDeck().isNone()){
+    		btnSubmit.setEnabled(true);
+    		return;
+    	}
+    	
         for (CardButton c : cards) {
-            
-            System.out.println(c.getEstimateValue() + " " + c.isCardSelected());
             if (c.isCardSelected()) {
                 btnSubmit.setEnabled(true);
                 return;
@@ -521,14 +553,15 @@ public class VotePanel extends javax.swing.JPanel {
     /**
      * Updates the selected total displayed next to the submit button
      */
-    private void updateTotal() {
-        float total = 0;
-        for (CardButton card : cards) {
-            if (card.isCardSelected()) {
-                total += card.getEstimateValue();
-            }
-        }
-        lblTotal.setText(CardButton.cardFormat.format(total));
+    private void updateTotal(){
+    	float total = 0;
+    	for(CardButton card:cards){
+    		if(card.isCardSelected() || parentGame.getDeck().isNone()){
+    			total += card.getEstimateValue();
+    		}
+    	}
+    	lblTotal.setText(CardButton.cardFormat.format(total));
+
     }
     
     /**
@@ -550,7 +583,7 @@ public class VotePanel extends javax.swing.JPanel {
     
     private JButton btnSubmit;
     private JLabel lblTotal;
-    private ArrayList<CardButton> cards;
+    private final ArrayList<CardButton> cards;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel completedVotesField;

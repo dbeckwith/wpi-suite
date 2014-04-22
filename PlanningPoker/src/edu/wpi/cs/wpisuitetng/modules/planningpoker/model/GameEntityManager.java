@@ -5,10 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
- ******************************************************************************/
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.Arrays;
@@ -30,20 +27,28 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserv
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
 
 
+/**
+ * This class is an Entity Manager for storing GameModels on the server.
+ * 
+ * @author Team 9
+ * @version 1.0
+ */
 public class GameEntityManager implements EntityManager<GameModel> {
     
-    private Data db;
+    private final Data db;
     
     private static GameEntityManager instance;
     
     /**
-     * Only for use by the ManagerLayer in WPI-Suite
+     * Creates a new GameEntityManager attatched to the given database.
      * 
      * @param db
      */
     public GameEntityManager(Data db) {
         this.db = db;
-        NotificationServer.getInstance().start();
+        if (NotificationServer.getInstance().getState() == Thread.State.NEW) {
+            NotificationServer.getInstance().start();
+        }
         instance = this;
     }
     
@@ -60,20 +65,20 @@ public class GameEntityManager implements EntityManager<GameModel> {
      *        the role being verified
      * 
      * @throws WPISuiteException
-     *         user isn't authorized for the given role
+     *         if the user isn't authorized for the given role
      */
     private void ensureRole(Session session, Role role)
             throws WPISuiteException {
         final User user = (User) db.retrieve(User.class, "username",
                 session.getUsername()).get(0);
-        if (!user.getRole().equals(role)) { throw new UnauthorizedException(); }
+        if (!user.getRole().equals(role)) { throw new UnauthorizedException(""); }
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public int Count() throws WPISuiteException {
+    public int Count() {
         return db.retrieveAll(new GameModel()).size();
     }
     
@@ -82,7 +87,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public String advancedGet(Session arg0, String[] arg1)
-            throws WPISuiteException {
+            throws NotImplementedException {
         throw new NotImplementedException();
     }
     
@@ -91,7 +96,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public String advancedPost(Session arg0, String arg1, String arg2)
-            throws WPISuiteException {
+            throws NotImplementedException {
         throw new NotImplementedException();
     }
     
@@ -100,7 +105,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public String advancedPut(Session arg0, String[] arg1, String arg2)
-            throws WPISuiteException {
+            throws NotImplementedException {
         throw new NotImplementedException();
     }
     
@@ -126,7 +131,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public GameModel[] getAll(Session s) throws WPISuiteException {
+    public GameModel[] getAll(Session s) {
         return db.retrieveAll(new GameModel(), s.getProject()).toArray(
                 new GameModel[0]);
     }
@@ -137,7 +142,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     @Override
     public GameModel[] getEntity(Session s, String id) throws NotFoundException {
         final int intId = Integer.parseInt(id);
-        if (intId < 1) { throw new NotFoundException(); }
+        if (intId < 0) { throw new NotFoundException(""); }
         GameModel[] GameModels = null;
         try {
             GameModels = db.retrieve(GameModel.class, "id", intId,
@@ -146,7 +151,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         catch (WPISuiteException e) {
             e.printStackTrace();
         }
-        if (GameModels.length < 1 || GameModels[0] == null) { throw new NotFoundException(); }
+        if (GameModels.length < 1 || GameModels[0] == null) { throw new NotFoundException(
+                ""); }
         return GameModels;
     }
     
@@ -158,7 +164,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
             throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
         newGameModel.setID(getNextID(s));
-        if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
+        if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(
+                ""); }
         new GameTimeoutObserver(s, newGameModel);
         System.out.println("GEM makeEntity()");
         NotificationServer.getInstance().sendUpdateNotification();
@@ -169,8 +176,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public void save(Session s, GameModel GameModel) throws WPISuiteException {
-        System.out.println("GEM save()");
+    public void save(Session s, GameModel GameModel) {
         db.save(GameModel, s.getProject());
         
     }
@@ -252,24 +258,31 @@ public class GameEntityManager implements EntityManager<GameModel> {
              * line will only work after users have been added to the project
              * and before the server is stopped.
              */
-            EmailController.getInstance().setUsers(s.getProject().getTeam());
-            switch (updatedGameModel.getStatus()) {
-                case NEW:
-                    // don't send an email
-                    break;
-                case PENDING:
-                    // send game start email
-                    EmailController.getInstance().sendGameStartNotifications(
-                            updatedGameModel);
-                    break;
-                case COMPLETE:
-                    // send ended game email
-                    EmailController.getInstance().sendGameEndNotifications(
-                            updatedGameModel);
-                    break;
-                case CLOSED:
-                    // don't send an email
-                    break;
+            try {
+                EmailController.getInstance()
+                        .setUsers(s.getProject().getTeam());
+                switch (updatedGameModel.getStatus()) {
+                    case NEW:
+                        // don't send an email
+                        break;
+                    case PENDING:
+                        // send game start email
+                        EmailController.getInstance()
+                                .sendGameStartNotifications(updatedGameModel);
+                        break;
+                    case COMPLETE:
+                        // send ended game email
+                        EmailController.getInstance().sendGameEndNotifications(
+                                updatedGameModel);
+                        break;
+                    case CLOSED:
+                        // don't send an email
+                        break;
+                }
+            }
+            catch (NullPointerException e) {
+                System.err.println("Null team, not sending emails.");
+                e.printStackTrace();
             }
         }
         else {
@@ -280,6 +293,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
     }
     
+    /**
+     * Gets the next available unique ID for a GameModel
+     */
     private int getNextID(Session s) throws WPISuiteException {
         int max = 0;
         for (GameModel g : getAll(s)) {

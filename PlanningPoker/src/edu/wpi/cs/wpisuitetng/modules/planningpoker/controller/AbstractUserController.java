@@ -5,8 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Sam Carlberg
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -15,7 +13,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 /**
  * An abstract class for classes requesting users from the server.
  * 
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public abstract class AbstractUserController {
@@ -114,17 +112,19 @@ public abstract class AbstractUserController {
      *        a variable to hold timeout value
      */
     public void setTimeout(long timeout) {
-        if (timeout < 0)
+        if (timeout < 0){
             throw new IllegalArgumentException("Timeout must be >= 0");
-        else
+        }
+        else{
             this.timeout = timeout;
+        }
     }
     
     /**
      * @return timeout the request timeout
      */
     public long getTimeout() {
-        return this.timeout;
+        return timeout;
     }
     
 }

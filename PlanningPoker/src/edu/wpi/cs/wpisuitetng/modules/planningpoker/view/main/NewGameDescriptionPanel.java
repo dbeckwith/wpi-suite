@@ -1,11 +1,11 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
+ * Copyright (c) 2013 -- WPI Suite
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
@@ -59,7 +59,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * can fill out this form to set the name of the game, the description for the
  * game, end date of the game, and type of the game
  * 
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class NewGameDescriptionPanel extends javax.swing.JPanel implements SimpleListObserver {
@@ -97,7 +97,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         defaultDeck = new DeckModel("Default", cards, true);
         DeckListModel.getInstance().setDefaultDeck(defaultDeck);
         deckComboBox.addItem(defaultDeck);
-        noDeck = new DeckModel("No deck", new ArrayList<Double>(), false);
+        noDeck = new DeckModel("No deck");
         deckComboBox.addItem(noDeck);
         generatedDeck = new DeckModel("Generated deck", new ArrayList<Double>(), false);
         deckComboBox.addItem(generatedDeck);

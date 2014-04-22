@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
@@ -26,15 +23,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
- * this is an example of buttons
+ * This class represents a group of buttons used by all users
  * 
- * @author llhunker, blammeson, nfbrown
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class CommonButtonGroup extends ToolbarGroupView {
-	/**
-     * 
-     */
+    
 	private static final long serialVersionUID = -2589339467561118867L;
 
 	private final JButton newGameButton;
@@ -42,6 +37,10 @@ public class CommonButtonGroup extends ToolbarGroupView {
 
 	private final JPanel contentPanel = new JPanel();
 
+	/**
+	 * Creates a new CommonButtonGroup
+	 *
+	 */
 	public CommonButtonGroup() {
 		super(""); // not sure if this is needed
 

@@ -117,9 +117,7 @@ public class GameRequirementModel extends AbstractModel {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Gets the unique ID of this game requirement.
-=======
      * @return the estimateNote
      */
     public String getEstimateNote() {
@@ -134,7 +132,6 @@ public class GameRequirementModel extends AbstractModel {
     }
 
     /**
->>>>>>> origin/team9dev
      * @return the id
      */
     public long getId() {
@@ -265,8 +262,8 @@ public class GameRequirementModel extends AbstractModel {
      * @return true if all users have voted on a requirement, false otherwise
      */
     public boolean allVoted() {
-		ArrayList<User> estimateUsers = new ArrayList<User>();
-		User[] users = CurrentUserController.getInstance().getUsers();
+		final ArrayList<User> estimateUsers = new ArrayList<User>();
+		final User[] users = CurrentUserController.getInstance().getUsers();
 
 		// checks to see if an all users have voted
 		for (Estimate e : estimates) {
@@ -306,7 +303,7 @@ public class GameRequirementModel extends AbstractModel {
 
 	@Override
 	public String toString() {
-		return getName();
+		return name;
 	}
 
     /**

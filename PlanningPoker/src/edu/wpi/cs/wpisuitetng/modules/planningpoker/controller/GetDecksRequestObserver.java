@@ -1,22 +1,21 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
+ * Copyright (c) 2013 -- WPI Suite
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
-// who is author?
 /**
  * This observer is called when a response is received from a request
  * to the server to get decks.
- * @author team9
+ * @author Team 9
  * @version 1.0
  */
 public class GetDecksRequestObserver implements RequestObserver {
@@ -38,9 +37,9 @@ public class GetDecksRequestObserver implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        DeckModel decks[] = DeckModel.fromJSONArray(iReq.getResponse()
+        final DeckModel[] decks = DeckModel.fromJSONArray(iReq.getResponse()
                 .getBody());
-        controller.receivedDecks(decks);
+        GetDecksController.receivedDecks(decks);
     }
     
     /**

@@ -36,7 +36,7 @@ public class EstimateTest {
     @Test
     public void testJSON() {
         Estimate est = new Estimate(new User("joe", "joe", "password", 1), 20, null);
-        Estimate estAfter = est.fromJSON(est.toJSON());
+        Estimate estAfter = Estimate.fromJSON(est.toJSON());
         Assert.assertEquals(est.getIdNum(), estAfter.getIdNum());
         Assert.assertEquals(est.getName(), estAfter.getName());
         Assert.assertEquals(est.getUsername(), estAfter.getUsername());

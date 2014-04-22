@@ -36,7 +36,7 @@ public class NotificationServer extends Thread {
 		return instance;
 	}
 	
-	private ServerSocket serverSocket;
+	private ServerSocket serverSocket = null;
 	private final ArrayList<Socket> clientSockets;
 	
 	/**
@@ -46,7 +46,6 @@ public class NotificationServer extends Thread {
 		try {
 			serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		clientSockets = new ArrayList<Socket>();
 	}
@@ -61,7 +60,7 @@ public class NotificationServer extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}	
+		}
 	}
 	
 	/**

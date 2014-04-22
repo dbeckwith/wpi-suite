@@ -22,10 +22,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
 	private DeckModel defaultDeck;
-	private static DeckListModel instance;
-	private ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
+	private static DeckListModel instance = null;
+	private final ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
 	private static final long serialVersionUID = 3193186441179194894L;
-	private ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
+	private final ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
 
     /**
      * Returns the instance of this DeckListModel or creates a new one

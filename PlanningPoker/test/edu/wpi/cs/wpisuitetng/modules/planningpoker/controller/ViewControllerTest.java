@@ -17,6 +17,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -166,20 +167,21 @@ public class ViewControllerTest {
     
     @Test
     public void testDisplayAdmin() {
+        CurrentUserController.getInstance().receivedUsers(new User[]{new User("", "", "", 0)});
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
                 new ArrayList<GameRequirementModel>(), null, null,
-                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, ""));
+                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, new User("", "", "", 0)));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc
                 .displayAdmin(new GameModel("", "",
                         new ArrayList<GameRequirementModel>(), null, null,
                         GameModel.GameType.DISTRIBUTED,
-                        GameModel.GameStatus.NEW, "Me"));
+                        GameModel.GameStatus.NEW, new User("Me", "Me", "", 0)));
         Assert.assertFalse(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
                 new ArrayList<GameRequirementModel>(), null, null,
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE,
-                ""));
+                new User("", "", "", 0)));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
     }
 }

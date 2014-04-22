@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker;
 
@@ -28,12 +25,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel;
 
+
 /**
  * This is a module that implements the Planning Poker technique for estimation
  * on how long a project requirement will take.
  * 
- * @author TODO: Authors' names
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class PlanningPoker implements IJanewayModule {
 	
