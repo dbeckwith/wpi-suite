@@ -30,7 +30,7 @@ public class EmailSenderThreadTest {
                 "Pass", 0);
         person.setNotifyByEmail(true);
         Assert.assertTrue(person.isNotifyByEmail());
-        EmailController.getInstance.setUsers(new User[] { person });
+        EmailController.getInstance().setUsers(new User[] { person });
         final EmailSenderThread est = new EmailSenderThread(
                 "EmailSenderThreadTest",
                 "This came from EmailSenderThreadTest.java");
