@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 
-/**
+/** // $codepro.audit.disable typeJavadoc
  * A mock data implementation for server-side testing.
  */
 public class MockData implements Data {

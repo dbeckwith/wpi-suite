@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -30,13 +27,13 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
- * @author Lukas, Dan
+ * Tests games and their deadlines
  * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameTest {
     
-    
-   
     static User existingUser = new User("joe", "joe", "1234", 2);
     static Project testProject = new Project("test", "1");
     static String mockSsid = "abc123";
@@ -44,6 +41,9 @@ public class GameTest {
     static GameEntityManager manager = new GameEntityManager(db);
     static Session defaultSession = new Session(existingUser, testProject, mockSsid);
 
+    /**
+     * Initializes mock network and saves a user to the database
+     */
     @BeforeClass
     static public void prepare() {
         Network.initNetwork(new MockNetwork());
@@ -52,8 +52,11 @@ public class GameTest {
         db.save(existingUser);
     }
     
-	@Test
-	public void TestRequirementEndsAfterDeadline() {
+	/**
+	 * Tests to ensure a game ends after its deadline by sleeping until the deadline is up
+	 */
+    @Test
+	public void TestGameEndsAfterDeadline() {
 		final GameModel testgame = new GameModel("Test Game", "something", null,
 				DeckListModel.getInstance().getDefaultDeck(), new Date(
 						System.currentTimeMillis() + 1000),
@@ -63,8 +66,6 @@ public class GameTest {
             created = manager
                     .makeEntity(defaultSession, testgame.toJSON());
             final List<Model> oldGameModels = db.retrieve(GameModel.class, "id", created.getID());
-            System.out.println(oldGameModels.size());
-            System.out.println("Hi" + oldGameModels.get(0));
             created.startGame();
             created = manager
                     .update(defaultSession, created.toJSON());
@@ -81,6 +82,10 @@ public class GameTest {
 		Assert.assertTrue(created.isEnded());
 	}
 
+    /**
+     * Tests that a game that hasn't reached its deadline and hasn't been ended in any other way
+     * is not yet ended.
+     */
 	@Test
 	public void TestRequirementNotCompleteBeforeDeadline() {
 		final GameModel testgame = new GameModel("Test Game", "something", null,

@@ -17,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
-public class MockNetwork extends Network {
+public class MockNetwork extends Network { // $codepro.audit.disable typeJavadoc
     
     protected MockRequest lastRequestMade = null;
     

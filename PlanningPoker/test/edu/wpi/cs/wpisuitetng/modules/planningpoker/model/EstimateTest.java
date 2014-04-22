@@ -17,9 +17,10 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
+ * Tests the Estimate class
  * 
- * @author Andrew, Lukas
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class EstimateTest {
     

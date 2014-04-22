@@ -19,25 +19,35 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
+ * Tests the RequirementsListModel class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class RequirementsListModelTest {
     
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     PrintStream oldOut = System.out;
     
+    /**
+     * Sets the stream for standard out
+     */
     @Before
     public void prepareStreams() {
         System.setOut(new PrintStream(outStream));
     }
     
+    /**
+     * Restores the normal standard out stream
+     */
     @After
     public void cleanUpStreams() {
         System.setOut(oldOut);
     }
     
+    /**
+     * Tests that adding and removing observers works correctly
+     */
     @Test
     public void testObserverManipulation() {
         final RequirementsListModel rlm = RequirementsListModel.getInstance();

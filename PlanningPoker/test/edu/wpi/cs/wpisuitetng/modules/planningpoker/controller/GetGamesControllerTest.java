@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,42 +35,72 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * @version 1.0
  */
 public class GetGamesControllerTest {
-    static GetGamesController instance = GetGamesController.getInstance();
-    static GameModel nullGame = new GameModel();
-    static GameModel game1 = new GameModel("Test Game 1",
-            "Live Game that just ended", null, DeckListModel.getInstance()
-            .getDefaultDeck(), new Date(), GameType.LIVE,
-            GameStatus.COMPLETE);
-    static GameModel game2 = new GameModel("Test Game 2",
+    GetGamesController instance = GetGamesController.getInstance();
+    GameModel nullGame = new GameModel();
+    GameModel game1 = new GameModel("Test Game 1", "Live Game that just ended",
+            null, DeckListModel.getInstance().getDefaultDeck(), new Date(),
+            GameType.LIVE, GameStatus.COMPLETE);
+    GameModel game2 = new GameModel("Test Game 2",
             "Distributed Game that will end in 5 seconds", null, DeckListModel
-            .getInstance().getDefaultDeck(), new Date(
+                    .getInstance().getDefaultDeck(), new Date(
                     System.currentTimeMillis() + 5000), GameType.DISTRIBUTED,
-                    GameStatus.PENDING);
-    static GameModel game3 = new GameModel(
+            GameStatus.PENDING);
+    GameModel game3 = new GameModel(
             "Test Game 3",
             "Live Game with end time in 10 seconds, but already manually ended",
             null, DeckListModel.getInstance().getDefaultDeck(), new Date(System
                     .currentTimeMillis() + 10000), GameType.LIVE,
-                    GameStatus.COMPLETE);
-    static GameModel game4 = new GameModel(
+            GameStatus.COMPLETE);
+    GameModel game4 = new GameModel(
             "Test Game 4",
             "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-            null, DeckListModel.getInstance().getDefaultDeck(), new Date(
-                    System.currentTimeMillis() - 10000),
-                    GameType.DISTRIBUTED, GameStatus.PENDING);
-    static GameListModel list = GameListModel.getInstance();
-    static GameModel[] gamesToAdd = new GameModel[] {
-        GetGamesControllerTest.game1, GetGamesControllerTest.game2,
-        GetGamesControllerTest.game3, GetGamesControllerTest.game4 };
+            null, DeckListModel.getInstance().getDefaultDeck(), new Date(System
+                    .currentTimeMillis() - 10000), GameType.DISTRIBUTED,
+            GameStatus.PENDING);
+    GameListModel list = GameListModel.getInstance();
+    GameModel[] gamesToAdd = new GameModel[] { game1, game2, game3, game4 };
     
     /**
-     * Initiates the mock network and removes status observers from the game list
+     * Initiates the mock network and removes status observers from the game
+     * list
      */
     @BeforeClass
-    static public void prepare() {
+    static public void prepareFirst() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://localhost"));
+        
+    }
+    
+    /**
+     * Initializes variables
+     */
+    @Before
+    public void prepare() {
+        instance = GetGamesController.getInstance();
+        nullGame = new GameModel();
+        game1 = new GameModel("Test Game 1", "Live Game that just ended", null,
+                DeckListModel.getInstance().getDefaultDeck(), new Date(),
+                GameType.LIVE, GameStatus.COMPLETE);
+        game2 = new GameModel("Test Game 2",
+                "Distributed Game that will end in 5 seconds", null,
+                DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() + 5000),
+                GameType.DISTRIBUTED, GameStatus.PENDING);
+        game3 = new GameModel(
+                "Test Game 3",
+                "Live Game with end time in 10 seconds, but already manually ended",
+                null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() + 10000), GameType.LIVE,
+                GameStatus.COMPLETE);
+        game4 = new GameModel(
+                "Test Game 4",
+                "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
+                null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                        System.currentTimeMillis() - 10000),
+                GameType.DISTRIBUTED, GameStatus.PENDING);
+        list = GameListModel.getInstance();
+        gamesToAdd = new GameModel[] { game1, game2, game3, game4 };
         list.removeObservers();
         list.removeStatusObservers();
     }
@@ -81,8 +112,7 @@ public class GetGamesControllerTest {
     public void testGetInstance() {
         Assert.assertEquals(
                 "A new instance is not the same as the previous instance",
-                GetGamesControllerTest.instance,
-                GetGamesController.getInstance());
+                instance, GetGamesController.getInstance());
     }
     
     /**
@@ -90,17 +120,15 @@ public class GetGamesControllerTest {
      */
     @Test
     public void testReceivedGames() {
-        GetGamesControllerTest.instance.receivedGames(new GameModel[] {
-                GetGamesControllerTest.game1, GetGamesControllerTest.game2,
-                GetGamesControllerTest.game3, GetGamesControllerTest.game4 });
+        instance.receivedGames(new GameModel[] { game1, game2, game3, game4 });
         Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(GetGamesControllerTest.game1));
+                .contains(game1));
         Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(GetGamesControllerTest.game2));
+                .contains(game2));
         Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(GetGamesControllerTest.game3));
+                .contains(game3));
         Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(GetGamesControllerTest.game4));
+                .contains(game4));
     }
     
     /**

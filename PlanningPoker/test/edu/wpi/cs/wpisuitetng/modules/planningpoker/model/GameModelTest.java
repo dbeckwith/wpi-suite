@@ -19,33 +19,22 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the GameModel class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameModelTest {
     GameModel nullGame;
     GameModel game1;
     GameModel game2;
     GameModel game3;
-    GameModel game4;
     List<GameRequirementModel> reqs;
     
     /**
@@ -57,30 +46,24 @@ public class GameModelTest {
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
         reqs = new ArrayList<GameRequirementModel>();
-        final GameRequirementModel aReq = new GameRequirementModel(1, "Req name",
-                "Req desc", "User Story", new ArrayList<Estimate>());
+        final GameRequirementModel aReq = new GameRequirementModel(1,
+                "Req name", "Req desc", "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();
-        game1 = new GameModel("Test Game 1", "Live Game that just ended",
-                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(),
+        game1 = new GameModel("Test Game 1", "Live Game that just ended", reqs,
+                DeckListModel.getInstance().getDefaultDeck(), new Date(),
                 GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
                 "Distributed Game that will end in 5 seconds", reqs,
                 DeckListModel.getInstance().getDefaultDeck(), new Date(
                         System.currentTimeMillis() + 5000),
-                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
                 reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
-                        System.currentTimeMillis() + 10000), GameModel.GameType.LIVE,
-                        GameModel.GameStatus.COMPLETE);
-        game4 = new GameModel(
-                "Test Game 4",
-                "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
-                        System.currentTimeMillis() - 10000),
-                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                        System.currentTimeMillis() + 10000),
+                GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
     }
     
     /**
@@ -99,12 +82,13 @@ public class GameModelTest {
     /**
      * Tests that the isEnded method returns the appropriate boolean
      */
-    // @Test
+    @Test
     public void testIsEnded() {
+        CurrentUserController.getInstance().receivedUsers(
+                new User[] { new User("Name", "Username", "Pass", 1) });
         Assert.assertTrue(game1.isEnded());
         Assert.assertFalse(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
-        Assert.assertTrue(game4.isEnded());
     }
     
     /**
@@ -121,17 +105,17 @@ public class GameModelTest {
     /**
      * Tests the status of a games after closing or not closing them
      */
-    // @Test
+    @Test
     public void testClosedGame() {
+        CurrentUserController.getInstance().receivedUsers(
+                new User[] { new User("Name", "Username", "Pass", 1) });
         game1.closeGame();
         game2.closeGame();
         Assert.assertTrue(game1.isEnded());
         Assert.assertTrue(game2.isEnded());
         Assert.assertTrue(game3.isEnded());
-        Assert.assertTrue(game4.isEnded());
         Assert.assertTrue(game1.isClosed());
         Assert.assertTrue(game2.isClosed());
         Assert.assertFalse(game3.isClosed());
-        Assert.assertFalse(game4.isClosed());
     }
 }
