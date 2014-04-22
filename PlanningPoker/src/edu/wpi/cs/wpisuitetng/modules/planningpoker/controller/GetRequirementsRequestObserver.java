@@ -23,16 +23,13 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetRequirementsRequestObserver implements RequestObserver {
     
-    private final GetRequirementsController controller;
-    
     /**
      * Constructs the observer given a GetRequirementsController
      * 
      * @param controller
      *        the controller used to retrieve requirements
      */
-    public GetRequirementsRequestObserver(GetRequirementsController controller) {
-        this.controller = controller;
+    public GetRequirementsRequestObserver() {
     }
     
     /**
@@ -56,7 +53,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
         }
         
         // Pass these Requirements to the controller
-        controller.receivedRequirements(game_reqs
+        GetRequirementsController.receivedRequirements(game_reqs
                 .toArray(new GameRequirementModel[0]));
     }
     
@@ -82,7 +79,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
     public void fail(IRequest iReq, Exception exception) {
         final GameRequirementModel[] errorRequirement = { new GameRequirementModel(
                 new Requirement(6, "Error", "error desc")) };
-        controller.receivedRequirements(errorRequirement);
+        GetRequirementsController.receivedRequirements(errorRequirement);
     }
     
 }

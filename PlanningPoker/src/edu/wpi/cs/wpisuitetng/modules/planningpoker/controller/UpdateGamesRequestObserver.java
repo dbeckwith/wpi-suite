@@ -10,7 +10,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
-import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 
 /**
@@ -21,16 +20,13 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  */
 public class UpdateGamesRequestObserver implements RequestObserver {
     
-    private final UpdateGamesController controller;
-    
     /**
      * Constructs the observer given an UpdateGamesController
      * 
      * @param controller
      *        the controller used to add games
      */
-    public UpdateGamesRequestObserver(UpdateGamesController controller) {
-        this.controller = controller;
+    public UpdateGamesRequestObserver() {
     }
     
     /**
@@ -41,10 +37,6 @@ public class UpdateGamesRequestObserver implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        // Get the response to the given request
-        final ResponseModel response = iReq.getResponse();
-        
-        // Parse the game out of the response body
     }
     
     /**
