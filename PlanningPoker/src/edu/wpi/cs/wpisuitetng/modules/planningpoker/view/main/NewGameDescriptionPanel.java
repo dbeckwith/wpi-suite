@@ -480,7 +480,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     }
     
     public void checkParent(){
-    	parentPanel.check();
+        if(parentPanel != null) {
+            parentPanel.check();
+        }
     }
     
     /**
