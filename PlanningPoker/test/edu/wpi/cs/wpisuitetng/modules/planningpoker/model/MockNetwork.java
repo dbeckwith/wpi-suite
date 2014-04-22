@@ -17,14 +17,16 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
-public class MockNetwork extends Network {
+public class MockNetwork extends Network { // $codepro.audit.disable typeJavadoc
     
     protected MockRequest lastRequestMade = null;
     
     @Override
     public Request makeRequest(String path, HttpMethod requestMethod) {
-        if (requestMethod == null) { throw new NullPointerException(
-                "requestMethod may not be null"); }
+        if (requestMethod == null) { 
+            throw new NullPointerException(
+                "requestMethod may not be null"); 
+            }
         
         lastRequestMade = new MockRequest(defaultNetworkConfiguration, path,
                 requestMethod);
