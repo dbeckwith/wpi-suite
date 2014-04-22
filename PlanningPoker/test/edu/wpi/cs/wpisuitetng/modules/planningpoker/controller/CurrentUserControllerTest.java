@@ -26,9 +26,10 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the CurrentUserController class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class CurrentUserControllerTest {
     
@@ -37,32 +38,43 @@ public class CurrentUserControllerTest {
     PrintStream oldOut = System.out;
     PrintStream oldErr = System.err;
     
+    /**
+     * Sets the streams to catch standard out and error
+     */
     @Before
-    public void setUpStreams() {
+    public void prepareStreams() {
         System.setOut(new PrintStream(outStream));
         System.setErr(new PrintStream(errStream));
     }
     
+    /**
+     * Set users to null to avoid problems with stuff from previous tests
+     */
     @Before
-    public void resetController() {
-        // Set users to null to avoid problems with stuff from previous tests
+    public void resetController() { 
         CurrentUserController.getInstance().setUsers(null);
     }
     
+    /**
+     * Restores standard out and error
+     */
     @After
     public void cleanUpStreams() {
         System.setOut(oldOut);
         System.setErr(oldErr);
     }
     
+    /**
+     * Tests to ensure requestUsers makes a network request
+     */
     @Test
     public void testRequest() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        CurrentUserController cuc = CurrentUserController.getInstance();
+        final CurrentUserController cuc = CurrentUserController.getInstance();
         cuc.requestUsers();
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
@@ -70,13 +82,16 @@ public class CurrentUserControllerTest {
         Assert.assertTrue(request.isSent());
     }
     
+    /**
+     * Tests to see if the receivedUsers method works correctly for a null list
+     */
     @Test
     public void testReceivedNullUsers() {
         // Setup
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        CurrentUserController cuc = CurrentUserController.getInstance();
+        final CurrentUserController cuc = CurrentUserController.getInstance();
         
         cuc.receivedUsers(null);
         Assert.assertEquals(cuc.getUser(), null);
@@ -91,16 +106,19 @@ public class CurrentUserControllerTest {
         }
     }
     
+    /**
+     * Tests if receivedUsers method works correctly for a non-null list of users
+     */
     @Test
     public void testReceivedNonNullUsers() {
         // Setup
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        CurrentUserController cuc = CurrentUserController.getInstance();
+        final CurrentUserController cuc = CurrentUserController.getInstance();
         
-        User expected = new User("User", "Username", "Password", 1);
-        User[] received = { expected };
+        final User expected = new User("User", "Username", "Password", 1);
+        final User[] received = { expected };
         
         cuc.receivedUsers(received);
         Assert.assertEquals(cuc.getUser(), null);
@@ -108,16 +126,18 @@ public class CurrentUserControllerTest {
         
     }
     
+    /**
+     * Since we're not connected to a server, the request will time out
+     * and not retrieve a user
+     */
     @Test
     public void testRequestThreadTimeout() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        CurrentUserController cuc = CurrentUserController.getInstance();
+        final CurrentUserController cuc = CurrentUserController.getInstance();
         cuc.requestUsers();
         
-        // Since we're not connected to a server, the request will time out
-        // and not retrieve a user
         Assert.assertTrue(cuc.requestTimedOut());
     }
     

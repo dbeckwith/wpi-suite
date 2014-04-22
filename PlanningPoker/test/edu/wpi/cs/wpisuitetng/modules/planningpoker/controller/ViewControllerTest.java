@@ -30,48 +30,58 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the ViewController class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class ViewControllerTest {
     
-    static PlanningPoker pp;
-    static MainView mv;
-    static ViewController vc;
+    static PlanningPoker pp = new PlanningPoker();
+    static MainView mv = new MainView();
+    static ViewController vc = new ViewController(ViewControllerTest.mv,
+            new ToolbarView());
     
+    /**
+     * Initializes the mock network
+     */
     @BeforeClass
-    static public void setUpBeforeClass() {
+    static public void prepare() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        ViewControllerTest.pp = new PlanningPoker();
-        ViewControllerTest.mv = new MainView();
-        ViewControllerTest.vc = new ViewController(ViewControllerTest.mv,
-                new ToolbarView());
     }
     
+    /**
+     * Ensures that the tab count changes correctly when a new game tab is opened.
+     */
     @Test
     public void testAddNewGameTab() {
-        int before = ViewControllerTest.mv.getTabCount();
+        final int before = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addNewGameTab();
         Assert.assertEquals(before + 1, ViewControllerTest.mv.getTabCount());
         Assert.assertSame("New Game", ViewControllerTest.mv.getTitleAt(before));
     }
     
+    /**
+     * Ensures that the tab count changes correctly when a new game tab is closed.
+     */
     @Test
     public void testSaveNewGame() {
-        int count = ViewControllerTest.mv.getTabCount();
+        final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addNewGameTab();
-        NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.saveNewGame(ngp);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
+    /**
+     * Ensures that the tab count changes correctly when finished updating a game
+     */
     @Test
     public void testUpdateGame() {
-        int count = ViewControllerTest.mv.getTabCount();
+        final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
                 new GameModel("Test", "Test",
                         new ArrayList<GameRequirementModel>(), null, null,
@@ -79,47 +89,59 @@ public class ViewControllerTest {
         ViewControllerTest.vc.editGame();
         Assert.assertEquals("Edit Test",
                 ViewControllerTest.mv.getTitleAt(count));
-        NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.updateGame(new GameModel(), ngp);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
+    /**
+     * Ensures the tab count changes when creating a new game is cancelled
+     */
     @Test
     public void testCancelNewGame() {
-        int count = ViewControllerTest.mv.getTabCount();
+        final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addNewGameTab();
-        NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
         ViewControllerTest.vc.cancelNewGame(ngp);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
+    /**
+     * Ensures tab count changes with user cancels editing a game
+     */
     @Test
     public void testCancelEditGame() {
-        int count = ViewControllerTest.mv.getTabCount();
+        final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
                 new GameModel("Test", "Test",
                         new ArrayList<GameRequirementModel>(), null, null,
                         null, null));
         ViewControllerTest.vc.editGame();
-        NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
         ViewControllerTest.vc.cancelEditGame(ngp);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
+    /**
+     * Ensures tab count increments when user opens the preferences tab
+     */
     @Test
     public void testAddUserPrefsTab() {
-        int before = ViewControllerTest.mv.getTabCount();
+        final int before = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addUserPrefsTab();
         Assert.assertEquals(before + 1, ViewControllerTest.mv.getTabCount());
         Assert.assertSame("Preferences",
                 ViewControllerTest.mv.getTitleAt(before));
     }
     
+    /**
+     * Ensures startGame method creates a network request
+     */
     @Test
     public void testStartGame() {
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
@@ -127,7 +149,7 @@ public class ViewControllerTest {
                         new ArrayList<GameRequirementModel>(), null, null,
                         null, GameModel.GameStatus.NEW));
         ViewControllerTest.vc.startGame();
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
@@ -135,6 +157,9 @@ public class ViewControllerTest {
         Assert.assertTrue(request.isSent());
     }
     
+    /**
+     * Ensures endEstimation creates a network request
+     */
     @Test
     public void testEndEstimation() {
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
@@ -142,7 +167,7 @@ public class ViewControllerTest {
                         new ArrayList<GameRequirementModel>(), null, null,
                         null, GameModel.GameStatus.NEW));
         ViewControllerTest.vc.endEstimation();
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
@@ -150,6 +175,9 @@ public class ViewControllerTest {
         Assert.assertTrue(request.isSent());
     }
     
+    /**
+     * Ensures closeGame makes a network request
+     */
     @Test
     public void testCloseGame() {
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
@@ -157,7 +185,7 @@ public class ViewControllerTest {
                         new ArrayList<GameRequirementModel>(), null, null,
                         null, GameModel.GameStatus.NEW));
         ViewControllerTest.vc.closeGame();
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
@@ -165,6 +193,9 @@ public class ViewControllerTest {
         Assert.assertTrue(request.isSent());
     }
     
+    /**
+     * Tests that displayAdmin correctly changes the visibility of the admin controls
+     */
     @Test
     public void testDisplayAdmin() {
         CurrentUserController.getInstance().receivedUsers(new User[]{new User("", "", "", 0)});

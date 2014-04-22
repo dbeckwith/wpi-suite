@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Set;
 
 import edu.wpi.cs.wpisuitetng.database.Data;
-import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
+
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 
-/**
+/** // $codepro.audit.disable typeJavadoc
  * A mock data implementation for server-side testing.
  */
 public class MockData implements Data {
@@ -52,7 +52,7 @@ public class MockData implements Data {
     @SuppressWarnings("unchecked")
     @Override
     public <T> List<T> deleteAll(T arg0) {
-        List<T> deleted = new ArrayList<T>();
+        final List<T> deleted = new ArrayList<T>();
         for (Object obj : objects) {
             if (arg0.getClass().isInstance(obj)) {
                 deleted.add((T) obj);
@@ -66,7 +66,7 @@ public class MockData implements Data {
     @SuppressWarnings("rawtypes")
     @Override
     public List<Model> retrieve(Class type, String fieldName, Object value) {
-        List<Model> rv = new ArrayList<Model>();
+        final List<Model> rv = new ArrayList<Model>();
         for (Object obj : objects) {
             if (!type.isInstance(obj)) {
                 continue;
@@ -97,7 +97,7 @@ public class MockData implements Data {
     @SuppressWarnings("unchecked")
     @Override
     public <T> List<T> retrieveAll(T arg0) {
-        List<T> all = new ArrayList<T>();
+        final List<T> all = new ArrayList<T>();
         for (Object obj : objects) {
             if (arg0.getClass().isInstance(obj)) {
                 all.add((T) obj);
@@ -122,8 +122,7 @@ public class MockData implements Data {
     @SuppressWarnings("rawtypes")
     @Override
     public List<Model> andRetrieve(Class arg0, String[] arg1, List<Object> arg2)
-            throws WPISuiteException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+            throws IllegalArgumentException {
         return null;
     }
     
@@ -131,28 +130,25 @@ public class MockData implements Data {
     @Override
     public List<Model> complexRetrieve(Class arg0, String[] arg1,
             List<Object> arg2, Class arg3, String[] arg4, List<Object> arg5)
-            throws WPISuiteException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+            throws IllegalArgumentException {
         return null;
     }
     
     @Override
     public <T> List<Model> deleteAll(T arg0, Project arg1) {
-        List<Model> toDelete = retrieveAll(arg0, arg1);
+        final List<Model> toDelete = retrieveAll(arg0, arg1);
         objects.removeAll(toDelete);
         return toDelete;
     }
     
     @SuppressWarnings("rawtypes")
     @Override
-    public List<Model> orRetrieve(Class arg0, String[] arg1, List<Object> arg2)
-            throws WPISuiteException, IllegalAccessException,
-            InvocationTargetException {
+    public List<Model> orRetrieve(Class arg0, String[] arg1, List<Object> arg2) {
         return null;
     }
     
     private List<Model> filterByProject(List<Model> models, Project project) {
-        List<Model> filteredModels = new ArrayList<Model>();
+        final List<Model> filteredModels = new ArrayList<Model>();
         for (Model m : models) {
             if (m.getProject().getName().equalsIgnoreCase(project.getName())) {
                 filteredModels.add(m);
@@ -164,14 +160,14 @@ public class MockData implements Data {
     @SuppressWarnings("rawtypes")
     @Override
     public List<Model> retrieve(Class arg0, String arg1, Object arg2,
-            Project arg3) throws WPISuiteException {
+            Project arg3) {
         return filterByProject(retrieve(arg0, arg1, arg2), arg3);
     }
     
     @SuppressWarnings("unchecked")
     @Override
     public <T> List<Model> retrieveAll(T arg0, Project arg1) {
-        return filterByProject((List<Model>) retrieveAll(arg0), arg1);
+        return filterByProject((List<Model>) retrieveAll(arg0), arg1); // $codepro.audit.disable unnecessaryCast
     }
     
     @Override
