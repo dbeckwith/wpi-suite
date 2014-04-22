@@ -18,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
@@ -91,7 +92,7 @@ public class ViewControllerTest {
         NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
-        ViewControllerTest.vc.cancelNewGame(ngp);
+        ViewControllerTest.vc.cancelNewGame(ngp, false);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
@@ -100,13 +101,13 @@ public class ViewControllerTest {
         int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
                 new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null, null,
+                        new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                         null, null));
         ViewControllerTest.vc.editGame();
         NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
                 .getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
-        ViewControllerTest.vc.cancelEditGame(ngp);
+        ViewControllerTest.vc.cancelEditGame(ngp, false);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     

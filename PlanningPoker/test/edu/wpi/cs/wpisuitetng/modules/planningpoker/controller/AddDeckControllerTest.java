@@ -22,7 +22,7 @@ public class AddDeckControllerTest {
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
         AddDeckController adc = AddDeckController.getInstance();
-        adc.addDeck(new DeckModel());
+        adc.addDeck(new DeckModel(0));
         MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {

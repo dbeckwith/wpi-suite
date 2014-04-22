@@ -9,7 +9,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -70,7 +69,7 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        cancelNewGame(editGame, editGame.getHasChanged());
+                        cancelNewGame(editGame, true);
                     }
                 });
         
@@ -103,22 +102,10 @@ public class ViewController {
      *        The NewGamePanel to create a game from
      */
     public void saveNewGame(NewGamePanel e) {
-        DeckModel d = e.getDeck();
-        final ArrayList<Double> newCards = new ArrayList<Double>();
-        if (d.toString().equals("Generated deck")) {
-            for (int i = 1; i <= e.getMaximumCardValue(); i++) {
-                newCards.add((double) i);
-            }
-            
-            d = new DeckModel(d.toString(), newCards,
-                    d.canAllowsMultipleSelection());
-        }
-        System.out.println(d);
+
         
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), new DeckModel(
-                        d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(),
+                e.getDescription(), e.getRequirements(), e.getDeck(), e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         

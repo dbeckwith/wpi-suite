@@ -83,7 +83,7 @@ public class GameModel extends AbstractModel implements Serializable {
         this(null, // name
                 null, // description
                 null, // requirements
-                DeckListModel.getInstance().getDefaultDeck(), // deck
+                null, // deck
                 null, // end date
                 null, // type
                 null, // status

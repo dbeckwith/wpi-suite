@@ -15,8 +15,8 @@ public class GetDecksControllerTest {
     
     @Test
     public void test() {
-        DeckModel deck1 = new DeckModel("Deck 1");
-        DeckModel deck2 = new DeckModel("Deck 2");
+        DeckModel deck1 = new DeckModel();
+        DeckModel deck2 = new DeckModel();
         DeckListModel.getInstance().removeObservers();
         GetDecksController.receivedDecks(new DeckModel[] { deck1, deck2 });
         Assert.assertTrue(DeckListModel.getInstance().getDecks()

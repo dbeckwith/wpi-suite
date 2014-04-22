@@ -23,10 +23,31 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  * @version 1.0
  */
 public class DeckModel extends AbstractModel {
+	
+	public static final DeckModel DEFAULT_DECK;
+	
+	public static final int NO_LIMIT = 0;
+	
+	static {
+		ArrayList<Double> defaultCards = new ArrayList<Double>();
+		
+		defaultCards.add(0d);
+		defaultCards.add(1d);
+		defaultCards.add(1d);
+		defaultCards.add(2d);
+		defaultCards.add(3d);
+		defaultCards.add(5d);
+		defaultCards.add(8d);
+		defaultCards.add(13d);
+		
+		DEFAULT_DECK = new DeckModel("Default Deck", defaultCards, true);
+	}
+	
 	private final String name;
 	private final ArrayList<Double> cards;
 	private final boolean allowsMultipleSelection;
 	private final boolean isNone;
+	private final int maxEstimate;
     
     /**
      * Creates a new deck.
@@ -38,14 +59,13 @@ public class DeckModel extends AbstractModel {
      * @param allowsMultipleSelection
      *            whether or not this deck should allow multiple selection
      */
-	public DeckModel(String name, ArrayList<Double> cards,
-			boolean allowsMultipleSelection) {
+	public DeckModel(String name, ArrayList<Double> cards, boolean allowsMultipleSelection) {
 		this.name = name;
 		this.cards = cards;
 		isNone = (cards == null || cards.size() == 0);
 		
 		this.allowsMultipleSelection = allowsMultipleSelection;
-
+		maxEstimate = NO_LIMIT;
 	}
 
     /**
@@ -55,11 +75,12 @@ public class DeckModel extends AbstractModel {
      * @param name
      *            the name of the deck
      */
-	public DeckModel(String name) {
-		this.name = name;
+	public DeckModel(int max) {
+		this.name = "None";
 		this.cards = null;
 		this.allowsMultipleSelection = false;
 		isNone = true;
+		this.maxEstimate = Math.max(max, NO_LIMIT);
 	}
     
     /**
@@ -71,6 +92,7 @@ public class DeckModel extends AbstractModel {
         cards = null;
         allowsMultipleSelection = false;
         isNone = false;
+        maxEstimate = NO_LIMIT;
     }
 
 	/**
@@ -91,11 +113,24 @@ public class DeckModel extends AbstractModel {
 		return this.cards;
 	}
 	
-	/**
-	 * @return whether the deck has cards or not
-	 */
+    /**
+     * Gets whether this deck is a None deck or not. A None deck has no cards in
+     * it, but should instead allow the user to enter whatever estimate they
+     * want.
+     * 
+     * @return true if this deck is a None deck, false otherwise
+     */
 	public boolean isNone(){
 		return isNone;
+	}
+
+	/**
+	 * Gets the maximum custom estimate that can be entered for this deck
+	 *
+	 * @return maximum estimate , NO_LIMIT if there isnt one
+	 */
+	public int getMaxEstimate(){
+		return maxEstimate;
 	}
     
     /**
@@ -180,16 +215,8 @@ public class DeckModel extends AbstractModel {
 		return name;
 	}
 
-    /**
-     * Gets whether this deck is a None deck or not. A None deck has no cards in
-     * it, but should instead allow the user to enter whatever estimate they
-     * want.
-     * 
-     * @return true if this deck is a None deck, false otherwise
-     */
-	public boolean canGetIsNone() {
-		return isNone;
-	}
+
+
 
     /**
      * Gets whether multiple card selection is allowed for this deck. This means

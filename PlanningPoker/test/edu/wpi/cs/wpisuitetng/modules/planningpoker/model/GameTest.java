@@ -59,7 +59,7 @@ public class GameTest {
 	@Test
 	public void TestRequirementEndsAfterDeadline() {
 		GameModel testgame = new GameModel("Test Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() + 1000),
 				GameType.DISTRIBUTED, GameStatus.NEW);
 		GameModel created = new GameModel();
@@ -86,7 +86,7 @@ public class GameTest {
 	@Test
 	public void TestRequirementNotCompleteBeforeDeadline() {
 		GameModel testgame = new GameModel("Test Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() + 100000000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		Assert.assertFalse(testgame.isEnded());

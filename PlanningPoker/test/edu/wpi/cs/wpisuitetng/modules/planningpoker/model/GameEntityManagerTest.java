@@ -69,23 +69,23 @@ public class GameEntityManagerTest {
 		adminSession = new Session(admin, testProject, mockSsid);
 		existingUser = new User("joe", "joe", "1234", 2);
 		existingGame = new GameModel("Existing Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		existingGameID = existingGame.getID();
 		defaultSession = new Session(existingUser, testProject, mockSsid);
 		newGame = new GameModel("New Game", "A new game", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		newGameID = newGame.getID();
 		otherGame = new GameModel("Other Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		
 		GameModel gameUpdates = new GameModel("Updated Game", "Some updates",
-				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+				null, DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		goodUpdatedGame = new GameModel();
@@ -151,7 +151,7 @@ public class GameEntityManagerTest {
 	@Test
 	public void testSave() throws WPISuiteException {
 		GameModel game = new GameModel("Save Test", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		int saveTestGameID = game.getID();
@@ -187,7 +187,7 @@ public class GameEntityManagerTest {
 	@Test
 	public void testDeleteAll() throws WPISuiteException {
 		GameModel anotherGame = new GameModel("a title", "a description",
-				null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+				null,DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() - 100000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		manager.makeEntity(defaultSession, anotherGame.toJSON());

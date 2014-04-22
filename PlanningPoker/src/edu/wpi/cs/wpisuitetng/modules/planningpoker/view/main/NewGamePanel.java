@@ -353,9 +353,9 @@ public class NewGamePanel extends JPanel {
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		if(game == null){
-			PlanningPoker.getViewController().cancelNewGame(this);
+			PlanningPoker.getViewController().cancelNewGame(this, true);
 		} else {
-			PlanningPoker.getViewController().cancelEditGame(this);
+			PlanningPoker.getViewController().cancelEditGame(this, true);
 		}
 	}
 
@@ -430,7 +430,7 @@ public class NewGamePanel extends JPanel {
 	 */
 	public void check() {
 		saveButton.setEnabled(gameDescription.canValidateForm()
-				&& newGameRequirementsPanel.canValidateForm() && gameDescription.canValidateMaximum());
+				&& newGameRequirementsPanel.canValidateForm());
 		final ArrayList<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());
@@ -485,16 +485,7 @@ public class NewGamePanel extends JPanel {
     public NewGameRequirementsPanel getNewGameRequirementsPanel() {
         return newGameRequirementsPanel;
     }
-    
-    /**
-     * get the maximum card value
-     * 
-     * @return the maximum card value
-     */
-    public int getMaximumCardValue() {
-        return gameDescription.getMaxCardValue();
-    }
-    
+        
     private GameModel game = null;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
