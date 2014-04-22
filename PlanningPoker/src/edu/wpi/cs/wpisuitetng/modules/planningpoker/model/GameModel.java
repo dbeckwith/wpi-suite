@@ -280,7 +280,7 @@ public class GameModel extends AbstractModel implements Serializable {
      */
     public boolean deadlinePassed(){
         Date currDate = new Date();
-        return endDate.before(currDate);
+        return ((endDate != null) && endDate.before(currDate));
     }
     
     /**
