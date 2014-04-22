@@ -17,8 +17,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.OptionPane;
 /**
  * OptionPane implementation that automatically returns no
  * 
- * @author Andrew
- *
+ * @author Team 9
+ * @version 1.0
  */
 public class NoMockOptionPane implements OptionPane {
     
