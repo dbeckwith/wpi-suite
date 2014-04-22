@@ -123,7 +123,6 @@ public class ViewController {
                         .getUserName());
         
         AddGameController.getInstance().addGame(newGame);
-        EmailController.getInstance().sendGameStartNotifications(newGame);
         
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());

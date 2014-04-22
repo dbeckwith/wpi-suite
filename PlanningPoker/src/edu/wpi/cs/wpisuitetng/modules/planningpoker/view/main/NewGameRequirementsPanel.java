@@ -71,7 +71,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         };
         RequirementsListModel.getInstance().addListListener(
                 requirementsListObserver);
-        GetRequirementsController.getInstance().retrieveRequirements();
+        GetRequirementsController.getInstance().requestRequirements();
 	}
     
     /**
@@ -137,7 +137,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 		final JButton reloadButton = new JButton("Reload from Requirements Manager");
 		reloadButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        GetRequirementsController.getInstance().retrieveRequirements();
+		        GetRequirementsController.getInstance().requestRequirements();
 		    }
 		});
 		reloadButton.setIcon(ImageLoader.getIcon("reload.png"));
