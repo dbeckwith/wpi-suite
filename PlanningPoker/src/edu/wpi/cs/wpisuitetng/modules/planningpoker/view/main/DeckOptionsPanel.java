@@ -184,6 +184,9 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	public DeckModel getDeck(){
 		if(useDeck.isSelected()){
 			DeckModel selectedDeck = (DeckModel)savedDecks.getSelectedItem();
+			if(selectedDeck == null){
+				selectedDeck = DeckModel.DEFAULT_DECK;
+			}
 			return new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), selectedDeck.canAllowsMultipleSelection());
 		} else {
 			return new DeckModel((Integer)maxSpinner.getModel().getValue());			

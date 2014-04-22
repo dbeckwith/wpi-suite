@@ -199,7 +199,7 @@ public class ViewControllerTest {
     @Test
     public void testDisplayAdmin() {
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
-                new ArrayList<GameRequirementModel>(), null, null,
+                new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, ""));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc

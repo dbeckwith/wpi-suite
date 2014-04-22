@@ -317,7 +317,7 @@ public class NewDeckPanel extends JPanel {
         for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
             String name = deck.getName();
             // if the name looks like the prefix with a number after it
-            if (name.matches(defaultName + "( \\d+)?")) {
+            if (name != null && name.matches(defaultName + "( \\d+)?")) {
                 int newNum;
                 if (name.matches(defaultName + " \\d+")) {
                     // name has a number after it
