@@ -285,6 +285,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         });
         
         deckOptions = new DeckOptionsPanel();
+        deckOptions.setParent(this);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
@@ -476,6 +477,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
 			}
 		});
         
+    }
+    
+    public void checkParent(){
+    	parentPanel.check();
     }
     
     /**

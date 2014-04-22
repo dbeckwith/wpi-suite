@@ -62,6 +62,16 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 		}
 	}
 	
+	public void addAllDecks(DeckModel[] newDecks){
+		for(int i = 0; i < newDecks.length; i++){
+			decks.add(newDecks[i]);
+		}
+		
+		for (int i = 0; i < observers.size(); i++){
+			observers.get(i).listUpdated();
+		}
+	}
+	
 	/**
 	 * Remove all observers for the model
 	 */

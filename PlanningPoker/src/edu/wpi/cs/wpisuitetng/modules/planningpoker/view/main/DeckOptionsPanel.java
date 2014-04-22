@@ -28,6 +28,8 @@ import javax.swing.JSpinner;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
@@ -43,7 +45,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
  * @version 1.0
  * 
  */
-public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
+public class DeckOptionsPanel extends JPanel implements SimpleListObserver, ActionListener, ChangeListener {
+	
+	private NewGameDescriptionPanel parent;
 	
 	private JCheckBox useDeck;
 	private JComboBox<DeckModel> savedDecks;
@@ -66,7 +70,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		useDeck = new JCheckBox("Deck:");
-		
+		useDeck.setSelected(true);
 		useDeck.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,10 +78,14 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 			}
 		});
 		
+		useDeck.addActionListener(this);
+		
 		
 		useDeck.setBackground(Color.WHITE);
 		
 		savedDecks = new JComboBox<DeckModel>();
+		
+		savedDecks.addActionListener(this);
 		
 		newDeckButton = new JButton("New Deck...");
 		
@@ -87,6 +95,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 		lblForNo.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		
 		maxSpinner = new JSpinner();
+		maxSpinner.addChangeListener(this);
 		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
     	JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor()).getTextField();
     	((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
@@ -133,15 +142,20 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 		
 	}
 	
+	public void setParent(NewGameDescriptionPanel p){
+		parent = p;		
+	}
+	
 	/**
 	 * Set the game for the deck options
 	 * @param game
 	 */
 	public void setGame(GameModel game){
 		this.game = game;	
+
+		listUpdated();
 		
 		if(game.getDeck() == null){
-			System.out.println("Deck is null!");
 			return;
 		}
 		
@@ -151,17 +165,15 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 			maxSpinner.getModel().setValue(game.getDeck().getMaxEstimate());
 		} else {
 			for (int i = 0; i < savedDecks.getModel().getSize(); i++) {
-	            final DeckModel deck = savedDecks.getModel().getElementAt(i);
+	            DeckModel deck = savedDecks.getModel().getElementAt(i);
 	            if (deck != null && deck.getName().equals(game.getDeck().getName())) {
 	                savedDecks.setSelectedItem(deck);
-	                System.out.println("selecting game's deck "+deck);
 	                break;
 	            }
 	        }  
 		}
-		listUpdated();
 		checkUseDeck();
-		
+		repaint();
 		
 	}
 	
@@ -190,20 +202,25 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
             newModel.addElement(deck);
         }
         
+
+        
         DeckModel selected = (DeckModel) savedDecks.getSelectedItem();
         if(selected == null){
         	selected = DeckModel.DEFAULT_DECK;
         }
-        
+
         savedDecks.setModel(newModel);
         
-        for (int i = 0; i < newModel.getSize(); i++) {
-            DeckModel deck = newModel.getElementAt(i);
-            if (deck != null && deck.getName() != null && deck.getName().equals(selected.getName())) {
-                //savedDecks.setSelectedItem(deck);
-                break;
-            }
-        }        
+        for(int i = 0; i < newModel.getSize(); i++){
+        	DeckModel deck = newModel.getElementAt(i);
+        	if(deck != null && deck.getName() != null && deck.getName().equals(selected.getName())){
+        		savedDecks.setSelectedItem(deck);
+        		break;
+        	}
+        }       
+        
+        repaint();
+        
     }
     
     public void addNewDeckButtonListener(ActionListener a) {
@@ -220,4 +237,19 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 		newDeckButton.setEnabled(deckSelected);
     	
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(parent != null){ 
+			parent.checkParent();		
+		}
+		
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if(parent != null){
+			parent.checkParent();
+		}
+	}
 }

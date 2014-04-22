@@ -183,6 +183,16 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 	            g2.drawString(value, (int) (getWidth() - r.getWidth()) / 2,
 	                    (int) (getHeight() - r.getHeight()) / 2
 	                            + g2.getFontMetrics().getAscent());
+            } else {
+            	if(!((SpinnerNumberModel)input.getModel()).getMaximum().equals(DeckModel.NO_LIMIT)){
+            		g2.setColor(Color.BLACK);
+            		String maxString = "Max : "+ ((SpinnerNumberModel)input.getModel()).getMaximum();
+            		g2.setFont(g.getFont().deriveFont(getWidth()*FONT_SIZE*0.3f));
+            		Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
+            		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
+    	                    (int) (getHeight() - r.getHeight()) / 2
+    	                            + g2.getFontMetrics().getAscent() + input.getHeight()/2);
+            	}
             }
             
         }

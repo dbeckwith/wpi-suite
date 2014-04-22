@@ -231,6 +231,7 @@ public class NewGamePanel extends JPanel {
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
+        newGameRequirementsPanel.setEditGamePanel(this);
         newGameRequirementsCard.add(newGameRequirementsPanel, "reqlistpanel");
         
         newDeckPanel = new NewDeckPanel();
