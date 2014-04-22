@@ -37,6 +37,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import java.awt.Dimension;
 
 /**
  * This is a class to show the panel when the user clicks create game button.
@@ -248,6 +249,8 @@ public class NewGamePanel extends JPanel {
         descLabel = new JLabel("Requirement Description: *");
         
         saveNewReqButton = new JButton("Save Requirement");
+        saveNewReqButton.setMinimumSize(new Dimension(170, 31));
+        saveNewReqButton.setMaximumSize(new Dimension(170, 31));
         saveNewReqButton.setIcon(ImageLoader.getIcon("Save.png"));
         saveNewReqButton.addActionListener(new ActionListener() {
             @Override
@@ -281,6 +284,8 @@ public class NewGamePanel extends JPanel {
         "Scenario" }));
         
         cancelNewReqButton = new JButton("Return to List");
+        cancelNewReqButton.setMaximumSize(new Dimension(150, 31));
+        cancelNewReqButton.setMinimumSize(new Dimension(150, 31));
         cancelNewReqButton.setIcon(ImageLoader.getIcon("backArrow.png"));
         cancelNewReqButton.addActionListener(new ActionListener() {
             @Override
