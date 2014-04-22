@@ -261,28 +261,28 @@ public class GameEntityManager implements EntityManager<GameModel> {
             try {
                 EmailController.getInstance()
                         .setUsers(s.getProject().getTeam());
-                switch (updatedGameModel.getStatus()) {
-                    case NEW:
-                        // don't send an email
-                        break;
-                    case PENDING:
-                        // send game start email
-                        EmailController.getInstance()
-                                .sendGameStartNotifications(updatedGameModel);
-                        break;
-                    case COMPLETE:
-                        // send ended game email
-                        EmailController.getInstance().sendGameEndNotifications(
-                                updatedGameModel);
-                        break;
-                    case CLOSED:
-                        // don't send an email
-                        break;
-                }
             }
             catch (NullPointerException e) {
-                System.err.println("Null team, not sending emails.");
+                System.err.println("Null team, sending emails to last known users");
                 e.printStackTrace();
+            }
+            switch (updatedGameModel.getStatus()) {
+                case NEW:
+                    // don't send an email
+                    break;
+                case PENDING:
+                    // send game start email
+                    EmailController.getInstance().sendGameStartNotifications(
+                            updatedGameModel);
+                    break;
+                case COMPLETE:
+                    // send ended game email
+                    EmailController.getInstance().sendGameEndNotifications(
+                            updatedGameModel);
+                    break;
+                case CLOSED:
+                    // don't send an email
+                    break;            
             }
         }
         else {
