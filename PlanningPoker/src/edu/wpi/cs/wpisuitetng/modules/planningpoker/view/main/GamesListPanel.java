@@ -18,6 +18,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
@@ -113,7 +114,7 @@ public class GamesListPanel extends javax.swing.JPanel {
             else {
                 if (GameListModel.getInstance().getGames().get(i).isStarted()
                         || GameListModel.getInstance().getGames().get(i).getOwner()
-                                .equals(ConfigManager.getConfig().getUserName())) {
+                                .equals(CurrentUserController.getInstance().getUser())) {
                     pendingFolder.add(gameNode);
                 }
             }

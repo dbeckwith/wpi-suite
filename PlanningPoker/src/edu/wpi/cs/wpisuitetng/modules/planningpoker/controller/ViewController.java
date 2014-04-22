@@ -120,8 +120,7 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
                         d.canAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
-                        .getUserName());
+                e.getGameType(), GameStatus.NEW, CurrentUserController.getInstance().getUser());
         
         AddGameController.getInstance().addGame(newGame);
         
@@ -145,8 +144,7 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
                         d.canAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
-                        .getUserName());
+                e.getGameType(), GameStatus.NEW, CurrentUserController.getInstance().getUser());
         game.editCopyFrom(newGame);
         UpdateGamesController.getInstance().updateGame(game);
         RequirementsListModel.getInstance().removeListListener(
@@ -226,7 +224,6 @@ public class ViewController {
         if (curr != null && !curr.isEnded()) {
             curr.setEnded(true);
             UpdateGamesController.getInstance().updateGame(curr);
-            EmailController.getInstance().sendGameEndNotifications(curr);
         }
     }
     
@@ -239,7 +236,7 @@ public class ViewController {
     public void displayAdmin(GameModel game) {
         if (game != null
                 && game.getOwner().equals(
-                        ConfigManager.getConfig().getUserName())
+                        CurrentUserController.getInstance().getUser())
                 && !game.isClosed() && mainView.getSelectedIndex() == 0) {
             toolbar.setAdminVisibility(true);
             toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);
@@ -335,7 +332,6 @@ public class ViewController {
         else if (curr != null && !curr.isStarted()) {
             curr.startGame();
             UpdateGamesController.getInstance().updateGame(curr);
-            EmailController.getInstance().sendGameStartNotifications(curr);
         }
         
     }

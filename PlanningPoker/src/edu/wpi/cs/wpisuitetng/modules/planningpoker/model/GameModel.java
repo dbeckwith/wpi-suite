@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
 /**
@@ -80,7 +82,7 @@ public class GameModel extends AbstractModel implements Serializable {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-    private String owner;
+    private User owner;
     private DeckModel deck;
     private static int nextId = 0;
     
@@ -123,7 +125,7 @@ public class GameModel extends AbstractModel implements Serializable {
             List<GameRequirementModel> requirements, DeckModel deck, Date end,
             GameType type, GameStatus status) {
         this(name, description, requirements, deck, end, type, status,
-                ConfigManager.getConfig().getUserName());
+                CurrentUserController.getInstance().getUser());
     }
     
     /**
@@ -149,7 +151,7 @@ public class GameModel extends AbstractModel implements Serializable {
      */
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
-            Date endDate, GameType type, GameStatus status, String owner) {
+            Date endDate, GameType type, GameStatus status, User owner) {
         id = GameModel.nextId++;
         this.name = name;
         this.description = description;
@@ -195,7 +197,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return the owner
      */
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
     
@@ -480,7 +482,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @return True if this GameModel is equal to the input GameModel
      */
     public boolean equals(GameModel other) {
-        return other.id == id && other.name.equals(other.name);
+        return other.id == id && other.name.equals(name);
     }
     
     @Override
