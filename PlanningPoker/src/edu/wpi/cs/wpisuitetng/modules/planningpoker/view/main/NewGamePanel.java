@@ -82,7 +82,6 @@ public class NewGamePanel extends JPanel {
             
             private void validate() {
                 hasChanged = true;
-                System.out.println("DEBUG: validate");
                 newReqNameValid = (newReqName.getText() != null && !newReqName
                         .getText().isEmpty());
                 setErrorBorder(newReqName, newReqNameValid);
