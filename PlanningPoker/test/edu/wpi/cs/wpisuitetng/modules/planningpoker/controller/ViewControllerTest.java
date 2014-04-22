@@ -198,6 +198,7 @@ public class ViewControllerTest {
      */
     @Test
     public void testDisplayAdmin() {
+        ViewControllerTest.mv.setSelectedIndex(0);
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
                 new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, ""));
