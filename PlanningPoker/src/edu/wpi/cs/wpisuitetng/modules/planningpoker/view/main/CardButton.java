@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -224,6 +225,11 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
      */
     public void setCardSelected(boolean selected) {
         this.selected = selected;
+    }
+    
+    public void setLimit(int limit){
+    	double cardLimit = (limit == DeckModel.NO_LIMIT)?Double.MAX_VALUE:limit;
+    	input.setModel(new SpinnerNumberModel(1, 0,cardLimit, 0.5));
     }
     
     /**

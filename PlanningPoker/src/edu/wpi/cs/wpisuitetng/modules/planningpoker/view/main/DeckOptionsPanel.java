@@ -58,8 +58,6 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 	public DeckOptionsPanel() {
 		initComponents();
 		
-		listUpdated();
-		
 		DeckListModel.getInstance().addObserver(this);
 	}
 	
@@ -72,11 +70,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 		useDeck.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean deckSelected = useDeck.isSelected();
-				
-				maxSpinner.setEnabled(!deckSelected);
-				savedDecks.setEnabled(deckSelected);
-				newDeckButton.setEnabled(deckSelected);
+				checkUseDeck();
 			}
 		});
 		
@@ -112,14 +106,15 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(useDeck)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(savedDecks, 0, 170, Short.MAX_VALUE)
+							.addComponent(savedDecks, 0, 160, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(newDeckButton)))
-					.addContainerGap())
+					.addGap(14))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(useDeck)
 						.addComponent(savedDecks, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -129,12 +124,12 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 						.addComponent(lblMaximumEstimate)
 						.addComponent(lblForNo)
 						.addComponent(maxSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(128, Short.MAX_VALUE))
+					.addContainerGap(74, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
 		//enable the correct controls
-		useDeck.doClick();
+		checkUseDeck();
 		
 	}
 	
@@ -146,23 +141,27 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 		this.game = game;	
 		
 		if(game.getDeck() == null){
+			System.out.println("Deck is null!");
 			return;
 		}
 		
 		useDeck.setSelected(!game.getDeck().isNone());
 		
 		if(game.getDeck().isNone()){
-			maxSpinner.setValue(game.getDeck().getMaxEstimate());
+			maxSpinner.getModel().setValue(game.getDeck().getMaxEstimate());
 		} else {
 			for (int i = 0; i < savedDecks.getModel().getSize(); i++) {
 	            final DeckModel deck = savedDecks.getModel().getElementAt(i);
 	            if (deck != null && deck.getName().equals(game.getDeck().getName())) {
 	                savedDecks.setSelectedItem(deck);
+	                System.out.println("selecting game's deck "+deck);
+	                break;
 	            }
 	        }  
 		}
+		listUpdated();
+		checkUseDeck();
 		
-		useDeck.doClick();	
 		
 	}
 	
@@ -175,7 +174,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
 			DeckModel selectedDeck = (DeckModel)savedDecks.getSelectedItem();
 			return new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), selectedDeck.canAllowsMultipleSelection());
 		} else {
-			return new DeckModel((Integer)maxSpinner.getValue());			
+			return new DeckModel((Integer)maxSpinner.getModel().getValue());			
 		}
 	}
 	
@@ -193,15 +192,18 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
         
         DeckModel selected = (DeckModel) savedDecks.getSelectedItem();
         if(selected == null){
+        	System.out.println("selected was null");
         	selected = DeckModel.DEFAULT_DECK;
         }
         
         savedDecks.setModel(newModel);
         
         for (int i = 0; i < newModel.getSize(); i++) {
-            final DeckModel deck = newModel.getElementAt(i);
+            DeckModel deck = newModel.getElementAt(i);
             if (deck != null && deck.getName() != null && deck.getName().equals(selected.getName())) {
+            	System.out.println("lu() selecting deck "+deck);
                 savedDecks.setSelectedItem(deck);
+                break;
             }
         }        
     }
@@ -210,5 +212,14 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver {
     	if(a != null){
     		newDeckButton.addActionListener(a);
     	}
+    }
+    
+    private void checkUseDeck(){
+		boolean deckSelected = useDeck.isSelected();
+		
+		maxSpinner.setEnabled(!deckSelected);
+		savedDecks.setEnabled(deckSelected);
+		newDeckButton.setEnabled(deckSelected);
+    	
     }
 }

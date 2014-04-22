@@ -129,9 +129,7 @@ public class ViewController {
     public void updateGame(GameModel game, NewGamePanel e) {
         final DeckModel d = e.getDeck();
         final GameModel newGame = new GameModel(e.getName(),
-                e.getDescription(), e.getRequirements(), new DeckModel(
-                        d.toString(), d.getCards(),
-                        d.canAllowsMultipleSelection()), e.getEndDate(),
+                e.getDescription(), e.getRequirements(), d, e.getEndDate(),
                 e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
         game.editCopyFrom(newGame);

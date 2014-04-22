@@ -135,7 +135,7 @@ public class VotePanel extends javax.swing.JPanel {
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
         	CardButton estimateInput = new CardButton();
-        	
+        	estimateInput.setLimit(parentGame.getDeck().getMaxEstimate());
             estimateInput.addActionListener(new ActionListener() {					
 				@Override
 				public void actionPerformed(ActionEvent e) {
