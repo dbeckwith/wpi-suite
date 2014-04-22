@@ -63,10 +63,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         setBackground(Color.WHITE);
         initComponents();
         if (CurrentUserController.getInstance().getUser() != null) {
-            emailBox.setSelected(CurrentUserController.getInstance().getUser()
-                    .isNotifyByEmail());
-            imBox.setSelected(CurrentUserController.getInstance().getUser()
-                    .isNotifyByIM());
+            emailBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByEmail());
+            imBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByIM());
             boolean b = emailBox.isSelected();
             lblEmail.setVisible(b);
             emailField.setVisible(b);
@@ -84,9 +82,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         notificationsPanel = new javax.swing.JPanel();
-        notificationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(
-                184, 207, 229)), "Notification Options", TitledBorder.LEADING,
-                TitledBorder.TOP, null, null));
+        notificationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)),
+                "Notification Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
         emailBox = new javax.swing.JCheckBox();
         emailBox.setBackground(Color.WHITE);
@@ -114,7 +111,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         emailField = new JTextField();
         emailField.setColumns(10);
-        emailField.getDocument().addDocumentListener(new DocumentListener(){
+        emailField.getDocument().addDocumentListener(new DocumentListener() {
             
             @Override
             public void changedUpdate(DocumentEvent arg0) {
@@ -123,7 +120,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             
             @Override
             public void insertUpdate(DocumentEvent arg0) {
-                validate(); 
+                validate();
             }
             
             @Override
@@ -131,12 +128,13 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 validate();
             }
             
-            public void validate(){
+            public void validate() {
                 String email = emailField.getText();
                 errorLabel.setVisible(false);
-                if(email.equals(CurrentUserController.getInstance().getUser().getEmail())){
+                if (email.equals(CurrentUserController.getInstance().getUser().getEmail())) {
                     saveButton.setEnabled(false);
-                }else{
+                }
+                else {
                     saveButton.setEnabled(false);
                     Pattern emailPattern;
                     Matcher emailMatcher;
@@ -145,9 +143,10 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     emailPattern = Pattern.compile(EMAIL_PATTERN);
                     emailMatcher = emailPattern.matcher(email);
                     
-                    if(emailMatcher.matches()){
+                    if (emailMatcher.matches()) {
                         saveButton.setEnabled(true);
-                    }else{
+                    }
+                    else {
                         errorLabel.setVisible(true);
                     }
                 }
@@ -156,7 +155,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         });
         
         saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener(){
+        saveButton.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -172,68 +171,81 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         final javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(
                 notificationsPanel);
-        notificationsPanelLayout.setHorizontalGroup(
-                notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(notificationsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(notificationsPanelLayout.createSequentialGroup()
-                                        .addComponent(imBox)
-                                        .addGap(199)
-                                        .addComponent(errorLabel))
-                                        .addGroup(notificationsPanelLayout.createSequentialGroup()
-                                                .addComponent(emailBox)
-                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                .addComponent(lblEmail)
-                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                .addComponent(saveButton)))
-                                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                );
-        notificationsPanelLayout.setVerticalGroup(
-                notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(notificationsPanelLayout.createSequentialGroup()
+        notificationsPanelLayout
+                .setHorizontalGroup(notificationsPanelLayout
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                notificationsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                notificationsPanelLayout
+                                                        .createParallelGroup(Alignment.LEADING)
+                                                        .addGroup(
+                                                                notificationsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(imBox)
+                                                                        .addGap(199)
+                                                                        .addComponent(errorLabel))
+                                                        .addGroup(
+                                                                notificationsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(emailBox)
+                                                                        .addPreferredGap(
+                                                                                ComponentPlacement.UNRELATED)
+                                                                        .addComponent(lblEmail)
+                                                                        .addPreferredGap(
+                                                                                ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                emailField,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                149,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                        .addPreferredGap(
+                                                                                ComponentPlacement.RELATED)
+                                                                        .addComponent(saveButton)))
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        notificationsPanelLayout.setVerticalGroup(notificationsPanelLayout.createParallelGroup(
+                Alignment.LEADING).addGroup(
+                notificationsPanelLayout
+                        .createSequentialGroup()
                         .addContainerGap(17, Short.MAX_VALUE)
-                        .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(imBox)
-                                .addComponent(errorLabel))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
+                        .addGroup(
+                                notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(imBox).addComponent(errorLabel))
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addGroup(
+                                notificationsPanelLayout
+                                        .createParallelGroup(Alignment.BASELINE)
                                         .addComponent(emailBox)
                                         .addComponent(lblEmail)
-                                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(saveButton)))
-                );
+                                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(saveButton))));
         notificationsPanel.setLayout(notificationsPanelLayout);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+        layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup().addContainerGap()
                         .addComponent(notificationsPanel, 133, 410, GroupLayout.PREFERRED_SIZE) //manually change min to 133
-                        .addContainerGap(85, Short.MAX_VALUE))
-                );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(85, Short.MAX_VALUE)));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(203, Short.MAX_VALUE))
-                );
+                        .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 86,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap(203, Short.MAX_VALUE)));
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {
-        UserUpdateController.getInstance().setNotifyByEmail(
-                emailBox.isSelected());
+        UserUpdateController.getInstance().setNotifyByEmail(emailBox.isSelected());
         boolean b = emailBox.isSelected();
         lblEmail.setVisible(b);
         emailField.setVisible(b);
         saveButton.setVisible(b);
         errorLabel.setVisible(false);
-        if(b){
+        if (b) {
             emailField.setText(CurrentUserController.getInstance().getUser().getEmail());
         }
     }
@@ -242,8 +254,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         UserUpdateController.getInstance().setNotifyByIM(imBox.isSelected());
     }
     
-    private void updateEmail(){
-        String email =  emailField.getText();
+    private void updateEmail() {
+        String email = emailField.getText();
         UserUpdateController.getInstance().updateEmail(email);
         saveButton.setEnabled(false);
     }

@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * A controller for allowing the current user to change personal preferences.
  * Currently only allows for notification preferences, but can be expanded in
  * the future.
+ * 
  * @author Team 9
  * @version 1.0
  * @see UserPreferencesPanel
@@ -96,7 +97,7 @@ public class UserUpdateController {
         sendPostRequest(FieldName.IM_NOTIFY, doNotify);
     }
     
-    public void updateEmail(String e){
+    public void updateEmail(String e) {
         sendPostRequest(FieldName.EMAIL_UPDATE, e);
     }
     
@@ -122,8 +123,7 @@ public class UserUpdateController {
                 user.setEmail((String) newValue);
                 break;
             default:
-                System.err
-                        .println("Invalid notification type " + fieldToUpdate);
+                System.err.println("Invalid notification type " + fieldToUpdate);
                 return;
         }
         final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
