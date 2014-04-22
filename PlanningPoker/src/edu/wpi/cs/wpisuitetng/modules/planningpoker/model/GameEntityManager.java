@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.lang.Thread.State;
 import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -212,7 +213,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
             if (obs == null) {
                 System.out.println("Could not find observer for game");
             }
-            else if (!obs.isAlive()) {
+            else if (obs.getState() == State.NEW) {
                 System.out.println("Starting observer");
                 obs.start();
             }
