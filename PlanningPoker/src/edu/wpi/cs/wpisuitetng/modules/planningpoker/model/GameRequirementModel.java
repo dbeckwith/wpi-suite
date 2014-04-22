@@ -76,7 +76,7 @@ public class GameRequirementModel extends AbstractModel {
         this.estimates = estimates;
         
         Collections.sort(this.estimates);
-        finalEstimate = -1;
+        finalEstimate = 0;
         id = nextId;
         nextId++;
         isFromRequirementManager = false;
@@ -95,7 +95,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         estimates = new ArrayList<Estimate>();
-        finalEstimate = -1;
+        finalEstimate = 0;
         id = nextId;
         nextId++;
         isFromRequirementManager = false;
@@ -234,8 +234,9 @@ public class GameRequirementModel extends AbstractModel {
         float toReturn = 0;
         if (!estimates.isEmpty()) {
             for (Estimate e : estimates) {
-                toReturn += e.getEstimate() / (estimates.size());
+                toReturn += e.getEstimate();
             }
+            toReturn = toReturn / estimates.size();
         }
         return toReturn;
     }
