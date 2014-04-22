@@ -18,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
@@ -116,7 +117,7 @@ public class ViewControllerTest {
         final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
                 new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null, null,
+                        new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                         null, null));
         ViewControllerTest.vc.editGame();
         final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
@@ -197,8 +198,9 @@ public class ViewControllerTest {
      */
     @Test
     public void testDisplayAdmin() {
+        ViewControllerTest.mv.setSelectedIndex(0);
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
-                new ArrayList<GameRequirementModel>(), null, null,
+                new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, ""));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc

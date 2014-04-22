@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
@@ -63,6 +64,7 @@ public class MainView extends JTabbedPane {
 				if(!updated){
 			        GetGamesController.getInstance().retrieveGames();
 			        GetRequirementsController.getInstance().retrieveRequirements();
+			        GetDecksController.getInstance().retrieveDecks();
 			        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
 			        
 			        Component parent = MainView.this;

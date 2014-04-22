@@ -19,6 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
@@ -35,26 +36,26 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * @version 1.0
  */
 public class GetGamesControllerTest {
+
     GetGamesController instance = GetGamesController.getInstance();
     GameModel nullGame = new GameModel();
     GameModel game1 = new GameModel("Test Game 1", "Live Game that just ended",
-            null, DeckListModel.getInstance().getDefaultDeck(), new Date(),
+            null,DeckModel.DEFAULT_DECK, new Date(),
             GameType.LIVE, GameStatus.COMPLETE);
     GameModel game2 = new GameModel("Test Game 2",
-            "Distributed Game that will end in 5 seconds", null, DeckListModel
-                    .getInstance().getDefaultDeck(), new Date(
+            "Distributed Game that will end in 5 seconds", null, DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() + 5000), GameType.DISTRIBUTED,
             GameStatus.PENDING);
     GameModel game3 = new GameModel(
             "Test Game 3",
             "Live Game with end time in 10 seconds, but already manually ended",
-            null, DeckListModel.getInstance().getDefaultDeck(), new Date(System
+            null,DeckModel.DEFAULT_DECK, new Date(System
                     .currentTimeMillis() + 10000), GameType.LIVE,
             GameStatus.COMPLETE);
     GameModel game4 = new GameModel(
             "Test Game 4",
             "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-            null, DeckListModel.getInstance().getDefaultDeck(), new Date(System
+            null,DeckModel.DEFAULT_DECK, new Date(System
                     .currentTimeMillis() - 10000), GameType.DISTRIBUTED,
             GameStatus.PENDING);
     GameListModel list = GameListModel.getInstance();
@@ -80,23 +81,23 @@ public class GetGamesControllerTest {
         instance = GetGamesController.getInstance();
         nullGame = new GameModel();
         game1 = new GameModel("Test Game 1", "Live Game that just ended", null,
-                DeckListModel.getInstance().getDefaultDeck(), new Date(),
+               DeckModel.DEFAULT_DECK, new Date(),
                 GameType.LIVE, GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
                 "Distributed Game that will end in 5 seconds", null,
-                DeckListModel.getInstance().getDefaultDeck(), new Date(
+               DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 5000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
-                null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                null,DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 10000), GameType.LIVE,
                 GameStatus.COMPLETE);
         game4 = new GameModel(
                 "Test Game 4",
                 "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-                null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                null,DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 10000),
                 GameType.DISTRIBUTED, GameStatus.PENDING);
         list = GameListModel.getInstance();
