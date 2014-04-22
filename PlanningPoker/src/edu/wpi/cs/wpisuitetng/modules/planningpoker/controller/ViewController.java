@@ -70,7 +70,7 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        cancelNewGame(editGame);
+                        cancelNewGame(editGame, editGame.getHasChanged());
                     }
                 });
         
@@ -160,11 +160,20 @@ public class ViewController {
      * @param e
      *        The NewGamePanel to cancel
      */
-    public void cancelNewGame(NewGamePanel e) {
+    public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
+        
+        
+        if(hasChanged) {
         final int result = cancelConfirm.showConfirmDialog(e,
                 "Are you sure you want to cancel this game?", "Cancel Game",
                 JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
+            RequirementsListModel.getInstance().removeListListener(
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
+            mainView.removeTabAt(mainView.indexOfComponent(e));
+        }
+        } else {
             RequirementsListModel.getInstance().removeListListener(
                     e.getNewGameRequirementsPanel()
                             .getRequirementsListObserver());
@@ -178,13 +187,20 @@ public class ViewController {
      * @param e
      *        the NewGamePanel to cancel
      */
-    public void cancelEditGame(NewGamePanel e) {
+    public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
+        if(hasChanged) {
         final int result = cancelConfirm
                 .showConfirmDialog(
                         e,
                         "Are you sure you would like cancel editing this game? (changes will not be saved)",
                         "Cancel Edit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
+            RequirementsListModel.getInstance().removeListListener(
+                    e.getNewGameRequirementsPanel()
+                            .getRequirementsListObserver());
+            mainView.removeTabAt(mainView.indexOfComponent(e));
+        }
+        } else {
             RequirementsListModel.getInstance().removeListListener(
                     e.getNewGameRequirementsPanel()
                             .getRequirementsListObserver());
@@ -293,7 +309,8 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        cancelEditGame(editGame);
+                        
+                        cancelEditGame(editGame, true);
                     }
                 });
     }
