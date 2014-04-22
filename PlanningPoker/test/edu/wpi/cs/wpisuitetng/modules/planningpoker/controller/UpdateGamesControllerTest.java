@@ -21,20 +21,24 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the UpdateGamesController class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class UpdateGamesControllerTest {
     
+    /**
+     * Tests that updateGame makes a network request
+     */
     @Test
-    public void test() {
+    public void testRequest() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        UpdateGamesController ugc = UpdateGamesController.getInstance();
+        final UpdateGamesController ugc = UpdateGamesController.getInstance();
         ugc.updateGame(new GameModel());
-        MockRequest request = ((MockNetwork) Network.getInstance())
+        final MockRequest request = ((MockNetwork) Network.getInstance())
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");

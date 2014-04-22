@@ -17,8 +17,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.OptionPane;
 /**
  * OptionPane implementation that automatically returns yes
  * 
- * @author Andrew
- *
+ * @author Team 9
+ * @version 1.0
  */
 public class YesMockOptionPane implements OptionPane {
     
