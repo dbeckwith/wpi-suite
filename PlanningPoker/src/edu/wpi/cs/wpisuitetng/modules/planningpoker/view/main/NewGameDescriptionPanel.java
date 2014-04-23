@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,7 +59,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @version 1.0
  */
 public class NewGameDescriptionPanel extends javax.swing.JPanel {
-	
+    
     private static final long serialVersionUID = 4601624442206350512L;
     
     /**
@@ -71,13 +72,14 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         //set default game name
         final Calendar now = new GregorianCalendar();
         final int gameCount = GameListModel.getInstance().getGames().size();
-        nameField.setText(String.format("Game %d - %d/%d/%d %d:%d", gameCount + 1,
-                now.get(Calendar.MONTH)+1, now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
-                now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)));
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        String formatted = formatter.format(now.getTime());
+        nameField.setText(String.format("Game %d - ", gameCount + 1)
+                + formatted);
         isNameValid = true;
         
-        setErrorBorder(descriptionField, false);        
-       
+        setErrorBorder(descriptionField, false);
+        
         GetDecksController.getInstance().retrieveDecks();
         
         nameField.getDocument().addDocumentListener(new DocumentListener() {
@@ -99,37 +101,39 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
             
             private void validate() {
                 parentPanel.setHasChanged(true);
-                isNameValid = (nameField.getText() != null && !nameField.getText().isEmpty());
+                isNameValid = (nameField.getText() != null && !nameField
+                        .getText().isEmpty());
                 setErrorBorder(nameField, isNameValid);
                 parentPanel.check();
             }
         });
         
-        descriptionField.getDocument().addDocumentListener(new DocumentListener() {
-            
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            private void validate() {
-                parentPanel.setHasChanged(true);
-                isDescriptionValid = (descriptionField.getText() != null && !descriptionField
-                        .getText().isEmpty());
-                setErrorBorder(descriptionField, isDescriptionValid);
-                parentPanel.check();
-            }
-        });
+        descriptionField.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    private void validate() {
+                        parentPanel.setHasChanged(true);
+                        isDescriptionValid = (descriptionField.getText() != null && !descriptionField
+                                .getText().isEmpty());
+                        setErrorBorder(descriptionField, isDescriptionValid);
+                        parentPanel.check();
+                    }
+                });
         
         datePicker.addActionListener(new ActionListener() {
             @Override
@@ -183,13 +187,13 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         distributed.setEnabled(false);
         live.setEnabled(false);
         
-  
-
+        
         if (game.getEndTime() != null) {
             selectDeadline.setSelected(true);
             datePicker.setDate(game.getEndTime());
             timeSpinner.setValue(game.getEndTime());
-        }else {
+        }
+        else {
             selectDeadline.setSelected(false);
             datePicker.setDate(getDefaultDate());
             timeSpinner.setValue(getDefaultDate());
@@ -216,7 +220,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         descriptionScrollPane.setBorder(null);
         descriptionScrollPane.setViewportBorder(null);
         descriptionField = new javax.swing.JTextPane();
-        descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+                null));
         
         nameLabel.setText("Game Name: *");
         
@@ -229,46 +234,77 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
-        panel.setBorder(new TitledBorder(null, "Game Type", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel.setBorder(new TitledBorder(null, "Game Type",
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
         
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new TitledBorder(null, "Deadline", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_1.setBorder(new TitledBorder(null, "Deadline",
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel_1.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(nameField, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(nameLabel)
-                        .addComponent(descriptionLabel)
-                        .addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(deckOptions, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
-                    .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(12)
-                    .addComponent(nameLabel)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.UNRELATED)
-                    .addComponent(descriptionLabel)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(descriptionScrollPane, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(35, Short.MAX_VALUE))
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.TRAILING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(
+                                                        descriptionScrollPane,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        nameField,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(nameLabel)
+                                                .addComponent(descriptionLabel)
+                                                .addComponent(
+                                                        panel,
+                                                        Alignment.TRAILING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        deckOptions,
+                                                        Alignment.TRAILING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        panel_1,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE))
+                                .addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addGap(12)
+                                .addComponent(nameLabel)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(nameField,
+                                        GroupLayout.PREFERRED_SIZE,
+                                        GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addComponent(descriptionLabel)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(descriptionScrollPane,
+                                        GroupLayout.PREFERRED_SIZE, 100,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(panel,
+                                        GroupLayout.PREFERRED_SIZE, 84,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(deckOptions,
+                                        GroupLayout.PREFERRED_SIZE, 99,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(panel_1,
+                                        GroupLayout.PREFERRED_SIZE, 94,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(35, Short.MAX_VALUE)));
         selectDeadline = new javax.swing.JCheckBox();
         selectDeadline.setBackground(Color.WHITE);
         
@@ -298,45 +334,82 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         timeSpinner = new JSpinner();
         timeSpinner.setModel(new SpinnerDateModel());
-        final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner, "h:mm a");
+        final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
+                "h:mm a");
         timeSpinner.setEditor(dEdit);
         timeSpinner.setValue(getDefaultDate());
         GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-        gl_panel_1.setHorizontalGroup(
-            gl_panel_1.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panel_1.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-                        .addComponent(selectDeadline)
-                        .addGroup(gl_panel_1.createSequentialGroup()
-                            .addComponent(lblDate)
-                            .addGap(12)
-                            .addComponent(datePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addGap(6)
-                            .addComponent(timeSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(165, Short.MAX_VALUE))
-        );
-        gl_panel_1.setVerticalGroup(
-            gl_panel_1.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panel_1.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(selectDeadline)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_panel_1.createSequentialGroup()
-                            .addGap(4)
-                            .addComponent(lblDate))
-                        .addComponent(datePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(gl_panel_1.createSequentialGroup()
-                            .addGap(2)
-                            .addComponent(timeSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(35, Short.MAX_VALUE))
-        );
+        gl_panel_1
+                .setHorizontalGroup(gl_panel_1
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                gl_panel_1
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                gl_panel_1
+                                                        .createParallelGroup(
+                                                                Alignment.LEADING)
+                                                        .addComponent(
+                                                                selectDeadline)
+                                                        .addGroup(
+                                                                gl_panel_1
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                lblDate)
+                                                                        .addGap(12)
+                                                                        .addComponent(
+                                                                                datePicker,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(6)
+                                                                        .addComponent(
+                                                                                timeSpinner,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(165, Short.MAX_VALUE)));
+        gl_panel_1
+                .setVerticalGroup(gl_panel_1
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                gl_panel_1
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(selectDeadline)
+                                        .addPreferredGap(
+                                                ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                gl_panel_1
+                                                        .createParallelGroup(
+                                                                Alignment.LEADING)
+                                                        .addGroup(
+                                                                gl_panel_1
+                                                                        .createSequentialGroup()
+                                                                        .addGap(4)
+                                                                        .addComponent(
+                                                                                lblDate))
+                                                        .addComponent(
+                                                                datePicker,
+                                                                GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(
+                                                                gl_panel_1
+                                                                        .createSequentialGroup()
+                                                                        .addGap(2)
+                                                                        .addComponent(
+                                                                                timeSpinner,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(35, Short.MAX_VALUE)));
         panel_1.setLayout(gl_panel_1);
         distributed = new javax.swing.JRadioButton();
         distributed.setBackground(Color.WHITE);
         distributed.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 parentPanel.setHasChanged(true);
@@ -350,8 +423,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         distributed.setText("Distributed Game");
         live = new javax.swing.JRadioButton();
         live.setBackground(Color.WHITE);
-        live.addActionListener(new ActionListener(){
-
+        live.addActionListener(new ActionListener() {
+            
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 parentPanel.setHasChanged(true);
@@ -363,24 +436,23 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         gameType.add(live);
         live.setText("Live Game");
         GroupLayout gl_panel = new GroupLayout(panel);
-        gl_panel.setHorizontalGroup(
-            gl_panel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panel.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+        gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
+                Alignment.LEADING).addGroup(
+                gl_panel.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                gl_panel.createParallelGroup(Alignment.LEADING)
+                                        .addComponent(distributed)
+                                        .addComponent(live))
+                        .addContainerGap(309, Short.MAX_VALUE)));
+        gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+                Alignment.TRAILING).addGroup(
+                Alignment.LEADING,
+                gl_panel.createSequentialGroup().addContainerGap()
                         .addComponent(distributed)
-                        .addComponent(live))
-                    .addContainerGap(309, Short.MAX_VALUE))
-        );
-        gl_panel.setVerticalGroup(
-            gl_panel.createParallelGroup(Alignment.TRAILING)
-                .addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(distributed)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(live)
-                    .addContainerGap(13, Short.MAX_VALUE))
-        );
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(live)
+                        .addContainerGap(13, Short.MAX_VALUE)));
         panel.setLayout(gl_panel);
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
@@ -413,7 +485,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
             ret = date.getTime();
         }
         else {
-            ret =  null;
+            ret = null;
         }
         return ret;
     }
@@ -438,9 +510,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         datePicker.setEnabled(selectDeadline.isSelected());
         timeSpinner.setEnabled(selectDeadline.isSelected());
         
-        if (!selectDeadline.isSelected()) {
-            return true;
-        }
+        if (!selectDeadline.isSelected()) { return true; }
         
         final Date currentDate = new Date();
         final Date enteredDate = getDate();
@@ -456,7 +526,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      *         filled.
      */
     public boolean canValidateForm() {
-        final boolean valid = isNameValid && isDescriptionValid && canValidateDeadline();
+        final boolean valid = isNameValid && isDescriptionValid
+                && canValidateDeadline();
         return valid;
     }
     
@@ -503,19 +574,19 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      *        the parent panel for this subpanel
      */
     public void setEditGamePanel(NewGamePanel p) {
-        parentPanel = p;    
+        parentPanel = p;
         
-        deckOptions.addNewDeckButtonListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				parentPanel.showPanel("newdeckpanel");				
-			}
-		});
+        deckOptions.addNewDeckButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parentPanel.showPanel("newdeckpanel");
+            }
+        });
         
     }
     
-    public void checkParent(){
-        if(parentPanel != null) {
+    public void checkParent() {
+        if (parentPanel != null) {
             parentPanel.check();
         }
     }
