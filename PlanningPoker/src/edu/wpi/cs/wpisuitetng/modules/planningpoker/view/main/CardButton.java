@@ -117,7 +117,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
     	input.addChangeListener(this);
     	input.setOpaque(false);
-    	input.setBorder(null);
+    	//input.setBorder(null);
     	
     	value = "";
     	

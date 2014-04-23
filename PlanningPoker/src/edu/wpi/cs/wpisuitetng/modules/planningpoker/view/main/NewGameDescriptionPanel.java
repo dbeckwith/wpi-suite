@@ -173,6 +173,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         distributed.setSelected(game.getType() == GameType.DISTRIBUTED);
         live.setSelected(game.getType() == GameType.LIVE);
         
+        nameField.setBackground(Color.WHITE);
         nameField.setEditable(false);
         nameField.setEnabled(false);
         descriptionField.setEditable(false);

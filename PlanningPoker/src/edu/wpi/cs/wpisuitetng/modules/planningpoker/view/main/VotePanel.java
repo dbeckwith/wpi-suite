@@ -425,6 +425,11 @@ public class VotePanel extends javax.swing.JPanel {
     		}
     	}
     	lblTotal.setText(CardButton.cardFormat.format(total));
+    	
+    	if(btnSubmit != null && old != null){
+    		btnSubmit.setEnabled(total != old.getEstimate());
+    	}
+    	
 
     }
     
