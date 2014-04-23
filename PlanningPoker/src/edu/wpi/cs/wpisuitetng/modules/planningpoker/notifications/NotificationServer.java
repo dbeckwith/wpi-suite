@@ -11,10 +11,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
