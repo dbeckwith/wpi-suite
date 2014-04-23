@@ -53,6 +53,13 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setDescriptionText(game.getDescription());
         setEndDate(game.getEndTime());
         setDeckName(game.getDeck().toString());
+        
+        System.out.println(gameName.getWidth());
+        int difference = gameDeadline.getX() - lblDeadline.getX();
+        if ((gameName.getX() + gameName.getWidth()) > lblDeadline.getX()) {
+            lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, lblDeadline.getY());
+            gameDeadline.setLocation(lblDeadline.getX() + difference, gameDeadline.getY());
+        }
         // DefaultListModel<String> listModel = new DefaultListModel<>();
         // listModel.addElement(element);
         // getParticipantsList().setModel(listModel);
@@ -103,23 +110,19 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nameLabel)
-                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                        .addComponent(gameName))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(154)
-                                        .addComponent(lblDeadline)
-                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                        .addComponent(gameDeadline))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblDeck)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(deckName))))
+                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(nameLabel)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addGap(7)
+                            .addComponent(lblDeadline)
+                            .addGap(6)
+                            .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblDeck)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(deckName)))
                     .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,16 +131,16 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(nameLabel)
-                        .addComponent(gameName)
+                        .addComponent(gameName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDeadline, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(gameDeadline))
+                        .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblDeck)
                         .addComponent(deckName))
-                    .addContainerGap(186, Short.MAX_VALUE))
+                    .addContainerGap(214, Short.MAX_VALUE))
         );
         
         descriptionText = new JTextPane();
