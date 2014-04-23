@@ -356,9 +356,9 @@ public class NewGamePanel extends JPanel {
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		if(game == null){
-			PlanningPoker.getViewController().cancelNewGame(this, true);
+			PlanningPoker.getViewController().cancelNewGame(this, false);
 		} else {
-			PlanningPoker.getViewController().cancelEditGame(this, true);
+			PlanningPoker.getViewController().cancelEditGame(this, false);
 		}
 	}
 
