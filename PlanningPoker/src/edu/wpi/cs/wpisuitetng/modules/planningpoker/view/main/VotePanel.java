@@ -34,6 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import java.awt.Font;
 
 /**
  * the panel to show vote GUI
@@ -293,8 +294,10 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel.setMaximumSize(new Dimension(0, 0));
         
         lblYouVoted = new JLabel("You voted: ");
+        lblYouVoted.setFont(new Font("Dialog", Font.BOLD, 18));
         
         prevVoteLabel = new JLabel("<previous vote>");
+        prevVoteLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         
         final JLabel lblSelectedTotal = new JLabel("Selected Total:");
         

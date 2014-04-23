@@ -453,7 +453,6 @@ public class NewGamePanel extends JPanel {
             errorLabel.setText("");
         }
         undoButton.setEnabled(true);
-        saveButton.setEnabled(true);
     }
     
     /**
