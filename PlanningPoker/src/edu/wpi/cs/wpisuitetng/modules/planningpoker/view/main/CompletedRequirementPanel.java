@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -472,34 +473,40 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      * Validates the user inputs so the GUI can react accordingly
      */
     private void validatePanel() {
-        final String pattern = "^[\\s]*$";
-        try {
-            final int finalEstimate = Integer.parseInt(finalEstimateField
-                    .getText());
-            if (finalEstimate == req.getFinalEstimate()) {
-                lblError.setVisible(false);
-                saveFinalEstimateButton.setEnabled(false);
-            } else if (finalEstimate <= 0) {
-                //set error label
-                lblError.setText("* Positive Integers Only!");
-                lblError.setVisible(true);
-                saveFinalEstimateButton.setEnabled(false);
-            } else if (Pattern.matches(pattern, notePane.getText()) 
-                    && req.getFinalEstimate() != 0) {
-                lblError.setText("* You Must Add a Note!");
-                lblError.setVisible(true);
-                saveFinalEstimateButton.setEnabled(false);
-            } else {
-                lblError.setVisible(false);
-                saveFinalEstimateButton.setEnabled(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            
+            @Override
+            public void run() {
+                final String pattern = "^[\\s]*$";
+                try {
+                    final int finalEstimate = Integer.parseInt(finalEstimateField
+                            .getText());
+                    if (finalEstimate == req.getFinalEstimate()) {
+                        lblError.setVisible(false);
+                        saveFinalEstimateButton.setEnabled(false);
+                    } else if (finalEstimate <= 0) {
+                        //set error label
+                        lblError.setText("* Positive Integers Only!");
+                        lblError.setVisible(true);
+                        saveFinalEstimateButton.setEnabled(false);
+                    } else if (Pattern.matches(pattern, notePane.getText()) 
+                            && req.getFinalEstimate() != 0) {
+                        lblError.setText("* You Must Add a Note!");
+                        lblError.setVisible(true);
+                        saveFinalEstimateButton.setEnabled(false);
+                    } else {
+                        lblError.setVisible(false);
+                        saveFinalEstimateButton.setEnabled(true);
+                    }
+                }
+                catch (NumberFormatException e) {
+                    //set error label
+                    lblError.setText("* Positive Integers Only!");
+                    lblError.setVisible(true);
+                    saveFinalEstimateButton.setEnabled(false);
+                }
             }
-        }
-        catch (NumberFormatException e) {
-            //set error label
-            lblError.setText("* Positive Integers Only!");
-            lblError.setVisible(true);
-            saveFinalEstimateButton.setEnabled(false);
-        }
+        });
     }
     
     private javax.swing.JSeparator jSeparator1;

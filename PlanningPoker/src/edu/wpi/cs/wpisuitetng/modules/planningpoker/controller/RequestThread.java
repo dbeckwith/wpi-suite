@@ -64,6 +64,7 @@ public class RequestThread extends Thread {
      *        the controller to nofity
      */
     public RequestThread(AbstractUserController controller) {
+        super("User Request Thread");
         this.controller = controller;
     }
     

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.text.DateFormat;
+import java.util.Date;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -43,6 +45,7 @@ public class NotificationClient extends Thread {
      * Constructor
      */
     private NotificationClient() {
+        super("Long Polling Notification Client");
         try {
             //get ip address of the server
             serverAddress = InetAddress.getByName(new URL(Network.getInstance()
@@ -64,7 +67,7 @@ public class NotificationClient extends Thread {
                 GetGamesController.getInstance().retrieveGames(); //update the games
             }
             catch (IOException e) {
-                System.out.print("");    //making codePro happy
+                System.out.print(""); //making codePro happy
             }
         }
     }

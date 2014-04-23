@@ -11,7 +11,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A server that can notify clients when there is an update
@@ -37,7 +41,7 @@ public class NotificationServer extends Thread {
 	}
 	
 	private ServerSocket serverSocket = null;
-	private final ArrayList<Socket> clientSockets;
+	private final List<Socket> clientSockets;
 	
 	/**
 	 * Constructor
@@ -47,7 +51,7 @@ public class NotificationServer extends Thread {
 			serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
 		}
-		clientSockets = new ArrayList<Socket>();
+		clientSockets = Collections.synchronizedList(new ArrayList<Socket>());
 	}
 	
 	@Override
@@ -77,7 +81,7 @@ public class NotificationServer extends Thread {
 				s.getOutputStream().write(0); //notify each client by sending one byte
 				s.close(); //close connection
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.print("");
 			}
 		}
 	}
