@@ -107,7 +107,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     public CardButton(){
     	textInput = true;
     	input = new JSpinner();
-    	input.setModel(new SpinnerNumberModel(1, 0, Double.MAX_VALUE, 0.5));
+    	input.setModel(new SpinnerNumberModel(1, 0, Double.MAX_VALUE-1, 0.5));
     	
     	input.setEditor(new JSpinner.NumberEditor(input, "0.0"));
     	JFormattedTextField txt = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
@@ -224,7 +224,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
      */
     public float getEstimateValue() {
     	if(textInput){
-    		float enteredValue = ((Double)(input.getModel().getValue())).floatValue();
+    		float enteredValue = ((Number)(input.getModel().getValue())).floatValue();
     		if(maxInput != DeckModel.NO_LIMIT){
     			return (float) Math.min(maxInput, enteredValue);
     		} else {
@@ -328,8 +328,13 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		if(maxInput != DeckModel.NO_LIMIT && ((Double)input.getValue()) > maxInput){
+		float inputValue = ((Number)input.getValue()).floatValue();
+		if(maxInput != DeckModel.NO_LIMIT && inputValue > maxInput){
 			input.setValue(maxInput);
+		} else {
+			if(inputValue == Float.POSITIVE_INFINITY){
+				input.setValue(0);
+			}
 		}
 		for(ActionListener l:listeners){
 			l.actionPerformed(new ActionEvent(this, 0, null));

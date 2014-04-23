@@ -433,6 +433,8 @@ public class VotePanel extends javax.swing.JPanel {
     		btnSubmit.setEnabled(total != old.getEstimate());
     	}
     	
+    	repaint();
+    	
 
     }
     
