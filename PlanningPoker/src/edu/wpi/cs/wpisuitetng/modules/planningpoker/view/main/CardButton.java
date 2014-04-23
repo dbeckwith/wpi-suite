@@ -50,6 +50,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     
     public static final DecimalFormat cardFormat = new DecimalFormat("0.#");
     
+    
     //private static final float MARGIN = 0.03f;
     private static final float MARGIN_LOGO = 0.05f;
     private static final float FRONT_SUIT_SIZE = 0.3f;
@@ -81,7 +82,10 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     
     private boolean textInput = false;
     
-    JSpinner input;
+    
+    
+    private JSpinner input;
+    private double maxInput;
     
     private ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
     
@@ -184,9 +188,9 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 	                    (int) (getHeight() - r.getHeight()) / 2
 	                            + g2.getFontMetrics().getAscent());
             } else {
-            	if(!((SpinnerNumberModel)input.getModel()).getMaximum().equals(DeckModel.NO_LIMIT)){
+            	if(maxInput != DeckModel.NO_LIMIT){
             		g2.setColor(Color.BLACK);
-            		String maxString = "Max : "+ ((SpinnerNumberModel)input.getModel()).getMaximum();
+            		String maxString = "Max : "+ cardFormat.format(((SpinnerNumberModel)input.getModel()).getMaximum());
             		g2.setFont(g.getFont().deriveFont(getWidth()*FONT_SIZE*0.3f));
             		Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
             		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
@@ -220,8 +224,13 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
      */
     public float getEstimateValue() {
     	if(textInput){
-    		return ((Double)(input.getModel().getValue())).floatValue();
-    	} else {
+    		float enteredValue = ((Double)(input.getModel().getValue())).floatValue();
+    		if(maxInput != DeckModel.NO_LIMIT){
+    			return (float) Math.min(maxInput, enteredValue);
+    		} else {
+    			return enteredValue;
+    		}
+		} else {
     		return Float.parseFloat(value);
     	}
     }
@@ -238,6 +247,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     }
     
     public void setLimit(int limit){
+    	maxInput = limit;
     	double cardLimit = (limit == DeckModel.NO_LIMIT)?Double.MAX_VALUE:limit;
     	input.setModel(new SpinnerNumberModel(1, 0,cardLimit, 0.5));
     }
@@ -318,6 +328,9 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
+		if(maxInput != DeckModel.NO_LIMIT && ((Double)input.getValue()) > maxInput){
+			input.setValue(maxInput);
+		}
 		for(ActionListener l:listeners){
 			l.actionPerformed(new ActionEvent(this, 0, null));
 		}
