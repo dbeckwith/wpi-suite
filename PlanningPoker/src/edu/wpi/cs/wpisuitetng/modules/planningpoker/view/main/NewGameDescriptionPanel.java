@@ -71,7 +71,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         final Calendar now = new GregorianCalendar();
         final int gameCount = GameListModel.getInstance().getGames().size();
         nameField.setText(String.format("Game %d - %d/%d/%d %d:%d", gameCount + 1,
-                now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH)+1, now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
                 now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)));
         isNameValid = true;
         
