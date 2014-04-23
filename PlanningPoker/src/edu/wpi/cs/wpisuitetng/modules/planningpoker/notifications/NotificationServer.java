@@ -11,8 +11,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,7 +81,7 @@ public class NotificationServer extends Thread {
 				s.getOutputStream().write(0); //notify each client by sending one byte
 				s.close(); //close connection
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.print("");
 			}
 		}
 	}
