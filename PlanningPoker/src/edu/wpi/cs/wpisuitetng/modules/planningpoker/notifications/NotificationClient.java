@@ -58,6 +58,7 @@ public class NotificationClient extends Thread {
         System.out.println("Notification client started");
         while (true) {
             try {
+                System.out.println("making new notification socket");
                 Socket server = new Socket(serverAddress, NotificationServer.PORT); //open a connection to the notification server
                 server.getInputStream().read(); //wait for the one-byte ping
                 server.close(); //close the connection
