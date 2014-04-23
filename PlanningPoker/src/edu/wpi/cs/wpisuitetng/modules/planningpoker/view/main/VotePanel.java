@@ -299,7 +299,7 @@ public class VotePanel extends javax.swing.JPanel {
         prevVoteLabel = new JLabel("<previous vote>");
         prevVoteLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         
-        final JLabel lblSelectedTotal = new JLabel("Selected Total:");
+        final JLabel lblSelectedTotal = new JLabel("Current Estimate:");
         
         lblTotal = new JLabel("<total>");
         
