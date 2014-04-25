@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -34,6 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
 import java.awt.Font;
 
 /**
@@ -84,8 +86,8 @@ public class VotePanel extends javax.swing.JPanel {
         
         boolean voted = false;
         old = null;
-        ArrayList<Integer> selectedCards = null;
-        final ArrayList<Estimate> estimates = req.getEstimates();
+        List<Integer> selectedCards = null;
+        final List<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 selectedCards = e.getCardsSelected();
@@ -120,7 +122,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         
         
-        ArrayList<Integer> selected = new ArrayList<Integer>();
+        List<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
             selected = old.getCardsSelected();
             lblYouVoted.setVisible(true);
@@ -207,7 +209,7 @@ public class VotePanel extends javax.swing.JPanel {
     private void selectEstimateCard() {
         
         boolean alreadyVoted = false;
-        final ArrayList<Estimate> estimates = req.getEstimates();
+        final List<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 alreadyVoted = true;

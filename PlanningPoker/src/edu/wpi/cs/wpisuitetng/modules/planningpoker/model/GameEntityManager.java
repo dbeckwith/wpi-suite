@@ -35,7 +35,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     
     private final Data db;
     
-    private static GameEntityManager instance;
+    private static GameEntityManager  instance;
     
     /**
      * Creates a new GameEntityManager attatched to the given database.
@@ -210,7 +210,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
             // start observer only when the game is live
             if(updatedGameModel.hasDeadline()){
                 System.out.println("Getting observer for game");
-                GameTimeoutObserver obs = GameTimeoutObserver
+                final GameTimeoutObserver obs = GameTimeoutObserver
                         .getObserver(updatedGameModel);
                 if (obs == null) {
                     System.out.println("Could not find observer for game");
@@ -222,7 +222,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
             }
         }
         
-        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
+        if (!db.save(existingGameModel, s.getProject())) { 
+			throw new WPISuiteException("Database not saved"); 
+        }
         System.out.println("GEM update()");
         NotificationServer.getInstance().sendUpdateNotification();
         return existingGameModel;
@@ -231,7 +233,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     /**
      * Gets the next available unique ID for a GameModel
      */
-    private int getNextID(Session s) throws WPISuiteException{
+    private int getNextID(Session s){
         int max = 0;
         for (GameModel g : getAll(s)) {
             if (g.getID() > max) {

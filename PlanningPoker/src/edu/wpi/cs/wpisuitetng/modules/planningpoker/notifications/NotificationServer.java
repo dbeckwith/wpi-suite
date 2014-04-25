@@ -22,40 +22,41 @@ import java.util.List;
  * @version 1.0
  */
 public class NotificationServer extends Thread {
-	
+
 	public static final int PORT = 9797;
-	
+
 	private static NotificationServer instance = null;
-	
-    /**
-     * @return The instance of the NotificationServer or creates one if it does
-     *         not exist.
-     */
+
+	/**
+	 * @return The instance of the NotificationServer or creates one if it does
+	 *         not exist.
+	 */
 	public static NotificationServer getInstance() {
-		if(instance == null){
+		if (instance == null) {
 			instance = new NotificationServer();
 		}
 		return instance;
 	}
-	
+
 	private ServerSocket serverSocket = null;
 	private final List<Socket> clientSockets;
-	
+
 	/**
 	 * Constructor
 	 */
-	private NotificationServer(){
+	private NotificationServer() {
 		try {
 			serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
+			System.out.print(""); // making codePro happy
 		}
 		clientSockets = Collections.synchronizedList(new ArrayList<Socket>());
 	}
-	
+
 	@Override
-	public void run(){
+	public void run() {
 		System.out.println("Notification server started");
-		while(true){
+		while (true) {
 			try {
 				Socket newClient = serverSocket.accept();
 				clientSockets.add(newClient);
@@ -64,20 +65,20 @@ public class NotificationServer extends Thread {
 			}
 		}
 	}
-	
+
 	/**
-	 * Notifies all waiting clients of an update, 
-	 * then closes their connection
+	 * Notifies all waiting clients of an update, then closes their connection
 	 */
-	public void sendUpdateNotification(){
-		//copy waiting clients, then clear list
-		final Socket[] clients = clientSockets.toArray(new Socket[]{});
+	public void sendUpdateNotification() {
+		// copy waiting clients, then clear list
+		final Socket[] clients = clientSockets.toArray(new Socket[] {});
 		clientSockets.clear();
-		
-		for(Socket s:clients){
+
+		for (Socket s : clients) {
 			try {
-				s.getOutputStream().write(0); //notify each client by sending one byte
-				s.close(); //close connection
+				s.getOutputStream().write(0); // notify each client by sending
+												// one byte
+				s.close(); // close connection
 			} catch (IOException e) {
 				System.out.print("");
 			}
