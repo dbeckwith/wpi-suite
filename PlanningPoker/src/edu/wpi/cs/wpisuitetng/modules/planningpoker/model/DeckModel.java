@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -44,7 +45,7 @@ public class DeckModel extends AbstractModel {
 	}
 	
 	private final String name;
-	private final ArrayList<Double> cards;
+	private final List<Double> cards;
 	private final boolean allowsMultipleSelection;
 	private final boolean isNone;
 	private final int maxEstimate;
@@ -59,7 +60,7 @@ public class DeckModel extends AbstractModel {
      * @param allowsMultipleSelection
      *            whether or not this deck should allow multiple selection
      */
-	public DeckModel(String name, ArrayList<Double> cards, boolean allowsMultipleSelection) {
+	public DeckModel(String name, List<Double> cards, boolean allowsMultipleSelection) {
 		this.name = name;
 		this.cards = cards;
 		isNone = (cards == null || cards.size() == 0);
@@ -76,11 +77,11 @@ public class DeckModel extends AbstractModel {
      *            the name of the deck
      */
 	public DeckModel(int max) {
-		this.name = "None";
-		this.cards = null;
-		this.allowsMultipleSelection = false;
+		name = "None";
+		cards = null;
+		allowsMultipleSelection = false;
 		isNone = true;
-		this.maxEstimate = Math.max(max, NO_LIMIT);
+		maxEstimate = Math.max(max, NO_LIMIT);
 	}
     
     /**
@@ -109,8 +110,8 @@ public class DeckModel extends AbstractModel {
 	 * 
 	 * @return The cards in the deck
 	 */
-	public ArrayList<Double> getCards() {
-		return this.cards;
+	public List<Double> getCards() {
+		return cards;
 	}
 	
     /**

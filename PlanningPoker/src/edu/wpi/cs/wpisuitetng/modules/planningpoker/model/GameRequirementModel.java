@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -33,7 +34,7 @@ public class GameRequirementModel extends AbstractModel {
 	private String name;
 	private String description;
 	private String type;
-	private ArrayList<Estimate> estimates;
+	private List<Estimate> estimates;
 	private int finalEstimate;
 	
 	private String estimateNote;
@@ -64,7 +65,7 @@ public class GameRequirementModel extends AbstractModel {
      *            requirement
      */
 	public GameRequirementModel(int parentId, String name, String description,
-			String type, ArrayList<Estimate> estimates) {
+			String type, List<Estimate> estimates) {
 		this.parentId = parentId;
 		this.name = name;
 		this.description = description;
@@ -183,7 +184,7 @@ public class GameRequirementModel extends AbstractModel {
 	 * Gets the list of estimates made so far for this requirement.
 	 * @return the estimates
 	 */
-	public ArrayList<Estimate> getEstimates() {
+	public List<Estimate> getEstimates() {
 		return estimates;
 	}
     
@@ -226,7 +227,7 @@ public class GameRequirementModel extends AbstractModel {
 			toReturn = 0;
 		} 
 		else {
-			final ArrayList<Estimate> estimates_copy = new ArrayList<>(
+			final List<Estimate> estimates_copy = new ArrayList<>(
 					estimates);
 			Collections.sort(estimates_copy);
 			final int count = estimates_copy.size();
@@ -262,7 +263,7 @@ public class GameRequirementModel extends AbstractModel {
      * @return true if all users have voted on a requirement, false otherwise
      */
     public boolean allVoted() {
-		final ArrayList<User> estimateUsers = new ArrayList<User>();
+		final List<User> estimateUsers = new ArrayList<User>();
 		final User[] users = CurrentUserController.getInstance().getUsers();
 
 		// checks to see if an all users have voted

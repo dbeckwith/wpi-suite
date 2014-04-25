@@ -71,7 +71,7 @@ public class GameModel extends AbstractModel implements Serializable {
         LIVE, DISTRIBUTED
     };
     
-    private transient ArrayList<GameStatusObserver> status_observers;
+    private transient List<GameStatusObserver> status_observers;
     
     private int id;
     private String name;
@@ -464,7 +464,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return the simplelistobservers for the list of games
      */
-    public ArrayList<GameStatusObserver> getStatusObservers() {
+    public List<GameStatusObserver> getStatusObservers() {
         return status_observers;
     }
     
