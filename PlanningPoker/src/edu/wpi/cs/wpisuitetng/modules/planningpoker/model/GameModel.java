@@ -482,7 +482,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @param other
     
      * @return True if this GameModel is equal to the input GameModel */
-    public boolean equals(GameModel other) {
+	public boolean equals(GameModel other) {
         return other.id == id && other.name.equals(other.name);
     }
     

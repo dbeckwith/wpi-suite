@@ -223,7 +223,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
         }
         
         if (!db.save(existingGameModel, s.getProject())) { 
-        	throw new WPISuiteException("Database not saved"); 
+			throw new WPISuiteException("Database not saved"); 
         }
         System.out.println("GEM update()");
         NotificationServer.getInstance().sendUpdateNotification();
