@@ -34,6 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import java.awt.Font;
 
 /**
  * the panel to show vote GUI
@@ -134,7 +135,7 @@ public class VotePanel extends javax.swing.JPanel {
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
         	CardButton estimateInput = new CardButton();
-        	
+        	estimateInput.setLimit(parentGame.getDeck().getMaxEstimate());
             estimateInput.addActionListener(new ActionListener() {					
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -293,10 +294,12 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel.setMaximumSize(new Dimension(0, 0));
         
         lblYouVoted = new JLabel("You voted: ");
+        lblYouVoted.setFont(new Font("Dialog", Font.BOLD, 18));
         
         prevVoteLabel = new JLabel("<previous vote>");
+        prevVoteLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         
-        final JLabel lblSelectedTotal = new JLabel("Selected Total:");
+        final JLabel lblSelectedTotal = new JLabel("Current Estimate:");
         
         lblTotal = new JLabel("<total>");
         
@@ -425,6 +428,13 @@ public class VotePanel extends javax.swing.JPanel {
     		}
     	}
     	lblTotal.setText(CardButton.cardFormat.format(total));
+    	
+    	if(btnSubmit != null && old != null){
+    		btnSubmit.setEnabled(total != old.getEstimate());
+    	}
+    	
+    	repaint();
+    	
 
     }
     

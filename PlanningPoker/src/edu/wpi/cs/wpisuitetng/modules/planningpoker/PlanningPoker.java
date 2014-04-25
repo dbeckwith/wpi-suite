@@ -44,6 +44,9 @@ public class PlanningPoker implements IJanewayModule {
 	
 	List<JanewayTabModel> tabs;
 	
+	/**
+	 * Constructor for the Planning Poker game
+	 */
 	public PlanningPoker() {
 		
 		tabs = new ArrayList<JanewayTabModel>();

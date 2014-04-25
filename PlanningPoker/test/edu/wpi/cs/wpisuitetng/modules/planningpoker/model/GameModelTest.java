@@ -50,18 +50,20 @@ public class GameModelTest {
                 "Req name", "Req desc", "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();
+
         game1 = new GameModel("Test Game 1", "Live Game that just ended", reqs,
-                DeckListModel.getInstance().getDefaultDeck(), new Date(),
+                DeckModel.DEFAULT_DECK, new Date(),
                 GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
                 "Distributed Game that will end in 5 seconds", reqs,
-                DeckListModel.getInstance().getDefaultDeck(), new Date(
+                DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 5000),
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
                 "Live Game with end time in 10 seconds, but already manually ended",
-                reqs, DeckListModel.getInstance().getDefaultDeck(), new Date(
+
+                reqs, DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 10000),
                 GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
     }

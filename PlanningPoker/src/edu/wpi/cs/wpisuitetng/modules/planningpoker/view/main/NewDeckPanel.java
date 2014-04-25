@@ -156,6 +156,7 @@ public class NewDeckPanel extends JPanel {
             }
             
             private void validate() {
+
                 final String pattern = " *([0-9]{1,3} *, *)*[0-9]{1,3} *";
                 areCardsValid = newDeckCards.getText() != null
                         && !newDeckCards.getText().isEmpty()
@@ -316,7 +317,7 @@ public class NewDeckPanel extends JPanel {
         for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
             String name = deck.getName();
             // if the name looks like the prefix with a number after it
-            if (name.matches(defaultName + "( \\d+)?")) {
+            if (name != null && name.matches(defaultName + "( \\d+)?")) {
                 int newNum;
                 if (name.matches(defaultName + " \\d+")) {
                     // name has a number after it

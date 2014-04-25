@@ -9,45 +9,41 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerDateModel;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 
 import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -62,8 +58,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class NewGameDescriptionPanel extends javax.swing.JPanel implements SimpleListObserver {
-    private static final DecimalFormat cardFormat = new DecimalFormat("0.#");
+public class NewGameDescriptionPanel extends javax.swing.JPanel {
+    
     private static final long serialVersionUID = 4601624442206350512L;
     
     /**
@@ -73,34 +69,16 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         setBackground(Color.WHITE);
         initComponents();
         
+        //set default game name
         final Calendar now = new GregorianCalendar();
         final int gameCount = GameListModel.getInstance().getGames().size();
-        nameField.setText(String.format("Game %d - %d/%d/%d %d:%d", gameCount + 1,
-                now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
-                now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)));
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        String formatted = formatter.format(now.getTime());
+        nameField.setText(String.format("Game %d - ", gameCount + 1)
+                + formatted);
         isNameValid = true;
         
         setErrorBorder(descriptionField, false);
-        
-        DeckListModel.getInstance().addObserver(this);
-        
-        final ArrayList<Double> cards = new ArrayList<Double>();
-        cards.add(0.0);
-        cards.add(1.0);
-        cards.add(1.0);
-        cards.add(2.0);
-        cards.add(3.0);
-        cards.add(5.0);
-        cards.add(8.0);
-        cards.add(13.0);
-        
-        defaultDeck = new DeckModel("Default", cards, true);
-        DeckListModel.getInstance().setDefaultDeck(defaultDeck);
-        deckComboBox.addItem(defaultDeck);
-        noDeck = new DeckModel("No deck");
-        deckComboBox.addItem(noDeck);
-        generatedDeck = new DeckModel("Generated deck", new ArrayList<Double>(), false);
-        deckComboBox.addItem(generatedDeck);
         
         GetDecksController.getInstance().retrieveDecks();
         
@@ -123,37 +101,39 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             
             private void validate() {
                 parentPanel.setHasChanged(true);
-                isNameValid = (nameField.getText() != null && !nameField.getText().isEmpty());
+                isNameValid = (nameField.getText() != null && !nameField
+                        .getText().isEmpty());
                 setErrorBorder(nameField, isNameValid);
                 parentPanel.check();
             }
         });
         
-        descriptionField.getDocument().addDocumentListener(new DocumentListener() {
-            
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            private void validate() {
-                parentPanel.setHasChanged(true);
-                isDescriptionValid = (descriptionField.getText() != null && !descriptionField
-                        .getText().isEmpty());
-                setErrorBorder(descriptionField, isDescriptionValid);
-                parentPanel.check();
-            }
-        });
+        descriptionField.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    private void validate() {
+                        parentPanel.setHasChanged(true);
+                        isDescriptionValid = (descriptionField.getText() != null && !descriptionField
+                                .getText().isEmpty());
+                        setErrorBorder(descriptionField, isDescriptionValid);
+                        parentPanel.check();
+                    }
+                });
         
         datePicker.addActionListener(new ActionListener() {
             @Override
@@ -182,13 +162,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             }
         });
         
-        newDeckButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parentPanel.showPanel("newdeckpanel");
-            }
-        });
-        
         canValidateDeadline();
     }
     
@@ -205,6 +178,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         distributed.setSelected(game.getType() == GameType.DISTRIBUTED);
         live.setSelected(game.getType() == GameType.LIVE);
         
+        nameField.setBackground(Color.WHITE);
         nameField.setEditable(false);
         nameField.setEnabled(false);
         descriptionField.setEditable(false);
@@ -213,25 +187,19 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         distributed.setEnabled(false);
         live.setEnabled(false);
         
-        final DefaultComboBoxModel<DeckModel> decks = (DefaultComboBoxModel<DeckModel>) deckComboBox
-                .getModel();
-        
-        for (int i = 0; i < decks.getSize(); i++) {
-            DeckModel deck = decks.getElementAt(i);
-            if (deck.getName().equals(game.getDeck().getName())) {
-                deckComboBox.setSelectedItem(deck);
-            }
-        }
         
         if (game.getEndTime() != null) {
             selectDeadline.setSelected(true);
             datePicker.setDate(game.getEndTime());
             timeSpinner.setValue(game.getEndTime());
-        }else {
+        }
+        else {
             selectDeadline.setSelected(false);
             datePicker.setDate(getDefaultDate());
             timeSpinner.setValue(getDefaultDate());
         }
+        
+        deckOptions.setGame(game);
         
     }
     
@@ -241,7 +209,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
      * regenerated by the Form Editor.
      */
     // desc="Generated Code">//GEN-BEGIN:initComponents
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         
         gameType = new javax.swing.ButtonGroup();
@@ -249,50 +216,109 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         nameField = new javax.swing.JTextField();
         nameField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         descriptionLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setViewportBorder(null);
+        descriptionScrollPane = new javax.swing.JScrollPane();
+        descriptionScrollPane.setBorder(null);
+        descriptionScrollPane.setViewportBorder(null);
         descriptionField = new javax.swing.JTextPane();
-        descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-        selectDeadline = new javax.swing.JCheckBox();
-        selectDeadline.setBackground(Color.WHITE);
-        distributed = new javax.swing.JRadioButton();
-        distributed.setBackground(Color.WHITE);
-        distributed.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parentPanel.setHasChanged(true);
-                
-            }
-            
-        });
-        live = new javax.swing.JRadioButton();
-        live.setBackground(Color.WHITE);
-        live.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                parentPanel.setHasChanged(true);
-                
-            }
-            
-        });
+        descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+                null));
         
         nameLabel.setText("Game Name: *");
         
         descriptionLabel.setText("Game Description: *");
         
-        jScrollPane1.setViewportView(descriptionField);
+        descriptionScrollPane.setViewportView(descriptionField);
+        
+        deckOptions = new DeckOptionsPanel();
+        deckOptions.setParent(this);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(new TitledBorder(null, "Game Type",
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBorder(new TitledBorder(null, "Deadline",
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_1.setBackground(Color.WHITE);
+        
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.TRAILING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(
+                                                        descriptionScrollPane,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        nameField,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(nameLabel)
+                                                .addComponent(descriptionLabel)
+                                                .addComponent(
+                                                        panel,
+                                                        Alignment.TRAILING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        deckOptions,
+                                                        Alignment.TRAILING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        panel_1,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        529, Short.MAX_VALUE))
+                                .addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addGap(12)
+                                .addComponent(nameLabel)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(nameField,
+                                        GroupLayout.PREFERRED_SIZE,
+                                        GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addComponent(descriptionLabel)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(descriptionScrollPane,
+                                        GroupLayout.PREFERRED_SIZE, 100,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(panel,
+                                        GroupLayout.PREFERRED_SIZE, 84,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(deckOptions,
+                                        GroupLayout.PREFERRED_SIZE, 99,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(panel_1,
+                                        GroupLayout.PREFERRED_SIZE, 94,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(35, Short.MAX_VALUE)));
+        selectDeadline = new javax.swing.JCheckBox();
+        selectDeadline.setBackground(Color.WHITE);
         
         selectDeadline.setText("Deadline");
         
-        gameType.add(distributed);
-        distributed.setSelected(true);
-        distributed.setText("Distributed Game");
+        selectDeadline.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                datePicker.setEnabled(selectDeadline.isSelected());
+                timeSpinner.setEnabled(selectDeadline.isSelected());
+            }
+        });
         
-        gameType.add(live);
-        live.setText("Live Game");
+        final JLabel lblDate = new JLabel("Date:");
         
         datePicker = new JXDatePicker(getDefaultDate());
         final JButton eDate = (JButton) datePicker.getComponent(1);
@@ -306,208 +332,128 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         dateBtn.setBorderPainted(false);
         dateBtn.setOpaque(false);
         
-        final JLabel lblDate = new JLabel("Date:");
-        
         timeSpinner = new JSpinner();
         timeSpinner.setModel(new SpinnerDateModel());
-        final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner, "h:mm a");
+        final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
+                "h:mm a");
         timeSpinner.setEditor(dEdit);
         timeSpinner.setValue(getDefaultDate());
-        
-        selectDeadline.addActionListener(new ActionListener() {
+        GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+        gl_panel_1
+                .setHorizontalGroup(gl_panel_1
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                gl_panel_1
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                gl_panel_1
+                                                        .createParallelGroup(
+                                                                Alignment.LEADING)
+                                                        .addComponent(
+                                                                selectDeadline)
+                                                        .addGroup(
+                                                                gl_panel_1
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                lblDate)
+                                                                        .addGap(12)
+                                                                        .addComponent(
+                                                                                datePicker,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(6)
+                                                                        .addComponent(
+                                                                                timeSpinner,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(165, Short.MAX_VALUE)));
+        gl_panel_1
+                .setVerticalGroup(gl_panel_1
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                gl_panel_1
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(selectDeadline)
+                                        .addPreferredGap(
+                                                ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                gl_panel_1
+                                                        .createParallelGroup(
+                                                                Alignment.LEADING)
+                                                        .addGroup(
+                                                                gl_panel_1
+                                                                        .createSequentialGroup()
+                                                                        .addGap(4)
+                                                                        .addComponent(
+                                                                                lblDate))
+                                                        .addComponent(
+                                                                datePicker,
+                                                                GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(
+                                                                gl_panel_1
+                                                                        .createSequentialGroup()
+                                                                        .addGap(2)
+                                                                        .addComponent(
+                                                                                timeSpinner,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(35, Short.MAX_VALUE)));
+        panel_1.setLayout(gl_panel_1);
+        distributed = new javax.swing.JRadioButton();
+        distributed.setBackground(Color.WHITE);
+        distributed.addActionListener(new ActionListener() {
+            
             @Override
             public void actionPerformed(ActionEvent e) {
-                datePicker.setEnabled(selectDeadline.isSelected());
-                timeSpinner.setEnabled(selectDeadline.isSelected());
-            }
-        });
-        
-        final JLabel deckLabel = new JLabel("Deck:");
-        
-        deckComboBox = new JComboBox<DeckModel>();
-        deckComboBox.setRenderer(new DeckComboBoxRenderer());
-        
-        deckComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (parentPanel != null) {
-                    parentPanel.setHasChanged(true);
-                }
-                if (((DeckModel) deckComboBox.getSelectedItem()).toString()
-                        .equals("Generated deck")) {
-                    maximumValue.setVisible(true);
-                    maxValueLabel.setVisible(true);
-                    newDeckButton.setEnabled(false);
-                    getErrors();
-                    if (parentPanel != null) {
-                        parentPanel.check();
-                    }
-                }
-                else {
-                    maximumValue.setVisible(false);
-                    maxValueLabel.setVisible(false);
-                    newDeckButton.setEnabled(true);
-                    getErrors();
-                    if (parentPanel != null) {
-                        parentPanel.check();
-                    }
-                }
-            }
-        });
-        newDeckButton = new JButton("New Deck");
-        
-        maximumValue = new JTextField();
-        maximumValue.setDocument(new JTextFieldLimit(2));
-        maximumValue.setColumns(10);
-        
-        maximumValue.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void removeUpdate(DocumentEvent arg0) {
-                validate();
+                parentPanel.setHasChanged(true);
+                
             }
             
-            @Override
-            public void insertUpdate(DocumentEvent arg0) {
-                validate();
-            }
-            
-            @Override
-            public void changedUpdate(DocumentEvent arg0) {
-                validate();
-            }
-            
-            private void validate() {
-                getErrors();
-                parentPanel.check();
-            }
         });
         
-        maxValueLabel = new JLabel("Max value (< 99)");
+        gameType.add(distributed);
+        distributed.setSelected(true);
+        distributed.setText("Distributed Game");
+        live = new javax.swing.JRadioButton();
+        live.setBackground(Color.WHITE);
+        live.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                parentPanel.setHasChanged(true);
+                
+            }
+            
+        });
         
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addComponent(
-                                                                                        jScrollPane1,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        418,
-                                                                                        Short.MAX_VALUE)
-                                                                                .addComponent(
-                                                                                        nameLabel)
-                                                                                .addComponent(
-                                                                                        descriptionLabel)
-                                                                                .addComponent(
-                                                                                        nameField,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        418,
-                                                                                        Short.MAX_VALUE)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                                .addGroup(
-                                                                                                                        layout.createSequentialGroup()
-                                                                                                                                .addComponent(
-                                                                                                                                        deckLabel)
-                                                                                                                                .addPreferredGap(
-                                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        deckComboBox,
-                                                                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                                                                        175,
-                                                                                                                                        GroupLayout.PREFERRED_SIZE))
-                                                                                                                .addComponent(
-                                                                                                                        live))
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                                .addGroup(
-                                                                                                                        layout.createSequentialGroup()
-                                                                                                                                .addComponent(
-                                                                                                                                        maximumValue,
-                                                                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                                                                        42,
-                                                                                                                                        Short.MAX_VALUE)
-                                                                                                                                .addPreferredGap(
-                                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        newDeckButton)
-                                                                                                                                .addGap(12))
-                                                                                                                .addComponent(
-                                                                                                                        maxValueLabel)))
-                                                                                .addComponent(
-                                                                                        selectDeadline)
-                                                                                .addComponent(
-                                                                                        distributed))
-                                                                .addGap(13))
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(lblDate)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(datePicker,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(timeSpinner,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap()))));
-        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
+        gameType.add(live);
+        live.setText("Live Game");
+        GroupLayout gl_panel = new GroupLayout(panel);
+        gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
+                Alignment.LEADING).addGroup(
+                gl_panel.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(nameLabel)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(nameField, GroupLayout.PREFERRED_SIZE,
-                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(descriptionLabel)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                        .addGroup(
+                                gl_panel.createParallelGroup(Alignment.LEADING)
+                                        .addComponent(distributed)
+                                        .addComponent(live))
+                        .addContainerGap(309, Short.MAX_VALUE)));
+        gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+                Alignment.TRAILING).addGroup(
+                Alignment.LEADING,
+                gl_panel.createSequentialGroup().addContainerGap()
                         .addComponent(distributed)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addGroup(
-                                layout.createParallelGroup(Alignment.BASELINE).addComponent(live)
-                                        .addComponent(maxValueLabel))
-                        .addGap(5)
-                        .addGroup(
-                                layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(deckLabel)
-                                        .addComponent(deckComboBox, GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(newDeckButton)
-                                        .addComponent(maximumValue, GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addGap(18)
-                        .addComponent(selectDeadline)
-                        .addGap(8)
-                        .addGroup(
-                                layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(lblDate)
-                                        .addComponent(datePicker, GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(timeSpinner, GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE)).addGap(6)));
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(live)
+                        .addContainerGap(13, Short.MAX_VALUE)));
+        panel.setLayout(gl_panel);
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
@@ -539,7 +485,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
             ret = date.getTime();
         }
         else {
-            ret =  null;
+            ret = null;
         }
         return ret;
     }
@@ -550,7 +496,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
      * @return deck for this game
      */
     public DeckModel getDeck() {
-        return (DeckModel) deckComboBox.getSelectedItem();
+        return deckOptions.getDeck();
     }
     
     /**
@@ -564,9 +510,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         datePicker.setEnabled(selectDeadline.isSelected());
         timeSpinner.setEnabled(selectDeadline.isSelected());
         
-        if (!selectDeadline.isSelected()) {
-            return true;
-        }
+        if (!selectDeadline.isSelected()) { return true; }
         
         final Date currentDate = new Date();
         final Date enteredDate = getDate();
@@ -576,133 +520,15 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     }
     
     /**
-     * Makes sure maximum value is a positive integer
-     * 
-     * @return valid the boolean to determine if maximum value is a positive
-     *         integer
-     */
-    public boolean canValidateMaximum() {
-        return !deckComboBox.getSelectedItem().toString().equals("Generated deck")
-                || Pattern.matches("[1-9][0-9]*", maximumValue.getText());
-    }
-    
-    /**
-     * Return maximum value
-     */
-    public int getMaxCardValue() {
-        return Integer.parseInt(maximumValue.getText());
-    }
-    
-    /**
      * Check whether the name, description, and date have valid data
      * 
      * @return valid the boolean value to determine if the form is properly
      *         filled.
      */
     public boolean canValidateForm() {
-        final boolean valid = isNameValid && isDescriptionValid && canValidateDeadline();
+        final boolean valid = isNameValid && isDescriptionValid
+                && canValidateDeadline();
         return valid;
-    }
-    
-    /**
-     * Populates deck combo box with new decks
-     */
-    @Override
-    public void listUpdated() {
-        final ArrayList<DeckModel> decks = DeckListModel.getInstance().getDecks();
-        final DefaultComboBoxModel<DeckModel> newModel = new DefaultComboBoxModel<DeckModel>();
-        newModel.addElement(defaultDeck);
-        newModel.addElement(noDeck);
-        newModel.addElement(generatedDeck);
-        for (DeckModel deck : decks) {
-            newModel.addElement(deck);
-        }
-        deckComboBox.setModel(newModel);
-        
-        if (game != null) {
-            for (int i = 0; i < newModel.getSize(); i++) {
-                DeckModel deck = newModel.getElementAt(i);
-                System.out.println(i + " deck  " + deck.getName());
-                if (deck != null && deck.getName().equals(game.getDeck().getName())) {
-                    deckComboBox.setSelectedItem(deck);
-                }
-            }
-        }
-    }
-    
-    /**
-     * a class to set the limit for the JTextField
-     * 
-     * @author team9
-     * @version 1.0
-     */
-    public class JTextFieldLimit extends PlainDocument {
-        private static final long serialVersionUID = 1859032164698771516L;
-        private final int limit;
-        
-        /**
-         * construct an object to set the limit for the JTextField
-         * 
-         * @param limit
-         */
-        JTextFieldLimit(int limit) {
-            this.limit = limit;
-        }
-        
-        @Override
-        public void insertString(int offset, String str, AttributeSet attr)
-                throws BadLocationException {
-            if (str == null) {
-                return;
-            }
-            
-            if ((getLength() + str.length()) <= limit) {
-                super.insertString(offset, str, attr);
-            }
-        }
-    }
-    
-    /**
-     * Renders tooltips for deck selection combobox
-     * 
-     * @author team9
-     * @version 1.0
-     * 
-     */
-    class DeckComboBoxRenderer extends BasicComboBoxRenderer {
-        private static final long serialVersionUID = -6654798255103649031L;
-        
-        @Override
-        public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus) {
-            if (isSelected) {
-                setBackground(list.getSelectionBackground());
-                setForeground(list.getSelectionForeground());
-                
-                if (-1 < index && (index == 0 || index > 2)) {
-                    String toolTip = "";
-                    for (Double card : ((DeckModel) value).getCards()) {
-                        toolTip += NewGameDescriptionPanel.cardFormat.format(card) + ", ";
-                    }
-                    toolTip = toolTip.replaceAll(", $", "");
-                    list.setToolTipText(toolTip);
-                }
-                else if (index == 1) {
-                    list.setToolTipText("User-entered values, no limit");
-                }
-                else if (index == 2) {
-                    list.setToolTipText("Create a deck with cards from 1 to specified value");
-                }
-            }
-            else {
-                setBackground(list.getBackground());
-                setForeground(list.getForeground());
-            }
-            
-            setFont(list.getFont());
-            setText((value == null) ? "" : value.toString());
-            return this;
-        }
     }
     
     /**
@@ -720,9 +546,6 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
         }
         if (!canValidateDeadline()) {
             errors.add("Deadline is invalid");
-        }
-        if (!canValidateMaximum()) {
-            errors.add("Maximum value is invalid");
         }
         return errors;
     }
@@ -752,26 +575,40 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
      */
     public void setEditGamePanel(NewGamePanel p) {
         parentPanel = p;
+        
+        deckOptions.addNewDeckButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parentPanel.showPanel("newdeckpanel");
+            }
+        });
+        
+    }
+    
+    public void checkParent() {
+        if (parentPanel != null) {
+            parentPanel.check();
+        }
     }
     
     /**
      * @return the descriptionField
      */
-    public javax.swing.JTextPane getDescriptionField() {
+    public JTextPane getDescriptionField() {
         return descriptionField;
     }
     
     /**
      * @return the distributed
      */
-    public javax.swing.JRadioButton getDistributed() {
+    public JRadioButton getDistributed() {
         return distributed;
     }
     
     /**
      * @return the nameField
      */
-    public javax.swing.JTextField getNameField() {
+    public JTextField getNameField() {
         return nameField;
     }
     
@@ -783,20 +620,14 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel implements Simpl
     private JSpinner timeSpinner;
     private JXDatePicker datePicker;
     private NewGamePanel parentPanel;
-    private javax.swing.JTextPane descriptionField;
-    private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JRadioButton distributed;
-    private javax.swing.ButtonGroup gameType;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton live;
-    private javax.swing.JTextField nameField;
-    private javax.swing.JLabel nameLabel;
-    private javax.swing.JCheckBox selectDeadline;
-    private JComboBox<DeckModel> deckComboBox;
-    private final DeckModel defaultDeck;
-    private final DeckModel generatedDeck;
-    private final DeckModel noDeck;
-    private JButton newDeckButton;
-    private JTextField maximumValue;
-    private JLabel maxValueLabel;
+    private JTextPane descriptionField;
+    private JLabel descriptionLabel;
+    private JRadioButton distributed;
+    private ButtonGroup gameType;
+    private JScrollPane descriptionScrollPane;
+    private JRadioButton live;
+    private JTextField nameField;
+    private JLabel nameLabel;
+    private JCheckBox selectDeadline;
+    private DeckOptionsPanel deckOptions;
 }

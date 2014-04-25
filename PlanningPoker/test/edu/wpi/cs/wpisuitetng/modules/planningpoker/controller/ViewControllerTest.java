@@ -17,8 +17,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
@@ -117,7 +117,7 @@ public class ViewControllerTest {
         final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
                 new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null, null,
+                        new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                         null, null));
         ViewControllerTest.vc.editGame();
         final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
@@ -198,21 +198,21 @@ public class ViewControllerTest {
      */
     @Test
     public void testDisplayAdmin() {
-        CurrentUserController.getInstance().receivedUsers(new User[]{new User("", "", "", 0)});
+        ViewControllerTest.mv.setSelectedIndex(0);
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
-                new ArrayList<GameRequirementModel>(), null, null,
-                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, new User("", "", "", 0)));
+                new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
+                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.NEW, ""));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc
                 .displayAdmin(new GameModel("", "",
                         new ArrayList<GameRequirementModel>(), null, null,
                         GameModel.GameType.DISTRIBUTED,
-                        GameModel.GameStatus.NEW, new User("Me", "Me", "", 0)));
+                        GameModel.GameStatus.NEW, "Me"));
         Assert.assertFalse(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
                 new ArrayList<GameRequirementModel>(), null, null,
                 GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE,
-                new User("", "", "", 0)));
+                ""));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
     }
 }

@@ -26,9 +26,10 @@ public class GetDecksControllerTest {
      * Tests that DeckListModel correctly contains decks after they've been received
      */
     @Test
-    public void testReceivedDecks() {
-        final DeckModel deck1 = new DeckModel("Deck 1");
-        final DeckModel deck2 = new DeckModel("Deck 2");
+    public void test() {
+        final DeckModel deck1 = new DeckModel();
+        final DeckModel deck2 = new DeckModel();
+
         DeckListModel.getInstance().removeObservers();
         GetDecksController.receivedDecks(new DeckModel[] { deck1, deck2 });
         Assert.assertTrue(DeckListModel.getInstance().getDecks()

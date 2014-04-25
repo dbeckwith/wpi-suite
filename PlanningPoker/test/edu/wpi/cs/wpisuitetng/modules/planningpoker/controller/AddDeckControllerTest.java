@@ -33,9 +33,11 @@ public class AddDeckControllerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
+
         final AddDeckController adc = AddDeckController.getInstance();
-        adc.addDeck(new DeckModel());
+        adc.addDeck(new DeckModel(0));
         final MockRequest request = ((MockNetwork) Network.getInstance())
+
                 .getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");

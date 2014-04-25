@@ -40,7 +40,7 @@ public class GameEntityManagerTest {
     static MockData db = new MockData(new HashSet<Object>());
     static User existingUser = new User("joe", "joe", "1234", 2);
     static GameModel existingGame = new GameModel("Existing Game", "something", null,
-            DeckListModel.getInstance().getDefaultDeck(), new Date(
+           DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() - 100000),
                     GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
     static int existingGameID = existingGame.getID();
@@ -50,7 +50,7 @@ public class GameEntityManagerTest {
     static Session defaultSession = new Session(existingUser, testProject, mockSsid);
     static GameEntityManager manager = new GameEntityManager(db);
     static GameModel newGame = new GameModel("New Game", "A new game", null,
-            DeckListModel.getInstance().getDefaultDeck(), new Date(
+           DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() - 100000),
                     GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
     static int newGameID = newGame.getID();
@@ -58,7 +58,7 @@ public class GameEntityManagerTest {
     static Session adminSession = new Session(admin, testProject, mockSsid);
     static Project otherProject = new Project("other", "2");
     static GameModel otherGame = new GameModel("Other Game", "something", null,
-            DeckListModel.getInstance().getDefaultDeck(), new Date(
+           DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() - 100000),
                     GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
     
@@ -70,9 +70,10 @@ public class GameEntityManagerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
+
         admin.setRole(Role.ADMIN);
         final GameModel gameUpdates = new GameModel("Updated Game", "Some updates",
-                null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                null,DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 100000),
                         GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         goodUpdatedGame.copyFrom(existingGame);
@@ -165,7 +166,7 @@ public class GameEntityManagerTest {
     @Test
     public void testSave() {
         final GameModel game = new GameModel("Save Test", "something", null,
-                DeckListModel.getInstance().getDefaultDeck(), new Date(
+               DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 100000),
                         GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         final int saveTestGameID = game.getID();
@@ -224,7 +225,7 @@ public class GameEntityManagerTest {
     @Test
     public void testDeleteAll() throws WPISuiteException {
         final GameModel anotherGame = new GameModel("a title", "a description",
-                null, DeckListModel.getInstance().getDefaultDeck(), new Date(
+                null,DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 100000),
                         GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
         manager.makeEntity(defaultSession, anotherGame.toJSON());

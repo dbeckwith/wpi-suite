@@ -18,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
@@ -56,8 +57,7 @@ public class AddGameControllerTest {
 				new NetworkConfiguration("http://wpisuitetng"));
 		final AddGameController agc = AddGameController.getInstance();
 		agc.addGame(new GameModel( "Test", "Test Description",
-				new ArrayList<GameRequirementModel>(), DeckListModel
-						.getInstance().getDefaultDeck(), new Date(),
+				new ArrayList<GameRequirementModel>(),DeckModel.DEFAULT_DECK, new Date(),
 				GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE));
 		final MockRequest request = ((MockNetwork) Network.getInstance())
 				.getLastRequestMade();

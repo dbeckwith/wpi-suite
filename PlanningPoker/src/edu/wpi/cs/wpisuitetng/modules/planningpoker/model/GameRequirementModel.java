@@ -335,12 +335,7 @@ public class GameRequirementModel extends AbstractModel {
      *            the other requirement to compare to
      * @return true if the two requirements are considered equal, false
      *         otherwise
-     */
-    public boolean equals(GameRequirementModel other) {
-        return (name.equals(other.name))
-                && (description.equals(other.description));
-	}
-    
+     */    
     @Override
     public boolean equals(Object other) {
         boolean toReturn = false;
@@ -348,7 +343,8 @@ public class GameRequirementModel extends AbstractModel {
             toReturn = true;
         }
         else if (other instanceof GameRequirementModel) {
-            toReturn = this.equals((GameRequirementModel) other);
+            toReturn = (name.equals(((GameRequirementModel)other).name))
+                    && (description.equals(((GameRequirementModel)other).description));
         }
         else {
             toReturn = super.equals(other);
