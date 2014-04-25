@@ -273,13 +273,14 @@ public class NewGamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO: get new ID incremented off of existing requirements
-                newGameRequirementsPanel
-                        .addCustomRequirement(new GameRequirementModel(0,
-                                newReqName.getText(), newReqDesc.getText(),
-								(String) newReqType.getSelectedItem()));
-				newGameRequirementsPanel.requirementsTable.setValueAt(true,
-						newGameRequirementsPanel.requirementsTable
-								.getRowCount() - 1, 0);
+            	GameRequirementModel newRequirement = new GameRequirementModel(
+            			0,
+            			newReqName.getText(),
+            			newReqDesc.getText(),
+            			newReqType.getSelectedItem().toString());
+            	
+                newGameRequirementsPanel.addCustomRequirement(newRequirement, true);
+                
 				newReqName.setText("");
 				newReqDesc.setText("");
 				newReqType.setSelectedIndex(0);

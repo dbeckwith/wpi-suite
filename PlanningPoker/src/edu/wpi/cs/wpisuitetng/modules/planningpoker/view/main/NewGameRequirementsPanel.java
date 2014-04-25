@@ -12,14 +12,24 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +47,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class NewGameRequirementsPanel extends javax.swing.JPanel {
+public class NewGameRequirementsPanel extends JPanel implements MouseListener, KeyListener {
     
     private static final long serialVersionUID = -4252474071295177531L;
     
@@ -95,20 +105,23 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
 	}
 
 	private void initComponents() {
-
-		requirementsTableScrollPane = new javax.swing.JScrollPane();
-		requirementsTable = new javax.swing.JTable();
-		addButton = new javax.swing.JButton();
+		setFocusable(true);
+		addKeyListener(this);
+		
+		requirementsTableScrollPane = new JScrollPane();
+		requirementsTable = new HighlightedTable();
+		addButton = new JButton();
 
 		clearRequirements();
 		requirementsTable
-				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+				.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		requirementsTable.getTableHeader().setReorderingAllowed(false);
 		final Font temp_Font;
 		temp_Font = requirementsTable.getTableHeader().getFont();
 		requirementsTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
 		requirementsTableScrollPane.setViewportView(requirementsTable);
-
+		requirementsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		requirementsTable.addMouseListener(this);
 		addButton.setText("Create Requirement");
 		addButton.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -182,17 +195,17 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private TableModel getEmptyTableModel() {
-        return new javax.swing.table.DefaultTableModel(new Object[][] {
+        return new DefaultTableModel(new Object[][] {
                 
         }, new String[] { "Add", "Name", "Description", "Type" }) {
             /**
              * 
              */
             private static final long serialVersionUID = 3245971487236783965L;
-            private final Class[] types = new Class[] { java.lang.Boolean.class,
-                    java.lang.Object.class, java.lang.String.class,
-                    java.lang.String.class };
-            private final boolean[] canEdit = new boolean[] { true, false, false, false };
+            private final Class[] types = new Class[] { Boolean.class,
+                    Object.class, String.class,
+                    String.class };
+            private final boolean[] canEdit = new boolean[] { false, false, false, false };
             
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -213,15 +226,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     public void setupData(List<GameRequirementModel> reqs){
         //add all requirements to the game
         for (GameRequirementModel req: reqs){
-            addCustomRequirement(req);  
-        }
-        final DefaultTableModel model = (DefaultTableModel) requirementsTable
-                .getModel();
-        //select all requirements that are currently in the game
-        for (int i = 0; i < model.getRowCount(); i++){
-            if(reqs.contains((GameRequirementModel) model.getValueAt(i, 1))){
-                model.setValueAt(true, i, 0);
-            }
+            addCustomRequirement(req, true);  
         }
     }
     
@@ -241,6 +246,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
     private void clearRequirements() {
         requirementsTable.setModel(getEmptyTableModel());
+        requirementsTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        requirementsTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        requirementsTable.getColumnModel().getColumn(2).setPreferredWidth(250);
         requirementsTable.getModel().addTableModelListener(
                 new TableModelListener() {
                     
@@ -259,9 +267,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
      * This method add the requirement created by user in planning poker game (not in requirement manager)
      * @param r the requirement to be add
      */
-    public void addCustomRequirement(GameRequirementModel r) {
+    public void addCustomRequirement(GameRequirementModel r, boolean selected) {
         createdRequirements.add(r);
-        addRequirement(r);
+        addRequirement(r, true);
     }
     
     private void addRequirement(GameRequirementModel r) {
@@ -343,11 +351,63 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         return errors;
     }
     
+    public void selectedHighlightedRows(){
+    	DefaultTableModel model = (DefaultTableModel)requirementsTable.getModel();
+
+		int[] selectedRows = requirementsTable.getSelectedRows();
+		if(selectedRows.length == 0){
+			return;
+		}
+		boolean selectionValue = !(Boolean)model.getValueAt(selectedRows[0], 0);
+		for(int i = 0; i < selectedRows.length; i++){
+			model.setValueAt(selectionValue, selectedRows[i], 0);
+		}
+
+		requirementsTable.setModel(model);
+    }
+    
+
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		requestFocus();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		selectedHighlightedRows();
+		requirementsTable.setSelectionModel(new DefaultListSelectionModel());
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+	
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		if(e.getKeyChar() == ' ' || e.getKeyChar() == '\n'){
+			selectedHighlightedRows();
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {}
+
+	@Override
+	public void keyReleased(KeyEvent e) {}
+	
+    
     private NewGamePanel parentPanel;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
-    private javax.swing.JScrollPane requirementsTableScrollPane;
-    protected javax.swing.JTable requirementsTable;
+    private JButton addButton;
+    private JScrollPane requirementsTableScrollPane;
+    private JTable requirementsTable;
     private JButton btnSelectAll;
+
 }
