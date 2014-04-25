@@ -20,14 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class UpdateGamesRequestObserver implements RequestObserver {
     
-    /**
-     * Constructs the observer given an UpdateGamesController
-     * 
-     * @param controller
-     *        the controller used to add games
-     */
-    public UpdateGamesRequestObserver() {
-    }
+    
     
     /**
      * Parse the game that was received from the server then pass them to the
