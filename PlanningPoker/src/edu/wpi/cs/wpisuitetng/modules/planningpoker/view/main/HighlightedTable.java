@@ -11,7 +11,7 @@ import javax.swing.table.TableCellRenderer;
 
 public class HighlightedTable extends JTable implements MouseMotionListener, MouseListener {
 	
-	private final Color HIGHLIGHT_COLOR;
+	private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
 
 	private int highlightRow = -1;
 
@@ -19,7 +19,6 @@ public class HighlightedTable extends JTable implements MouseMotionListener, Mou
 		super();
 		addMouseListener(this);
 		addMouseMotionListener(this);
-		HIGHLIGHT_COLOR = new Color(220, 232, 244);
 	}
 
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {

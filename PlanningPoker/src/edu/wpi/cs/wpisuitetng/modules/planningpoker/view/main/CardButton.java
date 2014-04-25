@@ -49,7 +49,8 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     private static final long serialVersionUID = 2543023112833273691L;
     
     public static final DecimalFormat cardFormat = new DecimalFormat("0.#");
-    
+
+	private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
     
     //private static final float MARGIN = 0.03f;
     private static final float MARGIN_LOGO = 0.05f;
@@ -158,14 +159,14 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
         int suitMargin = (int) (getWidth() * CardButton.MARGIN_LOGO);
         
-        g2.setColor(new Color(230, 230, 230));
+        g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, getWidth(), getHeight());
         
         if (isEnabled()) {
             int suitSize = (int) (getWidth() * CardButton.FRONT_SUIT_SIZE);
             //highlight card background
-            if (hover || selected || textInput) {
-                g2.setColor(Color.WHITE);
+            if (hover || selected) {
+                g2.setColor(HIGHLIGHT_COLOR);
                 g2.fillRect(0, 0, getWidth(), getHeight());
 
             }
@@ -181,7 +182,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 	            //draw text
 	            g2.setColor(Color.BLACK);
 	            g2.setFont(new Font(g.getFont().getFontName(), Font.BOLD,
-	                    (int) (getWidth() * (hover ? CardButton.FONT_SIZE_HOVER
+	                    (int) (getWidth() * ((hover || selected) ? CardButton.FONT_SIZE_HOVER
 	                            : CardButton.FONT_SIZE))));
 	            Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
 	            g2.drawString(value, (int) (getWidth() - r.getWidth()) / 2,
