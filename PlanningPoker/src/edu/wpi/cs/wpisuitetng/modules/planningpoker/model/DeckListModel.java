@@ -63,6 +63,10 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 		}
 	}
 	
+	/**
+	 * Method addAllDecks.
+	 * @param newDecks DeckModel[]
+	 */
 	public void addAllDecks(DeckModel[] newDecks){
 		for(int i = 0; i < newDecks.length; i++){
 			decks.add(newDecks[i]);

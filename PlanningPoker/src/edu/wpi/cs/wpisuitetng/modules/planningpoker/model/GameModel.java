@@ -36,6 +36,7 @@ public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * An enumeration representing the different states of a game.
+     * @author Team 9
      */
     public static enum GameStatus {
         NEW("New"), PENDING("Pending"), COMPLETE("Complete"), CLOSED("Closed");
@@ -66,6 +67,7 @@ public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * An enumeration representing the different types of games.
+     * @author Team 9
      */
     public static enum GameType {
         LIVE, DISTRIBUTED
@@ -228,8 +230,8 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @param reqIndex
      *        the index of the requirement in the list of requirements
-     * @return an array containing all of the estimates
-     */
+    
+     * @return an array containing all of the estimates */
     public List<Estimate> getEstimates(int reqIndex) {
         return requirements.get(reqIndex).getEstimates();
     }
@@ -276,10 +278,10 @@ public class GameModel extends AbstractModel implements Serializable {
     /**
      * Checks if the deadline for this game has passed
      * 
-     * @return if the deadline for this game has passed
-     */
+    
+     * @return if the deadline for this game has passed */
     public boolean deadlinePassed(){
-        Date currDate = new Date();
+        final Date currDate = new Date();
         return ((endDate != null) && endDate.before(currDate));
     }
     
@@ -312,18 +314,19 @@ public class GameModel extends AbstractModel implements Serializable {
     /**
      * Checks if all users have voted on all requirements
      * 
-     * @return whether all users have voted on all requirements
-     */
+    
+     * @return whether all users have voted on all requirements */
     public boolean checkVoted() {
+    	boolean haveVoted = true;
         if (requirements == null) {
-            return false;
+            haveVoted = false;
         }
         for (GameRequirementModel r : requirements) {
             if (!r.allVoted()) {
-                return false;
+                haveVoted = false;
             }
         }
-        return true;
+        return haveVoted;
     }
     
     /**
@@ -392,8 +395,8 @@ public class GameModel extends AbstractModel implements Serializable {
      * Creates a GameModel from a JSON string
      * 
      * @param json
-     * @return GameModel object from JSON string
-     */
+    
+     * @return GameModel object from JSON string */
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
         final GameModel gm = parser.fromJson(json, GameModel.class);
@@ -405,8 +408,8 @@ public class GameModel extends AbstractModel implements Serializable {
      * Creates an array of GameModels from a JSON array
      * 
      * @param json
-     * @return Array of GameModels from the JSON array
-     */
+    
+     * @return Array of GameModels from the JSON array */
     public static GameModel[] fromJSONArray(String json) {
         final Gson parser = new Gson();
         final GameModel[] gms = parser.fromJson(json, GameModel[].class);
@@ -477,8 +480,8 @@ public class GameModel extends AbstractModel implements Serializable {
      * Returns whether the input GameModel is equal to this one
      * 
      * @param other
-     * @return True if this GameModel is equal to the input GameModel
-     */
+    
+     * @return True if this GameModel is equal to the input GameModel */
     public boolean equals(GameModel other) {
         return other.id == id && other.name.equals(other.name);
     }
@@ -500,6 +503,7 @@ public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * Checks to see if this game has a deadline.
+     * @return boolean
      */
     public boolean hasDeadline() {
         return endDate != null;

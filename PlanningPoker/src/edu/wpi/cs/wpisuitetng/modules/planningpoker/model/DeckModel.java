@@ -30,7 +30,7 @@ public class DeckModel extends AbstractModel {
 	public static final int NO_LIMIT = 0;
 	
 	static {
-		ArrayList<Double> defaultCards = new ArrayList<Double>();
+		final ArrayList<Double> defaultCards = new ArrayList<Double>();
 		
 		defaultCards.add(0d);
 		defaultCards.add(1d);
@@ -73,8 +73,8 @@ public class DeckModel extends AbstractModel {
      * Creates a new deck without any cards that does not allow multiple
      * selection.
      * 
-     * @param name
-     *            the name of the deck
+    
+     * @param max int
      */
 	public DeckModel(int max) {
 		name = "None";
@@ -142,10 +142,9 @@ public class DeckModel extends AbstractModel {
      *            the value of the card to add
      */
 	public void addCard(Double newCard) {
-		if (cards.contains(newCard)) {
-			return;
+		if (!cards.contains(newCard)) {
+			cards.add(newCard);
 		}
-		cards.add(newCard);
 	}
     
     /**
@@ -155,10 +154,9 @@ public class DeckModel extends AbstractModel {
      *            the value to remove, if it is in the deck
      */
 	public void removeCard(Double card) {
-		if (!cards.contains(card)) {
-			return;
+		if (cards.contains(card)) {
+			cards.remove(card);
 		}
-		cards.remove(card);
 	}
 
 	/**
@@ -191,8 +189,8 @@ public class DeckModel extends AbstractModel {
 	 * 
 	 * @param json
 	 *            The JSON string
-	 * @return The DeckModel from the JSON string
-	 */
+	
+	 * @return The DeckModel from the JSON string */
 	public static DeckModel fromJSON(String json) {
 		final Gson parser = new Gson();
 		final DeckModel deck = parser.fromJson(json, DeckModel.class);
@@ -203,8 +201,8 @@ public class DeckModel extends AbstractModel {
 	 * Creates an array of deck models from a JSONArray.
 	 * 
 	 * @param json
-	 * @return Array of DeckModels from the JSON array
-	 */
+	
+	 * @return Array of DeckModels from the JSON array */
 	public static DeckModel[] fromJSONArray(String json) {
 		final Gson parser = new Gson();
 		final DeckModel[] decks = parser.fromJson(json, DeckModel[].class);
@@ -213,7 +211,7 @@ public class DeckModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return ""+name;
+		return "" + name;
 	}
 
 
@@ -224,8 +222,8 @@ public class DeckModel extends AbstractModel {
      * that the user can select mutiple cards from the deck and sum their values
      * to make their estimate.
      * 
-     * @return true if this deck allows multiple selection, false otherwise
-     */
+    
+     * @return true if this deck allows multiple selection, false otherwise */
 	public boolean canAllowsMultipleSelection() {
 		return allowsMultipleSelection;
 	}
