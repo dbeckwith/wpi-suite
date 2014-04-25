@@ -67,12 +67,14 @@ public class CurrentUserController extends AbstractUserController {
      *         exists
      */
     public User findUser(String name) {
+        User toReturn = null;
         for (User u : getUsers()) {
             if (u.getUsername().equals(name)){
-                return u;
+                toReturn = u;
+                break;
             }
         }
-        return null;
+        return toReturn;
     }
     
     /**

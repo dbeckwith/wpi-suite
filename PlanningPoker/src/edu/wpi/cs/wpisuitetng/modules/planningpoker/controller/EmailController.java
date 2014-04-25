@@ -17,6 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 /**
  * This controller responds when a game is started or ended by sending email
  * notifications
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -25,12 +26,14 @@ public class EmailController extends AbstractUserController {
     /**
      * Subject line for a new game email.
      */
-    private static final String NEW_GAME_SUBJECT = "A new Planning Poker game has begun!"; //$NON-NLS-1$
+    private static final String NEW_GAME_SUBJECT = "A new Planning Poker game has begun!";
+    //$NON-NLS-1$
     
     /**
      * Subject line for an ended game email.
      */
-    private static final String END_GAME_SUBJECT = "A Planning Poker game has ended."; //$NON-NLS-1$
+    private static final String END_GAME_SUBJECT = "A Planning Poker game has ended.";
+    //$NON-NLS-1$
     
     /**
      * A list of all threads used to send email notifications. Threads are added
@@ -89,7 +92,8 @@ public class EmailController extends AbstractUserController {
     public void receivedUsers(User[] users) {
         if (users != null) {
             setUsers(users);
-            while (!senderThreads.isEmpty()) { // $codepro.audit.disable methodInvocationInLoopCondition
+            while (!senderThreads.isEmpty()) {
+                // $codepro.audit.disable methodInvocationInLoopCondition
                 senderThreads.pop().start();
             }
         }

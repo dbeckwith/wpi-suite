@@ -144,6 +144,11 @@ public class ViewController {
 	 * @param e
 	 *            The NewGamePanel to cancel
 	 */
+	/**
+	 * Cancels creation of a new game
+	 * @param e The NewGamePanel to cancel
+	 * @param hasChanged indicator about whether the game changes
+	 */
 	public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
 
 		if (hasChanged) {
@@ -169,6 +174,8 @@ public class ViewController {
 	 * 
 	 * @param e
 	 *            the NewGamePanel to cancel
+	 * @param hasChanged 
+	 *             indicator about whether the game changes
 	 */
 	public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
 
@@ -176,7 +183,8 @@ public class ViewController {
 			final int result = cancelConfirm
 					.showConfirmDialog(
 							e,
-							"Are you sure you would like cancel editing this game? (changes will not be saved)",
+							"Are you sure you would like cancel editing this game? "
+							+ "(changes will not be saved)",
 							"Cancel Edit", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				RequirementsListModel.getInstance().removeListListener(
@@ -302,7 +310,7 @@ public class ViewController {
 	public void startGame() {
 		final GameModel curr = mainView.getMainPanel().getSelectedGame();
 		if (curr.deadlinePassed()) {
-			Object[] options = { "OK" };
+			final Object[] options = { "OK" };
 			JOptionPane
 					.showOptionDialog(
 							mainView,

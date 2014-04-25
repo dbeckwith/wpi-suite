@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -31,11 +32,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
  * code</b>.
  * 
  * @author Sam Carlberg
- * 
+ * @version 1.0
  */
 public class GameTimeoutObserver extends Thread {
     
-    private static final ArrayList<GameTimeoutObserver> OBSERVERS = new ArrayList<>();
+    private static final List<GameTimeoutObserver> OBSERVERS = new ArrayList<>();
     
     /**
      * The game to end once the deadline has passed.
@@ -66,6 +67,10 @@ public class GameTimeoutObserver extends Thread {
      * Creates a new {@link GameTimeoutObserver}. Called when the
      * GameEntityManager creates a new GameModel on the server.
      * 
+     * @param session
+     *        session of current game
+     * @param game
+     *        game model
      * @see GameEntityManager#makeEntity(Session, String)
      */
     public GameTimeoutObserver(Session session, GameModel game) {
@@ -118,12 +123,20 @@ public class GameTimeoutObserver extends Thread {
     
     /**
      * Gets the observer associated with the given game.
+     * 
+     * @param game
+     *        game to get observer
+     * @return o the observer associated with the given game
      */
     public static GameTimeoutObserver getObserver(GameModel game) {
+        GameTimeoutObserver toReturn = null;
         for (GameTimeoutObserver o : OBSERVERS) {
-            if (o.game.equals(game)) { return o; }
+            if (o.game.equals(game)) {
+                toReturn = o;
+                break;
+            }
         }
-        return null;
+        return toReturn;
     }
     
     /**
@@ -133,13 +146,14 @@ public class GameTimeoutObserver extends Thread {
      * @return
      */
     private Date toGMT(Date date) {
+        Date toReturn = null;
         try {
-            return dateFormatLocal.parse(dateFormatGMT.format(date));
+            toReturn = dateFormatLocal.parse(dateFormatGMT.format(date));
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
-        return null;
+        return toReturn;
     }
     
 }
