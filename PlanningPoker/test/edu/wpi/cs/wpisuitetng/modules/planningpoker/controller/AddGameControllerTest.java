@@ -17,7 +17,6 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -58,7 +57,7 @@ public class AddGameControllerTest {
 		final AddGameController agc = AddGameController.getInstance();
 		agc.addGame(new GameModel( "Test", "Test Description",
 				new ArrayList<GameRequirementModel>(),DeckModel.DEFAULT_DECK, new Date(),
-				GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE));
+				GameModel.GameStatus.COMPLETE));
 		final MockRequest request = ((MockNetwork) Network.getInstance())
 				.getLastRequestMade();
 		if (request == null) {

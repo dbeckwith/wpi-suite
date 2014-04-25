@@ -64,13 +64,6 @@ public class GameModel extends AbstractModel implements Serializable {
         }
     };
     
-    /**
-     * An enumeration representing the different types of games.
-     */
-    public static enum GameType {
-        LIVE, DISTRIBUTED
-    };
-    
     private transient ArrayList<GameStatusObserver> status_observers;
     
     private int id;
@@ -78,7 +71,6 @@ public class GameModel extends AbstractModel implements Serializable {
     private String description;
     private List<GameRequirementModel> requirements;
     private Date endDate;
-    private GameType type;
     private GameStatus status;
     private String owner;
     private DeckModel deck;
@@ -95,7 +87,6 @@ public class GameModel extends AbstractModel implements Serializable {
                 null, // requirements
                 null, // deck
                 null, // end date
-                null, // type
                 null, // status
                 null); // owner
     }
@@ -120,9 +111,8 @@ public class GameModel extends AbstractModel implements Serializable {
      *        what the current status of this game should be
      */
     public GameModel(String name, String description,
-            List<GameRequirementModel> requirements, DeckModel deck, Date end,
-            GameType type, GameStatus status) {
-        this(name, description, requirements, deck, end, type, status,
+            List<GameRequirementModel> requirements, DeckModel deck, Date end, GameStatus status) {
+        this(name, description, requirements, deck, end, status,
                 ConfigManager.getConfig().getUserName());
     }
     
@@ -149,14 +139,13 @@ public class GameModel extends AbstractModel implements Serializable {
      */
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
-            Date endDate, GameType type, GameStatus status, String owner) {
+            Date endDate, GameStatus status, String owner) {
         id = GameModel.nextId++;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         this.deck = deck;
         this.endDate = endDate;
-        this.type = type;
         this.status = status;
         this.owner = owner;
         status_observers = new ArrayList<>();
@@ -281,15 +270,6 @@ public class GameModel extends AbstractModel implements Serializable {
     public boolean deadlinePassed(){
         Date currDate = new Date();
         return ((endDate != null) && endDate.before(currDate));
-    }
-    
-    /**
-     * Returns which type of game this is
-     * 
-     * @return the game's type
-     */
-    public GameType getType() {
-        return type;
     }
     
     /**
@@ -435,7 +415,6 @@ public class GameModel extends AbstractModel implements Serializable {
         description = g.description;
         requirements = g.requirements;
         endDate = g.endDate;
-        type = g.type;
         status = g.status;
         status_observers = g.status_observers;
         owner = g.owner;
@@ -454,7 +433,6 @@ public class GameModel extends AbstractModel implements Serializable {
         description = g.description;
         requirements = g.requirements;
         endDate = g.endDate;
-        type = g.type;
         status = g.status;
         owner = g.owner;
         deck = g.deck;
