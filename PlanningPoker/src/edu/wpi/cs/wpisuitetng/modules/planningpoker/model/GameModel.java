@@ -82,7 +82,7 @@ public class GameModel extends AbstractModel implements Serializable {
     private Date endDate;
     private GameType type;
     private GameStatus status;
-    private User owner;
+    private String owner;
     private DeckModel deck;
     private static int nextId = 0;
     
@@ -125,7 +125,7 @@ public class GameModel extends AbstractModel implements Serializable {
             List<GameRequirementModel> requirements, DeckModel deck, Date end,
             GameType type, GameStatus status) {
         this(name, description, requirements, deck, end, type, status,
-                CurrentUserController.getInstance().getUser());
+                CurrentUserController.USER_NAME);
     }
     
     /**
@@ -151,7 +151,7 @@ public class GameModel extends AbstractModel implements Serializable {
      */
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
-            Date endDate, GameType type, GameStatus status, User owner) {
+            Date endDate, GameType type, GameStatus status, String owner) {
         id = GameModel.nextId++;
         this.name = name;
         this.description = description;
@@ -197,7 +197,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return the owner
      */
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
     

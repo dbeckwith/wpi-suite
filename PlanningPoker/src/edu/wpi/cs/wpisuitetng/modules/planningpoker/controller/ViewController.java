@@ -120,7 +120,7 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
                         d.canAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.NEW, CurrentUserController.getInstance().getUser());
+                e.getGameType(), GameStatus.NEW, CurrentUserController.USER_NAME);
         
         AddGameController.getInstance().addGame(newGame);
         
@@ -144,7 +144,7 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), new DeckModel(
                         d.toString(), d.getCards(),
                         d.canAllowsMultipleSelection()), e.getEndDate(),
-                e.getGameType(), GameStatus.NEW, CurrentUserController.getInstance().getUser());
+                e.getGameType(), GameStatus.NEW, CurrentUserController.USER_NAME);
         game.editCopyFrom(newGame);
         UpdateGamesController.getInstance().updateGame(game);
         RequirementsListModel.getInstance().removeListListener(
@@ -236,7 +236,7 @@ public class ViewController {
     public void displayAdmin(GameModel game) {
         if (game != null
                 && game.getOwner().equals(
-                        CurrentUserController.getInstance().getUser())
+                        CurrentUserController.USER_NAME)
                 && !game.isClosed() && mainView.getSelectedIndex() == 0) {
             toolbar.setAdminVisibility(true);
             toolbar.showStartButtonGroup(game.getStatus() == GameStatus.NEW);

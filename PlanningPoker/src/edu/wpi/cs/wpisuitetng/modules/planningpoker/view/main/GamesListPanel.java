@@ -114,7 +114,7 @@ public class GamesListPanel extends javax.swing.JPanel {
             else {
                 if (GameListModel.getInstance().getGames().get(i).isStarted()
                         || GameListModel.getInstance().getGames().get(i).getOwner()
-                                .equals(CurrentUserController.getInstance().getUser())) {
+                                .equals(CurrentUserController.USER_NAME)) {
                     pendingFolder.add(gameNode);
                 }
             }
