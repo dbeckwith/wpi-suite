@@ -76,10 +76,9 @@ public class GameListModelTest {
     @Test
     public void testGameManipulation() {
         final GameModel game1 = new GameModel("Test Game",
-                "Test Game Description", null, DeckModel.DEFAULT_DECK, new Date(), null, GameModel.GameStatus.PENDING);
+                "Test Game Description", null, DeckModel.DEFAULT_DECK, new Date(), null);
         final GameModel game2 = new GameModel("Test Game 2",
-                "Test Game Description 2", null, DeckModel.DEFAULT_DECK, new Date(), null,
-                GameModel.GameStatus.COMPLETE);
+                "Test Game Description 2", null, DeckModel.DEFAULT_DECK, new Date(), null);
         GameListModelTest.instance.addGame(game1);
         GameListModelTest.instance.addGame(game2);
         Assert.assertTrue(GameListModelTest.instance.getGames().contains(game1));

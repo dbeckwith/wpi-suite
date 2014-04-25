@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -28,20 +29,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-import java.awt.Dimension;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
-import java.awt.Component;
-import javax.swing.Box;
+
 
 /**
  * This is a class to show the panel when the user clicks create game button.
@@ -423,20 +421,6 @@ public class NewGamePanel extends JPanel {
      */
     public String getDescription() {
         return gameDescription.getDescriptionField().getText();
-    }
-    
-    /**
-     * Gets the type of the game
-     * 
-     * @return the GameType of this game
-     */
-    public GameType getGameType() {
-        if (gameDescription.getDistributed().isSelected()) {
-            return GameType.DISTRIBUTED;
-        }
-        else {
-            return GameType.LIVE;
-        }
     }
     
     /**
