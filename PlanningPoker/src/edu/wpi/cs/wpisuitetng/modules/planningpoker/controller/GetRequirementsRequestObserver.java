@@ -23,14 +23,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetRequirementsRequestObserver implements RequestObserver {
     
-    /**
-     * Constructs the observer given a GetRequirementsController
-     * 
-     * @param controller
-     *        the controller used to retrieve requirements
-     */
-    public GetRequirementsRequestObserver() {
-    }
+    
     
     /**
      * Parse the requirements out of the response body and pass them to the
