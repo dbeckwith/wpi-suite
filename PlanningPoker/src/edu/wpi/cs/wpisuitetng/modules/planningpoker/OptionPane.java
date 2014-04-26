@@ -18,9 +18,9 @@ import java.awt.Component;
  * @version 1.0
  */
 public interface OptionPane {
-    /**
-     * @see JOptionPane#showConfirmDialog(Component, Object, String, int);
-     */
-    int showConfirmDialog(Component parentComponent, Object message,
-            String title, int optionType);
+	/**
+	 * @see JOptionPane#showConfirmDialog(Component, Object, String, int);
+	 */
+	int showConfirmDialog(Component parentComponent, Object message,
+			String title, int optionType);
 }

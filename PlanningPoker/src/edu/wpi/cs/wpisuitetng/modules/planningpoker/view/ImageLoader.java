@@ -24,58 +24,60 @@ import javax.swing.ImageIcon;
  * 
  */
 public class ImageLoader {
-    
-    private static final String modifiedPath = "/res/";
-    
-    private static HashMap<String, BufferedImage> images;
-    
-    static {
-        ImageLoader.images = new HashMap<String, BufferedImage>();
-    }
-    
-    /**
-     * Returns a BufferedImage loaded from a file
-     * 
-     * @param file
-     *        the name of the file to load from the resources folder
-     * @return The BufferedImage from file
-     */
-    public static BufferedImage getImage(String file) {
-        BufferedImage bImg = null;
-        
-        //check if the image is already loaded
-        if (ImageLoader.images.containsKey(file)) {
-            bImg = ImageLoader.images.get(file); //get the image from the list
-        } else {
-            try {
-                final URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
-                System.out.println(u.toString());
-                bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
-                if (bImg != null) {
-                	//put the image in the list
-                    ImageLoader.images.put(file, bImg);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return bImg;
-    }
-    
-    /**
-     * Returns an ImageIcon loaded from a file
-     * 
-     * @param file
-     *        the name of the file to load from the resources folder
-     * @return The ImageIcon from file
-     */
-    public static ImageIcon getIcon(String file) {
-        ImageIcon icon = null;
-        final BufferedImage image = ImageLoader.getImage(file);
-        if (image != null) {
-            icon = new ImageIcon(image);
-        }
-        return icon;
-    }
-    
+
+	private static final String modifiedPath = "/res/";
+
+	private static HashMap<String, BufferedImage> images;
+
+	static {
+		ImageLoader.images = new HashMap<String, BufferedImage>();
+	}
+
+	/**
+	 * Returns a BufferedImage loaded from a file
+	 * 
+	 * @param file
+	 *            the name of the file to load from the resources folder
+	 * @return The BufferedImage from file
+	 */
+	public static BufferedImage getImage(String file) {
+		BufferedImage bImg = null;
+
+		// check if the image is already loaded
+		if (ImageLoader.images.containsKey(file)) {
+			bImg = ImageLoader.images.get(file); // get the image from the list
+		} else {
+			try {
+				final URL u = ImageLoader.class
+						.getResource(ImageLoader.modifiedPath + file);
+				System.out.println(u.toString());
+				bImg = ImageIO.read(ImageLoader.class
+						.getResource(ImageLoader.modifiedPath + file));
+				if (bImg != null) {
+					// put the image in the list
+					ImageLoader.images.put(file, bImg);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return bImg;
+	}
+
+	/**
+	 * Returns an ImageIcon loaded from a file
+	 * 
+	 * @param file
+	 *            the name of the file to load from the resources folder
+	 * @return The ImageIcon from file
+	 */
+	public static ImageIcon getIcon(String file) {
+		ImageIcon icon = null;
+		final BufferedImage image = ImageLoader.getImage(file);
+		if (image != null) {
+			icon = new ImageIcon(image);
+		}
+		return icon;
+	}
+
 }

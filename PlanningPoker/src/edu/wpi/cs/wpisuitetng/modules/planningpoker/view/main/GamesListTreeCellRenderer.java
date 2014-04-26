@@ -94,7 +94,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             final GameRequirementModel req = (GameRequirementModel) node
                     .getUserObject();
             
-            for (Estimate e : (ArrayList<Estimate>) req.getEstimates()) {
+			for (Estimate e : (ArrayList<Estimate>) req.getEstimates()) {
                 if (e.getUsername() != null
                         && e.getUsername().equals(
                                 CurrentUserController.getInstance().getUser()

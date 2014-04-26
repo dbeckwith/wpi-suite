@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
  */
 public class DeckComboBoxRenderer extends BasicComboBoxRenderer {
 	private static final long serialVersionUID = -6654798255103649031L;
-	
+
 	private static final DecimalFormat cardFormat = new DecimalFormat("0.0");
 
 	@Override
@@ -38,8 +38,7 @@ public class DeckComboBoxRenderer extends BasicComboBoxRenderer {
 			if (-1 < index && (index == 0 || index > 2)) {
 				String toolTip = "";
 				for (Double card : ((DeckModel) value).getCards()) {
-					toolTip += cardFormat.format(card)
-							+ ", ";
+					toolTip += cardFormat.format(card) + ", ";
 				}
 				toolTip = toolTip.replaceAll(", $", "");
 				list.setToolTipText(toolTip);

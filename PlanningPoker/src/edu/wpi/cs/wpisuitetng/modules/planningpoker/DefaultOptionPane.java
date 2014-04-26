@@ -19,12 +19,12 @@ import javax.swing.JOptionPane;
  * @version 1.0
  */
 public class DefaultOptionPane implements OptionPane {
-    
-    @Override
-    public int showConfirmDialog(Component parentComponent, Object message,
-            String title, int optionType) {
-        return JOptionPane.showConfirmDialog(parentComponent, message, title,
-                optionType);
-    }
-    
+
+	@Override
+	public int showConfirmDialog(Component parentComponent, Object message,
+			String title, int optionType) {
+		return JOptionPane.showConfirmDialog(parentComponent, message, title,
+				optionType);
+	}
+
 }

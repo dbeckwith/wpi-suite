@@ -16,6 +16,4 @@ import javax.swing.JPanel;
  */
 public class InputEstimateCard extends JPanel {
 
-	
-
 }

@@ -35,65 +35,69 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
  * 
  */
 public class MainView extends JTabbedPane {
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 7802378837976895569L;
-    private final AllGamesViewPanel mainPanel;
-    private boolean updated = false;
-    
-    private JFrame window = null;
-    
-    public MainView() {
-        mainPanel = new AllGamesViewPanel();
-        addTab("Games", null, mainPanel, null);
-        addChangeListener(new ChangeListener() {
-            
-            @Override
-            public void stateChanged(ChangeEvent arg0) {
-                PlanningPoker.getViewController()
-                        .tabChanged(getSelectedIndex());
-                
-            }
-            
-        });
-        
-        addAncestorListener(new AncestorListener() {
+	private static final long serialVersionUID = 7802378837976895569L;
+	private final AllGamesViewPanel mainPanel;
+	private boolean updated = false;
+
+	private JFrame window = null;
+
+	public MainView() {
+		mainPanel = new AllGamesViewPanel();
+		addTab("Games", null, mainPanel, null);
+		addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				PlanningPoker.getViewController()
+						.tabChanged(getSelectedIndex());
+
+			}
+
+		});
+
+		addAncestorListener(new AncestorListener() {
 			@Override
 			public void ancestorAdded(AncestorEvent event) {
-				if(!updated){
-			        GetGamesController.getInstance().retrieveGames();
-			        GetRequirementsController.getInstance().retrieveRequirements();
-			        GetDecksController.getInstance().retrieveDecks();
-			        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
-			        
-			        Component parent = MainView.this;
-			        while(!((parent = parent.getParent()) instanceof JFrame)){
-			        	System.out.println(parent);
-			        }
-			        window = (JFrame)parent;
-			        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			       
+				if (!updated) {
+					GetGamesController.getInstance().retrieveGames();
+					GetRequirementsController.getInstance()
+							.retrieveRequirements();
+					GetDecksController.getInstance().retrieveDecks();
+					CurrentUserController.getInstance(); // initialize
+															// CurrentUserController
+															// early so it gets
+															// the current user
+
+					Component parent = MainView.this;
+					while (!((parent = parent.getParent()) instanceof JFrame)) {
+						System.out.println(parent);
+					}
+					window = (JFrame) parent;
+					window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 				}
-				
-		        
+
 			}
-			
+
 			@Override
-			public void ancestorRemoved(AncestorEvent event) {}
-			
-			
+			public void ancestorRemoved(AncestorEvent event) {
+			}
+
 			@Override
-			public void ancestorMoved(AncestorEvent event) {}
-		
-        });
-  
-    }
-    
-    /**
-     * @return the mainPanel
-     */
-    public AllGamesViewPanel getMainPanel() {
-        return mainPanel;
-    }
+			public void ancestorMoved(AncestorEvent event) {
+			}
+
+		});
+
+	}
+
+	/**
+	 * @return the mainPanel
+	 */
+	public AllGamesViewPanel getMainPanel() {
+		return mainPanel;
+	}
 }

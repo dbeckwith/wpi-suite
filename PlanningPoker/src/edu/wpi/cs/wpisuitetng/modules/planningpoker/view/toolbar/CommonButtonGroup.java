@@ -29,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @version 1.0
  */
 public class CommonButtonGroup extends ToolbarGroupView {
-    
+
 	private static final long serialVersionUID = -2589339467561118867L;
 
 	private final JButton newGameButton;
@@ -39,7 +39,7 @@ public class CommonButtonGroup extends ToolbarGroupView {
 
 	/**
 	 * Creates a new CommonButtonGroup
-	 *
+	 * 
 	 */
 	public CommonButtonGroup() {
 		super(""); // not sure if this is needed

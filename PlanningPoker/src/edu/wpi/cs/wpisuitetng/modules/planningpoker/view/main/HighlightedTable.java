@@ -21,8 +21,9 @@ import javax.swing.table.TableCellRenderer;
  * @version 1
  * @author Team 9
  */
-public class HighlightedTable extends JTable implements MouseMotionListener, MouseListener {
-	
+public class HighlightedTable extends JTable implements MouseMotionListener,
+		MouseListener {
+
 	private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
 
 	private int highlightRow = -1;
@@ -31,12 +32,13 @@ public class HighlightedTable extends JTable implements MouseMotionListener, Mou
 	 * Constructor for HighlightedTable.
 	 */
 	public HighlightedTable() {
-		
+
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
 
-	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+	public Component prepareRenderer(TableCellRenderer renderer, int row,
+			int column) {
 		final Component c = super.prepareRenderer(renderer, row, column);
 		if (!isRowSelected(row)) {
 			c.setBackground(highlightRow == row ? HIGHLIGHT_COLOR : Color.WHITE);
@@ -53,7 +55,7 @@ public class HighlightedTable extends JTable implements MouseMotionListener, Mou
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		highlightRow = rowAtPoint(e.getPoint());
-		repaint(); 
+		repaint();
 	}
 
 	@Override

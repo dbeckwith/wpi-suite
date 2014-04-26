@@ -122,7 +122,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
                                                                                                 .addPreferredGap(
                                                                                                         ComponentPlacement.RELATED)
                                                                                                 .addComponent(
-                                                                                                        requirementType))))
+																										requirementType))))
                                                 .addComponent(lblDescription,
                                                         Alignment.LEADING))
                                 .addContainerGap()));
