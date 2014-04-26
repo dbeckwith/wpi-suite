@@ -29,7 +29,7 @@ public class DeckModel extends AbstractModel {
 	public static final int NO_LIMIT = 0;
 	
 	static {
-		ArrayList<Double> defaultCards = new ArrayList<Double>();
+		final ArrayList<Double> defaultCards = new ArrayList<Double>();
 		
 		defaultCards.add(0d);
 		defaultCards.add(1d);

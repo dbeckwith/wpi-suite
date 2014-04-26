@@ -375,7 +375,7 @@ public class GameRequirementModel extends AbstractModel {
      */
     public void updateRequirementManager() {
         GetRequirementsController.getInstance().retrieveRequirements();
-        Requirement parent = GetParentRequirementController.getInstance()
+        final Requirement parent = GetParentRequirementController.getInstance()
                 .getParentRequirement(parentId);
         parent.setEstimate(finalEstimate);
         UpdateRequirementController.getInstance().updateRequirement(parent);

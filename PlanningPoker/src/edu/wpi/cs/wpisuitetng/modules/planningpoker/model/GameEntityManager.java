@@ -35,7 +35,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     
     private final Data db;
     
-    private static GameEntityManager instance;
+    final private static GameEntityManager instance;
     
     /**
      * Creates a new GameEntityManager attatched to the given database.
@@ -234,7 +234,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
             // start observer only when the game is live
             if (updatedGameModel.hasDeadline()) {
                 System.out.println("Getting observer for game");
-                GameTimeoutObserver obs = GameTimeoutObserver
+                final GameTimeoutObserver obs = GameTimeoutObserver
                         .getObserver(updatedGameModel);
                 if (obs == null) {
                     System.out.println("Could not find observer for game");
@@ -267,7 +267,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
             // get all users in the database
             // no way of knowing what users are in the current project,
             // so everyone's going to get emails
-            List<User> users = db.retrieveAll(new User("", "", "", 0));
+            final List<User> users = db.retrieveAll(new User("", "", "", 0));
             User owner = null;
             for (User u : users) {
                 if (u.getUsername().equals(updatedGameModel.getOwner())) {

@@ -96,7 +96,7 @@ public class GameTimeoutObserver extends Thread {
                 System.out.println("Deadline reached, ending game: "
                         + game.toString());
                 // clone the game so we don't change it in the database
-                GameModel clone = new GameModel();
+                final GameModel clone = new GameModel();
                 clone.copyFrom(game);
                 clone.setEnded(true);
                 GameEntityManager.getInstance().update(session, clone.toJSON());

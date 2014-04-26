@@ -302,7 +302,7 @@ public class ViewController {
 	public void startGame() {
 		final GameModel curr = mainView.getMainPanel().getSelectedGame();
 		if (curr.deadlinePassed()) {
-			Object[] options = { "OK" };
+			final Object[] options = { "OK" };
 			JOptionPane
 					.showOptionDialog(
 							mainView,

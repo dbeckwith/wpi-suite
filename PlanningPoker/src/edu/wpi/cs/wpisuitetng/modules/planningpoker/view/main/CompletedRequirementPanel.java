@@ -224,7 +224,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     private void initComponents() {
         final Font temp_Font;
-        GridBagLayout gridBagLayout = new GridBagLayout();
+        final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
         gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
         gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 5.0, 0.0, 0.0, 0.0};
@@ -257,7 +257,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         tableScrollPane.setViewportView(voteResultTable);
-        GridBagConstraints gbc_tableScrollPane = new GridBagConstraints();
+        final GridBagConstraints gbc_tableScrollPane = new GridBagConstraints();
         gbc_tableScrollPane.fill = GridBagConstraints.BOTH;
         gbc_tableScrollPane.insets = new Insets(0, 0, 5, 0);
         gbc_tableScrollPane.gridwidth = 9;
@@ -299,13 +299,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 });
         
         lblFinalEstimate = new JLabel("Final Estimate:");
-        GridBagConstraints gbc_lblFinalEstimate = new GridBagConstraints();
+        final GridBagConstraints gbc_lblFinalEstimate = new GridBagConstraints();
         gbc_lblFinalEstimate.anchor = GridBagConstraints.EAST;
         gbc_lblFinalEstimate.insets = new Insets(0, 0, 5, 5);
         gbc_lblFinalEstimate.gridx = 4;
         gbc_lblFinalEstimate.gridy = 2;
         add(lblFinalEstimate, gbc_lblFinalEstimate);
-        GridBagConstraints gbc_finalEstimateField = new GridBagConstraints();
+        final GridBagConstraints gbc_finalEstimateField = new GridBagConstraints();
         gbc_finalEstimateField.fill = GridBagConstraints.HORIZONTAL;
         gbc_finalEstimateField.anchor = GridBagConstraints.NORTH;
         gbc_finalEstimateField.insets = new Insets(0, 0, 5, 5);
@@ -315,7 +315,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(finalEstimateField, gbc_finalEstimateField);
         
         final JLabel lblNote = new JLabel("Note:");
-        GridBagConstraints gbc_lblNote = new GridBagConstraints();
+        final GridBagConstraints gbc_lblNote = new GridBagConstraints();
         gbc_lblNote.anchor = GridBagConstraints.EAST;
         gbc_lblNote.insets = new Insets(0, 0, 5, 5);
         gbc_lblNote.gridx = 4;
@@ -324,7 +324,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         final JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
-        GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
+        final GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
         gbc_lblGameStatistics.fill = GridBagConstraints.HORIZONTAL;
         gbc_lblGameStatistics.insets = new Insets(0, 0, 5, 5);
         gbc_lblGameStatistics.gridx = 1;
@@ -355,7 +355,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 validatePanel();
             }
         });
-        GridBagConstraints gbc_notePane = new GridBagConstraints();
+        final GridBagConstraints gbc_notePane = new GridBagConstraints();
         gbc_notePane.gridheight = 4;
         gbc_notePane.gridwidth = 3;
         gbc_notePane.fill = GridBagConstraints.BOTH;
@@ -365,7 +365,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(notePane, gbc_notePane);
         
         final JLabel votedUsersLabel = new JLabel("Users Voted:");
-        GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
         gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
         gbc_votedUsersLabel.insets = new Insets(0, 0, 5, 5);
@@ -374,7 +374,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(votedUsersLabel, gbc_votedUsersLabel);
         
         votedUsersValueLabel = new JLabel("123");
-        GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
         gbc_votedUsersValueLabel.anchor = GridBagConstraints.NORTHWEST;
         gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_votedUsersValueLabel.gridx = 2;
@@ -383,7 +383,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         meanLabel = new javax.swing.JLabel();
         
         meanLabel.setText("Mean:");
-        GridBagConstraints gbc_meanLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_meanLabel = new GridBagConstraints();
         gbc_meanLabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_meanLabel.anchor = GridBagConstraints.NORTH;
         gbc_meanLabel.insets = new Insets(0, 0, 5, 5);
@@ -393,7 +393,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         meanValueLabel = new javax.swing.JLabel();
         
         meanValueLabel.setText("XYZ");
-        GridBagConstraints gbc_meanValueLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_meanValueLabel = new GridBagConstraints();
         gbc_meanValueLabel.anchor = GridBagConstraints.NORTHWEST;
         gbc_meanValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_meanValueLabel.gridx = 2;
@@ -402,7 +402,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         medianLabel = new javax.swing.JLabel();
         
         medianLabel.setText("Median:");
-        GridBagConstraints gbc_medianLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_medianLabel = new GridBagConstraints();
         gbc_medianLabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_medianLabel.anchor = GridBagConstraints.NORTH;
         gbc_medianLabel.insets = new Insets(0, 0, 5, 5);
@@ -412,7 +412,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         medianValueLabel = new javax.swing.JLabel();
         
         medianValueLabel.setText("ABC");
-        GridBagConstraints gbc_medianValueLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_medianValueLabel = new GridBagConstraints();
         gbc_medianValueLabel.anchor = GridBagConstraints.NORTHWEST;
         gbc_medianValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_medianValueLabel.gridx = 2;
@@ -423,7 +423,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblError.setVisible(false);
         lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblError.setForeground(Color.RED);
-        GridBagConstraints gbc_lblError = new GridBagConstraints();
+        final GridBagConstraints gbc_lblError = new GridBagConstraints();
         gbc_lblError.anchor = GridBagConstraints.EAST;
         gbc_lblError.insets = new Insets(0, 0, 5, 5);
         gbc_lblError.gridx = 5;
@@ -440,7 +440,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 saveFinalEstimate();
             }
         });
-        GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
+        final GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
         gbc_saveFinalEstimateButton.insets = new Insets(0, 0, 5, 5);
         gbc_saveFinalEstimateButton.anchor = GridBagConstraints.WEST;
         gbc_saveFinalEstimateButton.gridx = 6;
@@ -448,7 +448,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(saveFinalEstimateButton, gbc_saveFinalEstimateButton);
         
         btnUpdateRequirementManager = new JButton("Update Requirement Manager");
-        GridBagConstraints gbc_btnUpdateRequirementManager = new GridBagConstraints();
+        final GridBagConstraints gbc_btnUpdateRequirementManager = new GridBagConstraints();
         gbc_btnUpdateRequirementManager.insets = new Insets(0, 0, 5, 5);
         gbc_btnUpdateRequirementManager.gridx = 7;
         gbc_btnUpdateRequirementManager.gridy = 8;

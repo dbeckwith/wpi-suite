@@ -92,18 +92,18 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		
 		newDeckButton = new JButton("New Deck...");
 		
-		JLabel lblMaximumEstimate = new JLabel("Maximum Estimate:");
+		final JLabel lblMaximumEstimate = new JLabel("Maximum Estimate:");
 		
-		JLabel lblForNo = new JLabel("(0 for no limit)");
+		final JLabel lblForNo = new JLabel("(0 for no limit)");
 		lblForNo.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		
 		maxSpinner = new JSpinner();
 		maxSpinner.addChangeListener(this);
 		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-    	JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor()).getTextField();
+		final JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor()).getTextField();
     	((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
 		
-		GroupLayout groupLayout = new GroupLayout(this);
+    	final GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
