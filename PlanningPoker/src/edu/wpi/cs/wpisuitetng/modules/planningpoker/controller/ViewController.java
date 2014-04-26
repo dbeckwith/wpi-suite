@@ -138,11 +138,11 @@ public class ViewController {
 		mainView.removeTabAt(mainView.indexOfComponent(e));
 	}
 
+
 	/**
 	 * Cancels creation of a new game
-	 * 
-	 * @param e
-	 *            The NewGamePanel to cancel
+	 * @param e The NewGamePanel to cancel
+	 * @param hasChanged flag to indicate if the game has changed
 	 */
 	public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
 
@@ -164,11 +164,11 @@ public class ViewController {
 		}
 	}
 
+
 	/**
 	 * Cancels the editing of a game
-	 * 
-	 * @param e
-	 *            the NewGamePanel to cancel
+	 * @param e the NewGamePanel to cancel
+	 * @param hasChanged flag to indicate if the game has changed
 	 */
 	public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
 

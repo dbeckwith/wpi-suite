@@ -262,9 +262,11 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
                 });
     }
     
+
     /**
      * This method add the requirement created by user in planning poker game (not in requirement manager)
      * @param r the requirement to be add
+     * @param selected
      */
     public void addCustomRequirement(GameRequirementModel r, boolean selected) {
         createdRequirements.add(r);
@@ -350,6 +352,9 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
         return errors;
     }
     
+    /**
+     * selectedHighlightedRows
+     */
     public void selectedHighlightedRows(){
         final DefaultTableModel model = (DefaultTableModel)requirementsTable.getModel();
 

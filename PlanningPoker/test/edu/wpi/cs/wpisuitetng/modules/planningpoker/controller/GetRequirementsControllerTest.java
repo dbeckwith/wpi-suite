@@ -21,10 +21,12 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 /**
  * 
  * @author Andrew
- * 
+ * @version 1.0
  */
 public class GetRequirementsControllerTest {
-    
+    /**
+     * test ReceivedRequirements
+     */
     @Test
     public void testReceivedRequirements() {
         final GetRequirementsController grc = GetRequirementsController.getInstance();

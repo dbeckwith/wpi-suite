@@ -139,7 +139,10 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     	selected = true;
     }
     
-    
+    /**
+     * addActionListener
+     * @param e the addActionListener to be added
+     */
     public void addActionListener(ActionListener e){
     	if(e != null){
     		listeners.add(e);

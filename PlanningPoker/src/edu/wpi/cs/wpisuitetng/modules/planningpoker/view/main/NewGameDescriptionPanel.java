@@ -490,6 +490,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
     }
     
+    /**
+     * check if Parent panel is valid
+     */
     public void checkParent() {
         if (parentPanel != null) {
             parentPanel.check();

@@ -68,6 +68,9 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		DeckListModel.getInstance().addObserver(this);
 	}
 	
+	/**
+	 * initilize components in this panel
+	 */
 	public void initComponents(){
 		setBackground(Color.WHITE);
 		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -227,6 +230,10 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
         
     }
     
+    /**
+     * add NewDeckButtonListener
+     * @param a the NewDeckButtonListener to be added
+     */
     public void addNewDeckButtonListener(ActionListener a) {
     	if(a != null){
     		newDeckButton.addActionListener(a);
