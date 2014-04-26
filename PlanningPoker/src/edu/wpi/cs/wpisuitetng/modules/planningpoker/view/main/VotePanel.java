@@ -29,12 +29,16 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
 import java.awt.Font;
+
+import javax.swing.JProgressBar;
 
 /**
  * the panel to show vote GUI
@@ -198,6 +202,7 @@ public class VotePanel extends javax.swing.JPanel {
 	        
         }
         
+        updateProgress();
         updateTotal();
         
         validate();
@@ -303,18 +308,27 @@ public class VotePanel extends javax.swing.JPanel {
         
         lblTotal = new JLabel("<total>");
         
+        teammateProgressBar = new JProgressBar();
+        teammateProgressBar.setStringPainted(true);
+        
+        JLabel lblTeammateProgress = new JLabel("Team Progress");
+        
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(scrollPane)
-                        .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+                        .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lblRequirement)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(requirementNameLabel))
+                            .addComponent(requirementNameLabel)
+                            .addPreferredGap(ComponentPlacement.RELATED, 473, Short.MAX_VALUE)
+                            .addComponent(lblTeammateProgress)
+                            .addPreferredGap(ComponentPlacement.UNRELATED)
+                            .addComponent(teammateProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addComponent(estimateLabel)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnSubmit)
@@ -322,7 +336,7 @@ public class VotePanel extends javax.swing.JPanel {
                             .addComponent(lblSelectedTotal)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(lblTotal)
-                            .addPreferredGap(ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblYouVoted)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(prevVoteLabel))
@@ -336,19 +350,23 @@ public class VotePanel extends javax.swing.JPanel {
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblRequirement)
-                        .addComponent(requirementNameLabel))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblType)
-                        .addComponent(requirementType))
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(lblRequirement)
+                                .addComponent(requirementNameLabel)
+                                .addComponent(lblTeammateProgress))
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(lblType)
+                                .addComponent(requirementType)))
+                        .addComponent(teammateProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(estimateLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(btnSubmit)
@@ -439,6 +457,16 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     /**
+     * updates the progress bar based on teammate progress
+     */
+    private void updateProgress(){
+       int est = req.getEstimates().size();
+       int user = CurrentUserController.getInstance().getUsers().length;
+       double prog = (double)est/(double)user;
+       teammateProgressBar.setValue((int)(prog *100));
+    }
+    
+    /**
      * set the game to allow for choosing multiple cards
      * 
      * @param allow
@@ -463,7 +491,7 @@ public class VotePanel extends javax.swing.JPanel {
     private JPanel estimateCardsPanel;
     private JLabel requirementNameLabel;
     private JLabel requirementType;
-    
+    private JProgressBar teammateProgressBar;
     private JLabel prevVoteLabel;
     private JLabel lblYouVoted;
 }
