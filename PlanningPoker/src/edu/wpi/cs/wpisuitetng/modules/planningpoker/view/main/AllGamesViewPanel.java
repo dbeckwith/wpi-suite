@@ -27,6 +27,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 import java.awt.Color;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 /**
  * This is the main planning poker view. It is intended to be a way of viewing
@@ -85,6 +87,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
+        setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{descriptionCard, jSplitPane3, gameTree, gameTree.getTree(), emptyDescriptionPanel, emptyDescriptionLabel, splitPane, gameDescriptionPanel, requirementPanel, requirementDescriptionPanel, noRequirementPanel, lblSelectARequirement}));
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             
             @Override
