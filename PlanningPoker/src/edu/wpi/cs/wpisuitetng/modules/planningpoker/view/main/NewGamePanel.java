@@ -556,6 +556,7 @@ public class NewGamePanel extends JPanel {
             saveButton.setEnabled(gameDescription.canValidateForm()
                     && newGameRequirementsPanel.canValidateForm()
                     && !(game.getDeck().getName().equals(getDeck().getName())
+                    		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
                             && sameDateStatus && game.getRequirements()
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
