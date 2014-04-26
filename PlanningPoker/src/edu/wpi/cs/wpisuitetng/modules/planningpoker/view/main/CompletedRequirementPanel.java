@@ -10,25 +10,29 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
@@ -57,13 +61,77 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     /**
      * Creates a new CompletedRequirementPanel
-     *
+     * 
+     * @param tree
+     *        the tree of games
      */
-    public CompletedRequirementPanel() {
+    public CompletedRequirementPanel(JTree tree) {
         setBackground(Color.WHITE);
         // setup tablemodel (using autogenerted netbeans code)
         initComponents();
+        this.tree = tree;
         tableScrollPane.getViewport().setBackground(Color.WHITE);
+        addAncestorListener(new AncestorListener() {
+            
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                finalEstimateField.requestFocusInWindow();
+                finalEstimateField.selectAll();
+            }
+            
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+            
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+            
+        });
+        
+        final KeyListener saveOnEnter = new KeyListener() {
+            
+            private final int enterKey = KeyEvent.VK_ENTER;
+            private final int shiftKey = KeyEvent.VK_SHIFT;
+            private boolean enterPressed = false;
+            private boolean shiftPressed = false;
+            
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == enterKey) {
+                    enterPressed = true;
+                }
+                
+                if (e.getKeyCode() == shiftKey) {
+                    shiftPressed = true;
+                }
+                
+                if (enterPressed) {
+                    if (shiftPressed) {
+                        saveAndContinue();
+                    }
+                    saveFinalEstimate();
+                }
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == enterKey) {
+                    enterPressed = false;
+                }
+                
+                if (e.getKeyCode() == shiftKey) {
+                    shiftPressed = false;
+                }
+            }
+            
+        };
+        finalEstimateField.addKeyListener(saveOnEnter);
+        notePane.addKeyListener(saveOnEnter);
     }
     
     /**
@@ -99,7 +167,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
-        
+        finalEstimateField.requestFocusInWindow();
+        finalEstimateField.selectAll();
         tableModel = new javax.swing.table.DefaultTableModel() {
             
             /**
@@ -128,6 +197,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             tableModel.addRow(row);
         }
         voteResultTable.setModel(tableModel);
+        voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);
+        voteResultTable.getColumnModel().getColumn(1).setResizable(false);
+        voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         
         votedUsersValueLabel
                 .setText(Integer.toString(tableModel.getRowCount()));
@@ -136,9 +208,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     private void displayFinalEstimateFields(boolean b) {
         finalEstimateField.setEditable(b);
-        lblError.setVisible(b);   //TODO maybe change this
         saveFinalEstimateButton.setVisible(b);
         notePane.setEditable(b);
+        btnUpdateRequirementManager.setVisible(b);
     }
     
     /**
@@ -147,24 +219,20 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     private void checkDisplayFinal() {
         displayFinalEstimateFields(CurrentUserController.USER_NAME
-                .equals(parentModel.getOwner())
-                && !parentModel.isClosed());
+                .equals(parentModel.getOwner()) && !parentModel.isClosed());
     }
     
     private void initComponents() {
-        
-        jSeparator1 = new javax.swing.JSeparator();
-        meanLabel = new javax.swing.JLabel();
-        medianLabel = new javax.swing.JLabel();
+        final Font temp_Font;
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
+        gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0};
+        gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
         voteResultTable = new javax.swing.JTable();
         voteResultTable.setBackground(Color.WHITE);
-        meanValueLabel = new javax.swing.JLabel();
-        medianValueLabel = new javax.swing.JLabel();
-        
-        meanLabel.setText("Mean:");
-        
-        medianLabel.setText("Median:");
         
         tableScrollPane.setBackground(Color.WHITE);
         
@@ -174,14 +242,14 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
              * 
              */
             private static final long serialVersionUID = -5144539907705808611L;
-            private final boolean[] columnEditables = new boolean[] { false, false };
+            private final boolean[] columnEditables = new boolean[] { false,
+                    false };
             
             @Override
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];
             }
         });
-        final Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(
                 temp_Font.deriveFont(Font.BOLD));
@@ -189,20 +257,19 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         tableScrollPane.setViewportView(voteResultTable);
-        
-        meanValueLabel.setText("XYZ");
-        
-        medianValueLabel.setText("ABC");
-        
-        lblFinalEstimate = new JLabel("Final Estimate:");
+        GridBagConstraints gbc_tableScrollPane = new GridBagConstraints();
+        gbc_tableScrollPane.fill = GridBagConstraints.BOTH;
+        gbc_tableScrollPane.insets = new Insets(0, 0, 5, 0);
+        gbc_tableScrollPane.gridwidth = 9;
+        gbc_tableScrollPane.gridx = 0;
+        gbc_tableScrollPane.gridy = 0;
+        add(tableScrollPane, gbc_tableScrollPane);
         
         finalEstimateField = new JTextField();
         finalEstimateField.setColumns(10);
         finalEstimateField.setBackground(Color.WHITE);
-        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-        saveFinalEstimateButton = new JButton("Save");
-        saveFinalEstimateButton.setEnabled(false);
-        saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
+        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
+                null, null));
         
         finalEstimateField.getDocument().addDocumentListener(
                 new DocumentListener() {
@@ -231,40 +298,55 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     
                 });
         
-        
-        saveFinalEstimateButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                lblError.setVisible(false);
-                if (req.getFinalEstimate() != 0
-                        && !req.getEstimateNote().startsWith("Manual change: \n")) {
-                    req.setEstimateNote("Manual change: \n" + notePane.getText());
-                } else {
-                    req.setEstimateNote(notePane.getText());
-                }
-                req.setFinalEstimate(Integer.parseInt(finalEstimateField
-                        .getText()));
-                UpdateGamesController.getInstance().updateGame(parentModel);
-                final ArrayList<GameStatusObserver> gsos = parentModel
-                        .getStatusObservers();
-                for (int i = 0; i < gsos.size(); i++) {
-                    gsos.get(i).statusChanged(parentModel);
-                }
-            }
-        });
-        
-        lblError = new JLabel("* Positive Integers Only!");
-        lblError.setVisible(false);
-        lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
-        lblError.setForeground(Color.RED);
-        
         final JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
+        GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
+        gbc_lblGameStatistics.fill = GridBagConstraints.HORIZONTAL;
+        gbc_lblGameStatistics.insets = new Insets(0, 0, 5, 5);
+        gbc_lblGameStatistics.gridx = 1;
+        gbc_lblGameStatistics.gridy = 2;
+        add(lblGameStatistics, gbc_lblGameStatistics);
+        
+        lblFinalEstimate = new JLabel("Final Estimate:");
+        GridBagConstraints gbc_lblFinalEstimate = new GridBagConstraints();
+        gbc_lblFinalEstimate.anchor = GridBagConstraints.EAST;
+        gbc_lblFinalEstimate.insets = new Insets(0, 0, 5, 5);
+        gbc_lblFinalEstimate.gridx = 4;
+        gbc_lblFinalEstimate.gridy = 2;
+        add(lblFinalEstimate, gbc_lblFinalEstimate);
+        GridBagConstraints gbc_finalEstimateField = new GridBagConstraints();
+        gbc_finalEstimateField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_finalEstimateField.anchor = GridBagConstraints.NORTH;
+        gbc_finalEstimateField.insets = new Insets(0, 0, 5, 5);
+        gbc_finalEstimateField.gridwidth = 3;
+        gbc_finalEstimateField.gridx = 5;
+        gbc_finalEstimateField.gridy = 2;
+        add(finalEstimateField, gbc_finalEstimateField);
         
         final JLabel votedUsersLabel = new JLabel("Users Voted:");
+        GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
+        gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
+        gbc_votedUsersLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_votedUsersLabel.gridx = 1;
+        gbc_votedUsersLabel.gridy = 3;
+        add(votedUsersLabel, gbc_votedUsersLabel);
         
         votedUsersValueLabel = new JLabel("123");
+        GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
+        gbc_votedUsersValueLabel.anchor = GridBagConstraints.SOUTHWEST;
+        gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_votedUsersValueLabel.gridx = 2;
+        gbc_votedUsersValueLabel.gridy = 3;
+        add(votedUsersValueLabel, gbc_votedUsersValueLabel);
         
-        final JLabel lblNote = new JLabel("Note: ");
+        final JLabel lblNote = new JLabel("Note:");
+        GridBagConstraints gbc_lblNote = new GridBagConstraints();
+        gbc_lblNote.anchor = GridBagConstraints.EAST;
+        gbc_lblNote.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNote.gridx = 4;
+        gbc_lblNote.gridy = 3;
+        add(lblNote, gbc_lblNote);
         
         notePane = new JTextPane();
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -290,183 +372,98 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 validatePanel();
             }
         });
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 879,
-                        Short.MAX_VALUE)
-                .addGroup(
-                        layout.createSequentialGroup().addContainerGap()
-                                .addComponent(meanLabel)
-                                .addContainerGap(839, Short.MAX_VALUE))
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addComponent(
-                                                                                        lblGameStatistics)
-                                                                                .addComponent(
-                                                                                        medianLabel))
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addComponent(
-                                                                                                        jSeparator1,
-                                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                                        GroupLayout.PREFERRED_SIZE))
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addGap(51)
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.TRAILING)
-                                                                                                                .addComponent(
-                                                                                                                        meanValueLabel)
-                                                                                                                .addComponent(
-                                                                                                                        medianValueLabel)
-                                                                                                                .addComponent(
-                                                                                                                        votedUsersValueLabel)))))
-                                                .addComponent(votedUsersLabel))
-                                .addGap(224)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.TRAILING)
-                                                .addComponent(lblFinalEstimate)
-                                                .addComponent(lblNote))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addGroup(
-                                                        Alignment.TRAILING,
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        notePane,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        209,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED,
-                                                                        36,
-                                                                        Short.MAX_VALUE)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.TRAILING)
-                                                                                .addComponent(
-                                                                                        saveFinalEstimateButton)
-                                                                                .addComponent(
-                                                                                        lblError)))
-                                                .addComponent(
-                                                        finalEstimateField,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        106,
-                                                        GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addComponent(tableScrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 186,
-                                        Short.MAX_VALUE)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED,
-                                                                        45,
-                                                                        Short.MAX_VALUE)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.TRAILING)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                                .addComponent(
-                                                                                                                        jSeparator1,
-                                                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                                                        10,
-                                                                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                                                                .addComponent(
-                                                                                                                        lblGameStatistics))
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.BASELINE)
-                                                                                                                .addComponent(
-                                                                                                                        votedUsersLabel)
-                                                                                                                .addComponent(
-                                                                                                                        votedUsersValueLabel))
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.BASELINE)
-                                                                                                                .addComponent(
-                                                                                                                        meanLabel)
-                                                                                                                .addComponent(
-                                                                                                                        meanValueLabel)))
-                                                                                .addComponent(
-                                                                                        lblError))
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addGroup(
-                                                                                        layout.createParallelGroup(
-                                                                                                Alignment.BASELINE)
-                                                                                                .addComponent(
-                                                                                                        medianLabel)
-                                                                                                .addComponent(
-                                                                                                        medianValueLabel))
-                                                                                .addComponent(
-                                                                                        saveFinalEstimateButton))
-                                                                .addContainerGap())
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGap(18)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.BASELINE)
-                                                                                .addComponent(
-                                                                                        finalEstimateField,
-                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(
-                                                                                        lblFinalEstimate))
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.UNRELATED)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addComponent(
-                                                                                        notePane,
-                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                        62,
-                                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(
-                                                                                        lblNote))
-                                                                .addGap(32)))));
-        setLayout(layout);
+        GridBagConstraints gbc_notePane = new GridBagConstraints();
+        gbc_notePane.gridheight = 4;
+        gbc_notePane.gridwidth = 3;
+        gbc_notePane.fill = GridBagConstraints.BOTH;
+        gbc_notePane.insets = new Insets(0, 0, 5, 5);
+        gbc_notePane.gridx = 5;
+        gbc_notePane.gridy = 3;
+        add(notePane, gbc_notePane);
+        meanLabel = new javax.swing.JLabel();
+        
+        meanLabel.setText("Mean:");
+        GridBagConstraints gbc_meanLabel = new GridBagConstraints();
+        gbc_meanLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_meanLabel.anchor = GridBagConstraints.NORTH;
+        gbc_meanLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_meanLabel.gridx = 1;
+        gbc_meanLabel.gridy = 4;
+        add(meanLabel, gbc_meanLabel);
+        meanValueLabel = new javax.swing.JLabel();
+        
+        meanValueLabel.setText("XYZ");
+        GridBagConstraints gbc_meanValueLabel = new GridBagConstraints();
+        gbc_meanValueLabel.anchor = GridBagConstraints.NORTHWEST;
+        gbc_meanValueLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_meanValueLabel.gridx = 2;
+        gbc_meanValueLabel.gridy = 4;
+        add(meanValueLabel, gbc_meanValueLabel);
+        medianLabel = new javax.swing.JLabel();
+        
+        medianLabel.setText("Median:");
+        GridBagConstraints gbc_medianLabel = new GridBagConstraints();
+        gbc_medianLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_medianLabel.anchor = GridBagConstraints.NORTH;
+        gbc_medianLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_medianLabel.gridx = 1;
+        gbc_medianLabel.gridy = 5;
+        add(medianLabel, gbc_medianLabel);
+        
+        lblError = new JLabel("* Positive Integers Only!");
+        lblError.setVisible(false);
+        medianValueLabel = new javax.swing.JLabel();
+        
+        medianValueLabel.setText("ABC");
+        GridBagConstraints gbc_medianValueLabel = new GridBagConstraints();
+        gbc_medianValueLabel.anchor = GridBagConstraints.NORTHWEST;
+        gbc_medianValueLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_medianValueLabel.gridx = 2;
+        gbc_medianValueLabel.gridy = 5;
+        add(medianValueLabel, gbc_medianValueLabel);
+        lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblError.setForeground(Color.RED);
+        GridBagConstraints gbc_lblError = new GridBagConstraints();
+        gbc_lblError.anchor = GridBagConstraints.EAST;
+        gbc_lblError.insets = new Insets(0, 0, 5, 5);
+        gbc_lblError.gridx = 5;
+        gbc_lblError.gridy = 8;
+        add(lblError, gbc_lblError);
+        saveFinalEstimateButton = new JButton("Save");
+        saveFinalEstimateButton.setEnabled(false);
+        saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
+        
+        
+        saveFinalEstimateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                saveFinalEstimate();
+            }
+        });
+        GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
+        gbc_saveFinalEstimateButton.insets = new Insets(0, 0, 5, 5);
+        gbc_saveFinalEstimateButton.anchor = GridBagConstraints.WEST;
+        gbc_saveFinalEstimateButton.gridx = 6;
+        gbc_saveFinalEstimateButton.gridy = 8;
+        add(saveFinalEstimateButton, gbc_saveFinalEstimateButton);
+        
+        btnUpdateRequirementManager = new JButton("Update Requirement Manager");
+        GridBagConstraints gbc_btnUpdateRequirementManager = new GridBagConstraints();
+        gbc_btnUpdateRequirementManager.insets = new Insets(0, 0, 5, 5);
+        gbc_btnUpdateRequirementManager.gridx = 7;
+        gbc_btnUpdateRequirementManager.gridy = 8;
+        add(btnUpdateRequirementManager, gbc_btnUpdateRequirementManager);
+        btnUpdateRequirementManager.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                req.updateRequirementManager();
+                UpdateGamesController.getInstance().updateGame(parentModel);
+                final ArrayList<GameStatusObserver> gsos = parentModel
+                        .getStatusObservers();
+                for (int i = 0; i < gsos.size(); i++) {
+                    gsos.get(i).statusChanged(parentModel);
+                }
+            }
+        });
     }
     
     /**
@@ -479,22 +476,25 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void run() {
                 final String pattern = "^[\\s]*$";
                 try {
-                    final int finalEstimate = Integer.parseInt(finalEstimateField
-                            .getText());
+                    final int finalEstimate = Integer
+                            .parseInt(finalEstimateField.getText());
                     if (finalEstimate == req.getFinalEstimate()) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else if (finalEstimate <= 0) {
+                    }
+                    else if (finalEstimate <= 0) {
                         //set error label
                         lblError.setText("* Positive Integers Only!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else if (Pattern.matches(pattern, notePane.getText()) 
+                    }
+                    else if (Pattern.matches(pattern, notePane.getText())
                             && req.getFinalEstimate() != 0) {
                         lblError.setText("* You Must Add a Note!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else {
+                    }
+                    else {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(true);
                     }
@@ -505,11 +505,50 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     lblError.setVisible(true);
                     saveFinalEstimateButton.setEnabled(false);
                 }
+                
+                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req.getParentEstimate())) {
+                    btnUpdateRequirementManager.setEnabled(true);
+                } else {
+                    btnUpdateRequirementManager.setEnabled(false);
+                }
             }
         });
     }
     
-    private javax.swing.JSeparator jSeparator1;
+    /**
+     * Saves the final estimate
+     */
+    private void saveFinalEstimate() {
+        if (saveFinalEstimateButton.isEnabled()) {
+            lblError.setVisible(false);
+            if (req.getFinalEstimate() != 0
+                    && !req.getEstimateNote().startsWith("Manual change: \n")) {
+                req.setEstimateNote("Manual change: \n" + notePane.getText());
+            }
+            else {
+                req.setEstimateNote(notePane.getText());
+            }
+            req.setFinalEstimate(Integer.parseInt(finalEstimateField.getText()));
+            UpdateGamesController.getInstance().updateGame(parentModel);
+            final ArrayList<GameStatusObserver> gsos = parentModel
+                    .getStatusObservers();
+            for (int i = 0; i < gsos.size(); i++) {
+                gsos.get(i).statusChanged(parentModel);
+            }
+        }
+    }
+    
+    /**
+     * Saves the final estimate and moves to the next game
+     */
+    private void saveAndContinue() {
+        saveFinalEstimate();
+        if (parentModel.getRequirements().indexOf(req) < parentModel
+                .getRequirements().size() - 1) {
+            tree.setSelectionRow(tree.getSelectionRows()[0] + 1);
+        }
+    }
+    
     private javax.swing.JLabel meanLabel;
     private javax.swing.JLabel meanValueLabel;
     private javax.swing.JLabel medianLabel;
@@ -522,4 +561,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JButton saveFinalEstimateButton;
     private JLabel votedUsersValueLabel;
     private JTextPane notePane;
+    private final JTree tree;
+    private JButton btnUpdateRequirementManager;
 }

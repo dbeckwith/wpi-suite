@@ -17,8 +17,6 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
 /**
@@ -58,7 +56,7 @@ public class GameModel extends AbstractModel implements Serializable {
         /**
          * 
          * Gets the name of this status
-         *
+         * 
          * @return the name
          */
         public String getName() {
@@ -107,15 +105,14 @@ public class GameModel extends AbstractModel implements Serializable {
      *        this game
      * @param end
      *        the deadline for this game
-     * @param type
-     *        what kind of game this is
      * @param status
      *        what the current status of this game should be
      */
     public GameModel(String name, String description,
-            List<GameRequirementModel> requirements, DeckModel deck, Date end, GameStatus status) {
-        this(name, description, requirements, deck, end, status,
-                ConfigManager.getConfig().getUserName());
+            List<GameRequirementModel> requirements, DeckModel deck, Date end,
+            GameStatus status) {
+        this(name, description, requirements, deck, end, status, ConfigManager
+                .getConfig().getUserName());
     }
     
     /**
@@ -132,8 +129,6 @@ public class GameModel extends AbstractModel implements Serializable {
      *        this game
      * @param endDate
      *        the deadline for this game
-     * @param type
-     *        what kind of game this is
      * @param status
      *        what the current status of this game should be
      * @param owner
@@ -155,7 +150,7 @@ public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * Gets the name of this game.
-     *
+     * 
      * @return the name of this game
      */
     public String getName() {
@@ -269,7 +264,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return if the deadline for this game has passed
      */
-    public boolean deadlinePassed(){
+    public boolean deadlinePassed() {
         Date currDate = new Date();
         return ((endDate != null) && endDate.before(currDate));
     }
@@ -480,6 +475,8 @@ public class GameModel extends AbstractModel implements Serializable {
     
     /**
      * Checks to see if this game has a deadline.
+     * 
+     * @return true if game has deadline
      */
     public boolean hasDeadline() {
         return endDate != null;

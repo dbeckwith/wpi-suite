@@ -19,7 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
+import javax.swing.JProgressBar;
 
 /**
  * The requirements panel of the planning poker GUI
@@ -60,6 +65,8 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
             lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, lblDeadline.getY());
             gameDeadline.setLocation(lblDeadline.getX() + difference, gameDeadline.getY());
         }
+        this.game = game;
+        updateprogress();
         // DefaultListModel<String> listModel = new DefaultListModel<>();
         // listModel.addElement(element);
         // getParticipantsList().setModel(listModel);
@@ -104,26 +111,42 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         
         deckName = new JLabel("");
         
+        lblYourProgress = new JLabel("Your Progress");
+        
+        personalProgress = new JProgressBar();
+        personalProgress.setStringPainted(true);
+        
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+            layout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(Alignment.LEADING, layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(nameLabel)
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(nameLabel)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                                    .addGap(7)
+                                    .addComponent(lblDeadline)
+                                    .addGap(6)
+                                    .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblDeck)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(6)
+                                            .addComponent(deckName)
+                                            .addPreferredGap(ComponentPlacement.RELATED, 257, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(ComponentPlacement.RELATED)
+                                            .addComponent(lblYourProgress)
+                                            .addGap(12)))))
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                            .addGap(7)
-                            .addComponent(lblDeadline)
-                            .addGap(6)
-                            .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(lblDeck)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(deckName)))
-                    .addContainerGap())
+                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(Alignment.LEADING)
@@ -137,10 +160,14 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblDeck)
-                        .addComponent(deckName))
-                    .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                            .addComponent(deckName)
+                            .addComponent(lblDeck))
+                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                            .addComponent(lblYourProgress)
+                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(10, Short.MAX_VALUE))
         );
         
         descriptionText = new JTextPane();
@@ -149,13 +176,32 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
-    private javax.swing.JLabel nameLabel;
-    private JLabel gameName;
-    private JTextPane descriptionText;
-    private JLabel gameDeadline;
-    private JLabel lblDeadline;
-    private JLabel lblDeck;
-    private JLabel deckName;
+    /**
+     * updates the personal progress bar
+     */
+    private void updateprogress(){
+        personalProgress.setVisible(true);
+        lblYourProgress.setVisible(true);
+        int req = 0, est = 0;   //requirements in the game, and ones the user has estiamted
+        for(GameRequirementModel r: game.getRequirements()){
+            req++;
+            if(!r.allVoted()){
+                for (Estimate e: r.getEstimates()){
+                    if(e.getUsername().equals(CurrentUserController.USER_NAME)){
+                        est++;
+                    }
+                }
+            } else{
+                est++;
+            }
+        }
+        double prog = (double)est/(double)req;
+        personalProgress.setValue((int)(prog *100));
+        if(!game.isStarted()){
+            personalProgress.setVisible(false);
+            lblYourProgress.setVisible(false);
+        }
+    }
     
     /**
      * get the name of the game
@@ -249,4 +295,15 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     protected void setDeckName(String text) {
         deckName.setText(text);
     }
+    
+    private javax.swing.JLabel nameLabel;
+    private JLabel gameName;
+    private JTextPane descriptionText;
+    private JLabel gameDeadline;
+    private JLabel lblDeadline;
+    private JLabel lblDeck;
+    private JLabel deckName;
+    private JProgressBar personalProgress;
+    private JLabel lblYourProgress;
+    private GameModel game;
 }

@@ -47,14 +47,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
  */
 public class DeckOptionsPanel extends JPanel implements SimpleListObserver, ActionListener, ChangeListener {
 	
-	private NewGameDescriptionPanel parent;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -3228337947577586565L;
+
+    private NewGameDescriptionPanel parent;
 	
 	private JCheckBox useDeck;
 	private JComboBox<DeckModel> savedDecks;
 	private JButton newDeckButton;
 	private JSpinner maxSpinner;
-	
-	private GameModel game = null;
 	
 	/**
 	 * Create the panel.
@@ -151,8 +154,6 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	 * @param game
 	 */
 	public void setGame(GameModel game){
-		this.game = game;	
-
 		listUpdated();
 		
 		if(game.getDeck() == null){
@@ -239,6 +240,13 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		savedDecks.setEnabled(deckSelected);
 		newDeckButton.setEnabled(deckSelected);
     	
+    }
+    
+    /**
+     * Set the selected deck in the savedDecks combo box to the newest deck
+     */
+    public void setNewDeck(){
+        savedDecks.setSelectedIndex(savedDecks.getItemCount() - 1);
     }
 
 	@Override

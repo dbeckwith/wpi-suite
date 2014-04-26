@@ -40,9 +40,7 @@ public class MainView extends JTabbedPane {
      */
     private static final long serialVersionUID = 7802378837976895569L;
     private final AllGamesViewPanel mainPanel;
-    private boolean updated = false;
-    
-    private JFrame window = null;
+    private boolean setExitOnClose = false;
     
     public MainView() {
         mainPanel = new AllGamesViewPanel();
@@ -61,22 +59,25 @@ public class MainView extends JTabbedPane {
         addAncestorListener(new AncestorListener() {
 			@Override
 			public void ancestorAdded(AncestorEvent event) {
-				if(!updated){
-			        GetGamesController.getInstance().retrieveGames();
-			        GetRequirementsController.getInstance().retrieveRequirements();
-			        GetDecksController.getInstance().retrieveDecks();
-			        CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user  
-			        
+			    // called when this tab is switched to
+
+                CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user
+                GetDecksController.getInstance().retrieveDecks();
+                GetRequirementsController.getInstance().retrieveRequirements();
+                GetGamesController.getInstance().retrieveGames();
+                
+				if (!setExitOnClose){
+				    JFrame window = null;
+				    
 			        Component parent = MainView.this;
 			        while(!((parent = parent.getParent()) instanceof JFrame)){
 			        	System.out.println(parent);
 			        }
 			        window = (JFrame)parent;
 			        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			       
+
+			        setExitOnClose = true;
 				}
-				
-		        
 			}
 			
 			@Override

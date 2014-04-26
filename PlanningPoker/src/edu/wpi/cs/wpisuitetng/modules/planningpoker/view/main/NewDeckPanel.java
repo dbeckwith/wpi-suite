@@ -156,7 +156,7 @@ public class NewDeckPanel extends JPanel {
             }
             
             private void validate() {
-
+                
                 final String pattern = " *([0-9]{1,3} *, *)*[0-9]{1,3} *";
                 areCardsValid = newDeckCards.getText() != null
                         && !newDeckCards.getText().isEmpty()
@@ -191,6 +191,18 @@ public class NewDeckPanel extends JPanel {
                 newDeck.sort();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        parentPanel.setNewDeck();
+                    }
+                }.run();
             }
         });
         
@@ -252,7 +264,7 @@ public class NewDeckPanel extends JPanel {
         springLayout.putConstraint(SpringLayout.WEST, errorLabel, 6,
                 SpringLayout.EAST, createDeckButton);
         add(errorLabel);
-
+        
         newDeckName.setText(makeNewDeckName());
         
         checkNewDeck();

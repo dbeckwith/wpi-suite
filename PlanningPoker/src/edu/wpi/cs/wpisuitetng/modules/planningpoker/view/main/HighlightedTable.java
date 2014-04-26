@@ -19,7 +19,12 @@ import javax.swing.table.TableCellRenderer;
 
 public class HighlightedTable extends JTable implements MouseMotionListener, MouseListener {
 	
-	private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -7039413546375398892L;
+
+    private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
 
 	private int highlightRow = -1;
 
