@@ -239,17 +239,22 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 	 * @return the estimate value
 	 */
 	public float getEstimateValue() {
+	    float toReturn;
 		if (textInput) {
 			final float enteredValue = ((Number) (input.getModel().getValue()))
 					.floatValue();
 			if (maxInput != DeckModel.NO_LIMIT) {
-				return (float) Math.min(maxInput, enteredValue);
+			    toReturn = (float) Math.min(maxInput, enteredValue);
+				//return (float) Math.min(maxInput, enteredValue);
 			} else {
-				return enteredValue;
+			    toReturn = enteredValue;
+				//return enteredValue;
 			}
 		} else {
-			return Float.parseFloat(value);
+		    toReturn = Float.parseFloat(value);
+			//return Float.parseFloat(value);
 		}
+		return toReturn;
 	}
 
 	/**

@@ -429,18 +429,22 @@ public class VotePanel extends javax.swing.JPanel {
 	}
 
 	private void validateCards() {
-
+	    int returnFlag = 0;
 		if (parentGame.getDeck().isNone()) {
 			btnSubmit.setEnabled(true);
-			return;
+			returnFlag = 1;
+			//return;
 		}
-
+		if (returnFlag == 0)
 		for (CardButton c : cards) {
 			if (c.isCardSelected()) {
 				btnSubmit.setEnabled(true);
-				return;
+				returnFlag = 2;
+				break;
+				//return;
 			}
 		}
+		if (returnFlag == 0)
 		btnSubmit.setEnabled(false);
 	}
 
