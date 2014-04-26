@@ -71,7 +71,7 @@ public class HighlightedTable extends JTable implements MouseMotionListener, Mou
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		highlightRow = -1;	
+		highlightRow = -1;
 		repaint();
 	}
 }
