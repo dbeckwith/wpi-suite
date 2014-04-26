@@ -560,6 +560,7 @@ public class NewGamePanel extends JPanel {
                             && sameDateStatus && game.getRequirements()
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
+            
             undoButton.setEnabled(gameDescription.canValidateForm()
                     && newGameRequirementsPanel.canValidateForm()
                     && !(game.getDeck().getName().equals(getDeck().getName())
@@ -579,7 +580,6 @@ public class NewGamePanel extends JPanel {
         else {
             errorLabel.setText("");
         }
-        //undoButton.setEnabled(true);
     }
     
     /**
