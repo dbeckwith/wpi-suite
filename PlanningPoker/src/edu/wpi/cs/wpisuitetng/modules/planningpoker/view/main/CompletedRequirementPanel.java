@@ -138,6 +138,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblError.setVisible(b);   //TODO maybe change this
         saveFinalEstimateButton.setVisible(b);
         notePane.setEditable(b);
+        btnUpdateRequirementManager.setVisible(b);
     }
     
     /**
@@ -153,9 +154,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private void initComponents() {
         final Font temp_Font;
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 36, 0};
+        gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
         gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 5.0, 0.0, 0.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 5.0, 0.0, 0.0, 0.0};
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
@@ -187,7 +188,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         GridBagConstraints gbc_tableScrollPane = new GridBagConstraints();
         gbc_tableScrollPane.fill = GridBagConstraints.BOTH;
         gbc_tableScrollPane.insets = new Insets(0, 0, 5, 0);
-        gbc_tableScrollPane.gridwidth = 8;
+        gbc_tableScrollPane.gridwidth = 9;
         gbc_tableScrollPane.gridx = 0;
         gbc_tableScrollPane.gridy = 0;
         add(tableScrollPane, gbc_tableScrollPane);
@@ -235,7 +236,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_finalEstimateField.fill = GridBagConstraints.HORIZONTAL;
         gbc_finalEstimateField.anchor = GridBagConstraints.NORTH;
         gbc_finalEstimateField.insets = new Insets(0, 0, 5, 5);
-        gbc_finalEstimateField.gridwidth = 2;
+        gbc_finalEstimateField.gridwidth = 3;
         gbc_finalEstimateField.gridx = 5;
         gbc_finalEstimateField.gridy = 2;
         add(finalEstimateField, gbc_finalEstimateField);
@@ -283,7 +284,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         });
         GridBagConstraints gbc_notePane = new GridBagConstraints();
         gbc_notePane.gridheight = 4;
-        gbc_notePane.gridwidth = 2;
+        gbc_notePane.gridwidth = 3;
         gbc_notePane.fill = GridBagConstraints.BOTH;
         gbc_notePane.insets = new Insets(0, 0, 5, 5);
         gbc_notePane.gridx = 5;
@@ -385,6 +386,24 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_saveFinalEstimateButton.gridx = 6;
         gbc_saveFinalEstimateButton.gridy = 8;
         add(saveFinalEstimateButton, gbc_saveFinalEstimateButton);
+        
+        btnUpdateRequirementManager = new JButton("Update Requirement Manager");
+        GridBagConstraints gbc_btnUpdateRequirementManager = new GridBagConstraints();
+        gbc_btnUpdateRequirementManager.insets = new Insets(0, 0, 5, 5);
+        gbc_btnUpdateRequirementManager.gridx = 7;
+        gbc_btnUpdateRequirementManager.gridy = 8;
+        add(btnUpdateRequirementManager, gbc_btnUpdateRequirementManager);
+        btnUpdateRequirementManager.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                req.updateRequirementManager();
+                UpdateGamesController.getInstance().updateGame(parentModel);
+                final ArrayList<GameStatusObserver> gsos = parentModel
+                        .getStatusObservers();
+                for (int i = 0; i < gsos.size(); i++) {
+                    gsos.get(i).statusChanged(parentModel);
+                }
+            }
+        });
     }
     
     /**
@@ -423,6 +442,12 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     lblError.setVisible(true);
                     saveFinalEstimateButton.setEnabled(false);
                 }
+                
+                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req.getParentEstimate())) {
+                    btnUpdateRequirementManager.setEnabled(true);
+                } else {
+                    btnUpdateRequirementManager.setEnabled(false);
+                }
             }
         });
     }
@@ -438,4 +463,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JButton saveFinalEstimateButton;
     private JLabel votedUsersValueLabel;
     private JTextPane notePane;
+    private JButton btnUpdateRequirementManager;
 }
