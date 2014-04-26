@@ -50,16 +50,16 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             final GameModel game = (GameModel) node.getUserObject();
             
             if (game.isClosed()) {
-                icon = new ImageIcon(ImageLoader.getImage("archiveTree.png"));
+                icon = ImageLoader.getIcon("archiveTree.png");
             }
             else if (game.isEnded()) {
-                icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
+                icon = ImageLoader.getIcon("GameCompleted.png");
             }
             else if (!game.isStarted()) {
-                icon = new ImageIcon(ImageLoader.getImage("new_req_small.png"));
+                icon = ImageLoader.getIcon("new_req_small.png");
             }
             else {
-                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
+                icon = ImageLoader.getIcon("GameInProgress.png");
                 if (game.getRequirements() != null) {
                     boolean hasUnvotedReqs = false;
                     req_loop:
@@ -92,6 +92,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         } else if (node.getUserObject() instanceof GameRequirementModel) {
             final GameRequirementModel req = (GameRequirementModel) node
                     .getUserObject();
+
+            icon = ImageLoader.getIcon("GameInProgress.png");
             
             for (Estimate e : req.getEstimates()) {
                 if (e.getUsername() != null
@@ -108,10 +110,10 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                 && node.getUserObject() instanceof String) {
             if (((String) node.getUserObject())
                     .matches("Games in Progress \\(\\d+\\)")) {
-                icon = ImageLoader.getIcon("GameInProgress.png");
+                icon = ImageLoader.getIcon("GameInProgressFolder.png");
             } else if (((String) node.getUserObject())
                     .matches("Complete Games \\(\\d+\\)")) {
-                icon = ImageLoader.getIcon("GameCompleted.png");
+                icon = ImageLoader.getIcon("GameCompletedFolder.png");
             } else if (node.getUserObject().equals("<No complete games>")
                     || node.getUserObject().equals("<No games in progress>")) {
                 icon = ImageLoader.getIcon("noGames.png");

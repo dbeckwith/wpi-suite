@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,8 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-
-import java.awt.Color;
 
 /**
  * This is the main planning poker view. It is intended to be a way of viewing
@@ -45,6 +44,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      */
     public AllGamesViewPanel() {
         initComponents();
+        setLayout(new BorderLayout(0, 0));
         final JTree tree = gameTree.getTree();
         
         descriptionCard = new JPanel();
@@ -62,7 +62,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
         
         final JSplitPane splitPane = new JSplitPane();
-        splitPane.setResizeWeight(0.5);
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         descriptionCard.add(splitPane, "description");
         
@@ -85,6 +84,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
+        add(jSplitPane3);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             
             @Override
@@ -137,23 +137,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         jSplitPane3 = new javax.swing.JSplitPane();
         
         jSplitPane3.setDividerLocation(190);
-        
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSplitPane3,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, 658,
-                                Short.MAX_VALUE).addContainerGap()));
-        layout.setVerticalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSplitPane3,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, 394,
-                                Short.MAX_VALUE).addContainerGap()));
         
         gameTree = new GamesListPanel();
         jSplitPane3.setLeftComponent(gameTree);

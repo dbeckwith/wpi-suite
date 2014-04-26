@@ -95,8 +95,11 @@ public class GameTimeoutObserver extends Thread {
             try {
                 System.out.println("Deadline reached, ending game: "
                         + game.toString());
-                game.setEnded(true);
-                GameEntityManager.getInstance().update(session, game.toJSON());
+                // clone the game so we don't change it in the database
+                GameModel clone = new GameModel();
+                clone.copyFrom(game);
+                clone.setEnded(true);
+                GameEntityManager.getInstance().update(session, clone.toJSON());
             }
             catch (WPISuiteException e) {
                 System.err.println("Could not save ended game to database");
