@@ -11,6 +11,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import javax.swing.JPanel;
 
 /**
+ * @version 1
+ * @author Team 9
  */
 public class InputEstimateCard extends JPanel {
 

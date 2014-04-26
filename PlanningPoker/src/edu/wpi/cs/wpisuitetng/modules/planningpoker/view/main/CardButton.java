@@ -117,7 +117,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     	final JFormattedTextField txt = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
     	((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     	txt.setHorizontalAlignment(JTextField.CENTER);
-    	txt.setBackground(new Color(255,255,255,0));
+    	txt.setBackground(new Color(255, 255, 255, 0));
 
     	input.addChangeListener(this);
     	input.setOpaque(false);
@@ -257,7 +257,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     public void setLimit(int limit){
     	maxInput = limit;
     	final double cardLimit = (limit == DeckModel.NO_LIMIT)?Double.MAX_VALUE:limit;
-    	input.setModel(new SpinnerNumberModel(1, 0,cardLimit, 0.5));
+    	input.setModel(new SpinnerNumberModel(1, 0, cardLimit, 0.5));
     }
     
     /**

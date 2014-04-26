@@ -18,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
+ * @version 1
+ * @author Team 9
  */
 public class HighlightedTable extends JTable implements MouseMotionListener, MouseListener {
 	
