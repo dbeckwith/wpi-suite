@@ -612,6 +612,15 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         return nameField;
     }
     
+    /**
+     * Sets the selected deck in the combo box of saved decks to the deck at index
+     * 
+     * @param index the index of the deck to be selected
+     */
+    public void setNewDeck(){
+        deckOptions.setNewDeck();
+    }
+    
     private GameModel game;
     
     private boolean isNameValid = false;

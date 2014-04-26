@@ -524,6 +524,14 @@ public class NewGamePanel extends JPanel {
         return hasChanged;
     }
     
+    /**
+     * Sets the selected deck in the combo box of saved decks to the newest
+     * 
+     * @param index the index of the deck to be selected
+     */
+    public void setNewDeck(){
+        gameDescription.setNewDeck();
+    }
 
     private GameModel game = null;
     

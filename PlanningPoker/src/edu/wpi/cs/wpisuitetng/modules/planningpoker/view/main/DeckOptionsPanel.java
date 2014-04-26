@@ -240,6 +240,15 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		newDeckButton.setEnabled(deckSelected);
     	
     }
+    
+    /**
+     * Set the selected deck in the savedDecks combo box to the object at index
+     * 
+     * @param index the index of the deck to select
+     */
+    public void setNewDeck(){
+        savedDecks.setSelectedIndex(savedDecks.getItemCount() - 1);
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
