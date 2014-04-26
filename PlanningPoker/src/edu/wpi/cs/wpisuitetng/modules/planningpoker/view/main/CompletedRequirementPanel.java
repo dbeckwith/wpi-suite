@@ -12,6 +12,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -36,6 +38,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import java.awt.Component;
 
 /**
  * 
@@ -251,6 +257,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 }
             }
         });
+        saveFinalEstimateButton.setMnemonic(KeyEvent.VK_ENTER);
         
         lblError = new JLabel("* Positive Integers Only!");
         lblError.setVisible(false);
@@ -467,6 +474,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                                                                         lblNote))
                                                                 .addGap(32)))));
         setLayout(layout);
+        setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{finalEstimateField, notePane, saveFinalEstimateButton, tableScrollPane, voteResultTable, meanLabel, lblGameStatistics, medianLabel, jSeparator1, meanValueLabel, medianValueLabel, votedUsersValueLabel, votedUsersLabel, lblFinalEstimate, lblNote, lblError}));
     }
     
     /**
