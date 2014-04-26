@@ -28,9 +28,7 @@ public class GetParentRequirementController extends
     /**
      * Constructs the controller given a RequirementModel
      */
-    private GetParentRequirementController() {
-        super();
-    }
+    private GetParentRequirementController() {}
     
     /**
      * 

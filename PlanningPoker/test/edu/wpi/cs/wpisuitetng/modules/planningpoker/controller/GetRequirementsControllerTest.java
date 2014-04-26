@@ -38,7 +38,7 @@ public class GetRequirementsControllerTest {
                 "Requirement 4", "Requirement 4 Description");
         Requirement[] list = new Requirement[] { req1, req2,
                 req3, req4 };
-        grc.receivedRequirements(list);
+        grc.receivedRequirementsTesting(list);
         Assert.assertTrue(RequirementsListModel.getInstance().getAll()
                 .contains(new GameRequirementModel(req1)));
         Assert.assertTrue(RequirementsListModel.getInstance().getAll()
