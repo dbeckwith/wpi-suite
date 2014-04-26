@@ -24,6 +24,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User.Carrier;
+
 /**
  * A custom deserializer class for the GSON JSON library. The password field
  * should not be exposed after inflation, so it is set to null.
@@ -54,7 +56,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		String email = null;
 		String password = null;
 		boolean emailNotify = false;
-		boolean imNotify = false;
+		boolean smsNotify = false;
+		Carrier carrier = null;
+		String phoneNumber = null;
+		
 
 		if (deflated.has("idNum")
 				&& !deflated.get("idNum").getAsString().equals("")) {
@@ -83,13 +88,17 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			emailNotify = deflated.get("emailNotify").getAsBoolean();
 		}
 
-		if (deflated.has("imNotify") && !isValueEmpty(deflated, "imNotify")) {
-			imNotify = deflated.get("imNotify").getAsBoolean();
+		if (deflated.has("smsNotify") && !isValueEmpty(deflated, "smsNotify")) {
+			smsNotify = deflated.get("smsNotify").getAsBoolean();
 		}
-
+		
+        if (deflated.has("carrier") && !isValueEmpty(deflated, "carrier")) {
+            carrier = Carrier.valueOf(Carrier.class, deflated.get("carrier").getAsString());
+        }
+        
 		User inflated = new User(name, username, email, password, idNum);
 		inflated.setNotifyByEmail(emailNotify);
-		inflated.setNotifyByIM(imNotify);
+		inflated.setNotifyBySMS(smsNotify);
 
 		if (deflated.has("role") && !isValueEmpty(deflated, "role")) {
 			Role r = Role.valueOf(deflated.get("role").getAsString());

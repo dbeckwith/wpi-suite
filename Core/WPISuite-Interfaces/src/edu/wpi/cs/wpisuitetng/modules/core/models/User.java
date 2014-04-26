@@ -31,9 +31,33 @@ public class User extends AbstractModel
 	private int idNum;
 	private Role role;
 	private boolean notifyByEmail = false;
-	private boolean notifyByIM = false;
+	private boolean notifyBySMS = false;
+	private Carrier carrier;
+	private String phoneNumber;
 	
 	transient private String password; // excluded from serialization, still stored.
+	
+	public enum Carrier {
+	    TMOBILE("tmomail.net"),
+	    VIRGINMOBILE("vmobl.com"),
+	    CINGULAR("cingularme.com"),
+	    SPRINT("messaging.sprintpcs.com"),
+	    VERIZON("vtext.com"),
+	    USCELLULAR("email.uscc.net"),
+	    SUNCOM("tms.suncom.com"),
+	    POWERTEL("ptel.net"),
+	    ATT("txt.att.net"),
+	    METROPCS("mymetropcs.com");
+	    private final String url;
+	    
+	    private Carrier(String url) {
+	        this.url = url;
+	    }
+	    
+	    public String getURL() {
+	        return url;
+	    }
+	}
 	
 	/**
 	 * The primary constructor for a User
@@ -153,8 +177,36 @@ public class User extends AbstractModel
 		return notifyByEmail;
 	}
 	
-	public boolean isNotifyByIM() {
-		return notifyByIM;
+	/**
+     * @return the phoneNumber
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * @param phoneNumber the phoneNumber to set
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * @return the carrier
+     */
+    public Carrier getCarrier() {
+        return carrier;
+    }
+
+    /**
+     * @param carrier the carrier to set
+     */
+    public void setCarrier(Carrier carrier) {
+        this.carrier = carrier;
+    }
+
+    public boolean isNotifyBySMS() {
+		return notifyBySMS;
 	}
 	
 	/* database interaction */
@@ -274,8 +326,8 @@ public class User extends AbstractModel
 		this.notifyByEmail = notify;
 	}
 	
-	public void setNotifyByIM(boolean notify) {
-		this.notifyByIM = notify;
+	public void setNotifyBySMS(boolean notify) {
+		this.notifyBySMS = notify;
 	}
 
 	
