@@ -106,7 +106,7 @@ public class ViewController {
 
 		final GameModel newGame = new GameModel(e.getName(),
 				e.getDescription(), e.getRequirements(), e.getDeck(),
-				e.getEndDate(), e.getGameType(), GameStatus.NEW, ConfigManager
+				e.getEndDate(), GameStatus.NEW, ConfigManager
 						.getConfig().getUserName());
 
 		AddGameController.getInstance().addGame(newGame);
@@ -129,7 +129,7 @@ public class ViewController {
 		final DeckModel d = e.getDeck();
 		final GameModel newGame = new GameModel(e.getName(),
 				e.getDescription(), e.getRequirements(), d, e.getEndDate(),
-				e.getGameType(), GameStatus.NEW, ConfigManager.getConfig()
+				GameStatus.NEW, ConfigManager.getConfig()
 						.getUserName());
 		game.editCopyFrom(newGame);
 		UpdateGamesController.getInstance().updateGame(game);
@@ -313,7 +313,6 @@ public class ViewController {
 		} else if (curr != null && !curr.isStarted()) {
 			curr.startGame();
 			UpdateGamesController.getInstance().updateGame(curr);
-			EmailController.getInstance().sendGameStartNotifications(curr);
 		}
 
 	}

@@ -73,7 +73,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
         System.setProperty("java.net.preferIPv4Stack", "true"); //$NON-NLS-2$ //$NON-NLS-1$
         try {
             for (User u : EmailController.getInstance().getUsers()) {
-                if (u.getEmail() != null && u.isNotifyByEmail()) {
+                if (u != null && u.getEmail() != null && u.isNotifyByEmail()) {
                     Email email = new SimpleEmail();
                     email.setHostName("smtp.gmail.com"); //$NON-NLS-1$
                     email.setSmtpPort(SMTP_PORT);
@@ -86,11 +86,13 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
                     email.setMsg("Dear " + u.getName() + "," //$NON-NLS-1$ // $codepro.audit.disable disallowStringConcatenation
                             + System.getProperty("line.separator") + body); //$NON-NLS-1$
                     email.send();
+                    System.out.println("Sent email to " + u.getName());
                 }
             }
         }
         catch (EmailException e) {
             // failed to send email
+            e.printStackTrace();
             return;
         }
     }

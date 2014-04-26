@@ -22,7 +22,6 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -59,8 +58,7 @@ public class GameTest {
 	public void TestGameEndsAfterDeadline() {
 		final GameModel testgame = new GameModel("Test Game", "something", null,
 				DeckModel.DEFAULT_DECK, new Date(
-						System.currentTimeMillis() + 1000),
-				GameType.DISTRIBUTED, GameStatus.NEW);
+						System.currentTimeMillis() + 1000), GameStatus.NEW);
 		GameModel created = new GameModel();
 		try {
             created = manager
@@ -91,8 +89,7 @@ public class GameTest {
 
 		final GameModel testgame = new GameModel("Test Game", "something", null,
 				DeckModel.DEFAULT_DECK, new Date(
-						System.currentTimeMillis() + 100000000),
-				GameType.DISTRIBUTED, GameStatus.PENDING);
+						System.currentTimeMillis() + 100000000), GameStatus.PENDING);
 		Assert.assertFalse(testgame.isEnded());
 	}
 

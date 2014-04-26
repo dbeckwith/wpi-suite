@@ -17,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -34,6 +34,7 @@ public class GameRequirementModel extends AbstractModel {
      * the id of the parent requirement in requirements manager
      */
     private int parentId;
+    private int parentEstimate = 0;
     
 	private String name;
 	private String description;
@@ -120,6 +121,7 @@ public class GameRequirementModel extends AbstractModel {
 		this(r.getId(), r.getName(), r.getDescription(),
 				r.getType().toString(), new ArrayList<Estimate>());
 		fromRequirementManager = true;
+		parentEstimate = r.getEstimate();
 	}
 
 	/**
@@ -280,8 +282,8 @@ public class GameRequirementModel extends AbstractModel {
 			}
 		}
 
-		for (User u : users) {
-			if (!estimateUsers.contains(u)) {
+		for (int i = 0; i < users.length; i++) {
+		    if (!estimateUsers.contains(users[i])) {
 				return false;
 			}
 		}
@@ -368,6 +370,7 @@ public class GameRequirementModel extends AbstractModel {
         UpdateRequirementController.getInstance().updateRequirement(parent);
         RequirementModel.getInstance().getRequirement(parentId).setEstimate(finalEstimate);
         ViewEventController.getInstance().refreshTable();
+        parentEstimate = finalEstimate;
     }
     
     /**
@@ -375,6 +378,13 @@ public class GameRequirementModel extends AbstractModel {
      */
     public boolean isFromRequirementManager() {
         return fromRequirementManager;
+    }
+    
+    /**
+     * @return The estimate for the parent requirement
+     */
+    public int getParentEstimate() {
+        return parentEstimate;
     }
     
 }

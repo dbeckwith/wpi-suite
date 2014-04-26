@@ -51,6 +51,7 @@ public class UserRequestThread extends Thread {
          */
         private void notifyController() {
             synchronized (controller) {
+                System.out.println("Got response");
                 controller.notifyAll();
                 controller.setTimedOut(false);
             }

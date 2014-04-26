@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
  * This handles requests for game requirements
@@ -66,6 +67,12 @@ public class GetRequirementsController extends AbstractRequirementController {
             GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
             // set the requirements to the local model
             RequirementsListModel.getInstance().setRequirements(gameReqs.toArray(toSet));
+            
+            // Update Requirement Manager
+            // Empty the local model to eliminate duplications
+            RequirementModel.getInstance().emptyModel();
+            // add the requirements to the local model
+            RequirementModel.getInstance().addRequirements(requirements);
         }
     }
     
