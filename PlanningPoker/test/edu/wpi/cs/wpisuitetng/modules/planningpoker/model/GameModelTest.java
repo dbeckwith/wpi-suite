@@ -51,21 +51,21 @@ public class GameModelTest {
         reqs.add(aReq);
         nullGame = new GameModel();
 
-        game1 = new GameModel("Test Game 1", "Live Game that just ended", reqs,
+        game1 = new GameModel("Test Game 1", "Game that just ended", reqs,
                 DeckModel.DEFAULT_DECK, new Date(),
-                GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
+                GameModel.GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
-                "Distributed Game that will end in 5 seconds", reqs,
+                "Game that will end in 5 seconds", reqs,
                 DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 5000),
-                GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                GameModel.GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
-                "Live Game with end time in 10 seconds, but already manually ended",
+                "Game with end time in 10 seconds, but already manually ended",
 
                 reqs, DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 10000),
-                GameModel.GameType.LIVE, GameModel.GameStatus.COMPLETE);
+                GameModel.GameStatus.COMPLETE);
     }
     
     /**
