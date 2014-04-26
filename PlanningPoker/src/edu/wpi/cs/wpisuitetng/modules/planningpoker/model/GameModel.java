@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
  * @author Team 9
  * @version 1.0
  * 
- *          Represents a planning poker game
+ * Represents a planning poker game
  */
 public class GameModel extends AbstractModel implements Serializable {
     

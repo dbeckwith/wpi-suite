@@ -197,6 +197,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             tableModel.addRow(row);
         }
         voteResultTable.setModel(tableModel);
+        voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);
+        voteResultTable.getColumnModel().getColumn(1).setResizable(false);
+        voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         
         votedUsersValueLabel
                 .setText(Integer.toString(tableModel.getRowCount()));
@@ -205,7 +208,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     private void displayFinalEstimateFields(boolean b) {
         finalEstimateField.setEditable(b);
-        lblError.setVisible(b);   //TODO maybe change this
         saveFinalEstimateButton.setVisible(b);
         notePane.setEditable(b);
         btnUpdateRequirementManager.setVisible(b);
