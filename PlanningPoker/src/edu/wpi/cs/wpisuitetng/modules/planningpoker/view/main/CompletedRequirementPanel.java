@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.AncestorEvent;
@@ -32,7 +33,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
@@ -61,14 +61,17 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     /**
      * Creates a new CompletedRequirementPanel
-     *
+     * 
+     * @param tree
+     *        the tree of games
      */
-    public CompletedRequirementPanel() {
+    public CompletedRequirementPanel(JTree tree) {
         setBackground(Color.WHITE);
         // setup tablemodel (using autogenerted netbeans code)
         initComponents();
+        this.tree = tree;
         tableScrollPane.getViewport().setBackground(Color.WHITE);
-        addAncestorListener( new AncestorListener(){
+        addAncestorListener(new AncestorListener() {
             
             @Override
             public void ancestorAdded(AncestorEvent event) {
@@ -86,12 +89,12 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
         });
         
-        KeyListener saveOnEnter = new KeyListener(){
+        final KeyListener saveOnEnter = new KeyListener() {
             
-            final int enterKey = KeyEvent.VK_ENTER;
-            final int shiftKey = KeyEvent.VK_SHIFT;
-            boolean enterPressed = false;
-            boolean shiftPressed = false;
+            private final int enterKey = KeyEvent.VK_ENTER;
+            private final int shiftKey = KeyEvent.VK_SHIFT;
+            private boolean enterPressed = false;
+            private boolean shiftPressed = false;
             
             @Override
             public void keyTyped(KeyEvent e) {
@@ -99,17 +102,17 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == enterKey){
+                if (e.getKeyCode() == enterKey) {
                     enterPressed = true;
                 }
                 
-                if(e.getKeyCode() == shiftKey){
+                if (e.getKeyCode() == shiftKey) {
                     shiftPressed = true;
                 }
                 
-                if(enterPressed){
-                    if(shiftPressed){
-                        
+                if (enterPressed) {
+                    if (shiftPressed) {
+                        saveAndContinue();
                     }
                     saveFinalEstimate();
                 }
@@ -117,11 +120,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == enterKey){
+                if (e.getKeyCode() == enterKey) {
                     enterPressed = false;
                 }
                 
-                if(e.getKeyCode() == shiftKey){
+                if (e.getKeyCode() == shiftKey) {
                     shiftPressed = false;
                 }
             }
@@ -155,11 +158,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
-        .setText(String.format("%1.1f", req.getEstimateMedian()));
+                .setText(String.format("%1.1f", req.getEstimateMedian()));
         if (parent_game.getOwner().equals(CurrentUserController.USER_NAME)
                 && req.getFinalEstimate() == 0) {
             finalEstimateField
-            .setText((int) (req.getEstimateMean() + 0.5) + "");
+                    .setText((int) (req.getEstimateMean() + 0.5) + "");
         }
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
@@ -196,7 +199,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.setModel(tableModel);
         
         votedUsersValueLabel
-        .setText(Integer.toString(tableModel.getRowCount()));
+                .setText(Integer.toString(tableModel.getRowCount()));
         notePane.setText(req.getEstimateNote());
     }
     
@@ -213,17 +216,19 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     private void checkDisplayFinal() {
         displayFinalEstimateFields(CurrentUserController.USER_NAME
-                .equals(parentModel.getOwner())
-                && !parentModel.isClosed());
+                .equals(parentModel.getOwner()) && !parentModel.isClosed());
     }
     
     private void initComponents() {
         final Font temp_Font;
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 36, 0};
-        gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 5.0, 0.0, 0.0};
-        gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        gridBagLayout.columnWidths = new int[] { 7, 105, 60, 97, 90, 32, 36, 0 };
+        gridBagLayout.rowHeights = new int[] { 60, 27, 20, 10, 6, 16, 16, 16,
+                0, 7 };
+        gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0,
+                5.0, 0.0, 0.0 };
+        gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0 };
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
         voteResultTable = new javax.swing.JTable();
@@ -232,12 +237,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableScrollPane.setBackground(Color.WHITE);
         
         voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
-            null }, }, new String[] { "User", "Estimate" }) {
+                null }, }, new String[] { "User", "Estimate" }) {
             /**
              * 
              */
             private static final long serialVersionUID = -5144539907705808611L;
-            private final boolean[] columnEditables = new boolean[] { false, false };
+            private final boolean[] columnEditables = new boolean[] { false,
+                    false };
             
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -262,7 +268,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         finalEstimateField = new JTextField();
         finalEstimateField.setColumns(10);
         finalEstimateField.setBackground(Color.WHITE);
-        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
+                null, null));
         
         finalEstimateField.getDocument().addDocumentListener(
                 new DocumentListener() {
@@ -428,6 +435,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         
         saveFinalEstimateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 saveFinalEstimate();
             }
@@ -450,22 +458,25 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void run() {
                 final String pattern = "^[\\s]*$";
                 try {
-                    final int finalEstimate = Integer.parseInt(finalEstimateField
-                            .getText());
+                    final int finalEstimate = Integer
+                            .parseInt(finalEstimateField.getText());
                     if (finalEstimate == req.getFinalEstimate()) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else if (finalEstimate <= 0) {
+                    }
+                    else if (finalEstimate <= 0) {
                         //set error label
                         lblError.setText("* Positive Integers Only!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else if (Pattern.matches(pattern, notePane.getText()) 
+                    }
+                    else if (Pattern.matches(pattern, notePane.getText())
                             && req.getFinalEstimate() != 0) {
                         lblError.setText("* You Must Add a Note!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else {
+                    }
+                    else {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(true);
                     }
@@ -483,23 +494,34 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     /**
      * Saves the final estimate
      */
-    private void saveFinalEstimate(){
-        if(saveFinalEstimateButton.isEnabled()){
+    private void saveFinalEstimate() {
+        if (saveFinalEstimateButton.isEnabled()) {
             lblError.setVisible(false);
             if (req.getFinalEstimate() != 0
                     && !req.getEstimateNote().startsWith("Manual change: \n")) {
                 req.setEstimateNote("Manual change: \n" + notePane.getText());
-            } else {
+            }
+            else {
                 req.setEstimateNote(notePane.getText());
             }
-            req.setFinalEstimate(Integer.parseInt(finalEstimateField
-                    .getText()));
+            req.setFinalEstimate(Integer.parseInt(finalEstimateField.getText()));
             UpdateGamesController.getInstance().updateGame(parentModel);
             final ArrayList<GameStatusObserver> gsos = parentModel
                     .getStatusObservers();
             for (int i = 0; i < gsos.size(); i++) {
                 gsos.get(i).statusChanged(parentModel);
             }
+        }
+    }
+    
+    /**
+     * Saves the final estimate and moves to the next game
+     */
+    private void saveAndContinue() {
+        saveFinalEstimate();
+        if (parentModel.getRequirements().indexOf(req) < parentModel
+                .getRequirements().size() - 1) {
+            tree.setSelectionRow(tree.getSelectionRows()[0] + 1);
         }
     }
     
@@ -515,4 +537,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JButton saveFinalEstimateButton;
     private JLabel votedUsersValueLabel;
     private JTextPane notePane;
+    private final JTree tree;
 }
