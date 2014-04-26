@@ -11,9 +11,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -43,7 +40,7 @@ public class EmailController {
     private User[] users = new User[] {};
     
     /**
-     * Creates a new EmailController class. Private to avoid instansiation.
+     * Creates a new EmailController class. Private to avoid instantiation.
      */
     private EmailController() { // $codepro.audit.disable emptyMethod    
     }
@@ -52,6 +49,11 @@ public class EmailController {
      * The instance of the controller.
      */
     private static EmailController Instance = null;
+    
+    /**
+     * The owner of the game that emails are being sent for.
+     */
+    private static User gameOwner = null;
     
     /**
      * Gets the instance of the EmailController.
@@ -63,6 +65,13 @@ public class EmailController {
             Instance = new EmailController();
         }
         return Instance;
+    }
+    
+    /**
+     * Sets the owner of the game for which notifications are being sent.
+     */
+    public static void setOwner(User owner) {
+    	gameOwner = owner;
     }
     
     /**
@@ -105,10 +114,12 @@ public class EmailController {
      * Sets the users in the current project.
      */
     public void setUsers(User[] users) {
-        System.out.println("Setting users to " + Arrays.asList(users));
         this.users = users;
     }
     
+    /**
+     * Gets the users in the current project.
+     */
     public User[] getUsers() {
         return users;
     }
@@ -127,7 +138,7 @@ public class EmailController {
             body += "An unknown user has created a new Planning Poker game called ";
         }
         else {
-            body += game.getOwner().getName()
+            body += gameOwner.getName()
                     + " has created a new Planning Poker game called ";
         }
         body += game.getName() + ".\n\n";

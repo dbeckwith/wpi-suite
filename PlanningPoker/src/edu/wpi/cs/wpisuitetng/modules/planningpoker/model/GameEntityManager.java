@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -25,7 +24,6 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
-
 
 /**
  * This class is an Entity Manager for storing GameModels on the server.
@@ -46,7 +44,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     public GameEntityManager(Data db) {
         this.db = db;
-        if(NotificationServer.getInstance().getState() == Thread.State.NEW){
+        if (NotificationServer.getInstance().getState() == Thread.State.NEW) {
             NotificationServer.getInstance().start();
         }
         instance = this;
@@ -71,7 +69,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
             throws WPISuiteException {
         final User user = (User) db.retrieve(User.class, "username",
                 session.getUsername()).get(0);
-        if (!user.getRole().equals(role)) { throw new UnauthorizedException(""); }
+        if (!user.getRole().equals(role)) {
+            throw new UnauthorizedException("");
+        }
     }
     
     /**
@@ -142,7 +142,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
     @Override
     public GameModel[] getEntity(Session s, String id) throws NotFoundException {
         final int intId = Integer.parseInt(id);
-        if (intId < 0) { throw new NotFoundException(""); }
+        if (intId < 0) {
+            throw new NotFoundException("");
+        }
         GameModel[] GameModels = null;
         try {
             GameModels = db.retrieve(GameModel.class, "id", intId,
@@ -151,8 +153,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
         catch (WPISuiteException e) {
             e.printStackTrace();
         }
-        if (GameModels.length < 1 || GameModels[0] == null) { throw new NotFoundException(
-                ""); }
+        if (GameModels.length < 1 || GameModels[0] == null) {
+            throw new NotFoundException("");
+        }
         return GameModels;
     }
     
@@ -167,7 +170,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
         }
-        if(newGameModel.hasDeadline()){
+        if (newGameModel.hasDeadline()) {
             new GameTimeoutObserver(s, newGameModel);
         }
         System.out.println("GEM makeEntity()");
@@ -199,19 +202,22 @@ public class GameEntityManager implements EntityManager<GameModel> {
          */
         final List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
                 updatedGameModel.getID(), s.getProject());
-        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) { throw new BadRequestException(
-                "GameModel with ID does not exist."); }
+        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) {
+            throw new BadRequestException("GameModel with ID does not exist.");
+        }
         
         final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
-        sendEmails(s, existingGameModel, updatedGameModel);
+        sendEmails(existingGameModel, updatedGameModel);
         
         startObserver(updatedGameModel);
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
         
-        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
+        if (!db.save(existingGameModel, s.getProject())) {
+            throw new WPISuiteException();
+        }
         System.out.println("GEM update()");
         NotificationServer.getInstance().sendUpdateNotification();
         return existingGameModel;
@@ -226,7 +232,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     private void startObserver(GameModel updatedGameModel) {
         if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
             // start observer only when the game is live
-            if(updatedGameModel.hasDeadline()){
+            if (updatedGameModel.hasDeadline()) {
                 System.out.println("Getting observer for game");
                 GameTimeoutObserver obs = GameTimeoutObserver
                         .getObserver(updatedGameModel);
@@ -251,25 +257,27 @@ public class GameEntityManager implements EntityManager<GameModel> {
      *        the old game model
      * @param updatedGameModel
      *        the updated game model
+     * @throws NotImplementedException
      */
-    private void sendEmails(Session s, GameModel existingGameModel,
-            GameModel updatedGameModel) {
+    private void sendEmails(GameModel existingGameModel,
+            GameModel updatedGameModel) throws NotImplementedException {
+        
         // send emails based on updated status
         if (!updatedGameModel.getStatus().equals(existingGameModel.getStatus())) {
-            
-            /*
-             * KNOWN BUG: the team is not deserialzed on server start, so this
-             * line will only work after users have been added to the project
-             * and before the server is stopped.
-             */
-            try {
-                EmailController.getInstance()
-                        .setUsers(s.getProject().getTeam());
+            // get all users in the database
+            // no way of knowing what users are in the current project,
+            // so everyone's going to get emails
+            List<User> users = db.retrieveAll(new User("", "", "", 0));
+            User owner = null;
+            for (User u : users) {
+                if (u.getUsername().equals(updatedGameModel.getOwner())) {
+                    owner = u;
+                    break;
+                }
             }
-            catch (NullPointerException e) {
-                System.err.println("Null team, sending emails to last known users");
-                e.printStackTrace();
-            }
+            EmailController.setOwner(owner);
+            EmailController.getInstance().setUsers(
+                    users.toArray(new User[users.size()]));
             switch (updatedGameModel.getStatus()) {
                 case NEW:
                     // don't send an email
@@ -286,7 +294,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
                     break;
                 case CLOSED:
                     // don't send an email
-                    break;            
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
         }
         else {

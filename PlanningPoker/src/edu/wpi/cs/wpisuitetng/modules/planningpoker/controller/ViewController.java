@@ -313,7 +313,6 @@ public class ViewController {
 		} else if (curr != null && !curr.isStarted()) {
 			curr.startGame();
 			UpdateGamesController.getInstance().updateGame(curr);
-			EmailController.getInstance().sendGameStartNotifications(curr);
 		}
 
 	}

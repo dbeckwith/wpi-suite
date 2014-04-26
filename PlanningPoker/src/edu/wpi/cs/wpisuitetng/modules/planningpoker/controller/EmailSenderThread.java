@@ -8,8 +8,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.Arrays;
-
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
@@ -74,8 +72,6 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
     private void sendEmails() {
         System.setProperty("java.net.preferIPv4Stack", "true"); //$NON-NLS-2$ //$NON-NLS-1$
         try {
-            System.out.println("Sending emails to "
-                    + Arrays.asList(EmailController.getInstance().getUsers()));
             for (User u : EmailController.getInstance().getUsers()) {
                 if (u != null && u.getEmail() != null && u.isNotifyByEmail()) {
                     Email email = new SimpleEmail();
