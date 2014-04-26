@@ -38,16 +38,65 @@ public class User extends AbstractModel
 	transient private String password; // excluded from serialization, still stored.
 	
 	public enum Carrier {
-	    TMOBILE("tmomail.net"),
-	    VIRGINMOBILE("vmobl.com"),
-	    CINGULAR("cingularme.com"),
-	    SPRINT("messaging.sprintpcs.com"),
-	    VERIZON("vtext.com"),
-	    USCELLULAR("email.uscc.net"),
-	    SUNCOM("tms.suncom.com"),
-	    POWERTEL("ptel.net"),
-	    ATT("txt.att.net"),
-	    METROPCS("mymetropcs.com");
+	    THREE_RIVER_WIRELESS("sms.3rivers.net"),
+	    ACS_WIRELESS("paging.acswireless.com"),
+	    ALLTEL("message.alltel.com"),
+        ATT("txt.att.net"),
+        BLUE_SKY_FROG("blueskyfrog.com"),
+        BLUEGRASS_CELLULAR("sms.bluecell.com"),
+        BOOST_MOBILE("myboostmobile.com"),
+        BPL_MOBILE("bplmobile.com"),
+        CAROLINA_WEST_WIRELESS("cwwsms.com"),
+        CELLULAR_ONE("mobile.celloneusa.com"),
+        CELLULAR_SOUTH("csouth1.com"),
+        CENTENNIAL_WIRELESS("cwemail.com"),
+        CENTURYTEL("messaging.centurytel.net"),
+        CLEARNET("msg.clearnet.com"),
+        COMCAST("comcastpcs.textmsg.com"),
+        CORR_WIRELESS_COMMUNICATIONS("corrwireless.net"),
+        DOBSON("mobile.dobson.net"),
+        EDGE_WIRELESS("sms.edgewireless.com"),
+        FIDO("fido.ca"),
+        GOLDEN_TELECOM("sms.goldentele.com"),
+        HELIO("messaging.sprintpcs.com"),
+        HOUSTON_CELLULAR("text.houstoncellular.net"),
+        IDEA_CELLULAR("ideacellular.net"),
+        ILLINOIS_VALLEY_CELLULAR("ivctext.com"),
+        INLAND_CELLULAR_TELEPHONE("inlandlink.com"),
+        MCI("pagemci.com"),
+        METROCALL("page.metrocall.com"),
+        METROCALL2WAY("my2way.com"),
+        METRO_PCS("mymetropcs.com"),
+        MICROCELL("fido.ca"),
+        MIDWEST_WIRELESS("clearlydigital.com"),
+        MOBILCOMM("mobilecomm.net"),
+        MTS("text.mtsmobility.com"),
+        NEXTEL("messaging.nextel.com"),
+        ONLINEBEEP("onlinebeep.net"),
+        PCS_ONE("pcsone.net"),
+        PRESIDENTS_CHOICE("txt.bell.ca"),
+        PUBLIC_SERVICE_CELLULAR("sms.pscel.com"),
+        QWEST("qwestmp.com"),
+        SATELLINK("satellink.net"),
+        SOLO_MOBILE("txt.bell.ca"),
+        SOUTHWESTERN_BELL("email.swbw.com"),
+        SPRINT("messaging.sprintpcs.com"),
+        SUMCOM("tms.suncom.com"),
+        SUREWEST_COMMUNICATIONS("mobile.surewest.com"),
+        T_MOBILE("tmomail.net"),
+        TELUS("msg.telus.com"),
+        TRACFONE("txt.att.net"),
+        TRITON("tms.suncom.com"),
+        UNICEL("utext.com"),
+        UNKNOWN(""),
+        US_CELLULAR("email.uscc.net"),
+        US_WEST("uswestdatamail.com"),
+        VERIZON("vtext.com"),
+        VIRGIN_MOBILE("vmobl.com"),
+        VIRGIN_MOBILE_CA("vmobile.ca"),
+        WEST_CENTRAL_WIRELESS("sms.wcc.net"),
+        WESTERN_WIRELESS("cellularonewest.com");
+
 	    private final String url;
 	    
 	    private Carrier(String url) {
@@ -73,6 +122,8 @@ public class User extends AbstractModel
 		this.idNum = idNum;
 		this.role = Role.USER;
 		this.email = null;
+		this.phoneNumber = null;
+		this.carrier = Carrier.UNKNOWN;
 	}
 	
 	public User(String name, String username, String email, String password, int idNum) {
@@ -82,6 +133,19 @@ public class User extends AbstractModel
         this.idNum = idNum;
         this.role = Role.USER;
         this.email = email;
+        this.phoneNumber = null;
+        this.carrier = Carrier.UNKNOWN;
+	}
+	
+	public User(String name, String username, String email, String password, int idNum, String phoneNumber, Carrier carrier) {
+	        this.name = name;
+	        this.username = username;
+	        this.password = password;
+	        this.idNum = idNum;
+	        this.role = Role.USER;
+	        this.email = email;
+	        this.phoneNumber = phoneNumber;
+	        this.carrier = carrier;
 	}
 	
 	@Override
@@ -114,6 +178,16 @@ public class User extends AbstractModel
 				if(this.role != null && !this.role.equals(((User)other).role))
 				{
 					return false;
+				}
+				
+				if(this.phoneNumber != null && !this.phoneNumber.equals(((User)other).phoneNumber))
+				{
+				    return false;
+				}
+				
+				if(this.carrier != null && !this.carrier.equals(((User)other).carrier))
+				{
+				    return false;
 				}
 				
 				return true;

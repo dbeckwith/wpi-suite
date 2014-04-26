@@ -92,11 +92,15 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			smsNotify = deflated.get("smsNotify").getAsBoolean();
 		}
 		
+		if(deflated.has("phoneNumber") && !isValueEmpty(deflated, "phoneNumber")) {
+		    phoneNumber = deflated.get("phoneNumber").getAsString();
+		}
+		
         if (deflated.has("carrier") && !isValueEmpty(deflated, "carrier")) {
             carrier = Carrier.valueOf(Carrier.class, deflated.get("carrier").getAsString());
         }
         
-		User inflated = new User(name, username, email, password, idNum);
+		User inflated = new User(name, username, email, password, idNum, phoneNumber, carrier);
 		inflated.setNotifyByEmail(emailNotify);
 		inflated.setNotifyBySMS(smsNotify);
 

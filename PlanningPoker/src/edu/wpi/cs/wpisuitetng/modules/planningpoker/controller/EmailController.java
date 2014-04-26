@@ -24,6 +24,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
  */
 public class EmailController {
     
+    
+    
     /**
      * Subject line for a new game email.
      */
@@ -83,8 +85,8 @@ public class EmailController {
      * @param body
      *        the body of the email
      */
-    public void sendEmails(String subject, String body) {
-        final EmailSenderThread sender = new EmailSenderThread(subject, body);
+    public void sendEmails(String subject, String body, String SMSbody) {
+        final EmailSenderThread sender = new EmailSenderThread(subject, body, SMSbody);
         sender.start();
     }
     
@@ -96,7 +98,8 @@ public class EmailController {
      *        the game has ended
      */
     public void sendGameEndNotifications(GameModel game) {
-        sendEmails(END_GAME_SUBJECT, endGameMessageBody(game));
+        String endGameMessageBody = endGameMessageBody(game);
+        sendEmails(END_GAME_SUBJECT, endGameMessageBody, endGameMessageBody);
     }
     
     /**
@@ -107,7 +110,7 @@ public class EmailController {
      *        the game has started
      */
     public void sendGameStartNotifications(GameModel game) {
-        sendEmails(NEW_GAME_SUBJECT, startGameMessageBody(game));
+        sendEmails(NEW_GAME_SUBJECT, startGameMessageBody(game), startGameMessageBodySMS(game));
     }
     
     /**
@@ -154,6 +157,24 @@ public class EmailController {
                         + game.getEndTime();
         return body;
     }
+    
+    private static String startGameMessageBodySMS(GameModel game) {
+        String body = "\n";
+        
+        if (game.getOwner() == null) {
+            body += "An unknown user has created a new Planning Poker game called ";
+        }
+        else {
+            body += gameOwner.getName()
+                    + " has created a new Planning Poker game called ";
+        }
+        body += game.getName() + ".\n\n";
+        
+        body += game.getEndTime() == null ? ""
+                : "Deadline: "
+                        + game.getEndTime();
+        return body;
+    }  
     
     
     /**
