@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import java.lang.Thread.State;
 import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -46,7 +45,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     public GameEntityManager(Data db) {
         this.db = db;
         if(NotificationServer.getInstance().getState() == Thread.State.NEW){
-                NotificationServer.getInstance().start();
+            NotificationServer.getInstance().start();
         }
         instance = this;
     }
@@ -166,7 +165,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
         }
-        new GameTimeoutObserver(s, newGameModel);
+        if(newGameModel.hasDeadline()){
+            new GameTimeoutObserver(s, newGameModel);
+        }
         System.out.println("GEM makeEntity()");
         NotificationServer.getInstance().sendUpdateNotification();
         return newGameModel;
@@ -207,15 +208,17 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
         if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
             // start observer only when the game is live
-            System.out.println("Getting observer for game");
-            GameTimeoutObserver obs = GameTimeoutObserver
-                    .getObserver(updatedGameModel);
-            if (obs == null) {
-                System.out.println("Could not find observer for game");
-            }
-            else if (obs.getState() == State.NEW) {
-                System.out.println("Starting observer");
-                obs.start();
+            if(updatedGameModel.hasDeadline()){
+                System.out.println("Getting observer for game");
+                GameTimeoutObserver obs = GameTimeoutObserver
+                        .getObserver(updatedGameModel);
+                if (obs == null) {
+                    System.out.println("Could not find observer for game");
+                }
+                else if (!obs.isAlive()) {
+                    System.out.println("Starting observer");
+                    obs.start();
+                }
             }
         }
         

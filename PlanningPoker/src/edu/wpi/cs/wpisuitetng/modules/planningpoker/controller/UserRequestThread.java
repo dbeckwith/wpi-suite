@@ -8,24 +8,18 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
-import edu.wpi.cs.wpisuitetng.network.models.RequestModel;
 
 /**
  * A class for requesting users from the server.
  * @author Team 9
  * @version 1.0
  */
-public class UserRequestThread extends Thread {
+public class RequestThread extends Thread {
     
     /**
      * The controller sending a request for a user.
@@ -69,7 +63,8 @@ public class UserRequestThread extends Thread {
      * @param controller
      *        the controller to nofity
      */
-    public UserRequestThread(AbstractUserController controller) {
+    public RequestThread(AbstractUserController controller) {
+        super("User Request Thread");
         this.controller = controller;
     }
     

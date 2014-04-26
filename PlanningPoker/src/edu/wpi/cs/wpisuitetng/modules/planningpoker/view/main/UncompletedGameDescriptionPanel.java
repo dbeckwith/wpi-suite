@@ -15,7 +15,6 @@ import java.util.Date;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -54,6 +53,13 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setDescriptionText(game.getDescription());
         setEndDate(game.getEndTime());
         setDeckName(game.getDeck().toString());
+        
+        System.out.println(gameName.getWidth());
+        int difference = gameDeadline.getX() - lblDeadline.getX();
+        if ((gameName.getX() + gameName.getWidth()) > lblDeadline.getX()) {
+            lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, lblDeadline.getY());
+            gameDeadline.setLocation(lblDeadline.getX() + difference, gameDeadline.getY());
+        }
         // DefaultListModel<String> listModel = new DefaultListModel<>();
         // listModel.addElement(element);
         // getParticipantsList().setModel(listModel);
@@ -88,12 +94,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         
         gameName = new JLabel("");
         
-        final JLabel lblProgress = new JLabel("Progress:");
-        
-        progressBar = new JProgressBar();
-        
-        progressLabel = new JLabel("0/0");
-        
         final JScrollPane scrollPane_1 = new JScrollPane();
         
         lblDeadline = new JLabel("Deadline:");
@@ -105,110 +105,43 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         deckName = new JLabel("");
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(
-                                                        scrollPane_1,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        488, Short.MAX_VALUE)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                Alignment.LEADING)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addComponent(
-                                                                                                        nameLabel)
-                                                                                                .addGroup(
-                                                                                                        layout.createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                                .addGroup(
-                                                                                                                        layout.createSequentialGroup()
-                                                                                                                                .addPreferredGap(
-                                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        gameName))
-                                                                                                                .addGroup(
-                                                                                                                        layout.createSequentialGroup()
-                                                                                                                                .addGap(154)
-                                                                                                                                .addComponent(
-                                                                                                                                        lblDeadline)
-                                                                                                                                .addPreferredGap(
-                                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        gameDeadline))))
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addComponent(
-                                                                                                        lblDeck)
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                .addComponent(
-                                                                                                        deckName)))
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED,
-                                                                        36,
-                                                                        Short.MAX_VALUE)
-                                                                .addComponent(
-                                                                        lblProgress)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        progressBar,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                        ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        progressLabel)))
-                                .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(nameLabel)
-                                                .addComponent(gameName)
-                                                .addComponent(
-                                                        lblDeadline,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        14,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(gameDeadline))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(scrollPane_1,
-                                        GroupLayout.PREFERRED_SIZE, 32,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(progressLabel)
-                                                .addComponent(lblProgress)
-                                                .addComponent(
-                                                        progressBar,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(
-                                                        layout.createParallelGroup(
-                                                                Alignment.BASELINE)
-                                                                .addComponent(
-                                                                        lblDeck)
-                                                                .addComponent(
-                                                                        deckName)))
-                                .addContainerGap(186, Short.MAX_VALUE)));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                        .addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(nameLabel)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addGap(7)
+                            .addComponent(lblDeadline)
+                            .addGap(6)
+                            .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(lblDeck)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(deckName)))
+                    .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(nameLabel)
+                        .addComponent(gameName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDeadline, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(lblDeck)
+                        .addComponent(deckName))
+                    .addContainerGap(19, Short.MAX_VALUE))
+        );
         
         descriptionText = new JTextPane();
         descriptionText.setEditable(false);
@@ -219,8 +152,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     private javax.swing.JLabel nameLabel;
     private JLabel gameName;
     private JTextPane descriptionText;
-    private JProgressBar progressBar;
-    private JLabel progressLabel;
     private JLabel gameDeadline;
     private JLabel lblDeadline;
     private JLabel lblDeck;
@@ -262,43 +193,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
      */
     protected void setDescriptionText(String text) {
         descriptionText.setText(text);
-    }
-    
-    /**
-     * get the progress bar value
-     * 
-     * @return the progress bar value
-     */
-    protected int getProgressBarValue() {
-        return progressBar.getValue();
-    }
-    
-    /**
-     * Sets the progress bar value
-     * 
-     * @param value
-     *        progress bar value
-     */
-    protected void setProgressBarValue(int value) {
-        progressBar.setValue(value);
-    }
-    
-    /**
-     * get the progress label text
-     * 
-     * @return The progress bar label text
-     */
-    protected String getProgressLabelText() {
-        return progressLabel.getText();
-    }
-    
-    /**
-     * Sets the progress bar label text
-     * 
-     * @param text
-     */
-    protected void setProgressLabelText(String text) {
-        progressLabel.setText(text);
     }
     
     /**

@@ -5,9 +5,6 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * TODO: Contributors' names
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
@@ -30,36 +27,38 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
- * @author Lukas, Dan
+ * Tests games and their deadlines
  * 
+ * @author Team 9
+ * @version 1.0
  */
 public class GameTest {
     
-    static Session defaultSession;
-    static GameEntityManager manager;
-    static User existingUser;
-    static Project testProject;
-    static String mockSsid;
-    static MockData db;
+    static User existingUser = new User("joe", "joe", "1234", 2);
+    static Project testProject = new Project("test", "1");
+    static String mockSsid = "abc123";
+    static MockData db = new MockData(new HashSet<Object>());
+    static GameEntityManager manager = new GameEntityManager(db);
+    static Session defaultSession = new Session(existingUser, testProject, mockSsid);
 
+    /**
+     * Initializes mock network and saves a user to the database
+     */
     @BeforeClass
-    static public void setUpBeforeClass() {
+    static public void prepare() {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        mockSsid = "abc123";
-        testProject = new Project("test", "1");
-        existingUser = new User("joe", "joe", "1234", 2);
-        defaultSession = new Session(existingUser, testProject, mockSsid);
-        db = new MockData(new HashSet<Object>());
         db.save(existingUser);
-        manager = new GameEntityManager(db);
     }
     
-	@Test
-	public void TestRequirementEndsAfterDeadline() {
-		GameModel testgame = new GameModel("Test Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+	/**
+	 * Tests to ensure a game ends after its deadline by sleeping until the deadline is up
+	 */
+    @Test
+	public void TestGameEndsAfterDeadline() {
+		final GameModel testgame = new GameModel("Test Game", "something", null,
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() + 1000),
 				GameType.DISTRIBUTED, GameStatus.NEW);
 		GameModel created = new GameModel();
@@ -67,26 +66,31 @@ public class GameTest {
             created = manager
                     .makeEntity(defaultSession, testgame.toJSON());
             final List<Model> oldGameModels = db.retrieve(GameModel.class, "id", created.getID());
-            System.out.println(oldGameModels.size());
-            System.out.println("Hi" + oldGameModels.get(0));
             created.startGame();
             created = manager
                     .update(defaultSession, created.toJSON());
         }
         catch (WPISuiteException e1) {
+            System.out.print("");
         }
 		try {
             Thread.sleep(3000);
         }
         catch (InterruptedException e) {
+            System.out.print("");
         }
 		Assert.assertTrue(created.isEnded());
 	}
 
+    /**
+     * Tests that a game that hasn't reached its deadline and hasn't been ended in any other way
+     * is not yet ended.
+     */
 	@Test
 	public void TestRequirementNotCompleteBeforeDeadline() {
-		GameModel testgame = new GameModel("Test Game", "something", null,
-				DeckListModel.getInstance().getDefaultDeck(), new Date(
+
+		final GameModel testgame = new GameModel("Test Game", "something", null,
+				DeckModel.DEFAULT_DECK, new Date(
 						System.currentTimeMillis() + 100000000),
 				GameType.DISTRIBUTED, GameStatus.PENDING);
 		Assert.assertFalse(testgame.isEnded());

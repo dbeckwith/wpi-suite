@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
@@ -27,19 +27,18 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
+ * Tests the AddGameController class
  * 
- * @author Andrew
- * 
+ * @author Team 9
+ * @version 1.0
  */
 public class AddGameControllerTest {
 
-	static AddGameController instance;
+	static AddGameController instance = AddGameController.getInstance();
 
-	@BeforeClass
-	static public void setUpBeforeClass() {
-		AddGameControllerTest.instance = AddGameController.getInstance();
-	}
-
+	/**
+	 * Tests that getInstance returns the same instance
+	 */
 	@Test
 	public void testGetInstance() {
 		AddGameControllerTest.instance = AddGameController.getInstance();
@@ -48,17 +47,19 @@ public class AddGameControllerTest {
 				AddGameControllerTest.instance, AddGameController.getInstance());
 	}
 
+	/**
+	 * Tests that addGame sends a network request
+	 */
 	@Test
 	public void testAddGame() {
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
-		AddGameController agc = AddGameController.getInstance();
+		final AddGameController agc = AddGameController.getInstance();
 		agc.addGame(new GameModel( "Test", "Test Description",
-				new ArrayList<GameRequirementModel>(), DeckListModel
-						.getInstance().getDefaultDeck(), new Date(),
+				new ArrayList<GameRequirementModel>(),DeckModel.DEFAULT_DECK, new Date(),
 				GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.COMPLETE));
-		MockRequest request = ((MockNetwork) Network.getInstance())
+		final MockRequest request = ((MockNetwork) Network.getInstance())
 				.getLastRequestMade();
 		if (request == null) {
 			Assert.fail("request not sent");
