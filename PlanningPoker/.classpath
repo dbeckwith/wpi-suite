@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/Janeway/lib/swingx-all-1.6.4.jar"/>
-	<classpathentry kind="lib" path="/Janeway/lib/commons-email-1.3.2.jar"/>
+	<classpathentry kind="lib" path="/Janeway/lib/commons-email-1.3.2.jar" sourcepath="/Janeway/lib/commons-email-1.3.2.jar"/>
 	<classpathentry kind="lib" path="/Janeway/lib/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
