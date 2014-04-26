@@ -227,7 +227,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
         gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 5.0, 0.0, 0.0, 0.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0};
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
@@ -298,6 +298,15 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     
                 });
         
+        final JLabel lblGameStatistics = new JLabel("Game Statistics:");
+        lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
+        GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
+        gbc_lblGameStatistics.fill = GridBagConstraints.HORIZONTAL;
+        gbc_lblGameStatistics.insets = new Insets(0, 0, 5, 5);
+        gbc_lblGameStatistics.gridx = 1;
+        gbc_lblGameStatistics.gridy = 2;
+        add(lblGameStatistics, gbc_lblGameStatistics);
+        
         lblFinalEstimate = new JLabel("Final Estimate:");
         GridBagConstraints gbc_lblFinalEstimate = new GridBagConstraints();
         gbc_lblFinalEstimate.anchor = GridBagConstraints.EAST;
@@ -314,6 +323,23 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_finalEstimateField.gridy = 2;
         add(finalEstimateField, gbc_finalEstimateField);
         
+        final JLabel votedUsersLabel = new JLabel("Users Voted:");
+        GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
+        gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
+        gbc_votedUsersLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_votedUsersLabel.gridx = 1;
+        gbc_votedUsersLabel.gridy = 3;
+        add(votedUsersLabel, gbc_votedUsersLabel);
+        
+        votedUsersValueLabel = new JLabel("123");
+        GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
+        gbc_votedUsersValueLabel.anchor = GridBagConstraints.SOUTHWEST;
+        gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_votedUsersValueLabel.gridx = 2;
+        gbc_votedUsersValueLabel.gridy = 3;
+        add(votedUsersValueLabel, gbc_votedUsersValueLabel);
+        
         final JLabel lblNote = new JLabel("Note:");
         GridBagConstraints gbc_lblNote = new GridBagConstraints();
         gbc_lblNote.anchor = GridBagConstraints.EAST;
@@ -321,15 +347,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_lblNote.gridx = 4;
         gbc_lblNote.gridy = 3;
         add(lblNote, gbc_lblNote);
-        
-        final JLabel lblGameStatistics = new JLabel("Game Statistics:");
-        lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
-        GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
-        gbc_lblGameStatistics.fill = GridBagConstraints.HORIZONTAL;
-        gbc_lblGameStatistics.insets = new Insets(0, 0, 5, 5);
-        gbc_lblGameStatistics.gridx = 1;
-        gbc_lblGameStatistics.gridy = 4;
-        add(lblGameStatistics, gbc_lblGameStatistics);
         
         notePane = new JTextPane();
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -363,23 +380,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_notePane.gridx = 5;
         gbc_notePane.gridy = 3;
         add(notePane, gbc_notePane);
-        
-        final JLabel votedUsersLabel = new JLabel("Users Voted:");
-        GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
-        gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
-        gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
-        gbc_votedUsersLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_votedUsersLabel.gridx = 1;
-        gbc_votedUsersLabel.gridy = 5;
-        add(votedUsersLabel, gbc_votedUsersLabel);
-        
-        votedUsersValueLabel = new JLabel("123");
-        GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
-        gbc_votedUsersValueLabel.anchor = GridBagConstraints.NORTHWEST;
-        gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_votedUsersValueLabel.gridx = 2;
-        gbc_votedUsersValueLabel.gridy = 5;
-        add(votedUsersValueLabel, gbc_votedUsersValueLabel);
         meanLabel = new javax.swing.JLabel();
         
         meanLabel.setText("Mean:");
@@ -388,7 +388,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_meanLabel.anchor = GridBagConstraints.NORTH;
         gbc_meanLabel.insets = new Insets(0, 0, 5, 5);
         gbc_meanLabel.gridx = 1;
-        gbc_meanLabel.gridy = 6;
+        gbc_meanLabel.gridy = 4;
         add(meanLabel, gbc_meanLabel);
         meanValueLabel = new javax.swing.JLabel();
         
@@ -397,7 +397,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_meanValueLabel.anchor = GridBagConstraints.NORTHWEST;
         gbc_meanValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_meanValueLabel.gridx = 2;
-        gbc_meanValueLabel.gridy = 6;
+        gbc_meanValueLabel.gridy = 4;
         add(meanValueLabel, gbc_meanValueLabel);
         medianLabel = new javax.swing.JLabel();
         
@@ -407,8 +407,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_medianLabel.anchor = GridBagConstraints.NORTH;
         gbc_medianLabel.insets = new Insets(0, 0, 5, 5);
         gbc_medianLabel.gridx = 1;
-        gbc_medianLabel.gridy = 7;
+        gbc_medianLabel.gridy = 5;
         add(medianLabel, gbc_medianLabel);
+        
+        lblError = new JLabel("* Positive Integers Only!");
+        lblError.setVisible(false);
         medianValueLabel = new javax.swing.JLabel();
         
         medianValueLabel.setText("ABC");
@@ -416,11 +419,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_medianValueLabel.anchor = GridBagConstraints.NORTHWEST;
         gbc_medianValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_medianValueLabel.gridx = 2;
-        gbc_medianValueLabel.gridy = 7;
+        gbc_medianValueLabel.gridy = 5;
         add(medianValueLabel, gbc_medianValueLabel);
-        
-        lblError = new JLabel("* Positive Integers Only!");
-        lblError.setVisible(false);
         lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblError.setForeground(Color.RED);
         GridBagConstraints gbc_lblError = new GridBagConstraints();
