@@ -41,6 +41,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 
+
 /**
  * This is a class to show the panel when the user clicks create game button.
  * 
