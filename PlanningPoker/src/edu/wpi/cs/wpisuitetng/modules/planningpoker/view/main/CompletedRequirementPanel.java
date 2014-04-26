@@ -15,6 +15,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -67,22 +69,66 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         initComponents();
         tableScrollPane.getViewport().setBackground(Color.WHITE);
         addAncestorListener( new AncestorListener(){
-
+            
             @Override
             public void ancestorAdded(AncestorEvent event) {
                 finalEstimateField.requestFocusInWindow();
                 finalEstimateField.selectAll();
             }
-
+            
             @Override
             public void ancestorRemoved(AncestorEvent event) {
             }
-
+            
             @Override
             public void ancestorMoved(AncestorEvent event) {
             }
             
         });
+        
+        KeyListener saveOnEnter = new KeyListener(){
+            
+            final int enterKey = KeyEvent.VK_ENTER;
+            final int shiftKey = KeyEvent.VK_SHIFT;
+            boolean enterPressed = false;
+            boolean shiftPressed = false;
+            
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == enterKey){
+                    enterPressed = true;
+                }
+                
+                if(e.getKeyCode() == shiftKey){
+                    shiftPressed = true;
+                }
+                
+                if(enterPressed){
+                    if(shiftPressed){
+                        
+                    }
+                    saveFinalEstimate();
+                }
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == enterKey){
+                    enterPressed = false;
+                }
+                
+                if(e.getKeyCode() == shiftKey){
+                    shiftPressed = false;
+                }
+            }
+            
+        };
+        finalEstimateField.addKeyListener(saveOnEnter);
+        notePane.addKeyListener(saveOnEnter);
     }
     
     /**
@@ -109,11 +155,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
-                .setText(String.format("%1.1f", req.getEstimateMedian()));
+        .setText(String.format("%1.1f", req.getEstimateMedian()));
         if (parent_game.getOwner().equals(CurrentUserController.USER_NAME)
                 && req.getFinalEstimate() == 0) {
             finalEstimateField
-                    .setText((int) (req.getEstimateMean() + 0.5) + "");
+            .setText((int) (req.getEstimateMean() + 0.5) + "");
         }
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
@@ -150,7 +196,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.setModel(tableModel);
         
         votedUsersValueLabel
-                .setText(Integer.toString(tableModel.getRowCount()));
+        .setText(Integer.toString(tableModel.getRowCount()));
         notePane.setText(req.getEstimateNote());
     }
     
@@ -186,7 +232,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableScrollPane.setBackground(Color.WHITE);
         
         voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
-                null }, }, new String[] { "User", "Estimate" }) {
+            null }, }, new String[] { "User", "Estimate" }) {
             /**
              * 
              */
@@ -383,21 +429,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         saveFinalEstimateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                lblError.setVisible(false);
-                if (req.getFinalEstimate() != 0
-                        && !req.getEstimateNote().startsWith("Manual change: \n")) {
-                    req.setEstimateNote("Manual change: \n" + notePane.getText());
-                } else {
-                    req.setEstimateNote(notePane.getText());
-                }
-                req.setFinalEstimate(Integer.parseInt(finalEstimateField
-                        .getText()));
-                UpdateGamesController.getInstance().updateGame(parentModel);
-                final ArrayList<GameStatusObserver> gsos = parentModel
-                        .getStatusObservers();
-                for (int i = 0; i < gsos.size(); i++) {
-                    gsos.get(i).statusChanged(parentModel);
-                }
+                saveFinalEstimate();
             }
         });
         GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
@@ -447,6 +479,30 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
     }
+    
+    /**
+     * Saves the final estimate
+     */
+    private void saveFinalEstimate(){
+        if(saveFinalEstimateButton.isEnabled()){
+            lblError.setVisible(false);
+            if (req.getFinalEstimate() != 0
+                    && !req.getEstimateNote().startsWith("Manual change: \n")) {
+                req.setEstimateNote("Manual change: \n" + notePane.getText());
+            } else {
+                req.setEstimateNote(notePane.getText());
+            }
+            req.setFinalEstimate(Integer.parseInt(finalEstimateField
+                    .getText()));
+            UpdateGamesController.getInstance().updateGame(parentModel);
+            final ArrayList<GameStatusObserver> gsos = parentModel
+                    .getStatusObservers();
+            for (int i = 0; i < gsos.size(); i++) {
+                gsos.get(i).statusChanged(parentModel);
+            }
+        }
+    }
+    
     private javax.swing.JLabel meanLabel;
     private javax.swing.JLabel meanValueLabel;
     private javax.swing.JLabel medianLabel;
