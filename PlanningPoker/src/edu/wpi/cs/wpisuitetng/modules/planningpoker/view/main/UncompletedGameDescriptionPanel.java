@@ -55,7 +55,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setDeckName(game.getDeck().toString());
         
         System.out.println(gameName.getWidth());
-        int difference = gameDeadline.getX() - lblDeadline.getX();
+        final int difference = gameDeadline.getX() - lblDeadline.getX();
         if ((gameName.getX() + gameName.getWidth()) > lblDeadline.getX()) {
             lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, 
             		lblDeadline.getY());

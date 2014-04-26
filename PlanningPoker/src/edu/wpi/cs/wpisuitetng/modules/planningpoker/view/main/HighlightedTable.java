@@ -30,7 +30,7 @@ public class HighlightedTable extends JTable implements MouseMotionListener, Mou
 	}
 
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-		Component c = super.prepareRenderer(renderer, row, column);
+		final Component c = super.prepareRenderer(renderer, row, column);
 		if (!isRowSelected(row)) {
 			c.setBackground(highlightRow == row ? HIGHLIGHT_COLOR : Color.WHITE);
 		} else {

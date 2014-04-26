@@ -65,7 +65,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         if (CurrentUserController.getInstance().getUser() != null) {
             emailBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByEmail());
             imBox.setSelected(CurrentUserController.getInstance().getUser().isNotifyByIM());
-            boolean b = emailBox.isSelected();
+            final boolean b = emailBox.isSelected();
             lblEmail.setVisible(b);
             emailField.setVisible(b);
             saveButton.setVisible(b);
@@ -129,15 +129,15 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
             
             private void validate() {
-                String email = emailField.getText();
+                final String email = emailField.getText();
                 errorLabel.setVisible(false);
                 if (email.equals(CurrentUserController.getInstance().getUser().getEmail())) {
                     saveButton.setEnabled(false);
                 }
                 else {
                     saveButton.setEnabled(false);
-                    Pattern emailPattern;
-                    Matcher emailMatcher;
+                    final Pattern emailPattern;
+                    final Matcher emailMatcher;
                     final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     emailPattern = Pattern.compile(EMAIL_PATTERN);
@@ -241,7 +241,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {
         UserUpdateController.getInstance().setNotifyByEmail(emailBox.isSelected());
-        boolean b = emailBox.isSelected();
+        final boolean b = emailBox.isSelected();
         lblEmail.setVisible(b);
         emailField.setVisible(b);
         saveButton.setVisible(b);
@@ -256,7 +256,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void updateEmail() {
-        String email = emailField.getText();
+        final String email = emailField.getText();
         UserUpdateController.getInstance().updateEmail(email);
         saveButton.setEnabled(false);
     }

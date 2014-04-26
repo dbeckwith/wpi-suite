@@ -62,9 +62,9 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     
     static {
         CardButton.suits = new BufferedImage[4];
-        BufferedImage allSuits = ImageLoader.getImage("suits.png");
-        int sWidth = allSuits.getWidth() / 2;
-        int sHeight = allSuits.getHeight() / 2;
+        final BufferedImage allSuits = ImageLoader.getImage("suits.png");
+        final int sWidth = allSuits.getWidth() / 2;
+        final int sHeight = allSuits.getHeight() / 2;
         CardButton.suits[0] = allSuits.getSubimage(0, 0, sWidth, sHeight);
         CardButton.suits[1] = allSuits.getSubimage(sWidth, 0, sWidth, sHeight);
         CardButton.suits[2] = allSuits.getSubimage(0, sHeight, sWidth, sHeight);
@@ -88,7 +88,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     private JSpinner input;
     private double maxInput;
     
-    private List<ActionListener> listeners = new ArrayList<ActionListener>();
+    private final List<ActionListener> listeners = new ArrayList<ActionListener>();
     
     /**
      * Creates a new CardButton representing the given value.
@@ -114,7 +114,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     	input.setModel(new SpinnerNumberModel(1, 0, Double.MAX_VALUE-1, 0.5));
     	
     	input.setEditor(new JSpinner.NumberEditor(input, "0.0"));
-    	JFormattedTextField txt = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
+    	final JFormattedTextField txt = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
     	((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     	txt.setHorizontalAlignment(JTextField.CENTER);
     	txt.setBackground(new Color(255,255,255,0));
@@ -124,14 +124,14 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     	
     	value = "";
     	
-    	GridBagLayout gridBagLayout = new GridBagLayout();
+    	final GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		GridBagConstraints gbc = new GridBagConstraints();
+		final GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -159,17 +159,17 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     		input.setFont(input.getFont().deriveFont(getWidth()*FONT_SIZE));
     	}
     	
-        Graphics2D g2 = (Graphics2D) g;
+        final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int suitMargin = (int) (getWidth() * CardButton.MARGIN_LOGO);
+        final int suitMargin = (int) (getWidth() * CardButton.MARGIN_LOGO);
         
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, getWidth(), getHeight());
         
         if (isEnabled()) {
-            int suitSize = (int) (getWidth() * CardButton.FRONT_SUIT_SIZE);
+            final int suitSize = (int) (getWidth() * CardButton.FRONT_SUIT_SIZE);
             //highlight card background
             if (hover || selected) {
                 g2.setColor(HIGHLIGHT_COLOR);
@@ -190,17 +190,17 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 	            g2.setFont(new Font(g.getFont().getFontName(), Font.BOLD,
 	                    (int) (getWidth() * ((hover || selected) ? CardButton.FONT_SIZE_HOVER
 	                            : CardButton.FONT_SIZE))));
-	            Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
+	            final Rectangle2D r = g2.getFontMetrics().getStringBounds(value, g);
 	            g2.drawString(value, (int) (getWidth() - r.getWidth()) / 2,
 	                    (int) (getHeight() - r.getHeight()) / 2
 	                            + g2.getFontMetrics().getAscent());
             } else {
             	if(maxInput != DeckModel.NO_LIMIT){
             		g2.setColor(Color.BLACK);
-            		String maxString = "Max : "+ cardFormat.format(((SpinnerNumberModel)input
+            		final String maxString = "Max : "+ cardFormat.format(((SpinnerNumberModel)input
             				.getModel()).getMaximum());
             		g2.setFont(g.getFont().deriveFont(getWidth()*FONT_SIZE*0.3f));
-            		Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
+            		final Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
             		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
     	                    (int) (getHeight() - r.getHeight()) / 2
     	                            + g2.getFontMetrics().getAscent() + input.getHeight()/2);
@@ -209,7 +209,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
             
         }
         else {
-            int suitSize = (int) (getWidth() * CardButton.BACK_SUIT_SIZE);
+            final int suitSize = (int) (getWidth() * CardButton.BACK_SUIT_SIZE);
             g2.drawImage(CardButton.suits[suitIndex],
                     (getWidth() - suitSize) / 2, (getHeight() - suitSize) / 2,
                     suitSize, suitSize, null);
@@ -232,7 +232,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
      */
     public float getEstimateValue() {
     	if(textInput){
-    		float enteredValue = ((Number)(input.getModel().getValue())).floatValue();
+    		final float enteredValue = ((Number)(input.getModel().getValue())).floatValue();
     		if(maxInput != DeckModel.NO_LIMIT){
     			return (float) Math.min(maxInput, enteredValue);
     		} else {
@@ -256,7 +256,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     
     public void setLimit(int limit){
     	maxInput = limit;
-    	double cardLimit = (limit == DeckModel.NO_LIMIT)?Double.MAX_VALUE:limit;
+    	final double cardLimit = (limit == DeckModel.NO_LIMIT)?Double.MAX_VALUE:limit;
     	input.setModel(new SpinnerNumberModel(1, 0,cardLimit, 0.5));
     }
     
@@ -336,7 +336,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		float inputValue = ((Number)input.getValue()).floatValue();
+		final float inputValue = ((Number)input.getValue()).floatValue();
 		if(maxInput != DeckModel.NO_LIMIT && inputValue > maxInput){
 			input.setValue(maxInput);
 		} else {

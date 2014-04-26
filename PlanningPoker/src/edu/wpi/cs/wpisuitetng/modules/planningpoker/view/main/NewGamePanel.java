@@ -65,7 +65,7 @@ public class NewGamePanel extends JPanel {
         setErrorBorder(newReqDesc, false);
         
         gameDescription.setEditGamePanel(this);
-        GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+        final GroupLayout gl_panel_1 = new GroupLayout(panel_1);
         gl_panel_1.setHorizontalGroup(
             gl_panel_1.createParallelGroup(Alignment.LEADING)
                 .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
@@ -282,7 +282,7 @@ public class NewGamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO: get new ID incremented off of existing requirements
-            	GameRequirementModel newRequirement = new GameRequirementModel(
+            	final GameRequirementModel newRequirement = new GameRequirementModel(
             			0,
             			newReqName.getText(),
             			newReqDesc.getText(),

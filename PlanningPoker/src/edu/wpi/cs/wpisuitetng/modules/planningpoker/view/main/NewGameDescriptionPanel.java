@@ -73,8 +73,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         //set default game name
         final Calendar now = new GregorianCalendar();
         final int gameCount = GameListModel.getInstance().getGames().size();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-        String formatted = formatter.format(now.getTime());
+        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        final String formatted = formatter.format(now.getTime());
         nameField.setText(String.format("Game %d - ", gameCount + 1)
                 + formatted);
         isNameValid = true;
@@ -232,12 +232,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         deckOptions = new DeckOptionsPanel();
         deckOptions.setParent(this);
         
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
         panel.setBorder(new TitledBorder(null, "Game Type",
                 TitledBorder.LEADING, TitledBorder.TOP, null, null));
         
-        JPanel panel_1 = new JPanel();
+        final JPanel panel_1 = new JPanel();
         panel_1.setBorder(new TitledBorder(null, "Deadline",
                 TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel_1.setBackground(Color.WHITE);
@@ -338,7 +338,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                 "h:mm a");
         timeSpinner.setEditor(dEdit);
         timeSpinner.setValue(getDefaultDate());
-        GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+        final GroupLayout gl_panel_1 = new GroupLayout(panel_1);
         gl_panel_1
                 .setHorizontalGroup(gl_panel_1
                         .createParallelGroup(Alignment.LEADING)
@@ -435,7 +435,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         gameType.add(live);
         live.setText("Live Game");
-        GroupLayout gl_panel = new GroupLayout(panel);
+        final GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
                 Alignment.LEADING).addGroup(
                 gl_panel.createSequentialGroup()

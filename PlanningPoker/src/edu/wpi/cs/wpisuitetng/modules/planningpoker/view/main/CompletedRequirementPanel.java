@@ -109,7 +109,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             private static final long serialVersionUID = 766575328559324615L;
             
             /*
-             * (non-Javadoc)
              * 
              * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
              */
