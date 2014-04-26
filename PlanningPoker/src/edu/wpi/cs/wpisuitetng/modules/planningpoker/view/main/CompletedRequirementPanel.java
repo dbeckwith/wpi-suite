@@ -24,6 +24,8 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -64,6 +66,23 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         // setup tablemodel (using autogenerted netbeans code)
         initComponents();
         tableScrollPane.getViewport().setBackground(Color.WHITE);
+        addAncestorListener( new AncestorListener(){
+
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                finalEstimateField.requestFocusInWindow();
+                finalEstimateField.selectAll();
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+            
+        });
     }
     
     /**
@@ -99,7 +118,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
-        
+        finalEstimateField.requestFocusInWindow();
+        finalEstimateField.selectAll();
         tableModel = new javax.swing.table.DefaultTableModel() {
             
             /**
