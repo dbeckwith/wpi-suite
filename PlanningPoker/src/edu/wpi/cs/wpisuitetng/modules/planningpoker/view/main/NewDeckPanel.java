@@ -9,23 +9,25 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
-import java.awt.SystemColor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.SpringLayout;
-import javax.swing.border.EtchedBorder;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -33,6 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * 
@@ -54,24 +57,11 @@ public class NewDeckPanel extends JPanel {
         setBackground(Color.WHITE);
         GetDecksController.getInstance().retrieveDecks();
         
-        final SpringLayout springLayout = new SpringLayout();
-        setLayout(springLayout);
+        cards = new ArrayList<CardButton>();
         
         final JLabel deckLabel = new JLabel("Deck Name: *");
-        springLayout.putConstraint(SpringLayout.NORTH, deckLabel, 10,
-                SpringLayout.NORTH, this);
-        springLayout.putConstraint(SpringLayout.WEST, deckLabel, 10,
-                SpringLayout.WEST, this);
-        add(deckLabel);
         
         newDeckName = new JTextField();
-        springLayout.putConstraint(SpringLayout.NORTH, newDeckName, 6,
-                SpringLayout.SOUTH, deckLabel);
-        springLayout.putConstraint(SpringLayout.WEST, newDeckName, 10,
-                SpringLayout.WEST, this);
-        springLayout.putConstraint(SpringLayout.EAST, newDeckName, -10,
-                SpringLayout.EAST, this);
-        add(newDeckName);
         newDeckName.setColumns(10);
         
         newDeckName.getDocument().addDocumentListener(new DocumentListener() {
@@ -118,67 +108,13 @@ public class NewDeckPanel extends JPanel {
         });
         
         final JLabel cardLabel = new JLabel("Cards: *");
-        springLayout.putConstraint(SpringLayout.NORTH, cardLabel, 13,
-                SpringLayout.SOUTH, newDeckName);
-        springLayout.putConstraint(SpringLayout.WEST, cardLabel, 0,
-                SpringLayout.WEST, deckLabel);
-        add(cardLabel);
-        
-        newDeckCards = new JTextPane();
-        springLayout.putConstraint(SpringLayout.NORTH, newDeckCards, 6,
-                SpringLayout.SOUTH, cardLabel);
-        newDeckCards.setForeground(SystemColor.desktop);
-        newDeckCards.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-                null));
-        springLayout.putConstraint(SpringLayout.WEST, newDeckCards, 10,
-                SpringLayout.WEST, this);
-        springLayout.putConstraint(SpringLayout.EAST, newDeckCards, -10,
-                SpringLayout.EAST, this);
-        add(newDeckCards);
-        
-        newDeckCards.getDocument().addDocumentListener(new DocumentListener() {
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validate();
-            }
-            
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validate();
-                
-            }
-            
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validate();
-                
-            }
-            
-            private void validate() {
-
-                final String pattern = " *([0-9]{1,3} *, *)*[0-9]{1,3} *";
-                areCardsValid = newDeckCards.getText() != null
-                        && !newDeckCards.getText().isEmpty()
-                        && Pattern.matches(pattern, newDeckCards.getText());
-                
-                setErrorBorder(newDeckCards, areCardsValid);
-                
-                checkNewDeck();
-            }
-        });
         
         createDeckButton = new JButton("Create Deck");
-        springLayout.putConstraint(SpringLayout.WEST, createDeckButton, 0,
-                SpringLayout.WEST, deckLabel);
-        springLayout.putConstraint(SpringLayout.SOUTH, createDeckButton, -10,
-                SpringLayout.SOUTH, this);
-        add(createDeckButton);
         
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                final String newCards = newDeckCards.getText();
+            	String newCards = null; //###################################################################################### #FIXIT
                 final String[] newCardArray = newCards.split("[ ,]+");
                 final ArrayList<Double> cards = new ArrayList<Double>();
                 for (String newCard : newCardArray) {
@@ -202,63 +138,122 @@ public class NewDeckPanel extends JPanel {
             }
         });
         
-        springLayout.putConstraint(SpringLayout.SOUTH, cancelCreationButton, 0,
-                SpringLayout.SOUTH, createDeckButton);
-        springLayout.putConstraint(SpringLayout.EAST, cancelCreationButton,
-                -10, SpringLayout.EAST, this);
-        add(cancelCreationButton);
-        
         final ButtonGroup selectionGroup = new ButtonGroup();
         
         final JRadioButton singleSelect = new JRadioButton("Single");
         singleSelect.setBackground(Color.WHITE);
         singleSelect.setSelected(true);
-        springLayout.putConstraint(SpringLayout.WEST, singleSelect, 0,
-                SpringLayout.WEST, deckLabel);
-        springLayout.putConstraint(SpringLayout.SOUTH, singleSelect, -19,
-                SpringLayout.NORTH, createDeckButton);
-        add(singleSelect);
         
         multipleSelect = new JRadioButton("Multiple");
         multipleSelect.setBackground(Color.WHITE);
-        springLayout.putConstraint(SpringLayout.NORTH, multipleSelect, 0,
-                SpringLayout.NORTH, singleSelect);
-        springLayout.putConstraint(SpringLayout.WEST, multipleSelect, 4,
-                SpringLayout.EAST, singleSelect);
-        add(multipleSelect);
         
         selectionGroup.add(singleSelect);
         selectionGroup.add(multipleSelect);
         
         final JLabel selectionLabel = new JLabel("Selection Mode");
-        springLayout.putConstraint(SpringLayout.WEST, selectionLabel, 0,
-                SpringLayout.WEST, deckLabel);
-        springLayout.putConstraint(SpringLayout.SOUTH, selectionLabel, -1,
-                SpringLayout.NORTH, singleSelect);
-        add(selectionLabel);
-        
-        cardHelpLabel = new JLabel(
-                "Please enter a list of integers (up to 3 digits) separated by commas");
-        springLayout.putConstraint(SpringLayout.NORTH, cardHelpLabel, 2,
-                SpringLayout.SOUTH, newDeckCards);
-        springLayout.putConstraint(SpringLayout.WEST, cardHelpLabel, 0,
-                SpringLayout.WEST, deckLabel);
-        add(cardHelpLabel);
         
         errorLabel = new JLabel("<errors>");
         errorLabel.setForeground(Color.RED);
-        springLayout.putConstraint(SpringLayout.NORTH, errorLabel, 5,
-                SpringLayout.NORTH, createDeckButton);
-        springLayout.putConstraint(SpringLayout.WEST, errorLabel, 6,
-                SpringLayout.EAST, createDeckButton);
-        add(errorLabel);
 
         newDeckName.setText(makeNewDeckName());
         
         checkNewDeck();
         
         setErrorBorder(newDeckName, true);
-        setErrorBorder(newDeckCards, false);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        JButton addCard = new JButton("Add Card");
+        addCard.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		System.out.println("adding card");
+        		CardButton newCard = new CardButton();
+        		newCard.setPreferredSize(new Dimension(80, 120));
+        		cards.add(newCard);
+        		newCard.setValue(cards.size());
+        		cardPanel.add(newCard);
+        		
+        		cardPanel.repaint();
+        		cardPanel.revalidate();
+        	}
+        });
+        addCard.setIcon(ImageLoader.getIcon("newReq.png"));
+        
+        JButton deleteCard = new JButton("Delete Card");
+        deleteCard.setIcon(ImageLoader.getIcon("Delete.png"));
+        
+        GroupLayout groupLayout = new GroupLayout(this);
+        groupLayout.setHorizontalGroup(
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+        					.addContainerGap())
+        				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+        					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addComponent(singleSelect)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(multipleSelect))
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(deckLabel)
+        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+        								.addComponent(cardLabel)
+        								.addGroup(groupLayout.createSequentialGroup()
+        									.addComponent(createDeckButton)
+        									.addPreferredGap(ComponentPlacement.RELATED)
+        									.addComponent(errorLabel)
+        									.addPreferredGap(ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+        									.addComponent(cancelCreationButton)))
+        							.addPreferredGap(ComponentPlacement.RELATED))
+        						.addComponent(selectionLabel))
+        					.addGap(8))
+        				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+        					.addComponent(addCard)
+        					.addPreferredGap(ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+        					.addComponent(deleteCard)
+        					.addContainerGap())))
+        );
+        groupLayout.setVerticalGroup(
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(deckLabel)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(newDeckName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(cardLabel)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(addCard)
+        				.addComponent(deleteCard))
+        			.addGap(18)
+        			.addComponent(selectionLabel)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(singleSelect)
+        						.addComponent(multipleSelect))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(createDeckButton)
+        						.addComponent(cancelCreationButton)))
+        				.addComponent(errorLabel))
+        			.addContainerGap())
+        );
+        
+        cardPanel = new JPanel();
+        cardPanel.setBackground(Color.WHITE);
+        scrollPane.setViewportView(cardPanel);
+        cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        setLayout(groupLayout);
     }
     
     /**
@@ -268,7 +263,6 @@ public class NewDeckPanel extends JPanel {
      */
     public void resetFields() {
         newDeckName.setText(makeNewDeckName());
-        newDeckCards.setText("");
     }
     
     private void checkNewDeck() {
@@ -349,6 +343,8 @@ public class NewDeckPanel extends JPanel {
         parentPanel = p;
     }
     
+    private ArrayList<CardButton> cards;
+    private JPanel cardPanel;
     private NewGamePanel parentPanel;
     private final JButton createDeckButton;
     private final JTextField newDeckName;
@@ -356,8 +352,6 @@ public class NewDeckPanel extends JPanel {
     private boolean isNameValid = false;
     private boolean areCardsValid = false;
     private boolean nameInUse = false;
-    private final JTextPane newDeckCards;
     private final JRadioButton multipleSelect;
-    private final JLabel cardHelpLabel;
     private final JLabel errorLabel;
 }

@@ -165,7 +165,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
         if (isEnabled()) {
             int suitSize = (int) (getWidth() * CardButton.FRONT_SUIT_SIZE);
             //highlight card background
-            if (hover || selected) {
+            if (!textInput && (hover || selected)) {
                 g2.setColor(HIGHLIGHT_COLOR);
                 g2.fillRect(0, 0, getWidth(), getHeight());
 
