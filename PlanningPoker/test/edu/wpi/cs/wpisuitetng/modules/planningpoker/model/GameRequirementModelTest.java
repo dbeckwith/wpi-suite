@@ -34,9 +34,12 @@ public class GameRequirementModelTest {
     public void testMean() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
                 "A requirement", "A Description", "A type");
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25, null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20, null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25,
+                null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20,
+                null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30,
+                null));
         Assert.assertEquals("testing mean failed", 25, grm.getEstimateMean(), 3);
     }
     
@@ -47,12 +50,16 @@ public class GameRequirementModelTest {
     public void testMedian() {
         final GameRequirementModel grm = new GameRequirementModel(-1,
                 "A requirement", "A Description", "A type");
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25, null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20, null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25,
+                null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20,
+                null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30,
+                null));
         Assert.assertEquals("testing median failed", 25,
                 grm.getEstimateMedian(), 3);
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 25, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 25,
+                null));
         Assert.assertEquals("testing median failed", 25,
                 grm.getEstimateMedian(), 3);
         
@@ -94,19 +101,17 @@ public class GameRequirementModelTest {
      */
     @Test
     public void testEqualsMethod() {
-        final GameRequirementModel grm = new GameRequirementModel(-1,
-                "A requirement", "A description", "A type",
-                new ArrayList<Estimate>());
-        final GameRequirementModel grmDouble = new GameRequirementModel(-1,
-                "A requirement", "A description", "A type",
-                new ArrayList<Estimate>());
-        final GameRequirementModel grmDifferent1 = new GameRequirementModel(-1,
+        final Object grm = new GameRequirementModel(-1, "A requirement",
+                "A description", "A type", new ArrayList<Estimate>());
+        final Object grmDouble = new GameRequirementModel(-1, "A requirement",
+                "A description", "A type", new ArrayList<Estimate>());
+        final Object grmDifferent1 = new GameRequirementModel(-1,
                 "A requirement", "B description", "A type");
-        final GameRequirementModel grmDifferent2 = new GameRequirementModel(5,
+        final Object grmDifferent2 = new GameRequirementModel(5,
                 "B requirement", "A description", "B type");
-        final GameRequirementModel grmDifferent3 = new GameRequirementModel(6,
+        final Object grmDifferent3 = new GameRequirementModel(6,
                 "C requirement", "D description", "Z type");
-        final GameRequirementModel blank = new GameRequirementModel();
+        final Object blank = new GameRequirementModel();
         final int anInteger = 5;
         final String aString = "A String";
         
@@ -116,12 +121,9 @@ public class GameRequirementModelTest {
         Assert.assertFalse(grm.equals(anInteger));
         Assert.assertFalse(grm.equals(aString));
         Assert.assertTrue(grm.equals(grmDouble));
-        Assert.assertTrue(grmDouble.equals((Object) grm));
-        Assert.assertFalse(grm.equals((Object) grmDifferent1));
-        Assert.assertFalse(grm.equals( grmDifferent1));
-        Assert.assertFalse(grm.equals((Object) grmDifferent2));
+        Assert.assertTrue(grmDouble.equals(grm));
+        Assert.assertFalse(grm.equals(grmDifferent1));
         Assert.assertFalse(grm.equals(grmDifferent2));
-        Assert.assertFalse(grm.equals((Object) grmDifferent3));
         Assert.assertFalse(grm.equals(grmDifferent3));
         
     }

@@ -23,7 +23,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockRequest;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -41,22 +40,22 @@ public class GetGamesControllerTest {
     GameModel nullGame = new GameModel();
     GameModel game1 = new GameModel("Test Game 1", "Live Game that just ended",
             null,DeckModel.DEFAULT_DECK, new Date(),
-            GameType.LIVE, GameStatus.COMPLETE);
+            GameStatus.COMPLETE);
     GameModel game2 = new GameModel("Test Game 2",
-            "Distributed Game that will end in 5 seconds", null, DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() + 5000), GameType.DISTRIBUTED,
+            "Game that will end in 5 seconds", null, DeckModel.DEFAULT_DECK, new Date(
+                    System.currentTimeMillis() + 5000),
             GameStatus.PENDING);
     GameModel game3 = new GameModel(
             "Test Game 3",
-            "Live Game with end time in 10 seconds, but already manually ended",
+            "Game with end time in 10 seconds, but already manually ended",
             null,DeckModel.DEFAULT_DECK, new Date(System
-                    .currentTimeMillis() + 10000), GameType.LIVE,
+                    .currentTimeMillis() + 10000),
             GameStatus.COMPLETE);
     GameModel game4 = new GameModel(
             "Test Game 4",
-            "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
+            "Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
             null,DeckModel.DEFAULT_DECK, new Date(System
-                    .currentTimeMillis() - 10000), GameType.DISTRIBUTED,
+                    .currentTimeMillis() - 10000),
             GameStatus.PENDING);
     GameListModel list = GameListModel.getInstance();
     GameModel[] gamesToAdd = new GameModel[] { game1, game2, game3, game4 };
@@ -81,25 +80,22 @@ public class GetGamesControllerTest {
         instance = GetGamesController.getInstance();
         nullGame = new GameModel();
         game1 = new GameModel("Test Game 1", "Live Game that just ended", null,
-               DeckModel.DEFAULT_DECK, new Date(),
-                GameType.LIVE, GameStatus.COMPLETE);
+               DeckModel.DEFAULT_DECK, new Date(), GameStatus.COMPLETE);
         game2 = new GameModel("Test Game 2",
-                "Distributed Game that will end in 5 seconds", null,
+                "Game that will end in 5 seconds", null,
                DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() + 5000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                        System.currentTimeMillis() + 5000), GameStatus.PENDING);
         game3 = new GameModel(
                 "Test Game 3",
-                "Live Game with end time in 10 seconds, but already manually ended",
+                "Game with end time in 10 seconds, but already manually ended",
                 null,DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() + 10000), GameType.LIVE,
+                        System.currentTimeMillis() + 10000),
                 GameStatus.COMPLETE);
         game4 = new GameModel(
                 "Test Game 4",
-                "Distributed Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
+                "Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
                 null,DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 10000),
-                GameType.DISTRIBUTED, GameStatus.PENDING);
+                        System.currentTimeMillis() - 10000), GameStatus.PENDING);
         list = GameListModel.getInstance();
         gamesToAdd = new GameModel[] { game1, game2, game3, game4 };
         list.removeObservers();

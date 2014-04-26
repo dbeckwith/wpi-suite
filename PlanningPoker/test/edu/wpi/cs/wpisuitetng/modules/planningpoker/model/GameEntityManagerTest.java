@@ -41,8 +41,7 @@ public class GameEntityManagerTest {
     static User existingUser = new User("joe", "joe", "1234", 2);
     static GameModel existingGame = new GameModel("Existing Game", "something", null,
            DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() - 100000),
-                    GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                    System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
     static int existingGameID = existingGame.getID();
     static Project testProject = new Project("test", "1");
     static User admin = new User("admin", "admin", "1234", 27);
@@ -51,16 +50,14 @@ public class GameEntityManagerTest {
     static GameEntityManager manager = new GameEntityManager(db);
     static GameModel newGame = new GameModel("New Game", "A new game", null,
            DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() - 100000),
-                    GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                    System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
     static int newGameID = newGame.getID();
     static GameModel goodUpdatedGame = new GameModel();;
     static Session adminSession = new Session(admin, testProject, mockSsid);
     static Project otherProject = new Project("other", "2");
     static GameModel otherGame = new GameModel("Other Game", "something", null,
            DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() - 100000),
-                    GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                    System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
     
     /**
      * Initializes the mock network and prepares other variables
@@ -74,8 +71,7 @@ public class GameEntityManagerTest {
         admin.setRole(Role.ADMIN);
         final GameModel gameUpdates = new GameModel("Updated Game", "Some updates",
                 null,DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 100000),
-                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                        System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
         goodUpdatedGame.copyFrom(existingGame);
         goodUpdatedGame.editCopyFrom(gameUpdates);
         
@@ -167,8 +163,7 @@ public class GameEntityManagerTest {
     public void testSave() {
         final GameModel game = new GameModel("Save Test", "something", null,
                DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 100000),
-                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                        System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
         final int saveTestGameID = game.getID();
         manager.save(defaultSession, game);
         Assert.assertSame(game, db.retrieve(GameModel.class, "id", saveTestGameID).get(0));
@@ -226,8 +221,7 @@ public class GameEntityManagerTest {
     public void testDeleteAll() throws WPISuiteException {
         final GameModel anotherGame = new GameModel("a title", "a description",
                 null,DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 100000),
-                        GameModel.GameType.DISTRIBUTED, GameModel.GameStatus.PENDING);
+                        System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
         manager.makeEntity(defaultSession, anotherGame.toJSON());
         Assert.assertEquals(2, db.retrieveAll(new GameModel(), testProject)
                 .size());
