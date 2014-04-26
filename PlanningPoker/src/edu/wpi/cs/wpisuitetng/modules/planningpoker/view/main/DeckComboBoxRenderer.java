@@ -28,7 +28,8 @@ public class DeckComboBoxRenderer extends BasicComboBoxRenderer {
 	
 	private static final DecimalFormat cardFormat = new DecimalFormat("0.0");
 
-	@Override
+	@SuppressWarnings("rawtypes")
+    @Override
 	public Component getListCellRendererComponent(JList list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		if (isSelected) {
