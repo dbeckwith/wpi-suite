@@ -72,6 +72,7 @@ public class RequirementRequestThread extends Thread {
      *        the controller to notify
      */
     public RequirementRequestThread(AbstractRequirementController controller) {
+        super("Requirement Request Thread");
         this.controller = controller;
     }
     

@@ -76,7 +76,7 @@ public class GameRequirementModelTest {
     @Test
     public void testOtherConstructors() {
         final GameRequirementModel blank = new GameRequirementModel();
-        Assert.assertEquals(-1, blank.getParentId());
+        Assert.assertEquals(0, blank.getParentId());
         blank.setParentId(1);
         Assert.assertEquals(1, blank.getParentId());
         Assert.assertSame("", blank.getType());

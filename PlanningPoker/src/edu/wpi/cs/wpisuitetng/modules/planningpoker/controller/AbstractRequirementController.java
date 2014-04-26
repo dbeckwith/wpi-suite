@@ -32,12 +32,13 @@ public abstract class AbstractRequirementController {
     
     private long timeout = 1500;
     
-    private Requirement[] reqs = null;
+    private static Requirement[] reqs = null;
     
     final GetRequirementsRequestObserver observer;
     
     protected AbstractRequirementController() {
         observer = new GetRequirementsRequestObserver(this);
+        retrieveRequirements();
     }
     
     /**
@@ -52,7 +53,7 @@ public abstract class AbstractRequirementController {
      * Requests query of all requirements related to the project.
      * 
      */
-    public void requestRequirements() {
+    public void retrieveRequirements() {
         synchronized (this) {
             new RequirementRequestThread(this).start();
             try {

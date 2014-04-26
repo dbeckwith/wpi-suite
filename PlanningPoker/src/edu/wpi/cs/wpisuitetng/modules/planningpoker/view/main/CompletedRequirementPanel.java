@@ -31,11 +31,15 @@ import javax.swing.table.DefaultTableModel;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 
 /**
  * 
@@ -57,7 +61,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     /**
      * Creates a new CompletedRequirementPanel
-     *
+     * 
      */
     public CompletedRequirementPanel() {
         setBackground(Color.WHITE);
@@ -98,6 +102,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         }
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
+        }        
+        
+        if (req.isFromRequirementManager() && req.getFinalEstimate() != 0) {
+            updateReqMan.setEnabled(true);
+        }
+        else {
+            updateReqMan.setEnabled(false);
         }
         
         tableModel = new javax.swing.table.DefaultTableModel() {
@@ -174,7 +185,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
              * 
              */
             private static final long serialVersionUID = -5144539907705808611L;
-            private final boolean[] columnEditables = new boolean[] { false, false };
+            private final boolean[] columnEditables = new boolean[] { false,
+                    false };
             
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -199,7 +211,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         finalEstimateField = new JTextField();
         finalEstimateField.setColumns(10);
         finalEstimateField.setBackground(Color.WHITE);
-        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
+                null, null));
         saveFinalEstimateButton = new JButton("Save");
         saveFinalEstimateButton.setEnabled(false);
         saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
@@ -236,9 +249,12 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent arg0) {
                 lblError.setVisible(false);
                 if (req.getFinalEstimate() != 0
-                        && !req.getEstimateNote().startsWith("Manual change: \n")) {
-                    req.setEstimateNote("Manual change: \n" + notePane.getText());
-                } else {
+                        && !req.getEstimateNote().startsWith(
+                                "Manual change: \n")) {
+                    req.setEstimateNote("Manual change: \n"
+                            + notePane.getText());
+                }
+                else {
                     req.setEstimateNote(notePane.getText());
                 }
                 req.setFinalEstimate(Integer.parseInt(finalEstimateField
@@ -290,15 +306,23 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 validatePanel();
             }
         });
+        
+        updateReqMan = new JButton("Update Requirement Manager");
+        updateReqMan.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                req.updateRequirementManager();
+            }
+        });
+        
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
-                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 879,
+                .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 1073,
                         Short.MAX_VALUE)
                 .addGroup(
                         layout.createSequentialGroup().addContainerGap()
                                 .addComponent(meanLabel)
-                                .addContainerGap(839, Short.MAX_VALUE))
+                                .addContainerGap(1030, Short.MAX_VALUE))
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addContainerGap()
@@ -348,9 +372,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                 .addPreferredGap(ComponentPlacement.RELATED)
                                 .addGroup(
                                         layout.createParallelGroup(
-                                                Alignment.LEADING)
+                                                Alignment.TRAILING)
                                                 .addGroup(
-                                                        Alignment.TRAILING,
                                                         layout.createSequentialGroup()
                                                                 .addComponent(
                                                                         notePane,
@@ -359,13 +382,19 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                                                         GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(
                                                                         ComponentPlacement.RELATED,
-                                                                        36,
+                                                                        172,
                                                                         Short.MAX_VALUE)
                                                                 .addGroup(
                                                                         layout.createParallelGroup(
                                                                                 Alignment.TRAILING)
-                                                                                .addComponent(
-                                                                                        saveFinalEstimateButton)
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addComponent(
+                                                                                                        updateReqMan)
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        saveFinalEstimateButton))
                                                                                 .addComponent(
                                                                                         lblError)))
                                                 .addComponent(
@@ -379,7 +408,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addComponent(tableScrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 186,
+                                        GroupLayout.DEFAULT_SIZE, 156,
                                         Short.MAX_VALUE)
                                 .addGroup(
                                         layout.createParallelGroup(
@@ -437,8 +466,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                                                                                         medianLabel)
                                                                                                 .addComponent(
                                                                                                         medianValueLabel))
-                                                                                .addComponent(
-                                                                                        saveFinalEstimateButton))
+                                                                                .addGroup(
+                                                                                        layout.createParallelGroup(
+                                                                                                Alignment.BASELINE)
+                                                                                                .addComponent(
+                                                                                                        saveFinalEstimateButton)
+                                                                                                .addComponent(
+                                                                                                        updateReqMan)))
                                                                 .addContainerGap())
                                                 .addGroup(
                                                         layout.createSequentialGroup()
@@ -479,22 +513,25 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void run() {
                 final String pattern = "^[\\s]*$";
                 try {
-                    final int finalEstimate = Integer.parseInt(finalEstimateField
-                            .getText());
+                    final int finalEstimate = Integer
+                            .parseInt(finalEstimateField.getText());
                     if (finalEstimate == req.getFinalEstimate()) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else if (finalEstimate <= 0) {
+                    }
+                    else if (finalEstimate <= 0) {
                         //set error label
                         lblError.setText("* Positive Integers Only!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else if (Pattern.matches(pattern, notePane.getText()) 
+                    }
+                    else if (Pattern.matches(pattern, notePane.getText())
                             && req.getFinalEstimate() != 0) {
                         lblError.setText("* You Must Add a Note!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                    } else {
+                    }
+                    else {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(true);
                     }
@@ -520,6 +557,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JTextField finalEstimateField;
     private JLabel lblError;
     private JButton saveFinalEstimateButton;
+    private JButton updateReqMan;
     private JLabel votedUsersValueLabel;
     private JTextPane notePane;
 }

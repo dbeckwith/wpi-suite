@@ -16,7 +16,12 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 
 /**
  * A simplified requirement model for a planning poker game
@@ -37,7 +42,7 @@ public class GameRequirementModel extends AbstractModel {
 	private int finalEstimate;
 	
 	private String estimateNote;
-	
+	private boolean fromRequirementManager = false;
 	/**
 	 * A unique id for this instance of the requirement
 	 */
@@ -114,6 +119,7 @@ public class GameRequirementModel extends AbstractModel {
 	public GameRequirementModel(Requirement r) {
 		this(r.getId(), r.getName(), r.getDescription(),
 				r.getType().toString(), new ArrayList<Estimate>());
+		fromRequirementManager = true;
 	}
 
 	/**
@@ -350,6 +356,25 @@ public class GameRequirementModel extends AbstractModel {
             toReturn = super.equals(other);
         }
         return toReturn;
+    }
+    
+    /**
+     * 
+     */
+    public void updateRequirementManager() {
+        GetRequirementsController.getInstance().retrieveRequirements();
+        Requirement parent = GetParentRequirementController.getInstance().getParentRequirement(parentId);
+        parent.setEstimate(finalEstimate);
+        UpdateRequirementController.getInstance().updateRequirement(parent);
+        RequirementModel.getInstance().getRequirement(parentId).setEstimate(finalEstimate);
+        ViewEventController.getInstance().refreshTable();
+    }
+    
+    /**
+     * @return True if this requirement came from the requirement manager
+     */
+    public boolean isFromRequirementManager() {
+        return fromRequirementManager;
     }
     
 }

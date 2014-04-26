@@ -19,7 +19,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author Team 9
  * @version 1.0
  */
-public class RequestThread extends Thread {
+public class UserRequestThread extends Thread {
     
     /**
      * The controller sending a request for a user.
@@ -63,7 +63,7 @@ public class RequestThread extends Thread {
      * @param controller
      *        the controller to nofity
      */
-    public RequestThread(AbstractUserController controller) {
+    public UserRequestThread(AbstractUserController controller) {
         super("User Request Thread");
         this.controller = controller;
     }

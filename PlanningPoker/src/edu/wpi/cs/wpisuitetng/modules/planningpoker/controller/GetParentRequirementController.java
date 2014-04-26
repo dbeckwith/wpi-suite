@@ -30,7 +30,6 @@ public class GetParentRequirementController extends
      */
     private GetParentRequirementController() {
         super();
-        requestRequirements();
     }
     
     /**
@@ -74,16 +73,15 @@ public class GetParentRequirementController extends
      *         requirement does not exist in the requirement manager
      */
     public Requirement getParentRequirement(int id) {
-        requestRequirements();
-        if (getRequirements() == null) {
-            return null;
-        }
-        else {
+        retrieveRequirements();
+        if (getRequirements() != null) {
             for (Requirement r : getRequirements()) {
-                if (r.getId() == id) { return r; }
+                if (r.getId() == id) { 
+                    return r; 
+                }
             }
-            return null;
         }
+        return null;
     }
     
 }
