@@ -17,12 +17,17 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ */
 public class HighlightedTable extends JTable implements MouseMotionListener, MouseListener {
 	
 	private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
 
 	private int highlightRow = -1;
 
+	/**
+	 * Constructor for HighlightedTable.
+	 */
 	public HighlightedTable() {
 		
 		addMouseListener(this);

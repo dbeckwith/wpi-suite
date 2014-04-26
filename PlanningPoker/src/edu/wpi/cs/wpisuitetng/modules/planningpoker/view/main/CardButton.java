@@ -99,7 +99,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     public CardButton(String val) {
     	textInput = false;
         value = CardButton.cardFormat.format(Float.parseFloat(val));
-        suitIndex = ((int)getEstimateValue()+1)%4;
+        suitIndex = ((int)getEstimateValue() + 1) % 4;
         selected = false;
         addMouseListener(this);
         
@@ -111,7 +111,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     public CardButton(){
     	textInput = true;
     	input = new JSpinner();
-    	input.setModel(new SpinnerNumberModel(1, 0, Double.MAX_VALUE-1, 0.5));
+    	input.setModel(new SpinnerNumberModel(1, 0, Double.MAX_VALUE - 1, 0.5));
     	
     	input.setEditor(new JSpinner.NumberEditor(input, "0.0"));
     	final JFormattedTextField txt = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
@@ -156,7 +156,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     public void paintComponent(Graphics g) {
     	
     	if(textInput){
-    		input.setFont(input.getFont().deriveFont(getWidth()*FONT_SIZE));
+    		input.setFont(input.getFont().deriveFont(getWidth() * FONT_SIZE));
     	}
     	
         final Graphics2D g2 = (Graphics2D) g;
@@ -197,13 +197,13 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
             } else {
             	if(maxInput != DeckModel.NO_LIMIT){
             		g2.setColor(Color.BLACK);
-            		final String maxString = "Max : "+ cardFormat.format(((SpinnerNumberModel)input
+            		final String maxString = "Max : " + cardFormat.format(((SpinnerNumberModel)input
             				.getModel()).getMaximum());
-            		g2.setFont(g.getFont().deriveFont(getWidth()*FONT_SIZE*0.3f));
+            		g2.setFont(g.getFont().deriveFont(getWidth() * FONT_SIZE * 0.3f));
             		final Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
             		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
     	                    (int) (getHeight() - r.getHeight()) / 2
-    	                            + g2.getFontMetrics().getAscent() + input.getHeight()/2);
+    	                            + g2.getFontMetrics().getAscent() + input.getHeight() / 2);
             	}
             }
             
@@ -219,10 +219,10 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
         g2.setColor(Color.BLACK);
         if (selected && !textInput) {
             g2.setColor(Color.BLUE);
-            g2.drawRect(2, 2, getWidth() -4, getHeight() -4 );
+            g2.drawRect(2, 2, getWidth() - 4, getHeight() - 4 );
         }
-        g2.drawRect(0, 0, getWidth()-1, getHeight()-1);
-        g2.drawRect(1, 1, getWidth() -3, getHeight() -3 );
+        g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+        g2.drawRect(1, 1, getWidth() - 3, getHeight() - 3 );
     }
     
     /**

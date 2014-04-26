@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class HelpButtons extends ToolbarGroupView {
+public class HelpButton extends ToolbarGroupView {
     
     private static final long serialVersionUID = 1902038690593121709L;
     
@@ -38,7 +38,7 @@ public class HelpButtons extends ToolbarGroupView {
      * Creates a new HelpButtons
      *
      */
-    public HelpButtons() {
+    public HelpButton() {
         super(""); // not sure if this is needed
         
         helpButton = new JButton("<html>Help</html>");
