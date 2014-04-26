@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
 
 /**
  * Depending on the requirement and game status, this is the panel to show requirement description of the requirement or vote GUI or result of estimates 
@@ -45,7 +43,6 @@ public class RequirementDescriptionPanel extends JPanel {
         
         newReq = new RequirementDescriptionOnlyPanel();
         add(newReq, "new");
-        setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{completedPanel, votePanel, newReq}));
         
     }
     

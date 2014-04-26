@@ -39,8 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
+
 
 
 /**
@@ -77,7 +76,6 @@ public class NewGamePanel extends JPanel {
         panel_1.setLayout(gl_panel_1);
         newGameRequirementsPanel.setEditGamePanel(this);
         newDeckPanel.setEditGamePanel(this);
-        setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{gameDescription}));
         
         newReqName.getDocument().addDocumentListener(new DocumentListener() {
             
