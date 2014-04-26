@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,11 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-
-import java.awt.Color;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import java.awt.FlowLayout;
 
 /**
  * This is the main planning poker view. It is intended to be a way of viewing

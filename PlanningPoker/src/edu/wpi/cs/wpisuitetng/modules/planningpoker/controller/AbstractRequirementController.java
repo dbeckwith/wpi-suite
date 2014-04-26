@@ -5,18 +5,22 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * nfbrown
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
- * An abstract class for classes requesting users from the server.
+ * Abstract requirement controller to be extended by other classes that need to
+ * receive requirements
  * 
  * @author Team 9
- * @version 1.0
+ * @version Apr 18, 2014
  */
-public abstract class AbstractUserController {
+public abstract class AbstractRequirementController {
     
     /**
      * For testing only.
@@ -25,67 +29,57 @@ public abstract class AbstractUserController {
     
     private long timeout = 1500;
     
-    /**
-     * This controller's observer.
-     */
-    final UserRequestObserver observer;
+    private static Requirement[] reqs = null;
     
-    /**
-     * The array of users in the project logged onto.
-     */
-    private User[] users = null;
+    final GetRequirementsRequestObserver observer;
     
-    /**
-     * constructor for AbstractUserController
-     */
-    protected AbstractUserController() {
-        observer = new UserRequestObserver(this);
+    protected AbstractRequirementController() {
+        observer = new GetRequirementsRequestObserver(this);
+        retrieveRequirements();
     }
     
     /**
-     * Called when the UserRequestObserver for this controller receives users
+     * This method is called by a RequirementRequestThread when it received a
+     * response from the server
      * 
-     * @param users
-     *        an array of users on the server. May be null.
+     * @param reqs The received requirements
      */
-    public abstract void receivedUsers(User[] users);
+    public abstract void receivedRequirements(Requirement[] reqs);
     
     /**
-     * Requests query of all users related to the project.
+     * Requests query of all requirements related to the project.
      * 
      */
-    public void requestUsers() {
+    public void retrieveRequirements() {
         synchronized (this) {
-            new UserRequestThread(this).start();
+            new RequirementRequestThread(this).start();
             try {
-                System.out.println("Waiting for response");//TODO remove
                 wait(timeout);
             }
             catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
     
     /**
-     * Set the array of users in the current project.
+     * Set the array of requirements in the current project.
      * 
-     * @param users
-     *        an array of users in the current project.
+     * @param reqs
+     *        an array of requirements in the current project.
      * 
      */
-    public void setUsers(User[] users) {
-        this.users = users;
+    public static void setRequirements(Requirement[] reqs) {
+        AbstractRequirementController.reqs = reqs;
     }
     
     /**
-     * Gets the array of users in the current project.
+     * Gets the array of requirements in the current project.
      * 
-     * @return an array of users in the curren project.
+     * @return the array of requirements in the current project.
      */
-    public User[] getUsers() {
-        return users;
+    public static Requirement[] getRequirements() {
+        return reqs;
     }
     
     /**
@@ -112,10 +106,10 @@ public abstract class AbstractUserController {
      *        a variable to hold timeout value
      */
     public void setTimeout(long timeout) {
-        if (timeout < 0){
+        if (timeout < 0) {
             throw new IllegalArgumentException("Timeout must be >= 0");
         }
-        else{
+        else {
             this.timeout = timeout;
         }
     }
@@ -126,5 +120,6 @@ public abstract class AbstractUserController {
     public long getTimeout() {
         return timeout;
     }
+    
     
 }

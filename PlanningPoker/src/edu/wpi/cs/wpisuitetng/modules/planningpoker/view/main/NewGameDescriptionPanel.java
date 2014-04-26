@@ -501,6 +501,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      */
     public JTextPane getDescriptionField() {
         return descriptionField;
+        
     }
     
     /**
