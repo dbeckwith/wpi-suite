@@ -46,6 +46,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 /**
  * The panel to show the form when the user click create game button. The user
@@ -76,6 +78,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         isNameValid = true;
         
         setErrorBorder(descriptionField, false);
+        setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{nameField, descriptionField, deckOptions, selectDeadline, timeSpinner, datePicker}));
         
         GetDecksController.getInstance().retrieveDecks();
         
