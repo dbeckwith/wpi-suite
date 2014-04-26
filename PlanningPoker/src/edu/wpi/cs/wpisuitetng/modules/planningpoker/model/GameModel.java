@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 
 /**
@@ -458,7 +460,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @return True if this GameModel is equal to the input GameModel
      */
     public boolean equals(GameModel other) {
-        return other.id == id && other.name.equals(other.name);
+        return other.id == id && other.name.equals(name);
     }
     
     @Override

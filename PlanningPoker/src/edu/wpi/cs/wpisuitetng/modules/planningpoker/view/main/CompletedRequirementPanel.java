@@ -152,7 +152,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      * based on it.
      */
     private void checkDisplayFinal() {
-        displayFinalEstimateFields(ConfigManager.getConfig().getUserName()
+        displayFinalEstimateFields(CurrentUserController.USER_NAME
                 .equals(parentModel.getOwner())
                 && !parentModel.isClosed());
     }
