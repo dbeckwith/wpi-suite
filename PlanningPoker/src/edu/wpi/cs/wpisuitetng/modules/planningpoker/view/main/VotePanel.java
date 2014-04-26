@@ -118,7 +118,7 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        final ArrayList<String> deck = new ArrayList<>();
+        final List<String> deck = new ArrayList<>();
         
         
         
@@ -216,7 +216,7 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        final ArrayList<Integer> selected = new ArrayList<Integer>();
+        final List<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
         for (CardButton c : cards) {
             if (c.isCardSelected()) {
@@ -459,7 +459,7 @@ public class VotePanel extends javax.swing.JPanel {
     
     private JButton btnSubmit;
     private JLabel lblTotal;
-    private final ArrayList<CardButton> cards;
+    private final List<CardButton> cards;
     private javax.swing.JLabel estimateLabel;
     private JTextArea reqDescriptionTextArea;
     private JPanel estimateCardsPanel;

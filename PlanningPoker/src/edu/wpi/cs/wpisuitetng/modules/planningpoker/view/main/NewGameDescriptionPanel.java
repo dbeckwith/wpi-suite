@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -536,8 +537,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      * 
      * @return the list of errors when creating a new game
      */
-    public ArrayList<String> getErrors() {
-        final ArrayList<String> errors = new ArrayList<>();
+    public List<String> getErrors() {
+        final List<String> errors = new ArrayList<>();
         if (!isNameValid) {
             errors.add("Name field is required");
         }

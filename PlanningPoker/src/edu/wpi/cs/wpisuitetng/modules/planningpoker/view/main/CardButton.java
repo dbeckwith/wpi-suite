@@ -23,6 +23,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -88,7 +89,7 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     private JSpinner input;
     private double maxInput;
     
-    private ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
+    private List<ActionListener> listeners = new ArrayList<ActionListener>();
     
     /**
      * Creates a new CardButton representing the given value.

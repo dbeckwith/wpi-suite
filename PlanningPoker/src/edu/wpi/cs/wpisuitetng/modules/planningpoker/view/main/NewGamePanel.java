@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -37,7 +38,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
 import java.awt.Dimension;
+
 import javax.swing.ScrollPaneConstants;
 
 /**
@@ -449,7 +452,7 @@ public class NewGamePanel extends JPanel {
      * 
      * @return the requirements of the new game
      */
-	public ArrayList<GameRequirementModel> getRequirements() {
+	public List<GameRequirementModel> getRequirements() {
 		return newGameRequirementsPanel.getRequirementsFromTable();
 	}
 
@@ -459,7 +462,7 @@ public class NewGamePanel extends JPanel {
 	public void check() {
 		saveButton.setEnabled(gameDescription.canValidateForm()
 				&& newGameRequirementsPanel.canValidateForm());
-		final ArrayList<String> errors = new ArrayList<>();
+		final List<String> errors = new ArrayList<>();
 		errors.addAll(gameDescription.getErrors());
 		errors.addAll(newGameRequirementsPanel.getErrors());
 

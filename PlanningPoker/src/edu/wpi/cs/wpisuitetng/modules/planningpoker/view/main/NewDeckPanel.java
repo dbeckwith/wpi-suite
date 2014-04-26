@@ -314,7 +314,7 @@ public class NewDeckPanel extends JPanel {
         
         // go through all the current decks and find the largest number
         // already in the names
-        for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
+        for (DeckModel deck : (ArrayList<DeckModel>)DeckListModel.getInstance().getDecks()) {
             String name = deck.getName();
             // if the name looks like the prefix with a number after it
             if (name != null && name.matches(defaultName + "( \\d+)?")) {

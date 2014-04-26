@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -64,7 +65,7 @@ public class GamesListPanel extends javax.swing.JPanel {
     private void updateTree() {
         
         // save an array of games whose nodes were open before the update
-        final ArrayList<GameModel> expandedGames = new ArrayList<>();
+        final List<GameModel> expandedGames = new ArrayList<>();
         
         for (int i = 0; i < gameTree.getRowCount(); i++) {
             // loop through all the visible nodes
