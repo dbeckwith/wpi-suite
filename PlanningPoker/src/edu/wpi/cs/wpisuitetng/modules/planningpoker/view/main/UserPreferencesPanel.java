@@ -31,7 +31,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User.Carrier;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -103,38 +106,28 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 184, 207, 229)), "Notification Options", TitledBorder.LEADING,
                 TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
-        emailBox = new javax.swing.JCheckBox();
-        emailBox.setBackground(Color.WHITE);
-        smsBox = new javax.swing.JCheckBox();
-        smsBox.setBackground(Color.WHITE);
-        btnSaveSms = new JButton("Save SMS");
-        btnSaveSms.addActionListener(new ActionListener () {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateSMS();
-            }
-        });
         
-        emailBox.setText("Receive E-mail");
-        emailBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailBoxActionPerformed(evt);
-            }
-        });
-        
-        smsBox.setText("Receive SMS");
-        smsBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                smsBoxActionPerformed(evt);
-            }
-        });
-        
-        lblEmail = new JLabel("Email : ");
-        lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
-        
-        lblPhoneNumber = new JLabel("Phone # :");
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 804, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(38, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(84, Short.MAX_VALUE))
+        );
+        GridBagLayout gbl_notificationsPanel = new GridBagLayout();
+        gbl_notificationsPanel.columnWidths = new int[]{16, 162, 73, 336, 83, 89, 0};
+        gbl_notificationsPanel.rowHeights = new int[]{40, 42, 10, 47, 0};
+        gbl_notificationsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_notificationsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        notificationsPanel.setLayout(gbl_notificationsPanel);
         
         emailField = new JTextField();
         emailField.setColumns(10);
@@ -181,24 +174,39 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
             
         });
+        emailBox = new javax.swing.JCheckBox();
+        emailBox.setBackground(Color.WHITE);
         
-        saveEmailButton = new JButton("Save Email");
-        saveEmailButton.addActionListener(new ActionListener() {
-            
+        emailBox.setText("Receive E-mail");
+        emailBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0) {
-                updateEmail();
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailBoxActionPerformed(evt);
             }
-            
         });
+        btnSaveSms = new JButton("Save SMS");
+        btnSaveSms.addActionListener(new ActionListener () {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateSMS();
+            }
+        });
+        smsBox = new javax.swing.JCheckBox();
+        smsBox.setBackground(Color.WHITE);
         
-        errorEmailLabel = new JLabel("Invalid Email!");
-        errorEmailLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-        errorEmailLabel.setForeground(Color.RED);
-        errorEmailLabel.setVisible(false);
-        
-        
-        lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 11));
+        smsBox.setText("Receive SMS");
+        smsBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smsBoxActionPerformed(evt);
+            }
+        });
+        GridBagConstraints gbc_smsBox = new GridBagConstraints();
+        gbc_smsBox.anchor = GridBagConstraints.WEST;
+        gbc_smsBox.insets = new Insets(0, 0, 5, 5);
+        gbc_smsBox.gridx = 1;
+        gbc_smsBox.gridy = 0;
+        notificationsPanel.add(smsBox, gbc_smsBox);
         
         phoneNumberField = new JTextField();
         phoneNumberField.setColumns(10);
@@ -251,14 +259,41 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     }
                 });
         
+        lblPhoneNumber = new JLabel("Phone # :");
+        
+        
+        lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 11));
+        GridBagConstraints gbc_lblPhoneNumber = new GridBagConstraints();
+        gbc_lblPhoneNumber.anchor = GridBagConstraints.EAST;
+        gbc_lblPhoneNumber.insets = new Insets(0, 0, 5, 5);
+        gbc_lblPhoneNumber.gridx = 2;
+        gbc_lblPhoneNumber.gridy = 0;
+        notificationsPanel.add(lblPhoneNumber, gbc_lblPhoneNumber);
+        GridBagConstraints gbc_phoneNumberField = new GridBagConstraints();
+        gbc_phoneNumberField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_phoneNumberField.insets = new Insets(0, 0, 5, 5);
+        gbc_phoneNumberField.gridx = 3;
+        gbc_phoneNumberField.gridy = 0;
+        notificationsPanel.add(phoneNumberField, gbc_phoneNumberField);
+        GridBagConstraints gbc_btnSaveSms = new GridBagConstraints();
+        gbc_btnSaveSms.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnSaveSms.insets = new Insets(0, 0, 5, 5);
+        gbc_btnSaveSms.gridx = 4;
+        gbc_btnSaveSms.gridy = 0;
+        notificationsPanel.add(btnSaveSms, gbc_btnSaveSms);
+        
         
         lblInvalidPhone = new JLabel("Invalid Phone #");
         lblInvalidPhone.setFont(new Font("Tahoma", Font.BOLD, 11));
         lblInvalidPhone.setForeground(Color.RED);
         lblInvalidPhone.setVisible(false);
-        
-        carrierBox = new JComboBox();
-        carrierBox.setModel(new DefaultComboBoxModel(Carrier.values()));
+        GridBagConstraints gbc_lblInvalidPhone = new GridBagConstraints();
+        gbc_lblInvalidPhone.fill = GridBagConstraints.VERTICAL;
+        gbc_lblInvalidPhone.anchor = GridBagConstraints.WEST;
+        gbc_lblInvalidPhone.insets = new Insets(0, 0, 5, 0);
+        gbc_lblInvalidPhone.gridx = 5;
+        gbc_lblInvalidPhone.gridy = 0;
+        notificationsPanel.add(lblInvalidPhone, gbc_lblInvalidPhone);
         //        carrierBox.setModel(new DefaultComboBoxModel(new String[] { "",
         //                "3 River Wireless", "ACS Wireless", "Alltel", "AT&T",
         //                "Blue Sky Frog", "Bluegrass Cellular", "Boost Mobile",
@@ -279,84 +314,68 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         lblCarrier = new JLabel("Carrier :");
         lblCarrier.setFont(new Font("Tahoma", Font.BOLD, 11));
+        GridBagConstraints gbc_lblCarrier = new GridBagConstraints();
+        gbc_lblCarrier.anchor = GridBagConstraints.EAST;
+        gbc_lblCarrier.insets = new Insets(0, 0, 5, 5);
+        gbc_lblCarrier.gridx = 2;
+        gbc_lblCarrier.gridy = 1;
+        notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
-        final javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(
-                notificationsPanel);
-        notificationsPanelLayout.setHorizontalGroup(
-            notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(notificationsPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(notificationsPanelLayout.createSequentialGroup()
-                            .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.TRAILING)
-                                .addGroup(notificationsPanelLayout.createSequentialGroup()
-                                    .addComponent(smsBox)
-                                    .addPreferredGap(ComponentPlacement.UNRELATED)
-                                    .addComponent(lblPhoneNumber))
-                                .addComponent(lblCarrier))
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(phoneNumberField, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                .addComponent(carrierBox, 0, 152, Short.MAX_VALUE)))
-                        .addGroup(notificationsPanelLayout.createSequentialGroup()
-                            .addComponent(emailBox)
-                            .addGap(6)
-                            .addComponent(lblEmail)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(emailField, 158, 158, 158)))
-                    .addGap(18)
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(saveEmailButton, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                        .addComponent(btnSaveSms, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(lblInvalidPhone, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(errorEmailLabel))
-                    .addContainerGap())
-        );
-        notificationsPanelLayout.setVerticalGroup(
-            notificationsPanelLayout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(notificationsPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(notificationsPanelLayout.createSequentialGroup()
-                            .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(smsBox)
-                                .addComponent(lblPhoneNumber)
-                                .addComponent(phoneNumberField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(lblCarrier)
-                                .addComponent(carrierBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                            .addComponent(lblInvalidPhone)
-                            .addComponent(btnSaveSms, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(notificationsPanelLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(errorEmailLabel)
-                        .addComponent(lblEmail)
-                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(saveEmailButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(emailBox))
-                    .addGap(75))
-        );
-        notificationsPanel.setLayout(notificationsPanelLayout);
+        carrierBox = new JComboBox();
+        carrierBox.setModel(new DefaultComboBoxModel(Carrier.values()));
+        GridBagConstraints gbc_carrierBox = new GridBagConstraints();
+        gbc_carrierBox.fill = GridBagConstraints.HORIZONTAL;
+        gbc_carrierBox.insets = new Insets(0, 0, 5, 5);
+        gbc_carrierBox.gridx = 3;
+        gbc_carrierBox.gridy = 1;
+        notificationsPanel.add(carrierBox, gbc_carrierBox);
+        GridBagConstraints gbc_emailBox = new GridBagConstraints();
+        gbc_emailBox.anchor = GridBagConstraints.WEST;
+        gbc_emailBox.insets = new Insets(0, 0, 0, 5);
+        gbc_emailBox.gridx = 1;
+        gbc_emailBox.gridy = 3;
+        notificationsPanel.add(emailBox, gbc_emailBox);
         
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(48, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(66, Short.MAX_VALUE))
-        );
+        lblEmail = new JLabel("Email : ");
+        lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
+        GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+        gbc_lblEmail.anchor = GridBagConstraints.EAST;
+        gbc_lblEmail.insets = new Insets(0, 0, 0, 5);
+        gbc_lblEmail.gridx = 2;
+        gbc_lblEmail.gridy = 3;
+        notificationsPanel.add(lblEmail, gbc_lblEmail);
+        GridBagConstraints gbc_emailField = new GridBagConstraints();
+        gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_emailField.insets = new Insets(0, 0, 0, 5);
+        gbc_emailField.gridx = 3;
+        gbc_emailField.gridy = 3;
+        notificationsPanel.add(emailField, gbc_emailField);
+        
+        errorEmailLabel = new JLabel("Invalid Email!");
+        errorEmailLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+        errorEmailLabel.setForeground(Color.RED);
+        errorEmailLabel.setVisible(false);
+        
+        saveEmailButton = new JButton("Save Email");
+        saveEmailButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                updateEmail();
+            }
+            
+        });
+        GridBagConstraints gbc_saveEmailButton = new GridBagConstraints();
+        gbc_saveEmailButton.anchor = GridBagConstraints.WEST;
+        gbc_saveEmailButton.insets = new Insets(0, 0, 0, 5);
+        gbc_saveEmailButton.gridx = 4;
+        gbc_saveEmailButton.gridy = 3;
+        notificationsPanel.add(saveEmailButton, gbc_saveEmailButton);
+        GridBagConstraints gbc_errorEmailLabel = new GridBagConstraints();
+        gbc_errorEmailLabel.anchor = GridBagConstraints.WEST;
+        gbc_errorEmailLabel.gridx = 5;
+        gbc_errorEmailLabel.gridy = 3;
+        notificationsPanel.add(errorEmailLabel, gbc_errorEmailLabel);
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     

@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User.Carrier;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
@@ -54,9 +54,13 @@ public class UserUpdateControllerTest {
         uuc.updateEmail("steve@example.com");
         assertEquals("steve@example.com", steve.getEmail());
         
-        assertNull(steve.getCarrier());
+        assertEquals(Carrier.UNKNOWN, steve.getCarrier());
         uuc.updatePhoneCarrier(Carrier.VERIZON);
         assertEquals(Carrier.VERIZON, steve.getCarrier());
+        
+        assertNull(steve.getPhoneNumber());
+        uuc.updatePhoneNumber("0123456789");
+        assertEquals("0123456789", steve.getPhoneNumber());
         
     }
     

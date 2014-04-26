@@ -14,7 +14,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User.Carrier;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 
 /**
  * A class for handling email sending to users.

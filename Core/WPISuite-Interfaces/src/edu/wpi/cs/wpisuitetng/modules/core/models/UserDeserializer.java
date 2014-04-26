@@ -24,8 +24,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User.Carrier;
-
 /**
  * A custom deserializer class for the GSON JSON library. The password field
  * should not be exposed after inflation, so it is set to null.
@@ -97,7 +95,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		}
 		
         if (deflated.has("carrier") && !isValueEmpty(deflated, "carrier")) {
-            carrier = Carrier.valueOf(Carrier.class, deflated.get("carrier").getAsString());
+            carrier = Carrier.getEnum(deflated.get("carrier").getAsString());
         }
         
 		User inflated = new User(name, username, email, password, idNum, phoneNumber, carrier);

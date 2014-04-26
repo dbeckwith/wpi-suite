@@ -13,6 +13,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.core.models;
 
+
 import com.google.gson.*;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
@@ -37,76 +38,6 @@ public class User extends AbstractModel
 	
 	transient private String password; // excluded from serialization, still stored.
 	
-	public enum Carrier {
-	    THREE_RIVER_WIRELESS("sms.3rivers.net"),
-	    ACS_WIRELESS("paging.acswireless.com"),
-	    ALLTEL("message.alltel.com"),
-        ATT("txt.att.net"),
-        BLUE_SKY_FROG("blueskyfrog.com"),
-        BLUEGRASS_CELLULAR("sms.bluecell.com"),
-        BOOST_MOBILE("myboostmobile.com"),
-        BPL_MOBILE("bplmobile.com"),
-        CAROLINA_WEST_WIRELESS("cwwsms.com"),
-        CELLULAR_ONE("mobile.celloneusa.com"),
-        CELLULAR_SOUTH("csouth1.com"),
-        CENTENNIAL_WIRELESS("cwemail.com"),
-        CENTURYTEL("messaging.centurytel.net"),
-        CLEARNET("msg.clearnet.com"),
-        COMCAST("comcastpcs.textmsg.com"),
-        CORR_WIRELESS_COMMUNICATIONS("corrwireless.net"),
-        DOBSON("mobile.dobson.net"),
-        EDGE_WIRELESS("sms.edgewireless.com"),
-        FIDO("fido.ca"),
-        GOLDEN_TELECOM("sms.goldentele.com"),
-        HELIO("messaging.sprintpcs.com"),
-        HOUSTON_CELLULAR("text.houstoncellular.net"),
-        IDEA_CELLULAR("ideacellular.net"),
-        ILLINOIS_VALLEY_CELLULAR("ivctext.com"),
-        INLAND_CELLULAR_TELEPHONE("inlandlink.com"),
-        MCI("pagemci.com"),
-        METROCALL("page.metrocall.com"),
-        METROCALL2WAY("my2way.com"),
-        METRO_PCS("mymetropcs.com"),
-        MICROCELL("fido.ca"),
-        MIDWEST_WIRELESS("clearlydigital.com"),
-        MOBILCOMM("mobilecomm.net"),
-        MTS("text.mtsmobility.com"),
-        NEXTEL("messaging.nextel.com"),
-        ONLINEBEEP("onlinebeep.net"),
-        PCS_ONE("pcsone.net"),
-        PRESIDENTS_CHOICE("txt.bell.ca"),
-        PUBLIC_SERVICE_CELLULAR("sms.pscel.com"),
-        QWEST("qwestmp.com"),
-        SATELLINK("satellink.net"),
-        SOLO_MOBILE("txt.bell.ca"),
-        SOUTHWESTERN_BELL("email.swbw.com"),
-        SPRINT("messaging.sprintpcs.com"),
-        SUMCOM("tms.suncom.com"),
-        SUREWEST_COMMUNICATIONS("mobile.surewest.com"),
-        T_MOBILE("tmomail.net"),
-        TELUS("msg.telus.com"),
-        TRACFONE("txt.att.net"),
-        TRITON("tms.suncom.com"),
-        UNICEL("utext.com"),
-        UNKNOWN(""),
-        US_CELLULAR("email.uscc.net"),
-        US_WEST("uswestdatamail.com"),
-        VERIZON("vtext.com"),
-        VIRGIN_MOBILE("vmobl.com"),
-        VIRGIN_MOBILE_CA("vmobile.ca"),
-        WEST_CENTRAL_WIRELESS("sms.wcc.net"),
-        WESTERN_WIRELESS("cellularonewest.com");
-
-	    private final String url;
-	    
-	    private Carrier(String url) {
-	        this.url = url;
-	    }
-	    
-	    public String getURL() {
-	        return url;
-	    }
-	}
 	
 	/**
 	 * The primary constructor for a User
