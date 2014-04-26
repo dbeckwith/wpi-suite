@@ -128,7 +128,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 validate();
             }
             
-            public void validate() {
+            private void validate() {
                 String email = emailField.getText();
                 errorLabel.setVisible(false);
                 if (email.equals(CurrentUserController.getInstance().getUser().getEmail())) {
@@ -228,7 +228,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
                 layout.createSequentialGroup().addContainerGap()
-                        .addComponent(notificationsPanel, 133, 410, GroupLayout.PREFERRED_SIZE) //manually change min to 133
+                        .addComponent(notificationsPanel, 133, 410, GroupLayout.PREFERRED_SIZE) 
+                        //manually change min to 133
                         .addContainerGap(85, Short.MAX_VALUE)));
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
                 layout.createSequentialGroup()

@@ -150,7 +150,8 @@ public class GamesListPanel extends javax.swing.JPanel {
             node = (DefaultMutableTreeNode) treeEnum.nextElement();
             if (node.getUserObject() != null
                     && ((node.getUserObject() instanceof GameModel && expandedGames.contains(node
-                            .getUserObject())) || node == pendingFolder || node == completeFolder)) {
+                            .getUserObject())) || node == pendingFolder || 
+                            	node == completeFolder)) {
                 // if the node's game was in the list,
                 // or the node is a folder of games, expand it
                 gameTree.expandPath(new TreePath(node.getPath()));
@@ -166,14 +167,16 @@ public class GamesListPanel extends javax.swing.JPanel {
             if (node.getUserObject() != null
                     && node.getUserObject() instanceof GameRequirementModel) {
                 if (requirement
-                        && ((GameRequirementModel) node.getUserObject()).getId() == ((GameRequirementModel) selectedNodeUserObject)
+                        && ((GameRequirementModel) node.getUserObject()).getId() == 
+                        	((GameRequirementModel) selectedNodeUserObject)
                                 .getId()){
                     gameTree.setSelectionPath(new TreePath(node.getPath()));
                 }
             }
             else if (node.getUserObject() != null && node.getUserObject() instanceof GameModel) {
                 if (game
-                        && ((GameModel) node.getUserObject()).getID() == ((GameModel) selectedNodeUserObject)
+                        && ((GameModel) node.getUserObject()).getID() == 
+                        	((GameModel) selectedNodeUserObject)
                                 .getID()){
                     gameTree.setSelectionPath(new TreePath(node.getPath()));
                 }

@@ -258,7 +258,6 @@ public class VotePanel extends javax.swing.JPanel {
         final JScrollPane scrollPane = new JScrollPane();
         final JScrollPane estimateScrollPane = new JScrollPane();
         
-        //JScrollPane scrollPane_1 = new JScrollPane();
         
         requirementNameLabel = new JLabel("<requirement>");
         
@@ -312,7 +311,8 @@ public class VotePanel extends javax.swing.JPanel {
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
                         .addComponent(scrollPane)
-                        .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                        .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 580, 
+                        		Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lblRequirement)
                             .addPreferredGap(ComponentPlacement.RELATED)
@@ -346,11 +346,13 @@ public class VotePanel extends javax.swing.JPanel {
                         .addComponent(lblType)
                         .addComponent(requirementType))
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 50, 
+                    		GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(estimateLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 102, 
+                    		Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(btnSubmit)

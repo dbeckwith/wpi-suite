@@ -53,7 +53,6 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
 	private final Color HIGHLIGHT_COLOR = new Color(220, 232, 244);
     
-    //private static final float MARGIN = 0.03f;
     private static final float MARGIN_LOGO = 0.05f;
     private static final float FRONT_SUIT_SIZE = 0.3f;
     private static final float BACK_SUIT_SIZE = 0.7f;
@@ -100,12 +99,15 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     public CardButton(String val) {
     	textInput = false;
         value = CardButton.cardFormat.format(Float.parseFloat(val));
-        suitIndex = ((int)getEstimateValue()+1)%4;//(int) (Math.random() * CardButton.suits.length);
+        suitIndex = ((int)getEstimateValue()+1)%4;
         selected = false;
         addMouseListener(this);
         
     }
     
+    /**
+     * Constructor for CardButton.
+     */
     public CardButton(){
     	textInput = true;
     	input = new JSpinner();
@@ -119,7 +121,6 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
 
     	input.addChangeListener(this);
     	input.setOpaque(false);
-    	//input.setBorder(null);
     	
     	value = "";
     	
@@ -141,6 +142,10 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
     }
     
     
+    /**
+     * Method addActionListener.
+     * @param e ActionListener
+     */
     public void addActionListener(ActionListener e){
     	if(e != null){
     		listeners.add(e);
@@ -192,7 +197,8 @@ public class CardButton extends JPanel implements MouseListener, ChangeListener 
             } else {
             	if(maxInput != DeckModel.NO_LIMIT){
             		g2.setColor(Color.BLACK);
-            		String maxString = "Max : "+ cardFormat.format(((SpinnerNumberModel)input.getModel()).getMaximum());
+            		String maxString = "Max : "+ cardFormat.format(((SpinnerNumberModel)input
+            				.getModel()).getMaximum());
             		g2.setFont(g.getFont().deriveFont(getWidth()*FONT_SIZE*0.3f));
             		Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
             		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,

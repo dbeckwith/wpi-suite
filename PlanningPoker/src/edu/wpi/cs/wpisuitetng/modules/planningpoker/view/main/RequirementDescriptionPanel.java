@@ -17,7 +17,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
- * Depending on the requirement and game status, this is the panel to show requirement description of the requirement or vote GUI or result of estimates 
+ * Depending on the requirement and game status, this is the panel to show requirement 
+ * description of the requirement or vote GUI or result of estimates 
  * @author Team 9
  * @version 1.0
  *

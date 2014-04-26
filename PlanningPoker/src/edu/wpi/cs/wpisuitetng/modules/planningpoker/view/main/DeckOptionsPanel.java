@@ -46,7 +46,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
  * @version 1.0
  * 
  */
-public class DeckOptionsPanel extends JPanel implements SimpleListObserver, ActionListener, ChangeListener {
+public class DeckOptionsPanel extends JPanel implements SimpleListObserver, ActionListener, 
+		ChangeListener {
 	
 	private NewGameDescriptionPanel parent;
 	
@@ -66,9 +67,13 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		DeckListModel.getInstance().addObserver(this);
 	}
 	
+	/**
+	 * Method initComponents.
+	 */
 	public void initComponents(){
 		setBackground(Color.WHITE);
-		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
 		
 		useDeck = new JCheckBox("Deck:");
 		useDeck.setSelected(true);
@@ -97,7 +102,8 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		
 		maxSpinner = new JSpinner();
 		maxSpinner.addChangeListener(this);
-		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, 
+				new Integer(1)));
     	JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor()).getTextField();
     	((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
 		
@@ -112,7 +118,8 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblForNo)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(maxSpinner, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+							.addComponent(maxSpinner, GroupLayout.DEFAULT_SIZE, 143, 
+									Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(useDeck)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -127,13 +134,15 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(useDeck)
-						.addComponent(savedDecks, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(savedDecks, GroupLayout.PREFERRED_SIZE, 
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(newDeckButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblMaximumEstimate)
 						.addComponent(lblForNo)
-						.addComponent(maxSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(maxSpinner, GroupLayout.PREFERRED_SIZE, 
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(74, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
@@ -188,7 +197,8 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 			if(selectedDeck == null){
 				selectedDeck = DeckModel.DEFAULT_DECK;
 			}
-			return new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), selectedDeck.canAllowsMultipleSelection());
+			return new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), 
+					selectedDeck.canAllowsMultipleSelection());
 		} else {
 			return new DeckModel((Integer)maxSpinner.getModel().getValue());			
 		}
@@ -227,6 +237,10 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
         
     }
     
+    /**
+     * Method addNewDeckButtonListener.
+     * @param a ActionListener
+     */
     public void addNewDeckButtonListener(ActionListener a) {
     	if(a != null){
     		newDeckButton.addActionListener(a);

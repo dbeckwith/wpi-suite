@@ -218,15 +218,19 @@ public class NewGamePanel extends JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(saveButton)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(undoButton, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(undoButton, GroupLayout.PREFERRED_SIZE, 136, 
+                            		GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(cancelButton))
-                        .addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 198, 
+                        		GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                            .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 446, 
+                            		Short.MAX_VALUE)
                             .addPreferredGap(ComponentPlacement.UNRELATED)))
                     .addGap(12)
-                    .addComponent(newGameRequirementsCard, GroupLayout.PREFERRED_SIZE, 631, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newGameRequirementsCard, GroupLayout.PREFERRED_SIZE, 631, 
+                    		GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -242,12 +246,14 @@ public class NewGamePanel extends JPanel {
                         .addComponent(cancelButton)
                         .addComponent(undoButton))
                     .addContainerGap())
-                .addComponent(newGameRequirementsCard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addComponent(newGameRequirementsCard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
+                		434, Short.MAX_VALUE)
         );
         
         panel_1 = new JPanel();
         scrollPane_1.setViewportView(panel_1);
-        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main
+        		.NewGameDescriptionPanel();
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -330,7 +336,8 @@ public class NewGamePanel extends JPanel {
 		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
 		                    .addComponent(typeLabel)
 		                    .addPreferredGap(ComponentPlacement.RELATED)
-		                    .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		                    .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, 
+		                    		GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		                .addGroup(gl_newRequirementPanel.createSequentialGroup()
 		                    .addComponent(cancelNewReqButton)
 		                    .addPreferredGap(ComponentPlacement.RELATED)
@@ -345,7 +352,8 @@ public class NewGamePanel extends JPanel {
 		            .addContainerGap()
 		            .addComponent(nameLabel)
 		            .addGap(5)
-		            .addComponent(newReqName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(newReqName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+		            		GroupLayout.PREFERRED_SIZE)
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addComponent(descLabel)
 		            .addPreferredGap(ComponentPlacement.RELATED)
@@ -353,7 +361,8 @@ public class NewGamePanel extends JPanel {
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(typeLabel)
-		                .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		                .addComponent(newReqType, GroupLayout.PREFERRED_SIZE, 
+		                		GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addGroup(gl_newRequirementPanel.createParallelGroup(Alignment.BASELINE)
 		                .addComponent(cancelNewReqButton)
@@ -533,9 +542,11 @@ public class NewGamePanel extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private JPanel newGameRequirementsCard;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel newGameRequirementsPanel;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel
+    	newGameRequirementsPanel;
     private NewDeckPanel newDeckPanel;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel 
+    	gameDescription;
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;
     private JLabel nameLabel;

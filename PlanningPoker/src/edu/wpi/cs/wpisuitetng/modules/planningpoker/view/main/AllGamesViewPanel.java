@@ -104,7 +104,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                         final GameModel game = (GameModel) nodeInfo;
                         currentSelectionGame = game;
                         getGameDescriptionPanel().setGame(game);
-                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
+                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), 
+                        		"description");
                     
                     } else if (nodeInfo instanceof GameRequirementModel) {
                     	
@@ -121,9 +122,11 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                                 .getParent()).getUserObject();
                         getGameDescriptionPanel().setGame(game);
                         currentSelectionGame = game;
-                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
+                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), 
+                        		"description");
 	                } else {
-	                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "empty");
+	                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(),
+	                    		"empty");
 	                }
                
                     PlanningPoker.getViewController().displayAdmin(currentSelectionGame);
