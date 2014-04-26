@@ -30,6 +30,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -38,6 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
 
 /**
  * This is a class to show the panel when the user clicks create game button.
@@ -190,6 +192,8 @@ public class NewGamePanel extends JPanel {
         cancelButton.setIcon(ImageLoader.getIcon("Delete.png"));
         
         newGameRequirementsCard = new JPanel();
+        newGameRequirementsCard.setBorder(new EtchedBorder(
+                EtchedBorder.LOWERED, null, null));
         
         errorLabel = new JLabel("At least one requirement is needed");
         errorLabel.setForeground(Color.RED);
@@ -219,6 +223,19 @@ public class NewGamePanel extends JPanel {
                                                 .addGroup(
                                                         layout.createSequentialGroup()
                                                                 .addComponent(
+                                                                        scrollPane_1,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        323,
+                                                                        Short.MAX_VALUE)
+                                                                .addGap(12)
+                                                                .addComponent(
+                                                                        newGameRequirementsCard,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        631,
+                                                                        GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
                                                                         saveButton)
                                                                 .addPreferredGap(
                                                                         ComponentPlacement.RELATED)
@@ -230,46 +247,37 @@ public class NewGamePanel extends JPanel {
                                                                 .addPreferredGap(
                                                                         ComponentPlacement.RELATED)
                                                                 .addComponent(
-                                                                        cancelButton))
-                                                .addComponent(
-                                                        errorLabel,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        198,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        scrollPane_1,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        446,
-                                                                        Short.MAX_VALUE)
+                                                                        cancelButton)
                                                                 .addPreferredGap(
-                                                                        ComponentPlacement.UNRELATED)))
-                                .addGap(12)
-                                .addComponent(newGameRequirementsCard,
-                                        GroupLayout.PREFERRED_SIZE, 631,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        errorLabel)
+                                                                .addContainerGap()))));
         layout.setVerticalGroup(layout
                 .createParallelGroup(Alignment.TRAILING)
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(scrollPane_1,
-                                        GroupLayout.DEFAULT_SIZE, 350,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(errorLabel)
-                                .addGap(12)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.TRAILING)
+                                                .addComponent(
+                                                        newGameRequirementsCard,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        492, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        scrollPane_1,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        492, Short.MAX_VALUE))
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
                                 .addGroup(
                                         layout.createParallelGroup(
                                                 Alignment.BASELINE)
                                                 .addComponent(saveButton)
                                                 .addComponent(cancelButton)
-                                                .addComponent(undoButton))
-                                .addContainerGap())
-                .addComponent(newGameRequirementsCard, Alignment.LEADING,
-                        GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE));
+                                                .addComponent(undoButton)
+                                                .addComponent(errorLabel))
+                                .addContainerGap()));
         
         panel_1 = new JPanel();
         scrollPane_1.setViewportView(panel_1);

@@ -274,8 +274,8 @@ public class GameRequirementModel extends AbstractModel {
 			}
 		}
 
-		for (User u : users) {
-			if (!estimateUsers.contains(u)) {
+		for (int i = 0; i < users.length; i++) {
+		    if (!estimateUsers.contains(users[i])) {
 				return false;
 			}
 		}

@@ -21,9 +21,9 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameTimeoutObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationServer;
-
 
 /**
  * This class is an Entity Manager for storing GameModels on the server.
@@ -44,7 +44,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     public GameEntityManager(Data db) {
         this.db = db;
-        if(NotificationServer.getInstance().getState() == Thread.State.NEW){
+        if (NotificationServer.getInstance().getState() == Thread.State.NEW) {
             NotificationServer.getInstance().start();
         }
         instance = this;
@@ -65,8 +65,10 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * @throws WPISuiteException
      *         if the user isn't authorized for the given role
      */
-    private void ensureRole(Session session, Role role) throws WPISuiteException {
-        final User user = (User) db.retrieve(User.class, "username", session.getUsername()).get(0);
+    private void ensureRole(Session session, Role role)
+            throws WPISuiteException {
+        final User user = (User) db.retrieve(User.class, "username",
+                session.getUsername()).get(0);
         if (!user.getRole().equals(role)) {
             throw new UnauthorizedException("");
         }
@@ -84,7 +86,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public String advancedGet(Session arg0, String[] arg1) throws NotImplementedException {
+    public String advancedGet(Session arg0, String[] arg1)
+            throws NotImplementedException {
         throw new NotImplementedException();
     }
     
@@ -129,7 +132,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public GameModel[] getAll(Session s) {
-        return db.retrieveAll(new GameModel(), s.getProject()).toArray(new GameModel[0]);
+        return db.retrieveAll(new GameModel(), s.getProject()).toArray(
+                new GameModel[0]);
     }
     
     /**
@@ -143,8 +147,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         }
         GameModel[] GameModels = null;
         try {
-            GameModels = db.retrieve(GameModel.class, "id", intId, s.getProject()).toArray(
-                    new GameModel[0]);
+            GameModels = db.retrieve(GameModel.class, "id", intId,
+                    s.getProject()).toArray(new GameModel[0]);
         }
         catch (WPISuiteException e) {
             e.printStackTrace();
@@ -159,13 +163,14 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public GameModel makeEntity(Session s, String content) throws WPISuiteException {
+    public GameModel makeEntity(Session s, String content)
+            throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
         newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
         }
-        if(newGameModel.hasDeadline()){
+        if (newGameModel.hasDeadline()) {
             new GameTimeoutObserver(s, newGameModel);
         }
         System.out.println("GEM makeEntity()");
@@ -177,7 +182,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public void save(Session s, GameModel GameModel){
+    public void save(Session s, GameModel GameModel) {
         db.save(GameModel, s.getProject());
         
     }
@@ -203,12 +208,31 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
         final GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
+        sendEmails(existingGameModel, updatedGameModel);
+        
+        startObserver(updatedGameModel);
+        
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
         
+        if (!db.save(existingGameModel, s.getProject())) {
+            throw new WPISuiteException();
+        }
+        System.out.println("GEM update()");
+        NotificationServer.getInstance().sendUpdateNotification();
+        return existingGameModel;
+    }
+    
+    /**
+     * Starts the timeout observer for a game
+     * 
+     * @param updatedGameModel
+     *        the game to start
+     */
+    private void startObserver(GameModel updatedGameModel) {
         if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
             // start observer only when the game is live
-            if(updatedGameModel.hasDeadline()){
+            if (updatedGameModel.hasDeadline()) {
                 System.out.println("Getting observer for game");
                 GameTimeoutObserver obs = GameTimeoutObserver
                         .getObserver(updatedGameModel);
@@ -222,16 +246,71 @@ public class GameEntityManager implements EntityManager<GameModel> {
             }
         }
         
-        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
-        System.out.println("GEM update()");
-        NotificationServer.getInstance().sendUpdateNotification();
-        return existingGameModel;
+    }
+    
+    /**
+     * Sends emails on a game update
+     * 
+     * @param s
+     *        the session containing the current project
+     * @param existingGameModel
+     *        the old game model
+     * @param updatedGameModel
+     *        the updated game model
+     * @throws NotImplementedException
+     */
+    private void sendEmails(GameModel existingGameModel,
+            GameModel updatedGameModel) throws NotImplementedException {
+        
+        // send emails based on updated status
+        if (!updatedGameModel.getStatus().equals(existingGameModel.getStatus())) {
+            // get all users in the database
+            // no way of knowing what users are in the current project,
+            // so everyone's going to get emails
+            List<User> users = db.retrieveAll(new User("", "", "", 0));
+            User owner = null;
+            for (User u : users) {
+                if (u.getUsername().equals(updatedGameModel.getOwner())) {
+                    owner = u;
+                    break;
+                }
+            }
+            EmailController.setOwner(owner);
+            EmailController.getInstance().setUsers(
+                    users.toArray(new User[users.size()]));
+            switch (updatedGameModel.getStatus()) {
+                case NEW:
+                    // don't send an email
+                    break;
+                case PENDING:
+                    // send game start email
+                    EmailController.getInstance().sendGameStartNotifications(
+                            updatedGameModel);
+                    break;
+                case COMPLETE:
+                    // send ended game email
+                    EmailController.getInstance().sendGameEndNotifications(
+                            updatedGameModel);
+                    break;
+                case CLOSED:
+                    // don't send an email
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        else {
+            System.out.print("No status change, not sending emails.");
+            System.out.println("\t(" + existingGameModel.getStatus() + "|"
+                    + updatedGameModel.getStatus() + ")");
+        }
+        
     }
     
     /**
      * Gets the next available unique ID for a GameModel
      */
-    private int getNextID(Session s) throws WPISuiteException{
+    private int getNextID(Session s) throws WPISuiteException {
         int max = 0;
         for (GameModel g : getAll(s)) {
             if (g.getID() > max) {

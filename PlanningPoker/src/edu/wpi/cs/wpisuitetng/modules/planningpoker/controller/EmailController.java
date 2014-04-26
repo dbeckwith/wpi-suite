@@ -5,10 +5,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * nfbrown, szhou, dcwethern
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
-
-import java.util.LinkedList;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -17,10 +18,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 /**
  * This controller responds when a game is started or ended by sending email
  * notifications
+ * 
  * @author Team 9
  * @version 1.0
  */
-public class EmailController extends AbstractUserController {
+public class EmailController {
     
     /**
      * Subject line for a new game email.
@@ -33,16 +35,12 @@ public class EmailController extends AbstractUserController {
     private static final String END_GAME_SUBJECT = "A Planning Poker game has ended."; //$NON-NLS-1$
     
     /**
-     * A list of all threads used to send email notifications. Threads are added
-     * to the list when {@link #sendEmails(String, String)} is called and are
-     * run when the controller recieves users from the server to avoid sending
-     * to users who have chosen not to recieve emails or not sending to users
-     * who have.
+     * All users in the current project.
      */
-    private final LinkedList<EmailSenderThread> senderThreads = new LinkedList<>();
+    private User[] users = new User[] {};
     
     /**
-     * Creates a new EmailController class. Private to avoid instansiation.
+     * Creates a new EmailController class. Private to avoid instantiation.
      */
     private EmailController() { // $codepro.audit.disable emptyMethod    
     }
@@ -51,6 +49,11 @@ public class EmailController extends AbstractUserController {
      * The instance of the controller.
      */
     private static EmailController Instance = null;
+    
+    /**
+     * The owner of the game that emails are being sent for.
+     */
+    private static User gameOwner = null;
     
     /**
      * Gets the instance of the EmailController.
@@ -65,6 +68,13 @@ public class EmailController extends AbstractUserController {
     }
     
     /**
+     * Sets the owner of the game for which notifications are being sent.
+     */
+    public static void setOwner(User owner) {
+    	gameOwner = owner;
+    }
+    
+    /**
      * Sends an email with the given subject and body to all users who have
      * chosen to receive email notifications.
      * 
@@ -75,24 +85,7 @@ public class EmailController extends AbstractUserController {
      */
     public void sendEmails(String subject, String body) {
         final EmailSenderThread sender = new EmailSenderThread(subject, body);
-        senderThreads.add(sender);
-        requestUsers();
-    }
-    
-    /**
-     * Sets the users list to the users received by the network
-     * 
-     * @param users
-     *        The list of users received by UserRequestController
-     */
-    @Override
-    public void receivedUsers(User[] users) {
-        if (users != null) {
-            setUsers(users);
-            while (!senderThreads.isEmpty()) { // $codepro.audit.disable methodInvocationInLoopCondition
-                senderThreads.pop().start();
-            }
-        }
+        sender.start();
     }
     
     /**
@@ -118,6 +111,20 @@ public class EmailController extends AbstractUserController {
     }
     
     /**
+     * Sets the users in the current project.
+     */
+    public void setUsers(User[] users) {
+        this.users = users;
+    }
+    
+    /**
+     * Gets the users in the current project.
+     */
+    public User[] getUsers() {
+        return users;
+    }
+    
+    /**
      * Generates a email message body for a new game notification.
      * 
      * @param game
@@ -127,11 +134,11 @@ public class EmailController extends AbstractUserController {
     private static String startGameMessageBody(GameModel game) {
         String body = "\n";
         
-        if (CurrentUserController.getInstance().getUser() == null) {
+        if (game.getOwner() == null) {
             body += "An unknown user has created a new Planning Poker game called ";
         }
         else {
-            body += CurrentUserController.getInstance().getUser().getName()
+            body += gameOwner.getName()
                     + " has created a new Planning Poker game called ";
         }
         body += game.getName() + ".\n\n";
