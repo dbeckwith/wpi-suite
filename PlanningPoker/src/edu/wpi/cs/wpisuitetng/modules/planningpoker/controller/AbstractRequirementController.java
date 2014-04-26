@@ -12,15 +12,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Abstract requirement controller to be extended by other classes that need to
  * receive requirements
  * 
- * @author nfbrown
+ * @author Team 9
  * @version Apr 18, 2014
  */
 public abstract class AbstractRequirementController {
@@ -72,8 +69,8 @@ public abstract class AbstractRequirementController {
      *        an array of requirements in the current project.
      * 
      */
-    public void setRequirements(Requirement[] reqs) {
-        this.reqs = reqs;
+    public static void setRequirements(Requirement[] reqs) {
+        AbstractRequirementController.reqs = reqs;
     }
     
     /**
@@ -81,7 +78,7 @@ public abstract class AbstractRequirementController {
      * 
      * @return the array of requirements in the current project.
      */
-    public Requirement[] getRequirements() {
+    public static Requirement[] getRequirements() {
         return reqs;
     }
     
