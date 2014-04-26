@@ -119,31 +119,34 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(layout.createSequentialGroup()
+                .addGroup(Alignment.LEADING, layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(nameLabel)
+                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(nameLabel)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                                    .addGap(7)
+                                    .addComponent(lblDeadline)
+                                    .addGap(6)
+                                    .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblDeck)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(6)
+                                            .addComponent(deckName)
+                                            .addPreferredGap(ComponentPlacement.RELATED, 257, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(ComponentPlacement.RELATED)
+                                            .addComponent(lblYourProgress)
+                                            .addGap(12)))))
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                            .addGap(7)
-                            .addComponent(lblDeadline)
-                            .addGap(6)
-                            .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblDeck)
-                            .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(deckName)
-                                    .addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(lblYourProgress)
-                                    .addPreferredGap(ComponentPlacement.RELATED)))
-                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap())
+                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(Alignment.LEADING)
@@ -159,11 +162,12 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                            .addComponent(lblDeck)
                             .addComponent(deckName)
-                            .addComponent(lblYourProgress))
-                        .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(19, Short.MAX_VALUE))
+                            .addComponent(lblDeck))
+                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                            .addComponent(lblYourProgress)
+                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(10, Short.MAX_VALUE))
         );
         
         descriptionText = new JTextPane();
@@ -192,7 +196,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
             }
         }
         double prog = (double)est/(double)req;
-        System.out.println("DEBUG: est: " + est + " req " + req);
         personalProgress.setValue((int)(prog *100));
         if(!game.isStarted()){
             personalProgress.setVisible(false);
