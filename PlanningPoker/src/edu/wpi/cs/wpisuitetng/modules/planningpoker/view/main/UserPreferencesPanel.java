@@ -20,15 +20,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,6 +76,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             smsBox.setSelected(CurrentUserController.getInstance().getUser()
                     .isNotifyBySMS());
             boolean b = emailBox.isSelected();
+            
             lblEmail.setVisible(b);
             emailField.setVisible(b);
             saveEmailButton.setVisible(b);
@@ -114,7 +112,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
         
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
@@ -161,7 +159,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
             
             public void validate() {
-                String email = emailField.getText();
+                final String email = emailField.getText();
                 errorEmailLabel.setVisible(false);
                 if (email.equals(CurrentUserController.getInstance().getUser()
                         .getEmail())) {
@@ -169,8 +167,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 }
                 else {
                     saveEmailButton.setEnabled(false);
-                    Pattern emailPattern;
-                    Matcher emailMatcher;
+                    final Pattern emailPattern;
+                    final Matcher emailMatcher;
                     final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     emailPattern = Pattern.compile(EMAIL_PATTERN);
@@ -245,8 +243,9 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     }
                     
                     public void validate() {
-                        String phoneNumber = phoneNumberField.getText();
-                        Carrier carrier = (Carrier) carrierBox
+                        hasStarted = true;
+                        final String phoneNumber = phoneNumberField.getText();
+                        final Carrier carrier = (Carrier) carrierBox
                                 .getSelectedItem();
                         lblInvalidPhone.setVisible(false);
                         if (phoneNumber.equals(CurrentUserController
@@ -257,8 +256,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         }
                         else {
                             btnSaveSms.setEnabled(false);
-                            Pattern phonePattern;
-                            Matcher phoneMatcher;
+                            final Pattern phonePattern;
+                            final Matcher phoneMatcher;
                             final String PHONE_PATTERN = "[0-9]{10}";
                             phonePattern = Pattern.compile(PHONE_PATTERN);
                             phoneMatcher = phonePattern.matcher(phoneNumber);
@@ -409,7 +408,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {
         UserUpdateController.getInstance().setNotifyByEmail(
                 emailBox.isSelected());
-        boolean b = emailBox.isSelected();
+        final boolean b = emailBox.isSelected();
+        
         lblEmail.setVisible(b);
         emailField.setVisible(b);
         saveEmailButton.setVisible(b);
@@ -422,7 +422,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void smsBoxActionPerformed(java.awt.event.ActionEvent evt) {
         UserUpdateController.getInstance().setNotifyBySMS(smsBox.isSelected());
-        boolean b = smsBox.isSelected();
+        final boolean b = smsBox.isSelected();
         lblPhoneNumber.setVisible(b);
         phoneNumberField.setVisible(b);
         btnSaveSms.setVisible(b);
@@ -440,35 +440,38 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
-        
-        if (!phoneNumberIsGood) {
-            lblInvalidPhone.setText("Invalid Phone #");
-            lblInvalidPhone.setVisible(true);
-            btnSaveSms.setEnabled(false);
-        }
-        else {
-            if (!carrierBox.getSelectedItem().equals(Carrier.UNKNOWN)) {
-                lblInvalidPhone.setVisible(false);
-                btnSaveSms.setEnabled(true);
+        if (hasStarted) {
+            if (!phoneNumberIsGood) {
+                lblInvalidPhone.setText("Invalid Phone #");
+                lblInvalidPhone.setVisible(true);
+                btnSaveSms.setEnabled(false);
             }
             else {
-                lblInvalidPhone.setText("Select a carrier!");
-                btnSaveSms.setEnabled(false);
-                lblInvalidPhone.setVisible(true);
+                if (!carrierBox.getSelectedItem().equals(Carrier.UNKNOWN)) {
+                    lblInvalidPhone.setVisible(false);
+                    btnSaveSms.setEnabled(true);
+                }
+                else {
+                    lblInvalidPhone.setText("Select a carrier!");
+                    btnSaveSms.setEnabled(false);
+                    lblInvalidPhone.setVisible(true);
+                }
             }
+        }
+        else {
+            hasStarted = true;
         }
     }
     
-    
     private void updateEmail() {
-        String email = emailField.getText();
+        final String email = emailField.getText();
         UserUpdateController.getInstance().updateEmail(email);
         saveEmailButton.setEnabled(false);
     }
     
     private void updateSMS() {
-        String phoneNumber = phoneNumberField.getText();
-        Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
+        final String phoneNumber = phoneNumberField.getText();
+        final Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
         UserUpdateController.getInstance().updatePhoneNumber(phoneNumber);
         UserUpdateController.getInstance().updatePhoneCarrier(selectedCarrier);
         btnSaveSms.setEnabled(false);
@@ -490,4 +493,5 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private JComboBox<Carrier> carrierBox;
     private JLabel lblMsgAndData;
     private boolean phoneNumberIsGood = false;
+    private boolean hasStarted = false;
 }
