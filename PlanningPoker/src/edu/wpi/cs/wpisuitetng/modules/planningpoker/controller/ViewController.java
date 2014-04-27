@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
@@ -19,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DocumentationPanel;
@@ -75,7 +77,8 @@ public class ViewController {
 						cancelNewGame(editGame, true);
 					}
 				});
-
+		
+		TutorialPane.getInstance().fireGUIChanged(editGame);
 	}
 
 	/**
@@ -359,6 +362,20 @@ public class ViewController {
 	 * Highlight the "Create Game" button to help user create a game
 	 */
     public void showInteractiveHelp() {
-        TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!");
+        TutorialPath path = new TutorialPath("test path");
+        path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons()
+                .getNewGameButton(), "Click here to create a game!"));
+        path.add(new TutorialPath.PathItem("Enter the game description here") {
+            
+            @Override
+            protected Component grabComponent(Component changedComponent) {
+                if (changedComponent instanceof NewGamePanel) {
+                    return ((NewGamePanel) changedComponent)
+                            .getGameDescriptionPanel().getDescriptionField();
+                }
+                return null;
+            }
+        });
+        TutorialPane.getInstance().setPath(path);
     }
 }

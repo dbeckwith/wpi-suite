@@ -14,9 +14,17 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GUIChangeListener;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 
 /**
  * 
@@ -41,14 +49,43 @@ public class TutorialPane extends JComponent {
         return TutorialPane.instance;
     }
     
+    private final ArrayList<GUIChangeListener> guiChangeListeners;
+    
     private JFrame window;
+    private TutorialPath path;
+    private int currentItemIndex;
+    private TutorialPath.PathItem currentItem;
     private Rectangle highlightArea;
-    private String highlightLabel;
+    
+    private ComponentAdapter currentItemCompListener = new ComponentAdapter() {
+        @Override
+        public void componentMoved(java.awt.event.ComponentEvent e) {
+            getCurrCompBounds();
+        };
+        
+        @Override
+        public void componentResized(java.awt.event.ComponentEvent e) {
+            getCurrCompBounds();
+        };
+    };
     
     private TutorialPane() {
+        guiChangeListeners = new ArrayList<>();
+        GroupLayout groupLayout = new GroupLayout(this);
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGap(0, 450, Short.MAX_VALUE)
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGap(0, 300, Short.MAX_VALUE)
+        );
+        setLayout(groupLayout);
         window = null;
+        path = null;
+        currentItemIndex = 0;
+        currentItem = null;
         highlightArea = null;
-        highlightLabel = null;
     }
     
     public void install(Component comp) {
@@ -69,16 +106,17 @@ public class TutorialPane extends JComponent {
     
     @Override
     protected void paintComponent(Graphics g) {
-        if (highlightArea != null) {
-            g.setColor(new Color(200, 30, 30, 210));
+        if (currentItem != null) {
+            g.setColor(new Color(240, 30, 30, 210));
             drawThickRect(g, highlightArea.x, highlightArea.y,
                     highlightArea.width, highlightArea.height, 3);
             
-            g.setColor(new Color(230, 30, 30));
+            g.setColor(new Color(255, 30, 30));
             g.setFont(getFont().deriveFont(Font.BOLD));
-            g.drawString(highlightLabel, highlightArea.x + highlightArea.width
-                    + 10, highlightArea.y + highlightArea.height / 2
-                    + g.getFontMetrics().getAscent() / 2);
+            g.drawString(currentItem.getLabel(), highlightArea.x
+                    + highlightArea.width + 10, highlightArea.y
+                    + highlightArea.height / 2 + g.getFontMetrics().getAscent()
+                    / 2);
         }
     }
     
@@ -94,32 +132,74 @@ public class TutorialPane extends JComponent {
     public boolean contains(int x, int y) {
         // overwrite contains so that the mouse cursor can change like normal
         // when it hovers over components below the glass pane
+        for (Component comp : getComponents()) {
+            if (comp.contains(SwingUtilities.convertPoint(this, x, y, comp))) {
+                return true;
+            }
+        }
         return false;
     }
-
-    public void clear() {
+    
+    public void setPath(TutorialPath path) {
+        this.path = path;
+        currentItemIndex = -1;
+        currentItem = null;
         highlightArea = null;
-        highlightLabel = null;
+        nextItem(null);
+    }
+    
+    private void getCurrCompBounds() {
+        if (currentItem != null) {
+            highlightArea = currentItem.getComponent().getBounds();
+            Point compPos = currentItem.getComponent().getLocationOnScreen();
+            Point pos = getLocationOnScreen();
+            highlightArea.x = compPos.x - pos.x;
+            highlightArea.y = compPos.y - pos.y;
+        }
         repaint();
     }
     
-    public void setHighlightArea(Component highlightedComponent, String label) {
-        if (window != null) {
-            highlightArea = highlightedComponent.getBounds();
-            Point compPos = highlightedComponent.getLocationOnScreen();
-            Point pos = getLocationOnScreen();
-            System.out.println(highlightArea);
-            System.out.println(compPos);
-            System.out.println(pos);
-            highlightArea.x = compPos.x - pos.x;
-            highlightArea.y = compPos.y - pos.y;
-            System.out.println(highlightArea);
-            highlightLabel = label;
-            repaint();
+    private void nextItem(Component changedComponent) {
+        if (currentItem != null) {
+            currentItem.getComponent().removeComponentListener(
+                    currentItemCompListener);
         }
-        else {
-            System.err.println("Tutorial pane not installed!");
+        
+        if (path != null) {
+            if (currentItemIndex < path.size()) {
+                if (path.get(currentItemIndex + 1).setComponent(changedComponent)) {
+                    currentItemIndex++;
+                    currentItem = path.get(currentItemIndex);
+                    currentItem.setComponent(changedComponent);
+                    currentItem.getComponent().addComponentListener(
+                            currentItemCompListener);
+                    
+                    getCurrCompBounds();
+                }
+                else {
+                    System.out.println("next path item didn't like the changed component");
+                }
+            }
+            else {
+                currentItem = null;
+                repaint();
+            }
         }
+    }
+    
+    public void addGUIChangeListener(GUIChangeListener l) {
+        guiChangeListeners.add(l);
+    }
+    
+    public void removeGUIChaneListener(GUIChangeListener l) {
+        guiChangeListeners.remove(l);
+    }
+    
+    public void fireGUIChanged(Component changedComponent) {
+        for (GUIChangeListener l : guiChangeListeners) {
+            l.ComponentChanged(changedComponent);
+        }
+        nextItem(changedComponent);
     }
     
 }
