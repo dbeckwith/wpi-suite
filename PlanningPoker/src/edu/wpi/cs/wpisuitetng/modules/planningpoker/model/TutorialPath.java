@@ -3,23 +3,78 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 import java.awt.Component;
 import java.util.ArrayList;
 
+/**
+ * 
+ * A class for a list of components that the user can be guided through as a tutorial.
+ *
+ * @author Team 9
+ * @version Apr 27, 2014
+ */
 public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
     
     /**
      * 
      */
-    private static final long serialVersionUID = 9065382263997689976L;
+    private static final long serialVersionUID = 9065382263997689976L; 
     
-    // TODO: instead of giving list of components, give list of methods that get components so the components can be retrieved dynamically 
-    
-    public static class PathItem {
-        public Component component;
-        public String label;
+    /**
+     * 
+     * An abstract class representing one stop in the tutorial.<br>
+     * To use this class, add an anonymous class of this type to a TutorialPath,
+     * overriding the getComponent() method to get the component that the
+     * user should be pointed to. The reason for this is that the component may not
+     * exist when the path item is instantiated, and getComponent() will only be
+     * called when the user gets to that point in the tutorial, at which point
+     * the component should exist and be visible.
+     *
+     * @author Team 9
+     * @version Apr 27, 2014
+     */
+    public static abstract class PathItem {
+        private String label;
         
-        public PathItem(Component component, String label) {
-            this.component = component;
+        public PathItem(String label) {
             this.label = label;
         }
+        
+        public abstract Component getComponent();
+        
+        public String getLabel() {
+            return label;
+        }
+    }
+    
+    /**
+     * 
+     * A convenience subclass of PathItem.<br>
+     * If the target component for the PathItem will always exist and be visible,
+     * it is easier to just pass it in as a reference to this class rather than
+     * make an anonymous subclass of PathItem.
+     *
+     * @author Sonaxaton
+     * @version Apr 27, 2014
+     */
+    public static class StaticPathItem extends PathItem {
+        private Component comp;
+        
+        public StaticPathItem(Component comp, String label) {
+            super(label);
+            this.comp = comp;
+        }
+        
+        public Component getComponent() {
+            return comp;
+        }
+    }
+    
+    private String name;
+    
+    public TutorialPath(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
     }
     
 }

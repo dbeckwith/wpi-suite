@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
@@ -328,8 +329,8 @@ public class ViewController {
 
     public void showInteractiveHelp() {
         TutorialPath path = new TutorialPath();
-        path.add(new TutorialPath.PathItem(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!"));
-        path.add(new TutorialPath.PathItem(toolbar.getCommonButtons().getUserPrefsButton(), "Click here to set your preferences!"));
+        path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!"));
+        path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons().getUserPrefsButton(), "Click here to set your preferences!"));
         TutorialPane.getInstance().setPath(path);
     }
 

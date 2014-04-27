@@ -137,7 +137,7 @@ public class TutorialPane extends JComponent {
             
             g.setColor(new Color(255, 30, 30));
             g.setFont(getFont().deriveFont(Font.BOLD));
-            g.drawString(currentItem.label, highlightArea.x
+            g.drawString(currentItem.getLabel(), highlightArea.x
                     + highlightArea.width + 10, highlightArea.y
                     + highlightArea.height / 2 + g.getFontMetrics().getAscent()
                     / 2);
@@ -173,8 +173,8 @@ public class TutorialPane extends JComponent {
     
     private void getCurrCompBounds() {
         if (currentItem != null) {
-            highlightArea = currentItem.component.getBounds();
-            Point compPos = currentItem.component.getLocationOnScreen();
+            highlightArea = currentItem.getComponent().getBounds();
+            Point compPos = currentItem.getComponent().getLocationOnScreen();
             Point pos = getLocationOnScreen();
             highlightArea.x = compPos.x - pos.x;
             highlightArea.y = compPos.y - pos.y;
@@ -184,17 +184,19 @@ public class TutorialPane extends JComponent {
     
     public void nextItem() {
         if (currentItem != null) {
-            currentItem.component.removeFocusListener(nextPathItemListener);
-            currentItem.component
-                    .removeComponentListener(currentItemCompListener);
+            currentItem.getComponent()
+                    .removeFocusListener(nextPathItemListener);
+            currentItem.getComponent().removeComponentListener(
+                    currentItemCompListener);
         }
         
         if (pathIter != null) {
             if (pathIter.hasNext()) {
                 currentItem = pathIter.next();
-                currentItem.component.addFocusListener(nextPathItemListener);
-                currentItem.component
-                        .addComponentListener(currentItemCompListener);
+                currentItem.getComponent().addFocusListener(
+                        nextPathItemListener);
+                currentItem.getComponent().addComponentListener(
+                        currentItemCompListener);
                 
                 getCurrCompBounds();
             }
