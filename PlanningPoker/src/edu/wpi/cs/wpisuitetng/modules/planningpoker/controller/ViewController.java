@@ -22,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
@@ -323,5 +324,9 @@ public class ViewController {
 	public boolean getAdminVisibility() {
 		return showAdmin;
 	}
+
+    public void showInteractiveHelp() {
+        TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!");
+    }
 
 }
