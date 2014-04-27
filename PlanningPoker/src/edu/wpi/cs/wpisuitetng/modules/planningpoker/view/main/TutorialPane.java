@@ -17,7 +17,6 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
-import java.awt.event.FocusAdapter;
 import java.util.Iterator;
 
 import javax.swing.GroupLayout;
@@ -56,14 +55,6 @@ public class TutorialPane extends JComponent {
     private Iterator<TutorialPath.PathItem> pathIter;
     private TutorialPath.PathItem currentItem;
     private Rectangle highlightArea;
-    
-    private FocusAdapter nextPathItemListener = new FocusAdapter() {
-        
-        @Override
-        public void focusGained(java.awt.event.FocusEvent e) {
-            nextItem();
-        };
-    };
     
     private ComponentAdapter currentItemCompListener = new ComponentAdapter() {
         @Override
@@ -184,8 +175,6 @@ public class TutorialPane extends JComponent {
     
     public void nextItem() {
         if (currentItem != null) {
-            currentItem.getComponent()
-                    .removeFocusListener(nextPathItemListener);
             currentItem.getComponent().removeComponentListener(
                     currentItemCompListener);
         }
@@ -193,8 +182,6 @@ public class TutorialPane extends JComponent {
         if (pathIter != null) {
             if (pathIter.hasNext()) {
                 currentItem = pathIter.next();
-                currentItem.getComponent().addFocusListener(
-                        nextPathItemListener);
                 currentItem.getComponent().addComponentListener(
                         currentItemCompListener);
                 
