@@ -89,7 +89,6 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
     public TutorialPath(String name, JPanel panel) {
         this.name = name;
         this.panel = panel;
-        TutorialComponents.getInstance().addTutorial(this);
     }
     
     /**
@@ -105,5 +104,37 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
     public JPanel getPanel() {
         return panel;
     }
-    
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((panel == null) ? 0 : panel.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TutorialPath other = (TutorialPath) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        }
+        else if (!name.equals(other.name))
+            return false;
+        if (panel == null) {
+            if (other.panel != null)
+                return false;
+        }
+        else if (!panel.equals(other.panel))
+            return false;
+        return true;
+    }
 }

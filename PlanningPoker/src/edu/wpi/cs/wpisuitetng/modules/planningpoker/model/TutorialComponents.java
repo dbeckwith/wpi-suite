@@ -79,16 +79,22 @@ public final class TutorialComponents {
      */
     public boolean addTutorial(TutorialPath tutorial) {
         if (!TUTORIALS.contains(tutorial)) {
+            System.out.println("Added tutorial " + tutorial.getName());
             return TUTORIALS.add(tutorial);
         }
+        System.out.println("Failed to add tutorial " + tutorial.getName() + "(list already contained tutorial)");
         return false;
+    }
+    
+    public ArrayList<TutorialPath> getTutorials() {
+        return TUTORIALS;
     }
     
     /**
      * Create all tutorial paths here.
      */
     private void initTutorialPaths() {
-        TutorialPath p = new TutorialPath("");
+        
     }
     
 }
