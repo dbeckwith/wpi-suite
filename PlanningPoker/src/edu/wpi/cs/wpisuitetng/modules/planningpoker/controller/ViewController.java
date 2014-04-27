@@ -105,7 +105,7 @@ public class ViewController {
      * Adds a help documentation panel
      */
     public void addDocumentationPanel() {
-        final DocumentationPanel docPanel = new DocumentationPanel();
+        final DocumentationPanel docPanel = DocumentationPanel.getPanel();
         mainView.addTab("Documentation Panel", docPanel);
         mainView.setSelectedComponent(docPanel);
         
@@ -115,20 +115,10 @@ public class ViewController {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        closeDocumentation(docPanel);
+                        mainView.removeTabAt(mainView.indexOfComponent(docPanel));
                     }
                 });
         
-    }
-    
-    /**
-     * Closes the documentation panel
-     * 
-     * @param e
-     *        The documentation panel to cancel
-     */
-    public void closeDocumentation(DocumentationPanel e) {
-        mainView.removeTabAt(mainView.indexOfComponent(e));
     }
 
 	/**
