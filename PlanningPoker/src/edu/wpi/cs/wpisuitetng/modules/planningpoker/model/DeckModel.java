@@ -29,7 +29,7 @@ public class DeckModel extends AbstractModel {
 	public static final int NO_LIMIT = 0;
 	
 	static {
-		ArrayList<Double> defaultCards = new ArrayList<Double>();
+		final ArrayList<Double> defaultCards = new ArrayList<Double>();
 		
 		defaultCards.add(0d);
 		defaultCards.add(1d);
@@ -68,13 +68,12 @@ public class DeckModel extends AbstractModel {
 		maxEstimate = NO_LIMIT;
 	}
 
-    /**
-     * Creates a new deck without any cards that does not allow multiple
+
+	/**
+	 * Creates a new deck without any cards that does not allow multiple
      * selection.
-     * 
-     * @param name
-     *            the name of the deck
-     */
+	 * @param max
+	 */
 	public DeckModel(int max) {
 		this.name = "None";
 		this.cards = null;

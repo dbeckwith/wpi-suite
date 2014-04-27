@@ -97,6 +97,10 @@ public class UserUpdateController {
         sendPostRequest(FieldName.IM_NOTIFY, doNotify);
     }
     
+    /**
+     * update email
+     * @param e
+     */
     public void updateEmail(String e) {
         sendPostRequest(FieldName.EMAIL_UPDATE, e);
     }

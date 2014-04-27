@@ -133,6 +133,7 @@ public class VotePanel extends javax.swing.JPanel {
         cards.clear();
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
+
         	SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck().getMaxEstimate());
             estimateInput.addActionListener(new ActionListener() {					
 				@Override
@@ -304,7 +305,7 @@ public class VotePanel extends javax.swing.JPanel {
         teammateProgressBar = new JProgressBar();
         teammateProgressBar.setStringPainted(true);
         
-        JLabel lblTeammateProgress = new JLabel("Team Progress");
+        final JLabel lblTeammateProgress = new JLabel("Team Progress");
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
@@ -452,9 +453,9 @@ public class VotePanel extends javax.swing.JPanel {
      * updates the progress bar based on teammate progress
      */
     private void updateProgress(){
-       int est = req.getEstimates().size();
-       int user = CurrentUserController.getInstance().getUsers().length;
-       double prog = (double)est/(double)user;
+        final int est = req.getEstimates().size();
+        final int user = CurrentUserController.getInstance().getUsers().length;
+        final double prog = (double)est/(double)user;
        teammateProgressBar.setValue((int)(prog *100));
     }
     

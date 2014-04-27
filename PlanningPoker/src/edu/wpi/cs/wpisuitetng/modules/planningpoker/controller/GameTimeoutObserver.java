@@ -67,6 +67,8 @@ public class GameTimeoutObserver extends Thread {
      * GameEntityManager creates a new GameModel on the server.
      * 
      * @see GameEntityManager#makeEntity(Session, String)
+     * @param session  
+     * @param game
      */
     public GameTimeoutObserver(Session session, GameModel game) {
         super("GameTimeoutObserver-" + game.getID());
@@ -96,7 +98,7 @@ public class GameTimeoutObserver extends Thread {
                 System.out.println("Deadline reached, ending game: "
                         + game.toString());
                 // clone the game so we don't change it in the database
-                GameModel clone = new GameModel();
+                final GameModel clone = new GameModel();
                 clone.copyFrom(game);
                 clone.setEnded(true);
                 GameEntityManager.getInstance().update(session, clone.toJSON());
@@ -119,8 +121,11 @@ public class GameTimeoutObserver extends Thread {
         return toGMT(new Date()).after(endDate);
     }
     
+
     /**
      * Gets the observer associated with the given game.
+     * @param game
+     * @return GameTimeoutObserver
      */
     public static GameTimeoutObserver getObserver(GameModel game) {
         for (GameTimeoutObserver o : OBSERVERS) {
