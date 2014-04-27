@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
+
 /**
  * 
  * A class for a list of components that the user can be guided through as a
@@ -24,24 +26,52 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
      * 
      * An abstract class representing one stop in the tutorial.<br>
      * To use this class, add an anonymous class of this type to a TutorialPath,
-     * overriding the getComponent() method to get the component that the
+     * overriding the grabComponent() method to get the component that the
      * user should be pointed to. The reason for this is that the component may
-     * not
-     * exist when the path item is instantiated, and getComponent() will only be
-     * called when the user gets to that point in the tutorial, at which point
-     * the component should exist and be visible.
+     * not exist when the path item is instantiated, and grabComponent() will
+     * only be called when the user gets to that point in the tutorial, at which
+     * point the component should exist and be visible.<br>
+     * In order for PathItems to be notified of GUI changes, any time a GUI
+     * element that might relate to a tutorial changes in a way that might cause
+     * the tutorial to advance, it should call
+     * {@link TutorialPane#fireGUIChanged(Component)} on
+     * {@link TutorialPane#getInstance()}.
      * 
      * @author Team 9
      * @version Apr 27, 2014
      */
     public static abstract class PathItem {
         private String label;
+        private Component comp;
         
         public PathItem(String label) {
             this.label = label;
+            comp = null;
         }
         
-        public abstract Component getComponent();
+        /**
+         * 
+         * This method will be called when the TutorialPane is notified of a
+         * change in the GUI, and will be passed the component that changed. The
+         * general contract of this method is that if the changed component was
+         * the one that is or contains the component that should be highlighted
+         * in this path item, it should cast the changed component and return
+         * the component to be highlighted. If the changed component was not the
+         * one you wanted, return null instead, indicating that the tutorial
+         * should not move on and the changed component should be ignored.
+         * 
+         * @param changedComponent
+         * @return
+         */
+        protected abstract Component grabComponent(Component changedComponent);
+        
+        public boolean setComponent(Component changedComponent) {
+            return (comp = grabComponent(changedComponent)) != null;
+        }
+        
+        public Component getComponent() {
+            return comp;
+        }
         
         public String getLabel() {
             return label;
@@ -67,7 +97,7 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
             this.comp = comp;
         }
         
-        public Component getComponent() {
+        public Component grabComponent(Component changedComponent) {
             return comp;
         }
     }
@@ -105,7 +135,7 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
     public JPanel getPanel() {
         return panel;
     }
-
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -114,7 +144,7 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
         result = prime * result + ((panel == null) ? 0 : panel.hashCode());
         return result;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

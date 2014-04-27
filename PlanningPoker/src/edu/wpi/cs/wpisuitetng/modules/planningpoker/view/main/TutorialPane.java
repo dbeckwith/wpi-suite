@@ -14,18 +14,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
-import java.util.Iterator;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GUIChangeListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 
 /**
@@ -51,8 +49,11 @@ public class TutorialPane extends JComponent {
         return TutorialPane.instance;
     }
     
+    private final ArrayList<GUIChangeListener> guiChangeListeners;
+    
     private JFrame window;
-    private Iterator<TutorialPath.PathItem> pathIter;
+    private TutorialPath path;
+    private int currentItemIndex;
     private TutorialPath.PathItem currentItem;
     private Rectangle highlightArea;
     
@@ -69,36 +70,20 @@ public class TutorialPane extends JComponent {
     };
     
     private TutorialPane() {
-        
-        JButton nextButton = new JButton("Next");
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nextItem();
-            }
-        });
+        guiChangeListeners = new ArrayList<>();
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-                Alignment.LEADING).addGroup(
-                Alignment.TRAILING,
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap(349, Short.MAX_VALUE)
-                        .addComponent(nextButton, GroupLayout.PREFERRED_SIZE,
-                                89, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap()));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-                Alignment.LEADING).addGroup(
-                Alignment.TRAILING,
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap(265, Short.MAX_VALUE)
-                        .addComponent(nextButton, GroupLayout.PREFERRED_SIZE,
-                                23, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap()));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGap(0, 450, Short.MAX_VALUE)
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGap(0, 300, Short.MAX_VALUE)
+        );
         setLayout(groupLayout);
         window = null;
-        pathIter = null;
+        path = null;
+        currentItemIndex = 0;
         currentItem = null;
         highlightArea = null;
     }
@@ -156,10 +141,11 @@ public class TutorialPane extends JComponent {
     }
     
     public void setPath(TutorialPath path) {
-        pathIter = path.iterator();
+        this.path = path;
+        currentItemIndex = -1;
         currentItem = null;
         highlightArea = null;
-        nextItem();
+        nextItem(null);
     }
     
     private void getCurrCompBounds() {
@@ -173,19 +159,26 @@ public class TutorialPane extends JComponent {
         repaint();
     }
     
-    public void nextItem() {
+    private void nextItem(Component changedComponent) {
         if (currentItem != null) {
             currentItem.getComponent().removeComponentListener(
                     currentItemCompListener);
         }
         
-        if (pathIter != null) {
-            if (pathIter.hasNext()) {
-                currentItem = pathIter.next();
-                currentItem.getComponent().addComponentListener(
-                        currentItemCompListener);
-                
-                getCurrCompBounds();
+        if (path != null) {
+            if (currentItemIndex < path.size()) {
+                if (path.get(currentItemIndex + 1).setComponent(changedComponent)) {
+                    currentItemIndex++;
+                    currentItem = path.get(currentItemIndex);
+                    currentItem.setComponent(changedComponent);
+                    currentItem.getComponent().addComponentListener(
+                            currentItemCompListener);
+                    
+                    getCurrCompBounds();
+                }
+                else {
+                    System.out.println("next path item didn't like the changed component");
+                }
             }
             else {
                 currentItem = null;
@@ -193,4 +186,20 @@ public class TutorialPane extends JComponent {
             }
         }
     }
+    
+    public void addGUIChangeListener(GUIChangeListener l) {
+        guiChangeListeners.add(l);
+    }
+    
+    public void removeGUIChaneListener(GUIChangeListener l) {
+        guiChangeListeners.remove(l);
+    }
+    
+    public void fireGUIChanged(Component changedComponent) {
+        for (GUIChangeListener l : guiChangeListeners) {
+            l.ComponentChanged(changedComponent);
+        }
+        nextItem(changedComponent);
+    }
+    
 }

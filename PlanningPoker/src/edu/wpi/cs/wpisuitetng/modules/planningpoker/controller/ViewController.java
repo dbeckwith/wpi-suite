@@ -10,9 +10,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
 
 import javax.swing.JOptionPane;
 
@@ -79,7 +76,8 @@ public class ViewController {
 						cancelNewGame(editGame, true);
 					}
 				});
-
+		
+		TutorialPane.getInstance().fireGUIChanged(editGame);
 	}
 
 	/**
@@ -334,34 +332,15 @@ public class ViewController {
         TutorialPath path = new TutorialPath("test path");
         path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons()
                 .getNewGameButton(), "Click here to create a game!"));
-        toolbar.getCommonButtons().getNewGameButton()
-                .addActionListener(new ActionListener() {
-                    
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        TutorialPane.getInstance().nextItem();
-                    }
-                });
         path.add(new TutorialPath.PathItem("Enter the game description here") {
             
             @Override
-            public Component getComponent() {
-                NewGamePanel ngp = null;
-                if (mainView.getSelectedComponent() instanceof NewGamePanel) {
-                    ngp = (NewGamePanel) mainView.getSelectedComponent();
+            protected Component grabComponent(Component changedComponent) {
+                if (changedComponent instanceof NewGamePanel) {
+                    return ((NewGamePanel) changedComponent)
+                            .getGameDescriptionPanel().getDescriptionField();
                 }
-                if (ngp == null) {
-                    System.err.println("NewGamePanel not found!");
-                    return null;
-                }
-                return ngp.getGameDescriptionPanel().getDescriptionField();
-            }
-        });
-        mainView.addContainerListener(new ContainerAdapter() {
-            @Override
-            public void componentAdded(ContainerEvent e) {
-                TutorialPane.getInstance().nextItem();
-                System.out.println("component added");
+                return null;
             }
         });
         TutorialPane.getInstance().setPath(path);
