@@ -279,6 +279,7 @@ public class GameRequirementModel extends AbstractModel {
      */
     public boolean allVoted() {
         final ArrayList<User> estimateUsers = new ArrayList<User>();
+        CurrentUserController.getInstance().requestUsers();
         final User[] users = CurrentUserController.getInstance().getUsers();
         
         // checks to see if an all users have voted
