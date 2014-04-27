@@ -247,11 +247,11 @@ public class GameRequirementModel extends AbstractModel {
             Collections.sort(estimates_copy);
             final int count = estimates_copy.size();
             if (estimates_copy.size() % 2 == 1) {
-                toReturn = estimates_copy.get(count / 2).getEstimate();
+                toReturn = estimates_copy.get((int) (count / 2.0)).getEstimate();
             }
             else {
-                toReturn = (estimates_copy.get(count / 2).getEstimate() + estimates_copy
-                        .get(count / 2 - 1).getEstimate()) / 2;
+                toReturn = (estimates_copy.get((int) (count / 2.0)).getEstimate() + estimates_copy
+                        .get((int) (count / 2.0 - 1.0)).getEstimate()) / 2;
             }
         }
         return toReturn;
@@ -278,6 +278,7 @@ public class GameRequirementModel extends AbstractModel {
      * @return true if all users have voted on a requirement, false otherwise
      */
     public boolean allVoted() {
+    	boolean voted = true;
         final ArrayList<User> estimateUsers = new ArrayList<User>();
         CurrentUserController.getInstance().requestUsers();
         final User[] users = CurrentUserController.getInstance().getUsers();
@@ -293,10 +294,10 @@ public class GameRequirementModel extends AbstractModel {
         
         for (int i = 0; i < users.length; i++) {
             if (!estimateUsers.contains(users[i])) { 
-            	return false; 
+            	voted = false; 
             }
         }
-        return true;
+        return voted;
     }
     
     @Override
@@ -368,6 +369,11 @@ public class GameRequirementModel extends AbstractModel {
             toReturn = super.equals(other);
         }
         return toReturn;
+    }
+    
+    @Override
+    public int hashCode(){
+		return id;
     }
     
     /**

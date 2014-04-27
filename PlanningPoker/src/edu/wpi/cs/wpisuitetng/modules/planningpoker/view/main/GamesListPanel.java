@@ -79,14 +79,17 @@ public class GamesListPanel extends javax.swing.JPanel {
         }
         
         // save the selected node
+        Object selectedNodeParent = null;
         Object selectedNodeUserObject = null;
         boolean requirement = false;
         boolean game = false;
         if (gameTree.getSelectionCount() != 0) {
-            selectedNodeUserObject = ((DefaultMutableTreeNode) gameTree.getSelectionPath()
-                    .getLastPathComponent()).getUserObject();
+            DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) gameTree.getSelectionPath()
+                    .getLastPathComponent();
+            selectedNodeUserObject = treeNode.getUserObject();
             if (selectedNodeUserObject instanceof GameRequirementModel) {
                 requirement = true;
+                selectedNodeParent = ((DefaultMutableTreeNode) treeNode.getParent()).getUserObject();
             }
             else if (selectedNodeUserObject instanceof GameModel) {
                 game = true;
@@ -165,8 +168,8 @@ public class GamesListPanel extends javax.swing.JPanel {
             if (node.getUserObject() != null
                     && node.getUserObject() instanceof GameRequirementModel) {
                 if (requirement
-                        && ((GameRequirementModel) node.getUserObject()).getId() == ((GameRequirementModel) selectedNodeUserObject)
-                                .getId()){
+                        && ((GameRequirementModel) node.getUserObject()).equals((GameRequirementModel) selectedNodeUserObject)
+                        && ((GameModel) ((DefaultMutableTreeNode) node.getParent()).getUserObject()).equals((GameModel) selectedNodeParent)){
                     gameTree.setSelectionPath(new TreePath(node.getPath()));
                 }
             }
