@@ -55,7 +55,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		String password = null;
 		boolean emailNotify = false;
 		boolean smsNotify = false;
-		Carrier carrier = null;
+		Carrier carrier = Carrier.UNKNOWN;
 		String phoneNumber = null;
 		
 
@@ -95,7 +95,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		}
 		
         if (deflated.has("carrier") && !isValueEmpty(deflated, "carrier")) {
-            carrier = Carrier.getEnum(deflated.get("carrier").getAsString());
+            carrier = Carrier.valueOf(deflated.get("carrier").getAsString());
         }
         
 		User inflated = new User(name, username, email, password, idNum, phoneNumber, carrier);

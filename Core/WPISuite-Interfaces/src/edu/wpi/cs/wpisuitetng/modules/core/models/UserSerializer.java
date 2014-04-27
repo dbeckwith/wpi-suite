@@ -34,7 +34,7 @@ public class UserSerializer implements JsonSerializer<User> {
 		deflated.addProperty("emailNotify", u.isNotifyByEmail());
 		deflated.addProperty("smsNotify", u.isNotifyBySMS());
 		deflated.addProperty("phoneNumber", u.getPhoneNumber());
-		deflated.addProperty("carrier", u.getCarrier().getLabelText());
+		deflated.addProperty("carrier", u.getCarrier().name());
 		
 		return deflated;
 	}

@@ -51,7 +51,7 @@ public enum Carrier {
     TRACFONE("txt.att.net", "Tracfone"),
     TRITON("tms.suncom.com", "Triton"),
     UNICEL("utext.com", "Unicel"),
-    UNKNOWN("", "Unknown"),
+    UNKNOWN("", "Select a Phone Carrier"),
     US_CELLULAR("email.uscc.net", "US Cellular"),
     US_WEST("uswestdatamail.com", "US West"),
     VERIZON("vtext.com", "Verizon"),

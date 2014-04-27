@@ -27,11 +27,16 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
 import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -84,13 +89,15 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             b = smsBox.isSelected();
             lblPhoneNumber.setVisible(b);
             phoneNumberField.setVisible(b);
-            phoneNumberField.setText(CurrentUserController.getInstance().getUser().getPhoneNumber());
+            phoneNumberField.setText(CurrentUserController.getInstance()
+                    .getUser().getPhoneNumber());
             btnSaveSms.setVisible(b);
             btnSaveSms.setEnabled(false);
             lblCarrier.setVisible(b);
             carrierBox.setVisible(b);
-            carrierBox.setSelectedItem(CurrentUserController.getInstance().getUser().getCarrier());
-            
+            carrierBox.setSelectedItem(CurrentUserController.getInstance()
+                    .getUser().getCarrier());
+            lblMsgAndData.setVisible(b);
         }
     }
     
@@ -108,25 +115,30 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 804, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(38, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(84, Short.MAX_VALUE))
-        );
+        layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(notificationsPanel,
+                                        GroupLayout.PREFERRED_SIZE, 804,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(38, Short.MAX_VALUE)));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(notificationsPanel,
+                                        GroupLayout.PREFERRED_SIZE, 172,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(84, Short.MAX_VALUE)));
         GridBagLayout gbl_notificationsPanel = new GridBagLayout();
-        gbl_notificationsPanel.columnWidths = new int[]{16, 162, 73, 336, 83, 89, 0};
-        gbl_notificationsPanel.rowHeights = new int[]{40, 42, 10, 47, 0};
-        gbl_notificationsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_notificationsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_notificationsPanel.columnWidths = new int[] { 16, 162, 73, 336, 83,
+                89, 0 };
+        gbl_notificationsPanel.rowHeights = new int[] { 40, 42, 10, 47, 0 };
+        gbl_notificationsPanel.columnWeights = new double[] { 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gbl_notificationsPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
+                Double.MIN_VALUE };
         notificationsPanel.setLayout(gbl_notificationsPanel);
         
         emailField = new JTextField();
@@ -175,6 +187,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             
         });
         emailBox = new javax.swing.JCheckBox();
+        emailBox.setFont(new Font("Tahoma", Font.BOLD, 11));
         emailBox.setBackground(Color.WHITE);
         
         emailBox.setText("Receive E-mail");
@@ -184,14 +197,15 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 emailBoxActionPerformed(evt);
             }
         });
-        btnSaveSms = new JButton("Save SMS");
-        btnSaveSms.addActionListener(new ActionListener () {
+        btnSaveSms = new JButton("Save");
+        btnSaveSms.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateSMS();
             }
         });
         smsBox = new javax.swing.JCheckBox();
+        smsBox.setFont(new Font("Tahoma", Font.BOLD, 11));
         smsBox.setBackground(Color.WHITE);
         
         smsBox.setText("Receive SMS");
@@ -237,22 +251,31 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         lblInvalidPhone.setVisible(false);
                         if (phoneNumber.equals(CurrentUserController
                                 .getInstance().getUser().getPhoneNumber())
-                                && carrier.equals(CurrentUserController
-                                        .getInstance().getUser().getCarrier())) {
+                                && (carrier.equals(CurrentUserController
+                                        .getInstance().getUser().getCarrier()))) {
                             btnSaveSms.setEnabled(false);
                         }
                         else {
-                            saveEmailButton.setEnabled(false);
+                            btnSaveSms.setEnabled(false);
                             Pattern phonePattern;
                             Matcher phoneMatcher;
                             final String PHONE_PATTERN = "[0-9]{10}";
                             phonePattern = Pattern.compile(PHONE_PATTERN);
                             phoneMatcher = phonePattern.matcher(phoneNumber);
-                            
-                            if (phoneMatcher.matches()) {
-                                btnSaveSms.setEnabled(true);
+                            phoneNumberIsGood = phoneMatcher.matches();
+                            if (phoneNumberIsGood) {
+                                if ((carrierBox.getSelectedItem()
+                                        .equals(Carrier.UNKNOWN))) {
+                                    lblInvalidPhone
+                                            .setText("Select a carrier!");
+                                    lblInvalidPhone.setVisible(true);
+                                }
+                                else {
+                                    btnSaveSms.setEnabled(true);
+                                }
                             }
                             else {
+                                lblInvalidPhone.setText("Invalid Phone #");
                                 lblInvalidPhone.setVisible(true);
                             }
                         }
@@ -294,23 +317,17 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         gbc_lblInvalidPhone.gridx = 5;
         gbc_lblInvalidPhone.gridy = 0;
         notificationsPanel.add(lblInvalidPhone, gbc_lblInvalidPhone);
-        //        carrierBox.setModel(new DefaultComboBoxModel(new String[] { "",
-        //                "3 River Wireless", "ACS Wireless", "Alltel", "AT&T",
-        //                "Blue Sky Frog", "Bluegrass Cellular", "Boost Mobile",
-        //                "BPL Mobile", "Carolina West Wireless", "Cellular One",
-        //                "Cellular South", "Centennial Wireless", "CenturyTel",
-        //                "Clearnet", "Comcast", "Corr Wireless Communications",
-        //                "Dobson", "Edge Wireless", "Fido", "Golden Telecom", "Helio",
-        //                "Houston Cellular", "Idea Cellular",
-        //                "Illinois Valley Cellular", "Inland Cellular Telephone", "MCI",
-        //                "Metrocall", "Metrocall 2-way", "Metro PCS", "Microcell",
-        //                "Midwest Wireless", "Mobilcomm", "MTS", "Nextel", "OnlineBeep",
-        //                "PCS One", "President's Choice", "Public Service Cellular",
-        //                "Qwest", "Satellink", "Solo Mobile", "Southwestern Bell",
-        //                "Sprint", "Sumcom", "Surewest Communications", "T-Mobile",
-        //                "Telus", "Tracfone", "Triton", "Unicel", "US Cellular",
-        //                "US West", "Verizon", "Virgin Mobile", "Virgin Mobile Canada",
-        //                "West Central Wireless", "Western Wireless" }));
+        
+        lblMsgAndData = new JLabel("Msg & data rates may apply");
+        lblMsgAndData.setFont(new Font("Tahoma", Font.ITALIC, 11));
+        GridBagConstraints gbc_lblMsgAndData = new GridBagConstraints();
+        gbc_lblMsgAndData.fill = GridBagConstraints.VERTICAL;
+        gbc_lblMsgAndData.anchor = GridBagConstraints.EAST;
+        gbc_lblMsgAndData.insets = new Insets(0, 0, 5, 5);
+        gbc_lblMsgAndData.gridx = 1;
+        gbc_lblMsgAndData.gridy = 1;
+        notificationsPanel.add(lblMsgAndData, gbc_lblMsgAndData);
+        
         
         lblCarrier = new JLabel("Carrier :");
         lblCarrier.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -321,8 +338,18 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         gbc_lblCarrier.gridy = 1;
         notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
-        carrierBox = new JComboBox();
-        carrierBox.setModel(new DefaultComboBoxModel(Carrier.values()));
+        carrierBox = new JComboBox<Carrier>();
+        carrierBox
+                .setModel(new DefaultComboBoxModel<Carrier>(Carrier.values()));
+        carrierBox.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carrierBoxActionPerformed(e);
+                
+            }
+            
+        });
         GridBagConstraints gbc_carrierBox = new GridBagConstraints();
         gbc_carrierBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_carrierBox.insets = new Insets(0, 0, 5, 5);
@@ -356,7 +383,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         errorEmailLabel.setForeground(Color.RED);
         errorEmailLabel.setVisible(false);
         
-        saveEmailButton = new JButton("Save Email");
+        saveEmailButton = new JButton("Save");
         saveEmailButton.addActionListener(new ActionListener() {
             
             @Override
@@ -366,7 +393,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             
         });
         GridBagConstraints gbc_saveEmailButton = new GridBagConstraints();
-        gbc_saveEmailButton.anchor = GridBagConstraints.WEST;
+        gbc_saveEmailButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_saveEmailButton.insets = new Insets(0, 0, 0, 5);
         gbc_saveEmailButton.gridx = 4;
         gbc_saveEmailButton.gridy = 3;
@@ -402,6 +429,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         lblCarrier.setVisible(b);
         lblInvalidPhone.setVisible(false);
         carrierBox.setVisible(b);
+        lblMsgAndData.setVisible(b);
         if (b) {
             phoneNumberField.setText(CurrentUserController.getInstance()
                     .getUser().getPhoneNumber());
@@ -411,6 +439,27 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
     }
     
+    private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
+        
+        if (!phoneNumberIsGood) {
+            lblInvalidPhone.setText("Invalid Phone #");
+            lblInvalidPhone.setVisible(true);
+            btnSaveSms.setEnabled(false);
+        }
+        else {
+            if (!carrierBox.getSelectedItem().equals(Carrier.UNKNOWN)) {
+                lblInvalidPhone.setVisible(false);
+                btnSaveSms.setEnabled(true);
+            }
+            else {
+                lblInvalidPhone.setText("Select a carrier!");
+                btnSaveSms.setEnabled(false);
+                lblInvalidPhone.setVisible(true);
+            }
+        }
+    }
+    
+    
     private void updateEmail() {
         String email = emailField.getText();
         UserUpdateController.getInstance().updateEmail(email);
@@ -419,9 +468,9 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void updateSMS() {
         String phoneNumber = phoneNumberField.getText();
-        Carrier carrier = (Carrier) carrierBox.getSelectedItem();
+        Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
         UserUpdateController.getInstance().updatePhoneNumber(phoneNumber);
-        UserUpdateController.getInstance().updatePhoneCarrier(carrier);
+        UserUpdateController.getInstance().updatePhoneCarrier(selectedCarrier);
         btnSaveSms.setEnabled(false);
     }
     
@@ -439,4 +488,6 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private JLabel lblPhoneNumber;
     private JButton btnSaveSms;
     private JComboBox<Carrier> carrierBox;
+    private JLabel lblMsgAndData;
+    private boolean phoneNumberIsGood = false;
 }
