@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
+import javax.swing.JButton;
 
 /**
  * 
@@ -76,11 +77,23 @@ public class TutorialPane extends JComponent {
     };
     
     private TutorialPane() {
+        
+        JButton btnNext = new JButton("Next");
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-                Alignment.TRAILING).addGap(0, 450, Short.MAX_VALUE));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-                Alignment.TRAILING).addGap(0, 300, Short.MAX_VALUE));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap(340, Short.MAX_VALUE)
+                    .addComponent(btnNext)
+                    .addContainerGap())
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnNext)
+                    .addContainerGap(262, Short.MAX_VALUE))
+        );
         setLayout(groupLayout);
         window = null;
         path = null;
@@ -199,5 +212,4 @@ public class TutorialPane extends JComponent {
     public void fireGUIChanged(Component changedComponent) {
         nextItem(changedComponent);
     }
-    
 }

@@ -348,6 +348,7 @@ public class ViewController {
 	public boolean getAdminVisibility() {
 		return showAdmin;
 	}
+	
 	/**
 	 * Highlight the "Create Game" button to help user create a game
 	 */

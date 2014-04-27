@@ -3,8 +3,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 import java.awt.Component;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 /**
