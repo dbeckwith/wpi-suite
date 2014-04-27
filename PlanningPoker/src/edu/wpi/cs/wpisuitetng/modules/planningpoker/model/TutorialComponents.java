@@ -10,8 +10,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 /**
  * 
  * @author Team 9
@@ -54,22 +52,6 @@ public final class TutorialComponents {
     }
     
     /**
-     * Gets the tutorial path for the given panel, or null if no tutorial is
-     * associated with that panel.
-     * 
-     * @param panel
-     *        the panel to get the tutorial for
-     */
-    public TutorialPath getTutorial(JPanel panel) {
-        for (TutorialPath t : TUTORIALS) {
-            if (t.getPanel() != null && t.getPanel().equals(panel)) {
-                return t;
-            }
-        }
-        return null;
-    }
-    
-    /**
      * Adds the given tutorial to the list of tutorials.
      * 
      * @param tutorial
@@ -82,7 +64,8 @@ public final class TutorialComponents {
             System.out.println("Added tutorial " + tutorial.getName());
             return TUTORIALS.add(tutorial);
         }
-        System.out.println("Failed to add tutorial " + tutorial.getName() + " (already stored)");
+        System.out.println("Failed to add tutorial " + tutorial.getName()
+                + " (already stored)");
         return false;
     }
     

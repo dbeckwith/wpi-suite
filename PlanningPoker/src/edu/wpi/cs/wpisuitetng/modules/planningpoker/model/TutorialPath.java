@@ -103,22 +103,12 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
     }
     
     private String name;
-    private JPanel panel;
     
     /**
      * Creates a new tutorial path with the given name.
      */
     public TutorialPath(String name) {
-        this(name, null);
-    }
-    
-    /**
-     * Creates a new tutorial path with the given name and associated with the
-     * given JPanel.
-     */
-    public TutorialPath(String name, JPanel panel) {
         this.name = name;
-        this.panel = panel;
         TutorialComponents.getInstance().addTutorial(this);
     }
     
@@ -129,19 +119,11 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
         return name;
     }
     
-    /**
-     * Gets the JPanel associated with this tutorial. May be null.
-     */
-    public JPanel getPanel() {
-        return panel;
-    }
-    
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((panel == null) ? 0 : panel.hashCode());
         return result;
     }
     
@@ -159,12 +141,6 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
                 return false;
         }
         else if (!name.equals(other.name))
-            return false;
-        if (panel == null) {
-            if (other.panel != null)
-                return false;
-        }
-        else if (!panel.equals(other.panel))
             return false;
         return true;
     }
