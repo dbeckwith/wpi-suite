@@ -89,6 +89,7 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
     public TutorialPath(String name, JPanel panel) {
         this.name = name;
         this.panel = panel;
+        TutorialComponents.getInstance().addTutorial(this);
     }
     
     /**
