@@ -158,7 +158,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 validate();
             }
             
-            public void validate() {
+            private void validate() {
                 final String email = emailField.getText();
                 errorEmailLabel.setVisible(false);
                 if (email.equals(CurrentUserController.getInstance().getUser()

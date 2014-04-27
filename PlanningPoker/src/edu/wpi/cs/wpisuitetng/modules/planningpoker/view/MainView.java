@@ -74,7 +74,7 @@ public class MainView extends JTabbedPane {
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     }
                     
-                    TutorialPane.getInstance().install((Component)MainView.this);
+                    TutorialPane.getInstance().install(MainView.this);
 
                     alreadyShown = true;
                 }

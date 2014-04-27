@@ -108,7 +108,6 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
             email.setMsg("Dear " + u.getName() + "," //$NON-NLS-1$ // $codepro.audit.disable disallowStringConcatenation
                     + System.getProperty("line.separator") + theBody); //$NON-NLS-1$
             email.send();
-            
         }
         catch (EmailException e) {
             // failed to send email
