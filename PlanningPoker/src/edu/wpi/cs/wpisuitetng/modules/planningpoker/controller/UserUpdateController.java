@@ -163,7 +163,7 @@ public class UserUpdateController {
                 alreadyReturned = true;
                 //return;
         }
-        if (alreadyReturned = false){
+        if (!alreadyReturned){
             final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
                     HttpMethod.POST);
             request.setBody(user.toJSON());
