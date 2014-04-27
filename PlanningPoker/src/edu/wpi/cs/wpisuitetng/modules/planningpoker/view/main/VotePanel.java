@@ -134,7 +134,7 @@ public class VotePanel extends javax.swing.JPanel {
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
 
-        	SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck().getMaxEstimate());
+        	final SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck().getMaxEstimate());
             estimateInput.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -147,7 +147,7 @@ public class VotePanel extends javax.swing.JPanel {
         	validateCards();
         	estimateInput.setPreferredSize(new Dimension(80, 120));
     		
-    		GridBagConstraints gbc = new GridBagConstraints();
+        	final GridBagConstraints gbc = new GridBagConstraints();
     		gbc.insets = new Insets(0, 10, 0, 10);
         	estimateCardsPanel.add(estimateInput, gbc);
         	
@@ -156,7 +156,7 @@ public class VotePanel extends javax.swing.JPanel {
         	}
         } else {
         	            
-            ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
+        	final ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
             
         	
 	        estimateCardsPanel.removeAll();
@@ -370,7 +370,7 @@ public class VotePanel extends javax.swing.JPanel {
         );
         
         estimateScrollPane.setViewportView(estimateCardsPanel);
-        GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
+        final GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
         estimateCardsPanel.setLayout(gbl_estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();

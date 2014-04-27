@@ -118,7 +118,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-            	ArrayList<Double> newCards = new ArrayList<Double>();
+            	final ArrayList<Double> newCards = new ArrayList<Double>();
             	
             	for(SpinnerCard card:cards){
             		newCards.add((double)card.getEstimateValue());
@@ -178,7 +178,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         
-        JButton addCard = new JButton("Add Card");
+        final JButton addCard = new JButton("Add Card");
         addCard.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		addCard();
@@ -187,7 +187,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         });
         addCard.setIcon(ImageLoader.getIcon("newReq.png"));
         
-        GroupLayout groupLayout = new GroupLayout(this);
+        final GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(groupLayout.createSequentialGroup()
@@ -260,7 +260,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         };
         cardPanel.setBackground(Color.WHITE);
         scrollPane.setViewportView(cardPanel);
-        GridBagLayout gbl_cardPanel = new GridBagLayout();
+        final GridBagLayout gbl_cardPanel = new GridBagLayout();
         cardPanel.setLayout(gbl_cardPanel);
         setLayout(groupLayout);
         
@@ -353,7 +353,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     }
     
     private void addCard(){
-   		SpinnerCard newCard = new SpinnerCard(cards.size(), DeckModel.NO_LIMIT);
+    	final SpinnerCard newCard = new SpinnerCard(cards.size(), DeckModel.NO_LIMIT);
 		newCard.setDeleteListener(NewDeckPanel.this);
 		newCard.setPreferredSize(new Dimension(80, 120));
 		
@@ -365,7 +365,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		
 		cards.add(newCard);
 		
-		GridBagConstraints gbc = new GridBagConstraints();
+		final GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 10, 0, 10);
 		cardPanel.add(newCard, gbc);
 		
@@ -377,7 +377,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Card deleteCard = (Card)e.getSource();
+		final Card deleteCard = (Card)e.getSource();
 		cardPanel.remove(deleteCard);
 		cards.remove(deleteCard);
 		
@@ -392,9 +392,9 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 	}
 	
 	
-	private JScrollPane scrollPane;
-    private ArrayList<SpinnerCard> cards;
-    private JPanel cardPanel;
+	private final JScrollPane scrollPane;
+    private final ArrayList<SpinnerCard> cards;
+    private final JPanel cardPanel;
     private NewGamePanel parentPanel;
     private final JButton createDeckButton;
     private final JTextField newDeckName;

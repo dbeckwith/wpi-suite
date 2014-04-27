@@ -299,7 +299,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         final JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
-        GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
+        final GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
         gbc_lblGameStatistics.fill = GridBagConstraints.HORIZONTAL;
         gbc_lblGameStatistics.insets = new Insets(0, 0, 5, 5);
         gbc_lblGameStatistics.gridx = 1;
@@ -323,7 +323,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(finalEstimateField, gbc_finalEstimateField);
         
         final JLabel votedUsersLabel = new JLabel("Users Voted:");
-        GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
         gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
         gbc_votedUsersLabel.insets = new Insets(0, 0, 5, 5);
@@ -332,7 +332,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(votedUsersLabel, gbc_votedUsersLabel);
         
         votedUsersValueLabel = new JLabel("123");
-        GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
         gbc_votedUsersValueLabel.anchor = GridBagConstraints.SOUTHWEST;
         gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_votedUsersValueLabel.gridx = 2;

@@ -89,9 +89,9 @@ public class ButtonCard extends Card implements MouseListener {
 
 	@Override
 	public void paintCard(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
+		final Graphics2D g2 = (Graphics2D) g;
 
-		String valueStr = decimalFormat.format(getEstimateValue());
+		final String valueStr = decimalFormat.format(getEstimateValue());
 		
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font(
@@ -99,7 +99,7 @@ public class ButtonCard extends Card implements MouseListener {
 				Font.BOLD,
 				(int) (getWidth() * ((hover || isCardSelected()) ? ButtonCard.FONT_SIZE_HOVER
 						: ButtonCard.FONT_SIZE))));
-		Rectangle2D r = g2.getFontMetrics().getStringBounds(valueStr, g);
+		final Rectangle2D r = g2.getFontMetrics().getStringBounds(valueStr, g);
 		g2.drawString(valueStr, (int) (getWidth() - r.getWidth()) / 2,
 				(int) (getHeight() - r.getHeight()) / 2
 						+ g2.getFontMetrics().getAscent());

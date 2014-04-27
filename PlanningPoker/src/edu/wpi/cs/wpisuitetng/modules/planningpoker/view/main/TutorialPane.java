@@ -33,6 +33,10 @@ public class TutorialPane extends JComponent {
     private static final long serialVersionUID = -4832992249337947413L;
     private static TutorialPane instance = null;
     
+    /**
+     * 
+     * @return
+     */
     public static TutorialPane getInstance() {
         if (TutorialPane.instance == null) {
             TutorialPane.instance = new TutorialPane();
@@ -51,6 +55,10 @@ public class TutorialPane extends JComponent {
         highlightLabel = null;
     }
     
+    /**
+     * 
+     * @param comp
+     */
     public void install(Component comp) {
         window = null;
         while (comp != null && !(comp instanceof JFrame)) {
@@ -96,18 +104,26 @@ public class TutorialPane extends JComponent {
         // when it hovers over components below the glass pane
         return false;
     }
-
+    
+    /**
+     * 
+     */
     public void clear() {
         highlightArea = null;
         highlightLabel = null;
         repaint();
     }
     
+    /**
+     * 
+     * @param highlightedComponent
+     * @param label
+     */
     public void setHighlightArea(Component highlightedComponent, String label) {
         if (window != null) {
             highlightArea = highlightedComponent.getBounds();
-            Point compPos = highlightedComponent.getLocationOnScreen();
-            Point pos = getLocationOnScreen();
+            final Point compPos = highlightedComponent.getLocationOnScreen();
+            final Point pos = getLocationOnScreen();
             System.out.println(highlightArea);
             System.out.println(compPos);
             System.out.println(pos);
