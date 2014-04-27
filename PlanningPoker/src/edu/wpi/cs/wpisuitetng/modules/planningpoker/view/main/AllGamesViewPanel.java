@@ -43,8 +43,14 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      * Creates a new AllGamesViewPanel.
      */
     public AllGamesViewPanel() {
-        initComponents();
         setLayout(new BorderLayout(0, 0));
+        jSplitPane3 = new javax.swing.JSplitPane();
+        add(jSplitPane3, BorderLayout.CENTER);
+        
+        jSplitPane3.setDividerLocation(190);
+        
+        gameTree = new GamesListPanel();
+        jSplitPane3.setLeftComponent(gameTree);
         final JTree tree = gameTree.getTree();
         
         descriptionCard = new JPanel();
@@ -84,7 +90,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
-        add(jSplitPane3);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             
             @Override
@@ -132,16 +137,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         });
     }
     
-    private void initComponents() {
-        
-        jSplitPane3 = new javax.swing.JSplitPane();
-        
-        jSplitPane3.setDividerLocation(190);
-        
-        gameTree = new GamesListPanel();
-        jSplitPane3.setLeftComponent(gameTree);
-    }
-    
     private javax.swing.JSplitPane jSplitPane3;
     private GamesListPanel gameTree;
     private final JPanel requirementPanel;
@@ -186,5 +181,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     
     protected JPanel getDescriptionCard() {
         return descriptionCard;
+    }
+    public GamesListPanel getGameTree() {
+        return gameTree;
     }
 }

@@ -130,4 +130,16 @@ public class AdminButtonGroup extends ToolbarGroupView {
         startGameButton.setVisible(b);
         editGameButton.setVisible(b);
     }
+    public JButton getCloseGameButton() {
+        return closeGameButton;
+    }
+    public JButton getEditGameButton() {
+        return editGameButton;
+    }
+    public JButton getEndGameButton() {
+        return endGameButton;
+    }
+    public JButton getStartGameButton() {
+        return startGameButton;
+    }
 }

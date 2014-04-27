@@ -81,4 +81,10 @@ public class CommonButtonGroup extends ToolbarGroupView {
 		this.add(contentPanel);
 	}
 
+    public JButton getNewGameButton() {
+        return newGameButton;
+    }
+    public JButton getUserPrefsButton() {
+        return userPrefsButton;
+    }
 }
