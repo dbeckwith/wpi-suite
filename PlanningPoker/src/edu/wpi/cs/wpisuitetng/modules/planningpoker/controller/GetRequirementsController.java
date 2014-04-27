@@ -59,13 +59,13 @@ public class GetRequirementsController extends AbstractRequirementController {
     public void receivedRequirements(Requirement[] requirements) {
         // Make sure the response was not null
         if (requirements != null) {
-            ArrayList<GameRequirementModel> gameReqs = new ArrayList<GameRequirementModel>();
+            final ArrayList<GameRequirementModel> gameReqs = new ArrayList<GameRequirementModel>();
             for (int i = 0; i < requirements.length; i++) {
                 if (requirements[i].getIteration().equals("Backlog")) {
                     gameReqs.add(new GameRequirementModel(requirements[i]));
                 }
             }
-            GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
+            final GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
             // set the requirements to the local model
             RequirementsListModel.getInstance().setRequirements(
                     gameReqs.toArray(toSet));
@@ -88,13 +88,13 @@ public class GetRequirementsController extends AbstractRequirementController {
     public void receivedRequirementsTesting(Requirement[] requirements) {
         // Make sure the response was not null
         if (requirements != null) {
-            ArrayList<GameRequirementModel> gameReqs = new ArrayList<GameRequirementModel>();
+            final ArrayList<GameRequirementModel> gameReqs = new ArrayList<GameRequirementModel>();
             for (int i = 0; i < requirements.length; i++) {
                 if (requirements[i].getIteration().equals("Backlog")) {
                     gameReqs.add(new GameRequirementModel(requirements[i]));
                 }
             }
-            GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
+            final GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
             // set the requirements to the local model
             RequirementsListModel.getInstance().setRequirements(
                     gameReqs.toArray(toSet));
