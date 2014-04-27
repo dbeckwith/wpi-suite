@@ -8,7 +8,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -62,7 +61,7 @@ public class TutorialPane extends JComponent {
             System.out.println("Tutorial pane installed successfully!");
         }
         else {
-            System.out.println("Tutorial pane installed unsuccessfully!");
+            System.err.println("Tutorial pane installed unsuccessfully!");
         }
     }
     
@@ -97,7 +96,7 @@ public class TutorialPane extends JComponent {
             repaint();
         }
         else {
-            System.out.println("Tutorial pane not installed!");
+            System.err.println("Tutorial pane not installed!");
         }
     }
     
