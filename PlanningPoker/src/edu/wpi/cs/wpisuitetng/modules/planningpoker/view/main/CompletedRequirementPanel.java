@@ -75,8 +75,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                finalEstimateField.requestFocusInWindow();
-                finalEstimateField.selectAll();
+                if(!parentModel.isClosed()){
+                    finalEstimateField.requestFocusInWindow();
+                    finalEstimateField.selectAll();
+                }
             }
             
             @Override
@@ -169,8 +171,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
-        finalEstimateField.requestFocusInWindow();
-        finalEstimateField.selectAll();
+        if(!parentModel.isClosed()){
+            finalEstimateField.requestFocusInWindow();
+            finalEstimateField.selectAll();
+        }
         tableModel = new javax.swing.table.DefaultTableModel() {
             
             /**
@@ -383,7 +387,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_notePane.gridx = 5;
         gbc_notePane.gridy = 3;
         add(notePane, gbc_notePane);
-
+        
         meanLabel = new javax.swing.JLabel();
         
         meanLabel.setText("Mean:");
@@ -444,7 +448,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 saveFinalEstimate();
             }
         });
-
+        
         final GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
         gbc_saveFinalEstimateButton.insets = new Insets(0, 0, 5, 5);
         gbc_saveFinalEstimateButton.anchor = GridBagConstraints.WEST;
