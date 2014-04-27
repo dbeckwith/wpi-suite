@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -35,6 +37,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+
+import java.awt.GridBagLayout;
 
 /**
  * the panel to show vote GUI
@@ -141,8 +145,11 @@ public class VotePanel extends javax.swing.JPanel {
             cards.add(estimateInput);
             updateTotal();
         	validateCards();
-        	estimateInput.setPreferredSize(new Dimension(120, 160));
-        	estimateCardsPanel.add(estimateInput);
+        	estimateInput.setPreferredSize(new Dimension(80, 120));
+    		
+    		GridBagConstraints gbc = new GridBagConstraints();
+    		gbc.insets = new Insets(0, 10, 0, 10);	
+        	estimateCardsPanel.add(estimateInput, gbc);
         	
         	if(voted && old != null){
         		cards.get(0).setEstimateValue(old.getEstimate());
@@ -158,7 +165,7 @@ public class VotePanel extends javax.swing.JPanel {
 	            
 	            cards.add(estimateCard);
 	            
-	            estimateCard.setPreferredSize(new Dimension(80, 120));
+	            estimateCard.setPreferredSize(new Dimension(120, 160));
 	            estimateCard.setCardSelected(selected.contains(new Integer(deckCardValues
 	                    .indexOf(estimate))));
 	            estimateCard.addActionListener(new ActionListener() {
@@ -174,8 +181,10 @@ public class VotePanel extends javax.swing.JPanel {
 	                    VotePanel.this.repaint();
 	                }
 	            });
-	            
-	            estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
+	    		
+	    		GridBagConstraints gbc = new GridBagConstraints();
+	    		gbc.insets = new Insets(0, 10, 0, 10);	
+	            estimateCardsPanel.add(estimateCard, gbc);
 	        }
 	        
 	        if(voted){
@@ -347,11 +356,10 @@ public class VotePanel extends javax.swing.JPanel {
                         .addComponent(lblTotal))
                     .addContainerGap())
         );
-        final FlowLayout fl_estimateCardsPanel = new FlowLayout(FlowLayout.CENTER, 5,
-                5);
-        estimateCardsPanel.setLayout(fl_estimateCardsPanel);
         
         estimateScrollPane.setViewportView(estimateCardsPanel);
+        GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
+        estimateCardsPanel.setLayout(gbl_estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();
         reqDescriptionTextArea.setEditable(false);

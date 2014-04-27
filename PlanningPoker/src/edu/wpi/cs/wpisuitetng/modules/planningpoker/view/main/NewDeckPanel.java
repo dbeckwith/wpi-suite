@@ -29,6 +29,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -164,7 +165,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         
         setErrorBorder(newDeckName, true);
         
-        JScrollPane scrollPane = new JScrollPane();
+        scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         
         JButton addCard = new JButton("Add Card");
@@ -358,6 +359,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		gbc.insets = new Insets(0, 10, 0, 10);		
 		cardPanel.add(newCard, gbc);
 		
+		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());
+		
 		cardPanel.repaint();
 		cardPanel.revalidate();
     }
@@ -379,7 +382,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 	}
 	
 	
-	
+	private JScrollPane scrollPane;
     private ArrayList<SpinnerCard> cards;
     private JPanel cardPanel;
     private NewGamePanel parentPanel;
