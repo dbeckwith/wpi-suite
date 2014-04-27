@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
@@ -49,7 +58,7 @@ public abstract class Card extends JPanel {
 	
 	protected Card(float val){
 		value = val;
-		suitIndex = ((int)val+1)%4;
+		suitIndex = ((int)val + 1) % 4;
 		cardSelected = false;
 		background = BACKGROUND_COLOR;
 		border = BORDER_COLOR;
@@ -97,7 +106,7 @@ public abstract class Card extends JPanel {
      */
 
 	public float getEstimateValue(){
-		return value;		
+		return value;
 	}
 	
     /**
@@ -137,8 +146,8 @@ public abstract class Card extends JPanel {
         //draw card outline
         g2.setColor(border);
         if (cardSelected) {
-            g2.drawRect(1, 1, getWidth() -3, getHeight() - 3 );
-            g2.drawRect(2, 2, getWidth() -5, getHeight() - 5 );
+            g2.drawRect(1, 1, getWidth() - 3, getHeight() - 3 );
+            g2.drawRect(2, 2, getWidth() - 5, getHeight() - 5 );
             
         }
         g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);

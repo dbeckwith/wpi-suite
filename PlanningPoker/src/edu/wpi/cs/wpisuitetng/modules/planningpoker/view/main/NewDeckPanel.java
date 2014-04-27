@@ -366,7 +366,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		cards.add(newCard);
 		
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 10, 0, 10);		
+		gbc.insets = new Insets(0, 10, 0, 10);
 		cardPanel.add(newCard, gbc);
 		
 		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());
@@ -382,7 +382,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		cards.remove(deleteCard);
 		
 		if(cards.size() == 1){
-			cards.get(0).setDeleteListener(null);			
+			cards.get(0).setDeleteListener(null);
 		}
 		
 		cardPanel.repaint();

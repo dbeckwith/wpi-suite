@@ -77,7 +77,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		
 		useDeck = new JCheckBox("Deck:");
 		useDeck.setSelected(true);
-		useDeck.addActionListener(new ActionListener() {			
+		useDeck.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				checkUseDeck();
@@ -149,7 +149,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	}
 	
 	public void setParent(NewGameDescriptionPanel p){
-		parent = p;		
+		parent = p;
 	}
 	
 	/**
@@ -193,7 +193,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 			}
 			return new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), selectedDeck.canAllowsMultipleSelection());
 		} else {
-			return new DeckModel((Integer)maxSpinner.getModel().getValue());			
+			return new DeckModel((Integer)maxSpinner.getModel().getValue());
 		}
 	}
 	
@@ -259,7 +259,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(parent != null){ 
-			parent.checkParent();		
+			parent.checkParent();
 		}
 		
 	}

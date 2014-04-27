@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
@@ -88,7 +97,7 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 			return (float) Math.min(maxInput, enteredValue);
 		} else {
 			return enteredValue;
-		}		
+		}
     }
     
 	@Override
@@ -109,20 +118,20 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 	public void paintCard(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         
-		input.setFont(input.getFont().deriveFont(getWidth()*FONT_SIZE));
+		input.setFont(input.getFont().deriveFont(getWidth() * FONT_SIZE));
 		
 		if(maxInput != DeckModel.NO_LIMIT){
     		g2.setColor(Color.BLACK);
-    		String maxString = "Max : "+ decimalFormat.format(((SpinnerNumberModel)input.getModel()).getMaximum());
-    		g2.setFont(g.getFont().deriveFont(getWidth()*FONT_SIZE*0.3f));
+    		String maxString = "Max : " + decimalFormat.format(((SpinnerNumberModel)input.getModel()).getMaximum());
+    		g2.setFont(g.getFont().deriveFont(getWidth() * FONT_SIZE * 0.3f));
     		Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
     		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
                     (int) (getHeight() - r.getHeight()) / 2
-                            + g2.getFontMetrics().getAscent() + input.getHeight()/2);
+                            + g2.getFontMetrics().getAscent() + input.getHeight() / 2);
     	}
 		
 		if(deleteListener != null){
-			g2.drawImage(deleteIcon, getWidth()-deleteIcon.getWidth()-2, 2, null);
+			g2.drawImage(deleteIcon, getWidth() - deleteIcon.getWidth() - 2, 2, null);
 		}
 		
 	}
@@ -132,7 +141,7 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 		if(deleteListener == null){
 			return;
 		}
-		Rectangle deleteRect = new Rectangle(getWidth()-deleteIcon.getWidth()-2, 2, deleteIcon.getWidth(), deleteIcon.getHeight());
+		Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, deleteIcon.getWidth(), deleteIcon.getHeight());
 		if(deleteRect.contains(e.getPoint())){
 			
 			deleteListener.actionPerformed(new ActionEvent(this, 0, null));

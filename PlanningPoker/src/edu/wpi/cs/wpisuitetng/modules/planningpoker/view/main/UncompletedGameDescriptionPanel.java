@@ -67,9 +67,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         }
         this.game = game;
         updateprogress();
-        // DefaultListModel<String> listModel = new DefaultListModel<>();
-        // listModel.addElement(element);
-        // getParticipantsList().setModel(listModel);
     }
     
     /**
@@ -195,8 +192,8 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                 est++;
             }
         }
-        final double prog = (double)est/(double)req;
-        personalProgress.setValue((int)(prog *100));
+        final double prog = (double)est / (double)req;
+        personalProgress.setValue((int)(prog * 100));
         if(!game.isStarted()){
             personalProgress.setVisible(false);
             lblYourProgress.setVisible(false);
