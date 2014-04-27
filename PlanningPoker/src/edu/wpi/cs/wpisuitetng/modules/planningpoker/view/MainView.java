@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 /**
  * This is the main panel of the planning poker GUI
@@ -40,7 +41,7 @@ public class MainView extends JTabbedPane {
      */
     private static final long serialVersionUID = 7802378837976895569L;
     private final AllGamesViewPanel mainPanel;
-    private boolean setExitOnClose = false;
+    private boolean alreadyShown = false;
     
     public MainView() {
         mainPanel = new AllGamesViewPanel();
@@ -60,28 +61,36 @@ public class MainView extends JTabbedPane {
 			@Override
 			public void ancestorAdded(AncestorEvent event) {
 			    // called when this tab is switched to
+                
+                if (!alreadyShown){
+                    JFrame window = null;
+
+                    Component comp = MainView.this;
+                    while (comp != null && !(comp instanceof JFrame)) {
+                        comp = comp.getParent();
+                    }
+                    if (comp != null) {
+                        window = (JFrame)comp;
+                        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    }
+                    
+                    TutorialPane.getInstance().install((Component)MainView.this);
+
+                    alreadyShown = true;
+                }
+                
+                TutorialPane.getInstance().setVisible(true);
 
                 CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user
                 GetDecksController.getInstance().retrieveDecks();
                 GetRequirementsController.getInstance().retrieveRequirements();
                 GetGamesController.getInstance().retrieveGames();
-                
-				if (!setExitOnClose){
-				    JFrame window = null;
-				    
-			        Component parent = MainView.this;
-			        while(!((parent = parent.getParent()) instanceof JFrame)){
-			        	System.out.println(parent);
-			        }
-			        window = (JFrame)parent;
-			        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			        setExitOnClose = true;
-				}
 			}
 			
 			@Override
-			public void ancestorRemoved(AncestorEvent event) {}
+			public void ancestorRemoved(AncestorEvent event) {
+			    TutorialPane.getInstance().setVisible(false);
+			}
 			
 			
 			@Override

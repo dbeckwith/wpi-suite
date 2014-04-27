@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -50,7 +51,7 @@ public class HelpButtons extends ToolbarGroupView {
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: implement help button function
+                PlanningPoker.getViewController().showInteractiveHelp();
             }
         });
         
@@ -61,5 +62,8 @@ public class HelpButtons extends ToolbarGroupView {
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
+    }
+    public JButton getHelpButton() {
+        return helpButton;
     }
 }
