@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
@@ -326,7 +327,10 @@ public class ViewController {
 	}
 
     public void showInteractiveHelp() {
-        TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!");
+        TutorialPath path = new TutorialPath();
+        path.add(new TutorialPath.PathItem(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!"));
+        path.add(new TutorialPath.PathItem(toolbar.getCommonButtons().getUserPrefsButton(), "Click here to set your preferences!"));
+        TutorialPane.getInstance().setPath(path);
     }
 
 }

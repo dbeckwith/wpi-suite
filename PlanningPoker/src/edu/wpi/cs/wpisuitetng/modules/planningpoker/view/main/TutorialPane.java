@@ -14,9 +14,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.FocusAdapter;
+import java.util.Iterator;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 
 /**
  * 
@@ -42,13 +47,35 @@ public class TutorialPane extends JComponent {
     }
     
     private JFrame window;
+    private Iterator<TutorialPath.PathItem> pathIter;
+    private TutorialPath.PathItem currentItem;
     private Rectangle highlightArea;
-    private String highlightLabel;
+    
+    private FocusAdapter nextPathItemListener = new FocusAdapter() {
+        
+        @Override
+        public void focusGained(java.awt.event.FocusEvent e) {
+            nextItem();
+        };
+    };
+    
+    private ComponentAdapter currentItemCompListener = new ComponentAdapter() {
+        @Override
+        public void componentMoved(java.awt.event.ComponentEvent e) {
+            getCurrCompBounds();
+        };
+        
+        @Override
+        public void componentResized(java.awt.event.ComponentEvent e) {
+            getCurrCompBounds();
+        };
+    };
     
     private TutorialPane() {
         window = null;
+        pathIter = null;
+        currentItem = null;
         highlightArea = null;
-        highlightLabel = null;
     }
     
     public void install(Component comp) {
@@ -69,16 +96,17 @@ public class TutorialPane extends JComponent {
     
     @Override
     protected void paintComponent(Graphics g) {
-        if (highlightArea != null) {
-            g.setColor(new Color(200, 30, 30, 210));
+        if (currentItem != null) {
+            g.setColor(new Color(240, 30, 30, 210));
             drawThickRect(g, highlightArea.x, highlightArea.y,
                     highlightArea.width, highlightArea.height, 3);
             
-            g.setColor(new Color(230, 30, 30));
+            g.setColor(new Color(255, 30, 30));
             g.setFont(getFont().deriveFont(Font.BOLD));
-            g.drawString(highlightLabel, highlightArea.x + highlightArea.width
-                    + 10, highlightArea.y + highlightArea.height / 2
-                    + g.getFontMetrics().getAscent() / 2);
+            g.drawString(currentItem.label, highlightArea.x
+                    + highlightArea.width + 10, highlightArea.y
+                    + highlightArea.height / 2 + g.getFontMetrics().getAscent()
+                    / 2);
         }
     }
     
@@ -96,29 +124,42 @@ public class TutorialPane extends JComponent {
         // when it hovers over components below the glass pane
         return false;
     }
-
-    public void clear() {
+    
+    public void setPath(TutorialPath path) {
+        pathIter = path.iterator();
+        currentItem = null;
         highlightArea = null;
-        highlightLabel = null;
+        nextItem();
+    }
+    
+    private void getCurrCompBounds() {
+        if (currentItem != null) {
+            highlightArea = currentItem.component.getBounds();
+            Point compPos = currentItem.component.getLocationOnScreen();
+            Point pos = getLocationOnScreen();
+            highlightArea.x = compPos.x - pos.x;
+            highlightArea.y = compPos.y - pos.y;
+        }
         repaint();
     }
     
-    public void setHighlightArea(Component highlightedComponent, String label) {
-        if (window != null) {
-            highlightArea = highlightedComponent.getBounds();
-            Point compPos = highlightedComponent.getLocationOnScreen();
-            Point pos = getLocationOnScreen();
-            System.out.println(highlightArea);
-            System.out.println(compPos);
-            System.out.println(pos);
-            highlightArea.x = compPos.x - pos.x;
-            highlightArea.y = compPos.y - pos.y;
-            System.out.println(highlightArea);
-            highlightLabel = label;
-            repaint();
+    public void nextItem() {
+        if (currentItem != null) {
+            currentItem.component.removeFocusListener(nextPathItemListener);
+            currentItem.component
+                    .removeComponentListener(currentItemCompListener);
+        }
+        
+        if (pathIter.hasNext()) {
+            currentItem = pathIter.next();
+            currentItem.component.addFocusListener(nextPathItemListener);
+            currentItem.component.addComponentListener(currentItemCompListener);
+            
+            getCurrCompBounds();
         }
         else {
-            System.err.println("Tutorial pane not installed!");
+            currentItem = null;
+            repaint();
         }
     }
     
