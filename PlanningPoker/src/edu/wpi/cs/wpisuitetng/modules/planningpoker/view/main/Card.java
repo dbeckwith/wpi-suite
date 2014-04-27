@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
@@ -14,7 +23,12 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
-public abstract class Card extends JPanel {
+/**
+ * @version 1.0
+ * @author Team 9
+ *
+ */
+public abstract class Card extends JPanel { // $codepro.audit.disable abstractSpecialization
 
 
     public static final DecimalFormat decimalFormat = new DecimalFormat("0.#");
@@ -29,9 +43,9 @@ public abstract class Card extends JPanel {
     
     static {
         Card.suits = new BufferedImage[4];
-        BufferedImage allSuits = ImageLoader.getImage("suits.png");
-        int sWidth = allSuits.getWidth() / 2;
-        int sHeight = allSuits.getHeight() / 2;
+        final BufferedImage allSuits = ImageLoader.getImage("suits.png");
+        final int sWidth = allSuits.getWidth() / 2;
+        final int sHeight = allSuits.getHeight() / 2;
         Card.suits[0] = allSuits.getSubimage(0, 0, sWidth, sHeight);
         Card.suits[1] = allSuits.getSubimage(sWidth, 0, sWidth, sHeight);
         Card.suits[2] = allSuits.getSubimage(0, sHeight, sWidth, sHeight);
@@ -41,20 +55,28 @@ public abstract class Card extends JPanel {
 	private float value;
 	private boolean cardSelected;
 	
-    private ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
+    private final ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
 	
-	private int suitIndex;
+	private final int suitIndex;
 	private Color background;
 	private Color border;
 	
-	public Card(float val){
+	/**
+	 * 
+	 * @param val
+	 */
+	protected Card(float val){
 		value = val;
-		suitIndex = ((int)val+1)%4;
+		suitIndex = ((int)val + 1) % 4;
 		cardSelected = false;
 		background = BACKGROUND_COLOR;
 		border = BORDER_COLOR;
 	}
 	
+	/**
+	 * 
+	 * @param e
+	 */
     public final void addActionListener(ActionListener e){
     	if(e != null){
     		listeners.add(e);
@@ -97,7 +119,7 @@ public abstract class Card extends JPanel {
      */
 
 	public float getEstimateValue(){
-		return value;		
+		return value;
 	}
 	
     /**
@@ -109,6 +131,11 @@ public abstract class Card extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * 
+	 * @param bgColor
+	 * @param borderColor
+	 */
 	public void setColors(Color bgColor, Color borderColor){
 		background = (bgColor == null)?BACKGROUND_COLOR:bgColor;
 		border = (borderColor == null)?BORDER_COLOR:borderColor;
@@ -116,16 +143,16 @@ public abstract class Card extends JPanel {
 	
 	public void paintComponent(Graphics g){
 		
-		Graphics2D g2 = (Graphics2D) g;
+		final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         
-        int suitMargin = (int) (getWidth() * MARGIN_LOGO);
+        final int suitMargin = (int) (getWidth() * MARGIN_LOGO);
 		
         g2.setColor(background);
         g2.fillRect(0, 0, getWidth(), getHeight());
         
-        int suitSize = (int) (getWidth() * FRONT_SUIT_SIZE);
+        final int suitSize = (int) (getWidth() * FRONT_SUIT_SIZE);
         
         //draw suit logos on the corners
         g2.drawImage(suits[suitIndex], suitMargin * 2,
@@ -137,15 +164,18 @@ public abstract class Card extends JPanel {
         //draw card outline
         g2.setColor(border);
         if (cardSelected) {
-            g2.drawRect(1, 1, getWidth() -3, getHeight() - 3 );
-            g2.drawRect(2, 2, getWidth() -5, getHeight() - 5 );
+            g2.drawRect(1, 1, getWidth() - 3, getHeight() - 3 );
+            g2.drawRect(2, 2, getWidth() - 5, getHeight() - 5 );
             
         }
         g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
         
 		paintCard(g);
 	}
-	
+	/**
+	 * 
+	 * @param g
+	 */
 	public abstract void paintCard(Graphics g);
 
 	

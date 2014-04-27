@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author Team 9
  * @version 1.0
  */
-public class UserRequestObserver implements RequestObserver { // $codepro.audit.disable declareDefaultConstructors
+public class UserRequestObserver implements RequestObserver { 
 
     /**
      * The controller that will be used to call receivedUsers().

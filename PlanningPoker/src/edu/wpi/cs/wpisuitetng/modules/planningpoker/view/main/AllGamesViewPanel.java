@@ -143,8 +143,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         });
     }
     
-    private javax.swing.JSplitPane jSplitPane3;
-    private GamesListPanel gameTree;
+    private final javax.swing.JSplitPane jSplitPane3;
+    private final GamesListPanel gameTree;
     private final JPanel requirementPanel;
     private final RequirementDescriptionPanel requirementDescriptionPanel;
     private final GameDescriptionPanel gameDescriptionPanel;

@@ -134,8 +134,7 @@ public class GameTimeoutObserver extends Thread {
             if (o.game.equals(game)) { 
                 toReturn = o;
                 alreadyReturned = true;
-                break;
-                //return o; 
+                break; 
             }
         }
         if (!alreadyReturned){
