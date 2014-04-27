@@ -292,15 +292,16 @@ public class GameModel extends AbstractModel implements Serializable {
      * @return whether all users have voted on all requirements
      */
     public boolean checkVoted() {
+    	boolean voted = true;
         if (requirements == null) {
-            return false;
+            voted = false;
         }
         for (GameRequirementModel r : requirements) {
             if (!r.allVoted()) {
-                return false;
+                voted = false;
             }
         }
-        return true;
+        return voted;
     }
     
     /**
@@ -471,6 +472,11 @@ public class GameModel extends AbstractModel implements Serializable {
             ret = super.equals(other);
         }
         return ret;
+    }
+    
+    @Override
+    public int hashCode(){
+		return id;
     }
     
     /**
