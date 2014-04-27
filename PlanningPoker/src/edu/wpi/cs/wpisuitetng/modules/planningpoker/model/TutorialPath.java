@@ -63,6 +63,8 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
          */
         protected abstract Component grabComponent(Component changedComponent);
         
+        public abstract boolean canProgress();
+        
         public boolean setComponent(Component changedComponent) {
             return (comp = grabComponent(changedComponent)) != null;
         }
@@ -97,6 +99,11 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
         
         public Component grabComponent(Component changedComponent) {
             return comp;
+        }
+
+        @Override
+        public boolean canProgress() {
+            return true;
         }
     }
     
