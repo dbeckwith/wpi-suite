@@ -114,7 +114,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     if (shiftPressed) {
                         saveAndContinue();
                     }
-                    saveFinalEstimate();
+                    else {
+                        saveFinalEstimate();
+                    }
                 }
             }
             
@@ -158,11 +160,11 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
-                .setText(String.format("%1.1f", req.getEstimateMedian()));
+        .setText(String.format("%1.1f", req.getEstimateMedian()));
         if (parent_game.getOwner().equals(CurrentUserController.USER_NAME)
                 && req.getFinalEstimate() == 0) {
             finalEstimateField
-                    .setText((int) (req.getEstimateMean() + 0.5) + "");
+            .setText((int) (req.getEstimateMean() + 0.5) + "");
         }
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
@@ -201,7 +203,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         
         votedUsersValueLabel
-                .setText(Integer.toString(tableModel.getRowCount()));
+        .setText(Integer.toString(tableModel.getRowCount()));
         notePane.setText(req.getEstimateNote());
     }
     
@@ -210,6 +212,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         saveFinalEstimateButton.setVisible(b);
         notePane.setEditable(b);
         btnUpdateRequirementManager.setVisible(b);
+        btnSaveAndContinue.setVisible(b);
     }
     
     /**
@@ -226,7 +229,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
         gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0};
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
@@ -236,7 +239,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         tableScrollPane.setBackground(Color.WHITE);
         
         voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
-                null }, }, new String[] { "User", "Estimate" }) {
+            null }, }, new String[] { "User", "Estimate" }) {
             /**
              * 
              */
@@ -259,7 +262,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         final GridBagConstraints gbc_tableScrollPane = new GridBagConstraints();
         gbc_tableScrollPane.fill = GridBagConstraints.BOTH;
         gbc_tableScrollPane.insets = new Insets(0, 0, 5, 0);
-        gbc_tableScrollPane.gridwidth = 9;
+        gbc_tableScrollPane.gridwidth = 10;
         gbc_tableScrollPane.gridx = 0;
         gbc_tableScrollPane.gridy = 0;
         add(tableScrollPane, gbc_tableScrollPane);
@@ -317,7 +320,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_finalEstimateField.fill = GridBagConstraints.HORIZONTAL;
         gbc_finalEstimateField.anchor = GridBagConstraints.NORTH;
         gbc_finalEstimateField.insets = new Insets(0, 0, 5, 5);
-        gbc_finalEstimateField.gridwidth = 3;
+        gbc_finalEstimateField.gridwidth = 4;
         gbc_finalEstimateField.gridx = 5;
         gbc_finalEstimateField.gridy = 2;
         add(finalEstimateField, gbc_finalEstimateField);
@@ -373,7 +376,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         });
         final GridBagConstraints gbc_notePane = new GridBagConstraints();
         gbc_notePane.gridheight = 4;
-        gbc_notePane.gridwidth = 3;
+        gbc_notePane.gridwidth = 4;
         gbc_notePane.fill = GridBagConstraints.BOTH;
         gbc_notePane.insets = new Insets(0, 0, 5, 5);
         gbc_notePane.gridx = 5;
@@ -424,15 +427,15 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblError.setForeground(Color.RED);
         final GridBagConstraints gbc_lblError = new GridBagConstraints();
+        gbc_lblError.gridwidth = 2;
         gbc_lblError.anchor = GridBagConstraints.EAST;
         gbc_lblError.insets = new Insets(0, 0, 5, 5);
-        gbc_lblError.gridx = 5;
+        gbc_lblError.gridx = 4;
         gbc_lblError.gridy = 8;
         add(lblError, gbc_lblError);
         saveFinalEstimateButton = new JButton("Save");
         saveFinalEstimateButton.setEnabled(false);
         saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
-        
         
         saveFinalEstimateButton.addActionListener(new ActionListener() {
             @Override
@@ -440,17 +443,35 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 saveFinalEstimate();
             }
         });
+
         final GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
         gbc_saveFinalEstimateButton.insets = new Insets(0, 0, 5, 5);
         gbc_saveFinalEstimateButton.anchor = GridBagConstraints.WEST;
-        gbc_saveFinalEstimateButton.gridx = 6;
+        gbc_saveFinalEstimateButton.gridx = 7;
         gbc_saveFinalEstimateButton.gridy = 8;
         add(saveFinalEstimateButton, gbc_saveFinalEstimateButton);
+        
+        btnSaveAndContinue = new JButton("Save and Continue");
+        btnSaveAndContinue.setEnabled(false);
+        btnSaveAndContinue.setIcon(ImageLoader.getIcon("SaveAndContinue.png"));
+        
+        btnSaveAndContinue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                saveAndContinue();
+            }
+        });
+        
+        GridBagConstraints gbc_btnSaveAndContinue = new GridBagConstraints();
+        gbc_btnSaveAndContinue.insets = new Insets(0, 0, 5, 5);
+        gbc_btnSaveAndContinue.gridx = 6;
+        gbc_btnSaveAndContinue.gridy = 8;
+        add(btnSaveAndContinue, gbc_btnSaveAndContinue);
         
         btnUpdateRequirementManager = new JButton("Update Requirement Manager");
         final GridBagConstraints gbc_btnUpdateRequirementManager = new GridBagConstraints();
         gbc_btnUpdateRequirementManager.insets = new Insets(0, 0, 5, 5);
-        gbc_btnUpdateRequirementManager.gridx = 7;
+        gbc_btnUpdateRequirementManager.gridx = 8;
         gbc_btnUpdateRequirementManager.gridy = 8;
         add(btnUpdateRequirementManager, gbc_btnUpdateRequirementManager);
         btnUpdateRequirementManager.addActionListener(new ActionListener() {
@@ -481,22 +502,32 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     if (finalEstimate == req.getFinalEstimate()) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
+                        btnSaveAndContinue.setEnabled(false);
                     }
                     else if (finalEstimate <= 0) {
                         //set error label
                         lblError.setText("* Positive Integers Only!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
+                        btnSaveAndContinue.setEnabled(false);
                     }
                     else if (Pattern.matches(pattern, notePane.getText())
                             && req.getFinalEstimate() != 0) {
                         lblError.setText("* You Must Add a Note!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
+                        btnSaveAndContinue.setEnabled(false);
                     }
                     else {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(true);
+                        if (parentModel.getRequirements().indexOf(req) < parentModel
+                                .getRequirements().size() - 1) {
+                            btnSaveAndContinue.setEnabled(true);
+                        }
+                        else {
+                            btnSaveAndContinue.setEnabled(false);
+                        }
                     }
                 }
                 catch (NumberFormatException e) {
@@ -504,6 +535,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     lblError.setText("* Positive Integers Only!");
                     lblError.setVisible(true);
                     saveFinalEstimateButton.setEnabled(false);
+                    btnSaveAndContinue.setEnabled(false);
                 }
                 
                 if (req.isFromRequirementManager() && (req.getFinalEstimate() != req
@@ -564,4 +596,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JTextPane notePane;
     private final JTree tree;
     private JButton btnUpdateRequirementManager;
+    private JButton btnSaveAndContinue;
 }

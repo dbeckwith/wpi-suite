@@ -169,6 +169,11 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
+	
+	@Override
+	public boolean isCardSelected() {
+	    return true;
+	}
 
 	
 
