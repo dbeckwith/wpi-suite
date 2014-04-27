@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,8 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-
-import java.awt.Color;
 
 /**
  * This is the main planning poker view. It is intended to be a way of viewing
@@ -45,7 +44,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      */
     public AllGamesViewPanel() {
         initComponents();
-        final JTree tree = gameTree.getTree();
+        setLayout(new BorderLayout(0, 0));
+        tree = gameTree.getTree();
         
         descriptionCard = new JPanel();
         descriptionCard.setLayout(new CardLayout(0, 0));
@@ -62,7 +62,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
         
         final JSplitPane splitPane = new JSplitPane();
-        splitPane.setResizeWeight(0.5);
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         descriptionCard.add(splitPane, "description");
         
@@ -73,7 +72,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         splitPane.setRightComponent(requirementPanel);
         requirementPanel.setLayout(new CardLayout(0, 0));
         
-        requirementDescriptionPanel = new RequirementDescriptionPanel();
+        requirementDescriptionPanel = new RequirementDescriptionPanel(tree);
         requirementPanel.add(requirementDescriptionPanel, "requirement");
         
         final JPanel noRequirementPanel = new JPanel();
@@ -85,6 +84,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
+        add(jSplitPane3);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             
             @Override
@@ -104,10 +104,12 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                         final GameModel game = (GameModel) nodeInfo;
                         currentSelectionGame = game;
                         getGameDescriptionPanel().setGame(game);
-                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
-                    
-                    } else if (nodeInfo instanceof GameRequirementModel) {
-                    	
+                        ((CardLayout) getDescriptionCard().getLayout()).show(
+                                getDescriptionCard(), "description");
+                        
+                    }
+                    else if (nodeInfo instanceof GameRequirementModel) {
+                        
                         ((CardLayout) getRequirementPanel().getLayout()).show(
                                 getRequirementPanel(), "requirement");
                         final GameRequirementModel req = (GameRequirementModel) nodeInfo;
@@ -121,12 +123,16 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                                 .getParent()).getUserObject();
                         getGameDescriptionPanel().setGame(game);
                         currentSelectionGame = game;
-                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
-	                } else {
-	                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "empty");
-	                }
-               
-                    PlanningPoker.getViewController().displayAdmin(currentSelectionGame);
+                        ((CardLayout) getDescriptionCard().getLayout()).show(
+                                getDescriptionCard(), "description");
+                    }
+                    else {
+                        ((CardLayout) getDescriptionCard().getLayout()).show(
+                                getDescriptionCard(), "empty");
+                    }
+                    
+                    PlanningPoker.getViewController().displayAdmin(
+                            currentSelectionGame);
                 }
             }
         });
@@ -137,23 +143,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         jSplitPane3 = new javax.swing.JSplitPane();
         
         jSplitPane3.setDividerLocation(190);
-        
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSplitPane3,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, 658,
-                                Short.MAX_VALUE).addContainerGap()));
-        layout.setVerticalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSplitPane3,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, 394,
-                                Short.MAX_VALUE).addContainerGap()));
         
         gameTree = new GamesListPanel();
         jSplitPane3.setLeftComponent(gameTree);
@@ -167,6 +156,16 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private final JPanel emptyDescriptionPanel;
     private final JLabel emptyDescriptionLabel;
     private final JPanel descriptionCard;
+    private final JTree tree;
+    
+    /**
+     * Allows the tree to be accessed to change the currently selected game.
+     * 
+     * @return the tree of games
+     */
+    public JTree getTree() {
+        return tree;
+    }
     
     protected JPanel getRequirementPanel() {
         return requirementPanel;
@@ -195,7 +194,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     /**
      * sets the currently selected game in the tree for testing purposes
      * 
-     * @param game the game to set
+     * @param game
+     *        the game to set
      */
     public void setSelectedGame(GameModel game) {
         currentSelectionGame = game;

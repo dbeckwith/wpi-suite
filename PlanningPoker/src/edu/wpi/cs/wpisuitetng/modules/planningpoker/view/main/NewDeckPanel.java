@@ -114,7 +114,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         });
         
         final JLabel cardLabel = new JLabel("Cards: *");
-        
+
         createDeckButton = new JButton("Create Deck");
         
         createDeckButton.addActionListener(new ActionListener() {
@@ -131,6 +131,18 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 newDeck.sort();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        parentPanel.setNewDeck();
+                    }
+                }.run();
             }
         });
         
