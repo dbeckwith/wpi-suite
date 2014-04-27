@@ -56,7 +56,7 @@ public class AddGameControllerTest {
 				new NetworkConfiguration("http://wpisuitetng"));
 		final AddGameController agc = AddGameController.getInstance();
 		agc.addGame(new GameModel( "Test", "Test Description",
-				new ArrayList<GameRequirementModel>(),DeckModel.DEFAULT_DECK, new Date(),
+				new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, new Date(),
 				GameModel.GameStatus.COMPLETE));
 		final MockRequest request = ((MockNetwork) Network.getInstance())
 				.getLastRequestMade();

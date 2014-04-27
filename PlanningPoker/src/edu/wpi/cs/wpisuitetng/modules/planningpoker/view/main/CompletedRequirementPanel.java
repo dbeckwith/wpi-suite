@@ -506,7 +506,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     saveFinalEstimateButton.setEnabled(false);
                 }
                 
-                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req.getParentEstimate())) {
+                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req
+                		.getParentEstimate())) {
                     btnUpdateRequirementManager.setEnabled(true);
                 } else {
                     btnUpdateRequirementManager.setEnabled(false);

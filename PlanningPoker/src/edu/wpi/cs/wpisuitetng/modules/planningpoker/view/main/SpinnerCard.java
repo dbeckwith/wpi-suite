@@ -34,7 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
- * 
+ * @version 1.0
  * @author Team 9
  *
  */
@@ -66,7 +66,7 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
     
     	final JFormattedTextField text = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
     	((NumberFormatter) text.getFormatter()).setAllowsInvalid(false);
-    	text.setHorizontalAlignment(JTextField.CENTER);
+    	text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     	text.setBackground(new Color(255, 255, 255, 0));
     
     	input.addChangeListener(this);

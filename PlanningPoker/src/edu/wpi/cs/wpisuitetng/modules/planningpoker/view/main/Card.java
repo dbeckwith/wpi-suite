@@ -24,11 +24,11 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
- * 
+ * @version 1.0
  * @author Team 9
  *
  */
-public abstract class Card extends JPanel {
+public abstract class Card extends JPanel { // $codepro.audit.disable abstractSpecialization
 
 
     public static final DecimalFormat decimalFormat = new DecimalFormat("0.#");

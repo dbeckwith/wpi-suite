@@ -27,12 +27,12 @@ public class EmailController {
     /**
      * Subject line for a new game email.
      */
-    private static final String NEW_GAME_SUBJECT = "A new Planning Poker game has begun!"; //$NON-NLS-1$
+    private static final String NEW_GAME_SUBJECT = "A new Planning Poker game has begun!";
     
     /**
      * Subject line for an ended game email.
      */
-    private static final String END_GAME_SUBJECT = "A Planning Poker game has ended."; //$NON-NLS-1$
+    private static final String END_GAME_SUBJECT = "A Planning Poker game has ended.";
     
     /**
      * All users in the current project.

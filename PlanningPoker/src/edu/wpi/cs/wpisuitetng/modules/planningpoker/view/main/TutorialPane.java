@@ -35,7 +35,7 @@ public class TutorialPane extends JComponent {
     
     /**
      * 
-     * @return
+     * @return TutorialPane.instance
      */
     public static TutorialPane getInstance() {
         if (TutorialPane.instance == null) {

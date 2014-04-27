@@ -38,7 +38,7 @@ public class GetGamesControllerTest {
     GetGamesController instance = GetGamesController.getInstance();
     GameModel nullGame = new GameModel();
     GameModel game1 = new GameModel("Test Game 1", "Live Game that just ended",
-            null,DeckModel.DEFAULT_DECK, new Date(),
+            null, DeckModel.DEFAULT_DECK, new Date(),
             GameStatus.COMPLETE);
     GameModel game2 = new GameModel("Test Game 2",
             "Game that will end in 5 seconds", null, DeckModel.DEFAULT_DECK, new Date(
@@ -47,13 +47,13 @@ public class GetGamesControllerTest {
     GameModel game3 = new GameModel(
             "Test Game 3",
             "Game with end time in 10 seconds, but already manually ended",
-            null,DeckModel.DEFAULT_DECK, new Date(System
+            null, DeckModel.DEFAULT_DECK, new Date(System
                     .currentTimeMillis() + 10000),
             GameStatus.COMPLETE);
     GameModel game4 = new GameModel(
             "Test Game 4",
             "Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-            null,DeckModel.DEFAULT_DECK, new Date(System
+            null, DeckModel.DEFAULT_DECK, new Date(System
                     .currentTimeMillis() - 10000),
             GameStatus.PENDING);
     GameListModel list = GameListModel.getInstance();
@@ -87,13 +87,13 @@ public class GetGamesControllerTest {
         game3 = new GameModel(
                 "Test Game 3",
                 "Game with end time in 10 seconds, but already manually ended",
-                null,DeckModel.DEFAULT_DECK, new Date(
+                null, DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() + 10000),
                 GameStatus.COMPLETE);
         game4 = new GameModel(
                 "Test Game 4",
                 "Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-                null,DeckModel.DEFAULT_DECK, new Date(
+                null, DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 10000), GameStatus.PENDING);
         list = GameListModel.getInstance();
         gamesToAdd = new GameModel[] { game1, game2, game3, game4 };

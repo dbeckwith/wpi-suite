@@ -45,7 +45,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
  * @version 1.0
  * 
  */
-public class DeckOptionsPanel extends JPanel implements SimpleListObserver, ActionListener, ChangeListener {
+public class DeckOptionsPanel extends JPanel implements SimpleListObserver, ActionListener, 
+	ChangeListener {
 	
 	/**
      * 
@@ -73,7 +74,8 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	 */
 	public void initComponents(){
 		setBackground(Color.WHITE);
-		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING, TitledBorder
+				.TOP, null, null));
 		
 		useDeck = new JCheckBox("Deck:");
 		useDeck.setSelected(true);
@@ -102,8 +104,10 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		
 		maxSpinner = new JSpinner();
 		maxSpinner.addChangeListener(this);
-		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		final JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor()).getTextField();
+		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), 
+				null, new Integer(1)));
+		final JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor())
+				.getTextField();
     	((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
 		
     	final GroupLayout groupLayout = new GroupLayout(this);
@@ -159,26 +163,23 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	public void setGame(GameModel game){
 		listUpdated();
 		
-		if(game.getDeck() == null){
-			return;
+		if(game.getDeck() != null){
+			useDeck.setSelected(!game.getDeck().isNone());
+			
+			if(game.getDeck().isNone()){
+				maxSpinner.getModel().setValue(game.getDeck().getMaxEstimate());
+			} else {
+				for (int i = 0; i < savedDecks.getModel().getSize(); i++) {
+		            DeckModel deck = savedDecks.getModel().getElementAt(i);
+		            if (deck != null && deck.getName().equals(game.getDeck().getName())) {
+		                savedDecks.setSelectedItem(deck);
+		                break;
+		            }
+		        }  
+			}
+			checkUseDeck();
+			repaint();
 		}
-		
-		useDeck.setSelected(!game.getDeck().isNone());
-		
-		if(game.getDeck().isNone()){
-			maxSpinner.getModel().setValue(game.getDeck().getMaxEstimate());
-		} else {
-			for (int i = 0; i < savedDecks.getModel().getSize(); i++) {
-	            DeckModel deck = savedDecks.getModel().getElementAt(i);
-	            if (deck != null && deck.getName().equals(game.getDeck().getName())) {
-	                savedDecks.setSelectedItem(deck);
-	                break;
-	            }
-	        }  
-		}
-		checkUseDeck();
-		repaint();
-		
 	}
 	
 
@@ -186,15 +187,19 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	 * @return the deck selected for this panel
 	 */
 	public DeckModel getDeck(){
+		DeckModel deck;
+		
 		if(useDeck.isSelected()){
 			DeckModel selectedDeck = (DeckModel)savedDecks.getSelectedItem();
 			if(selectedDeck == null){
 				selectedDeck = DeckModel.DEFAULT_DECK;
 			}
-			return new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), selectedDeck.canAllowsMultipleSelection());
+			deck = new DeckModel(selectedDeck.getName(), selectedDeck.getCards(), 
+					selectedDeck.canAllowsMultipleSelection());
 		} else {
-			return new DeckModel((Integer)maxSpinner.getModel().getValue());
+			deck = new DeckModel((Integer)maxSpinner.getModel().getValue());
 		}
+		return deck;
 	}
 	
     /**

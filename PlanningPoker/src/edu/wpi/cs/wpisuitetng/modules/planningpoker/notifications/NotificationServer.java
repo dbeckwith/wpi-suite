@@ -48,6 +48,7 @@ public class NotificationServer extends Thread {
 		try {
 			serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		clientSockets = Collections.synchronizedList(new ArrayList<Socket>());
 	}
