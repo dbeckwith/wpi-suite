@@ -71,15 +71,17 @@ public class GetParentRequirementController extends
      *         requirement does not exist in the requirement manager
      */
     public Requirement getParentRequirement(int id) {
+        Requirement toReturn = null;
         retrieveRequirements();
         if (getRequirements() != null) {
             for (Requirement r : getRequirements()) {
                 if (r.getId() == id) { 
-                    return r; 
+                    toReturn = r; 
+                    break;
                 }
             }
         }
-        return null;
+        return toReturn;
     }
     
 }
