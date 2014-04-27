@@ -51,7 +51,7 @@ public class HelpButtons extends ToolbarGroupView {
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: implement help button function
+                PlanningPoker.getViewController().showInteractiveHelp();
             }
         });
         
@@ -62,5 +62,8 @@ public class HelpButtons extends ToolbarGroupView {
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
+    }
+    public JButton getHelpButton() {
+        return helpButton;
     }
 }

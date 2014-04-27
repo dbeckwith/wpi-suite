@@ -29,7 +29,7 @@ public class DeckModel extends AbstractModel {
 	public static final int NO_LIMIT = 0;
 	
 	static {
-		ArrayList<Double> defaultCards = new ArrayList<Double>();
+		final ArrayList<Double> defaultCards = new ArrayList<Double>();
 		
 		defaultCards.add(0d);
 		defaultCards.add(1d);
@@ -68,19 +68,18 @@ public class DeckModel extends AbstractModel {
 		maxEstimate = NO_LIMIT;
 	}
 
-    /**
-     * Creates a new deck without any cards that does not allow multiple
+
+	/**
+	 * Creates a new deck without any cards that does not allow multiple
      * selection.
-     * 
-     * @param name
-     *            the name of the deck
-     */
+	 * @param max
+	 */
 	public DeckModel(int max) {
-		this.name = "None";
-		this.cards = null;
-		this.allowsMultipleSelection = false;
+		name = "None";
+		cards = null;
+		allowsMultipleSelection = false;
 		isNone = true;
-		this.maxEstimate = Math.max(max, NO_LIMIT);
+		maxEstimate = Math.max(max, NO_LIMIT);
 	}
     
     /**
@@ -110,7 +109,7 @@ public class DeckModel extends AbstractModel {
 	 * @return The cards in the deck
 	 */
 	public ArrayList<Double> getCards() {
-		return this.cards;
+		return cards;
 	}
 	
     /**
@@ -141,10 +140,9 @@ public class DeckModel extends AbstractModel {
      *            the value of the card to add
      */
 	public void addCard(Double newCard) {
-		if (cards.contains(newCard)) {
-			return;
+		if (!cards.contains(newCard)) {
+			cards.add(newCard);
 		}
-		cards.add(newCard);
 	}
     
     /**
@@ -154,10 +152,9 @@ public class DeckModel extends AbstractModel {
      *            the value to remove, if it is in the deck
      */
 	public void removeCard(Double card) {
-		if (!cards.contains(card)) {
-			return;
+		if (cards.contains(card)) {
+			cards.remove(card);
 		}
-		cards.remove(card);
 	}
 
 	/**
@@ -212,7 +209,7 @@ public class DeckModel extends AbstractModel {
 	
 	@Override
 	public String toString() {
-		return ""+name;
+		return "" + name;
 	}
 
 

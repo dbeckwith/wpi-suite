@@ -60,7 +60,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setDeckName(game.getDeck().toString());
         
         System.out.println(gameName.getWidth());
-        int difference = gameDeadline.getX() - lblDeadline.getX();
+        final int difference = gameDeadline.getX() - lblDeadline.getX();
         if ((gameName.getX() + gameName.getWidth()) > lblDeadline.getX()) {
             lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, lblDeadline.getY());
             gameDeadline.setLocation(lblDeadline.getX() + difference, gameDeadline.getY());
@@ -195,7 +195,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                 est++;
             }
         }
-        double prog = (double)est/(double)req;
+        final double prog = (double)est/(double)req;
         personalProgress.setValue((int)(prog *100));
         if(!game.isStarted()){
             personalProgress.setVisible(false);
