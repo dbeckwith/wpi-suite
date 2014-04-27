@@ -23,6 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DocumentationPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
@@ -99,6 +100,26 @@ public class ViewController {
 					}
 				});
 	}
+	
+    /**
+     * Adds a help documentation panel
+     */
+    public void addDocumentationPanel() {
+        final DocumentationPanel docPanel = DocumentationPanel.getPanel();
+        mainView.addTab("Documentation Panel", docPanel);
+        mainView.setSelectedComponent(docPanel);
+        
+        mainView.setTabComponentAt(mainView.indexOfComponent(docPanel),
+                new ClosableTabComponent(mainView) {
+                    private static final long serialVersionUID = -1818991807577187941L;
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mainView.removeTabAt(mainView.indexOfComponent(docPanel));
+                    }
+                });
+        
+    }
 
 	/**
 	 * Saves a GameModel based on the information in the NewGamePanel
@@ -347,5 +368,4 @@ public class ViewController {
         });
         TutorialPane.getInstance().setPath(path);
     }
-
 }
