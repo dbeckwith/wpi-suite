@@ -669,4 +669,7 @@ public class NewGamePanel extends JPanel {
     private boolean hasChanged;
     private JScrollPane scrollPane_1;
     private JPanel panel_1;
+    public NewGameDescriptionPanel getGameDescriptionPanel() {
+        return gameDescription;
+    }
 }

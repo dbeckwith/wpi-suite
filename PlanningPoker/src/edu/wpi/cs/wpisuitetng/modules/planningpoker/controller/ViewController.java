@@ -328,9 +328,27 @@ public class ViewController {
 	}
 
     public void showInteractiveHelp() {
-        TutorialPath path = new TutorialPath();
+        TutorialPath path = new TutorialPath("test path");
         path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!"));
-        path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons().getUserPrefsButton(), "Click here to set your preferences!"));
+        path.add(new TutorialPath.PathItem("Enter the game description here") {
+            
+            @Override
+            public Component getComponent() {
+                NewGamePanel ngp = null;
+                System.out.println(mainView.getTabCount());
+                for (int i = 0; i < mainView.getTabCount(); i++) {
+                    if (mainView.getTabComponentAt(i) instanceof NewGamePanel) {
+                        ngp = (NewGamePanel)mainView.getTabComponentAt(i);
+                        break;
+                    }
+                }
+                if (ngp == null) {
+                    System.err.println("NewGamePanel not found!");
+                    return null;
+                }
+                return ngp.getGameDescriptionPanel().getDescriptionField();
+            }
+        });
         TutorialPane.getInstance().setPath(path);
     }
 
