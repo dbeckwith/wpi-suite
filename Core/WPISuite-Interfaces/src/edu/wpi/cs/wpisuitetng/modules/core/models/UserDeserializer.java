@@ -54,7 +54,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		String email = null;
 		String password = null;
 		boolean emailNotify = false;
-		boolean imNotify = false;
+		boolean smsNotify = false;
+		Carrier carrier = null;
+		String phoneNumber = null;
+		
 
 		if (deflated.has("idNum")
 				&& !deflated.get("idNum").getAsString().equals("")) {
@@ -83,13 +86,21 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			emailNotify = deflated.get("emailNotify").getAsBoolean();
 		}
 
-		if (deflated.has("imNotify") && !isValueEmpty(deflated, "imNotify")) {
-			imNotify = deflated.get("imNotify").getAsBoolean();
+		if (deflated.has("smsNotify") && !isValueEmpty(deflated, "smsNotify")) {
+			smsNotify = deflated.get("smsNotify").getAsBoolean();
 		}
-
-		User inflated = new User(name, username, email, password, idNum);
+		
+		if(deflated.has("phoneNumber") && !isValueEmpty(deflated, "phoneNumber")) {
+		    phoneNumber = deflated.get("phoneNumber").getAsString();
+		}
+		
+        if (deflated.has("carrier") && !isValueEmpty(deflated, "carrier")) {
+            carrier = Carrier.getEnum(deflated.get("carrier").getAsString());
+        }
+        
+		User inflated = new User(name, username, email, password, idNum, phoneNumber, carrier);
 		inflated.setNotifyByEmail(emailNotify);
-		inflated.setNotifyByIM(imNotify);
+		inflated.setNotifyBySMS(smsNotify);
 
 		if (deflated.has("role") && !isValueEmpty(deflated, "role")) {
 			Role r = Role.valueOf(deflated.get("role").getAsString());

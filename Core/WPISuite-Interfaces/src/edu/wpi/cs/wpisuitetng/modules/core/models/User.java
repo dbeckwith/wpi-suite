@@ -13,6 +13,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.core.models;
 
+
 import com.google.gson.*;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
@@ -31,9 +32,12 @@ public class User extends AbstractModel
 	private int idNum;
 	private Role role;
 	private boolean notifyByEmail = false;
-	private boolean notifyByIM = false;
+	private boolean notifyBySMS = false;
+	private Carrier carrier;
+	private String phoneNumber;
 	
 	transient private String password; // excluded from serialization, still stored.
+	
 	
 	/**
 	 * The primary constructor for a User
@@ -49,6 +53,8 @@ public class User extends AbstractModel
 		this.idNum = idNum;
 		this.role = Role.USER;
 		this.email = null;
+		this.phoneNumber = null;
+		this.carrier = Carrier.UNKNOWN;
 	}
 	
 	public User(String name, String username, String email, String password, int idNum) {
@@ -58,6 +64,19 @@ public class User extends AbstractModel
         this.idNum = idNum;
         this.role = Role.USER;
         this.email = email;
+        this.phoneNumber = null;
+        this.carrier = Carrier.UNKNOWN;
+	}
+	
+	public User(String name, String username, String email, String password, int idNum, String phoneNumber, Carrier carrier) {
+	        this.name = name;
+	        this.username = username;
+	        this.password = password;
+	        this.idNum = idNum;
+	        this.role = Role.USER;
+	        this.email = email;
+	        this.phoneNumber = phoneNumber;
+	        this.carrier = carrier;
 	}
 	
 	@Override
@@ -90,6 +109,16 @@ public class User extends AbstractModel
 				if(this.role != null && !this.role.equals(((User)other).role))
 				{
 					return false;
+				}
+				
+				if(this.phoneNumber != null && !this.phoneNumber.equals(((User)other).phoneNumber))
+				{
+				    return false;
+				}
+				
+				if(this.carrier != null && !this.carrier.equals(((User)other).carrier))
+				{
+				    return false;
 				}
 				
 				return true;
@@ -153,8 +182,36 @@ public class User extends AbstractModel
 		return notifyByEmail;
 	}
 	
-	public boolean isNotifyByIM() {
-		return notifyByIM;
+	/**
+     * @return the phoneNumber
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * @param phoneNumber the phoneNumber to set
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * @return the carrier
+     */
+    public Carrier getCarrier() {
+        return carrier;
+    }
+
+    /**
+     * @param carrier the carrier to set
+     */
+    public void setCarrier(Carrier carrier) {
+        this.carrier = carrier;
+    }
+
+    public boolean isNotifyBySMS() {
+		return notifyBySMS;
 	}
 	
 	/* database interaction */
@@ -274,8 +331,8 @@ public class User extends AbstractModel
 		this.notifyByEmail = notify;
 	}
 	
-	public void setNotifyByIM(boolean notify) {
-		this.notifyByIM = notify;
+	public void setNotifyBySMS(boolean notify) {
+		this.notifyBySMS = notify;
 	}
 
 	
