@@ -14,12 +14,18 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.FocusAdapter;
 import java.util.Iterator;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 
@@ -72,6 +78,34 @@ public class TutorialPane extends JComponent {
     };
     
     private TutorialPane() {
+        
+        JButton nextButton = new JButton("Next");
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nextItem();
+            }
+        });
+        GroupLayout groupLayout = new GroupLayout(this);
+        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+                Alignment.LEADING).addGroup(
+                Alignment.TRAILING,
+                groupLayout
+                        .createSequentialGroup()
+                        .addContainerGap(349, Short.MAX_VALUE)
+                        .addComponent(nextButton, GroupLayout.PREFERRED_SIZE,
+                                89, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()));
+        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+                Alignment.LEADING).addGroup(
+                Alignment.TRAILING,
+                groupLayout
+                        .createSequentialGroup()
+                        .addContainerGap(265, Short.MAX_VALUE)
+                        .addComponent(nextButton, GroupLayout.PREFERRED_SIZE,
+                                23, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()));
+        setLayout(groupLayout);
         window = null;
         pathIter = null;
         currentItem = null;
@@ -122,6 +156,11 @@ public class TutorialPane extends JComponent {
     public boolean contains(int x, int y) {
         // overwrite contains so that the mouse cursor can change like normal
         // when it hovers over components below the glass pane
+        for (Component comp : getComponents()) {
+            if (comp.contains(SwingUtilities.convertPoint(this, x, y, comp))) {
+                return true;
+            }
+        }
         return false;
     }
     
@@ -150,17 +189,19 @@ public class TutorialPane extends JComponent {
                     .removeComponentListener(currentItemCompListener);
         }
         
-        if (pathIter.hasNext()) {
-            currentItem = pathIter.next();
-            currentItem.component.addFocusListener(nextPathItemListener);
-            currentItem.component.addComponentListener(currentItemCompListener);
-            
-            getCurrCompBounds();
-        }
-        else {
-            currentItem = null;
-            repaint();
+        if (pathIter != null) {
+            if (pathIter.hasNext()) {
+                currentItem = pathIter.next();
+                currentItem.component.addFocusListener(nextPathItemListener);
+                currentItem.component
+                        .addComponentListener(currentItemCompListener);
+                
+                getCurrCompBounds();
+            }
+            else {
+                currentItem = null;
+                repaint();
+            }
         }
     }
-    
 }

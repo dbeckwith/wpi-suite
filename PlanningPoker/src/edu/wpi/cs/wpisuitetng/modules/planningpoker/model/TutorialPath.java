@@ -10,6 +10,8 @@ public class TutorialPath extends ArrayList<TutorialPath.PathItem> {
      */
     private static final long serialVersionUID = 9065382263997689976L;
     
+    // TODO: instead of giving list of components, give list of methods that get components so the components can be retrieved dynamically 
+    
     public static class PathItem {
         public Component component;
         public String label;
