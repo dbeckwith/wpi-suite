@@ -8,11 +8,13 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -24,6 +26,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -35,10 +38,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-
-import java.awt.Font;
-
-import javax.swing.JProgressBar;
 
 /**
  * the panel to show vote GUI
@@ -66,7 +65,7 @@ public class VotePanel extends javax.swing.JPanel {
         parentGame = null;
         req = null;
         selectMultiple = true;
-        cards = new ArrayList<CardButton>();
+        cards = new ArrayList<Card>();
         old = null;
     }
     
@@ -119,11 +118,7 @@ public class VotePanel extends javax.swing.JPanel {
                 break;
             }
         }
-        
-        final ArrayList<String> deck = new ArrayList<>();
-        
-        
-        
+
         ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
             selected = old.getCardsSelected();
@@ -138,8 +133,7 @@ public class VotePanel extends javax.swing.JPanel {
         cards.clear();
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
-        	CardButton estimateInput = new CardButton();
-        	estimateInput.setLimit(parentGame.getDeck().getMaxEstimate());
+        	SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck().getMaxEstimate());
             estimateInput.addActionListener(new ActionListener() {					
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -150,47 +144,46 @@ public class VotePanel extends javax.swing.JPanel {
             cards.add(estimateInput);
             updateTotal();
         	validateCards();
-        	estimateInput.setPreferredSize(new Dimension(120, 160));
-        	estimateCardsPanel.add(estimateInput);
+        	estimateInput.setPreferredSize(new Dimension(80, 120));
+    		
+    		GridBagConstraints gbc = new GridBagConstraints();
+    		gbc.insets = new Insets(0, 10, 0, 10);	
+        	estimateCardsPanel.add(estimateInput, gbc);
         	
         	if(voted && old != null){
-        		cards.get(0).setValue(old.getEstimate());
+        		cards.get(0).setEstimateValue(old.getEstimate());
         	}
         } else {
         	            
-            // Add card values from the game's deck
-            for (Double cardVal : parentGame.getDeck().getCards()) {
-                deck.add(cardVal.toString());
-            }
+            ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
             
         	
 	        estimateCardsPanel.removeAll();
-	        for (final String estimate : deck) {
-	            final CardButton estimateCard = new CardButton(estimate);
+	        for (double estimate : deckCardValues) {
+	            final ButtonCard estimateCard = new ButtonCard((float)estimate);
 	            
 	            cards.add(estimateCard);
 	            
-	            estimateCard.setPreferredSize(new Dimension(80, 120));
-	            estimateCard.setCardSelected(selected.contains(new Integer(deck
+	            estimateCard.setPreferredSize(new Dimension(120, 160));
+	            estimateCard.setCardSelected(selected.contains(new Integer(deckCardValues
 	                    .indexOf(estimate))));
 	            estimateCard.addActionListener(new ActionListener() {
 	                
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
-	                    if (estimateCard.isCardEnabled()) {
-	                        estimateCard.setCardSelected(!estimateCard
-	                                .isCardSelected());
-	                        if (!selectMultiple) {
-	                            deselectOtherCards(estimateCard);
-	                        }
-	                        validateCards();
-	                    }
+                        if (!selectMultiple) {
+                            deselectOtherCards(estimateCard);
+                        }
+                        
+                        validateCards();	                    
 	                    updateTotal();
 	                    VotePanel.this.repaint();
 	                }
 	            });
-	            
-	            estimateCardsPanel.add(estimateCard, BorderLayout.CENTER);
+	    		
+	    		GridBagConstraints gbc = new GridBagConstraints();
+	    		gbc.insets = new Insets(0, 10, 0, 10);	
+	            estimateCardsPanel.add(estimateCard, gbc);
 	        }
 	        
 	        if(voted){
@@ -221,7 +214,7 @@ public class VotePanel extends javax.swing.JPanel {
         
         final ArrayList<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
-        for (CardButton c : cards) {
+        for (Card c : cards) {
             if (c.isCardSelected()) {
                 estimate += c.getEstimateValue();
                 selected.add(new Integer(cards.indexOf(c)));
@@ -376,11 +369,10 @@ public class VotePanel extends javax.swing.JPanel {
                         .addComponent(prevVoteLabel))
                     .addContainerGap())
         );
-        final FlowLayout fl_estimateCardsPanel = new FlowLayout(FlowLayout.CENTER, 5,
-                5);
-        estimateCardsPanel.setLayout(fl_estimateCardsPanel);
         
         estimateScrollPane.setViewportView(estimateCardsPanel);
+        GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
+        estimateCardsPanel.setLayout(gbl_estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();
         reqDescriptionTextArea.setEditable(false);
@@ -410,8 +402,8 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     
-    private void deselectOtherCards(CardButton card) {
-        for (CardButton c : cards) {
+    private void deselectOtherCards(ButtonCard card) {
+        for (Card c : cards) {
             if (c != card) {
                 c.setCardSelected(false);
             }
@@ -426,7 +418,7 @@ public class VotePanel extends javax.swing.JPanel {
     		return;
     	}
     	
-        for (CardButton c : cards) {
+        for (Card c : cards) {
             if (c.isCardSelected()) {
                 btnSubmit.setEnabled(true);
                 return;
@@ -440,12 +432,12 @@ public class VotePanel extends javax.swing.JPanel {
      */
     private void updateTotal(){
     	float total = 0;
-    	for(CardButton card:cards){
+    	for(Card card:cards){
     		if(card.isCardSelected() || parentGame.getDeck().isNone()){
     			total += card.getEstimateValue();
     		}
     	}
-    	lblTotal.setText(CardButton.cardFormat.format(total));
+    	lblTotal.setText(Card.decimalFormat.format(total));
     	
     	if(btnSubmit != null && old != null){
     		btnSubmit.setEnabled(total != old.getEstimate());
@@ -485,7 +477,7 @@ public class VotePanel extends javax.swing.JPanel {
     
     private JButton btnSubmit;
     private JLabel lblTotal;
-    private final ArrayList<CardButton> cards;
+    private final ArrayList<Card> cards;
     private javax.swing.JLabel estimateLabel;
     private JTextArea reqDescriptionTextArea;
     private JPanel estimateCardsPanel;
