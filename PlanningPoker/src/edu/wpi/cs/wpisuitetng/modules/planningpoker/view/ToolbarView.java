@@ -68,4 +68,16 @@ public class ToolbarView extends DefaultToolbarView {
     public void setEndGame(boolean b) {
         adminButtonGroup.setEndGameEnabled(b);
     }
+    
+    public CommonButtonGroup getCommonButtons() {
+        return commonButtonGroup;
+    }
+    
+    public AdminButtonGroup getAdminButtons() {
+        return adminButtonGroup;
+    }
+    
+    public HelpButtons getHelpButtons() {
+        return helpButtons;
+    }
 }
