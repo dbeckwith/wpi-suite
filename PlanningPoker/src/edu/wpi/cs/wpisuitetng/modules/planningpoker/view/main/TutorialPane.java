@@ -8,7 +8,9 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -68,13 +70,33 @@ public class TutorialPane extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         if (highlightArea != null) {
-            g.drawRect(highlightArea.x, highlightArea.y, highlightArea.width,
-                    highlightArea.height);
+            g.setColor(new Color(200, 30, 30, 210));
+            drawThickRect(g, highlightArea.x, highlightArea.y,
+                    highlightArea.width, highlightArea.height, 3);
+            
+            g.setColor(new Color(230, 30, 30));
+            g.setFont(getFont().deriveFont(Font.BOLD));
             g.drawString(highlightLabel, highlightArea.x + highlightArea.width
-                    + 10, highlightArea.y + highlightArea.height);
+                    + 10, highlightArea.y + highlightArea.height / 2
+                    + g.getFontMetrics().getAscent() / 2);
         }
     }
     
+    private void drawThickRect(Graphics g, int x, int y, int w, int h,
+            int thickness) {
+        for (int i = Math.round(-thickness / 2f); i <= Math
+                .round(thickness / 2f); i++) {
+            g.drawRect(x + i, y + i, w - i * 2, h - i * 2);
+        }
+    }
+    
+    @Override
+    public boolean contains(int x, int y) {
+        // overwrite contains so that the mouse cursor can change like normal
+        // when it hovers over components below the glass pane
+        return false;
+    }
+
     public void clear() {
         highlightArea = null;
         highlightLabel = null;
