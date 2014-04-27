@@ -17,6 +17,11 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * @version 1.0
+ * @author Team 9
+ *
+ */
 public class HighlightedTable extends JTable implements MouseMotionListener, MouseListener {
 	
 	/**
@@ -76,7 +81,7 @@ public class HighlightedTable extends JTable implements MouseMotionListener, Mou
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		highlightRow = -1;	
+		highlightRow = -1;
 		repaint();
 	}
 }

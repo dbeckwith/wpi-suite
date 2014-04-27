@@ -130,7 +130,6 @@ public class UserUpdateController {
             default:
                 System.err.println("Invalid notification type " + fieldToUpdate);
                 alreadyReturned = true;
-                //return;
         }
         if (alreadyReturned = false){
             final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$

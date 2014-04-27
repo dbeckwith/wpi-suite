@@ -74,14 +74,12 @@ public class CurrentUserController extends AbstractUserController {
                 toReturn = u;
                 alreadyReturned = true;
                 break;
-                //return u;
             }
         }
         if (!alreadyReturned){
             toReturn = null;
         }
         return toReturn;
-        //return null;
     }
     
     /**

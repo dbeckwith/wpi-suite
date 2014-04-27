@@ -177,8 +177,8 @@ public class ViewController {
 			final int result = cancelConfirm
 					.showConfirmDialog(
 							e,
-							"Are you sure you would like cancel editing this game? (changes will not be saved)",
-							"Cancel Edit", JOptionPane.YES_NO_OPTION);
+							"Are you sure you would like cancel editing this game? (changes will "
+							+ "not be saved)", "Cancel Edit", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				RequirementsListModel.getInstance().removeListListener(
 						e.getNewGameRequirementsPanel()
@@ -328,7 +328,8 @@ public class ViewController {
 	 * Highlight the "Create Game" button to help user create a game
 	 */
     public void showInteractiveHelp() {
-        TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!");
+        TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons()
+        		.getNewGameButton(), "Click here to create a game!");
     }
 
 }

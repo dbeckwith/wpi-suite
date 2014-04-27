@@ -36,7 +36,8 @@ public class GetGamesRequestObserver implements RequestObserver {
      * Parse the games out of the response body and pass them to the controller
      * when a response is received with a success (2xx) status code.
      * 
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess
+     * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {
@@ -53,7 +54,8 @@ public class GetGamesRequestObserver implements RequestObserver {
      * or
      * server error (5xx) status code.
      * 
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError
+     * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseError(IRequest iReq) {
@@ -64,8 +66,8 @@ public class GetGamesRequestObserver implements RequestObserver {
      * Put an error games in the PostBoardPanel if an attempt to make a request
      * fails.
      * 
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest,
-     *      java.lang.Exception)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail
+     * (edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {
