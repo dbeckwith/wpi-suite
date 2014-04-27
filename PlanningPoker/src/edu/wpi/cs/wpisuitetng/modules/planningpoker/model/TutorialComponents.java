@@ -17,9 +17,25 @@ import javax.swing.JPanel;
  * @author Team 9
  * @version 1.0
  */
-public class TutorialComponents {
+public final class TutorialComponents {
     
-    private static final ArrayList<TutorialPath> TUTORIALS = new ArrayList<>();
+    private final ArrayList<TutorialPath> TUTORIALS = new ArrayList<>();
+    
+    private TutorialComponents() {
+        initTutorialPaths();
+    }
+    
+    private static TutorialComponents instance = null;
+    
+    /**
+     * Gets the singleton instance.
+     */
+    public static TutorialComponents getInstance() {
+        if (instance == null) {
+            instance = new TutorialComponents();
+        }
+        return instance;
+    }
     
     /**
      * Gets the tutorial path with the given name, or null if no tutorial with
@@ -28,7 +44,7 @@ public class TutorialComponents {
      * @param tutorialName
      *        the name of the tutorial to retrieve
      */
-    public static TutorialPath getTutorial(String tutorialName) {
+    public TutorialPath getTutorial(String tutorialName) {
         for (TutorialPath t : TUTORIALS) {
             if (t.getName().equals(tutorialName)) {
                 return t;
@@ -44,9 +60,9 @@ public class TutorialComponents {
      * @param panel
      *        the panel to get the tutorial for
      */
-    public static TutorialPath getTutorial(JPanel panel) {
+    public TutorialPath getTutorial(JPanel panel) {
         for (TutorialPath t : TUTORIALS) {
-            if (t.getPanel().equals(panel)) {
+            if (t.getPanel() != null && t.getPanel().equals(panel)) {
                 return t;
             }
         }
@@ -54,18 +70,25 @@ public class TutorialComponents {
     }
     
     /**
-     * Adds the given tutorial to the list of tutorials
+     * Adds the given tutorial to the list of tutorials.
      * 
      * @param tutorial
      *        the tutorial to add
      * @return true if the tutorial was added to the list, otherwise returns
      *         false
      */
-    public static boolean addTutorial(TutorialPath tutorial) {
+    public boolean addTutorial(TutorialPath tutorial) {
         if (!TUTORIALS.contains(tutorial)) {
             return TUTORIALS.add(tutorial);
         }
         return false;
+    }
+    
+    /**
+     * Create all tutorial paths here.
+     */
+    private void initTutorialPaths() {
+        TutorialPath p = new TutorialPath("");
     }
     
 }
