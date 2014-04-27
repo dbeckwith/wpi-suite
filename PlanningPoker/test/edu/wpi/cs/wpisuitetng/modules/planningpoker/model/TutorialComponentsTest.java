@@ -11,6 +11,7 @@ public class TutorialComponentsTest {
     @Test
     public void testAddNamedTutorial() {
         TutorialPath tutorial = new TutorialPath("namedTutorial");
+        assertFalse(TutorialComponents.getInstance().addTutorial(tutorial));
         assertNotNull(TutorialComponents.getInstance().getTutorial("namedTutorial"));
     }
     
@@ -18,6 +19,7 @@ public class TutorialComponentsTest {
     public void testAddTutorialWithPanel() {
         JPanel panel = new JPanel();
         TutorialPath tutorial = new TutorialPath("panelTutorial", panel);
+        assertFalse(TutorialComponents.getInstance().addTutorial(tutorial));
         assertNotNull(TutorialComponents.getInstance().getTutorial("panelTutorial"));
         assertNotNull(TutorialComponents.getInstance().getTutorial(panel));
     }

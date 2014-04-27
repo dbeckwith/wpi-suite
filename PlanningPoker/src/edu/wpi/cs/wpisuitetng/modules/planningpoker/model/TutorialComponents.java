@@ -82,7 +82,7 @@ public final class TutorialComponents {
             System.out.println("Added tutorial " + tutorial.getName());
             return TUTORIALS.add(tutorial);
         }
-        System.out.println("Failed to add tutorial " + tutorial.getName() + "(list already contained tutorial)");
+        System.out.println("Failed to add tutorial " + tutorial.getName() + " (already stored)");
         return false;
     }
     
