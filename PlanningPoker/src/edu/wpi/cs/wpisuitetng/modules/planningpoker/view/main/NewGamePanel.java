@@ -41,6 +41,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 
+
 /**
  * This is a class to show the panel when the user clicks create game button.
  * 
@@ -634,6 +635,13 @@ public class NewGamePanel extends JPanel {
         return hasChanged;
     }
     
+    /**
+     * Sets the selected deck in the combo box of saved decks to the newest deck
+     */
+    public void setNewDeck(){
+        gameDescription.setNewDeck();
+    }
+
     private GameModel game = null;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

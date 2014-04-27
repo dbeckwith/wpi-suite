@@ -11,16 +11,19 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.CardLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JTree;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
- * Depending on the requirement and game status, this is the panel to show requirement description of the requirement or vote GUI or result of estimates 
+ * Depending on the requirement and game status, this is the panel to show
+ * requirement description of the requirement or vote GUI or result of estimates
+ * 
  * @author Team 9
  * @version 1.0
- *
+ * 
  */
 public class RequirementDescriptionPanel extends JPanel {
     
@@ -31,14 +34,17 @@ public class RequirementDescriptionPanel extends JPanel {
     
     /**
      * Create the panel.
+     * 
+     * @param tree
+     *        the tree of games
      */
-    public RequirementDescriptionPanel() {
+    public RequirementDescriptionPanel(JTree tree) {
         setLayout(new CardLayout(0, 0));
         
         votePanel = new VotePanel();
         add(votePanel, "vote");
         
-        completedPanel = new CompletedRequirementPanel();
+        completedPanel = new CompletedRequirementPanel(tree);
         add(completedPanel, "complete");
         
         newReq = new RequirementDescriptionOnlyPanel();
@@ -48,19 +54,25 @@ public class RequirementDescriptionPanel extends JPanel {
     
     /**
      * Sets the data for the RequirementDescriptionPanel
-     *
-     * @param current_user the current user
-     * @param parent_game the parent game
-     * @param req the requirement 
+     * 
+     * @param current_user
+     *        the current user
+     * @param parent_game
+     *        the parent game
+     * @param req
+     *        the requirement
      */
-    public void setData(User current_user, GameModel parent_game, GameRequirementModel req) {
+    public void setData(User current_user, GameModel parent_game,
+            GameRequirementModel req) {
         if (parent_game.isEnded()) {
             completedPanel.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "complete");
-        } else if (parent_game.isStarted()){
+        }
+        else if (parent_game.isStarted()) {
             votePanel.setRequirement(current_user, parent_game, req);
             ((CardLayout) getLayout()).show(this, "vote");
-        } else{
+        }
+        else {
             newReq.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "new");
         }

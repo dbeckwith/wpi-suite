@@ -51,7 +51,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         
         gameTree = new GamesListPanel();
         jSplitPane3.setLeftComponent(gameTree);
-        final JTree tree = gameTree.getTree();
+        tree = gameTree.getTree();
         
         descriptionCard = new JPanel();
         descriptionCard.setLayout(new CardLayout(0, 0));
@@ -78,7 +78,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         splitPane.setRightComponent(requirementPanel);
         requirementPanel.setLayout(new CardLayout(0, 0));
         
-        requirementDescriptionPanel = new RequirementDescriptionPanel();
+        requirementDescriptionPanel = new RequirementDescriptionPanel(tree);
         requirementPanel.add(requirementDescriptionPanel, "requirement");
         
         final JPanel noRequirementPanel = new JPanel();
@@ -109,10 +109,12 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                         final GameModel game = (GameModel) nodeInfo;
                         currentSelectionGame = game;
                         getGameDescriptionPanel().setGame(game);
-                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
-                    
-                    } else if (nodeInfo instanceof GameRequirementModel) {
-                    	
+                        ((CardLayout) getDescriptionCard().getLayout()).show(
+                                getDescriptionCard(), "description");
+                        
+                    }
+                    else if (nodeInfo instanceof GameRequirementModel) {
+                        
                         ((CardLayout) getRequirementPanel().getLayout()).show(
                                 getRequirementPanel(), "requirement");
                         final GameRequirementModel req = (GameRequirementModel) nodeInfo;
@@ -126,12 +128,16 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                                 .getParent()).getUserObject();
                         getGameDescriptionPanel().setGame(game);
                         currentSelectionGame = game;
-                        ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "description");
-	                } else {
-	                    ((CardLayout)getDescriptionCard().getLayout()).show(getDescriptionCard(), "empty");
-	                }
-               
-                    PlanningPoker.getViewController().displayAdmin(currentSelectionGame);
+                        ((CardLayout) getDescriptionCard().getLayout()).show(
+                                getDescriptionCard(), "description");
+                    }
+                    else {
+                        ((CardLayout) getDescriptionCard().getLayout()).show(
+                                getDescriptionCard(), "empty");
+                    }
+                    
+                    PlanningPoker.getViewController().displayAdmin(
+                            currentSelectionGame);
                 }
             }
         });
@@ -145,6 +151,16 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private final JPanel emptyDescriptionPanel;
     private final JLabel emptyDescriptionLabel;
     private final JPanel descriptionCard;
+    private final JTree tree;
+    
+    /**
+     * Allows the tree to be accessed to change the currently selected game.
+     * 
+     * @return the tree of games
+     */
+    public JTree getTree() {
+        return tree;
+    }
     
     protected JPanel getRequirementPanel() {
         return requirementPanel;
@@ -173,7 +189,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     /**
      * sets the currently selected game in the tree for testing purposes
      * 
-     * @param game the game to set
+     * @param game
+     *        the game to set
      */
     public void setSelectedGame(GameModel game) {
         currentSelectionGame = game;

@@ -511,6 +511,13 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         return nameField;
     }
     
+    /**
+     * Sets the selected deck in the combo box of saved decks to the newest deck
+     */
+    public void setNewDeck(){
+        deckOptions.setNewDeck();
+    }
+
     private boolean isNameValid = false;
     private boolean isDescriptionValid = false;
     
