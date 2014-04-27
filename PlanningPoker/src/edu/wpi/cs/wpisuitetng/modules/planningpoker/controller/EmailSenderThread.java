@@ -93,7 +93,6 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
         catch (EmailException e) {
             // failed to send email
             e.printStackTrace();
-            return;
         }
     }
     

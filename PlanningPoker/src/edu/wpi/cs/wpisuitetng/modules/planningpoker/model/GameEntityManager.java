@@ -216,7 +216,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
         existingGameModel.copyFrom(updatedGameModel);
         
         if (!db.save(existingGameModel, s.getProject())) {
-            throw new WPISuiteException();
+            throw new WPISuiteException("The database did not save.");
         }
         System.out.println("GEM update()");
         NotificationServer.getInstance().sendUpdateNotification();
@@ -229,12 +229,12 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * @param updatedGameModel
      *        the game to start
      */
-    private void startObserver(GameModel updatedGameModel) {
+    private static void startObserver(GameModel updatedGameModel) {
         if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
             // start observer only when the game is live
             if (updatedGameModel.hasDeadline()) {
                 System.out.println("Getting observer for game");
-                GameTimeoutObserver obs = GameTimeoutObserver
+                final GameTimeoutObserver obs = GameTimeoutObserver
                         .getObserver(updatedGameModel);
                 if (obs == null) {
                     System.out.println("Could not find observer for game");
@@ -267,7 +267,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
             // get all users in the database
             // no way of knowing what users are in the current project,
             // so everyone's going to get emails
-            List<User> users = db.retrieveAll(new User("", "", "", 0));
+            final List<User> users = db.retrieveAll(new User("", "", "", 0));
             User owner = null;
             for (User u : users) {
                 if (u.getUsername().equals(updatedGameModel.getOwner())) {
@@ -310,7 +310,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     /**
      * Gets the next available unique ID for a GameModel
      */
-    private int getNextID(Session s) throws WPISuiteException {
+    private int getNextID(Session s) {
         int max = 0;
         for (GameModel g : getAll(s)) {
             if (g.getID() > max) {

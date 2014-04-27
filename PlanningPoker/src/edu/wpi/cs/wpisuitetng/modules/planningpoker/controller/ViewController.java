@@ -142,11 +142,11 @@ public class ViewController {
 		mainView.removeTabAt(mainView.indexOfComponent(e));
 	}
 
+
 	/**
 	 * Cancels creation of a new game
-	 * 
-	 * @param e
-	 *            The NewGamePanel to cancel
+	 * @param e The NewGamePanel to cancel
+	 * @param hasChanged flag to indicate if the game has changed
 	 */
 	public void cancelNewGame(NewGamePanel e, boolean hasChanged) {
 
@@ -168,11 +168,11 @@ public class ViewController {
 		}
 	}
 
+
 	/**
 	 * Cancels the editing of a game
-	 * 
-	 * @param e
-	 *            the NewGamePanel to cancel
+	 * @param e the NewGamePanel to cancel
+	 * @param hasChanged flag to indicate if the game has changed
 	 */
 	public void cancelEditGame(NewGamePanel e, boolean hasChanged) {
 
@@ -306,7 +306,7 @@ public class ViewController {
 	public void startGame() {
 		final GameModel curr = mainView.getMainPanel().getSelectedGame();
 		if (curr.deadlinePassed()) {
-			Object[] options = { "OK" };
+			final Object[] options = { "OK" };
 			JOptionPane
 					.showOptionDialog(
 							mainView,
@@ -327,7 +327,9 @@ public class ViewController {
 	public boolean getAdminVisibility() {
 		return showAdmin;
 	}
-
+	/**
+	 * Highlight the "Create Game" button to help user create a game
+	 */
     public void showInteractiveHelp() {
         TutorialPath path = new TutorialPath("test path");
         path.add(new TutorialPath.StaticPathItem(toolbar.getCommonButtons()

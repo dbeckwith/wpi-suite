@@ -97,6 +97,10 @@ public class UserUpdateController {
         sendPostRequest(FieldName.IM_NOTIFY, doNotify);
     }
     
+    /**
+     * update email
+     * @param e
+     */
     public void updateEmail(String e) {
         sendPostRequest(FieldName.EMAIL_UPDATE, e);
     }
@@ -112,6 +116,7 @@ public class UserUpdateController {
      *        The new value of the field being updated
      */
     private <T> void sendPostRequest(FieldName fieldToUpdate, T newValue) {
+        boolean alreadyReturned = false;
         switch (fieldToUpdate) {
             case EMAIL_NOTIFY:
                 user.setNotifyByEmail((Boolean) newValue);
@@ -124,12 +129,16 @@ public class UserUpdateController {
                 break;
             default:
                 System.err.println("Invalid notification type " + fieldToUpdate);
-                return;
+                alreadyReturned = true;
+                //return;
         }
-        final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
-                HttpMethod.POST);
-        request.setBody(user.toJSON());
-        request.send();
+        if (alreadyReturned = false){
+            final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
+                    HttpMethod.POST);
+            request.setBody(user.toJSON());
+            request.send();
+        }
+        
     }
     
     /**
