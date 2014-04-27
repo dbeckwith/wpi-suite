@@ -428,9 +428,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblError.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblError.setForeground(Color.RED);
         final GridBagConstraints gbc_lblError = new GridBagConstraints();
+        gbc_lblError.gridwidth = 2;
         gbc_lblError.anchor = GridBagConstraints.EAST;
         gbc_lblError.insets = new Insets(0, 0, 5, 5);
-        gbc_lblError.gridx = 5;
+        gbc_lblError.gridx = 4;
         gbc_lblError.gridy = 8;
         add(lblError, gbc_lblError);
         saveFinalEstimateButton = new JButton("Save");
