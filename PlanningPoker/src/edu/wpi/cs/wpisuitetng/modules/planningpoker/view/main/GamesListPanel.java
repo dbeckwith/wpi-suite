@@ -16,6 +16,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
@@ -190,6 +191,8 @@ public class GamesListPanel extends javax.swing.JPanel {
         gameTree = new javax.swing.JTree();
         gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
         gameTree.setRootVisible(false);
+        gameTree.getSelectionModel().setSelectionMode
+        (TreeSelectionModel.SINGLE_TREE_SELECTION);
         
         jScrollPane2.setViewportView(gameTree);
         
