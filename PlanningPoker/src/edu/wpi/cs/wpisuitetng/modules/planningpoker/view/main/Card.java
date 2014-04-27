@@ -47,7 +47,7 @@ public abstract class Card extends JPanel {
 	private Color background;
 	private Color border;
 	
-	public Card(float val){
+	protected Card(float val){
 		value = val;
 		suitIndex = ((int)val+1)%4;
 		cardSelected = false;

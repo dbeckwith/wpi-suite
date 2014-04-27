@@ -12,30 +12,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.NumberFormatter;
-
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-
 /**
  * A card button is a button that is used to select a card from a deck for
  * estimating a requirement. It represents one value of a deck and may be

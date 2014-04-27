@@ -415,7 +415,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         datePicker.setEnabled(selectDeadline.isSelected());
         timeSpinner.setEnabled(selectDeadline.isSelected());
         
-        if (!selectDeadline.isSelected()) { return true; }
+        if (!selectDeadline.isSelected()) { 
+        	return true;
+        }
         
         final Date currentDate = new Date();
         final Date enteredDate = getDate();

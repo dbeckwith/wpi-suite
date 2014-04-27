@@ -48,7 +48,7 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
     	JFormattedTextField text = ((JSpinner.NumberEditor) input.getEditor()).getTextField();
     	((NumberFormatter) text.getFormatter()).setAllowsInvalid(false);
     	text.setHorizontalAlignment(JTextField.CENTER);
-    	text.setBackground(new Color(255,255,255,0));
+    	text.setBackground(new Color(255, 255, 255, 0));
     
     	input.addChangeListener(this);
     	input.setOpaque(false);

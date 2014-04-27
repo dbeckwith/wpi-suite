@@ -18,7 +18,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
