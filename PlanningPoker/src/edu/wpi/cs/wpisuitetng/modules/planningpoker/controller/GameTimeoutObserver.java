@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
  * code</b>.
  * 
  * @author Sam Carlberg
- * 
+ * @version 1.0
  */
 public class GameTimeoutObserver extends Thread {
     
@@ -128,10 +128,20 @@ public class GameTimeoutObserver extends Thread {
      * @return GameTimeoutObserver
      */
     public static GameTimeoutObserver getObserver(GameModel game) {
+        boolean alreadyReturned = false;
+        GameTimeoutObserver toReturn = null;
         for (GameTimeoutObserver o : OBSERVERS) {
-            if (o.game.equals(game)) { return o; }
+            if (o.game.equals(game)) { 
+                toReturn = o;
+                alreadyReturned = true;
+                break;
+                //return o; 
+            }
         }
-        return null;
+        if (!alreadyReturned){
+            toReturn = null;
+        }
+        return toReturn;
     }
     
     /**
@@ -141,13 +151,14 @@ public class GameTimeoutObserver extends Thread {
      * @return
      */
     private Date toGMT(Date date) {
+        Date toReturn = null;
         try {
-            return dateFormatLocal.parse(dateFormatGMT.format(date));
+            toReturn = dateFormatLocal.parse(dateFormatGMT.format(date));
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
-        return null;
+        return toReturn;
     }
     
 }

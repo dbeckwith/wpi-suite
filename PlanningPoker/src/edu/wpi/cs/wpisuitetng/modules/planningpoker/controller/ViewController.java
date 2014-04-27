@@ -324,7 +324,9 @@ public class ViewController {
 	public boolean getAdminVisibility() {
 		return showAdmin;
 	}
-
+	/**
+	 * Highlight the "Create Game" button to help user create a game
+	 */
     public void showInteractiveHelp() {
         TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons().getNewGameButton(), "Click here to create a game!");
     }

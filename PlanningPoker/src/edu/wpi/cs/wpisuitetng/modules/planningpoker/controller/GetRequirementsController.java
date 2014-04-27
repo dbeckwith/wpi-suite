@@ -20,8 +20,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 
 /**
  * This handles requests for game requirements
- * TODO: @author
- * 
+ * @author team9
+ * @version 1.0
  */
 public class GetRequirementsController extends AbstractRequirementController {
     
