@@ -10,9 +10,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -44,7 +49,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class NewDeckPanel extends JPanel {
+public class NewDeckPanel extends JPanel implements ActionListener {
     
     private static final long serialVersionUID = 4631372194324496204L;
     
@@ -57,7 +62,7 @@ public class NewDeckPanel extends JPanel {
         setBackground(Color.WHITE);
         GetDecksController.getInstance().retrieveDecks();
         
-        cards = new ArrayList<CardButton>();
+        cards = new ArrayList<SpinnerCard>();
         
         final JLabel deckLabel = new JLabel("Deck Name: *");
         
@@ -114,15 +119,13 @@ public class NewDeckPanel extends JPanel {
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-            	String newCards = null; //###################################################################################### #FIXIT
-                final String[] newCardArray = newCards.split("[ ,]+");
-                final ArrayList<Double> cards = new ArrayList<Double>();
-                for (String newCard : newCardArray) {
-                    if (!newCard.isEmpty() && !newCard.equals(null)) {
-                        cards.add(Double.parseDouble(newCard));
-                    }
-                }
-                final DeckModel newDeck = new DeckModel(newDeckName.getText().trim(), cards,
+            	ArrayList<Double> newCards = new ArrayList<Double>();
+            	
+            	for(SpinnerCard card:cards){
+            		newCards.add((double)card.getEstimateValue());
+            	}
+            	
+                final DeckModel newDeck = new DeckModel(newDeckName.getText().trim(), newCards,
                         multipleSelect.isSelected());
                 newDeck.sort();
                 AddDeckController.getInstance().addDeck(newDeck);
@@ -162,37 +165,27 @@ public class NewDeckPanel extends JPanel {
         setErrorBorder(newDeckName, true);
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         
         JButton addCard = new JButton("Add Card");
         addCard.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("adding card");
-        		CardButton newCard = new CardButton();
-        		newCard.setPreferredSize(new Dimension(80, 120));
-        		cards.add(newCard);
-        		newCard.setValue(cards.size());
-        		cardPanel.add(newCard);
-        		
-        		cardPanel.repaint();
-        		cardPanel.revalidate();
+        		addCard();
+ 
         	}
         });
         addCard.setIcon(ImageLoader.getIcon("newReq.png"));
-        
-        JButton deleteCard = new JButton("Delete Card");
-        deleteCard.setIcon(ImageLoader.getIcon("Delete.png"));
         
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(groupLayout.createSequentialGroup()
         			.addContainerGap()
-        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(groupLayout.createSequentialGroup()
         					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
         					.addContainerGap())
-        				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+        				.addGroup(groupLayout.createSequentialGroup()
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
         						.addGroup(groupLayout.createSequentialGroup()
         							.addComponent(singleSelect)
@@ -201,22 +194,18 @@ public class NewDeckPanel extends JPanel {
         						.addGroup(groupLayout.createSequentialGroup()
         							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
         								.addComponent(deckLabel)
-        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
         								.addComponent(cardLabel)
         								.addGroup(groupLayout.createSequentialGroup()
         									.addComponent(createDeckButton)
         									.addPreferredGap(ComponentPlacement.RELATED)
         									.addComponent(errorLabel)
-        									.addPreferredGap(ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+        									.addPreferredGap(ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
         									.addComponent(cancelCreationButton)))
         							.addPreferredGap(ComponentPlacement.RELATED))
         						.addComponent(selectionLabel))
         					.addGap(8))
-        				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-        					.addComponent(addCard)
-        					.addPreferredGap(ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
-        					.addComponent(deleteCard)
-        					.addContainerGap())))
+        				.addComponent(addCard, Alignment.LEADING)))
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -230,9 +219,7 @@ public class NewDeckPanel extends JPanel {
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(addCard)
-        				.addComponent(deleteCard))
+        			.addComponent(addCard)
         			.addGap(18)
         			.addComponent(selectionLabel)
         			.addPreferredGap(ComponentPlacement.RELATED)
@@ -249,11 +236,24 @@ public class NewDeckPanel extends JPanel {
         			.addContainerGap())
         );
         
-        cardPanel = new JPanel();
+        cardPanel = new JPanel(){
+            @Override
+            public void paintComponent(Graphics g) {
+                final BufferedImage texture = ImageLoader.getImage("felt.png");
+                for (int x = 0; x < getWidth(); x += texture.getWidth()) {
+                    for (int y = 0; y < getHeight(); y += texture.getHeight()) {
+                        g.drawImage(texture, x, y, null);
+                    }
+                }
+            }
+        };
         cardPanel.setBackground(Color.WHITE);
         scrollPane.setViewportView(cardPanel);
-        cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        GridBagLayout gbl_cardPanel = new GridBagLayout();
+        cardPanel.setLayout(gbl_cardPanel);
         setLayout(groupLayout);
+        
+        addCard();
     }
     
     /**
@@ -274,13 +274,11 @@ public class NewDeckPanel extends JPanel {
                 errorLabel.setText("Name is required");
             }
         }
-        else if (!areCardsValid) {
-            errorLabel.setText("Invalid cards list");
-        }
+
         else {
             errorLabel.setText("");
         }
-        createDeckButton.setEnabled(isNameValid && areCardsValid);
+        createDeckButton.setEnabled(isNameValid);
     }
     
     /**
@@ -343,15 +341,54 @@ public class NewDeckPanel extends JPanel {
         parentPanel = p;
     }
     
-    private ArrayList<CardButton> cards;
+    private void addCard(){
+   		SpinnerCard newCard = new SpinnerCard(cards.size(), DeckModel.NO_LIMIT);
+		newCard.setDeleteListener(NewDeckPanel.this);
+		newCard.setPreferredSize(new Dimension(80, 120));
+		
+		if(cards.size() == 1){
+			cards.get(0).setDeleteListener(this);
+		} else if(cards.size() == 0){
+			newCard.setDeleteListener(null);
+		}
+		
+		cards.add(newCard);
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0, 10, 0, 10);		
+		cardPanel.add(newCard, gbc);
+		
+		cardPanel.repaint();
+		cardPanel.revalidate();
+    }
+    
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Card deleteCard = (Card)e.getSource();
+		cardPanel.remove(deleteCard);
+		cards.remove(deleteCard);
+		
+		if(cards.size() == 1){
+			cards.get(0).setDeleteListener(null);			
+		}
+		
+		cardPanel.repaint();
+		cardPanel.revalidate();
+		
+		
+	}
+	
+	
+	
+    private ArrayList<SpinnerCard> cards;
     private JPanel cardPanel;
     private NewGamePanel parentPanel;
     private final JButton createDeckButton;
     private final JTextField newDeckName;
     private final JButton cancelCreationButton;
     private boolean isNameValid = false;
-    private boolean areCardsValid = false;
     private boolean nameInUse = false;
     private final JRadioButton multipleSelect;
     private final JLabel errorLabel;
+	
 }
