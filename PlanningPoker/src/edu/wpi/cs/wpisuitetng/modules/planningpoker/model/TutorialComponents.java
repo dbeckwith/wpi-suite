@@ -20,7 +20,6 @@ public final class TutorialComponents {
     private final ArrayList<TutorialPath> TUTORIALS = new ArrayList<>();
     
     private TutorialComponents() {
-        initTutorialPaths();
     }
     
     private static TutorialComponents instance = null;
@@ -31,6 +30,7 @@ public final class TutorialComponents {
     public static TutorialComponents getInstance() {
         if (instance == null) {
             instance = new TutorialComponents();
+            instance.initTutorialPaths();
         }
         return instance;
     }
