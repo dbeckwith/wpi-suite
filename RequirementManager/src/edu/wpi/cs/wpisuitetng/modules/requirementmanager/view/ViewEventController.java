@@ -27,6 +27,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -578,8 +580,13 @@ public class ViewEventController {
 					
 					Requirement[] importedReqs = gson.fromJson(jsonStr, Requirement[].class);
 					
-					RequirementModel.getInstance().addRequirements(importedReqs);
+					for(Requirement req:importedReqs){
+						req.setId(RequirementModel.getInstance().getNextID());
+						AddRequirementController.getInstance().addRequirement(req);
+					}
 					
+					RequirementModel.getInstance().addRequirements(importedReqs);
+										
 				} catch(IOException e){
 					failed.add(file);
 					e.printStackTrace();
@@ -594,7 +601,8 @@ public class ViewEventController {
 				JOptionPane.showMessageDialog(main, "Could not load all requirements: "+failStr,
 						"Input Error", JOptionPane.ERROR_MESSAGE);
 			}
-		}		
+		}	
+
 	}
 	
 	public void exportRequirements(){
@@ -614,7 +622,9 @@ public class ViewEventController {
 		
 		if(result == JFileChooser.APPROVE_OPTION){			
 			File selectedFile = fileChooser.getSelectedFile();
-			
+			if(!selectedFile.getName().endsWith(".json")){
+				selectedFile = new File(selectedFile.getAbsolutePath()+".json");
+			}
 			String json = new Gson().toJson(selectedRequirements, selectedRequirements.getClass());
 			
 			try {
