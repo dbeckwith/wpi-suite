@@ -33,7 +33,7 @@ public class EmailSenderThreadTest {
         EmailController.getInstance().setUsers(new User[] { person });
         final EmailSenderThread est = new EmailSenderThread(
                 "EmailSenderThreadTest",
-                "This came from EmailSenderThreadTest.java");
+                "This came from EmailSenderThreadTest.java", null);
         est.start();
     }
     

@@ -5,10 +5,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Sam Carlberg, Ted Armstrong
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -37,7 +41,7 @@ public class UserUpdateController {
     }
     
     private enum FieldName {
-        IM_NOTIFY, EMAIL_NOTIFY, EMAIL_UPDATE
+        SMS_NOTIFY, EMAIL_NOTIFY, EMAIL_UPDATE, PHONE_NUMBER, PHONE_CARRIER
     }
     
     /**
@@ -71,8 +75,8 @@ public class UserUpdateController {
      * 
      * @return The User class IM notification setting
      */
-    public boolean canNotifyByIM() {
-        return user.isNotifyByIM();
+    public boolean canNotifyBySMS() {
+        return user.isNotifyBySMS();
     }
     
     /**
@@ -91,18 +95,39 @@ public class UserUpdateController {
      * 
      * @param doNotify
      *        Boolean representing whether or not a User would like to receive
-     *        IM notifications
+     *        SMS notifications
      */
-    public void setNotifyByIM(boolean doNotify) {
-        sendPostRequest(FieldName.IM_NOTIFY, doNotify);
+    public void setNotifyBySMS(boolean doNotify) {
+        sendPostRequest(FieldName.SMS_NOTIFY, doNotify);
     }
     
     /**
+<<<<<<< HEAD
+     * Sets the users email.
+     * 
+=======
      * update email
      * @param e
+>>>>>>> team9dev
      */
     public void updateEmail(String e) {
         sendPostRequest(FieldName.EMAIL_UPDATE, e);
+    }
+    
+    /**
+     * Sets the users 10-digit phone number.
+     * 
+     */
+    public void updatePhoneNumber(String phoneNumber) {
+        sendPostRequest(FieldName.PHONE_NUMBER, phoneNumber);
+    }
+    
+    /**
+     * Sets the users phone carrier (e.g. Verizon, AT&T, etc.)
+     * 
+     */
+    public void updatePhoneCarrier(Carrier carrier) {
+        sendPostRequest(FieldName.PHONE_CARRIER, carrier);
     }
     
     /**
@@ -121,17 +146,23 @@ public class UserUpdateController {
             case EMAIL_NOTIFY:
                 user.setNotifyByEmail((Boolean) newValue);
                 break;
-            case IM_NOTIFY:
-                user.setNotifyByIM((Boolean) newValue);
+            case SMS_NOTIFY:
+                user.setNotifyBySMS((Boolean) newValue);
                 break;
             case EMAIL_UPDATE:
                 user.setEmail((String) newValue);
+                break;
+            case PHONE_NUMBER:
+                user.setPhoneNumber((String) newValue);
+                break;
+            case PHONE_CARRIER:
+                user.setCarrier((Carrier) newValue);
                 break;
             default:
                 System.err.println("Invalid notification type " + fieldToUpdate);
                 alreadyReturned = true;
         }
-        if (alreadyReturned = false){
+        if (!alreadyReturned){
             final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
                     HttpMethod.POST);
             request.setBody(user.toJSON());

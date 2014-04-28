@@ -14,9 +14,11 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 
 /**
  * A class for handling email sending to users.
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -45,7 +47,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
     /**
      * Subject and body of the email.
      */
-    private final String subject, body;
+    private final String subject, body, SMSbody;
     
     /**
      * Creates a new sender thread.
@@ -55,40 +57,57 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
      * @param body
      *        the body of the email to be sent
      */
-    public EmailSenderThread(String subject, String body) {
+    public EmailSenderThread(String subject, String body, String SMSbody) {
         this.subject = subject;
         this.body = body;
+        this.SMSbody = SMSbody;
     }
     
     @Override
     public void run() {
-        sendEmails();
+        sendSMSNotifications();
+        sendEmailNotifications();
+    }
+    
+    private void sendSMSNotifications() {
+        for (User u : EmailController.getInstance().getUsers()) {
+            if (u != null && u.getPhoneNumber() != null
+                    && u.getCarrier() != Carrier.UNKNOWN && u.isNotifyBySMS()) {
+                sendEmail(u,
+                        u.getPhoneNumber() + "@" + u.getCarrier().getURL(),
+                        null, SMSbody);
+                System.out.println("Sent SMS to " + u.getName());
+            }
+        }
+    }
+    
+    private void sendEmailNotifications() {
+        for (User u : EmailController.getInstance().getUsers()) {
+            if (u != null && u.getEmail() != null && u.isNotifyByEmail()) {
+                sendEmail(u, u.getEmail(), subject, body);
+                System.out.println("Sent email to " + u.getName());
+            }
+        }
     }
     
     /**
-     * Sends the email to all users who have chosen to recieve email
+     * Sends the email to all users who have chosen to receive email
      * notifications.
      */
-    private void sendEmails() {
+    private void sendEmail(User u, String emailAddress, String theSubject, String theBody) {
         System.setProperty("java.net.preferIPv4Stack", "true"); //$NON-NLS-2$ //$NON-NLS-1$
         try {
-            for (User u : EmailController.getInstance().getUsers()) {
-                if (u != null && u.getEmail() != null && u.isNotifyByEmail()) {
-                    Email email = new SimpleEmail();
-                    email.setHostName("smtp.gmail.com"); //$NON-NLS-1$
-                    email.setSmtpPort(SMTP_PORT);
-                    email.setAuthenticator(new DefaultAuthenticator(USERNAME,
-                            PASSWORD));
-                    email.setSSLOnConnect(true);
-                    email.addTo(u.getEmail());
-                    email.setSubject(subject);
-                    email.setFrom(EMAIL_ADDRESS);
-                    email.setMsg("Dear " + u.getName() + ","
-                            + System.getProperty("line.separator") + body); //$NON-NLS-1$
-                    email.send();
-                    System.out.println("Sent email to " + u.getName());
-                }
-            }
+            Email email = new SimpleEmail();
+            email.setHostName("smtp.gmail.com"); //$NON-NLS-1$
+            email.setSmtpPort(SMTP_PORT);
+            email.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
+            email.setSSLOnConnect(true);
+            email.addTo(emailAddress);
+            email.setSubject(theSubject);
+            email.setFrom(EMAIL_ADDRESS);
+            email.setMsg("Dear " + u.getName() + "," //$NON-NLS-1$ // $codepro.audit.disable disallowStringConcatenation
+                    + System.getProperty("line.separator") + theBody); //$NON-NLS-1$
+            email.send();
         }
         catch (EmailException e) {
             // failed to send email
