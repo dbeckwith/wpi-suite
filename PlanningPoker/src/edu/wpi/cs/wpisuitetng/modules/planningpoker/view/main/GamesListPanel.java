@@ -101,7 +101,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         final DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
                 "Games in Progress (0)");
         final DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
-                "Complete Games (0)");
+                "Completed Games (0)");
         final DefaultMutableTreeNode closedFolder = new DefaultMutableTreeNode(
                 "Closed Games (0)");
         // rebuild the tree
@@ -137,7 +137,7 @@ public class GamesListPanel extends javax.swing.JPanel {
             }
             pendingFolder
                     .setUserObject("Games in Progress (" + pendingFolder.getChildCount() + ")");
-            completeFolder.setUserObject("Complete Games (" + completeFolder.getChildCount() + ")");
+            completeFolder.setUserObject("Completed Games (" + completeFolder.getChildCount() + ")");
             closedFolder.setUserObject("Closed Games (" + closedFolder.getChildCount() + ")");
         }
         if (completeFolder.getChildCount() == 0) {
