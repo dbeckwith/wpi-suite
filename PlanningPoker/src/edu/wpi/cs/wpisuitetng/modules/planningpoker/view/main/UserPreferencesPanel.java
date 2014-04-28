@@ -26,6 +26,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,6 +98,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             carrierBox.setSelectedItem(CurrentUserController.getInstance()
                     .getUser().getCarrier());
             lblMsgAndData.setVisible(b);
+            lblInvalidPhone.setVisible(false);
         }
     }
     
@@ -243,7 +246,6 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     }
                     
                     public void validate() {
-                        hasStarted = true;
                         final String phoneNumber = phoneNumberField.getText();
                         final Carrier carrier = (Carrier) carrierBox
                                 .getSelectedItem();
@@ -281,7 +283,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     }
                 });
         
-        lblPhoneNumber = new JLabel("Phone # :");
+        lblPhoneNumber = new JLabel("10-Digit Phone # :");
         
         
         lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -338,8 +340,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
         carrierBox = new JComboBox<Carrier>();
+        Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier.values()));
+        v.remove(Carrier.UNKNOWN);
+        v.add(0, Carrier.UNKNOWN);
         carrierBox
-                .setModel(new DefaultComboBoxModel<Carrier>(Carrier.values()));
+                .setModel(new DefaultComboBoxModel<Carrier>(v));
         carrierBox.addActionListener(new ActionListener() {
             
             @Override
@@ -440,7 +445,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
-        if (hasStarted) {
+        String phoneNumberText = phoneNumberField.getText();
+        if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(CurrentUserController.getInstance().getUser().getPhoneNumber())) {
             if (!phoneNumberIsGood) {
                 lblInvalidPhone.setText("Invalid Phone #");
                 lblInvalidPhone.setVisible(true);
@@ -459,7 +465,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
         }
         else {
-            hasStarted = true;
+            lblInvalidPhone.setVisible(false);
         }
     }
     
@@ -492,6 +498,5 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private JButton btnSaveSms;
     private JComboBox<Carrier> carrierBox;
     private JLabel lblMsgAndData;
-    private boolean phoneNumberIsGood = false;
-    private boolean hasStarted = false;
+    private boolean phoneNumberIsGood;
 }
