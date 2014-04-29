@@ -515,8 +515,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                         btnSaveAndContinue.setEnabled(false);
                     }
                     else if ((notePane.getText().equals(req.getEstimateNote()) || (req
-                            .getEstimateNote().endsWith(notePane.getText()) && !req
-                            .getEstimateNote().startsWith("Manual Change \n")))
+                            .getEstimateNote().startsWith("Manual Change: \n"))
+                            && req.getEstimateNote().substring(16).equals(notePane.getText()))
                             && req.getFinalEstimate() != 0) {
                         lblError.setText("* You must change the Note!");
                         lblError.setVisible(true);
@@ -562,8 +562,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         if (saveFinalEstimateButton.isEnabled()) {
             lblError.setVisible(false);
             if (req.getFinalEstimate() != 0
-                    && !req.getEstimateNote().startsWith("Manual change: \n")) {
-                req.setEstimateNote("Manual change: \n" + notePane.getText());
+                    && !notePane.getText().startsWith("Manual Change:")) {
+                req.setEstimateNote("Manual Change: \n" + notePane.getText());
             }
             else {
                 req.setEstimateNote(notePane.getText());
