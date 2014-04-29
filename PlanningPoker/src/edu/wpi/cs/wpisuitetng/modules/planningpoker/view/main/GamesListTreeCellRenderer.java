@@ -118,7 +118,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                     .matches("Closed Games \\(\\d+\\)")) {
                 icon = ImageLoader.getIcon("GameCloseFolder.png");
             } else if (node.getUserObject().equals("<No completed games>")
-                    || node.getUserObject().equals("<No games in progress>")) {
+                    || node.getUserObject().equals("<No games in progress>")
+                    || node.getUserObject().equals("<No closed games>")) {
                 icon = ImageLoader.getIcon("noGames.png");
             }
         }
