@@ -45,9 +45,11 @@ public class CommonButtonGroup extends ToolbarGroupView {
 		super(""); // not sure if this is needed
 
 		newGameButton = new JButton("<html>Create<br/>Game</html>");
+		newGameButton.setToolTipText("Shows options for creating a new Planning Poker game.");
 		newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
 
 		userPrefsButton = new JButton("<html>Preferences</html>");
+		userPrefsButton.setToolTipText("Edits user preferences for the Planning Poker application.");
 
 		userPrefsButton.setIcon(ImageLoader.getIcon("prefs.png"));
 

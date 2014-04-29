@@ -76,6 +76,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		setBorder(new TitledBorder(null, "Deck Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		useDeck = new JCheckBox("Deck:");
+		useDeck.setToolTipText("Uncheck this box to not have a deck for this game and instead allow users to input estimates manually.");
 		useDeck.setSelected(true);
 		useDeck.addActionListener(new ActionListener() {			
 			@Override
@@ -90,17 +91,22 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		useDeck.setBackground(Color.WHITE);
 		
 		savedDecks = new JComboBox<DeckModel>();
+		savedDecks.setToolTipText("The currently selected deck for estimating requirements of this game.");
 		
 		savedDecks.addActionListener(this);
 		
 		newDeckButton = new JButton("New Deck...");
+		newDeckButton.setToolTipText("Create a new deck for estimating this game.");
 		
 		final JLabel lblMaximumEstimate = new JLabel("Maximum Estimate:");
+		lblMaximumEstimate.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit.");
 		
 		final JLabel lblForNo = new JLabel("(0 for no limit)");
+		lblForNo.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit.");
 		lblForNo.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		
 		maxSpinner = new JSpinner();
+		maxSpinner.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit.");
 		maxSpinner.addChangeListener(this);
 		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		final JFormattedTextField txt = ((JSpinner.NumberEditor) maxSpinner.getEditor()).getTextField();

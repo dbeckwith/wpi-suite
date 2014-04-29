@@ -66,8 +66,10 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         cards = new ArrayList<SpinnerCard>();
         
         final JLabel deckLabel = new JLabel("Deck Name: *");
+        deckLabel.setToolTipText("The name of the new deck.");
         
         newDeckName = new JTextField();
+        newDeckName.setToolTipText("The name of the new deck.");
         newDeckName.setColumns(10);
         
         newDeckName.getDocument().addDocumentListener(new DocumentListener() {
@@ -114,8 +116,10 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         });
         
         final JLabel cardLabel = new JLabel("Cards: *");
+        cardLabel.setToolTipText("The list of cards the user will be able to select in order to make their estimate.");
 
         createDeckButton = new JButton("Create Deck");
+        createDeckButton.setToolTipText("Create and save this deck.");
         
         createDeckButton.addActionListener(new ActionListener() {
             @Override
@@ -147,6 +151,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         });
         
         cancelCreationButton = new JButton("Cancel Creation");
+        cancelCreationButton.setToolTipText("Cancel making this deck and don't save it.");
         cancelCreationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -157,16 +162,19 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         final ButtonGroup selectionGroup = new ButtonGroup();
         
         final JRadioButton singleSelect = new JRadioButton("Single");
+        singleSelect.setToolTipText("Single selection mode only allows the user to select one card from the deck.");
         singleSelect.setBackground(Color.WHITE);
         singleSelect.setSelected(true);
         
         multipleSelect = new JRadioButton("Multiple");
+        multipleSelect.setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate.");
         multipleSelect.setBackground(Color.WHITE);
         
         selectionGroup.add(singleSelect);
         selectionGroup.add(multipleSelect);
         
         final JLabel selectionLabel = new JLabel("Selection Mode");
+        selectionLabel.setToolTipText("The selection mode for this deck.");
         
         errorLabel = new JLabel("<errors>");
         errorLabel.setForeground(Color.RED);
@@ -181,6 +189,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         
         JButton addCard = new JButton("Add Card");
+        addCard.setToolTipText("Add a new card to the list of cards.");
         addCard.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		addCard();

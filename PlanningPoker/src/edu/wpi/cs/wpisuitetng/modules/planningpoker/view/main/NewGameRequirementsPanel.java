@@ -108,8 +108,11 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
 		addKeyListener(this);
 		
 		requirementsTableScrollPane = new JScrollPane();
+		requirementsTableScrollPane.setToolTipText("The list of available requirements to include in this game.");
 		requirementsTable = new HighlightedTable();
+		requirementsTable.setToolTipText("The list of available requirements to include in this game.");
 		addButton = new JButton();
+		addButton.setToolTipText("Create a new requirement that can be added to this game's list of requirements.");
 
 		clearRequirements();
 		requirementsTable
@@ -131,6 +134,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
 		addButton.setIcon(ImageLoader.getIcon("newReq.png"));
 		
 		btnSelectAll = new JButton("Select All");
+		btnSelectAll.setToolTipText("Select/Deselect all the requirements in the list to be included in this game.");
 		btnSelectAll.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        setAllSelected(!allSelected);
@@ -140,6 +144,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
 		final JLabel lblGameRequirements = new JLabel("Game Requirements:");
 		
 		final JButton reloadButton = new JButton("Reload from Requirements Manager");
+		reloadButton.setToolTipText("Refresh the list of requirements to reflect the requirements in the backlog of Requirements Manager.");
 		reloadButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        GetRequirementsController.getInstance().retrieveRequirements();

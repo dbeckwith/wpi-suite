@@ -247,10 +247,12 @@ public class VotePanel extends javax.swing.JPanel {
     private void initComponents() {
         
         estimateLabel = new javax.swing.JLabel();
+        estimateLabel.setToolTipText("Select your estimate below by selecting a card or cards.");
         
         estimateLabel.setText("Please select your Estimate:");
         
         final JLabel lblRequirement = new JLabel("Requirement:");
+        lblRequirement.setToolTipText("The requirement's name.");
         
         final JScrollPane scrollPane = new JScrollPane();
         final JScrollPane estimateScrollPane = new JScrollPane();
@@ -258,12 +260,16 @@ public class VotePanel extends javax.swing.JPanel {
         //JScrollPane scrollPane_1 = new JScrollPane();
         
         requirementNameLabel = new JLabel("<requirement>");
+        requirementNameLabel.setToolTipText("The requirement's name.");
         
         final JLabel lblType = new JLabel("Type:");
+        lblType.setToolTipText("The requirement's type.");
         
         requirementType = new JLabel("<type>");
+        requirementType.setToolTipText("The requirement's type.");
         
         btnSubmit = new JButton("Submit");
+        btnSubmit.setToolTipText("Submits your currently selected estimate.");
         btnSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -293,19 +299,25 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel.setMaximumSize(new Dimension(0, 0));
         
         lblYouVoted = new JLabel("You voted: ");
+        lblYouVoted.setToolTipText("The value of your previous vote on this requirement.");
         lblYouVoted.setFont(new Font("Dialog", Font.BOLD, 18));
         
         prevVoteLabel = new JLabel("<previous vote>");
+        prevVoteLabel.setToolTipText("The value of your previous vote on this requirement.");
         prevVoteLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         
         final JLabel lblSelectedTotal = new JLabel("Current Estimate:");
+        lblSelectedTotal.setToolTipText("Your currently selected estimate total.");
         
         lblTotal = new JLabel("<total>");
+        lblTotal.setToolTipText("Your currently selected estimate total.");
         
         teammateProgressBar = new JProgressBar();
+        teammateProgressBar.setToolTipText("All users' progress in estimating this requirement.");
         teammateProgressBar.setStringPainted(true);
         
         final JLabel lblTeammateProgress = new JLabel("Team Progress");
+        lblTeammateProgress.setToolTipText("All users' progress in estimating this requirement.");
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
@@ -376,6 +388,7 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel.setLayout(gbl_estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();
+        reqDescriptionTextArea.setToolTipText("The requirement's description.");
         reqDescriptionTextArea.setEditable(false);
         reqDescriptionTextArea.setLineWrap(true);
         scrollPane.setViewportView(reqDescriptionTextArea);

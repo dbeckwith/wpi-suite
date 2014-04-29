@@ -203,13 +203,17 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         nameLabel = new javax.swing.JLabel();
+        nameLabel.setToolTipText("The name of the new game.");
         nameField = new javax.swing.JTextField();
+        nameField.setToolTipText("The name of the new game.");
         nameField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         descriptionLabel = new javax.swing.JLabel();
+        descriptionLabel.setToolTipText("The new game's description.");
         descriptionScrollPane = new javax.swing.JScrollPane();
         descriptionScrollPane.setBorder(null);
         descriptionScrollPane.setViewportBorder(null);
         descriptionField = new javax.swing.JTextPane();
+        descriptionField.setToolTipText("The new game's description.");
         descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
                 null));
         
@@ -259,6 +263,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                     .addContainerGap())
         );
         selectDeadline = new javax.swing.JCheckBox();
+        selectDeadline.setToolTipText("If checked, the game will end itself automatically at the specified date.");
         selectDeadline.setBackground(Color.WHITE);
         
         selectDeadline.setText("Deadline");
@@ -272,8 +277,11 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         });
         
         final JLabel lblDate = new JLabel("Date:");
+        lblDate.setToolTipText("The date that the game will end itself automatically.");
         
         datePicker = new JXDatePicker(getDefaultDate());
+        datePicker.setToolTipText("The date that the game will end itself automatically.");
+        datePicker.getEditor().setToolTipText("The date that the game will end itself automatically.");
         final JButton eDate = (JButton) datePicker.getComponent(1);
         final JButton dateBtn = (JButton) datePicker.getComponent(1);
         dateBtn.remove(eDate);
@@ -286,6 +294,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         dateBtn.setOpaque(false);
         
         timeSpinner = new JSpinner();
+        timeSpinner.setToolTipText("The date that the game will end itself automatically.");
         timeSpinner.setModel(new SpinnerDateModel());
         final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
                 "h:mm a");

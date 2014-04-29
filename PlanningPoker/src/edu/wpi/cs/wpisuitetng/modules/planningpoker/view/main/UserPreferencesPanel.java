@@ -86,8 +86,10 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 "Notification Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
         emailBox = new javax.swing.JCheckBox();
+        emailBox.setToolTipText("If checked, you will recieve email notifications about games at the specified address.");
         emailBox.setBackground(Color.WHITE);
         imBox = new javax.swing.JCheckBox();
+        imBox.setToolTipText("If checked, you will recieve IM notifications about games.");
         imBox.setBackground(Color.WHITE);
         
         emailBox.setText("Receive E-mail");
@@ -107,9 +109,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         });
         
         lblEmail = new JLabel("Email: ");
+        lblEmail.setToolTipText("The email at which you will recieve notifications.");
         lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
         
         emailField = new JTextField();
+        emailField.setToolTipText("The email at which you will recieve notifications.");
         emailField.setColumns(10);
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -155,6 +159,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         });
         
         saveButton = new JButton("Save");
+        saveButton.setToolTipText("Saves the entered email address.");
         saveButton.addActionListener(new ActionListener() {
             
             @Override

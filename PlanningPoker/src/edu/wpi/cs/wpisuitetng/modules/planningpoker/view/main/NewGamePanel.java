@@ -171,7 +171,9 @@ public class NewGamePanel extends JPanel {
     private void initComponents() {
         hasChanged = false;
         saveButton = new javax.swing.JButton();
+        saveButton.setToolTipText("Save the new game and close this tab.");
         cancelButton = new javax.swing.JButton();
+        cancelButton.setToolTipText("Cancel creation of this game.");
         
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -200,6 +202,7 @@ public class NewGamePanel extends JPanel {
         errorLabel.setForeground(Color.RED);
         
         undoButton = new JButton("Undo Changes");
+        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state.");
         undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
         undoButton.addActionListener(new ActionListener() {
             @Override

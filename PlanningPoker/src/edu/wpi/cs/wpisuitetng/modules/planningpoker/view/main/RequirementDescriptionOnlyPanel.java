@@ -67,18 +67,24 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         final JLabel lblRequirement = new JLabel("Requirement:");
+        lblRequirement.setToolTipText("The name of the requirement.");
         
         final JScrollPane scrollPane = new JScrollPane();
         
         requirementNameLabel = new JLabel("<requirement>");
+        requirementNameLabel.setToolTipText("The name of the requirement.");
         
         final JLabel lblDescription = new JLabel("Description:");
+        lblDescription.setToolTipText("The requirement's description.");
         
         final JLabel lblType = new JLabel("Type:");
+        lblType.setToolTipText("The type of the requirement.");
         
         requirementType = new JLabel("<type>");
+        requirementType.setToolTipText("The type of the requirement.");
         
         final JPanel ClickStartPanel = new JPanel();
+        ClickStartPanel.setToolTipText("This game has not been started yet, so it can't be voted on yet. Press the Start Game button above to begin estimation.");
         ClickStartPanel.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -158,6 +164,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
         ClickStartPanel.add(lblPressStartGame);
         
         reqDescriptionTextArea = new JTextArea();
+        reqDescriptionTextArea.setToolTipText("The requirement's description.");
         reqDescriptionTextArea.setEditable(false);
         reqDescriptionTextArea.setLineWrap(true);
         scrollPane.setViewportView(reqDescriptionTextArea);
