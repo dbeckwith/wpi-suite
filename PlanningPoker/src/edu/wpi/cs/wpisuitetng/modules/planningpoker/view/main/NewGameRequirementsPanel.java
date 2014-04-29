@@ -42,7 +42,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
- * This is a class to show the sub panel within NewGamePanel. The sub panel contains all requirements candidate for the user to add to the new game.
+ * This is a class to show the sub panel within NewGamePanel. The sub panel contains all 
+ * requirements candidate for the user to add to the new game.
  * @author Team 9
  * @version 1.0
  */
@@ -153,13 +154,15 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-		                .addComponent(requirementsTableScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+		                .addComponent(requirementsTableScrollPane, Alignment.TRAILING,
+		                		GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
 		                .addGroup(layout.createSequentialGroup()
 		                    .addComponent(addButton)
 		                    .addPreferredGap(ComponentPlacement.RELATED)
 		                    .addComponent(reloadButton))
 		                .addComponent(lblGameRequirements)
-		                .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+		                .addComponent(btnSelectAll, GroupLayout.PREFERRED_SIZE, 150,
+		                		GroupLayout.PREFERRED_SIZE))
 		            .addContainerGap())
 		);
 		layout.setVerticalGroup(
@@ -167,12 +170,15 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
 		        .addGroup(layout.createSequentialGroup()
 		            .addContainerGap()
 		            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-		                .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-		                .addComponent(reloadButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+		                .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 37,
+		                		GroupLayout.PREFERRED_SIZE)
+		                .addComponent(reloadButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout
+		                		.PREFERRED_SIZE))
 		            .addPreferredGap(ComponentPlacement.UNRELATED)
 		            .addComponent(lblGameRequirements)
 		            .addPreferredGap(ComponentPlacement.RELATED)
-		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+		            .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE,
+		            		615, Short.MAX_VALUE)
 		            .addPreferredGap(ComponentPlacement.RELATED)
 		            .addComponent(btnSelectAll)
 		            .addContainerGap())
@@ -264,7 +270,8 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
     
 
     /**
-     * This method add the requirement created by user in planning poker game (not in requirement manager)
+     * This method add the requirement created by user in planning poker game 
+     * (not in requirement manager)
      * @param r the requirement to be add
      * @param selected
      */
