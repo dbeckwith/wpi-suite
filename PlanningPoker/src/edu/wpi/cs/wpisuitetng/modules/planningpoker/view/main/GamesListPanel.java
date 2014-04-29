@@ -101,17 +101,23 @@ public class GamesListPanel extends javax.swing.JPanel {
         final DefaultMutableTreeNode pendingFolder = new DefaultMutableTreeNode(
                 "Games in Progress (0)");
         final DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
-                "Complete Games (0)");
+                "Completed Games (0)");
+        final DefaultMutableTreeNode closedFolder = new DefaultMutableTreeNode(
+                "Closed Games (0)");
         // rebuild the tree
         final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
         
         rootNode.add(pendingFolder);
         rootNode.add(completeFolder);
+        rootNode.add(closedFolder);
         for (int i = 0; i < GameListModel.getInstance().getGames().size(); i++) {
             DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode();
             gameNode.setUserObject(GameListModel.getInstance().getGames().get(i));
             
-            if (GameListModel.getInstance().getGames().get(i).isEnded()) {
+            if (GameListModel.getInstance().getGames().get(i).isClosed()) {
+                closedFolder.add(gameNode);
+            }
+            else if (GameListModel.getInstance().getGames().get(i).isEnded()) {
                 completeFolder.add(gameNode);
             }
             else {
@@ -131,15 +137,18 @@ public class GamesListPanel extends javax.swing.JPanel {
             }
             pendingFolder
                     .setUserObject("Games in Progress (" + pendingFolder.getChildCount() + ")");
-            completeFolder.setUserObject("Complete Games (" + completeFolder.getChildCount() + ")");
+            completeFolder.setUserObject("Completed Games (" + completeFolder.getChildCount() + ")");
+            closedFolder.setUserObject("Closed Games (" + closedFolder.getChildCount() + ")");
         }
         if (completeFolder.getChildCount() == 0) {
-            completeFolder.add(new DefaultMutableTreeNode("<No complete games>"));
+            completeFolder.add(new DefaultMutableTreeNode("<No completed games>"));
         }
         if (pendingFolder.getChildCount() == 0) {
             pendingFolder.add(new DefaultMutableTreeNode("<No games in progress>"));
         }
-        
+        if (closedFolder.getChildCount() == 0) {
+            closedFolder.add(new DefaultMutableTreeNode("<No closed games>"));
+        }
         
         gameTree.setModel(new DefaultTreeModel(rootNode));
         
@@ -153,7 +162,8 @@ public class GamesListPanel extends javax.swing.JPanel {
             node = (DefaultMutableTreeNode) treeEnum.nextElement();
             if (node.getUserObject() != null
                     && ((node.getUserObject() instanceof GameModel && expandedGames.contains(node
-                            .getUserObject())) || node == pendingFolder || node == completeFolder)) {
+                            .getUserObject())) || node == pendingFolder || node == completeFolder 
+                            || node == closedFolder)) {
                 // if the node's game was in the list,
                 // or the node is a folder of games, expand it
                 gameTree.expandPath(new TreePath(node.getPath()));

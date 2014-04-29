@@ -134,11 +134,11 @@ public class VotePanel extends javax.swing.JPanel {
         if(parentGame.getDeck().isNone()){
         	estimateCardsPanel.removeAll();
 
-        	SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck().getMaxEstimate());
-            estimateInput.addActionListener(new ActionListener() {					
+        	final SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck().getMaxEstimate());
+            estimateInput.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					updateTotal();	
+					updateTotal();
 					validateCards();
 				}
 			});
@@ -147,8 +147,8 @@ public class VotePanel extends javax.swing.JPanel {
         	validateCards();
         	estimateInput.setPreferredSize(new Dimension(80, 120));
     		
-    		GridBagConstraints gbc = new GridBagConstraints();
-    		gbc.insets = new Insets(0, 10, 0, 10);	
+        	final GridBagConstraints gbc = new GridBagConstraints();
+    		gbc.insets = new Insets(0, 10, 0, 10);
         	estimateCardsPanel.add(estimateInput, gbc);
         	
         	if(voted && old != null){
@@ -156,7 +156,7 @@ public class VotePanel extends javax.swing.JPanel {
         	}
         } else {
         	            
-            ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
+        	final ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
             
         	
 	        estimateCardsPanel.removeAll();
@@ -176,21 +176,21 @@ public class VotePanel extends javax.swing.JPanel {
                             deselectOtherCards(estimateCard);
                         }
                         
-                        validateCards();	                    
+                        validateCards();
 	                    updateTotal();
 	                    VotePanel.this.repaint();
 	                }
 	            });
 	    		
 	    		GridBagConstraints gbc = new GridBagConstraints();
-	    		gbc.insets = new Insets(0, 10, 0, 10);	
+	    		gbc.insets = new Insets(0, 10, 0, 10);
 	            estimateCardsPanel.add(estimateCard, gbc);
 	        }
 	        
 	        if(voted){
 	        		for(Integer i:selectedCards){
 	        		cards.get(i).setCardSelected(true);
-	        	}        	
+	        	}
 	        	
         	}
 	        
@@ -256,8 +256,6 @@ public class VotePanel extends javax.swing.JPanel {
         
         final JScrollPane scrollPane = new JScrollPane();
         final JScrollPane estimateScrollPane = new JScrollPane();
-        
-        //JScrollPane scrollPane_1 = new JScrollPane();
         
         requirementNameLabel = new JLabel("<requirement>");
         requirementNameLabel.setToolTipText("The requirement's name.");
@@ -384,7 +382,7 @@ public class VotePanel extends javax.swing.JPanel {
         );
         
         estimateScrollPane.setViewportView(estimateCardsPanel);
-        GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
+        final GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
         estimateCardsPanel.setLayout(gbl_estimateCardsPanel);
         
         reqDescriptionTextArea = new JTextArea();
@@ -468,8 +466,8 @@ public class VotePanel extends javax.swing.JPanel {
     private void updateProgress(){
         final int est = req.getEstimates().size();
         final int user = CurrentUserController.getInstance().getUsers().length;
-        final double prog = (double)est/(double)user;
-       teammateProgressBar.setValue((int)(prog *100));
+        final double prog = (double)est / (double)user;
+       teammateProgressBar.setValue((int)(prog * 100));
     }
     
     /**

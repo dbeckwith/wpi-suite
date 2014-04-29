@@ -59,7 +59,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         setEndDate(game.getEndTime());
         setDeckName(game.getDeck().toString());
         
-        System.out.println(gameName.getWidth());
         final int difference = gameDeadline.getX() - lblDeadline.getX();
         if ((gameName.getX() + gameName.getWidth()) > lblDeadline.getX()) {
             lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, lblDeadline.getY());
@@ -67,9 +66,6 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         }
         this.game = game;
         updateprogress();
-        // DefaultListModel<String> listModel = new DefaultListModel<>();
-        // listModel.addElement(element);
-        // getParticipantsList().setModel(listModel);
     }
     
     /**
@@ -204,8 +200,8 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
                 est++;
             }
         }
-        final double prog = (double)est/(double)req;
-        personalProgress.setValue((int)(prog *100));
+        final double prog = (double)est / (double)req;
+        personalProgress.setValue((int)(prog * 100));
         if(!game.isStarted()){
             personalProgress.setVisible(false);
             lblYourProgress.setVisible(false);

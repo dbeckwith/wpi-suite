@@ -280,7 +280,13 @@ public class UserManager implements EntityManager<User> {
         }
         
         toUpdate.setNotifyByEmail(changes.isNotifyByEmail());
-        toUpdate.setNotifyByIM(changes.isNotifyByIM());
+        toUpdate.setNotifyBySMS(changes.isNotifyBySMS());
+        
+        if(changes.getPhoneNumber() != null) {
+            toUpdate.setPhoneNumber(changes.getPhoneNumber());
+        }
+        
+        toUpdate.setCarrier(changes.getCarrier());
 		
 		if(s.getUser().getUsername().equals(toUpdate.getUsername()) || s.getUser().getRole().equals(Role.ADMIN))
 		{
