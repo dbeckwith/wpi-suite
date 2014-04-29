@@ -12,7 +12,10 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -115,7 +118,14 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         final Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
-        tableScrollPane.setViewportView(voteResultTable);
+        tableScrollPane.setViewportView(voteResultTable);       
+        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+        r.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 1; i < voteResultTable.getColumnCount(); i++) {
+            voteResultTable.getColumnModel().getColumn(i).setCellRenderer(r);
+        }
+        
+        
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
         
