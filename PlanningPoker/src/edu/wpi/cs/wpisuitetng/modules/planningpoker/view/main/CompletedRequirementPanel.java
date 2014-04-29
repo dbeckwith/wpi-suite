@@ -70,6 +70,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         // setup tablemodel (using autogenerted netbeans code)
         initComponents();
         this.tree = tree;
+        
         tableScrollPane.getViewport().setBackground(Color.WHITE);
         addAncestorListener(new AncestorListener() {
             
@@ -114,10 +115,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 
                 if (enterPressed) {
                     if (shiftPressed) {
-                        saveAndContinue();
+                        saveFinalEstimate();
+                        updateReqManager();
+                        nextGame();
                     }
                     else {
                         saveFinalEstimate();
+                        nextGame();
                     }
                 }
             }
@@ -215,8 +219,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         finalEstimateField.setEditable(b);
         saveFinalEstimateButton.setVisible(b);
         notePane.setEditable(b);
-        btnUpdateRequirementManager.setVisible(b);
-        btnSaveAndContinue.setVisible(b);
+        saveAndUpdateButton.setVisible(b);
     }
     
     /**
@@ -445,6 +448,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 saveFinalEstimate();
+                nextGame();
             }
         });
         
@@ -455,40 +459,24 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_saveFinalEstimateButton.gridy = 8;
         add(saveFinalEstimateButton, gbc_saveFinalEstimateButton);
         
-        btnSaveAndContinue = new JButton("Save and Continue");
-        btnSaveAndContinue.setEnabled(false);
-        btnSaveAndContinue.setIcon(ImageLoader.getIcon("SaveAndContinue.png"));
+        saveAndUpdateButton = new JButton("Save and Update Req. Manager");
+        saveAndUpdateButton.setEnabled(false);
+        saveAndUpdateButton.setIcon(ImageLoader.getIcon("SaveAndContinue.png"));
         
-        btnSaveAndContinue.addActionListener(new ActionListener() {
+        saveAndUpdateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                saveAndContinue();
+                saveFinalEstimate();
+                updateReqManager();
+                nextGame();
             }
         });
         
-        GridBagConstraints gbc_btnSaveAndContinue = new GridBagConstraints();
-        gbc_btnSaveAndContinue.insets = new Insets(0, 0, 5, 5);
-        gbc_btnSaveAndContinue.gridx = 6;
-        gbc_btnSaveAndContinue.gridy = 8;
-        add(btnSaveAndContinue, gbc_btnSaveAndContinue);
-        
-        btnUpdateRequirementManager = new JButton("Update Requirement Manager");
-        final GridBagConstraints gbc_btnUpdateRequirementManager = new GridBagConstraints();
-        gbc_btnUpdateRequirementManager.insets = new Insets(0, 0, 5, 5);
-        gbc_btnUpdateRequirementManager.gridx = 8;
-        gbc_btnUpdateRequirementManager.gridy = 8;
-        add(btnUpdateRequirementManager, gbc_btnUpdateRequirementManager);
-        btnUpdateRequirementManager.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                req.updateRequirementManager();
-                UpdateGamesController.getInstance().updateGame(parentModel);
-                final ArrayList<GameStatusObserver> gsos = parentModel
-                        .getStatusObservers();
-                for (int i = 0; i < gsos.size(); i++) {
-                    gsos.get(i).statusChanged(parentModel);
-                }
-            }
-        });
+        GridBagConstraints gbc_saveAndUpdateButton = new GridBagConstraints();
+        gbc_saveAndUpdateButton.insets = new Insets(0, 0, 5, 5);
+        gbc_saveAndUpdateButton.gridx = 8;
+        gbc_saveAndUpdateButton.gridy = 8;
+        add(saveAndUpdateButton, gbc_saveAndUpdateButton);
     }
     
     /**
@@ -506,31 +494,31 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     if (finalEstimate == req.getFinalEstimate()) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
-                        btnSaveAndContinue.setEnabled(false);
+                        saveAndUpdateButton.setEnabled(false);
                     }
                     else if (finalEstimate <= 0) {
                         //set error label
                         lblError.setText("* Positive Integers Only!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                        btnSaveAndContinue.setEnabled(false);
+                        saveAndUpdateButton.setEnabled(false);
                     }
                     else if (Pattern.matches(pattern, notePane.getText())
                             && req.getFinalEstimate() != 0) {
                         lblError.setText("* You Must Add a Note!");
                         lblError.setVisible(true);
                         saveFinalEstimateButton.setEnabled(false);
-                        btnSaveAndContinue.setEnabled(false);
+                        saveAndUpdateButton.setEnabled(false);
                     }
                     else {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(true);
-                        if (parentModel.getRequirements().indexOf(req) < parentModel
-                                .getRequirements().size() - 1) {
-                            btnSaveAndContinue.setEnabled(true);
+                        if (req.isFromRequirementManager() && (req.getFinalEstimate() != req
+                                .getParentEstimate())) {
+                            saveAndUpdateButton.setEnabled(true);
                         }
                         else {
-                            btnSaveAndContinue.setEnabled(false);
+                            saveAndUpdateButton.setEnabled(false);
                         }
                     }
                 }
@@ -539,15 +527,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     lblError.setText("* Positive Integers Only!");
                     lblError.setVisible(true);
                     saveFinalEstimateButton.setEnabled(false);
-                    btnSaveAndContinue.setEnabled(false);
+                    saveAndUpdateButton.setEnabled(false);
                 }
                 
-                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req
-                		.getParentEstimate())) {
-                    btnUpdateRequirementManager.setEnabled(true);
-                } else {
-                    btnUpdateRequirementManager.setEnabled(false);
-                }
             }
         });
     }
@@ -576,13 +558,25 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     }
     
     /**
-     * Saves the final estimate and moves to the next game
+     * Moves to the next requirement if there are more in the game.
      */
-    private void saveAndContinue() {
-        saveFinalEstimate();
+    private void nextGame() {
         if (parentModel.getRequirements().indexOf(req) < parentModel
                 .getRequirements().size() - 1) {
             tree.setSelectionRow(tree.getSelectionRows()[0] + 1);
+        }
+    }
+    
+    private void updateReqManager() {
+        if(req.isFromRequirementManager() && (req.getFinalEstimate() != req
+                .getParentEstimate())){
+            req.updateRequirementManager();
+            UpdateGamesController.getInstance().updateGame(parentModel);
+            final ArrayList<GameStatusObserver> gsos = parentModel
+                    .getStatusObservers();
+            for (int i = 0; i < gsos.size(); i++) {
+                gsos.get(i).statusChanged(parentModel);
+            }
         }
     }
     
@@ -599,6 +593,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JLabel votedUsersValueLabel;
     private JTextPane notePane;
     private final JTree tree;
-    private JButton btnUpdateRequirementManager;
-    private JButton btnSaveAndContinue;
+    private JButton saveAndUpdateButton;
 }
