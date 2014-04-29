@@ -71,9 +71,9 @@ public class CommonButtonGroup extends ToolbarGroupView {
 		});
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		newGameButton.setPreferredSize(new Dimension(200, 200));
+		newGameButton.setPreferredSize(new Dimension(175, 200));
 		userPrefsButton.setHorizontalAlignment(SwingConstants.CENTER);
-		userPrefsButton.setPreferredSize(new Dimension(150, 200));
+		userPrefsButton.setPreferredSize(new Dimension(175, 200));
 		contentPanel.add(newGameButton);
 		contentPanel.add(userPrefsButton);
 		contentPanel.setOpaque(false);
