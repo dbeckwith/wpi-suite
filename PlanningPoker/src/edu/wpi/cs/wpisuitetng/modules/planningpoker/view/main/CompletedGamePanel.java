@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
@@ -112,6 +113,12 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                 return columnEditables[column];
             }
         });
+        voteResultTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(400);
+        voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(0);
+        voteResultTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+        voteResultTable.getColumnModel().getColumn(3).setPreferredWidth(0);
+        
         final Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
