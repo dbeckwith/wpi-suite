@@ -278,6 +278,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
     }
     
     private void addRequirement(GameRequirementModel r, boolean selected) {
+        if(r != null) {
         System.out.println("added requirement " + r.toString());
         final DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
@@ -285,6 +286,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
                 r.getType().toString() });
         canValidateForm();
         parentPanel.check();
+        }
     }
     
     
