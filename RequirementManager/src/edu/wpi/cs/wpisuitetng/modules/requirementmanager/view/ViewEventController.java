@@ -587,7 +587,7 @@ public class ViewEventController {
 					
 					RequirementModel.getInstance().addRequirements(importedReqs);
 										
-				} catch(IOException e){
+				} catch(Exception e){
 					failed.add(file);
 					e.printStackTrace();
 				}
@@ -625,7 +625,22 @@ public class ViewEventController {
 			if(!selectedFile.getName().endsWith(".json")){
 				selectedFile = new File(selectedFile.getAbsolutePath()+".json");
 			}
+			
+			if(selectedFile.exists()){
+				int continueSave = JOptionPane.showConfirmDialog(main, "The file already exists, would you like to overwrite it?", "Overwrite", JOptionPane.OK_CANCEL_OPTION);
+				if(continueSave != JOptionPane.OK_OPTION){
+					return;
+				}
+			}
+			
+			for(int i = 0; i < selected.length; i++){
+				Requirement original = selectedRequirements[i];
+				selectedRequirements[i] = new Requirement();
+				selectedRequirements[i].copyFrom(original);
+				selectedRequirements[i].setIteration("Backlog");
+			}
 			String json = new Gson().toJson(selectedRequirements, selectedRequirements.getClass());
+			
 			
 			try {
 				selectedFile.createNewFile();
