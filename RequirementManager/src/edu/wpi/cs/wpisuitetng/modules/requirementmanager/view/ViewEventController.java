@@ -10,13 +10,28 @@
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view;
 
 import java.awt.Component;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.google.gson.Gson;
+
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;
@@ -50,7 +65,7 @@ public class ViewEventController {
 	 * Sets the OverviewTable for the controller
 	 * @param overviewTable a given OverviewTable
 	 */
-	public void setOverviewTable(OverviewTable overviewTable) {
+	public void setOverviewTable(final OverviewTable overviewTable) {
 		this.overviewTable = overviewTable;
 	}
 
@@ -85,6 +100,17 @@ public class ViewEventController {
 	 */
 	public void setToolBar(ToolbarView tb) {
 		toolbar = tb;
+		
+		toolbar.getImportExportButton().getExportButton().setEnabled(false);	
+		overviewTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				boolean itemSelected = overviewTable.getSelectedRows().length > 0;
+				toolbar.getImportExportButton().getExportButton().setEnabled(itemSelected);				
+			}
+		});
+		
 		toolbar.repaint();
 	}
 
@@ -518,4 +544,120 @@ public class ViewEventController {
 	public ArrayList<RequirementPanel> getListOfRequirementPanels() {
 		return listOfEditingPanels;
 	}
+	
+	public void importRequirements(){
+		
+		ArrayList<File> failed = new ArrayList<File>();
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileNameExtensionFilter("JSON Files", "json"));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setMultiSelectionEnabled(true);
+		
+		int result = fileChooser.showOpenDialog(main);
+		
+		if(result == JFileChooser.APPROVE_OPTION){
+			File[] selectedFiles = fileChooser.getSelectedFiles();
+			
+			for(File file:selectedFiles){
+				try{
+					Gson gson = new Gson();
+					FileInputStream fileInputStream = new FileInputStream(file);
+					
+					byte[] inputBytes = new byte[0];
+					byte[] buffer = new byte[1024];
+					int read = 0;
+					while((read = fileInputStream.read(buffer)) != -1){					
+						byte[] oldInput = inputBytes;
+						inputBytes = new byte[oldInput.length + read];
+						System.arraycopy(oldInput, 0, inputBytes, 0, oldInput.length);
+						System.arraycopy(buffer, 0, inputBytes, oldInput.length, read);
+					} 
+					
+					fileInputStream.close();
+					
+					String jsonStr = new String(inputBytes);
+					
+					Requirement[] importedReqs = gson.fromJson(jsonStr, Requirement[].class);
+					
+					for(Requirement req:importedReqs){
+						req.setId(RequirementModel.getInstance().getNextID());
+						AddRequirementController.getInstance().addRequirement(req);
+					}
+					
+					RequirementModel.getInstance().addRequirements(importedReqs);
+										
+				} catch(IOException e){
+					failed.add(file);
+					e.printStackTrace();
+				}
+			}	
+			
+			if(failed.size() > 0){
+				String failStr = "";
+				for(File f:failed){
+					failStr += "\""+f.getName()+"\" ";
+				}
+				JOptionPane.showMessageDialog(main, "Could not load all requirements: "+failStr,
+						"Input Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}	
+
+	}
+	
+	public void exportRequirements(){
+		int[] selected = overviewTable.getSelectedRows();
+		Requirement[] selectedRequirements = new Requirement[selected.length];
+		
+		DefaultTableModel model = (DefaultTableModel)overviewTable.getModel();
+		
+		for(int i = 0; i < selected.length; i++){
+			selectedRequirements[i] = ((Requirement)model.getValueAt(selected[i], 1));
+		}
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileNameExtensionFilter("JSON Files", "json"));
+		
+		int result = fileChooser.showSaveDialog(main);
+		
+		if(result == JFileChooser.APPROVE_OPTION){			
+			File selectedFile = fileChooser.getSelectedFile();
+			if(!selectedFile.getName().endsWith(".json")){
+				selectedFile = new File(selectedFile.getAbsolutePath()+".json");
+			}
+			String json = new Gson().toJson(selectedRequirements, selectedRequirements.getClass());
+			
+			try {
+				selectedFile.createNewFile();
+				
+				FileOutputStream fileOutputStream = new FileOutputStream(selectedFile);
+				fileOutputStream.write(json.getBytes());
+				fileOutputStream.close();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(main, "Could not save requirements: "+e.getMessage(),
+						"Export Error", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
