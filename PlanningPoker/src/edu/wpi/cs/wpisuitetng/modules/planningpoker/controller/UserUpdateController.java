@@ -117,6 +117,7 @@ public class UserUpdateController {
     /**
      * Sets the users 10-digit phone number.
      * 
+     * @param phoneNumber
      */
     public void updatePhoneNumber(String phoneNumber) {
         sendPostRequest(FieldName.PHONE_NUMBER, phoneNumber);
@@ -125,6 +126,7 @@ public class UserUpdateController {
     /**
      * Sets the users phone carrier (e.g. Verizon, AT&T, etc.)
      * 
+     * @param carrier
      */
     public void updatePhoneCarrier(Carrier carrier) {
         sendPostRequest(FieldName.PHONE_CARRIER, carrier);
