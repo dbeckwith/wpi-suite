@@ -132,8 +132,10 @@ public class TutorialPane extends JComponent {
     protected void paintComponent(Graphics g) {
         if (highlightArea != null) {
             g.setColor(new Color(240, 30, 30, 210));
-            drawThickRect(g, highlightArea.x, highlightArea.y,
-                    highlightArea.width, highlightArea.height, 3);
+            //            drawThickRect(g, highlightArea.x, highlightArea.y,
+            //                    highlightArea.width, highlightArea.height, 3);
+            drawTransparentRect(g, highlightArea.x, highlightArea.y,
+                    highlightArea.width, highlightArea.height);
             
             g.setColor(new Color(255, 30, 30));
             g.setFont(getFont().deriveFont(Font.BOLD));
@@ -142,6 +144,13 @@ public class TutorialPane extends JComponent {
                     + highlightArea.height / 2 + g.getFontMetrics().getAscent()
                     / 2);
         }
+    }
+    
+    private void drawTransparentRect(Graphics g, int x, int y, int w, int h) {
+        Color previousColor = g.getColor(); // store previous color
+        g.setColor(new Color(100, 100, 200, 50));
+        g.fillRect(x, y, w, h);
+        g.setColor(previousColor);
     }
     
     private void drawThickRect(Graphics g, int x, int y, int w, int h,
