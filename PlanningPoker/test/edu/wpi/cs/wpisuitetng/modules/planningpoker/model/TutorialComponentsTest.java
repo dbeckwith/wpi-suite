@@ -1,10 +1,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import javax.swing.JPanel;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class TutorialComponentsTest {
     
@@ -17,11 +16,9 @@ public class TutorialComponentsTest {
     
     @Test
     public void testAddTutorialWithPanel() {
-        JPanel panel = new JPanel();
-        TutorialPath tutorial = new TutorialPath("panelTutorial", panel);
+        TutorialPath tutorial = new TutorialPath("panelTutorial");
         assertFalse(TutorialComponents.getInstance().addTutorial(tutorial));
         assertNotNull(TutorialComponents.getInstance().getTutorial("panelTutorial"));
-        assertNotNull(TutorialComponents.getInstance().getTutorial(panel));
     }
     
 }

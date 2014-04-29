@@ -24,6 +24,8 @@ import javax.swing.SwingUtilities;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.TutorialPath;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -53,6 +55,7 @@ public class TutorialPane extends JComponent {
     private int currentItemIndex;
     private TutorialPath.PathItem currentItem;
     private Rectangle highlightArea;
+    private boolean canContinue;
     
     private ComponentListener currentItemCompListener = new ComponentListener() {
         @Override
@@ -75,10 +78,16 @@ public class TutorialPane extends JComponent {
             getCurrCompBounds();
         };
     };
+    private JButton btnNext;
     
     private TutorialPane() {
         
-        JButton btnNext = new JButton("Next");
+        btnNext = new JButton("Next");
+        btnNext.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                nextItem();
+            }
+        });
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
             groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -100,6 +109,7 @@ public class TutorialPane extends JComponent {
         currentItemIndex = 0;
         currentItem = null;
         highlightArea = null;
+        canContinue = false;
     }
     
     public void install(Component comp) {
@@ -159,11 +169,13 @@ public class TutorialPane extends JComponent {
         currentItemIndex = -1;
         currentItem = null;
         highlightArea = null;
-        nextItem(null);
+        canContinue = true;
+        nextItem();
+        fireGUIChanged(null);
     }
     
     private void getCurrCompBounds() {
-        if (currentItem != null) {
+        if (currentItem != null && currentItem.getComponent() != null) {
             if (currentItem.getComponent().isVisible()) {
                 highlightArea = currentItem.getComponent().getBounds();
                 Point compPos = currentItem.getComponent()
@@ -179,7 +191,7 @@ public class TutorialPane extends JComponent {
         repaint();
     }
     
-    private void nextItem(Component changedComponent) {
+    private void nextItem() {
         if (currentItem != null) {
             currentItem.getComponent().removeComponentListener(
                     currentItemCompListener);
@@ -187,19 +199,11 @@ public class TutorialPane extends JComponent {
         
         if (path != null) {
             if (currentItemIndex < path.size()) {
-                if (path.get(currentItemIndex + 1).setComponent(
-                        changedComponent)) {
+                if (canContinue) {
                     currentItemIndex++;
                     currentItem = path.get(currentItemIndex);
-                    currentItem.setComponent(changedComponent);
-                    currentItem.getComponent().addComponentListener(
-                            currentItemCompListener);
-                    
-                    getCurrCompBounds();
-                }
-                else {
-                    System.out
-                            .println("next path item didn't like the changed component");
+                    canContinue = false;
+                    btnNext.setEnabled(false);
                 }
             }
             else {
@@ -210,6 +214,11 @@ public class TutorialPane extends JComponent {
     }
     
     public void fireGUIChanged(Component changedComponent) {
-        nextItem(changedComponent);
+        if (currentItem != null) {
+            canContinue = currentItem.setComponent(changedComponent) && currentItem.canProgress();
+            btnNext.setEnabled(canContinue);
+            
+            getCurrCompBounds();
+        }
     }
 }
