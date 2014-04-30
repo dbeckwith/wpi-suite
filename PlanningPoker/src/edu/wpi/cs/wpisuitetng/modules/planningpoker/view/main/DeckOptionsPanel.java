@@ -121,7 +121,8 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblForNo)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(maxSpinner, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+							.addComponent(maxSpinner, GroupLayout.DEFAULT_SIZE, 143, 
+									Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(useDeck)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -136,13 +137,15 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(useDeck)
-						.addComponent(savedDecks, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(savedDecks, GroupLayout.PREFERRED_SIZE, 
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(newDeckButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblMaximumEstimate)
 						.addComponent(lblForNo)
-						.addComponent(maxSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(maxSpinner, GroupLayout.PREFERRED_SIZE, 
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(74, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);

@@ -81,7 +81,8 @@ public class MainView extends JTabbedPane {
                 
                 TutorialPane.getInstance().setVisible(true);
 
-                CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user
+                CurrentUserController.getInstance(); // initialize CurrentUserController early so 
+                											//it gets the current user
                 GetDecksController.getInstance().retrieveDecks();
                 GetRequirementsController.getInstance().retrieveRequirements();
                 GetGamesController.getInstance().retrieveGames();
