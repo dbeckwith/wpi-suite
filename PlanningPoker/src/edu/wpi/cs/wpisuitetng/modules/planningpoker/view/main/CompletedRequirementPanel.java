@@ -503,7 +503,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 try {
                     final int finalEstimate = Integer
                             .parseInt(finalEstimateField.getText());
-                    if (finalEstimate == req.getFinalEstimate()) {
+                    if (finalEstimate == req.getFinalEstimate() && finalEstimate != 0) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
                         btnSaveAndContinue.setEnabled(false);
