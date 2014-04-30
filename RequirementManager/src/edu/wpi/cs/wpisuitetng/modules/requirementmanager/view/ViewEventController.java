@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -581,11 +582,13 @@ public class ViewEventController {
 					Requirement[] importedReqs = gson.fromJson(jsonStr, Requirement[].class);
 					
 					for(Requirement req:importedReqs){
+					    if (isDuplicateReq(req) ) {
+					        continue;
+					    }
 						req.setId(RequirementModel.getInstance().getNextID());
 						AddRequirementController.getInstance().addRequirement(req);
+						RequirementModel.getInstance().addRequirement(req);
 					}
-					
-					RequirementModel.getInstance().addRequirements(importedReqs);
 										
 				} catch(Exception e){
 					failed.add(file);
@@ -605,7 +608,23 @@ public class ViewEventController {
 
 	}
 	
-	public void exportRequirements(){
+    private boolean isDuplicateReq(Requirement importedReq) {
+        boolean toReturn = false;
+        List<Requirement> existingReqs = RequirementModel.getInstance()
+                .getRequirements();
+        
+        for (Requirement existingReq : existingReqs) {
+            toReturn = (existingReq.getName().equals(importedReq.getName()))
+                    && (existingReq.getDescription().equals(importedReq
+                            .getDescription()));
+            if (toReturn) {
+                break;
+            }
+        }
+        return toReturn;
+    }
+
+    public void exportRequirements(){
 		int[] selected = overviewTable.getSelectedRows();
 		Requirement[] selectedRequirements = new Requirement[selected.length];
 		
@@ -638,6 +657,7 @@ public class ViewEventController {
 				selectedRequirements[i] = new Requirement();
 				selectedRequirements[i].copyFrom(original);
 				selectedRequirements[i].setIteration("Backlog");
+				selectedRequirements[i].setEstimate(0);
 			}
 			String json = new Gson().toJson(selectedRequirements, selectedRequirements.getClass());
 			
