@@ -524,6 +524,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         deckOptions.setNewDeck();
     }
 
+    public DeckOptionsPanel getDeckOptionsPanel() {
+		return deckOptions;
+	}
+    
     private boolean isNameValid = false;
     private boolean isDescriptionValid = false;
     
@@ -537,4 +541,5 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     private JLabel nameLabel;
     private JCheckBox selectDeadline;
     private DeckOptionsPanel deckOptions;
+
 }

@@ -368,6 +368,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
 		}
 
 		requirementsTable.setModel(model);
+		
     }
     
 

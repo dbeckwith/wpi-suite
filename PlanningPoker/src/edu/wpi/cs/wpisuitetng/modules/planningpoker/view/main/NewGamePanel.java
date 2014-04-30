@@ -654,6 +654,10 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     	return newGameRequirementsPanel;
     }
     
+    public JPanel getCardLayoutPanel(){
+    	return newGameRequirementsCard;
+    }
+    
     public void setNewGameCallback(ActionListener e){
     	newGameCallback = e;
     }
@@ -706,6 +710,4 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private boolean hasChanged;
     private JScrollPane scrollPane_1;
     private JPanel panel_1;
-
-
 }

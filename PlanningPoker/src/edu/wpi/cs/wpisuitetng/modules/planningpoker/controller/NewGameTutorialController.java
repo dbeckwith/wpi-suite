@@ -6,19 +6,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DeckOptionsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 public class NewGameTutorialController implements ActionListener {
 
 	private enum Step {
-		StartTutorial, CreateGame, EditName, EditDescription, AddRequirements, CreateDeck, AddCards, SaveDeck, SaveGame, StartGame
+		 CreateGame, EditName, EditDescription, AddRequirements, CreateDeck, AddCards, SaveDeck, SaveGame, StartGame
 	}
 
 	private ViewController viewController;
@@ -47,7 +46,7 @@ public class NewGameTutorialController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		System.out.printf("Tutorial at %s, called by %s", currentStep.toString(), e.getActionCommand());
+		System.out.printf("\t[TUTORIAL] at %s, called by %s\n", currentStep.toString(), e.getActionCommand());
 		
 		switch (currentStep) {
 			case CreateGame:
@@ -75,15 +74,24 @@ public class NewGameTutorialController implements ActionListener {
 				
 			case AddRequirements:
 				currentStep = Step.CreateDeck;
-				final JTable table = newTab.getRequirementsPanel().getRequirementsTable();
-				table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {					
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-						table.getSelectionModel().removeListSelectionListener(this);	
-						actionPerformed(new ActionEvent(table, 0, "requirement selection"));
-					}
-				});
-				tPane.setHighlightArea(table, "Select or add some requirements");
+				tPane.setNextButtonCallback(this);
+				tPane.setHighlightArea(newTab.getCardLayoutPanel(), "Select or add some requirements");
+				break;
+			case CreateDeck:
+				currentStep = Step.AddCards;
+				DeckOptionsPanel deckOpt = newTab.getDescriptionPanel().getDeckOptionsPanel();
+				deckOpt.setNewDeckButtonCallback(this);
+				tPane.setHighlightArea(deckOpt.getNewDeckButton(), "Click to create a new deck");
+				break;
+			case AddCards:
+				break;
+			case SaveDeck:
+				break;
+			case SaveGame:
+				break;
+			case StartGame:
+				break;
+			default:
 				break;
 
 

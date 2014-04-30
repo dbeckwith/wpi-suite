@@ -60,6 +60,8 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	private JButton newDeckButton;
 	private JSpinner maxSpinner;
 	
+	private ActionListener newDeckCallback;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -96,6 +98,18 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		savedDecks.addActionListener(this);
 		
 		newDeckButton = new JButton("New Deck...");
+		newDeckButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(newDeckCallback != null){
+					ActionListener call = newDeckCallback;
+					newDeckCallback = null;
+					call.actionPerformed(new ActionEvent(DeckOptionsPanel.this, 0, "newDeckButton"));
+				}
+				
+			}
+		});
 		
 		final JLabel lblMaximumEstimate = new JLabel("Maximum Estimate:");
 		
@@ -244,6 +258,14 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
     		newDeckButton.addActionListener(a);
     	}
     }
+    
+    public void setNewDeckButtonCallback(ActionListener a){
+    	newDeckCallback = a;
+    }
+    
+    public JButton getNewDeckButton() {
+		return newDeckButton;
+	}
     
     private void checkUseDeck(){
 		boolean deckSelected = useDeck.isSelected();
