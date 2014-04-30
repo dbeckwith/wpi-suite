@@ -115,6 +115,17 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 
         createDeckButton = new JButton("Create Deck");
         
+        createDeckButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(newDeckCallback != null){
+					ActionListener call = newDeckCallback;
+					newDeckCallback = null;
+					call.actionPerformed(new ActionEvent(this, 0, ""));
+				}
+			}
+		});
+        
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -391,6 +402,15 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		
 	}
 	
+	public void setSaveDeckCallback(ActionListener a){
+		newDeckCallback = a;
+	}
+	
+	public JButton getCreateDeckButton() {
+		return createDeckButton;
+	}
+	
+	private ActionListener newDeckCallback;
 	
 	private final JScrollPane scrollPane;
     private final ArrayList<SpinnerCard> cards;

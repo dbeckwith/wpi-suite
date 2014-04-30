@@ -175,6 +175,18 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private void initComponents() {
         hasChanged = false;
         saveButton = new javax.swing.JButton();
+        
+        saveButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(saveGameCallback != null){
+					ActionListener call = saveGameCallback;
+					saveGameCallback = null;
+					call.actionPerformed(new ActionEvent(this, 0, ""));
+				}
+			}
+		});
+        
         cancelButton = new javax.swing.JButton();
         
         saveButton.setText("Save");
@@ -654,6 +666,10 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     	return newGameRequirementsPanel;
     }
     
+    public NewDeckPanel getNewDeckPanel(){
+    	return newDeckPanel;
+    }
+    
     public JPanel getCardLayoutPanel(){
     	return newGameRequirementsCard;
     }
@@ -681,9 +697,19 @@ public class NewGamePanel extends JPanel implements AncestorListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public void setSaveGameCallback(ActionListener a){
+		saveGameCallback = a;
+	}
 
     private GameModel game = null;
     private ActionListener newGameCallback;
+    
+    private ActionListener saveGameCallback;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
