@@ -1,52 +1,71 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<title>Plannning Poker Help</title>
 	
+		<style>
+			a.nolink {
+				text-decoration: none;
+				color: black;
+			}
+		</style>
+		
 	</head>
 	<body>
 	<h1>Welcome to planning poker</h1>
 	<div>
 	<h2>Introduction</h2>
 	<ul>
-		<li><a href="planningPoker.html#planning">Planning Poker</a></li>
-		<li><a href="planningPoker.html#team">Our Team</a></li>
+		<li><a href="#planning">Planning Poker</a></li>
+		<li><a href="#team">Our Team</a></li>
 	</ul>
 	</div>
 	<div class="nav">
 	<h2>Getting started with Planning Poker</h2>
 	<ul>
-		<li><a href="planningPoker.html#users">Users</a></li>
-		<li><a href="planningPoker.html#create">Create a game</a></li>
-		<li><a href="planningPoker.html#edit">Edit a game</a></li>
-		<li><a href="planningPoker.html#estimate">Estimate</a></li>
-		<li><a href="planningPoker.html#final">Final Estimate</a></li>
-		<li><a href="planningPoker.html#close">Close game</a></li>
+		<li><a href="#users">Users</a></li>
+		<li><a href="#create">Create a game</a></li>
+		<li><a href="#edit">Edit a game</a></li>
+		<li><a href="#estimate">Estimate</a></li>
+		<li><a href="#final">Final Estimate</a></li>
+		<li><a href="#close">Close game</a></li>
 	</ul>
 	</div>
 
 	<div>
 	<h2>Overview of the panels</h2>
 	<ul>
-		<li><a href="planningPoker.html#gameTree">Game Tree Panel</a></li>
-		<li><a href="planningPoker.html#preference">Preferences</a></li>
+		<li><a href="#gameTree">Game Tree Panel</a></li>
+		<li><a href="#preference">Preferences</a></li>
 	</ul>
 	</div>
 
 
 
+	<div>
+		<h3><a class="nolink" name="planning">Planning Poker</a></h3>
+		<blockquote cite="http://en.wikipedia.org/wiki/Planning_poker">
+		"Planning poker is a tool for estimating software development projects. It is a technique that minimizes effect of ANCHORING by asking each team member to play their estimate card such that it cannot be seen by the other players. After each player has selected a card, all cards are exposed at once."
+		</blockquote>
+		<p><a href="http://en.wikipedia.org/wiki/Planning_poker">source</a></p>
+	</div>
+
+	<div>
+		<h3><a class="nolink" name="team">Our team</a></h3>
+	</div>
+
+
 	<div class="container">
-		<h3 id="users">Users</h3>
+		<h3><a class="nolink" name="users">Users</a></h3>
 		<p>A user’s moderation privileges are game dependant, a game’s moderator is the creator of the game. A moderator has access to controls to begin the game, end the game, and set final estimation for the game. All other users only have access to view the game and vote on the requirements of the game.
 		</p>
 	</div>
 
 	<div class="container">
-		<h3 id="create">Create a game</h3>
+		<h3><a class="nolink" name="create">Create a game</a></h3>
 		<ul>
 			<li>Click on Create Game button</li>
 			<li>Fill in the game name (a default name is provided) and game description</li>
@@ -63,7 +82,7 @@
 	</div>
 
 	<div class="container">
-		<h3 id="edit">Edit a game</h3>
+		<h3><a class="nolink" name="edit">Edit a game</a></h3>
 		<ul>
 			<li>Before a game has been started, the creator is allowed to edit the game.</li>
 			<li>Select an unstarted game and click the Edit Game button.</li>
@@ -73,7 +92,7 @@
 	</div>
 
 	<div class="container">
-		<h3 id="start">Start a game</h3>
+		<h3><a class="nolink" name="start">Start a game</a></h3>
 		<ul>
 			<li>Select the unstarted game.</li>
 			<li>Click the start game button.</li>
@@ -81,6 +100,7 @@
 	</div>
 
 	<div class="container">
+		<h3><a class="nolink" name="estimate">Estimate the requirement</a></h3>
 		<h3 id="estimate">Estimate the requirement</h3>
 		<ul>
 			<li>Select the game that have been started.</li>
@@ -94,7 +114,7 @@
 	</div>
 
 	<div>
-		<h3 id="final">Final Estimate</h3>
+		<h3><a class="nolink" name="final">Final Estimate</a></h3>
 		<ul>
 			<li>Only the game creator can make the final estimate.</li>
 			<li>Select the complete game.</li>
@@ -108,7 +128,7 @@
 	</div>
 
 	<div>
-		<h3 id="close">Close game</h3>
+		<h3><a class="nolink" name="close">Close game</a></h3>
 		<ul>
 			<li>Click the game you want to close.</li>
 			<li>Click the close game button.</li>
@@ -117,37 +137,25 @@
 	</div>
 
 	<div>
-		<h3 id="gameTree">Game Tree Panel</h3>
+		<h3><a class="nolink" name="gameTree">Game Tree Panel</a></h3>
 		<img src="gamePanel.png" alt="game panel"/>
 		<p>On the game panel, the left side of the window shows a tree view of the games. There are two main groups of games: Games in Progress and Complete Games. Each of these groups have two types of games within them:</p>
 		<ul>
-			<li>Games in Progress:</li>
+			<li>Games in Progress:
 			<p>Games are marked with the icon of a blank page with a plus in the top corner have not been started yet. They can still be edited before they are started.</p>
-			<p>Games marked with an hourglass have been started and are available to be voted on.
-			</p>
-			<li>Completed Games:</li>
+			<p>Games marked with an hourglass have been started and are available to be voted on.</p>
+			</li>
+			<li>Completed Games:
 			<p>Games Marked with a check have been completed and ready for the creator to set their final estimate.</p>
 			<p>Games marked with a grey file cabinet icon have been closed. These games can be viewed for historical purposes but can not be changed any more.</p>
+			</li>
 		</ul>
 	</div>
 
 	<div>
-		<h3 id="preferences">Preferences</h3>
+		<h3><a class="nolink" name="preferences">Preferences</a></h3>
 		<p>The preference pane lets you select how you want to receive notifications. You may select to receive email notifications, SMS notifications, or both. When you select one of the methods of notification, you will be asked to input your email or mobile number and carrier depending on which method you select.
 		</p>
-	</div>
-
-
-	<div>
-		<h3 id="planning">Planning Poker</h3>
-		<blockquote cite="http://en.wikipedia.org/wiki/Planning_poker">
-		"Planning poker is a tool for estimating software development projects. It is a technique that minimizes effect of ANCHORING by asking each team member to play their estimate card such that it cannot be seen by the other players. After each player has selected a card, all cards are exposed at once."
-		</blockquote>
-		<p>Reference:http://en.wikipedia.org/wiki/Planning_poker</p>
-	</div>
-
-	<div>
-		<h3 id="team">Our team</h3>
 	</div>
 
 
