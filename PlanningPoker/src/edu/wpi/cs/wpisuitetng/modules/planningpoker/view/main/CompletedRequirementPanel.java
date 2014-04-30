@@ -236,7 +236,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
         gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 
+        		0.0};
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
@@ -491,7 +492,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 try {
                     final int finalEstimate = Integer
                             .parseInt(finalEstimateField.getText());
-                    if (finalEstimate == req.getFinalEstimate()) {
+                    if (finalEstimate == req.getFinalEstimate() && finalEstimate != 0) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
                         saveAndUpdateButton.setEnabled(false);
