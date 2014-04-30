@@ -494,8 +494,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void run() {
                 final String pattern = "^[\\s]*$";
                 try {
-                    final int finalEstimate = Integer.parseInt(finalEstimateField.getText());
-                    if (finalEstimate == req.getFinalEstimate()) {
+                    final int finalEstimate = Integer
+                            .parseInt(finalEstimateField.getText());
+                    if (finalEstimate == req.getFinalEstimate() && finalEstimate != 0) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
                         btnSaveAndContinue.setEnabled(false);
