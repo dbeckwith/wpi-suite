@@ -165,12 +165,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         checkDisplayFinal();
         
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
-        medianValueLabel
-        .setText(String.format("%1.1f", req.getEstimateMedian()));
+        medianValueLabel.setText(String.format("%1.1f", req.getEstimateMedian()));
         if (parent_game.getOwner().equals(CurrentUserController.USER_NAME)
                 && req.getFinalEstimate() == 0) {
-            finalEstimateField
-            .setText((int) (req.getEstimateMean() + 0.5) + "");
+            finalEstimateField.setText((int) (req.getEstimateMean() + 0.5) + "");
         }
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
@@ -210,8 +208,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         
-        votedUsersValueLabel
-        .setText(Integer.toString(tableModel.getRowCount()));
+        votedUsersValueLabel.setText(Integer.toString(tableModel.getRowCount()));
         notePane.setText(req.getEstimateNote());
     }
     
@@ -227,8 +224,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      * based on it.
      */
     private void checkDisplayFinal() {
-        displayFinalEstimateFields(CurrentUserController.USER_NAME
-                .equals(parentModel.getOwner()) && !parentModel.isClosed());
+        displayFinalEstimateFields(CurrentUserController.USER_NAME.equals(parentModel.getOwner())
+                && !parentModel.isClosed());
     }
     
     private void initComponents() {
@@ -246,14 +243,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         tableScrollPane.setBackground(Color.WHITE);
         
-        voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
-            null }, }, new String[] { "User", "Estimate" }) {
+        voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null, null }, },
+                new String[] { "User", "Estimate" }) {
             /**
              * 
              */
             private static final long serialVersionUID = -5144539907705808611L;
-            private final boolean[] columnEditables = new boolean[] { false,
-                    false };
+            private final boolean[] columnEditables = new boolean[] { false, false };
             
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -261,8 +257,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         temp_Font = voteResultTable.getTableHeader().getFont();
-        voteResultTable.getTableHeader().setFont(
-                temp_Font.deriveFont(Font.BOLD));
+        voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -278,35 +273,33 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         finalEstimateField = new JTextField();
         finalEstimateField.setColumns(10);
         finalEstimateField.setBackground(Color.WHITE);
-        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED,
-                null, null));
+        finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
-        finalEstimateField.getDocument().addDocumentListener(
-                new DocumentListener() {
-                    
-                    @Override
-                    public void changedUpdate(DocumentEvent e) {
-                        validate();
-                        
-                    }
-                    
-                    @Override
-                    public void insertUpdate(DocumentEvent e) {
-                        validate();
-                        
-                    }
-                    
-                    @Override
-                    public void removeUpdate(DocumentEvent e) {
-                        validate();
-                        
-                    }
-                    
-                    private void validate() {
-                        validatePanel();
-                    }
-                    
-                });
+        finalEstimateField.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validate();
+                
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validate();
+                
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validate();
+                
+            }
+            
+            private void validate() {
+                validatePanel();
+            }
+            
+        });
         
         final JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -478,6 +471,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_saveAndUpdateButton.gridx = 8;
         gbc_saveAndUpdateButton.gridy = 8;
         add(saveAndUpdateButton, gbc_saveAndUpdateButton);
+
     }
     
     /**
@@ -511,6 +505,16 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                         saveFinalEstimateButton.setEnabled(false);
                         saveAndUpdateButton.setEnabled(false);
                     }
+                    else if ((notePane.getText().equals(req.getEstimateNote()) || (req
+                            .getEstimateNote().startsWith("Manual Change: \n"))
+                            && req.getEstimateNote().substring(16).equals(notePane.getText()))
+                            && req.getFinalEstimate() != 0) {
+                        lblError.setText("* You must change the Note!");
+                        lblError.setVisible(true);
+                        saveFinalEstimateButton.setEnabled(false);
+                        saveAndUpdateButton.setEnabled(false);
+                        
+                    }
                     else {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(true);
@@ -542,16 +546,15 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         if (saveFinalEstimateButton.isEnabled()) {
             lblError.setVisible(false);
             if (req.getFinalEstimate() != 0
-                    && !req.getEstimateNote().startsWith("Manual change: \n")) {
-                req.setEstimateNote("Manual change: \n" + notePane.getText());
+                    && !notePane.getText().startsWith("Manual Change:")) {
+                req.setEstimateNote("Manual Change: \n" + notePane.getText());
             }
             else {
                 req.setEstimateNote(notePane.getText());
             }
             req.setFinalEstimate(Integer.parseInt(finalEstimateField.getText()));
             UpdateGamesController.getInstance().updateGame(parentModel);
-            final ArrayList<GameStatusObserver> gsos = parentModel
-                    .getStatusObservers();
+            final ArrayList<GameStatusObserver> gsos = parentModel.getStatusObservers();
             for (int i = 0; i < gsos.size(); i++) {
                 gsos.get(i).statusChanged(parentModel);
             }
