@@ -26,7 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 /**
  * This is the main panel of the planning poker GUI
@@ -73,13 +72,9 @@ public class MainView extends JTabbedPane {
                         window = (JFrame)comp;
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     }
-                    
-                    TutorialPane.getInstance().install(MainView.this);
 
                     alreadyShown = true;
                 }
-                
-                TutorialPane.getInstance().setVisible(true);
 
                 CurrentUserController.getInstance(); // initialize CurrentUserController early so 
                 											//it gets the current user
@@ -89,9 +84,7 @@ public class MainView extends JTabbedPane {
 			}
 			
 			@Override
-			public void ancestorRemoved(AncestorEvent event) {
-			    TutorialPane.getInstance().setVisible(false);
-			}
+			public void ancestorRemoved(AncestorEvent event) {}
 			
 			
 			@Override

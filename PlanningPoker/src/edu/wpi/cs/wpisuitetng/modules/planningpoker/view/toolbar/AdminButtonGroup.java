@@ -47,15 +47,19 @@ public class AdminButtonGroup extends ToolbarGroupView {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
+        endGameButton.setToolTipText("End the currently selected game so that users can no longer vote on it. A final estimation can still be made after estimation is ended.");
         endGameButton.setIcon(ImageLoader.getIcon("EndEstimation.png"));
         
         closeGameButton = new JButton("<html>Close<br/>Game</html>");
+        closeGameButton.setToolTipText("Completely close the currently selected game, archiving it.");
         closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
         
         editGameButton = new JButton("<html>Edit<br/>Game</html>");
+        editGameButton.setToolTipText("Edit the details of the currently selected games.");
         editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
         
         startGameButton = new JButton("<html>Start<br/>Game</html>");
+        startGameButton.setToolTipText("Start estimation on the currently selected game, enabling users to vote on its requirements.");
         startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
         
         

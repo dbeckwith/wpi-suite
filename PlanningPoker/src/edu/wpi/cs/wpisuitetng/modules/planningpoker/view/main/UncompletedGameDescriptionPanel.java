@@ -93,23 +93,31 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         nameLabel = new javax.swing.JLabel();
+        nameLabel.setToolTipText("The name of the selected game.");
         nameLabel.setText("Name:");
         
         gameName = new JLabel("");
+        gameName.setToolTipText("The name of the selected game.");
         
         final JScrollPane scrollPane_1 = new JScrollPane();
         
         lblDeadline = new JLabel("Deadline:");
+        lblDeadline.setToolTipText("The time this game will automatically end itself.");
         
         gameDeadline = new JLabel("");
+        gameDeadline.setToolTipText("The time this game will automatically end itself.");
         
         lblDeck = new JLabel("Deck:");
+        lblDeck.setToolTipText("The type of deck being used for estimations in this game.");
         
         deckName = new JLabel("");
+        deckName.setToolTipText("The type of deck being used for estimations in this game.");
         
         lblYourProgress = new JLabel("Your Progress");
+        lblYourProgress.setToolTipText("Your progress in estimating requirements for this game.");
         
         personalProgress = new JProgressBar();
+        personalProgress.setToolTipText("Your progress in estimating requirements for this game.");
         personalProgress.setStringPainted(true);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -167,6 +175,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         );
         
         descriptionText = new JTextPane();
+        descriptionText.setToolTipText("The description of the selected game.");
         descriptionText.setEditable(false);
         scrollPane_1.setViewportView(descriptionText);
         setLayout(layout);
