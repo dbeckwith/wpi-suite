@@ -104,6 +104,10 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
     	dialogPanel.setLayout(gl_dialogPanel);
     	nextButton.addActionListener(this);
     	
+    	dialogPanel.setVisible(false);
+    	
+    	
+    	
         window = null;
         
     }
@@ -171,6 +175,7 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
     }
     
     private void placePanel(final Rectangle c){
+    	
     	ArrayList<Rectangle> rects = new ArrayList<Rectangle>(){{
     		add(new Rectangle(c.x, 0, c.width, c.y));//north
     		add(new Rectangle(c.x+c.width, c.y, getWidth()-c.x-c.width, c.height));//east
@@ -193,6 +198,12 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
     	Rectangle cur = dialogPanel.getBounds();
     	cur.x = dir.x + (dir.width-cur.width)/2;
     	cur.y = dir.y + (dir.height-cur.height)/2;
+    	
+    	int dx = (int) (cur.getCenterX() - dir.getCenterX())/2;
+    	int dy = (int) (cur.getCenterY() - dir.getCenterY())/2;
+    	
+    	
+    	cur.translate(dx, dy);
     	
     	dialogPanel.setBounds(cur);
     	
@@ -226,12 +237,13 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
     /**
      * 
      * @param highlightedComponent
-     * @param label
+    l * @param label
      */
     public void setHighlightArea(Component highlightedComponent, String label) {
     	this.highlightedComponent = highlightedComponent;
     	this.highlightLabel = label;
     	text.setText(label);
+    	dialogPanel.setVisible(true);
     	System.out.printf("\t[TUTORIAL] Set highlight to %s, \"%s\"\n", highlightedComponent.toString(), label);
     	repaint();
     }
@@ -242,6 +254,7 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
      */
     public void setNextButtonCallback(ActionListener a){
     	nextButtonCallback = a;
+    	dialogPanel.setVisible(true);
     	nextButton.setVisible(true);
     }
     
@@ -250,6 +263,7 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
 		if(nextButtonCallback != null){
 			ActionListener call = nextButtonCallback; //save in case it sets a new one
 			nextButtonCallback = null;
+			dialogPanel.setVisible(false);
 			nextButton.setVisible(false);
 			call.actionPerformed(new ActionEvent(this, 0, null));
 		}
