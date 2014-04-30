@@ -74,7 +74,7 @@ public class MainView extends JTabbedPane {
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     }
                     
-                    TutorialPane.getInstance().install(MainView.this);
+                    TutorialPane.getInstance().install(window);
 
                     alreadyShown = true;
                 }
@@ -106,4 +106,5 @@ public class MainView extends JTabbedPane {
     public AllGamesViewPanel getMainPanel() {
         return mainPanel;
     }
+    
 }

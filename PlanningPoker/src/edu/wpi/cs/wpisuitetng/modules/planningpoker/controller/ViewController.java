@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
@@ -37,6 +38,8 @@ public class ViewController {
 	private final MainView mainView;
 	private final ToolbarView toolbar;
 	private OptionPane cancelConfirm;
+	
+	private ActionListener newGameCallback = null;
 
 	/**
 	 * indicates if admin buttons are being shown if all games panel is selected
@@ -74,6 +77,11 @@ public class ViewController {
 						cancelNewGame(editGame, true);
 					}
 				});
+		
+		if(newGameCallback != null){
+			newGameCallback.actionPerformed(new ActionEvent(editGame, mainView.indexOfComponent(editGame), null));
+			newGameCallback = null;
+		}
 
 	}
 
@@ -200,6 +208,10 @@ public class ViewController {
 	 */
 	public MainView getMainView() {
 		return mainView;
+	}
+	
+	public ToolbarView getToolbarView(){
+		return toolbar;
 	}
 
 	/**
@@ -330,6 +342,14 @@ public class ViewController {
     public void showInteractiveHelp() {
         TutorialPane.getInstance().setHighlightArea(toolbar.getCommonButtons()
         		.getNewGameButton(), "Click here to create a game!");
+    }
+    
+    /**
+     * Sets a callback to recieve a single event when the next game is created
+     * @param e
+     */
+    public void setNewGameCallback(ActionListener a){
+    	newGameCallback = a;
     }
 
 }

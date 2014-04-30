@@ -59,21 +59,11 @@ public class TutorialPane extends JComponent {
      * 
      * @param comp
      */
-    public void install(Component comp) {
-        window = null;
-        while (comp != null && !(comp instanceof JFrame)) {
-            comp = comp.getParent();
-        }
-        if (comp != null) {
-            window = (JFrame) comp;
-            window.setGlassPane(this);
-            setVisible(true);
-            System.out.println("Tutorial pane installed successfully!");
-        }
-        else {
-            System.err.println("Tutorial pane installed unsuccessfully!");
-        }
-    }
+	public void install(JFrame to) {
+		to.setGlassPane(this);
+		setVisible(true);
+
+	}
     
     @Override
     protected void paintComponent(Graphics g) {

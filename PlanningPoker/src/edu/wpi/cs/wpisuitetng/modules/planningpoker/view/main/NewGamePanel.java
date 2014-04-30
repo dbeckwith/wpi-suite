@@ -641,15 +641,24 @@ public class NewGamePanel extends JPanel {
     public void setNewDeck(){
         gameDescription.setNewDeck();
     }
+    
+    public NewGameDescriptionPanel getDescriptionPanel(){
+    	return gameDescription;
+    } 
+    
+    public NewGameRequirementsPanel getRequirementsPanel(){
+    	return newGameRequirementsPanel;
+    }
+    
 
     private GameModel game = null;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private JPanel newGameRequirementsCard;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel newGameRequirementsPanel;
+    private NewGameRequirementsPanel newGameRequirementsPanel;
     private NewDeckPanel newDeckPanel;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
+    private NewGameDescriptionPanel gameDescription;
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;
     private JLabel nameLabel;
