@@ -11,8 +11,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -112,10 +116,23 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                 return columnEditables[column];
             }
         });
+        voteResultTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(400);
+        voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(0);
+        voteResultTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+        voteResultTable.getColumnModel().getColumn(3).setPreferredWidth(0);
+        
         final Font temp_Font;
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
-        tableScrollPane.setViewportView(voteResultTable);
+        tableScrollPane.setViewportView(voteResultTable);       
+        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+        r.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 1; i < voteResultTable.getColumnCount(); i++) {
+            voteResultTable.getColumnModel().getColumn(i).setCellRenderer(r);
+        }
+        
+        
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
         
@@ -132,7 +149,8 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(numRequirements)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 
+                    		GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(257, Short.MAX_VALUE))
                 .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
@@ -149,7 +167,8 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                     .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, 
+                        		GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                             .addComponent(lblNumberOfRequirements)
                             .addComponent(numRequirements)))
