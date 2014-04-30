@@ -233,7 +233,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {7, 105, 60, 97, 90, 32, 0, 36, 0};
         gridBagLayout.rowHeights = new int[]{60, 27, 20, 10, 6, 16, 16, 16, 0, 7};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 
+        		0.0};
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
@@ -466,7 +467,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         
-        GridBagConstraints gbc_btnSaveAndContinue = new GridBagConstraints();
+        final GridBagConstraints gbc_btnSaveAndContinue = new GridBagConstraints();
         gbc_btnSaveAndContinue.insets = new Insets(0, 0, 5, 5);
         gbc_btnSaveAndContinue.gridx = 6;
         gbc_btnSaveAndContinue.gridy = 8;
