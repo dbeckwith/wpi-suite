@@ -149,7 +149,8 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(numRequirements)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 
+                    		GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(257, Short.MAX_VALUE))
                 .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
@@ -166,7 +167,8 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                     .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, 
+                        		GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                             .addComponent(lblNumberOfRequirements)
                             .addComponent(numRequirements)))
