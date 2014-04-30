@@ -183,8 +183,8 @@ public class GamesListPanel extends javax.swing.JPanel {
                 if (requirement
                         && ((GameRequirementModel) node.getUserObject()).equals(
                         		(GameRequirementModel) selectedNodeUserObject)
-                        && ((GameModel) ((DefaultMutableTreeNode) node.getParent()).
-                        		getUserObject()).equals((GameModel) selectedNodeParent)){
+                        && ((GameModel) ((DefaultMutableTreeNode) node.getParent())
+                        		.getUserObject()).equals((GameModel) selectedNodeParent)){
                     gameTree.setSelectionPath(new TreePath(node.getPath()));
                 }
             }

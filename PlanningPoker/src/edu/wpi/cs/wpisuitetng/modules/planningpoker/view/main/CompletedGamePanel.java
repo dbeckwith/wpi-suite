@@ -16,7 +16,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -126,7 +125,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         tableScrollPane.setViewportView(voteResultTable);       
-        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+        final DefaultTableCellRenderer r = new DefaultTableCellRenderer();
         r.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 1; i < voteResultTable.getColumnCount(); i++) {
             voteResultTable.getColumnModel().getColumn(i).setCellRenderer(r);

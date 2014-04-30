@@ -115,7 +115,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
@@ -132,7 +132,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                                         GroupLayout.PREFERRED_SIZE, 172,
                                         GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(84, Short.MAX_VALUE)));
-        GridBagLayout gbl_notificationsPanel = new GridBagLayout();
+        final GridBagLayout gbl_notificationsPanel = new GridBagLayout();
         gbl_notificationsPanel.columnWidths = new int[] { 16, 162, 73, 336, 83,
                 89, 0 };
         gbl_notificationsPanel.rowHeights = new int[] { 40, 42, 10, 47, 0 };
@@ -216,7 +216,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 smsBoxActionPerformed(evt);
             }
         });
-        GridBagConstraints gbc_smsBox = new GridBagConstraints();
+        final GridBagConstraints gbc_smsBox = new GridBagConstraints();
         gbc_smsBox.anchor = GridBagConstraints.WEST;
         gbc_smsBox.insets = new Insets(0, 0, 5, 5);
         gbc_smsBox.gridx = 1;
@@ -287,19 +287,19 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         
         lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 11));
-        GridBagConstraints gbc_lblPhoneNumber = new GridBagConstraints();
+        final GridBagConstraints gbc_lblPhoneNumber = new GridBagConstraints();
         gbc_lblPhoneNumber.anchor = GridBagConstraints.EAST;
         gbc_lblPhoneNumber.insets = new Insets(0, 0, 5, 5);
         gbc_lblPhoneNumber.gridx = 2;
         gbc_lblPhoneNumber.gridy = 0;
         notificationsPanel.add(lblPhoneNumber, gbc_lblPhoneNumber);
-        GridBagConstraints gbc_phoneNumberField = new GridBagConstraints();
+        final GridBagConstraints gbc_phoneNumberField = new GridBagConstraints();
         gbc_phoneNumberField.fill = GridBagConstraints.HORIZONTAL;
         gbc_phoneNumberField.insets = new Insets(0, 0, 5, 5);
         gbc_phoneNumberField.gridx = 3;
         gbc_phoneNumberField.gridy = 0;
         notificationsPanel.add(phoneNumberField, gbc_phoneNumberField);
-        GridBagConstraints gbc_btnSaveSms = new GridBagConstraints();
+        final GridBagConstraints gbc_btnSaveSms = new GridBagConstraints();
         gbc_btnSaveSms.fill = GridBagConstraints.HORIZONTAL;
         gbc_btnSaveSms.insets = new Insets(0, 0, 5, 5);
         gbc_btnSaveSms.gridx = 4;
@@ -311,7 +311,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         lblInvalidPhone.setFont(new Font("Tahoma", Font.BOLD, 11));
         lblInvalidPhone.setForeground(Color.RED);
         lblInvalidPhone.setVisible(false);
-        GridBagConstraints gbc_lblInvalidPhone = new GridBagConstraints();
+        final GridBagConstraints gbc_lblInvalidPhone = new GridBagConstraints();
         gbc_lblInvalidPhone.fill = GridBagConstraints.VERTICAL;
         gbc_lblInvalidPhone.anchor = GridBagConstraints.WEST;
         gbc_lblInvalidPhone.insets = new Insets(0, 0, 5, 0);
@@ -321,7 +321,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         lblMsgAndData = new JLabel("Msg & data rates may apply");
         lblMsgAndData.setFont(new Font("Tahoma", Font.ITALIC, 11));
-        GridBagConstraints gbc_lblMsgAndData = new GridBagConstraints();
+        final GridBagConstraints gbc_lblMsgAndData = new GridBagConstraints();
         gbc_lblMsgAndData.fill = GridBagConstraints.VERTICAL;
         gbc_lblMsgAndData.anchor = GridBagConstraints.EAST;
         gbc_lblMsgAndData.insets = new Insets(0, 0, 5, 5);
@@ -332,7 +332,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         lblCarrier = new JLabel("Carrier :");
         lblCarrier.setFont(new Font("Tahoma", Font.BOLD, 11));
-        GridBagConstraints gbc_lblCarrier = new GridBagConstraints();
+        final GridBagConstraints gbc_lblCarrier = new GridBagConstraints();
         gbc_lblCarrier.anchor = GridBagConstraints.EAST;
         gbc_lblCarrier.insets = new Insets(0, 0, 5, 5);
         gbc_lblCarrier.gridx = 2;
@@ -340,7 +340,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
         carrierBox = new JComboBox<Carrier>();
-        Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier.values()));
+        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier.values()));
         v.remove(Carrier.UNKNOWN);
         v.add(0, Carrier.UNKNOWN);
         carrierBox
@@ -354,13 +354,13 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
             
         });
-        GridBagConstraints gbc_carrierBox = new GridBagConstraints();
+        final GridBagConstraints gbc_carrierBox = new GridBagConstraints();
         gbc_carrierBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_carrierBox.insets = new Insets(0, 0, 5, 5);
         gbc_carrierBox.gridx = 3;
         gbc_carrierBox.gridy = 1;
         notificationsPanel.add(carrierBox, gbc_carrierBox);
-        GridBagConstraints gbc_emailBox = new GridBagConstraints();
+        final GridBagConstraints gbc_emailBox = new GridBagConstraints();
         gbc_emailBox.anchor = GridBagConstraints.WEST;
         gbc_emailBox.insets = new Insets(0, 0, 0, 5);
         gbc_emailBox.gridx = 1;
@@ -369,13 +369,13 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         lblEmail = new JLabel("Email : ");
         lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
-        GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+        final GridBagConstraints gbc_lblEmail = new GridBagConstraints();
         gbc_lblEmail.anchor = GridBagConstraints.EAST;
         gbc_lblEmail.insets = new Insets(0, 0, 0, 5);
         gbc_lblEmail.gridx = 2;
         gbc_lblEmail.gridy = 3;
         notificationsPanel.add(lblEmail, gbc_lblEmail);
-        GridBagConstraints gbc_emailField = new GridBagConstraints();
+        final GridBagConstraints gbc_emailField = new GridBagConstraints();
         gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
         gbc_emailField.insets = new Insets(0, 0, 0, 5);
         gbc_emailField.gridx = 3;
@@ -396,13 +396,13 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             }
             
         });
-        GridBagConstraints gbc_saveEmailButton = new GridBagConstraints();
+        final GridBagConstraints gbc_saveEmailButton = new GridBagConstraints();
         gbc_saveEmailButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_saveEmailButton.insets = new Insets(0, 0, 0, 5);
         gbc_saveEmailButton.gridx = 4;
         gbc_saveEmailButton.gridy = 3;
         notificationsPanel.add(saveEmailButton, gbc_saveEmailButton);
-        GridBagConstraints gbc_errorEmailLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_errorEmailLabel = new GridBagConstraints();
         gbc_errorEmailLabel.anchor = GridBagConstraints.WEST;
         gbc_errorEmailLabel.gridx = 5;
         gbc_errorEmailLabel.gridy = 3;
@@ -445,7 +445,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
-        String phoneNumberText = phoneNumberField.getText();
+    	final String phoneNumberText = phoneNumberField.getText();
         if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(CurrentUserController.getInstance().getUser().getPhoneNumber())) {
             if (!phoneNumberIsGood) {
                 lblInvalidPhone.setText("Invalid Phone #");

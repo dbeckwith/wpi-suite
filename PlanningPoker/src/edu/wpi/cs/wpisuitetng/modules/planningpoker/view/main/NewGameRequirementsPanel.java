@@ -409,7 +409,9 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
                 .getModel();
         
         final int[] selectedRows = requirementsTable.getSelectedRows();
-        if (selectedRows.length == 0) { return; }
+        if (selectedRows.length == 0) { 
+        	return;
+        }
         final boolean selectionValue = !(Boolean) model.getValueAt(
                 selectedRows[0], 0);
         for (int i = 0; i < selectedRows.length; i++) {
