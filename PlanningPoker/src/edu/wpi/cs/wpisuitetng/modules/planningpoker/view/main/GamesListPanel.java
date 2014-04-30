@@ -85,7 +85,8 @@ public class GamesListPanel extends javax.swing.JPanel {
         boolean requirement = false;
         boolean game = false;
         if (gameTree.getSelectionCount() != 0) {
-            final DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) gameTree.getSelectionPath()
+            final DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) gameTree
+            		.getSelectionPath()
                     .getLastPathComponent();
             selectedNodeUserObject = treeNode.getUserObject();
             if (selectedNodeUserObject instanceof GameRequirementModel) {

@@ -131,7 +131,8 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 		
 		if(maxInput != DeckModel.NO_LIMIT){
     		g2.setColor(Color.BLACK);
-    		final String maxString = "Max : " + decimalFormat.format(((SpinnerNumberModel)input.getModel()).getMaximum());
+    		final String maxString = "Max : " + decimalFormat.format(((SpinnerNumberModel)input
+    				.getModel()).getMaximum());
     		g2.setFont(g.getFont().deriveFont(getWidth() * FONT_SIZE * 0.3f));
     		final Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
     		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
@@ -150,7 +151,8 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 		if(deleteListener == null){
 			return;
 		}
-		final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, deleteIcon.getWidth(), deleteIcon.getHeight());
+		final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, 
+				deleteIcon.getWidth(), deleteIcon.getHeight());
 		if(deleteRect.contains(e.getPoint())){
 			
 			deleteListener.actionPerformed(new ActionEvent(this, 0, null));

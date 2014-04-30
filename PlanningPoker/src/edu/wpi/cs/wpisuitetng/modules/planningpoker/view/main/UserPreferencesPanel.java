@@ -446,7 +446,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
     	final String phoneNumberText = phoneNumberField.getText();
-        if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(CurrentUserController.getInstance().getUser().getPhoneNumber())) {
+        if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(CurrentUserController
+        		.getInstance().getUser().getPhoneNumber())) {
             if (!phoneNumberIsGood) {
                 lblInvalidPhone.setText("Invalid Phone #");
                 lblInvalidPhone.setVisible(true);

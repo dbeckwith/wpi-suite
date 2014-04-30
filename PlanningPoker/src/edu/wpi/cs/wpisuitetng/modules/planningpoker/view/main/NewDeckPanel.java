@@ -194,7 +194,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         			.addContainerGap()
         			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(groupLayout.createSequentialGroup()
-        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short
+        							.MAX_VALUE)
         					.addContainerGap())
         				.addGroup(groupLayout.createSequentialGroup()
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -205,13 +206,15 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         						.addGroup(groupLayout.createSequentialGroup()
         							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
         								.addComponent(deckLabel)
-        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 
+        										605, Short.MAX_VALUE)
         								.addComponent(cardLabel)
         								.addGroup(groupLayout.createSequentialGroup()
         									.addComponent(createDeckButton)
         									.addPreferredGap(ComponentPlacement.RELATED)
         									.addComponent(errorLabel)
-        									.addPreferredGap(ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+        									.addPreferredGap(ComponentPlacement.RELATED, 263, Short
+        											.MAX_VALUE)
         									.addComponent(cancelCreationButton)))
         							.addPreferredGap(ComponentPlacement.RELATED))
         						.addComponent(selectionLabel))
@@ -224,7 +227,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         			.addContainerGap()
         			.addComponent(deckLabel)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(newDeckName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(newDeckName, GroupLayout.PREFERRED_SIZE, GroupLayout
+        					.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(cardLabel)
         			.addPreferredGap(ComponentPlacement.RELATED)
@@ -369,7 +373,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		gbc.insets = new Insets(0, 10, 0, 10);
 		cardPanel.add(newCard, gbc);
 		
-		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());
+		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar()
+				.getMaximum());
 		
 		cardPanel.repaint();
 		cardPanel.revalidate();
