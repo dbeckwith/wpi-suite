@@ -84,6 +84,7 @@ public class EmailController {
      *        the subject line of the email
      * @param body
      *        the body of the email
+     * @param SMSbody
      */
     public void sendEmails(String subject, String body, String SMSbody) {
         final EmailSenderThread sender = new EmailSenderThread(subject, body, SMSbody);
@@ -98,7 +99,7 @@ public class EmailController {
      *        the game has ended
      */
     public void sendGameEndNotifications(GameModel game) {
-        String endGameMessageBody = endGameMessageBody(game);
+        final String endGameMessageBody = endGameMessageBody(game);
         sendEmails(END_GAME_SUBJECT, endGameMessageBody, endGameMessageBody);
     }
     

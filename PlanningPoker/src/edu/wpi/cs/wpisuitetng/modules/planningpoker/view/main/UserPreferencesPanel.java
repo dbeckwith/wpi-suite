@@ -143,6 +143,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.setLayout(gbl_notificationsPanel);
         
         emailField = new JTextField();
+        emailField.setToolTipText("The email at which you will recieve notifications.");
         emailField.setColumns(10);
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -305,7 +306,6 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         gbc_btnSaveSms.gridx = 4;
         gbc_btnSaveSms.gridy = 0;
         notificationsPanel.add(btnSaveSms, gbc_btnSaveSms);
-        
         
         lblInvalidPhone = new JLabel("Invalid Phone #");
         lblInvalidPhone.setFont(new Font("Tahoma", Font.BOLD, 11));

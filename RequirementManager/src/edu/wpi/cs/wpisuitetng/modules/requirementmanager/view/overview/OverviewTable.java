@@ -58,7 +58,7 @@ public class OverviewTable extends JTable
 		this.setModel(tableModel);
 		this.setDefaultRenderer(Object.class, new OverviewTableCellRenderer());
 		this.setDefaultEditor(Object.class, new OverviewTableEstimateCellEditor(new JTextField()));
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		this.setDragEnabled(true);
         this.setDropMode(DropMode.ON);
         this.setTransferHandler(new OverviewTableTransferHandler(this));
