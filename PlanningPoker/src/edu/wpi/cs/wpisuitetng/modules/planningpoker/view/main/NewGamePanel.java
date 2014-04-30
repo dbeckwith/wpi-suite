@@ -282,8 +282,7 @@ public class NewGamePanel extends JPanel {
         
         panel_1 = new JPanel();
         scrollPane_1.setViewportView(panel_1);
-        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main
-        		.NewGameDescriptionPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel();
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -380,29 +379,23 @@ public class NewGamePanel extends JPanel {
                                                                         .addComponent(
                                                                                 typeLabel)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
+                                                                                ComponentPlacement.RELATED)
                                                                         .addComponent(
                                                                                 newReqType,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE))
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(
                                                                 gl_newRequirementPanel
                                                                         .createSequentialGroup()
                                                                         .addComponent(
                                                                                 cancelNewReqButton)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
+                                                                                ComponentPlacement.RELATED)
                                                                         .addComponent(
                                                                                 saveNewReqButton)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
+                                                                                ComponentPlacement.RELATED)
                                                                         .addComponent(
                                                                                 newReqErrorsLabel)))
                                         .addContainerGap()));
@@ -654,11 +647,9 @@ public class NewGamePanel extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private JPanel newGameRequirementsCard;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel
-    	newGameRequirementsPanel;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel newGameRequirementsPanel;
     private NewDeckPanel newDeckPanel;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel 
-    	gameDescription;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;
     private JLabel nameLabel;

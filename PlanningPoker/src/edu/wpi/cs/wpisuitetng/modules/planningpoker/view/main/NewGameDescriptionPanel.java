@@ -125,8 +125,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                     
                     private void validate() {
                         parentPanel.setHasChanged(true);
-                        isDescriptionValid = (descriptionField.getText() != null && 
-                        		!descriptionField
+                        isDescriptionValid = (descriptionField.getText() != null && !descriptionField
                                 .getText().isEmpty());
                         setErrorBorder(descriptionField, isDescriptionValid);
                         parentPanel.check();
@@ -233,15 +232,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(descriptionScrollPane, Alignment.LEADING, 
-                        		GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(nameField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 
-                        		529, Short.MAX_VALUE)
+                        .addComponent(descriptionScrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                        .addComponent(nameField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
                         .addComponent(nameLabel, Alignment.LEADING)
                         .addComponent(descriptionLabel, Alignment.LEADING)
                         .addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(deckOptions, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 
-                        		529, Short.MAX_VALUE))
+                        .addComponent(deckOptions, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
                     .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -250,19 +246,15 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                     .addGap(12)
                     .addComponent(nameLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                    		GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.UNRELATED)
                     .addComponent(descriptionLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 106, 
-                    		Short.MAX_VALUE)
+                    .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99,
-                    		GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94,
-                    		GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
         );
         selectDeadline = new javax.swing.JCheckBox();
@@ -320,21 +312,15 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                                                         .addGap(12)
                                                                         .addComponent(
                                                                                 datePicker,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE)
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)
                                                                         .addGap(6)
                                                                         .addComponent(
                                                                                 timeSpinner,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE)))
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)))
                                         .addContainerGap(165, Short.MAX_VALUE)));
         gl_panel_1
                 .setVerticalGroup(gl_panel_1
@@ -367,12 +353,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                                                         .addGap(2)
                                                                         .addComponent(
                                                                                 timeSpinner,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE)))
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE)))
                                         .addContainerGap(35, Short.MAX_VALUE)));
         panel_1.setLayout(gl_panel_1);
         setLayout(layout);
