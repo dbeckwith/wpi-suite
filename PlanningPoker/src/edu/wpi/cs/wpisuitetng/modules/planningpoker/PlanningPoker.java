@@ -15,9 +15,11 @@ import javax.swing.ImageIcon;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.NewGameTutorialController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 
 
@@ -53,6 +55,8 @@ public class PlanningPoker implements IJanewayModule {
 		final MainView mainPanel = new MainView();
 				
 		PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
+		
+		toolbar.getHelpButtons().getHelpButton().addActionListener(new NewGameTutorialController());
 		
 		// Create a tab model that contains the toolbar panel and the main
 		// content panel

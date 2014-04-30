@@ -414,4 +414,8 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener, K
     private JTable requirementsTable;
     private JButton btnSelectAll;
 
+	public JTable getRequirementsTable() {
+		return requirementsTable;
+	}
+
 }

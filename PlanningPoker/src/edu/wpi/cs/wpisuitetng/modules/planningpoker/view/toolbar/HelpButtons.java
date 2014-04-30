@@ -46,15 +46,7 @@ public class HelpButtons extends ToolbarGroupView {
         helpButton.setIcon(ImageLoader.getIcon("help.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(175);
-        
-        helpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PlanningPoker.getViewController().showInteractiveHelp();
-            }
-        });
-        
+        setPreferredWidth(175);        
         
         helpButton.setHorizontalAlignment(SwingConstants.CENTER);
         

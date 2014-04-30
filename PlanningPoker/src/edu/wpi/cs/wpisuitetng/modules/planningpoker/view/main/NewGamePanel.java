@@ -31,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -48,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class NewGamePanel extends JPanel {
+public class NewGamePanel extends JPanel implements AncestorListener {
     private static final long serialVersionUID = 6206697919180272913L;
     private int validateMode = 0;
     
@@ -60,6 +62,8 @@ public class NewGamePanel extends JPanel {
         setBackground(Color.WHITE);
         
         initComponents();
+        
+        addAncestorListener(this);
         
         NewGamePanel.setErrorBorder(newReqName, false);
         NewGamePanel.setErrorBorder(newReqDesc, false);
@@ -650,8 +654,32 @@ public class NewGamePanel extends JPanel {
     	return newGameRequirementsPanel;
     }
     
+    public void setNewGameCallback(ActionListener e){
+    	newGameCallback = e;
+    }
+    
+	@Override
+	public void ancestorAdded(AncestorEvent event) {
+		if(newGameCallback != null){
+			newGameCallback.actionPerformed(new ActionEvent(this, 0, "newgame"));
+			newGameCallback = null;
+		}
+	}
+
+	@Override
+	public void ancestorMoved(AncestorEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ancestorRemoved(AncestorEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
 
     private GameModel game = null;
+    private ActionListener newGameCallback;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
@@ -678,4 +706,6 @@ public class NewGamePanel extends JPanel {
     private boolean hasChanged;
     private JScrollPane scrollPane_1;
     private JPanel panel_1;
+
+
 }

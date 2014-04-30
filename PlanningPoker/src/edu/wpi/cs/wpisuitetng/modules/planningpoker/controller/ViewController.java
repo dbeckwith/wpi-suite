@@ -58,6 +58,7 @@ public class ViewController {
 		this.mainView = mainView;
 		this.toolbar = toolbar;
 		cancelConfirm = new DefaultOptionPane();
+				
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class ViewController {
 				});
 		
 		if(newGameCallback != null){
-			newGameCallback.actionPerformed(new ActionEvent(editGame, mainView.indexOfComponent(editGame), null));
+			editGame.setNewGameCallback(newGameCallback);			
 			newGameCallback = null;
 		}
 
