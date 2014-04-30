@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.io.IOException;
@@ -10,7 +19,11 @@ import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
-
+/**
+ * 
+ * @author Drew
+ *
+ */
 public class DocumentationPanel extends JPanel {
     
     private static final long serialVersionUID = -6863310227330064388L;
@@ -32,12 +45,11 @@ public class DocumentationPanel extends JPanel {
     /**
      * Create the panel.
      */
-    public DocumentationPanel() {
-        //        File file = new File("/res/UserHelp.html");
-        URL helpPage = DocumentationPanel.class
+    private DocumentationPanel() {
+        final URL helpPage = DocumentationPanel.class
                 .getResource("/res/UserHelp.html");
         
-        JEditorPane editorPane = new JEditorPane();
+        final JEditorPane editorPane = new JEditorPane();
         editorPane.setContentType("text/html");
         editorPane.setEditable(false);
         try {
@@ -51,10 +63,10 @@ public class DocumentationPanel extends JPanel {
         }
         
         
-        JScrollPane editorScrollPane = new JScrollPane(editorPane);
+        final JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane
                 .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        GroupLayout groupLayout = new GroupLayout(this);
+        final GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
                 Alignment.LEADING).addComponent(editorScrollPane,
                 GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE));

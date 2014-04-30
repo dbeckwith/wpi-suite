@@ -452,7 +452,7 @@ public class VotePanel extends javax.swing.JPanel {
     	lblTotal.setText(Card.decimalFormat.format(total));
     	
     	if(btnSubmit != null && old != null){
-    		btnSubmit.setEnabled(total != old.getEstimate());
+    		btnSubmit.setEnabled(Float.compare(total, old.getEstimate()) != 0);
     	}
     	
     	repaint();

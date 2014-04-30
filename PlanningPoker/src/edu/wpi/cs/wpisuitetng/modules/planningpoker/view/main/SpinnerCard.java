@@ -115,7 +115,7 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 		if(maxInput != DeckModel.NO_LIMIT && inputValue > maxInput){
 			input.setValue(maxInput);
 		} else {
-			if(inputValue == Float.POSITIVE_INFINITY){
+			if(Float.compare(inputValue, Float.POSITIVE_INFINITY) == 0 ){
 				input.setValue(0);
 			}
 		}
