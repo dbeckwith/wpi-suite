@@ -235,7 +235,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
+        tableScrollPane.setToolTipText("A list of all the users who must vote on this requirement.");
         voteResultTable = new javax.swing.JTable();
+        voteResultTable.setToolTipText("A list of all the users who must vote on this requirement.");
         voteResultTable.setBackground(Color.WHITE);
         
         tableScrollPane.setBackground(Color.WHITE);
@@ -268,6 +270,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(tableScrollPane, gbc_tableScrollPane);
         
         finalEstimateField = new JTextField();
+        finalEstimateField.setToolTipText("The final estimate of this requirement; the final value is it to be given, which may or may not actually be based on users' estimates.");
         finalEstimateField.setColumns(10);
         finalEstimateField.setBackground(Color.WHITE);
         finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -308,6 +311,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(lblGameStatistics, gbc_lblGameStatistics);
         
         lblFinalEstimate = new JLabel("Final Estimate:");
+        lblFinalEstimate.setToolTipText("The final estimate of this requirement; the final value is it to be given, which may or may not actually be based on users' estimates.");
         final GridBagConstraints gbc_lblFinalEstimate = new GridBagConstraints();
         gbc_lblFinalEstimate.anchor = GridBagConstraints.EAST;
         gbc_lblFinalEstimate.insets = new Insets(0, 0, 5, 5);
@@ -341,6 +345,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(votedUsersValueLabel, gbc_votedUsersValueLabel);
         
         final JLabel lblNote = new JLabel("Note:");
+        lblNote.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required.");
         final GridBagConstraints gbc_lblNote = new GridBagConstraints();
         gbc_lblNote.anchor = GridBagConstraints.EAST;
         gbc_lblNote.insets = new Insets(0, 0, 5, 5);
@@ -349,6 +354,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(lblNote, gbc_lblNote);
         
         notePane = new JTextPane();
+        notePane.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required.");
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
         notePane.getDocument().addDocumentListener(new DocumentListener() {
