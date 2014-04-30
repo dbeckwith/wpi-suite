@@ -26,7 +26,8 @@ public class UpdateGamesRequestObserver implements RequestObserver {
      * Parse the game that was received from the server then pass them to the
      * controller when a response is received with a success (2xx) status code.
      * 
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess
+     * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {

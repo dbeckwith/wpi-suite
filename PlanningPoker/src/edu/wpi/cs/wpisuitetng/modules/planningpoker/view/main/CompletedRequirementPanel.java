@@ -75,8 +75,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                finalEstimateField.requestFocusInWindow();
-                finalEstimateField.selectAll();
+                if(!parentModel.isClosed() && parentModel.getOwner().equals(CurrentUserController.USER_NAME)){
+                    finalEstimateField.requestFocusInWindow();
+                    finalEstimateField.selectAll();
+                }
             }
             
             @Override
@@ -169,8 +171,10 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
-        finalEstimateField.requestFocusInWindow();
-        finalEstimateField.selectAll();
+        if(!parentModel.isClosed() && parent_game.getOwner().equals(CurrentUserController.USER_NAME)){
+            finalEstimateField.requestFocusInWindow();
+            finalEstimateField.selectAll();
+        }
         tableModel = new javax.swing.table.DefaultTableModel() {
             
             /**
@@ -179,7 +183,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             private static final long serialVersionUID = 766575328559324615L;
             
             /*
-             * (non-Javadoc)
              * 
              * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
              */
@@ -303,7 +306,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         final JLabel lblGameStatistics = new JLabel("Game Statistics:");
         lblGameStatistics.setFont(new Font("Dialog", Font.BOLD, 12));
-        GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
+        final GridBagConstraints gbc_lblGameStatistics = new GridBagConstraints();
         gbc_lblGameStatistics.fill = GridBagConstraints.HORIZONTAL;
         gbc_lblGameStatistics.insets = new Insets(0, 0, 5, 5);
         gbc_lblGameStatistics.gridx = 1;
@@ -327,7 +330,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(finalEstimateField, gbc_finalEstimateField);
         
         final JLabel votedUsersLabel = new JLabel("Users Voted:");
-        GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
         gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
         gbc_votedUsersLabel.insets = new Insets(0, 0, 5, 5);
@@ -336,7 +339,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(votedUsersLabel, gbc_votedUsersLabel);
         
         votedUsersValueLabel = new JLabel("123");
-        GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
+        final GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
         gbc_votedUsersValueLabel.anchor = GridBagConstraints.SOUTHWEST;
         gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
         gbc_votedUsersValueLabel.gridx = 2;
@@ -383,7 +386,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_notePane.gridx = 5;
         gbc_notePane.gridy = 3;
         add(notePane, gbc_notePane);
-
+        
         meanLabel = new javax.swing.JLabel();
         
         meanLabel.setText("Mean:");
@@ -444,7 +447,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                 saveFinalEstimate();
             }
         });
-
+        
         final GridBagConstraints gbc_saveFinalEstimateButton = new GridBagConstraints();
         gbc_saveFinalEstimateButton.insets = new Insets(0, 0, 5, 5);
         gbc_saveFinalEstimateButton.anchor = GridBagConstraints.WEST;
@@ -539,7 +542,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     btnSaveAndContinue.setEnabled(false);
                 }
                 
-                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req.getParentEstimate())) {
+                if (req.isFromRequirementManager() && (req.getFinalEstimate() != req
+                		.getParentEstimate())) {
                     btnUpdateRequirementManager.setEnabled(true);
                 } else {
                     btnUpdateRequirementManager.setEnabled(false);

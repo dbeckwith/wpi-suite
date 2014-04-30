@@ -70,7 +70,7 @@ public class GameEntityManagerTest {
 
         admin.setRole(Role.ADMIN);
         final GameModel gameUpdates = new GameModel("Updated Game", "Some updates",
-                null,DeckModel.DEFAULT_DECK, new Date(
+                null, DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
         goodUpdatedGame.copyFrom(existingGame);
         goodUpdatedGame.editCopyFrom(gameUpdates);
@@ -220,7 +220,7 @@ public class GameEntityManagerTest {
     @Test
     public void testDeleteAll() throws WPISuiteException {
         final GameModel anotherGame = new GameModel("a title", "a description",
-                null,DeckModel.DEFAULT_DECK, new Date(
+                null, DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
         manager.makeEntity(defaultSession, anotherGame.toJSON());
         Assert.assertEquals(2, db.retrieveAll(new GameModel(), testProject)
