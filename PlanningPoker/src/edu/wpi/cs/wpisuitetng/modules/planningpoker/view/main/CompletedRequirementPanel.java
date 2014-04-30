@@ -75,7 +75,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                if(!parentModel.isClosed()){
+                if(!parentModel.isClosed() && parentModel.getOwner().equals(CurrentUserController.USER_NAME)){
                     finalEstimateField.requestFocusInWindow();
                     finalEstimateField.selectAll();
                 }
@@ -171,7 +171,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
-        if(!parentModel.isClosed()){
+        if(!parentModel.isClosed() && parent_game.getOwner().equals(CurrentUserController.USER_NAME)){
             finalEstimateField.requestFocusInWindow();
             finalEstimateField.selectAll();
         }
