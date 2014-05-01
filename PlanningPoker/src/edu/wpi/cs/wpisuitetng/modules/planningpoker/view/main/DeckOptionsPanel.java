@@ -53,7 +53,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
      */
     private static final long serialVersionUID = -3228337947577586565L;
 
-    private NewGameDescriptionPanel parent;
+    private NewGameDescriptionPanel parentPanel;
 	
 	private JCheckBox useDeck;
 	private JComboBox<DeckModel> savedDecks;
@@ -78,7 +78,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 				.TOP, null, null));
 		
 		useDeck = new JCheckBox("Deck:");
-		useDeck.setToolTipText("Uncheck this box to not have a deck for this game and instead allow users to input estimates manually.");
+		useDeck.setToolTipText("Uncheck this box to not have a deck for this game and instead allow users to input estimates manually."); // $codepro.audit.disable lineLength
 		useDeck.setSelected(true);
 		useDeck.addActionListener(new ActionListener() {
 			@Override
@@ -93,7 +93,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		useDeck.setBackground(Color.WHITE);
 		
 		savedDecks = new JComboBox<DeckModel>();
-		savedDecks.setToolTipText("The currently selected deck for estimating requirements of this game.");
+		savedDecks.setToolTipText("The currently selected deck for estimating requirements of this game."); // $codepro.audit.disable lineLength
 		
 		savedDecks.addActionListener(this);
 		
@@ -101,14 +101,14 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 		newDeckButton.setToolTipText("Create a new deck for estimating this game.");
 		
 		final JLabel lblMaximumEstimate = new JLabel("Maximum Estimate:");
-		lblMaximumEstimate.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit.");
+		lblMaximumEstimate.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit."); // $codepro.audit.disable lineLength
 		
 		final JLabel lblForNo = new JLabel("(0 for no limit)");
-		lblForNo.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit.");
+		lblForNo.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit."); // $codepro.audit.disable lineLength
 		lblForNo.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		
 		maxSpinner = new JSpinner();
-		maxSpinner.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit.");
+		maxSpinner.setToolTipText("The maximum allowed estimate for this game if it has no deck. Enter a value of 0 to indicate no limit."); // $codepro.audit.disable lineLength
 		maxSpinner.addChangeListener(this);
 		maxSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), 
 				null, new Integer(1)));
@@ -162,7 +162,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	}
 	
 	public void setParent(NewGameDescriptionPanel p){
-		parent = p;
+		parentPanel = p;
 	}
 	
 	/**
@@ -266,22 +266,22 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
     /**
      * Set the selected deck in the savedDecks combo box to the newest deck
      */
-    public void setNewDeck(){
+    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         savedDecks.setSelectedIndex(savedDecks.getItemCount() - 1);
     }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(parent != null){ 
-			parent.checkParent();
+		if(parentPanel != null){ 
+			parentPanel.checkParent();
 		}
 		
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		if(parent != null){
-			parent.checkParent();
+		if(parentPanel != null){
+			parentPanel.checkParent();
 		}
 	}
 }

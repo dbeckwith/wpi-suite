@@ -10,7 +10,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -23,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
@@ -85,13 +89,13 @@ public class GamesListPanel extends javax.swing.JPanel {
         boolean requirement = false;
         boolean game = false;
         if (gameTree.getSelectionCount() != 0) {
-            final DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) gameTree.getSelectionPath()
-                    .getLastPathComponent();
+            final DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) gameTree
+                    .getSelectionPath().getLastPathComponent();
             selectedNodeUserObject = treeNode.getUserObject();
             if (selectedNodeUserObject instanceof GameRequirementModel) {
                 requirement = true;
                 selectedNodeParent = ((DefaultMutableTreeNode) treeNode.getParent())
-                		.getUserObject();
+                        .getUserObject();
             }
             else if (selectedNodeUserObject instanceof GameModel) {
                 game = true;
@@ -103,10 +107,42 @@ public class GamesListPanel extends javax.swing.JPanel {
                 "Games in Progress (0)");
         final DefaultMutableTreeNode completeFolder = new DefaultMutableTreeNode(
                 "Completed Games (0)");
-        final DefaultMutableTreeNode closedFolder = new DefaultMutableTreeNode(
-                "Closed Games (0)");
+        final DefaultMutableTreeNode closedFolder = new DefaultMutableTreeNode("Closed Games (0)");
         // rebuild the tree
         final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
+        
+        List<GameModel> games = GameListModel.getInstance().getGames(); // $codepro.audit.disable variableShouldBeFinal
+        Collections.sort(games, new Comparator<GameModel>() {
+            @Override
+            public int compare(GameModel gm1, GameModel gm2) {
+                
+                final GameStatus gs1 = gm1.getStatus();
+                final GameStatus gs2 = gm2.getStatus();
+                final int compareGameStatus = gs1.compareTo(gs2);
+                int toReturn;
+                if (compareGameStatus != 0) {
+                    toReturn = compareGameStatus;
+                    
+                }
+                else if (gs1 == GameStatus.COMPLETE || gs1 == GameStatus.CLOSED) {
+                    toReturn = -(gm1.getEndTime().compareTo(gm2.getEndTime()));
+                    
+                }
+                else if (gm1.getID() > gm2.getID()) {
+                    toReturn = -1;
+                    
+                }
+                else if (gm1.getID() < gm2.getID()) {
+                    toReturn = 1;
+                    
+                }
+                else {
+                    toReturn = 0;
+                    
+                }
+                return toReturn;
+            }
+        });
         
         rootNode.add(pendingFolder);
         rootNode.add(completeFolder);
@@ -138,8 +174,8 @@ public class GamesListPanel extends javax.swing.JPanel {
             }
             pendingFolder
                     .setUserObject("Games in Progress (" + pendingFolder.getChildCount() + ")");
-            completeFolder.setUserObject("Completed Games (" + completeFolder.getChildCount() 
-            		+ ")");
+            completeFolder
+                    .setUserObject("Completed Games (" + completeFolder.getChildCount() + ")");
             closedFolder.setUserObject("Closed Games (" + closedFolder.getChildCount() + ")");
         }
         if (completeFolder.getChildCount() == 0) {
@@ -164,8 +200,7 @@ public class GamesListPanel extends javax.swing.JPanel {
             node = (DefaultMutableTreeNode) treeEnum.nextElement();
             if (node.getUserObject() != null
                     && ((node.getUserObject() instanceof GameModel && expandedGames.contains(node
-                            .getUserObject())) || node == pendingFolder || node == completeFolder 
-                            || node == closedFolder)) {
+                            .getUserObject())) || node == pendingFolder || node == completeFolder || node == closedFolder)) {
                 // if the node's game was in the list,
                 // or the node is a folder of games, expand it
                 gameTree.expandPath(new TreePath(node.getPath()));
@@ -181,18 +216,17 @@ public class GamesListPanel extends javax.swing.JPanel {
             if (node.getUserObject() != null
                     && node.getUserObject() instanceof GameRequirementModel) {
                 if (requirement
-                        && ((GameRequirementModel) node.getUserObject()).equals(
-                        		(GameRequirementModel) selectedNodeUserObject)
-                        && ((GameModel) ((DefaultMutableTreeNode) node.getParent()).
-                        		getUserObject()).equals((GameModel) selectedNodeParent)){
+                        && ((GameRequirementModel) node.getUserObject())
+                                .equals((GameRequirementModel) selectedNodeUserObject)
+                        && ((GameModel) ((DefaultMutableTreeNode) node.getParent()).getUserObject())
+                                .equals((GameModel) selectedNodeParent)) {
                     gameTree.setSelectionPath(new TreePath(node.getPath()));
                 }
             }
             else if (node.getUserObject() != null && node.getUserObject() instanceof GameModel) {
                 if (game
-                        && ((GameModel) node.getUserObject()).getID() == ((GameModel) 
-                        		selectedNodeUserObject)
-                                .getID()){
+                        && ((GameModel) node.getUserObject()).getID() == ((GameModel) selectedNodeUserObject)
+                                .getID()) {
                     gameTree.setSelectionPath(new TreePath(node.getPath()));
                 }
             }
@@ -206,8 +240,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         gameTree = new javax.swing.JTree();
         gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
         gameTree.setRootVisible(false);
-        gameTree.getSelectionModel().setSelectionMode
-        (TreeSelectionModel.SINGLE_TREE_SELECTION);
+        gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         
         jScrollPane2.setViewportView(gameTree);
         

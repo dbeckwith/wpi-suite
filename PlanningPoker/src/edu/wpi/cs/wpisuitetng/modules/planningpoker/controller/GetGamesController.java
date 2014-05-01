@@ -80,7 +80,7 @@ public class GetGamesController implements ActionListener {
      * @param games
      *        array of games received from the server
      */
-    public void receivedGames(GameModel[] games) {
+    public void receivedGames(GameModel[] games) { // $codepro.audit.disable methodShouldBeStatic
         // Make sure the response was not null
         if (games != null) {
             // add the games to the local model
