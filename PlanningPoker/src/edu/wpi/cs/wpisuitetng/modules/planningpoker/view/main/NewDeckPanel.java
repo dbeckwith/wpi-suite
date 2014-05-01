@@ -90,7 +90,9 @@ public class NewDeckPanel extends JPanel implements ActionListener {
             }
             
             private void validate() {
+                boolean alreadyReturned = false;
                 for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
+                    
                     if (deck.toString().equals(newDeckName.getText().trim())
                             || newDeckName.getText().equals("Default")
                             || newDeckName.getText().equals("No deck")
@@ -99,22 +101,28 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                         nameInUse = true;
                         setErrorBorder(newDeckName, isNameValid);
                         checkNewDeck();
-                        return;
+                        alreadyReturned = true;
+                        break;
+                        
                     }
                 }
-                nameInUse = false;
+                if (!alreadyReturned){
+                    nameInUse = false;
+                    
+                    isNameValid = newDeckName.getText() != null
+                            && !newDeckName.getText().trim().isEmpty();
+                    
+                    setErrorBorder(newDeckName, isNameValid);
+                    
+                    checkNewDeck();
+                }
+       
                 
-                isNameValid = newDeckName.getText() != null
-                        && !newDeckName.getText().trim().isEmpty();
-                
-                setErrorBorder(newDeckName, isNameValid);
-                
-                checkNewDeck();
             }
         });
         
         final JLabel cardLabel = new JLabel("Cards: *");
-        cardLabel.setToolTipText("The list of cards the user will be able to select in order to make their estimate.");
+        cardLabel.setToolTipText("The list of cards the user will be able to select in order to make their estimate."); // $codepro.audit.disable lineLength
 
         createDeckButton = new JButton("Create Deck");
         createDeckButton.setToolTipText("Create and save this deck.");
@@ -146,6 +154,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 parentPanel.setNewDeck();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
+
             }
         });
         
@@ -161,12 +170,12 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         final ButtonGroup selectionGroup = new ButtonGroup();
         
         final JRadioButton singleSelect = new JRadioButton("Single");
-        singleSelect.setToolTipText("Single selection mode only allows the user to select one card from the deck.");
+        singleSelect.setToolTipText("Single selection mode only allows the user to select one card from the deck."); // $codepro.audit.disable lineLength
         singleSelect.setBackground(Color.WHITE);
         singleSelect.setSelected(true);
         
         multipleSelect = new JRadioButton("Multiple");
-        multipleSelect.setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate.");
+        multipleSelect.setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate."); // $codepro.audit.disable lineLength
         multipleSelect.setBackground(Color.WHITE);
         
         selectionGroup.add(singleSelect);
@@ -204,7 +213,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         			.addContainerGap()
         			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(groupLayout.createSequentialGroup()
-        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short
+        							.MAX_VALUE)
         					.addContainerGap())
         				.addGroup(groupLayout.createSequentialGroup()
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -215,13 +225,15 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         						.addGroup(groupLayout.createSequentialGroup()
         							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
         								.addComponent(deckLabel)
-        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 
+        										605, Short.MAX_VALUE)
         								.addComponent(cardLabel)
         								.addGroup(groupLayout.createSequentialGroup()
         									.addComponent(createDeckButton)
         									.addPreferredGap(ComponentPlacement.RELATED)
         									.addComponent(errorLabel)
-        									.addPreferredGap(ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+        									.addPreferredGap(ComponentPlacement.RELATED, 263, Short
+        											.MAX_VALUE)
         									.addComponent(cancelCreationButton)))
         							.addPreferredGap(ComponentPlacement.RELATED))
         						.addComponent(selectionLabel))
@@ -234,7 +246,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         			.addContainerGap()
         			.addComponent(deckLabel)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(newDeckName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(newDeckName, GroupLayout.PREFERRED_SIZE, GroupLayout
+        					.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(cardLabel)
         			.addPreferredGap(ComponentPlacement.RELATED)
@@ -384,7 +397,8 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		gbc.insets = new Insets(0, 10, 0, 10);
 		cardPanel.add(newCard, gbc);
 		
-		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());
+		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar()
+				.getMaximum());
 		
 		cardPanel.repaint();
 		cardPanel.revalidate();

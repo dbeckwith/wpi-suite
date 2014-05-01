@@ -149,7 +149,6 @@ public class ViewController {
             }
         }
         
-
         AddGameController.getInstance().addGame(newGame);
     }
     
@@ -368,12 +367,13 @@ public class ViewController {
         
     }
     
-    /**
-     * @return true if admin controls are visible
-     */
-    public boolean getAdminVisibility() {
-        return showAdmin;
-    }
+
+	/**
+	 * @return true if admin controls are visible
+	 */
+	public boolean getAdminVisibility() { // $codepro.audit.disable booleanMethodNamingConvention
+		return showAdmin;
+	}
     
     /**
      * Adds a help documentation panel

@@ -70,7 +70,7 @@ public class GetParentRequirementController extends
      * @return the requirement from the requirement manager or null if the
      *         requirement does not exist in the requirement manager
      */
-    public Requirement getParentRequirement(int id) {
+    public Requirement getParentRequirement(int id) { // $codepro.audit.disable methodShouldBeStatic
         Requirement toReturn = null;
         retrieveRequirements();
         if (getRequirements() != null) {

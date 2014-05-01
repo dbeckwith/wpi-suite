@@ -107,11 +107,15 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
     @Override
     public float getEstimateValue(){
     	final float enteredValue = ((Number)(input.getModel().getValue())).floatValue();
+    	float toReturn;
     	if(maxInput != DeckModel.NO_LIMIT){
-			return (float) Math.min(maxInput, enteredValue);
+    	    toReturn = (float) Math.min(maxInput, enteredValue);
+			
 		} else {
-			return enteredValue;
+		    toReturn = enteredValue;
+			
 		}
+    	return toReturn;
     }
     
 	@Override
@@ -120,7 +124,7 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 		if(maxInput != DeckModel.NO_LIMIT && inputValue > maxInput){
 			input.setValue(maxInput);
 		} else {
-			if(inputValue == Float.POSITIVE_INFINITY){
+			if(Float.compare(inputValue, Float.POSITIVE_INFINITY) == 0 ){
 				input.setValue(0);
 			}
 		}
@@ -136,7 +140,8 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 		
 		if(maxInput != DeckModel.NO_LIMIT){
     		g2.setColor(Color.BLACK);
-    		final String maxString = "Max : " + decimalFormat.format(((SpinnerNumberModel)input.getModel()).getMaximum());
+    		final String maxString = "Max : " + decimalFormat.format(((SpinnerNumberModel)input
+    				.getModel()).getMaximum());
     		g2.setFont(g.getFont().deriveFont(getWidth() * FONT_SIZE * 0.3f));
     		final Rectangle2D r = g2.getFontMetrics().getStringBounds(maxString, g);
     		g2.drawString(maxString, (int) (getWidth() - r.getWidth()) / 2,
@@ -152,14 +157,20 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+	    boolean alreadyReturned = false;
 		if(deleteListener == null){
-			return;
-		}
-		final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, deleteIcon.getWidth(), deleteIcon.getHeight());
-		if(deleteRect.contains(e.getPoint())){
+		    alreadyReturned = true;
 			
-			deleteListener.actionPerformed(new ActionEvent(this, 0, null));
 		}
+		if (!alreadyReturned){
+		    final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, 
+	                deleteIcon.getWidth(), deleteIcon.getHeight());
+	        if(deleteRect.contains(e.getPoint())){
+	            
+	            deleteListener.actionPerformed(new ActionEvent(this, 0, null));
+	        }
+		}
+		
 	}
 
 	@Override

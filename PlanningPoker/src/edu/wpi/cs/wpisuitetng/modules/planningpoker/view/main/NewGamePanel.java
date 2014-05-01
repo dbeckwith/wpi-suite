@@ -218,7 +218,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         errorLabel.setForeground(Color.RED);
         
         undoButton = new JButton("Undo Changes");
-        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state.");
+        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state."); // $codepro.audit.disable lineLength
         undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
         undoButton.addActionListener(new ActionListener() {
             @Override
@@ -301,7 +301,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         
         panel_1 = new JPanel();
         scrollPane_1.setViewportView(panel_1);
-        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main
+        		.NewGameDescriptionPanel();
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -398,23 +399,29 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                                                                         .addComponent(
                                                                                 typeLabel)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement.RELATED)
+                                                                                ComponentPlacement
+                                                                                .RELATED)
                                                                         .addComponent(
                                                                                 newReqType,
-                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE,
+                                                                                GroupLayout
+                                                                                .DEFAULT_SIZE,
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE))
                                                         .addGroup(
                                                                 gl_newRequirementPanel
                                                                         .createSequentialGroup()
                                                                         .addComponent(
                                                                                 cancelNewReqButton)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement.RELATED)
+                                                                                ComponentPlacement
+                                                                                .RELATED)
                                                                         .addComponent(
                                                                                 saveNewReqButton)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement.RELATED)
+                                                                                ComponentPlacement
+                                                                                .RELATED)
                                                                         .addComponent(
                                                                                 newReqErrorsLabel)))
                                         .addContainerGap()));
@@ -470,17 +477,23 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     }// </editor-fold>//GEN-END:initComponents
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        boolean alreadyReturned = false;
         if (!(newGameRequirementsPanel.canValidateForm() && gameDescription
                 .canValidateForm())) {
             check();
-            return;
+            alreadyReturned = true;
+            
         }
-        if (game == null) {
-            PlanningPoker.getViewController().saveNewGame(this);
+        if (!alreadyReturned){
+            if (game == null) {
+                PlanningPoker.getViewController().saveNewGame(this);
+            }
+            else {
+                PlanningPoker.getViewController().updateGame(game, this);
+            }
         }
-        else {
-            PlanningPoker.getViewController().updateGame(game, this);
-        }
+          
+        
     }
     
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,14 +663,14 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         hasChanged = b;
     }
     
-    public boolean getHasChanged() {
+    public boolean getHasChanged() { // $codepro.audit.disable booleanMethodNamingConvention
         return hasChanged;
     }
     
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){
+    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         gameDescription.setNewDeck();
     }
     
@@ -720,6 +733,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private NewGameRequirementsPanel newGameRequirementsPanel;
     private NewDeckPanel newDeckPanel;
     private NewGameDescriptionPanel gameDescription;
+
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;
     private JLabel nameLabel;

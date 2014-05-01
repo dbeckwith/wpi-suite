@@ -69,8 +69,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         //set default game name
         final Calendar now = new GregorianCalendar();
         final int gameCount = GameListModel.getInstance().getGames().size();
-        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-        final String formatted = formatter.format(now.getTime());
+        final SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        final String formatted = dateFormatter.format(now.getTime());
         nameField.setText(String.format("Game %d - ", gameCount + 1)
                 + formatted);
         isNameValid = true;
@@ -125,7 +125,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                     
                     private void validate() {
                         parentPanel.setHasChanged(true);
-                        isDescriptionValid = (descriptionField.getText() != null && !descriptionField
+                        isDescriptionValid = (descriptionField.getText() != null && 
+                        		!descriptionField
                                 .getText().isEmpty());
                         setErrorBorder(descriptionField, isDescriptionValid);
                         parentPanel.check();
@@ -236,12 +237,15 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(descriptionScrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(nameField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                        .addComponent(descriptionScrollPane, Alignment.LEADING, GroupLayout
+                        		.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                        .addComponent(nameField, Alignment.LEADING, GroupLayout
+                        		.DEFAULT_SIZE, 529, Short.MAX_VALUE)
                         .addComponent(nameLabel, Alignment.LEADING)
                         .addComponent(descriptionLabel, Alignment.LEADING)
                         .addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(deckOptions, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
+                        .addComponent(deckOptions, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
+                        		529, Short.MAX_VALUE))
                     .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -250,19 +254,23 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                     .addGap(12)
                     .addComponent(nameLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout
+                    		.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.UNRELATED)
                     .addComponent(descriptionLabel)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 
+                    		106, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99, 
+                    		GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94, 
+                    		GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
         );
         selectDeadline = new javax.swing.JCheckBox();
-        selectDeadline.setToolTipText("If checked, the game will end itself automatically at the specified date.");
+        selectDeadline.setToolTipText("If checked, the game will end itself automatically at the specified date."); // $codepro.audit.disable lineLength
         selectDeadline.setBackground(Color.WHITE);
         
         selectDeadline.setText("Deadline");
@@ -280,7 +288,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         datePicker = new JXDatePicker(getDefaultDate());
         datePicker.setToolTipText("The date that the game will end itself automatically.");
-        datePicker.getEditor().setToolTipText("The date that the game will end itself automatically.");
+        datePicker.getEditor().setToolTipText("The date that the game will end itself automatically."); // $codepro.audit.disable lineLength
         final JButton eDate = (JButton) datePicker.getComponent(1);
         final JButton dateBtn = (JButton) datePicker.getComponent(1);
         dateBtn.remove(eDate);
@@ -321,15 +329,21 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                                                         .addGap(12)
                                                                         .addComponent(
                                                                                 datePicker,
-                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE,
+                                                                                GroupLayout
+                                                                                .DEFAULT_SIZE,
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE)
                                                                         .addGap(6)
                                                                         .addComponent(
                                                                                 timeSpinner,
-                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.PREFERRED_SIZE)))
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE,
+                                                                                GroupLayout
+                                                                                .DEFAULT_SIZE,
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE)))
                                         .addContainerGap(165, Short.MAX_VALUE)));
         gl_panel_1
                 .setVerticalGroup(gl_panel_1
@@ -362,9 +376,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                                                         .addGap(2)
                                                                         .addComponent(
                                                                                 timeSpinner,
-                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.PREFERRED_SIZE)))
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE,
+                                                                                GroupLayout
+                                                                                .DEFAULT_SIZE,
+                                                                                GroupLayout
+                                                                                .PREFERRED_SIZE)))
                                         .addContainerGap(35, Short.MAX_VALUE)));
         panel_1.setLayout(gl_panel_1);
         setLayout(layout);
@@ -422,18 +439,24 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     public boolean canValidateDeadline() {
     	final boolean valid;
     	
+    	boolean toReturn;
         datePicker.setEnabled(selectDeadline.isSelected());
         timeSpinner.setEnabled(selectDeadline.isSelected());
         
         if (!selectDeadline.isSelected()) { 
-        	return true;
+            toReturn = true;
+        	
         }
+        else{
+            final Date currentDate = new Date();
+            final Date enteredDate = getDate();
+            
+            valid = enteredDate.after(currentDate);
+            toReturn = valid;
+            
+        }
+        return toReturn;
         
-        final Date currentDate = new Date();
-        final Date enteredDate = getDate();
-        
-        valid = enteredDate.after(currentDate);
-        return valid;
     }
     
     /**
@@ -529,7 +552,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){
+    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         deckOptions.setNewDeck();
     }
 
