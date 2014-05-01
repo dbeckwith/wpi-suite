@@ -283,6 +283,7 @@ public class GameModel extends AbstractModel implements Serializable {
                 : GameStatus.PENDING;
         if (status != new_status && status == GameStatus.PENDING) {
             status = new_status;
+            endDate = new Date();
             for (int i = 0; i < status_observers.size(); i++) {
                 status_observers.get(i).statusChanged(this);
             }
