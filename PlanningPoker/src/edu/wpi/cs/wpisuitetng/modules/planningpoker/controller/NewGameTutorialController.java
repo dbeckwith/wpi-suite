@@ -12,7 +12,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
@@ -106,6 +105,7 @@ public class NewGameTutorialController implements ActionListener {
 				break;
 	
 			case EditName:
+				newTab = (NewGamePanel)e.getSource();
 				editName();
 				break;
 				
@@ -174,7 +174,6 @@ public class NewGameTutorialController implements ActionListener {
 	 * Sets up the tutorial for editing the game name
 	 */
 	private void editName(){
-		newTab = (NewGamePanel) e.getSource();
 		Component nameField = newTab.getDescriptionPanel().getNameField();
 		tPane.setHighlightArea(nameField, currentStep.message);
 		tPane.setNextButtonCallback(this);
