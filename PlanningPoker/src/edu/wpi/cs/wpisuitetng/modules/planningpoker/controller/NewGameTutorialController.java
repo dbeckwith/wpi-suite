@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (c) 2013 -- WPI Suite
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.Component;
@@ -16,6 +24,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
+/**
+ * Guides the user through the process of creating and starting a new game
+ *
+ * @author Team 9
+ * @version 1.0
+ */
 public class NewGameTutorialController implements ActionListener {
 
 	private enum Step {
@@ -48,6 +62,9 @@ public class NewGameTutorialController implements ActionListener {
 	
 	private boolean quit = false;
 
+	/**
+	 * Constructor
+	 */
 	public NewGameTutorialController() {
 		viewController = PlanningPoker.getViewController();
 
@@ -69,6 +86,9 @@ public class NewGameTutorialController implements ActionListener {
 	}
 
 
+	/**
+	 * Handles the events this tutorial subscribed to in order
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(quit){
@@ -144,6 +164,7 @@ public class NewGameTutorialController implements ActionListener {
 			case SaveGame:
 				newTab.setSaveGameCallback(this);
 				tPane.setHighlightArea(newTab.getSaveButton(), currentStep.message);
+				currentStep = Step.StartGame;
 				break;
 			case StartGame:
 				tPane.clear();
