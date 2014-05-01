@@ -29,7 +29,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.AddRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -586,6 +585,7 @@ public class ViewEventController {
 					        continue;
 					    }
 						req.setId(RequirementModel.getInstance().getNextID());
+						req.getHistory().add("Imported");
 						AddRequirementController.getInstance().addRequirement(req);
 						RequirementModel.getInstance().addRequirement(req);
 					}
@@ -658,6 +658,7 @@ public class ViewEventController {
 				selectedRequirements[i].copyFrom(original);
 				selectedRequirements[i].setIteration("Backlog");
 				selectedRequirements[i].setEstimate(0);
+				selectedRequirements[i].getHistory().add("Exported");
 			}
 			String json = new Gson().toJson(selectedRequirements, selectedRequirements.getClass());
 			
