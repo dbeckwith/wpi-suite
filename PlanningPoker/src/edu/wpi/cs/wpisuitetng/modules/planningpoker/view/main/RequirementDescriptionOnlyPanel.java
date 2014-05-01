@@ -115,7 +115,8 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
                                                                         layout.createParallelGroup(
                                                                                 Alignment.LEADING)
                                                                                 .addGroup(
-                                                                                        layout.createSequentialGroup()
+                                                                                        layout
+                                                                                        .createSequentialGroup()
                                                                                                 .addPreferredGap(
                                                                                                         ComponentPlacement.RELATED)
                                                                                                 .addComponent(

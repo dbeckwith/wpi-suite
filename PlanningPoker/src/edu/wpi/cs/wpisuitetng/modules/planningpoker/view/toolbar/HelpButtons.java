@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class HelpButtons extends ToolbarGroupView {
+public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable typeNamesMustBeSingular, lineLength
     
     private static final long serialVersionUID = 1902038690593121709L;
     

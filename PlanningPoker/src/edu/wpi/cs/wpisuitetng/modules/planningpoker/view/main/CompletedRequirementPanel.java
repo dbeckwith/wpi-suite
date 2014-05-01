@@ -76,7 +76,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                if(!parentModel.isClosed() && parentModel.getOwner().equals(CurrentUserController.USER_NAME)){
+                if(!parentModel.isClosed() && parentModel.getOwner().equals(CurrentUserController
+                		.USER_NAME)){
                     finalEstimateField.requestFocusInWindow();
                     finalEstimateField.selectAll();
                 }
@@ -173,7 +174,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         else {
             finalEstimateField.setText(req.getFinalEstimate() + "");
         }
-        if(!parentModel.isClosed() && parent_game.getOwner().equals(CurrentUserController.USER_NAME)){
+        if(!parentModel.isClosed() && parent_game.getOwner().equals(CurrentUserController
+        		.USER_NAME)){
             finalEstimateField.requestFocusInWindow();
             finalEstimateField.selectAll();
         }
@@ -238,9 +240,9 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         setLayout(gridBagLayout);
         tableScrollPane = new javax.swing.JScrollPane();
-        tableScrollPane.setToolTipText("A list of all the users who must vote on this requirement.");
+        tableScrollPane.setToolTipText("A list of all the users who must vote on this requirement."); // $codepro.audit.disable lineLength
         voteResultTable = new javax.swing.JTable();
-        voteResultTable.setToolTipText("A list of all the users who must vote on this requirement.");
+        voteResultTable.setToolTipText("A list of all the users who must vote on this requirement."); // $codepro.audit.disable lineLength
         voteResultTable.setBackground(Color.WHITE);
         
         tableScrollPane.setBackground(Color.WHITE);
@@ -273,7 +275,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(tableScrollPane, gbc_tableScrollPane);
         
         finalEstimateField = new JTextField();
-        finalEstimateField.setToolTipText("The final estimate of this requirement; the final value is it to be given, which may or may not actually be based on users' estimates.");
+        finalEstimateField.setToolTipText("The final estimate of this requirement; the final value is it to be given, which may or may not actually be based on users' estimates."); // $codepro.audit.disable lineLength
         finalEstimateField.setColumns(10);
         finalEstimateField.setBackground(Color.WHITE);
         finalEstimateField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -314,7 +316,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(lblGameStatistics, gbc_lblGameStatistics);
         
         lblFinalEstimate = new JLabel("Final Estimate:");
-        lblFinalEstimate.setToolTipText("The final estimate of this requirement; the final value is it to be given, which may or may not actually be based on users' estimates.");
+        lblFinalEstimate.setToolTipText("The final estimate of this requirement; the final value is it to be given, which may or may not actually be based on users' estimates."); // $codepro.audit.disable lineLength
         final GridBagConstraints gbc_lblFinalEstimate = new GridBagConstraints();
         gbc_lblFinalEstimate.anchor = GridBagConstraints.EAST;
         gbc_lblFinalEstimate.insets = new Insets(0, 0, 5, 5);
@@ -348,7 +350,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(votedUsersValueLabel, gbc_votedUsersValueLabel);
         
         final JLabel lblNote = new JLabel("Note:");
-        lblNote.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required.");
+        lblNote.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required."); // $codepro.audit.disable lineLength
         final GridBagConstraints gbc_lblNote = new GridBagConstraints();
         gbc_lblNote.anchor = GridBagConstraints.EAST;
         gbc_lblNote.insets = new Insets(0, 0, 5, 5);
@@ -357,7 +359,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(lblNote, gbc_lblNote);
         
         notePane = new JTextPane();
-        notePane.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required.");
+        notePane.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required."); // $codepro.audit.disable lineLength
         notePane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
         notePane.getDocument().addDocumentListener(new DocumentListener() {
@@ -472,7 +474,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         
-        GridBagConstraints gbc_saveAndUpdateButton = new GridBagConstraints();
+        final GridBagConstraints gbc_saveAndUpdateButton = new GridBagConstraints();
         gbc_saveAndUpdateButton.insets = new Insets(0, 0, 5, 5);
         gbc_saveAndUpdateButton.gridx = 8;
         gbc_saveAndUpdateButton.gridy = 8;
@@ -483,7 +485,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     /**
      * Validates the user inputs so the GUI can react accordingly
      */
-    private void validatePanel() {
+    private void validatePanel() { // $codepro.audit.disable methodShouldBeStatic
         SwingUtilities.invokeLater(new Runnable() {
             
             @Override

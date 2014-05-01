@@ -87,7 +87,7 @@ public abstract class AbstractRequirementController {
      * 
      * @return timeOut value
      */
-    protected boolean requestTimedOut() {
+    protected boolean requestTimedOut() { // $codepro.audit.disable booleanMethodNamingConvention
         return timedOut;
     }
     

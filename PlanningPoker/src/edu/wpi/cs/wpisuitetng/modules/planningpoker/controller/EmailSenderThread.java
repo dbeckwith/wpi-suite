@@ -95,7 +95,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
      * Sends the email to all users who have chosen to receive email
      * notifications.
      */
-    private void sendEmail(User u, String emailAddress, String theSubject, String theBody) {
+    private void sendEmail(User u, String emailAddress, String theSubject, String theBody) { // $codepro.audit.disable methodShouldBeStatic, lineLength
         System.setProperty("java.net.preferIPv4Stack", "true"); //$NON-NLS-2$ //$NON-NLS-1$
         try {
             final Email email = new SimpleEmail();
@@ -106,8 +106,8 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
             email.addTo(emailAddress);
             email.setSubject(theSubject);
             email.setFrom(EMAIL_ADDRESS);
-            email.setMsg("Dear " + u.getName() + "," //$NON-NLS-1$ // $codepro.audit.disable disallowStringConcatenation
-                    + System.getProperty("line.separator") + theBody); //$NON-NLS-1$
+            email.setMsg("Dear " + u.getName() + "," + System.getProperty("line.separator") + 
+            		theBody); //$NON-NLS-1$
             email.send();
         }
         catch (EmailException e) {

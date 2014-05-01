@@ -117,7 +117,7 @@ public class GameTimeoutObserver extends Thread {
     /**
      * Check to see if the game has finished.
      */
-    private boolean finished() {
+    private boolean finished() { // $codepro.audit.disable booleanMethodNamingConvention
         return toGMT(new Date()).after(endDate);
     }
     
