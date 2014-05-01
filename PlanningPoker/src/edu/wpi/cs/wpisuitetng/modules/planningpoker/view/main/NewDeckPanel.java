@@ -90,7 +90,9 @@ public class NewDeckPanel extends JPanel implements ActionListener {
             }
             
             private void validate() {
+                boolean alreadyReturned = false;
                 for (DeckModel deck : DeckListModel.getInstance().getDecks()) {
+                    
                     if (deck.toString().equals(newDeckName.getText().trim())
                             || newDeckName.getText().equals("Default")
                             || newDeckName.getText().equals("No deck")
@@ -99,17 +101,23 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                         nameInUse = true;
                         setErrorBorder(newDeckName, isNameValid);
                         checkNewDeck();
-                        return;
+                        alreadyReturned = true;
+                        break;
+                        //return;
                     }
                 }
-                nameInUse = false;
+                if (alreadyReturned == false){
+                    nameInUse = false;
+                    
+                    isNameValid = newDeckName.getText() != null
+                            && !newDeckName.getText().trim().isEmpty();
+                    
+                    setErrorBorder(newDeckName, isNameValid);
+                    
+                    checkNewDeck();
+                }
+       
                 
-                isNameValid = newDeckName.getText() != null
-                        && !newDeckName.getText().trim().isEmpty();
-                
-                setErrorBorder(newDeckName, isNameValid);
-                
-                checkNewDeck();
             }
         });
         

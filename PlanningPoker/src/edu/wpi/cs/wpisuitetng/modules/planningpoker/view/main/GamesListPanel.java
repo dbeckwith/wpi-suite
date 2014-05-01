@@ -120,21 +120,28 @@ public class GamesListPanel extends javax.swing.JPanel {
                 GameStatus gs1 = gm1.getStatus();
                 GameStatus gs2 = gm2.getStatus();
                 int compareGameStatus = gs1.compareTo(gs2);
+                int toReturn;
                 if (compareGameStatus != 0) {
-                    return compareGameStatus;
+                    toReturn = compareGameStatus;
+                    //return compareGameStatus;
                 }
                 else if (gs1 == GameStatus.COMPLETE || gs1 == GameStatus.CLOSED) {
-                    return -(gm1.getEndTime().compareTo(gm2.getEndTime()));
+                    toReturn = -(gm1.getEndTime().compareTo(gm2.getEndTime()));
+                    //return -(gm1.getEndTime().compareTo(gm2.getEndTime()));
                 }
                 else if (gm1.getID() > gm2.getID()) {
-                    return -1;
+                    toReturn = -1;
+                    //return -1;
                 }
                 else if (gm1.getID() < gm2.getID()) {
-                    return 1;
+                    toReturn = 1;
+                    //return 1;
                 }
                 else {
-                    return 0;
+                    toReturn = 0;
+                    //return 0;
                 }
+                return toReturn;
             }
         });
         

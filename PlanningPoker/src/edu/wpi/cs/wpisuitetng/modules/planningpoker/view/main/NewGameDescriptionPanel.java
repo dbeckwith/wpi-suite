@@ -439,18 +439,24 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     public boolean canValidateDeadline() {
     	final boolean valid;
     	
+    	boolean toReturn;
         datePicker.setEnabled(selectDeadline.isSelected());
         timeSpinner.setEnabled(selectDeadline.isSelected());
         
         if (!selectDeadline.isSelected()) { 
-        	return true;
+            toReturn = true;
+        	//return true;
         }
+        else{
+            final Date currentDate = new Date();
+            final Date enteredDate = getDate();
+            
+            valid = enteredDate.after(currentDate);
+            toReturn = valid;
+            //return valid;
+        }
+        return toReturn;
         
-        final Date currentDate = new Date();
-        final Date enteredDate = getDate();
-        
-        valid = enteredDate.after(currentDate);
-        return valid;
     }
     
     /**
