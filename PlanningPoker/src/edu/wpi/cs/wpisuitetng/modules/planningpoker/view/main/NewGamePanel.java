@@ -202,7 +202,7 @@ public class NewGamePanel extends JPanel {
         errorLabel.setForeground(Color.RED);
         
         undoButton = new JButton("Undo Changes");
-        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state.");
+        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state."); // $codepro.audit.disable lineLength
         undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
         undoButton.addActionListener(new ActionListener() {
             @Override
@@ -466,9 +466,9 @@ public class NewGamePanel extends JPanel {
                 .canValidateForm())) {
             check();
             alreadyReturned = true;
-            //return;
+            
         }
-        if (alreadyReturned == false){
+        if (!alreadyReturned){
             if (game == null) {
                 PlanningPoker.getViewController().saveNewGame(this);
             }

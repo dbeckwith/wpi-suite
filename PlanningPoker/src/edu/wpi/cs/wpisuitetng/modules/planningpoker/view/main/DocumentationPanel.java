@@ -65,7 +65,7 @@ public class DocumentationPanel extends JPanel {
         
         final JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane
-                .setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                .setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // $codepro.audit.disable lineLength
         final GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
                 Alignment.LEADING).addComponent(editorScrollPane,

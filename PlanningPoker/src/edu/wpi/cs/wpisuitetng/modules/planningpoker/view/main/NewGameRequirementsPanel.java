@@ -114,11 +114,11 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         addKeyListener(this);
         
         requirementsTableScrollPane = new JScrollPane();
-        requirementsTableScrollPane.setToolTipText("The list of available requirements to include in this game.");
+        requirementsTableScrollPane.setToolTipText("The list of available requirements to include in this game."); // $codepro.audit.disable lineLength
         requirementsTable = new HighlightedTable();
-        requirementsTable.setToolTipText("The list of available requirements to include in this game.");
+        requirementsTable.setToolTipText("The list of available requirements to include in this game."); // $codepro.audit.disable lineLength
         addButton = new JButton();
-        addButton.setToolTipText("Create a new requirement that can be added to this game's list of requirements.");
+        addButton.setToolTipText("Create a new requirement that can be added to this game's list of requirements."); // $codepro.audit.disable lineLength
         
         clearRequirements();
         requirementsTable
@@ -141,7 +141,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         addButton.setIcon(ImageLoader.getIcon("newReq.png"));
         
         btnSelectAll = new JButton("Select All");
-        btnSelectAll.setToolTipText("Select/Deselect all the requirements in the list to be included in this game.");
+        btnSelectAll.setToolTipText("Select/Deselect all the requirements in the list to be included in this game."); // $codepro.audit.disable lineLength
         btnSelectAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setAllSelected(!allSelected);
@@ -152,7 +152,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         
         final JButton reloadButton = new JButton(
                 "Reload from Requirements Manager");
-        reloadButton.setToolTipText("Refresh the list of requirements to reflect the requirements in the backlog of Requirements Manager.");
+        reloadButton.setToolTipText("Refresh the list of requirements to reflect the requirements in the backlog of Requirements Manager."); // $codepro.audit.disable lineLength
         reloadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GetRequirementsController.getInstance().retrieveRequirements();
@@ -280,10 +280,10 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
                 btnSelectAll.setText("Select All");
                 alreadyReturned = true;
                 break;
-                //return;
+                
             }
         }
-        if (alreadyReturned == false){
+        if (!alreadyReturned){
             allSelected = true;
             btnSelectAll.setText("Deselect All");
         }
@@ -422,9 +422,9 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         final int[] selectedRows = requirementsTable.getSelectedRows();
         if (selectedRows.length == 0) { 
             alreadyReturned = true;
-        	//return;
+        	
         }
-        if (alreadyReturned == false){
+        if (!alreadyReturned){
             final boolean selectionValue = !(Boolean) model.getValueAt(
                     selectedRows[0], 0);
             for (int i = 0; i < selectedRows.length; i++) {

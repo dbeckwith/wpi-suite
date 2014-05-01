@@ -49,7 +49,7 @@ public class CommonButtonGroup extends ToolbarGroupView {
 		newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
 
 		userPrefsButton = new JButton("<html>Preferences</html>");
-		userPrefsButton.setToolTipText("Edits user preferences for the Planning Poker application.");
+		userPrefsButton.setToolTipText("Edits user preferences for the Planning Poker application."); // $codepro.audit.disable lineLength
 
 		userPrefsButton.setIcon(ImageLoader.getIcon("prefs.png"));
 

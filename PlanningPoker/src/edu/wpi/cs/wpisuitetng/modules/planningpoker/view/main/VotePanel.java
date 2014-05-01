@@ -469,7 +469,7 @@ public class VotePanel extends javax.swing.JPanel {
         if (parentGame.getDeck().isNone()) {
             btnSubmit.setEnabled(true);
             returnFlag = 1;
-            //return;
+            
         }
         
         if (returnFlag == 0) {
@@ -478,7 +478,7 @@ public class VotePanel extends javax.swing.JPanel {
                     btnSubmit.setEnabled(true);
                     returnFlag = 2;
                     break;
-                    //return;
+                    
                 }
             }
         }

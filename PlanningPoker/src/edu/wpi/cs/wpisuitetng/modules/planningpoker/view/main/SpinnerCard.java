@@ -155,9 +155,9 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 	    boolean alreadyReturned = false;
 		if(deleteListener == null){
 		    alreadyReturned = true;
-			//return;
+			
 		}
-		if (alreadyReturned == false){
+		if (!alreadyReturned){
 		    final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, 
 	                deleteIcon.getWidth(), deleteIcon.getHeight());
 	        if(deleteRect.contains(e.getPoint())){

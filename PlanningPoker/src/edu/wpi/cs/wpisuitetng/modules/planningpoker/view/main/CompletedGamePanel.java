@@ -96,9 +96,9 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         jSeparator1 = new javax.swing.JSeparator();
         tableScrollPane = new javax.swing.JScrollPane();
-        tableScrollPane.setToolTipText("Descriptions of each requirement this game had users vote on.");
+        tableScrollPane.setToolTipText("Descriptions of each requirement this game had users vote on."); // $codepro.audit.disable lineLength
         voteResultTable = new javax.swing.JTable();
-        voteResultTable.setToolTipText("Descriptions of each requirement this game had users vote on.");
+        voteResultTable.setToolTipText("Descriptions of each requirement this game had users vote on."); // $codepro.audit.disable lineLength
         
         tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
         
@@ -136,10 +136,10 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
-        lblNumberOfRequirements.setToolTipText("The number of requirements this game asked users to vote on.");
+        lblNumberOfRequirements.setToolTipText("The number of requirements this game asked users to vote on."); // $codepro.audit.disable lineLength
         
         numRequirements = new JLabel("<num reqs>");
-        numRequirements.setToolTipText("The number of requirements this game asked users to vote on.");
+        numRequirements.setToolTipText("The number of requirements this game asked users to vote on."); // $codepro.audit.disable lineLength
         
         final JLabel lblRequirements = new JLabel("Requirements:");
         

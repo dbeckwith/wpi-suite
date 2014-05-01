@@ -35,7 +35,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     
     private final Data db;
     
-    private static GameEntityManager instance; // $codepro.audit.disable initializeStaticFields, variableShouldBeFinal
+    private static GameEntityManager instance; // $codepro.audit.disable initializeStaticFields, variableShouldBeFinal, lineLength
     
     /**
      * Creates a new GameEntityManager attatched to the given database.

@@ -103,10 +103,10 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                         checkNewDeck();
                         alreadyReturned = true;
                         break;
-                        //return;
+                        
                     }
                 }
-                if (alreadyReturned == false){
+                if (!alreadyReturned){
                     nameInUse = false;
                     
                     isNameValid = newDeckName.getText() != null
@@ -122,7 +122,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         });
         
         final JLabel cardLabel = new JLabel("Cards: *");
-        cardLabel.setToolTipText("The list of cards the user will be able to select in order to make their estimate.");
+        cardLabel.setToolTipText("The list of cards the user will be able to select in order to make their estimate."); // $codepro.audit.disable lineLength
 
         createDeckButton = new JButton("Create Deck");
         createDeckButton.setToolTipText("Create and save this deck.");
@@ -168,12 +168,12 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         final ButtonGroup selectionGroup = new ButtonGroup();
         
         final JRadioButton singleSelect = new JRadioButton("Single");
-        singleSelect.setToolTipText("Single selection mode only allows the user to select one card from the deck.");
+        singleSelect.setToolTipText("Single selection mode only allows the user to select one card from the deck."); // $codepro.audit.disable lineLength
         singleSelect.setBackground(Color.WHITE);
         singleSelect.setSelected(true);
         
         multipleSelect = new JRadioButton("Multiple");
-        multipleSelect.setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate.");
+        multipleSelect.setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate."); // $codepro.audit.disable lineLength
         multipleSelect.setBackground(Color.WHITE);
         
         selectionGroup.add(singleSelect);

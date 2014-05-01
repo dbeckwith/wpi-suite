@@ -270,7 +270,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                     .addContainerGap())
         );
         selectDeadline = new javax.swing.JCheckBox();
-        selectDeadline.setToolTipText("If checked, the game will end itself automatically at the specified date.");
+        selectDeadline.setToolTipText("If checked, the game will end itself automatically at the specified date."); // $codepro.audit.disable lineLength
         selectDeadline.setBackground(Color.WHITE);
         
         selectDeadline.setText("Deadline");
@@ -288,7 +288,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         datePicker = new JXDatePicker(getDefaultDate());
         datePicker.setToolTipText("The date that the game will end itself automatically.");
-        datePicker.getEditor().setToolTipText("The date that the game will end itself automatically.");
+        datePicker.getEditor().setToolTipText("The date that the game will end itself automatically."); // $codepro.audit.disable lineLength
         final JButton eDate = (JButton) datePicker.getComponent(1);
         final JButton dateBtn = (JButton) datePicker.getComponent(1);
         dateBtn.remove(eDate);
@@ -445,7 +445,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         if (!selectDeadline.isSelected()) { 
             toReturn = true;
-        	//return true;
+        	
         }
         else{
             final Date currentDate = new Date();
@@ -453,7 +453,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
             
             valid = enteredDate.after(currentDate);
             toReturn = valid;
-            //return valid;
+            
         }
         return toReturn;
         

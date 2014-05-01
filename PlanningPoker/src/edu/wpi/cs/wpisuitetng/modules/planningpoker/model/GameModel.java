@@ -299,7 +299,7 @@ public class GameModel extends AbstractModel implements Serializable {
     public boolean checkVoted() { // $codepro.audit.disable booleanMethodNamingConvention
         boolean toReturn = true;
         int returnFlag = 1;
-        final ArrayList<User> users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
+        final ArrayList<User> users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers())); // $codepro.audit.disable lineLength
         
         if (requirements == null) {
             
@@ -324,7 +324,7 @@ public class GameModel extends AbstractModel implements Serializable {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            final ArrayList<User> nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
+            final ArrayList<User> nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers())); // $codepro.audit.disable lineLength
             
             if(users.containsAll(nowUsers)){
                 toReturn = true;
@@ -492,7 +492,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @param other
      * @return True if this GameModel is equal to the input GameModel
      */
-    public boolean equals(GameModel other) { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+    public boolean equals(GameModel other) { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals, lineLength
         return other.id == id && other.name.equals(name);
     }
     
