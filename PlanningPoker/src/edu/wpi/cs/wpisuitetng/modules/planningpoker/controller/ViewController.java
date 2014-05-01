@@ -10,18 +10,25 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.DefaultOptionPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.OptionPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DocumentationPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
@@ -126,6 +133,25 @@ public class ViewController {
         mainView.removeTabAt(mainView.indexOfComponent(e));
         mainView.setSelectedIndex(0);
         
+        GameListModel.getInstance().addGame(newGame);
+
+        JTree theTree = mainView.getMainPanel().getTree();
+        DefaultTreeModel treeModel = (DefaultTreeModel) theTree.getModel();
+        DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) theTree.getModel().getRoot();
+        
+        @SuppressWarnings("rawtypes")
+        Enumeration treeEnum = rootNode.depthFirstEnumeration();
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) new DefaultMutableTreeNode();
+        while (treeEnum.hasMoreElements()) {
+            node = (DefaultMutableTreeNode) treeEnum.nextElement();
+            if (node.getUserObject() != null && node.getUserObject() instanceof GameModel) {
+                if ( ((GameModel) node.getUserObject()).getID() == newGame.getID()) {
+                    theTree.setSelectionPath(new TreePath( treeModel.getPathToRoot(node)));
+                    mainView.getMainPanel().repaint();
+                    break;
+                }
+            }
+        }
     }
     
     /**
