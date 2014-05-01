@@ -76,7 +76,7 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                                                         .getUser()
                                                         .getUsername())) {
                                     voted = true;
-                                    break req_loop;
+                                    break req_loop; // $codepro.audit.disable breakWithLabel
                                 }
                             }
                             if (!voted){

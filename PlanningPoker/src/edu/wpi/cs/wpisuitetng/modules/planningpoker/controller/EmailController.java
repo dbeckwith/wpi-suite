@@ -86,7 +86,7 @@ public class EmailController {
      *        the body of the email
      * @param SMSbody
      */
-    public void sendEmails(String subject, String body, String SMSbody) {
+    public void sendEmails(String subject, String body, String SMSbody) { // $codepro.audit.disable methodShouldBeStatic
         final EmailSenderThread sender = new EmailSenderThread(subject, body, SMSbody);
         sender.start();
     }

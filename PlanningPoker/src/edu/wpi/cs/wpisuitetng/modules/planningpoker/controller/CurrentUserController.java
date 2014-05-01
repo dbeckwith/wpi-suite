@@ -66,7 +66,7 @@ public class CurrentUserController extends AbstractUserController {
      * @return the user in the array with the given user name, or null if none
      *         exists
      */
-    public User findUser(String name) {
+    public User findUser(String name) { // $codepro.audit.disable methodShouldBeStatic
         User toReturn = null;
         boolean alreadyReturned = false;
         for (User u : getUsers()) {

@@ -277,7 +277,7 @@ public class GameRequirementModel extends AbstractModel {
      * 
      * @return true if all users have voted on a requirement, false otherwise
      */
-    public boolean allVoted() {
+    public boolean allVoted() { // $codepro.audit.disable booleanMethodNamingConvention
     	boolean voted = true;
         final ArrayList<User> estimateUsers = new ArrayList<User>();
         CurrentUserController.getInstance().requestUsers();

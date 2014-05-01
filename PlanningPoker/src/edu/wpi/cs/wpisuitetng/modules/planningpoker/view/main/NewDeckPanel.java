@@ -144,7 +144,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                         }
                         parentPanel.setNewDeck();
                     }
-                }.run();
+                }.run(); // $codepro.audit.disable useStartRatherThanRun
             }
         });
         

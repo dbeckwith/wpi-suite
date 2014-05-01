@@ -95,7 +95,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
      * Sends the email to all users who have chosen to receive email
      * notifications.
      */
-    private void sendEmail(User u, String emailAddress, String theSubject, String theBody) {
+    private void sendEmail(User u, String emailAddress, String theSubject, String theBody) { // $codepro.audit.disable methodShouldBeStatic
         System.setProperty("java.net.preferIPv4Stack", "true"); //$NON-NLS-2$ //$NON-NLS-1$
         try {
             final Email email = new SimpleEmail();

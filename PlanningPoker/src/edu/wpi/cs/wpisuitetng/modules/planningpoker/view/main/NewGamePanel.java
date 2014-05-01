@@ -641,14 +641,14 @@ public class NewGamePanel extends JPanel {
         hasChanged = b;
     }
     
-    public boolean getHasChanged() {
+    public boolean getHasChanged() { // $codepro.audit.disable booleanMethodNamingConvention
         return hasChanged;
     }
     
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){
+    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         gameDescription.setNewDeck();
     }
 
