@@ -497,7 +497,13 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                     if (finalEstimate == req.getFinalEstimate() && finalEstimate != 0) {
                         lblError.setVisible(false);
                         saveFinalEstimateButton.setEnabled(false);
-                        saveAndUpdateButton.setEnabled(false);
+                        if(req.isFromRequirementManager() && (finalEstimate != req
+                                .getParentEstimate())) {
+                            saveAndUpdateButton.setEnabled(true);
+                        }
+                        else {
+                            saveAndUpdateButton.setEnabled(false);
+                        }
                     }
                     else if (finalEstimate <= 0) {
                         //set error label
