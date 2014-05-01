@@ -461,17 +461,23 @@ public class NewGamePanel extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        boolean alreadyReturned = false;
         if (!(newGameRequirementsPanel.canValidateForm() && gameDescription
                 .canValidateForm())) {
             check();
-            return;
+            alreadyReturned = true;
+            //return;
         }
-        if (game == null) {
-            PlanningPoker.getViewController().saveNewGame(this);
+        if (alreadyReturned == false){
+            if (game == null) {
+                PlanningPoker.getViewController().saveNewGame(this);
+            }
+            else {
+                PlanningPoker.getViewController().updateGame(game, this);
+            }
         }
-        else {
-            PlanningPoker.getViewController().updateGame(game, this);
-        }
+          
+        
     }
     
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {

@@ -102,11 +102,15 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
     @Override
     public float getEstimateValue(){
     	final float enteredValue = ((Number)(input.getModel().getValue())).floatValue();
+    	float toReturn;
     	if(maxInput != DeckModel.NO_LIMIT){
-			return (float) Math.min(maxInput, enteredValue);
+    	    toReturn = (float) Math.min(maxInput, enteredValue);
+			
 		} else {
-			return enteredValue;
+		    toReturn = enteredValue;
+			
 		}
+    	return toReturn;
     }
     
 	@Override
@@ -148,15 +152,20 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+	    boolean alreadyReturned = false;
 		if(deleteListener == null){
-			return;
+		    alreadyReturned = true;
+			//return;
 		}
-		final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, 
-				deleteIcon.getWidth(), deleteIcon.getHeight());
-		if(deleteRect.contains(e.getPoint())){
-			
-			deleteListener.actionPerformed(new ActionEvent(this, 0, null));
+		if (alreadyReturned == false){
+		    final Rectangle deleteRect = new Rectangle(getWidth() - deleteIcon.getWidth() - 2, 2, 
+	                deleteIcon.getWidth(), deleteIcon.getHeight());
+	        if(deleteRect.contains(e.getPoint())){
+	            
+	            deleteListener.actionPerformed(new ActionEvent(this, 0, null));
+	        }
 		}
+		
 	}
 
 	@Override

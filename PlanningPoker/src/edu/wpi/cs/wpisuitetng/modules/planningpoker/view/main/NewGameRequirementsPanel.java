@@ -273,15 +273,21 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private void checkAllSelected() {
         final DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
+        boolean alreadyReturned = false;
         for (int i = 0; i < model.getRowCount(); i++) {
             if (!(Boolean) model.getValueAt(i, 0)) {
                 allSelected = false;
                 btnSelectAll.setText("Select All");
-                return;
+                alreadyReturned = true;
+                break;
+                //return;
             }
         }
-        allSelected = true;
-        btnSelectAll.setText("Deselect All");
+        if (alreadyReturned == false){
+            allSelected = true;
+            btnSelectAll.setText("Deselect All");
+        }
+        
     }
     
     private void clearRequirements() {
@@ -412,18 +418,22 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     public void selectedHighlightedRows() {
         final DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
-        
+        boolean alreadyReturned = false;
         final int[] selectedRows = requirementsTable.getSelectedRows();
         if (selectedRows.length == 0) { 
-        	return;
+            alreadyReturned = true;
+        	//return;
         }
-        final boolean selectionValue = !(Boolean) model.getValueAt(
-                selectedRows[0], 0);
-        for (int i = 0; i < selectedRows.length; i++) {
-            model.setValueAt(selectionValue, selectedRows[i], 0);
+        if (alreadyReturned == false){
+            final boolean selectionValue = !(Boolean) model.getValueAt(
+                    selectedRows[0], 0);
+            for (int i = 0; i < selectedRows.length; i++) {
+                model.setValueAt(selectionValue, selectedRows[i], 0);
+            }
+            
+            requirementsTable.setModel(model);
         }
         
-        requirementsTable.setModel(model);
     }
     
     

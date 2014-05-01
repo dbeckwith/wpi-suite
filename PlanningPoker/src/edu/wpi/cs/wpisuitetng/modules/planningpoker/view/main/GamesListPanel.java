@@ -119,7 +119,7 @@ public class GamesListPanel extends javax.swing.JPanel {
                 final GameStatus gs1 = gm1.getStatus();
                 final GameStatus gs2 = gm2.getStatus();
                 final int compareGameStatus = gs1.compareTo(gs2);
-                
+                int toReturn;
                 if (compareGameStatus != 0) {
                     toReturn = compareGameStatus;
                     //return compareGameStatus;
