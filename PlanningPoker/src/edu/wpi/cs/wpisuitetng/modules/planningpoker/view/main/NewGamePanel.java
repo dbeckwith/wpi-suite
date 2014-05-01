@@ -187,7 +187,9 @@ public class NewGamePanel extends JPanel implements AncestorListener {
 			}
 		});
         
+        saveButton.setToolTipText("Save the new game and close this tab.");
         cancelButton = new javax.swing.JButton();
+        cancelButton.setToolTipText("Cancel creation of this game.");
         
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -216,6 +218,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         errorLabel.setForeground(Color.RED);
         
         undoButton = new JButton("Undo Changes");
+        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state.");
         undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
         undoButton.addActionListener(new ActionListener() {
             @Override
@@ -736,4 +739,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private boolean hasChanged;
     private JScrollPane scrollPane_1;
     private JPanel panel_1;
+    public NewGameDescriptionPanel getGameDescriptionPanel() {
+        return gameDescription;
+    }
 }

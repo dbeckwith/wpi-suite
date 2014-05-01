@@ -73,24 +73,22 @@ public class MainView extends JTabbedPane {
                         window = (JFrame)comp;
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     }
-                    
+         
                     TutorialPane.getInstance().install(window);
+
 
                     alreadyShown = true;
                 }
-                
-                TutorialPane.getInstance().setVisible(true);
 
-                CurrentUserController.getInstance(); // initialize CurrentUserController early so it gets the current user
+                CurrentUserController.getInstance(); // initialize CurrentUserController early so 
+                											//it gets the current user
                 GetDecksController.getInstance().retrieveDecks();
                 GetRequirementsController.getInstance().retrieveRequirements();
                 GetGamesController.getInstance().retrieveGames();
 			}
 			
 			@Override
-			public void ancestorRemoved(AncestorEvent event) {
-			    TutorialPane.getInstance().setVisible(false);
-			}
+			public void ancestorRemoved(AncestorEvent event) {}
 			
 			
 			@Override

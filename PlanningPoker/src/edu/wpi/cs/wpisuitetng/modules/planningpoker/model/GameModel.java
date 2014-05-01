@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 
 /**
  * This class represents a planning poker game
@@ -279,9 +280,11 @@ public class GameModel extends AbstractModel implements Serializable {
 				: GameStatus.PENDING;
 		if (status != new_status && status == GameStatus.PENDING) {
 			status = new_status;
+			endDate = new Date();
 			for (int i = 0; i < status_observers.size(); i++) {
 				status_observers.get(i).statusChanged(this);
 			}
+		     UpdateGamesController.getInstance().updateGame(this);
 		}
 	}
 

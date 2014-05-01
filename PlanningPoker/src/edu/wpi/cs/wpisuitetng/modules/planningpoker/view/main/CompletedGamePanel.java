@@ -97,7 +97,9 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         jSeparator1 = new javax.swing.JSeparator();
         tableScrollPane = new javax.swing.JScrollPane();
+        tableScrollPane.setToolTipText("Descriptions of each requirement this game had users vote on.");
         voteResultTable = new javax.swing.JTable();
+        voteResultTable.setToolTipText("Descriptions of each requirement this game had users vote on.");
         
         tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
         
@@ -135,8 +137,10 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
+        lblNumberOfRequirements.setToolTipText("The number of requirements this game asked users to vote on.");
         
         numRequirements = new JLabel("<num reqs>");
+        numRequirements.setToolTipText("The number of requirements this game asked users to vote on.");
         
         final JLabel lblRequirements = new JLabel("Requirements:");
         
@@ -149,7 +153,8 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(numRequirements)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 
+                    		GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(257, Short.MAX_VALUE))
                 .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
@@ -166,7 +171,8 @@ public class CompletedGamePanel extends javax.swing.JPanel {
                     .addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, 
+                        		GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                             .addComponent(lblNumberOfRequirements)
                             .addComponent(numRequirements)))

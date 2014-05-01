@@ -56,6 +56,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
      *        the subject line of the email to be sent
      * @param body
      *        the body of the email to be sent
+     * @param SMSbody
      */
     public EmailSenderThread(String subject, String body, String SMSbody) {
         this.subject = subject;
@@ -97,7 +98,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
     private void sendEmail(User u, String emailAddress, String theSubject, String theBody) {
         System.setProperty("java.net.preferIPv4Stack", "true"); //$NON-NLS-2$ //$NON-NLS-1$
         try {
-            Email email = new SimpleEmail();
+            final Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com"); //$NON-NLS-1$
             email.setSmtpPort(SMTP_PORT);
             email.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
