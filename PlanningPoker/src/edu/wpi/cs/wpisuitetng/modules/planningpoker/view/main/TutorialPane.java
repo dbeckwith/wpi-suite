@@ -91,7 +91,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 		nextButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		text = new JTextArea();
-		text.setFont(new Font("Monospaced", Font.BOLD, 13));
+		text.setFont(new Font("Dialog", Font.BOLD, 12));
 		text.setWrapStyleWord(true);
 		text.setLineWrap(true);
 		text.setEnabled(false);
@@ -248,6 +248,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 		g.fillRect(0, y, x, h);
 		g.fillRect(x + w, y, getWidth() - x - w, h);
 		g.fillRect(0, y + h, getWidth(), getHeight() - y - h);
+		
 
 		highlightedComponent.repaint();
 

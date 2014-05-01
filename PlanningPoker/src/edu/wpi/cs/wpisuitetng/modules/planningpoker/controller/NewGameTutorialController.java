@@ -34,16 +34,16 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 public class NewGameTutorialController implements ActionListener {
 
 	private enum Step {
-		 CreateGame("Click on this button to start creating a new Planning Poker Game."),
-		 EditName("Games have a name by default, but you should change it to something more readable. Enter a new name and click Next to continue."),
-		 EditDescription("Now, enter in a description for what your game is for. Click Next to continue"),
-		 AddRequirements("You need to add at least one requirement to your game. Create a new requirement or select an existing one."), 
-		 CreateDeck("You can select a deck, or just a number input with an option maximum. For this tutorial, we will create a new deck"),
-		 AddCards("Add a few cards to your deck and give them some different values. When you feel your deck is ready, click Next to continue."),
-		 SaveDeck("Now save your deck to use it in the game."),
-		 SaveGame("There is some more information you can enter in, but for now, we can save this game."),
+		 CreateGame("Click this button to start creating a new Planning Poker Game."),
+		 EditName("Games are given name by default, but we should change it to something more descriptive.\n Enter a new name and click Next to continue."),
+		 EditDescription("Now, enter in a description of what the game is for.\n Click Next to continue"),
+		 AddRequirements("We need to add at least one requirement to our game. Create a new requirement or select an existing one.\n Click Next to continue"), 
+		 CreateDeck("We can select a deck, or just a number input with an option maximum. For this tutorial, we will create a new deck."),
+		 AddCards("Let's add a few cards to our deck and give them some different values.\n When you feel the deck is ready, click Next to continue."),
+		 SaveDeck("Now let's save the deck to use it in the game."),
+		 SaveGame("There is some more information we can enter in, but for now, we can save this game."),
 		 StartGame("Since we didn't specify a deadline, the game needs to be manually started."),
-		 Finished("Congratulations, you have created a new Planning Poker Game!");
+		 Finished("Congratulations, we have created a new Planning Poker Game!");
 		 
 		 public String message;
 		 
