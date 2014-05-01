@@ -113,7 +113,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         // rebuild the tree
         final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
         
-        List<GameModel> games = GameListModel.getInstance().getGames();
+        List<GameModel> games = GameListModel.getInstance().getGames(); // $codepro.audit.disable variableShouldBeFinal
         Collections.sort(games, new Comparator<GameModel>() {
             @Override
             public int compare(GameModel gm1, GameModel gm2) {
