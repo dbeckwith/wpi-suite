@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
@@ -41,7 +43,8 @@ public class NewGameTutorialController implements ActionListener {
 		 AddCards("Add a few cards to your deck and give them some different values. When you feel your deck is ready, click Next to continue."),
 		 SaveDeck("Now save your deck to use it in the game."),
 		 SaveGame("There is some more information you can enter in, but for now, we can save this game."),
-		 StartGame("Since we didn't specify a deadline, the game needs to be manually started.");
+		 StartGame("Since we didn't specify a deadline, the game needs to be manually started."),
+		 Finished("Congratulations, you have created a new Planning Poker Game!");
 		 
 		 public String message;
 		 
@@ -77,7 +80,8 @@ public class NewGameTutorialController implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tPane.clear();
-				quit = true;				
+				quit = true;	
+				reset();
 			}
 		});
 
@@ -98,7 +102,7 @@ public class NewGameTutorialController implements ActionListener {
 		
 		switch (currentStep) {
 			case CreateGame:
-				((JButton)e.getSource()).removeActionListener(this);
+				toolbar.getHelpButtons().getTutorialButton().setEnabled(false);
 				viewController.setNewGameCallback(this);
 				tPane.setHighlightArea(toolbar.getCommonButtons()
 						.getNewGameButton(), currentStep.message);
@@ -167,22 +171,37 @@ public class NewGameTutorialController implements ActionListener {
 				currentStep = Step.StartGame;
 				break;
 			case StartGame:
+				currentStep = Step.StartGame;
 				tPane.clear();
 				mainView.getMainPanel().setVisibilityCallback(new ActionListener() {
 					
 					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						
+					public void actionPerformed(ActionEvent e) {
+						JComponent start = toolbar.getAdminButtons().getStartGameButton();
+						toolbar.getAdminButtons().setStartGameCallback(this);
+						tPane.setHighlightArea(start, currentStep.message);
 					}
 				});
 				break;
+			case Finished:
+				JOptionPane.showMessageDialog(mainView, currentStep.message);
+				reset();
+				break;
+
 			default:
 				break;
 
 
 		}
 
+	}
+	
+	public void reset(){
+		tPane.clear();
+		quit = false;
+		currentStep = Step.CreateGame;
+		newTab = null;
+		toolbar.getHelpButtons().getTutorialButton().setEnabled(true);
 	}
 
 }

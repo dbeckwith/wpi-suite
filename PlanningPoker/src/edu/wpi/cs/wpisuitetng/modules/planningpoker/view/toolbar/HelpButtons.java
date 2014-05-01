@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.NewGameTutorialController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
@@ -31,6 +32,7 @@ public class HelpButtons extends ToolbarGroupView {
     private static final long serialVersionUID = 1902038690593121709L;
     
     private final JButton helpButton;
+    private final JButton tutorialButton;
     
     private final JPanel contentPanel = new JPanel();
     
@@ -48,7 +50,7 @@ public class HelpButtons extends ToolbarGroupView {
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 
-        setPreferredWidth(175);
+        setPreferredWidth(300);
         
         helpButton.addActionListener(new ActionListener() {
             @Override
@@ -57,15 +59,24 @@ public class HelpButtons extends ToolbarGroupView {
             }
         });
         
+        tutorialButton = new JButton("<html>Start Tutorial</html>");
+        tutorialButton.setToolTipText("Start an interactive tutorial to create a game.");
+        tutorialButton.setIcon(ImageLoader.getIcon("tutorial.png"));        
         
         helpButton.setHorizontalAlignment(SwingConstants.CENTER);
         
         contentPanel.add(helpButton);
+        contentPanel.add(tutorialButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
     }
+    
     public JButton getHelpButton() {
         return helpButton;
     }
+    
+    public JButton getTutorialButton() {
+		return tutorialButton;
+	}
 }

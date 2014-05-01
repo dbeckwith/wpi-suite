@@ -83,9 +83,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 		addMouseMotionListener(this);
 
 		dialogPanel = new JPanel();
-		dialogPanel.setBackground(new Color(255, 255, 255, 0));
-		dialogPanel.setOpaque(false);
-		dialogPanel.setBounds(42, 32, 295, 162);
+		dialogPanel.setBackground(Color.WHITE);
+		dialogPanel.setBounds(42, 32, 368, 197);
 		add(dialogPanel);
 
 		nextButton = new JButton("Next");
@@ -98,36 +97,36 @@ public class TutorialPane extends JComponent implements ActionListener,
 		text.setEnabled(false);
 		text.setEditable(false);
 		text.setDisabledTextColor(Color.BLACK);
+		text.setOpaque(false);
+		text.setBackground(new Color(0,0,0,0));
 
 		quitButton = new JButton("Quit Tutorial");
 		quitButton.setIcon(new ImageIcon(TutorialPane.class
 				.getResource("/res/Delete.png")));
 		GroupLayout gl_dialogPanel = new GroupLayout(dialogPanel);
-		gl_dialogPanel.setHorizontalGroup(gl_dialogPanel
-				.createParallelGroup(Alignment.TRAILING)
-				.addGroup(
-						gl_dialogPanel
-								.createSequentialGroup()
-								.addComponent(quitButton)
-								.addPreferredGap(ComponentPlacement.RELATED,
-										151, Short.MAX_VALUE)
-								.addComponent(nextButton))
-				.addComponent(text, GroupLayout.DEFAULT_SIZE, 295,
-						Short.MAX_VALUE));
-		gl_dialogPanel.setVerticalGroup(gl_dialogPanel.createParallelGroup(
-				Alignment.TRAILING)
-				.addGroup(
-						gl_dialogPanel
-								.createSequentialGroup()
-								.addComponent(text, GroupLayout.DEFAULT_SIZE,
-										133, Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_dialogPanel
-												.createParallelGroup(
-														Alignment.BASELINE)
-												.addComponent(nextButton)
-												.addComponent(quitButton))));
+		gl_dialogPanel.setHorizontalGroup(
+			gl_dialogPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_dialogPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_dialogPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_dialogPanel.createSequentialGroup()
+							.addComponent(quitButton)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(nextButton))
+						.addComponent(text, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 344, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		gl_dialogPanel.setVerticalGroup(
+			gl_dialogPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_dialogPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(text, GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_dialogPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(quitButton)
+						.addComponent(nextButton))
+					.addGap(13))
+		);
 		dialogPanel.setLayout(gl_dialogPanel);
 		nextButton.addActionListener(this);
 		nextButton.setVisible(false);
@@ -201,6 +200,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 			g.setColor(new Color(100, 100, 220, 255));
 			g2.setStroke(new BasicStroke(5));
+			
+			g2.drawRect(dialogRect.x, dialogRect.y, dialogRect.width, dialogRect.height);
 
 			ArrayList<Point> edges = new ArrayList<Point>();
 			edges.add(new Point((int) highlightArea.getCenterX(),
@@ -219,11 +220,13 @@ public class TutorialPane extends JComponent implements ActionListener,
 				}
 			}
 
-			g.drawLine(dialogCenter.x, dialogCenter.y, lineEnd.x, lineEnd.y);
 
 			drawHighlightRect(g2, highlightArea.x, highlightArea.y,
 					highlightArea.width, highlightArea.height);
+			g.drawLine(dialogCenter.x, dialogCenter.y, lineEnd.x, lineEnd.y);
 
+
+			
 			g2.setStroke(new BasicStroke());
 
 		}

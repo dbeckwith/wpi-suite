@@ -56,7 +56,7 @@ public class PlanningPoker implements IJanewayModule {
 				
 		PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
 		
-		toolbar.getHelpButtons().getHelpButton().addActionListener(new NewGameTutorialController());
+		toolbar.getHelpButtons().getTutorialButton().addActionListener(new NewGameTutorialController());
 		
 		// Create a tab model that contains the toolbar panel and the main
 		// content panel
