@@ -474,7 +474,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
         });
         
-        GridBagConstraints gbc_saveAndUpdateButton = new GridBagConstraints();
+        final GridBagConstraints gbc_saveAndUpdateButton = new GridBagConstraints();
         gbc_saveAndUpdateButton.insets = new Insets(0, 0, 5, 5);
         gbc_saveAndUpdateButton.gridx = 8;
         gbc_saveAndUpdateButton.gridy = 8;
