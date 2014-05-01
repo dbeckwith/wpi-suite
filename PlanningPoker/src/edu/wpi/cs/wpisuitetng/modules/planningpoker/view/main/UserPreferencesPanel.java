@@ -246,7 +246,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         validate();
                     }
                     
-                    public void validate() {
+                    private void validate() {
                         final String phoneNumber = phoneNumberField.getText();
                         final Carrier carrier = (Carrier) carrierBox
                                 .getSelectedItem();

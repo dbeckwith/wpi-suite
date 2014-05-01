@@ -9,7 +9,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import com.google.gson.Gson;

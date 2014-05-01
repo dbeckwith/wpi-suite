@@ -20,7 +20,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 /**
- * 
+ * @version 1.0 
  * @author Drew
  *
  */
@@ -28,7 +28,7 @@ public class DocumentationPanel extends JPanel {
     
     private static final long serialVersionUID = -6863310227330064388L;
     
-    private static DocumentationPanel instance;
+    private static DocumentationPanel instance; // $codepro.audit.disable initializeStaticFields
     
     /**
      * Gets the single instance of the panel.
@@ -65,7 +65,7 @@ public class DocumentationPanel extends JPanel {
         
         final JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane
-                .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                .setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         final GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
                 Alignment.LEADING).addComponent(editorScrollPane,

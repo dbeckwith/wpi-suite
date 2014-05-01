@@ -53,7 +53,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
      */
     private static final long serialVersionUID = -3228337947577586565L;
 
-    private NewGameDescriptionPanel parent;
+    private NewGameDescriptionPanel parentPanel;
 	
 	private JCheckBox useDeck;
 	private JComboBox<DeckModel> savedDecks;
@@ -162,7 +162,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
 	}
 	
 	public void setParent(NewGameDescriptionPanel p){
-		parent = p;
+		parentPanel = p;
 	}
 	
 	/**
@@ -266,22 +266,22 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
     /**
      * Set the selected deck in the savedDecks combo box to the newest deck
      */
-    public void setNewDeck(){
+    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         savedDecks.setSelectedIndex(savedDecks.getItemCount() - 1);
     }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(parent != null){ 
-			parent.checkParent();
+		if(parentPanel != null){ 
+			parentPanel.checkParent();
 		}
 		
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		if(parent != null){
-			parent.checkParent();
+		if(parentPanel != null){
+			parentPanel.checkParent();
 		}
 	}
 }
