@@ -71,7 +71,9 @@ public class NewGameTutorialController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		if(quit){
+			return;
+		}
 		System.out.printf("\t[TUTORIAL] at %s, called by %s\n", currentStep.toString(), e.getActionCommand());
 		
 		switch (currentStep) {
@@ -145,6 +147,14 @@ public class NewGameTutorialController implements ActionListener {
 				break;
 			case StartGame:
 				tPane.clear();
+				mainView.getMainPanel().setVisibilityCallback(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 				break;
 			default:
 				break;

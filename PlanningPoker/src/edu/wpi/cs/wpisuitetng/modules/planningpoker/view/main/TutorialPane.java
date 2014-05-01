@@ -157,7 +157,15 @@ public class TutorialPane extends JComponent implements ActionListener, MouseMot
     	}
     	
         highlightArea = highlightedComponent.getBounds();
-        final Point compPos = highlightedComponent.getLocationOnScreen();
+        
+        final Point compPos;
+        
+        try {
+        	compPos = highlightedComponent.getLocationOnScreen();
+        } catch(Exception e){
+        	return;
+        }
+        
         final Point pos = getLocationOnScreen();        
         
         highlightArea.x = compPos.x - pos.x;
