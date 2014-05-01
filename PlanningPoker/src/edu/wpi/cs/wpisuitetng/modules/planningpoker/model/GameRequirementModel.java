@@ -380,6 +380,8 @@ public class GameRequirementModel extends AbstractModel {
     /**
      * Updates the requirement manager with the final estimate for this
      * requirement
+     * 
+     * @return this requirement so the calling panel can update accordingly
      */
     public void updateRequirementManager() {
         GetRequirementsController.getInstance().retrieveRequirements();
@@ -389,8 +391,10 @@ public class GameRequirementModel extends AbstractModel {
         UpdateRequirementController.getInstance().updateRequirement(parent);
         RequirementModel.getInstance().getRequirement(parentId)
                 .setEstimate(finalEstimate);
-        ViewEventController.getInstance().refreshTable();
         parentEstimate = finalEstimate;
+        ViewEventController.getInstance().refreshTable();
+        
+        System.out.println("Parent estimate successfully set to: " + parentEstimate);
     }
     
     /**
