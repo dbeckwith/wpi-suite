@@ -98,6 +98,7 @@ public class GamesListPanel extends javax.swing.JPanel {
                 		.getUserObject();
             }
             else if (selectedNodeUserObject instanceof GameModel) {
+            	System.out.println("saved selected game");
                 game = true;
             }
         }

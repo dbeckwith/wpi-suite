@@ -63,12 +63,9 @@ public class TutorialPane extends JComponent implements ActionListener,
 		return TutorialPane.instance;
 	}
 
-	private JFrame window;
 	private Rectangle highlightArea = null;
 	private Component highlightedComponent;
 	private String highlightLabel = "";
-	// private Rectangle highlightArea;
-	// private String highlightLabel;
 	private ActionListener nextButtonCallback;
 	private JPanel dialogPanel;
 	private JTextArea text;
@@ -132,8 +129,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 		nextButton.setVisible(false);
 		dialogPanel.setVisible(false);
 
-		window = null;
-
 	}
 
 	/**
@@ -142,7 +137,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 * @param comp
 	 */
 	public void install(JFrame to) {
-		window = to;
 		to.setGlassPane(this);
 		setVisible(true);
 

@@ -166,7 +166,7 @@ public class NewGameTutorialController implements ActionListener {
 		toolbar.getHelpButtons().getTutorialButton().setEnabled(false);
 		viewController.setNewGameCallback(this);
 		tPane.setHighlightArea(toolbar.getCommonButtons()
-				.getNewGameButton(), currentStep.message);
+				.getNewGameButton(), Step.CreateGame.message);
 		currentStep = Step.EditName;
 	}
 	
@@ -175,7 +175,7 @@ public class NewGameTutorialController implements ActionListener {
 	 */
 	private void editName(){
 		Component nameField = newTab.getDescriptionPanel().getNameField();
-		tPane.setHighlightArea(nameField, currentStep.message);
+		tPane.setHighlightArea(nameField, Step.EditName.message);
 		tPane.setNextButtonCallback(this);
 
 		currentStep = Step.EditDescription;
@@ -190,7 +190,7 @@ public class NewGameTutorialController implements ActionListener {
 			newTab.getDescriptionPanel().getNameField().setText("Tutorial Game");
 		}
 		Component descField = newTab.getDescriptionPanel().getDescriptionField();
-		tPane.setHighlightArea(descField, currentStep.message);
+		tPane.setHighlightArea(descField, Step.EditDescription.message);
 		tPane.setNextButtonCallback(this);
 
 		currentStep = Step.AddRequirements;
@@ -205,7 +205,7 @@ public class NewGameTutorialController implements ActionListener {
 			newTab.getDescriptionPanel().getDescriptionField().setText("Tutorial Game Description");
 		}
 		tPane.setNextButtonCallback(this);
-		tPane.setHighlightArea(newTab.getCardLayoutPanel(), currentStep.message);
+		tPane.setHighlightArea(newTab.getCardLayoutPanel(), Step.AddRequirements.message);
 
 		currentStep = Step.CreateDeck;
 	}
@@ -224,7 +224,7 @@ public class NewGameTutorialController implements ActionListener {
 		}
 		DeckOptionsPanel deckOpt = newTab.getDescriptionPanel().getDeckOptionsPanel();
 		deckOpt.setNewDeckButtonCallback(this);
-		tPane.setHighlightArea(deckOpt.getNewDeckButton(),currentStep.message);
+		tPane.setHighlightArea(deckOpt.getNewDeckButton(),Step.CreateDeck.message);
 
 		currentStep = Step.AddCards;
 	}
@@ -235,7 +235,7 @@ public class NewGameTutorialController implements ActionListener {
 	private void addCards(){
 		tPane.setNextButtonCallback(this);
 		newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(false);
-		tPane.setHighlightArea(newTab.getCardLayoutPanel(), currentStep.message);
+		tPane.setHighlightArea(newTab.getCardLayoutPanel(), Step.AddCards.message);
 
 		currentStep = Step.SaveDeck;
 	}
@@ -246,7 +246,7 @@ public class NewGameTutorialController implements ActionListener {
 	private void saveDeck(){
 		newTab.getNewDeckPanel().setSaveDeckCallback(this);
 		newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
-		tPane.setHighlightArea(newTab.getNewDeckPanel().getCreateDeckButton(), currentStep.message);
+		tPane.setHighlightArea(newTab.getNewDeckPanel().getCreateDeckButton(), Step.SaveDeck.message);
 		currentStep = Step.SaveGame;
 	}
 	
@@ -255,7 +255,7 @@ public class NewGameTutorialController implements ActionListener {
 	 */
 	private void saveGame(){
 		newTab.setSaveGameCallback(this);
-		tPane.setHighlightArea(newTab.getSaveButton(), currentStep.message);
+		tPane.setHighlightArea(newTab.getSaveButton(), Step.SaveGame.message);
 		currentStep = Step.StartGame;
 	}
 	
@@ -263,7 +263,6 @@ public class NewGameTutorialController implements ActionListener {
 	 * Sets up the tutorial for starting the new game
 	 */
 	private void startGame(){
-		currentStep = Step.Finished;
 		tPane.clear();
 		mainView.getMainPanel().setVisibilityCallback(new ActionListener() {
 			
@@ -271,9 +270,10 @@ public class NewGameTutorialController implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				JComponent start = toolbar.getAdminButtons().getStartGameButton();
 				toolbar.getAdminButtons().setStartGameCallback(this);
-				tPane.setHighlightArea(start, currentStep.message);
+				tPane.setHighlightArea(start, Step.StartGame.message);
 			}
 		});
+		currentStep = Step.Finished;
 	}
 
 }

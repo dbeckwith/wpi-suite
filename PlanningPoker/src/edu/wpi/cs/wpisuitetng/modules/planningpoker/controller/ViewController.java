@@ -147,6 +147,8 @@ public class ViewController {
             if (node.getUserObject() != null && node.getUserObject() instanceof GameModel) {
                 if ( ((GameModel) node.getUserObject()).getID() == newGame.getID()) {
                     theTree.setSelectionPath(new TreePath( treeModel.getPathToRoot(node)));
+                    System.out.println("selecting the new game");
+                    theTree.repaint();
                     mainView.getMainPanel().repaint();
                     break;
                 }
