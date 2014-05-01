@@ -364,6 +364,9 @@ public class GameModel extends AbstractModel implements Serializable {
      * Sets the game status to closed so that no more edits can be made.
      */
     public void closeGame() {
+        if (status != GameStatus.COMPLETE) {
+            endDate = new Date();
+        }
         status = GameStatus.CLOSED;
         // notify status listeners of the change
         for (int i = 0; i < status_observers.size(); i++) {
