@@ -299,7 +299,7 @@ public class GameModel extends AbstractModel implements Serializable {
     public boolean checkVoted() { // $codepro.audit.disable booleanMethodNamingConvention
         boolean toReturn = true;
         int returnFlag = 1;
-        ArrayList<User> users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
+        final ArrayList<User> users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
         
         if (requirements == null) {
             
@@ -324,7 +324,7 @@ public class GameModel extends AbstractModel implements Serializable {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            ArrayList<User> nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
+            final ArrayList<User> nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
             
             if(users.containsAll(nowUsers)){
                 toReturn = true;

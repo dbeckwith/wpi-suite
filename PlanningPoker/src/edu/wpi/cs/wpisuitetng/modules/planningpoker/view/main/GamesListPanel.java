@@ -117,9 +117,9 @@ public class GamesListPanel extends javax.swing.JPanel {
         Collections.sort(games, new Comparator<GameModel>() {
             @Override
             public int compare(GameModel gm1, GameModel gm2) {
-                GameStatus gs1 = gm1.getStatus();
-                GameStatus gs2 = gm2.getStatus();
-                int compareGameStatus = gs1.compareTo(gs2);
+                final GameStatus gs1 = gm1.getStatus();
+                final GameStatus gs2 = gm2.getStatus();
+                final int compareGameStatus = gs1.compareTo(gs2);
                 if (compareGameStatus != 0) {
                     return compareGameStatus;
                 }
