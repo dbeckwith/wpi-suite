@@ -485,7 +485,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     /**
      * Validates the user inputs so the GUI can react accordingly
      */
-    private void validatePanel() {
+    private void validatePanel() { // $codepro.audit.disable methodShouldBeStatic
         SwingUtilities.invokeLater(new Runnable() {
             
             @Override

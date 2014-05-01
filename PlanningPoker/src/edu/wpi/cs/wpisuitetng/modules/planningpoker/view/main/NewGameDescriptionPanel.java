@@ -69,8 +69,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         //set default game name
         final Calendar now = new GregorianCalendar();
         final int gameCount = GameListModel.getInstance().getGames().size();
-        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-        final String formatted = formatter.format(now.getTime());
+        final SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        final String formatted = dateFormatter.format(now.getTime());
         nameField.setText(String.format("Game %d - ", gameCount + 1)
                 + formatted);
         isNameValid = true;
@@ -546,7 +546,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){
+    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         deckOptions.setNewDeck();
     }
 

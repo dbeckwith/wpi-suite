@@ -267,7 +267,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return if the deadline for this game has passed
      */
-    public boolean deadlinePassed() {
+    public boolean deadlinePassed() { // $codepro.audit.disable booleanMethodNamingConvention
         final Date currDate = new Date();
         return ((endDate != null) && endDate.before(currDate));
     }
@@ -296,7 +296,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return whether all users have voted on all requirements
      */
-    public boolean checkVoted() {
+    public boolean checkVoted() { // $codepro.audit.disable booleanMethodNamingConvention
         boolean toReturn = true;
         int returnFlag = 1;
         ArrayList<User> users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
