@@ -28,7 +28,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DocumentationPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.UserPreferencesPanel;
@@ -125,9 +124,7 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), e.getDeck(),
                 e.getEndDate(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
-        
-        AddGameController.getInstance().addGame(newGame);
-        
+                
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
@@ -147,13 +144,13 @@ public class ViewController {
             if (node.getUserObject() != null && node.getUserObject() instanceof GameModel) {
                 if ( ((GameModel) node.getUserObject()).getID() == newGame.getID()) {
                     theTree.setSelectionPath(new TreePath( treeModel.getPathToRoot(node)));
-                    System.out.println("selecting the new game");
-                    theTree.repaint();
-                    mainView.getMainPanel().repaint();
                     break;
                 }
             }
         }
+        
+
+        AddGameController.getInstance().addGame(newGame);
     }
     
     /**

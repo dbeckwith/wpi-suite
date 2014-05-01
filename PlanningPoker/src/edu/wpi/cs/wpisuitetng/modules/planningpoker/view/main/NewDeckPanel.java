@@ -142,20 +142,10 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 final DeckModel newDeck = new DeckModel(newDeckName.getText().trim(), newCards,
                         multipleSelect.isSelected());
                 newDeck.sort();
+                DeckListModel.getInstance().addDeck(newDeck);
+                parentPanel.setNewDeck();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(500);
-                        }
-                        catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        parentPanel.setNewDeck();
-                    }
-                }.run();
             }
         });
         
@@ -197,7 +187,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         
-        final JButton addCard = new JButton("Add Card");
+        addCard = new JButton("Add Card");
         addCard.setToolTipText("Add a new card to the list of cards.");
         addCard.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -268,7 +258,12 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         );
         
         cardPanel = new JPanel(){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void paintComponent(Graphics g) {
                 final BufferedImage texture = ImageLoader.getImage("felt.png");
                 for (int x = 0; x < getWidth(); x += texture.getWidth()) {
@@ -384,7 +379,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		}
 		
 		cards.add(newCard);
-		
+				
 		final GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 10, 0, 10);
 		cardPanel.add(newCard, gbc);
@@ -432,5 +427,6 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     private boolean nameInUse = false;
     private final JRadioButton multipleSelect;
     private final JLabel errorLabel;
+    private JButton addCard;
 	
 }

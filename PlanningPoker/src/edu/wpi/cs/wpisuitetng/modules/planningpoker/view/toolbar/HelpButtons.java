@@ -18,7 +18,6 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.NewGameTutorialController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**

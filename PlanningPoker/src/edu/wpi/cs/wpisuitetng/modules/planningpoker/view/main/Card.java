@@ -31,7 +31,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 public abstract class Card extends JPanel { // $codepro.audit.disable abstractSpecialization
 
 
-    public static final DecimalFormat decimalFormat = new DecimalFormat("0.#");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static final DecimalFormat decimalFormat = new DecimalFormat("0.#");
     
     protected static final Color BACKGROUND_COLOR = Color.WHITE;
     protected static final Color BORDER_COLOR = Color.BLACK;

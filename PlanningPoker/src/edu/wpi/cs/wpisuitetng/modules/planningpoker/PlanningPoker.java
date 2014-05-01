@@ -19,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.NewGameTutorialCo
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 
 

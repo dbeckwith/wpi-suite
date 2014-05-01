@@ -24,7 +24,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -40,7 +39,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  */
 public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 
-    private static final float FONT_SIZE = 0.3f;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3185193957738804383L;
+
+	private static final float FONT_SIZE = 0.3f;
     
     private static final BufferedImage deleteIcon = ImageLoader.getImage("Delete.png");
 	
@@ -174,7 +178,4 @@ public class SpinnerCard extends Card implements ChangeListener, MouseListener{
 	public boolean isCardSelected() {
 	    return true;
 	}
-
-	
-
 }

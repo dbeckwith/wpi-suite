@@ -138,8 +138,8 @@ public class NewGameTutorialController implements ActionListener {
 				break;
 				
 			case Finished:
-				JOptionPane.showMessageDialog(mainView, currentStep.message);
 				reset();
+				JOptionPane.showMessageDialog(mainView, Step.Finished.message);
 				break;
 
 			default:
@@ -269,7 +269,7 @@ public class NewGameTutorialController implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComponent start = toolbar.getAdminButtons().getStartGameButton();
-				toolbar.getAdminButtons().setStartGameCallback(this);
+				toolbar.getAdminButtons().setStartGameCallback(NewGameTutorialController.this);
 				tPane.setHighlightArea(start, Step.StartGame.message);
 			}
 		});

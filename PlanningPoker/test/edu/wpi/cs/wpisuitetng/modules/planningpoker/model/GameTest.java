@@ -10,7 +10,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,7 +17,6 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
-import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus; // $codepro.audit.disable unnecessaryImport
@@ -63,7 +61,7 @@ public class GameTest {
 		try {
             created = manager
                     .makeEntity(defaultSession, testgame.toJSON());
-            final List<Model> oldGameModels = db.retrieve(GameModel.class, "id", created.getID());
+            //final List<Model> oldGameModels = db.retrieve(GameModel.class, "id", created.getID());
             created.startGame();
             created = manager
                     .update(defaultSession, created.toJSON());

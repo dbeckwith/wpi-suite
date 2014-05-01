@@ -49,8 +49,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private static final long serialVersionUID = -4832992249337947413L;
 	private static TutorialPane instance = null;
 
-	private static final int BORDER = 3;
-
 	/**
 	 * 
 	 * @return TutorialPane.instance
@@ -65,7 +63,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 	private Rectangle highlightArea = null;
 	private Component highlightedComponent;
-	private String highlightLabel = "";
 	private ActionListener nextButtonCallback;
 	private JPanel dialogPanel;
 	private JTextArea text;
@@ -336,7 +333,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 */
 	public void clear() {
 		highlightedComponent = null;
-		highlightLabel = null;
 		dialogPanel.setVisible(false);
 		repaint();
 	}
@@ -350,7 +346,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 */
 	public void setHighlightArea(Component highlightedComponent, String label) {
 		this.highlightedComponent = highlightedComponent;
-		this.highlightLabel = label;
 
 		text.setText(label);
 		dialogPanel.setVisible(true);
