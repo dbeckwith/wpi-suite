@@ -62,7 +62,7 @@ public class UserRequestThread extends Thread {
      * Creates a new thread that notifies the given controller.
      * 
      * @param controller
-     *        the controller to nofity
+     *        the controller to notify
      */
     public UserRequestThread(AbstractUserController controller) {
         super("User Request Thread");
