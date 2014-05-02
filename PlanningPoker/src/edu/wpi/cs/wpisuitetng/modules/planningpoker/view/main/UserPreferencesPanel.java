@@ -143,7 +143,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.setLayout(gbl_notificationsPanel);
         
         emailField = new JTextField();
-        emailField.setToolTipText("The email at which you will recieve notifications.");
+        emailField
+                .setToolTipText("The email at which you will recieve notifications.");
         emailField.setColumns(10);
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -171,14 +172,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 }
                 else {
                     saveEmailButton.setEnabled(false);
-                    final Pattern emailPattern;
-                    final Matcher emailMatcher;
-                    final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                    emailPattern = Pattern.compile(EMAIL_PATTERN);
-                    emailMatcher = emailPattern.matcher(email);
                     
-                    if (emailMatcher.matches()) {
+                    if (!extractPhoneNumber(email).isEmpty()) {
                         saveEmailButton.setEnabled(true);
                     }
                     else {
@@ -259,12 +254,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         }
                         else {
                             btnSaveSms.setEnabled(false);
-                            final Pattern phonePattern;
-                            final Matcher phoneMatcher;
-                            final String PHONE_PATTERN = "[0-9]{10}";
-                            phonePattern = Pattern.compile(PHONE_PATTERN);
-                            phoneMatcher = phonePattern.matcher(phoneNumber);
-                            phoneNumberIsGood = phoneMatcher.matches();
+                            phoneNumberIsGood = !(extractPhoneNumber(phoneNumber)
+                                    .isEmpty());
                             if (phoneNumberIsGood) {
                                 if ((carrierBox.getSelectedItem()
                                         .equals(Carrier.UNKNOWN))) {
@@ -340,11 +331,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
         carrierBox = new JComboBox<Carrier>();
-        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier.values()));
+        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier
+                .values()));
         v.remove(Carrier.UNKNOWN);
         v.add(0, Carrier.UNKNOWN);
-        carrierBox
-                .setModel(new DefaultComboBoxModel<Carrier>(v));
+        carrierBox.setModel(new DefaultComboBoxModel<Carrier>(v));
         carrierBox.addActionListener(new ActionListener() {
             
             @Override
@@ -445,9 +436,10 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
-    	final String phoneNumberText = phoneNumberField.getText();
-        if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(CurrentUserController
-        		.getInstance().getUser().getPhoneNumber())) {
+        final String phoneNumberText = phoneNumberField.getText();
+        if (!phoneNumberText.isEmpty()
+                && !phoneNumberText.equals(CurrentUserController.getInstance()
+                        .getUser().getPhoneNumber())) {
             if (!phoneNumberIsGood) {
                 lblInvalidPhone.setText("Invalid Phone #");
                 lblInvalidPhone.setVisible(true);
@@ -477,11 +469,31 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void updateSMS() {
-        final String phoneNumber = phoneNumberField.getText();
+        String extracted = extractPhoneNumber(phoneNumberField.getText());
+        UserUpdateController.getInstance().updatePhoneNumber(extracted);
         final Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
-        UserUpdateController.getInstance().updatePhoneNumber(phoneNumber);
         UserUpdateController.getInstance().updatePhoneCarrier(selectedCarrier);
         btnSaveSms.setEnabled(false);
+    }
+    
+    private String extractPhoneNumber(String inputText) {
+        final Pattern phonePattern;
+        final Matcher phoneMatcher;
+        final String PHONE_PATTERN = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})";
+        
+        phonePattern = Pattern.compile(PHONE_PATTERN);
+        phoneMatcher = phonePattern.matcher(inputText);
+        String returnString;
+        
+        if (phoneMatcher.matches()) {
+            returnString = phoneMatcher.group(2) + phoneMatcher.group(3)
+                    + phoneMatcher.group(4);
+        }
+        else {
+            returnString = "";
+        }
+        
+        return returnString;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
