@@ -321,7 +321,7 @@ public class ViewController {
 	/**
 	 * @return true if admin controls are visible
 	 */
-	public boolean getAdminVisibility() {
+	public boolean getAdminVisibility() { // $codepro.audit.disable booleanMethodNamingConvention
 		return showAdmin;
 	}
     

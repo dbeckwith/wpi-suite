@@ -267,7 +267,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return if the deadline for this game has passed
      */
-    public boolean deadlinePassed() {
+    public boolean deadlinePassed() { // $codepro.audit.disable booleanMethodNamingConvention
         final Date currDate = new Date();
         return ((endDate != null) && endDate.before(currDate));
     }
@@ -296,10 +296,11 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return whether all users have voted on all requirements
      */
-    public boolean checkVoted() {
+    public boolean checkVoted() { // $codepro.audit.disable booleanMethodNamingConvention
         boolean toReturn = true;
         int returnFlag = 1;
-        ArrayList<User> users;
+
+        final ArrayList<User> users;
         if(CurrentUserController.getInstance().getUsers() != null){
             users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
         }
@@ -330,7 +331,8 @@ public class GameModel extends AbstractModel implements Serializable {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            ArrayList<User> nowUsers;
+            
+            final ArrayList<User> nowUsers;
             if(CurrentUserController.getInstance().getUsers() != null) {
                 nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
             }
@@ -504,7 +506,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @param other
      * @return True if this GameModel is equal to the input GameModel
      */
-    public boolean equals(GameModel other) { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+    public boolean equals(GameModel other) { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals, lineLength
         return other.id == id && other.name.equals(name);
     }
     
