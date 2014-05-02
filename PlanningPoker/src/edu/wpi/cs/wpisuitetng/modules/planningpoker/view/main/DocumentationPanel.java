@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.swing.JPanel;
-import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JEditorPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTMLDocument;
 
 
 public class DocumentationPanel extends JPanel {
@@ -44,7 +43,6 @@ public class DocumentationPanel extends JPanel {
         final JEditorPane editorPane = new JEditorPane();
         editorPane.setContentType("text/html");
         editorPane.setEditable(false);
-        editorPane.setDocument(new HTMLDocument());
         try {
             editorPane.setPage(helpPage); //load the help page in the JEditorPanel
         }
@@ -54,6 +52,7 @@ public class DocumentationPanel extends JPanel {
         catch (IOException e) {
             e.printStackTrace();
         }
+        //editorPane.setDocument(new HTMLDocument());
         editorPane.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
