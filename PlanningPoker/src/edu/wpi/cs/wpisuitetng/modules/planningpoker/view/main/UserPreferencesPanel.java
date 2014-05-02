@@ -275,7 +275,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     }
                 });
         
-        lblPhoneNumber = new JLabel("10-Digit Phone # :");
+        lblPhoneNumber = new JLabel("Phone # :");
         
         
         lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 11));
