@@ -16,7 +16,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -97,9 +96,9 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         jSeparator1 = new javax.swing.JSeparator();
         tableScrollPane = new javax.swing.JScrollPane();
-        tableScrollPane.setToolTipText("Descriptions of each requirement this game had users vote on.");
+        tableScrollPane.setToolTipText("Descriptions of each requirement this game had users vote on."); // $codepro.audit.disable lineLength
         voteResultTable = new javax.swing.JTable();
-        voteResultTable.setToolTipText("Descriptions of each requirement this game had users vote on.");
+        voteResultTable.setToolTipText("Descriptions of each requirement this game had users vote on."); // $codepro.audit.disable lineLength
         
         tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
         
@@ -128,7 +127,7 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         temp_Font = voteResultTable.getTableHeader().getFont();
         voteResultTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         tableScrollPane.setViewportView(voteResultTable);       
-        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+        final DefaultTableCellRenderer r = new DefaultTableCellRenderer();
         r.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 1; i < voteResultTable.getColumnCount(); i++) {
             voteResultTable.getColumnModel().getColumn(i).setCellRenderer(r);
@@ -137,10 +136,10 @@ public class CompletedGamePanel extends javax.swing.JPanel {
         
         
         final JLabel lblNumberOfRequirements = new JLabel("Number of Requirements:");
-        lblNumberOfRequirements.setToolTipText("The number of requirements this game asked users to vote on.");
+        lblNumberOfRequirements.setToolTipText("The number of requirements this game asked users to vote on."); // $codepro.audit.disable lineLength
         
         numRequirements = new JLabel("<num reqs>");
-        numRequirements.setToolTipText("The number of requirements this game asked users to vote on.");
+        numRequirements.setToolTipText("The number of requirements this game asked users to vote on."); // $codepro.audit.disable lineLength
         
         final JLabel lblRequirements = new JLabel("Requirements:");
         

@@ -58,7 +58,7 @@ public abstract class Card extends JPanel { // $codepro.audit.disable abstractSp
     private final ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
 	
 	private final int suitIndex;
-	private Color background;
+	private Color backgroundColor;
 	private Color border;
 	
 	/**
@@ -69,7 +69,7 @@ public abstract class Card extends JPanel { // $codepro.audit.disable abstractSp
 		value = val;
 		suitIndex = ((int)val + 1) % 4;
 		cardSelected = false;
-		background = BACKGROUND_COLOR;
+		backgroundColor = BACKGROUND_COLOR;
 		border = BORDER_COLOR;
 	}
 	
@@ -137,7 +137,7 @@ public abstract class Card extends JPanel { // $codepro.audit.disable abstractSp
 	 * @param borderColor
 	 */
 	public void setColors(Color bgColor, Color borderColor){
-		background = (bgColor == null)?BACKGROUND_COLOR:bgColor;
+		backgroundColor = (bgColor == null)?BACKGROUND_COLOR:bgColor;
 		border = (borderColor == null)?BORDER_COLOR:borderColor;
 	}
 	
@@ -149,7 +149,7 @@ public abstract class Card extends JPanel { // $codepro.audit.disable abstractSp
         
         final int suitMargin = (int) (getWidth() * MARGIN_LOGO);
 		
-        g2.setColor(background);
+        g2.setColor(backgroundColor);
         g2.fillRect(0, 0, getWidth(), getHeight());
         
         final int suitSize = (int) (getWidth() * FRONT_SUIT_SIZE);
