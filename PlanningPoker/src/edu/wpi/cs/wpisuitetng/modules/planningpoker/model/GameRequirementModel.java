@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -406,4 +407,13 @@ public class GameRequirementModel extends AbstractModel {
         return parentEstimate;
     }
     
+    /**
+     * Sets the parentEstimate of this requirement
+     * 
+     * @param parentEstimate 
+     *      the parent Estimate
+     */
+    public void setParentEstimate(int parentEstimate){
+        this.parentEstimate = parentEstimate;
+    }
 }
