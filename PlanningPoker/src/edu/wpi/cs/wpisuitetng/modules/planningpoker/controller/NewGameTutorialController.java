@@ -169,6 +169,7 @@ public class NewGameTutorialController implements ActionListener {
 		currentStep = Step.CreateGame;
 		newTab = null;
 		toolbar.getHelpButtons().getTutorialButton().setEnabled(true);
+		viewController.setNewGameCallback(null);
 	}
 	
 	/**
