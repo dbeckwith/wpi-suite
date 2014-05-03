@@ -449,6 +449,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         }
         else {
             lblInvalidPhone.setVisible(false);
+            if (!((Carrier) carrierBox.getSelectedItem()).equals(currentUser.getCarrier())) {
+                btnSaveSms.setEnabled(true);
+            } else {
+                btnSaveSms.setEnabled(false);
+            }
         }
     }
     
@@ -460,8 +465,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void updateSMS() {
         String extracted = extractPhoneNumber(phoneNumberField.getText());
-        currentUser.setPhoneNumber(extracted);
         final Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
+        currentUser.setPhoneNumber(extracted);
         currentUser.setCarrier(selectedCarrier);
         btnSaveSms.setEnabled(false);
         updateAndRetrieve(currentUser);
