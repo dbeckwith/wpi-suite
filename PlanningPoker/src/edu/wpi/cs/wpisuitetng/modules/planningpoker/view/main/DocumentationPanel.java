@@ -9,15 +9,18 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Desktop;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.swing.JPanel;
-import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JEditorPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 /**
  * @version 1.0 
@@ -61,7 +64,31 @@ public class DocumentationPanel extends JPanel {
         catch (IOException e) {
             e.printStackTrace();
         }
-        
+        editorPane.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (HyperlinkEvent.EventType.ACTIVATED == e.getEventType()) {
+                    final String desc = e.getDescription();
+                    if (desc == null) {
+                        
+                    }
+                    else if (desc.startsWith("#")) {
+                        editorPane.scrollToReference(desc.substring(1));
+                    }
+                    else {
+                        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                            try {
+                                desktop.browse(new URL(desc).toURI());
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         
         final JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane

@@ -8,22 +8,11 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
-
 import java.awt.Color;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -31,14 +20,22 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserUpdateController;
 
 /**
  * A panel for changing user preferences. Right now it only includes
@@ -53,6 +50,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private static final long serialVersionUID = 3565380843068717833L;
     
     private static UserPreferencesPanel instance;
+    private User currentUser;
     
     /**
      * Gets the single instance of the panel.
@@ -72,31 +70,27 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private UserPreferencesPanel() {
         setBackground(Color.WHITE);
         initComponents();
-        if (CurrentUserController.getInstance().getUser() != null) {
-            emailBox.setSelected(CurrentUserController.getInstance().getUser()
-                    .isNotifyByEmail());
-            smsBox.setSelected(CurrentUserController.getInstance().getUser()
-                    .isNotifyBySMS());
+        currentUser = CurrentUserController.getInstance().getUser();
+        if (currentUser != null) {
+            emailBox.setSelected(currentUser.isNotifyByEmail());
+            smsBox.setSelected(currentUser.isNotifyBySMS());
             boolean b = emailBox.isSelected();
             
             lblEmail.setVisible(b);
             emailField.setVisible(b);
             saveEmailButton.setVisible(b);
-            emailField.setText(CurrentUserController.getInstance().getUser()
-                    .getEmail());
+            emailField.setText(currentUser.getEmail());
             saveEmailButton.setEnabled(false);
             
             b = smsBox.isSelected();
             lblPhoneNumber.setVisible(b);
             phoneNumberField.setVisible(b);
-            phoneNumberField.setText(CurrentUserController.getInstance()
-                    .getUser().getPhoneNumber());
+            phoneNumberField.setText(currentUser.getPhoneNumber());
             btnSaveSms.setVisible(b);
             btnSaveSms.setEnabled(false);
             lblCarrier.setVisible(b);
             carrierBox.setVisible(b);
-            carrierBox.setSelectedItem(CurrentUserController.getInstance()
-                    .getUser().getCarrier());
+            carrierBox.setSelectedItem(currentUser.getCarrier());
             lblMsgAndData.setVisible(b);
             lblInvalidPhone.setVisible(false);
         }
@@ -143,7 +137,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.setLayout(gbl_notificationsPanel);
         
         emailField = new JTextField();
-        emailField.setToolTipText("The email at which you will recieve notifications.");
+        emailField
+                .setToolTipText("The email at which you will recieve notifications.");
         emailField.setColumns(10);
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -171,14 +166,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 }
                 else {
                     saveEmailButton.setEnabled(false);
-                    final Pattern emailPattern;
-                    final Matcher emailMatcher;
-                    final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                    emailPattern = Pattern.compile(EMAIL_PATTERN);
-                    emailMatcher = emailPattern.matcher(email);
                     
-                    if (emailMatcher.matches()) {
+                    if (!extractPhoneNumber(email).isEmpty()) {
                         saveEmailButton.setEnabled(true);
                     }
                     else {
@@ -259,12 +248,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                         }
                         else {
                             btnSaveSms.setEnabled(false);
-                            final Pattern phonePattern;
-                            final Matcher phoneMatcher;
-                            final String PHONE_PATTERN = "[0-9]{10}";
-                            phonePattern = Pattern.compile(PHONE_PATTERN);
-                            phoneMatcher = phonePattern.matcher(phoneNumber);
-                            phoneNumberIsGood = phoneMatcher.matches();
+                            phoneNumberIsGood = !(extractPhoneNumber(phoneNumber)
+                                    .isEmpty());
                             if (phoneNumberIsGood) {
                                 if ((carrierBox.getSelectedItem()
                                         .equals(Carrier.UNKNOWN))) {
@@ -284,7 +269,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                     }
                 });
         
-        lblPhoneNumber = new JLabel("10-Digit Phone # :");
+        lblPhoneNumber = new JLabel("Phone # :");
         
         
         lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -340,11 +325,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
         carrierBox = new JComboBox<Carrier>();
-        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier.values()));
+        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier
+                .values()));
         v.remove(Carrier.UNKNOWN);
         v.add(0, Carrier.UNKNOWN);
-        carrierBox
-                .setModel(new DefaultComboBoxModel<Carrier>(v));
+        carrierBox.setModel(new DefaultComboBoxModel<Carrier>(v));
         carrierBox.addActionListener(new ActionListener() {
             
             @Override
@@ -411,23 +396,22 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {
-        UserUpdateController.getInstance().setNotifyByEmail(
-                emailBox.isSelected());
         final boolean b = emailBox.isSelected();
+        currentUser.setNotifyByEmail(b);
         
         lblEmail.setVisible(b);
         emailField.setVisible(b);
         saveEmailButton.setVisible(b);
         errorEmailLabel.setVisible(false);
         if (b) {
-            emailField.setText(CurrentUserController.getInstance().getUser()
-                    .getEmail());
+            emailField.setText(currentUser.getEmail());
         }
+        updateAndRetrieve(currentUser);
     }
     
     private void smsBoxActionPerformed(java.awt.event.ActionEvent evt) {
-        UserUpdateController.getInstance().setNotifyBySMS(smsBox.isSelected());
         final boolean b = smsBox.isSelected();
+        currentUser.setNotifyBySMS(b);
         lblPhoneNumber.setVisible(b);
         phoneNumberField.setVisible(b);
         btnSaveSms.setVisible(b);
@@ -436,18 +420,16 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         carrierBox.setVisible(b);
         lblMsgAndData.setVisible(b);
         if (b) {
-            phoneNumberField.setText(CurrentUserController.getInstance()
-                    .getUser().getPhoneNumber());
-            carrierBox.setSelectedItem(CurrentUserController.getInstance()
-                    .getUser().getCarrier());
+            phoneNumberField.setText(currentUser.getPhoneNumber());
+            carrierBox.setSelectedItem(currentUser.getCarrier());
         }
-        
+        updateAndRetrieve(currentUser);
     }
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
-    	final String phoneNumberText = phoneNumberField.getText();
-        if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(CurrentUserController
-        		.getInstance().getUser().getPhoneNumber())) {
+        final String phoneNumberText = phoneNumberField.getText();
+        if (!phoneNumberText.isEmpty()
+                && !phoneNumberText.equals(currentUser.getPhoneNumber())) {
             if (!phoneNumberIsGood) {
                 lblInvalidPhone.setText("Invalid Phone #");
                 lblInvalidPhone.setVisible(true);
@@ -467,21 +449,63 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         }
         else {
             lblInvalidPhone.setVisible(false);
+            if (!((Carrier) carrierBox.getSelectedItem()).equals(currentUser
+                    .getCarrier())) {
+                btnSaveSms.setEnabled(true);
+            }
+            else {
+                btnSaveSms.setEnabled(false);
+            }
         }
     }
     
     private void updateEmail() {
         final String email = emailField.getText();
-        UserUpdateController.getInstance().updateEmail(email);
+        currentUser.setEmail(email);
         saveEmailButton.setEnabled(false);
     }
     
     private void updateSMS() {
-        final String phoneNumber = phoneNumberField.getText();
+        final String extracted = extractPhoneNumber(phoneNumberField.getText());
         final Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
-        UserUpdateController.getInstance().updatePhoneNumber(phoneNumber);
-        UserUpdateController.getInstance().updatePhoneCarrier(selectedCarrier);
+        if (!extracted.isEmpty()) {
+            currentUser.setPhoneNumber(extracted);
+        }
+        currentUser.setCarrier(selectedCarrier);
         btnSaveSms.setEnabled(false);
+        updateAndRetrieve(currentUser);
+    }
+    
+    private static String extractPhoneNumber(String inputText) {
+        final Pattern phonePattern;
+        final Matcher phoneMatcher;
+        final String PHONE_PATTERN = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*"
+                + "(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})";
+        
+        phonePattern = Pattern.compile(PHONE_PATTERN);
+        phoneMatcher = phonePattern.matcher(inputText);
+        String returnString;
+        
+        if (phoneMatcher.matches()) {
+            returnString = phoneMatcher.group(2) + phoneMatcher.group(3)
+                    + phoneMatcher.group(4);
+        }
+        else {
+            returnString = "";
+        }
+        
+        return returnString;
+    }
+    
+    /**
+     * Sends the updated user to the server and reflect those changes locally
+     * 
+     * @param user
+     */
+    private void updateAndRetrieve(User user) {
+        UserUpdateController.getInstance().updateUser(user);
+        CurrentUserController.getInstance().requestUsers();
+        currentUser = CurrentUserController.getInstance().getUser();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

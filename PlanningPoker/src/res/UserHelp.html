@@ -1,160 +1,398 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<title>Plannning Poker Help</title>
-	
-	</head>
-	<body>
-	<h1>Welcome to planning poker</h1>
-	<div>
-	<h2>Introduction</h2>
-	<ul>
-		<li><a href="planningPoker.html#planning">Planning Poker</a></li>
-		<li><a href="planningPoker.html#team">Our Team</a></li>
-	</ul>
-	</div>
+<title>Plannning Poker Help</title>
+
+<style>
+body {
+	color: #454330;
+	background-color: #F0F9FF;
+	font-family: verdana, sans-serif;
+}
+
+h3 a {
+	text-decoration: none;
+	color: #454330;
+}
+
+a {
+	color: #3D9EFF;
+}
+
+h1 {
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.nav {
+	font-weight: 500;
+}
+</style>
+</head>
+<body>
+	<h1>Planning Poker Help Documentation</h1>
+	<br>
+
 	<div class="nav">
-	<h2>Getting started with Planning Poker</h2>
-	<ul>
-		<li><a href="planningPoker.html#users">Users</a></li>
-		<li><a href="planningPoker.html#create">Create a game</a></li>
-		<li><a href="planningPoker.html#edit">Edit a game</a></li>
-		<li><a href="planningPoker.html#estimate">Estimate</a></li>
-		<li><a href="planningPoker.html#final">Final Estimate</a></li>
-		<li><a href="planningPoker.html#close">Close game</a></li>
-	</ul>
+		<h2>1. Introduction To Planning Poker</h2>
+		<ul>
+			<li><a href="#what">1.1 What is Planning Poker?</a></li>
+			<li><a href="#how">1.2 How Does Planning Poker Work?</a></li>
+			<li><a href="#benefit">1.3 Benefits of Planning Poker</a></li>
+		</ul>
+	</div>
+
+	<div class="nav">
+		<h2>2. Getting started with Planning Poker</h2>
+		<ul>
+			<li><a href="#start">2.1 Quick Start</a></li>
+			<li><a href="#users">2.2 Users</a></li>
+			<li><a href="#panel">2.3 Overview of the Game Tree Panel</a></li>
+			<li><a href="#create">2.4 How to create a game</a></li>
+			<li><a href="#edit">2.5 How to edit a game</a></li>
+			<li><a href="#startgame">2.6 How to start a game</a></li>
+			<li><a href="#estimate">2.7 How to Vote</a></li>
+			<li><a href="#end">2.8 How to End a Game</a></li>
+			<li><a href="#final">2.9 How to Make a Final Estimate</a></li>
+			<li><a href="#close">2.10 How to Close a Game</a></li>
+			<li><a href="#preferences">2.11 Preferences</a></li>
+		</ul>
+	</div>
+
+	<div class="nav">
+		<h2>3. Who We Are (Team 9)</h2>
+		<ul>
+			<li><a href="#mission">3.1 Mission Statement</a></li>
+			<li><a href="#about">3.2 About Us</a></li>
+			<li><a href="#features">3.3 Some of Planning Poker’s
+					Features</a></li>
+		</ul>
+	</div>
+
+
+	<div class="container">
+		<h3>
+			<a name="what">1.1 What is Planning Poker?</a>
+		</h3>
+		<p>Planning Poker is a tool for estimating requirements of
+			development projects or subsets of the project. This software allows
+			a team to reach a consensus for an estimate, an approximation of a
+			relative amount of time needed to complete each requirement.</p>
+	</div>
+
+	<div class="container">
+		<h3>
+			<a name="how">1.2 How Does Planning Poker Work?</a>
+		</h3>
+		<p>A Planning Poker session is typically created when a customer
+			or developer feels that a new specification is needed to add
+			functionality, usability, reliability, performance, and/or
+			supportability to the product. A moderator can begin a Planning Poker
+			session by starting a new game and adding requirements needed for
+			estimation. Team members are then invited to vote their estimates in
+			each requirement. The vote is not shown to other players until the
+			session ends. When all users have voted and the session is closed,
+			the team is now allowed to see every vote and discuss the estimates.
+			A consensus is reached and the final estimate is entered. This allows
+			for fairness of answers and for each team member to independently
+			choose their estimate without any bias and influence from other
+			players.</p>
+	</div>
+
+	<div class="container">
+		<h3>
+			<a name="benefit">1.3 Benefits of Planning Poker</a>
+		</h3>
+		<p>Planning Poker is used to force each team member to think
+			independently and for the entire team to view every team member’s
+			estimates simultaneously. At times, if an individual says their
+			number first, other members might follow their estimate. At other
+			times, an individual might not listen to other people’s estimates and
+			opinions because they think that their estimate is final. Planning
+			Poker can be used in teams with difficulty expressing every member’s
+			opinions and teams who have members with different personalities.</p>
+	</div>
+
+
+	<div class="container">
+		<h3>
+			<a name="start">2.1 Quick Start</a>
+		</h3>
+		<p>If you have used Planning Poker before but need a review on how
+			to use it, you may want to read over the Quick Start guide.</p>
+		<ul>
+			<li>Only the moderator can create a game.</li>
+			<li>Fill in the required name, description, and game type.</li>
+			<li>Choose to have a deck or no deck.</li>
+			<li>Choose to have a deadline or not.</li>
+			<li>Choose your requirements for estimation.</li>
+			<li>Edit any information before starting the game.</li>
+			<li>After a game starts, users can vote on each requirement
+				either by:
+				<ul>
+					<li>a. typing in your estimate.</li>
+					<li>b. selecting one or multiple cards for your estimate
+						value.</li>
+				</ul>
+			</li>
+			<li>Can edit your vote for each requirement before game is
+				completed.</li>
+			<li>After a game has ended, the moderator can make final
+				estimates for each requirement.</li>
+			<li>Type the final estimate or stay with the default calculated
+				estimate.</li>
+			<li>Click “Save.”</li>
+			<li>Can modify the final estimate but must add in a note stating
+				why you changed it.</li>
+			<li>Select the game and click “Close Game.”</li>
+		</ul>
+
+	</div>
+
+
+
+
+	<div class="container">
+		<h3>
+			<a name="users">2.2 Users</a>
+		</h3>
+		<p>A user’s moderation privileges are game dependant. A game’s
+			Moderator is the creator of the game. A moderator has access to
+			controls to begin the game, end the game, and set the final
+			estimation for each requirement of the game. All other users only
+			have access to view and vote on the requirements of the game.</p>
 	</div>
 
 	<div>
-	<h2>Overview of the panels</h2>
-	<ul>
-		<li><a href="planningPoker.html#gameTree">Game Tree Panel</a></li>
-		<li><a href="planningPoker.html#preference">Preferences</a></li>
-	</ul>
-	</div>
-
-
-
-	<div class="container">
-		<h3 id="users">Users</h3>
-		<p>A user’s moderation privileges are game dependant, a game’s moderator is the creator of the game. A moderator has access to controls to begin the game, end the game, and set final estimation for the game. All other users only have access to view the game and vote on the requirements of the game.
-		</p>
-	</div>
-
-	<div class="container">
-		<h3 id="create">Create a game</h3>
+		<h3>
+			<a name="panel">2.3 Overview of the Game Tree Pane</a>
+		</h3>
+		<p>On the game panel, the left side of the window shows a tree
+			view of the games. There are two main groups of games: Games in
+			Progress and Complete Games. Each of the two groups has only two
+			types of games within them:</p>
 		<ul>
-			<li>Click on Create Game button</li>
-			<li>Fill in the game name (a default name is provided) and game description</li>
-			<li>Select live game or distributed game</li>
-			<li>Select to use a deck or not. If you select to not use a deck, users will be able to enter any number for their estimation. If you choose to use a deck, you can hover over the available decks to see which cards are in the deck. You may also choose to create a new deck, and you will be asked to enter a name for the deck, numbers for the cards, and whether the users can select multiple cards or only a single card.
+			<li>Games in Progress:
+				<ul>
+					<li>Games marked with the icon of a blank page with a plus
+						sign in the top corner have not been started yet are. They are
+						still editable before they start.</li>
+					<li>Games marked with an hourglass have been started and are
+						available to be voted on.</li>
+				</ul>
 			</li>
-			<li>select requirements from the panel on the right. You have the option of creating new requirements, where you will need to enter a name, description, and choose the type of requirement. There is also an option to reload requirements from the requirements manager. This is in case someone has added requirements to the requirement manager while you are creating the game.
-			</li>
-			<li>Choose if you would like the game to have a deadline or not. If yes, select a date and time that occurs in the future.
-			</li>
-			<li>When you are satisfied with your new planning poker game, click the save button and you will be returned to the Game overview panel.
+			<li>Completed Games:
+				<ul>
+					<li>Games marked with a check indicate that voting has been
+						completed and are ready for the creator to set their final
+						estimate.</li>
+					<li>Games marked with a grey file cabinet icon have been
+						closed. These games can be viewed for historical purposes but
+						cannot be changed.</li>
+				</ul>
 			</li>
 		</ul>
 	</div>
 
 	<div class="container">
-		<h3 id="edit">Edit a game</h3>
+		<h3>
+			<a name="create">2.4 How to Create a game</a>
+		</h3>
 		<ul>
-			<li>Before a game has been started, the creator is allowed to edit the game.</li>
-			<li>Select an unstarted game and click the Edit Game button.</li>
-			<li>The edit game panel will appear</li>
-			<li>Edit any information you would like to add and click save</li>
+			<li>Click on “Create Game” button.</li>
+			<li>Fill in the game name (a default name is provided) and game
+				description.</li>
+			<li>Default game type is Distributed game. This allows users to
+				vote on the requirement when they log in to the WPI Suite project.</li>
+			<li>Select to use a deck or not.
+				<ul>
+					<li>If you select to not use a deck, users will be able to
+						enter any number for their estimation, unless a maximum limit is
+						given.</li>
+					<li>If you select to use a deck, a default Fibonacci sequence
+						deck is chosen.</li>
+					<li>You can also choose another deck from the available saved
+						decks.</li>
+					<li>If you hover over the available decks, you can view the
+						available cards in the deck.</li>
+					<li>You may also choose to create a new deck, and you will be
+						asked to enter a name of the deck, numbers/estimates for each of
+						the cards, and whether the users can select multiple cards or only
+						a single card.</li>
+				</ul>
+			</li>
+			<li>select requirements from the panel on the right.
+				<ul>
+					<li>You have the option of creating new requirements, where
+						you will need to enter a name, description, and choose the type of
+						requirement.</li>
+					<li>There is also an option to reload requirements from the
+						requirements manager. This is in the case when someone has added
+						requirements to the requirement manager while you are creating the
+						game.</li>
+				</ul>
+			</li>
+			<li>Choose if you would like the game to have a deadline or not.
+				If yes, select a date and time that occurs in the future.</li>
+			<li>When you are satisfied with your new Planning Poker game,
+				click the “Save” button and you will be returned to the Game
+				Overview panel.</li>
 		</ul>
 	</div>
 
 	<div class="container">
-		<h3 id="start">Start a game</h3>
+		<h3>
+			<a name="edit">2.5 Edit a game</a>
+		</h3>
+		<ul>
+			<li>Before a game has been started, the moderator is allowed to
+				edit the game.
+				<ul>
+					<li>Select an unstarted game and click the “Edit Game” button.</li>
+					<li>The edit game panel will appear</li>
+					<li>Edit any of the following information and click “Save”:
+						Adding/deleting requirements, deck/no deck, deadline</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div class="container">
+		<h3>
+			<a name="startgame">2.6 Start a game</a>
+		</h3>
 		<ul>
 			<li>Select the unstarted game.</li>
-			<li>Click the start game button.</li>
+			<li>Click the “Start Game” button.</li>
 		</ul>
 	</div>
 
 	<div class="container">
-		<h3 id="estimate">Estimate the requirement</h3>
+		<h3>
+			<a name="estimate">2.7 How to Vote</a>
+		</h3>
 		<ul>
-			<li>Select the game that have been started.</li>
-			<li>Select the requirement</li>
-			<li>Select one card if the deck mode is single.</li>
-			<li>Select multiple cards if the deck mode is multiple.</li>
+			<li>Select the game that has already been started.</li>
+			<li>Select the requirement at needs to be voted.</li>
+			<li>Select your estimate of one card if the deck is in single
+				mode.</li>
+			<li>You can select multiple cards for your estimate value if the
+				deck is multiple mode.</li>
 			<li>You can see your estimate next to the submit button.</li>
-			<li>Deselect the cards and select others cards if you want to make a change.</li>
-			<li>When you are satisfied with your estimation, click the submit button.</li>
+			<li>You can see your total estimate value next to the submit
+				button.</li>
+			<li>You can deselect and select others cards if you want to make
+				a change.</li>
+			<li>When you are satisfied with your estimation, click the
+				“Submit” button.</li>
 		</ul>
 	</div>
 
 	<div>
-		<h3 id="final">Final Estimate</h3>
+		<h3>
+			<a name="end">2.8 How to End a Game </a>
+		</h3>
+		<p>A game ends either when the deadline is up, every user has
+			voted, or the moderator chooses to end a game at any point in time.</p>
+	</div>
+
+	<div>
+		<h3>
+			<a name="final">2.9 How to Make a Final Estimate</a>
+		</h3>
 		<ul>
 			<li>Only the game creator can make the final estimate.</li>
 			<li>Select the complete game.</li>
 			<li>You can see the mean and the median for the final estimate.</li>
-			<li>To make a change for the estimate before the game ends,select the requirement.</li>
-			<li>Put a estimate in the estimate field.</li>
-			<li>Click the save button to save the final estimate.</li>
-			<li>You can always make changes before the game closes or the time ends.</li>
-			<li>If you make the change after the first time, you have to put a note of why you want to make this change.</li>
+			<li>To make a change to the final estimate before the game
+				closes, select the requirement.</li>
+			<li>Type the final estimate in the estimate field.</li>
+			<li>Click the “Save” button to save the final estimate.</li>
+			<li>You can always make changes before the game closes or the
+				time ends.</li>
+			<li>If you make a change after you have a saved the final
+				estimate, you will need to put a note of why you made this change.</li>
+			<li>You can always make changes to the final estimate before the
+				game closes.</li>
 		</ul>
 	</div>
 
 	<div>
-		<h3 id="close">Close game</h3>
+		<h3>
+			<a name="close">2.10 How to Close a Game</a>
+		</h3>
 		<ul>
-			<li>Click the game you want to close.</li>
-			<li>Click the close game button.</li>
-			<li>You will see the game status change in the complete games.</li>
+			<li>CSelect the game that you want to close.</li>
+			<li>Click the “Close Game” button.</li>
+			<li>You will see that the game has been changed to “Closed”.</li>
 		</ul>
 	</div>
 
 	<div>
-		<h3 id="gameTree">Game Tree Panel</h3>
-		<img src="gamePanel.png" alt="game panel"/>
-		<p>On the game panel, the left side of the window shows a tree view of the games. There are two main groups of games: Games in Progress and Complete Games. Each of these groups have two types of games within them:</p>
+		<h3>
+			<a name="preferences">2.11 Preferences</a>
+		</h3>
+		<p>The Preferences panel lets you select how you want to receive
+			notifications. You may select to receive email notifications, SMS
+			notifications, or both. When you select email notifications, please
+			input your email. When you select SMS notifications, please input
+			your mobile number and carrier.</p>
+	</div>
+
+
+	<div>
+		<h3>
+			<a name="mission">3.1 Mission Statement</a>
+		</h3>
+		<p>Team 9 aims to make the best software for teams to achieve the
+			highest productivity.</p>
+	</div>
+
+	<div>
+		<h3>
+			<a name="about">3.2 About Us</a>
+		</h3>
+		<p>We are a group of 15 developers in the CS 3733 Software
+			Engineering class working collaboratively to explore the
+			specifications of creating a Planning Poker software to help teams
+			structure requirements and reach a consensus. The objective is to
+			create a user-friendly and easily-accessible Planning Poker software.</p>
+	</div>
+
+	<div>
+		<h3>
+			<a name="features">3.3 Some of Planning Poker’s Features </a>
+		</h3>
 		<ul>
-			<li>Games in Progress:</li>
-			<p>Games are marked with the icon of a blank page with a plus in the top corner have not been started yet. They can still be edited before they are started.</p>
-			<p>Games marked with an hourglass have been started and are available to be voted on.
-			</p>
-			<li>Completed Games:</li>
-			<p>Games Marked with a check have been completed and ready for the creator to set their final estimate.</p>
-			<p>Games marked with a grey file cabinet icon have been closed. These games can be viewed for historical purposes but can not be changed any more.</p>
+			<li>Mobile Application - This allows everyone to vote on a game
+				and create a game on-the-go, so you do not need to sit in front of
+				your computer in order to play a Planning Poker.</li>
+			<li>User-friendly GUI - The user is able to “fluidly” follow
+				through all the steps from creating to ending a game.</li>
+			<li>Mean and Median View - To make sure that when deciding a
+				final estimate, the team takes into account all the estimates. We
+				have made mean and median viewable to assist you in deciding your
+				final estimates.</li>
+			<li>Quick Game End - You can end a game without having to wait
+				for everyone to finish voting.</li>
+			<li>Manual Final Estimate Change - To make sure that everyone
+				knows why you have manually changed the final estimate, we added a
+				note feature so that when you do change the final estimate, you are
+				required to add a note.</li>
+			<li>Start Game Email Notification - After you created a new
+				game, a notification will be sent to your email so even if someone
+				has not opened the Planning Poker module, they will still know that
+				a game has begun.</li>
+			<li>Easy Step-by-Step Help - Our step-by-step help documentation
+				will help save you a lot of time if you are a beginning Planning
+				Poker user or just want to review how Planning Poker works with our
+				Quick Start guide.</li>
 		</ul>
+
 	</div>
-
-	<div>
-		<h3 id="preferences">Preferences</h3>
-		<p>The preference pane lets you select how you want to receive notifications. You may select to receive email notifications, SMS notifications, or both. When you select one of the methods of notification, you will be asked to input your email or mobile number and carrier depending on which method you select.
-		</p>
-	</div>
-
-
-	<div>
-		<h3 id="planning">Planning Poker</h3>
-		<blockquote cite="http://en.wikipedia.org/wiki/Planning_poker">
-		"Planning poker is a tool for estimating software development projects. It is a technique that minimizes effect of ANCHORING by asking each team member to play their estimate card such that it cannot be seen by the other players. After each player has selected a card, all cards are exposed at once."
-		</blockquote>
-		<p>Reference:http://en.wikipedia.org/wiki/Planning_poker</p>
-	</div>
-
-	<div>
-		<h3 id="team">Our team</h3>
-	</div>
-
-
-
-
-
-
-
-	</body>
+</body>
 </html>
