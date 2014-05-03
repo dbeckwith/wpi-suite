@@ -249,6 +249,7 @@ public class NewGameTutorialController implements ActionListener {
 		tPane.setNextButtonCallback(this);
 		newTab.getNewDeckPanel().setTutorial(true);
 		newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(false);
+		newTab.getNewDeckPanel().getCancelDeckButton().setEnabled(false);
 		tPane.setHighlightArea(newTab.getCardLayoutPanel(), Step.AddCards.message);
 
 		currentStep = Step.SaveDeck;
@@ -262,6 +263,7 @@ public class NewGameTutorialController implements ActionListener {
 		newTab.getNewDeckPanel().setTutorial(false);
 		newTab.getNewDeckPanel().validateInput();
 	    newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
+	    newTab.getNewDeckPanel().getCancelDeckButton().setEnabled(false);
 		tPane.setHighlightArea(newTab.getNewDeckPanel().getCreateDeckButton(), Step.SaveDeck.message);
 		currentStep = Step.SaveGame;
 	}

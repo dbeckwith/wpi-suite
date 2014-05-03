@@ -442,6 +442,13 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * @return the cancelCreationButton
+     */
+    public JButton getCancelDeckButton() {
+        return cancelCreationButton;
+    }
+    
+    /**
      * @param tutorial the tutorial to set
      */
     public void setTutorial(boolean tutorial) {
