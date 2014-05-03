@@ -137,6 +137,31 @@ public class AdminButtonGroup extends ToolbarGroupView {
     public JButton getCloseGameButton() {
         return closeGameButton;
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
+     * #mouseEntered()
+     */
+    @Override
+    public void mouseEntered() {
+        //don't highlight
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
+     * #mouseExited()
+     */
+    @Override
+    public void mouseExited() {
+        //don't highlight
+    }
+
     public JButton getEditGameButton() {
         return editGameButton;
     }
