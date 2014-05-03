@@ -140,6 +140,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	public void install(JFrame to) {
 		to.setGlassPane(this);
 		setVisible(true);
+		repaint();
 
 	}
 
@@ -368,6 +369,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 		nextButtonCallback = a;
 		dialogPanel.setVisible(true);
 		nextButton.setVisible(a != null);
+		repaint();
 	}
 
 	@Override
@@ -380,6 +382,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 			nextButton.setVisible(false);
 			call.actionPerformed(new ActionEvent(this, 0, null));
 		}
+		repaint();
 	}
 
 	@Override
@@ -388,10 +391,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		long now = System.currentTimeMillis();
-		if(now - lastRepaint >= REPAINT_INTERVAL){
-			lastRepaint = now;
-			repaint();
-		}
+
 	}
 }
