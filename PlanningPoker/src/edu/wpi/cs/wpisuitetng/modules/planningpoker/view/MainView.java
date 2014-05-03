@@ -12,6 +12,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -26,6 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDecksControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
 
 /**
  * This is the main panel of the planning poker GUI
@@ -72,6 +75,9 @@ public class MainView extends JTabbedPane {
                         window = (JFrame)comp;
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     }
+         
+                    TutorialPane.getInstance().install(window);
+
 
                     alreadyShown = true;
                 }
@@ -100,4 +106,5 @@ public class MainView extends JTabbedPane {
     public AllGamesViewPanel getMainPanel() {
         return mainPanel;
     }
+    
 }

@@ -42,7 +42,7 @@ public class GameEntityManagerTest {
     static GameModel existingGame = new GameModel("Existing Game", "something", null,
            DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-    static int existingGameID = existingGame.getID();
+    static long existingGameID = existingGame.getID();
     static Project testProject = new Project("test", "1");
     static User admin = new User("admin", "admin", "1234", 27);
     static String mockSsid = "abc123";
@@ -51,7 +51,7 @@ public class GameEntityManagerTest {
     static GameModel newGame = new GameModel("New Game", "A new game", null,
            DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-    static int newGameID = newGame.getID();
+    static long newGameID = newGame.getID();
     static GameModel goodUpdatedGame = new GameModel();;
     static Session adminSession = new Session(admin, testProject, mockSsid);
     static Project otherProject = new Project("other", "2");
@@ -164,7 +164,7 @@ public class GameEntityManagerTest {
         final GameModel game = new GameModel("Save Test", "something", null,
                DeckModel.DEFAULT_DECK, new Date(
                         System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-        final int saveTestGameID = game.getID();
+        final long saveTestGameID = game.getID();
         manager.save(defaultSession, game);
         Assert.assertSame(game, db.retrieve(GameModel.class, "id", saveTestGameID).get(0));
         Assert.assertSame(testProject, game.getProject());
@@ -200,7 +200,7 @@ public class GameEntityManagerTest {
      */
     @Test(expected = NotFoundException.class)
     public void testDeleteFromOtherProject() throws WPISuiteException {
-        manager.deleteEntity(adminSession, Integer.toString(otherGame.getID()));
+        manager.deleteEntity(adminSession, Long.toString(otherGame.getID()));
     }
     
     /**
@@ -210,7 +210,7 @@ public class GameEntityManagerTest {
     @Test(expected = UnauthorizedException.class)
     public void testDeleteNotAllowed() throws WPISuiteException {
         manager.deleteEntity(defaultSession,
-                Integer.toString(existingGame.getID()));
+                Long.toString(existingGame.getID()));
     }
     
     /**

@@ -420,6 +420,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
                 .getModel();
         boolean alreadyReturned = false;
         final int[] selectedRows = requirementsTable.getSelectedRows();
+
         if (selectedRows.length == 0) { 
             alreadyReturned = true;
         	
@@ -476,6 +477,9 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     public void keyReleased(KeyEvent e) {
     }
     
+    public JTable getRequirementsTable() {
+		return requirementsTable;
+	}
     
     private NewGamePanel parentPanel;
     
@@ -484,5 +488,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private JScrollPane requirementsTableScrollPane;
     private JTable requirementsTable;
     private JButton btnSelectAll;
-    
+
+	
+
 }
