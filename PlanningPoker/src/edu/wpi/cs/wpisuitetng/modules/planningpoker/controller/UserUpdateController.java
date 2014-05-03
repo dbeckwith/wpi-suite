@@ -37,7 +37,7 @@ public class UserUpdateController {
     /**
      * The instance of the controller.
      */
-    private static UserUpdateController Instance; // $codepro.audit.disable initializeStaticFields
+    private static UserUpdateController Instance = null;
     
     /**
      * Returns the instance of this UserUpdateController or creates a new one

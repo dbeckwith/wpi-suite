@@ -302,7 +302,8 @@ public class GameModel extends AbstractModel implements Serializable {
 
         final ArrayList<User> users;
         if(CurrentUserController.getInstance().getUsers() != null){
-            users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
+            users = new ArrayList<User>(Arrays.asList(CurrentUserController
+                    .getInstance().getUsers()));
         }
         else {
             users = new ArrayList<User>();
