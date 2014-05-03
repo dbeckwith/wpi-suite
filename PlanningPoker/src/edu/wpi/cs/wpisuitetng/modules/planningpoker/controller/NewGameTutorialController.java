@@ -95,6 +95,7 @@ public class NewGameTutorialController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(quit){
+		    
 			return;
 		}
 		System.out.printf("\t[TUTORIAL] at %s, called by %s\n", currentStep.toString(), e.getActionCommand());
@@ -152,6 +153,17 @@ public class NewGameTutorialController implements ActionListener {
 	 * Resets the controller so that it can start again
 	 */
 	public void reset(){
+	    //reset current panel if needed
+	    switch(currentStep){
+            case SaveDeck:
+                //reset create deck to normal operating mode
+                newTab.getNewDeckPanel().setTutorial(false);
+                newTab.getNewDeckPanel().validateInput();
+                newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
+                break;
+            default:
+                break;
+        }
 		tPane.clear();
 		quit = false;
 		currentStep = Step.CreateGame;
