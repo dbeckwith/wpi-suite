@@ -691,6 +691,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     }
     
     public void setNewGameCallback(ActionListener e){
+    	System.out.println("setnewgame callback" + gameDescription.getName());
     	newGameCallback = e;
     }
     
