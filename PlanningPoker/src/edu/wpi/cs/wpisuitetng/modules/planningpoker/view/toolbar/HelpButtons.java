@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -49,7 +50,7 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 
-        setPreferredWidth(300);
+        setPreferredWidth(350);
         
         helpButton.addActionListener(new ActionListener() {
             @Override
@@ -58,15 +59,20 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
             }
         });
         
-        tutorialButton = new JButton("<html>Start Tutorial</html>");
+        tutorialButton = new JButton("<html>Start<br/>Tutorial</html>");
         tutorialButton.setToolTipText("Start an interactive tutorial to create a game.");
-        tutorialButton.setIcon(ImageLoader.getIcon("tutorial.png"));        
+        tutorialButton.setIcon(ImageLoader.getIcon("tutorial.png"));
         
         helpButton.setHorizontalAlignment(SwingConstants.CENTER);
         
+        tutorialButton.setHorizontalAlignment(SwingConstants.CENTER);
+        tutorialButton.setPreferredSize(new Dimension(175, 200));
+        helpButton.setHorizontalAlignment(SwingConstants.CENTER);
+        helpButton.setPreferredSize(new Dimension(175, 200));
+        
         contentPanel.add(helpButton);
         contentPanel.add(tutorialButton);
-        contentPanel.setOpaque(false);
+        contentPanel.setOpaque(false);        
         
         this.add(contentPanel);
     }
