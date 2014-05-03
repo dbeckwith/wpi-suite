@@ -247,6 +247,7 @@ public class NewGameTutorialController implements ActionListener {
 	private void saveDeck(){
 		newTab.getNewDeckPanel().setSaveDeckCallback(this);
 		newTab.getNewDeckPanel().setTutorial(false);
+		newTab.getNewDeckPanel().validateInput();
 	    newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
 		tPane.setHighlightArea(newTab.getNewDeckPanel().getCreateDeckButton(), Step.SaveDeck.message);
 		currentStep = Step.SaveGame;

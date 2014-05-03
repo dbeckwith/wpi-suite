@@ -305,6 +305,15 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         newDeckName.setText(makeNewDeckName());
     }
     
+    /**
+     * makes the current input valid if it is not already
+     */
+    public void validateInput(){
+        if (!isNameValid) {
+            newDeckName.setText(makeNewDeckName());
+        }
+    }
+    
     private void checkNewDeck() {
         if (!isNameValid) {
             if (nameInUse) {
