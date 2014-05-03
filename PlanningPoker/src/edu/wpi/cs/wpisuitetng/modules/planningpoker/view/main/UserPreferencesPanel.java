@@ -449,9 +449,11 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         }
         else {
             lblInvalidPhone.setVisible(false);
-            if (!((Carrier) carrierBox.getSelectedItem()).equals(currentUser.getCarrier())) {
+            if (!((Carrier) carrierBox.getSelectedItem()).equals(currentUser
+                    .getCarrier())) {
                 btnSaveSms.setEnabled(true);
-            } else {
+            }
+            else {
                 btnSaveSms.setEnabled(false);
             }
         }
@@ -464,18 +466,21 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void updateSMS() {
-        String extracted = extractPhoneNumber(phoneNumberField.getText());
+        final String extracted = extractPhoneNumber(phoneNumberField.getText());
         final Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
-        currentUser.setPhoneNumber(extracted);
+        if (!extracted.isEmpty()) {
+            currentUser.setPhoneNumber(extracted);
+        }
         currentUser.setCarrier(selectedCarrier);
         btnSaveSms.setEnabled(false);
         updateAndRetrieve(currentUser);
     }
     
-    private String extractPhoneNumber(String inputText) {
+    private static String extractPhoneNumber(String inputText) {
         final Pattern phonePattern;
         final Matcher phoneMatcher;
-        final String PHONE_PATTERN = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})";
+        final String PHONE_PATTERN = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*"
+                + "(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})";
         
         phonePattern = Pattern.compile(PHONE_PATTERN);
         phoneMatcher = phonePattern.matcher(inputText);
