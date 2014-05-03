@@ -160,6 +160,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
         
         final JLabel lblPressStartGame = new JLabel(
                 "Press Start Game to Begin Estimation");
+        lblPressStartGame.setToolTipText("This game has not been started yet. Press the start game button in the toolbar above to begin estimation.");
         lblPressStartGame.setHorizontalAlignment(SwingConstants.CENTER);
         lblPressStartGame.setVerticalAlignment(SwingConstants.CENTER);
         lblPressStartGame.setIcon(ImageLoader.getIcon("upArrow.png"));
