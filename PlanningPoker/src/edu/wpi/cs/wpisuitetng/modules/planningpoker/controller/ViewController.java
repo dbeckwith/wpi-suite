@@ -124,26 +124,29 @@ public class ViewController {
                 e.getDescription(), e.getRequirements(), e.getDeck(),
                 e.getEndDate(), GameStatus.NEW, ConfigManager.getConfig()
                         .getUserName());
-                
+        
         RequirementsListModel.getInstance().removeListListener(
                 e.getNewGameRequirementsPanel().getRequirementsListObserver());
         mainView.removeTabAt(mainView.indexOfComponent(e));
         mainView.setSelectedIndex(0);
         
         GameListModel.getInstance().addGame(newGame);
-
+        
         JTree theTree = mainView.getMainPanel().getTree();
         DefaultTreeModel treeModel = (DefaultTreeModel) theTree.getModel();
-        DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) theTree.getModel().getRoot();
+        DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) theTree
+                .getModel().getRoot();
         
         @SuppressWarnings("rawtypes")
         Enumeration treeEnum = rootNode.depthFirstEnumeration();
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) new DefaultMutableTreeNode();
         while (treeEnum.hasMoreElements()) {
             node = (DefaultMutableTreeNode) treeEnum.nextElement();
-            if (node.getUserObject() != null && node.getUserObject() instanceof GameModel) {
-                if ( ((GameModel) node.getUserObject()).getID() == newGame.getID()) {
-                    theTree.setSelectionPath(new TreePath( treeModel.getPathToRoot(node)));
+            if (node.getUserObject() != null
+                    && node.getUserObject() instanceof GameModel) {
+                if (((GameModel) node.getUserObject()).equals(newGame)) {
+                    theTree.setSelectionPath(new TreePath(treeModel
+                            .getPathToRoot(node)));
                     break;
                 }
             }
@@ -367,13 +370,13 @@ public class ViewController {
         
     }
     
-
-	/**
-	 * @return true if admin controls are visible
-	 */
-	public boolean getAdminVisibility() { // $codepro.audit.disable booleanMethodNamingConvention
-		return showAdmin;
-	}
+    
+    /**
+     * @return true if admin controls are visible
+     */
+    public boolean getAdminVisibility() { // $codepro.audit.disable booleanMethodNamingConvention
+        return showAdmin;
+    }
     
     /**
      * Adds a help documentation panel
@@ -402,7 +405,7 @@ public class ViewController {
      * @param e
      */
     public void setNewGameCallback(ActionListener a) {
-    	System.out.println("setNewGmeCallback");
+        System.out.println("setNewGmeCallback");
         newGameCallback = a;
     }
     

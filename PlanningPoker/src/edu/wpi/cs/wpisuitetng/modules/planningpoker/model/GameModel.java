@@ -69,7 +69,7 @@ public class GameModel extends AbstractModel implements Serializable {
     
     private transient ArrayList<GameStatusObserver> status_observers;
     
-    private int id;
+    private long id;
     private String name;
     private String description;
     private List<GameRequirementModel> requirements;
@@ -140,7 +140,8 @@ public class GameModel extends AbstractModel implements Serializable {
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
             Date endDate, GameStatus status, String owner) {
-        id = GameModel.nextId++;
+//        id = GameModel.nextId++;
+        id = System.currentTimeMillis();
         this.name = name;
         this.description = description;
         this.requirements = requirements;
@@ -166,7 +167,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @param id
      *            the new ID number
      */
-    public void setID(int id) {
+    public void setID(long id) {
         this.id = id;
     }
     
@@ -431,7 +432,7 @@ public class GameModel extends AbstractModel implements Serializable {
         return gms;
     }
     
-    public int getID() {
+    public long getID() {
         return id;
     }
     
@@ -511,7 +512,7 @@ public class GameModel extends AbstractModel implements Serializable {
     
     @Override
     public int hashCode() {
-        return id;
+        return (int) id;
     }
     
     /**

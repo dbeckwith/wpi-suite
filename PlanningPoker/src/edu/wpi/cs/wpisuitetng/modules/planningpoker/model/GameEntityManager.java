@@ -166,7 +166,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     public GameModel makeEntity(Session s, String content)
             throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
-        newGameModel.setID(getNextID(s));
+//        newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
         }
@@ -310,8 +310,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
     /**
      * Gets the next available unique ID for a GameModel
      */
-    private int getNextID(Session s) {
-        int max = 0;
+    private long getNextID(Session s) {
+        long max = 0;
         for (GameModel g : getAll(s)) {
             if (g.getID() > max) {
                 max = g.getID();
