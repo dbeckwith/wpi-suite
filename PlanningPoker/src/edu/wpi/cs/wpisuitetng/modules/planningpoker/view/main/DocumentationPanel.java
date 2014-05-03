@@ -72,11 +72,12 @@ public class DocumentationPanel extends JPanel {
                     if (desc == null) {
                         
                     }
-                    else if (desc.startsWith("#")) {
+                    else if (desc.charAt(0) == '#') {
                         editorPane.scrollToReference(desc.substring(1));
                     }
                     else {
-                        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop
+                                .getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
                                 desktop.browse(new URL(desc).toURI());
