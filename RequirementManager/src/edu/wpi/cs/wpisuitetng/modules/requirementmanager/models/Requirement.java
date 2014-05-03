@@ -74,7 +74,14 @@ public class Requirement extends AbstractModel {
 	/** notes associated with the requirement */
 	private NoteList notes;
 
-	/** iteration the requirement is assigned to */
+	/**
+     * @param notes the notes to set
+     */
+    public void setNotes(NoteList notes) {
+        this.notes = notes;
+    }
+
+    /** iteration the requirement is assigned to */
 	private String iteration;
 	
 	/** the ID of the requirement that this requirement is a sub-requirement of */
@@ -256,7 +263,7 @@ public class Requirement extends AbstractModel {
 			if (originalRelease.isEmpty()) message = ("Release Number set to '" + newRelease + "'");
 			else if (newRelease.isEmpty()) message = ("Release Number set to blank from '" + originalRelease + "'");
 			else message = ("Release Number changed from '" + originalRelease + "' to '" + newRelease + "'");
-			this.history.add(message);			
+			this.history.add(message);
 		}
 		this.release = rel;
 	}
