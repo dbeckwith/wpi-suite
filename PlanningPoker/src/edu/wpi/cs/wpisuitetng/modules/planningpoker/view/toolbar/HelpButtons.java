@@ -22,12 +22,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * This is the button panel that allows the user to access the documentation
- *
+ * 
  * @author Team 9
  * @version 1.0
  */
 public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable typeNamesMustBeSingular, lineLength
-    
+
     private static final long serialVersionUID = 1902038690593121709L;
     
     private final JButton helpButton;
@@ -37,7 +37,7 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
     /**
      * 
      * Creates a new HelpButtons
-     *
+     * 
      */
     public HelpButtons() {
         super(""); // not sure if this is needed
@@ -64,7 +64,32 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
         
         this.add(contentPanel);
     }
+    
     public JButton getHelpButton() {
         return helpButton;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
+     * #mouseEntered()
+     */
+    @Override
+    public void mouseEntered() {
+        //don't highlight
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
+     * #mouseExited()
+     */
+    @Override
+    public void mouseExited() {
+        //don't highlight
     }
 }
