@@ -588,9 +588,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private void updateReqManager() {
         if(req.isFromRequirementManager() && (req.getFinalEstimate() != req
                 .getParentEstimate())){
-            System.out.println("Parent est before: " + req.getParentEstimate());
             req.updateRequirementManager();
-            System.out.println("Parent est after: " + req.getParentEstimate());
+            req.setParentEstimate(Integer.parseInt(finalEstimateField.getText()));
             UpdateGamesController.getInstance().updateGame(parentModel);
             final ArrayList<GameStatusObserver> gsos = parentModel
                     .getStatusObservers();
