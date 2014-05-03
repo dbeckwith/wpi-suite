@@ -42,7 +42,7 @@ public class NewGameTutorialController implements ActionListener {
 		 AddCards("Let's add a few cards to our deck and give them some different values.\n When you feel the deck is ready, click Next to continue."),
 		 SaveDeck("Now let's save the deck to use it in the game."),
 		 SaveGame("There is some more information we can enter in, but for now, we can save this game."),
-		 StartGame("Since we didn't specify a deadline, the game needs to be manually started."),
+		 StartGame("All games must be manually started by clicking this button."),
 		 Finished("Congratulations, we have created a new Planning Poker Game!");
 		 
 		 public String message;
