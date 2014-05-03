@@ -62,6 +62,7 @@ public class NewGameTutorialController implements ActionListener {
 
 	private Step currentStep;
 	
+	private boolean tutorialStarted = false;
 	private boolean quit = false;
 
 	/**
@@ -78,9 +79,10 @@ public class NewGameTutorialController implements ActionListener {
 		tPane.setQuitListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tPane.clear();
 				quit = true;	
 				reset();
+				tPane.setVisible(false);
+				tPane.repaint();
 			}
 		});
 
@@ -94,8 +96,15 @@ public class NewGameTutorialController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(quit){
-		    
+		System.out.println(e.getSource());
+		
+		if(e.getSource() == toolbar.getHelpButtons().getTutorialButton()){
+			tutorialStarted = true;
+			tPane.setVisible(true);
+		}
+		
+		if(quit || !tutorialStarted){
+
 			return;
 		}
 		System.out.printf("\t[TUTORIAL] at %s, called by %s\n", currentStep.toString(), e.getActionCommand());
@@ -165,10 +174,12 @@ public class NewGameTutorialController implements ActionListener {
                 break;
         }
 		tPane.clear();
+		tPane.setNextButtonCallback(null);
 		quit = false;
 		currentStep = Step.CreateGame;
 		newTab = null;
 		toolbar.getHelpButtons().getTutorialButton().setEnabled(true);
+		tutorialStarted = false;
 		viewController.setNewGameCallback(null);
 	}
 	

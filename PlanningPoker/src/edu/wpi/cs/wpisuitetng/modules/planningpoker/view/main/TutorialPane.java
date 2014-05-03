@@ -49,6 +49,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private static final long serialVersionUID = -4832992249337947413L;
 	private static TutorialPane instance = null;
 
+	private static final long REPAINT_INTERVAL = 1000/60;
+	
 	/**
 	 * 
 	 * @return TutorialPane.instance
@@ -69,6 +71,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private JButton nextButton;
 	private JButton quitButton;
 
+	private long lastRepaint = 0;
+	
 	/**
 	 * Constructor
 	 */
@@ -136,6 +140,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	public void install(JFrame to) {
 		to.setGlassPane(this);
 		setVisible(true);
+		repaint();
 
 	}
 
@@ -334,6 +339,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	public void clear() {
 		highlightedComponent = null;
 		dialogPanel.setVisible(false);
+		dialogPanel.repaint();
 		repaint();
 	}
 
@@ -362,7 +368,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 	public void setNextButtonCallback(ActionListener a) {
 		nextButtonCallback = a;
 		dialogPanel.setVisible(true);
-		nextButton.setVisible(true);
+		nextButton.setVisible(a != null);
+		repaint();
 	}
 
 	@Override
@@ -375,6 +382,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 			nextButton.setVisible(false);
 			call.actionPerformed(new ActionEvent(this, 0, null));
 		}
+		repaint();
 	}
 
 	@Override
@@ -383,6 +391,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-//		repaint();
+
 	}
 }
