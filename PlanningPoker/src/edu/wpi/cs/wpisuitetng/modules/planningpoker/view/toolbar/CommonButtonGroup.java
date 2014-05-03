@@ -93,10 +93,6 @@ public class CommonButtonGroup extends ToolbarGroupView {
     }
     
     /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
      * #mouseEntered()
      */
     @Override
@@ -105,10 +101,6 @@ public class CommonButtonGroup extends ToolbarGroupView {
     }
     
     /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
      * #mouseExited()
      */
     @Override
