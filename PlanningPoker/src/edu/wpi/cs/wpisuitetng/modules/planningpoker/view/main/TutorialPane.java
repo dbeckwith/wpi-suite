@@ -241,7 +241,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 		g.fillRect(0, y + h, getWidth(), getHeight() - y - h);
 		
 
-		highlightedComponent.repaint();
+//		highlightedComponent.repaint();
 
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 
@@ -383,6 +383,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		repaint();
+//		repaint();
 	}
 }
