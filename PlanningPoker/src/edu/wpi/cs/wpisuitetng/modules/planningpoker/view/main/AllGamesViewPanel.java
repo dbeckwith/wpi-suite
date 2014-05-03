@@ -88,6 +88,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         noRequirementPanel.setLayout(new BorderLayout(0, 0));
         
         final JLabel lblSelectARequirement = new JLabel("Select a Requirement");
+        lblSelectARequirement.setToolTipText("Select a requirement of this game from the list to the left in order to vote on it.");
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
