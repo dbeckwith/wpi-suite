@@ -99,6 +99,10 @@ public class TutorialPane extends JComponent implements ActionListener,
 		text.setBackground(new Color(0,0,0,0));
 
 		quitButton = new JButton("Quit Tutorial");
+		quitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		quitButton.setIcon(new ImageIcon(TutorialPane.class
 				.getResource("/res/Delete.png")));
 		GroupLayout gl_dialogPanel = new GroupLayout(dialogPanel);

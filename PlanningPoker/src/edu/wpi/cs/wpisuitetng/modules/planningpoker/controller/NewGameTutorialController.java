@@ -35,11 +35,11 @@ public class NewGameTutorialController implements ActionListener {
 
 	private enum Step {
 		 CreateGame("Click this button to start creating a new Planning Poker Game."),
-		 EditName("Games are given name by default, but we should change it to something more descriptive.\n Enter a new name and click Next to continue."),
-		 EditDescription("Now, enter in a description of what the game is for.\n Click Next to continue"),
-		 AddRequirements("We need to add at least one requirement to our game. Create a new requirement or select an existing one.\n Click Next to continue"), 
+		 EditName("Games are given name by default, but we should change it to something more descriptive.\nEnter a new name and click Next to continue."),
+		 EditDescription("Now, enter in a description of what the game is for.\nClick Next to continue"),
+		 AddRequirements("We need to add at least one requirement to our game. Create a new requirement or select an existing one.\nClick Next to continue"), 
 		 CreateDeck("We can select a deck, or just a number input with an option maximum. For this tutorial, we will create a new deck."),
-		 AddCards("Let's add a few cards to our deck and give them some different values.\n When you feel the deck is ready, click Next to continue."),
+		 AddCards("Let's add a few cards to our deck and give them some different values.\nWhen you feel the deck is ready, click Next to continue."),
 		 SaveDeck("Now let's save the deck to use it in the game."),
 		 SaveGame("There is some more information we can enter in, but for now, we can save this game."),
 		 StartGame("All games must be manually started by clicking this button."),

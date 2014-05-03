@@ -59,7 +59,7 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
             }
         });
         
-        tutorialButton = new JButton("<html>Start<br/>Tutorial</html>");
+        tutorialButton = new JButton("<html>New Game<br/>Tutorial</html>");
         tutorialButton.setToolTipText("Start an interactive tutorial to create a game.");
         tutorialButton.setIcon(ImageLoader.getIcon("tutorial.png"));
         
