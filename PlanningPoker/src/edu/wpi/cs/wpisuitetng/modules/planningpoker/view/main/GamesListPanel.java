@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,6 +17,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.JTree;
+import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -247,7 +249,38 @@ public class GamesListPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         jScrollPane2 = new javax.swing.JScrollPane();
-        gameTree = new javax.swing.JTree();
+        gameTree = new javax.swing.JTree() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 2930593867767254762L;
+
+            @Override
+            public String getToolTipText(MouseEvent evt) {
+                if (getRowForLocation(evt.getX(), evt.getY()) == -1)
+                  return null;
+                TreePath curPath = getPathForLocation(evt.getX(), evt.getY());
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)curPath.getLastPathComponent();
+                
+                String tooltip = null;
+                
+                if (node.getUserObject() != null && node.getUserObject() instanceof String) {
+                    if (((String) node.getUserObject())
+                            .matches("Games in Progress \\(\\d+\\)")) {
+                        tooltip = "These games are in progress and should be started or voted on.";
+                    } else if (((String) node.getUserObject())
+                            .matches("Completed Games \\(\\d+\\)")) {
+                        tooltip = "These games are complete and need final estimates.";
+                    } else if (((String) node.getUserObject())
+                            .matches("Closed Games \\(\\d+\\)")) {
+                        tooltip = "These games are closed and can no longer be edited.";
+                    }
+                }
+
+                return tooltip;
+              }
+        };
+        ToolTipManager.sharedInstance().registerComponent(gameTree);
         gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
         gameTree.setRootVisible(false);
         gameTree.getSelectionModel().setSelectionMode(

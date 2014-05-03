@@ -84,7 +84,8 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
         requirementType.setToolTipText("The type of the requirement.");
         
         final JPanel ClickStartPanel = new JPanel();
-        ClickStartPanel.setToolTipText("This game has not been started yet, so it can't be voted on yet. Press the Start Game button above to begin estimation.");
+        ClickStartPanel
+                .setToolTipText("This game has not been started yet. Press the Start Game button above to begin estimation.");
         ClickStartPanel.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -159,6 +160,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
         
         final JLabel lblPressStartGame = new JLabel(
                 "Press Start Game to Begin Estimation");
+        lblPressStartGame.setToolTipText("This game has not been started yet. Press the start game button in the toolbar above to begin estimation.");
         lblPressStartGame.setHorizontalAlignment(SwingConstants.CENTER);
         lblPressStartGame.setVerticalAlignment(SwingConstants.CENTER);
         lblPressStartGame.setIcon(ImageLoader.getIcon("upArrow.png"));
