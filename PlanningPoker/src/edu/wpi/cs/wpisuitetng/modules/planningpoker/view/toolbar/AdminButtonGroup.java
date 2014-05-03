@@ -139,10 +139,6 @@ public class AdminButtonGroup extends ToolbarGroupView {
     }
     
     /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
      * #mouseEntered()
      */
     @Override
@@ -151,10 +147,6 @@ public class AdminButtonGroup extends ToolbarGroupView {
     }
     
     /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
      * #mouseExited()
      */
     @Override

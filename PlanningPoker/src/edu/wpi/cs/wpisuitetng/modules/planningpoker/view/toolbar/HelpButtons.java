@@ -70,10 +70,6 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
     }
     
     /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
      * #mouseEntered()
      */
     @Override
@@ -82,10 +78,6 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
     }
     
     /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView
      * #mouseExited()
      */
     @Override

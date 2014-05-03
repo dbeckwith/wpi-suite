@@ -37,7 +37,7 @@ public class UserUpdateController {
     /**
      * The instance of the controller.
      */
-    private static UserUpdateController Instance;
+    private static UserUpdateController Instance; // $codepro.audit.disable initializeStaticFields
     
     /**
      * Returns the instance of this UserUpdateController or creates a new one
@@ -57,7 +57,7 @@ public class UserUpdateController {
      * @param user
      *        the user to update on the server
      */
-    public void updateUser(User user) {
+    public void updateUser(User user) { // $codepro.audit.disable methodShouldBeStatic -->
         System.out.println("Sending update to user " + user.getName());
         final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
                 HttpMethod.POST);
