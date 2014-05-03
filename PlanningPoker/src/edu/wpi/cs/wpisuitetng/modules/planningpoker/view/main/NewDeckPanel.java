@@ -60,6 +60,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     public NewDeckPanel() {
         setBackground(Color.WHITE);
         GetDecksController.getInstance().retrieveDecks();
+        tutorial = false;
         
         cards = new ArrayList<SpinnerCard>();
         
@@ -317,7 +318,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         else {
             errorLabel.setText("");
         }
-        createDeckButton.setEnabled(isNameValid);
+        createDeckButton.setEnabled(isNameValid && !tutorial);
     }
     
     /**
@@ -424,11 +425,23 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		newDeckCallback = a;
 	}
 	
-	public JButton getCreateDeckButton() {
-		return createDeckButton;
-	}
-	
-	private ActionListener newDeckCallback;
+	/**
+     * @return the createDeckButton
+     */
+    public JButton getCreateDeckButton() {
+        return createDeckButton;
+    }
+
+    /**
+     * @param tutorial the tutorial to set
+     */
+    public void setTutorial(boolean tutorial) {
+        this.tutorial = tutorial;
+    }
+
+
+
+    private ActionListener newDeckCallback;
 	
 	private final JScrollPane scrollPane;
     private final ArrayList<SpinnerCard> cards;
@@ -442,5 +455,6 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     private final JRadioButton multipleSelect;
     private final JLabel errorLabel;
     private JButton addCard;
+    private boolean tutorial;   //a flag to show if the tutorial is running
 	
 }

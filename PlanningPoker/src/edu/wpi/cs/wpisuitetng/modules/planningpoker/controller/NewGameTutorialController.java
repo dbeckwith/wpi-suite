@@ -234,6 +234,7 @@ public class NewGameTutorialController implements ActionListener {
 	 */
 	private void addCards(){
 		tPane.setNextButtonCallback(this);
+		newTab.getNewDeckPanel().setTutorial(true);
 		newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(false);
 		tPane.setHighlightArea(newTab.getCardLayoutPanel(), Step.AddCards.message);
 
@@ -245,7 +246,8 @@ public class NewGameTutorialController implements ActionListener {
 	 */
 	private void saveDeck(){
 		newTab.getNewDeckPanel().setSaveDeckCallback(this);
-		newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
+		newTab.getNewDeckPanel().setTutorial(false);
+	    newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
 		tPane.setHighlightArea(newTab.getNewDeckPanel().getCreateDeckButton(), Step.SaveDeck.message);
 		currentStep = Step.SaveGame;
 	}
