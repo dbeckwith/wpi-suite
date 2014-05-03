@@ -85,7 +85,7 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
         
         final JPanel ClickStartPanel = new JPanel();
         ClickStartPanel
-                .setToolTipText("This game has not been started yet, so it can't be voted on yet. Press the Start Game button above to begin estimation.");
+                .setToolTipText("This game has not been started yet. Press the Start Game button above to begin estimation.");
         ClickStartPanel.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

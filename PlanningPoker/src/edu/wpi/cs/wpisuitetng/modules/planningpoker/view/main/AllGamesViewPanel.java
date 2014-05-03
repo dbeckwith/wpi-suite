@@ -63,7 +63,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         emptyDescriptionPanel.setLayout(new BorderLayout(0, 0));
         
         emptyDescriptionLabel = new JLabel("Select a Game");
-        emptyDescriptionLabel.setToolTipText("No game is currently selected. Select one from the tree on the left to see information about it or vote on it. If there are no games, create one with the Create Game button above."); // $codepro.audit.disable lineLength
+        emptyDescriptionLabel.setToolTipText("Select a game from the tree on the left to see information about it or vote on it. If there are no games, create one with the Create Game button above."); // $codepro.audit.disable lineLength
         emptyDescriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         emptyDescriptionLabel.setIcon(ImageLoader.getIcon("leftArrow.png"));
         emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
