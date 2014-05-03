@@ -8,12 +8,15 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.MockNetwork;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
@@ -34,34 +37,47 @@ public class UserUpdateControllerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-        final UserUpdateController uuc = UserUpdateController.getInstance();
-        final User steve = new User("Steve", "steve", "Pass", 1);
-        uuc.setUser(steve);
+        User steve = new User("steve", "steve", "Pass", 1);
         
         assertFalse(steve.isNotifyByEmail());
-        uuc.setNotifyByEmail(true);
+        steve.setNotifyByEmail(true);
+        steve = updateAndRetrieve(steve);
+        
         assertTrue(steve.isNotifyByEmail());
-        uuc.setNotifyByEmail(false);
+        
+        steve.setNotifyByEmail(false);
+        steve = updateAndRetrieve(steve);
         assertFalse(steve.isNotifyByEmail());
         
         assertFalse(steve.isNotifyBySMS());
-        uuc.setNotifyBySMS(true);
+        steve.setNotifyBySMS(true);
+        steve = updateAndRetrieve(steve);
+        
         assertTrue(steve.isNotifyBySMS());
-        uuc.setNotifyBySMS(false);
+        
+        steve.setNotifyBySMS(false);
+        steve = updateAndRetrieve(steve);
         assertFalse(steve.isNotifyBySMS());
         
         assertNull(steve.getEmail());
-        uuc.updateEmail("steve@example.com");
+        steve.setEmail("steve@example.com");
+        steve = updateAndRetrieve(steve);
         assertEquals("steve@example.com", steve.getEmail());
         
         assertEquals(Carrier.UNKNOWN, steve.getCarrier());
-        uuc.updatePhoneCarrier(Carrier.VERIZON);
+        steve.setCarrier(Carrier.VERIZON);
+        steve = updateAndRetrieve(steve);
         assertEquals(Carrier.VERIZON, steve.getCarrier());
         
         assertNull(steve.getPhoneNumber());
-        uuc.updatePhoneNumber("0123456789");
+        steve.setPhoneNumber("0123456789");
+        steve = updateAndRetrieve(steve);
         assertEquals("0123456789", steve.getPhoneNumber());
-        
+    }
+    
+    private User updateAndRetrieve(final User user) {
+        // assume that the user is sent and retrieved
+        return user;
     }
     
 }
