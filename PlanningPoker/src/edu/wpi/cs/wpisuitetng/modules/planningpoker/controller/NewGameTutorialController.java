@@ -104,6 +104,7 @@ public class NewGameTutorialController implements ActionListener {
 		}
 		
 		if(quit || !tutorialStarted){
+
 			return;
 		}
 		System.out.printf("\t[TUTORIAL] at %s, called by %s\n", currentStep.toString(), e.getActionCommand());
@@ -161,6 +162,17 @@ public class NewGameTutorialController implements ActionListener {
 	 * Resets the controller so that it can start again
 	 */
 	public void reset(){
+	    //reset current panel if needed
+	    switch(currentStep){
+            case SaveDeck:
+                //reset create deck to normal operating mode
+                newTab.getNewDeckPanel().setTutorial(false);
+                newTab.getNewDeckPanel().validateInput();
+                newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(true);
+                break;
+            default:
+                break;
+        }
 		tPane.clear();
 		tPane.setNextButtonCallback(null);
 		quit = false;
@@ -168,6 +180,7 @@ public class NewGameTutorialController implements ActionListener {
 		newTab = null;
 		toolbar.getHelpButtons().getTutorialButton().setEnabled(true);
 		tutorialStarted = false;
+		viewController.setNewGameCallback(null);
 	}
 	
 	/**
