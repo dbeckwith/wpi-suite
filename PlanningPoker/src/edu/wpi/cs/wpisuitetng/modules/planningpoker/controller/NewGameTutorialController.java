@@ -149,6 +149,10 @@ public class NewGameTutorialController implements ActionListener {
 				
 			case Finished:
 				reset();
+				quit = true;	
+				reset();
+				tPane.setVisible(false);
+				tPane.repaint();
 				JOptionPane.showMessageDialog(mainView, Step.Finished.message);
 				break;
 
@@ -303,6 +307,8 @@ public class NewGameTutorialController implements ActionListener {
 			}
 		});
 		currentStep = Step.Finished;
+
+		
 	}
 
 }
