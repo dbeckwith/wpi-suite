@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
@@ -568,7 +569,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             }
             req.setFinalEstimate(Integer.parseInt(finalEstimateField.getText()));
             UpdateGamesController.getInstance().updateGame(parentModel);
-            final ArrayList<GameStatusObserver> gsos = parentModel.getStatusObservers();
+            final List<GameStatusObserver> gsos = parentModel.getStatusObservers();
             for (int i = 0; i < gsos.size(); i++) {
                 gsos.get(i).statusChanged(parentModel);
             }
@@ -591,7 +592,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             req.updateRequirementManager();
             req.setParentEstimate(Integer.parseInt(finalEstimateField.getText()));
             UpdateGamesController.getInstance().updateGame(parentModel);
-            final ArrayList<GameStatusObserver> gsos = parentModel
+            final List<GameStatusObserver> gsos = parentModel
                     .getStatusObservers();
             for (int i = 0; i < gsos.size(); i++) {
                 gsos.get(i).statusChanged(parentModel);

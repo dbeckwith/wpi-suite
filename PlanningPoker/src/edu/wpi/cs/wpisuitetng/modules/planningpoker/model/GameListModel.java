@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 
@@ -39,9 +40,9 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     private static final long serialVersionUID = -4216338772150454616L;
     
-    private final ArrayList<GameModel> games;
-    private final ArrayList<SimpleListObserver> observers;
-    private final ArrayList<GameStatusObserver> status_observers;
+    private final List<GameModel> games;
+    private final List<SimpleListObserver> observers;
+    private final List<GameStatusObserver> status_observers;
     private final GameStatusObserver game_observer;
     
     private GameListModel() {
@@ -182,7 +183,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * 
      * @return the list of games
      */
-    public ArrayList<GameModel> getGames() {
+    public List<GameModel> getGames() {
         return games;
     }
     
@@ -209,7 +210,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Gets all the list observers currently registered with the list model.
      * @return the simplelistobservers for the list of games
      */
-    public ArrayList<SimpleListObserver> getObservers() {
+    public List<SimpleListObserver> getObservers() {
         return observers;
     }
     

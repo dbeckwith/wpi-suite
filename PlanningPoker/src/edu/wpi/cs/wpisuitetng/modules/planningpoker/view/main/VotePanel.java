@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -86,8 +87,8 @@ public class VotePanel extends javax.swing.JPanel {
         
         boolean voted = false;
         old = null;
-        ArrayList<Integer> selectedCards = null;
-        final ArrayList<Estimate> estimates = req.getEstimates();
+        List<Integer> selectedCards = null;
+        final List<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 selectedCards = e.getCardsSelected();
@@ -118,7 +119,7 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        ArrayList<Integer> selected = new ArrayList<Integer>();
+        List<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
             selected = old.getCardsSelected();
             lblYouVoted.setVisible(true);
@@ -157,7 +158,7 @@ public class VotePanel extends javax.swing.JPanel {
         }
         else {
             
-            final ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
+            final List<Double> deckCardValues = parentGame.getDeck().getCards();
             
             
             estimateCardsPanel.removeAll();
@@ -207,14 +208,14 @@ public class VotePanel extends javax.swing.JPanel {
     private void selectEstimateCard() {
         
         boolean alreadyVoted = false;
-        final ArrayList<Estimate> estimates = req.getEstimates();
+        final List<Estimate> estimates = req.getEstimates();
         for (Estimate e : estimates) {
             if (e.getUsername().equals(currentUser.getUsername())) {
                 alreadyVoted = true;
             }
         }
         
-        final ArrayList<Integer> selected = new ArrayList<Integer>();
+        final List<Integer> selected = new ArrayList<Integer>();
         float estimate = 0;
         for (Card c : cards) {
             if (c.isCardSelected()) {
@@ -537,7 +538,7 @@ public class VotePanel extends javax.swing.JPanel {
     
     private JButton btnSubmit;
     private JLabel lblTotal;
-    private final ArrayList<Card> cards;
+    private final List<Card> cards;
     private javax.swing.JLabel estimateLabel;
     private JTextArea reqDescriptionTextArea;
     private JPanel estimateCardsPanel;

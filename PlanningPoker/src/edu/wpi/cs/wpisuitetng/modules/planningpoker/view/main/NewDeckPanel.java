@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -415,7 +416,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 	
 	
 	private final JScrollPane scrollPane;
-    private final ArrayList<SpinnerCard> cards;
+    private final List<SpinnerCard> cards;
     private final JPanel cardPanel;
     private NewGamePanel parentPanel;
     private final JButton createDeckButton;

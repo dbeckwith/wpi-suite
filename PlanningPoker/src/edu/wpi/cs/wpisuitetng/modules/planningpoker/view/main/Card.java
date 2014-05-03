@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -55,7 +56,7 @@ public abstract class Card extends JPanel { // $codepro.audit.disable abstractSp
 	private float value;
 	private boolean cardSelected;
 	
-    private final ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
+    private final List<ActionListener> listeners = new ArrayList<ActionListener>();
 	
 	private final int suitIndex;
 	private Color backgroundColor;

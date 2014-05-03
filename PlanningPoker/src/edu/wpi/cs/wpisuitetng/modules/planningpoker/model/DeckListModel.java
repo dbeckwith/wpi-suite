@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 
@@ -22,9 +23,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  */
 public class DeckListModel extends AbstractListModel<DeckModel> {
 	private static DeckListModel instance = null;
-	private final ArrayList<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
+	private final List<SimpleListObserver> observers = new ArrayList<SimpleListObserver>();
 	private static final long serialVersionUID = 3193186441179194894L;
-	private final ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
+	private final List<DeckModel> decks = new ArrayList<DeckModel>();
 
     /**
      * Returns the instance of this DeckListModel or creates a new one
@@ -103,7 +104,7 @@ public class DeckListModel extends AbstractListModel<DeckModel> {
 	 * Gets the list of all decks currently being stored.
 	 * @return the list of decks
 	 */
-	public ArrayList<DeckModel> getDecks() {
+	public List<DeckModel> getDecks() {
 		return decks;
 	}
 
