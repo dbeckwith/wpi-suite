@@ -18,7 +18,6 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetParentRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
