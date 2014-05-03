@@ -54,7 +54,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private static final long serialVersionUID = -4252474071295177531L;
     
     private final SimpleListObserver requirementsListObserver;
-    private final ArrayList<GameRequirementModel> createdRequirements;
+    private final List<GameRequirementModel> createdRequirements;
     
     // TODO: remember which requirements were checked off as added when the list updates
     
@@ -345,7 +345,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      * 
      * @return all selected requirements from the table
      */
-    public ArrayList<GameRequirementModel> getRequirementsFromTable() {
+    public List<GameRequirementModel> getRequirementsFromTable() {
         return getAllRequirementsFromTable(false);
     }
     
@@ -353,14 +353,14 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      * gets requirements from the table
      * 
      * @param all
-     *        true if all requirements, flase if only slective requirements
+     *        true if all requirements, false if only selective requirements
      * @return requirements from table
      */
-    public ArrayList<GameRequirementModel> getAllRequirementsFromTable(
+    public List<GameRequirementModel> getAllRequirementsFromTable(
             boolean all) {
         final DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
-        final ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
+        final List<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for (int i = 0; i < model.getRowCount(); i++) {
             if (!(Boolean) model.getValueAt(i, 0) && !all) {
                 continue;
@@ -404,8 +404,8 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      * 
      * @return the list of errors
      */
-    public ArrayList<String> getErrors() {
-        final ArrayList<String> errors = new ArrayList<>();
+    public List<String> getErrors() {
+        final List<String> errors = new ArrayList<>();
         if (!canValidateForm()) {
             errors.add("At least one requirement is needed");
         }

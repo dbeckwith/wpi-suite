@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 
@@ -27,8 +28,8 @@ public class RequirementsListModel extends
     
     private static RequirementsListModel instance = null;
     
-    private final ArrayList<GameRequirementModel> requirements;
-    private final ArrayList<SimpleListObserver> observers;
+    private final List<GameRequirementModel> requirements;
+    private final List<SimpleListObserver> observers;
     
     private RequirementsListModel() {
         requirements = new ArrayList<GameRequirementModel>();
@@ -78,7 +79,7 @@ public class RequirementsListModel extends
      * 
      * @return ArrayList of SimpleListObservers
      */
-    public ArrayList<SimpleListObserver> getObservers() {
+    public List<SimpleListObserver> getObservers() {
         return observers;
     }
     
@@ -156,7 +157,7 @@ public class RequirementsListModel extends
      * Gets the full list of current requirements.
      * @return The list of requirements
      */
-    public ArrayList<GameRequirementModel> getAll() {
+    public List<GameRequirementModel> getAll() {
         return requirements;
     }
     

@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,7 +28,7 @@ public class ImageLoader {
     
     private static final String modifiedPath = "/res/";
     
-    private static HashMap<String, BufferedImage> images;
+    private static Map<String, BufferedImage> images;
     
     static {
         ImageLoader.images = new HashMap<String, BufferedImage>();

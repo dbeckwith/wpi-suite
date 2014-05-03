@@ -67,7 +67,7 @@ public class GameModel extends AbstractModel implements Serializable {
         }
     };
     
-    private transient ArrayList<GameStatusObserver> status_observers;
+    private transient List<GameStatusObserver> status_observers;
     
     private int id;
     private String name;
@@ -300,7 +300,7 @@ public class GameModel extends AbstractModel implements Serializable {
         boolean toReturn = true;
         int returnFlag = 1;
 
-        final ArrayList<User> users;
+        final List<User> users;
         if(CurrentUserController.getInstance().getUsers() != null){
             users = new ArrayList<User>(Arrays.asList(CurrentUserController
                     .getInstance().getUsers()));
@@ -333,7 +333,7 @@ public class GameModel extends AbstractModel implements Serializable {
                 e.printStackTrace();
             }
             
-            final ArrayList<User> nowUsers;
+            final List<User> nowUsers;
             if(CurrentUserController.getInstance().getUsers() != null) {
                 nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
             }
@@ -492,7 +492,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * 
      * @return the simplelistobservers for the list of games
      */
-    public ArrayList<GameStatusObserver> getStatusObservers() {
+    public List<GameStatusObserver> getStatusObservers() {
         return status_observers;
     }
     

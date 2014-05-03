@@ -13,7 +13,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -216,7 +216,7 @@ public class DeckOptionsPanel extends JPanel implements SimpleListObserver, Acti
      */
     @Override
     public void listUpdated() {
-        final ArrayList<DeckModel> decks = DeckListModel.getInstance().getDecks();
+        final List<DeckModel> decks = DeckListModel.getInstance().getDecks();
         final DefaultComboBoxModel<DeckModel> newModel = new DefaultComboBoxModel<DeckModel>();
         newModel.addElement(DeckModel.DEFAULT_DECK);
         for (DeckModel deck : decks) {

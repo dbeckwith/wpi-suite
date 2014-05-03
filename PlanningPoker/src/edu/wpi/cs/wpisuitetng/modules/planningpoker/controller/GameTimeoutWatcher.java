@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -38,7 +39,7 @@ public class GameTimeoutWatcher {
     }
     
     private final Timer timer;
-    private final ArrayList<GameTimeoutTask> activeTasks;
+    private final List<GameTimeoutTask> activeTasks;
     
     private GameTimeoutWatcher() {
         timer = new Timer("GameTimeoutWatcher timer");

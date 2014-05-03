@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -35,7 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
  */
 public class GameTimeoutObserver extends Thread {
     
-    private static final ArrayList<GameTimeoutObserver> OBSERVERS = new ArrayList<>();
+    private static final List<GameTimeoutObserver> OBSERVERS = new ArrayList<>();
     
     /**
      * The game to end once the deadline has passed.

@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -540,7 +541,7 @@ public class NewGamePanel extends JPanel {
      * 
      * @return the requirements of the new game
      */
-    public ArrayList<GameRequirementModel> getRequirements() {
+    public List<GameRequirementModel> getRequirements() {
         return newGameRequirementsPanel.getRequirementsFromTable();
     }
     
@@ -587,7 +588,7 @@ public class NewGamePanel extends JPanel {
                                     .getRequirementsFromTable())));
             
         }
-        final ArrayList<String> errors = new ArrayList<>();
+        final List<String> errors = new ArrayList<>();
         errors.addAll(gameDescription.getErrors());
         errors.addAll(newGameRequirementsPanel.getErrors());
         
