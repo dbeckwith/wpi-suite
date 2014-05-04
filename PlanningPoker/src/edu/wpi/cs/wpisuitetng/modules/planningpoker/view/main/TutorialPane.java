@@ -8,7 +8,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.AWTException;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -18,7 +17,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -36,8 +34,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import org.jdesktop.swingx.image.GaussianBlurFilter;
-
 /**
  * 
  * A glass pane that goes over the rest of the GUI for the interactive tutorial.
@@ -54,8 +50,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private static final long serialVersionUID = -4832992249337947413L;
 	private static TutorialPane instance = null;
 
-	private static final long REPAINT_INTERVAL = 1000/20;
-	
 	/**
 	 * 
 	 * @return TutorialPane.instance
@@ -68,8 +62,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 		return TutorialPane.instance;
 	}
 	
-	private BufferedImage windowImage;
-	private JFrame window;
 	private Rectangle highlightArea = null;
 	private Component highlightedComponent;
 	private ActionListener nextButtonCallback;
@@ -78,7 +70,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private JButton nextButton;
 	private JButton quitButton;
 
-	private long lastRepaint = 0;
 	
 	/**
 	 * Constructor
@@ -151,7 +142,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 * @param comp
 	 */
 	public void install(JFrame to) {
-		window = to;
 		to.setGlassPane(this);
 		setVisible(true);
 		repaint();
