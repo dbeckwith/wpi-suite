@@ -98,6 +98,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         for (GameRequirementModel req : gameReqs) {
             addRequirement(req, true);
         }
+        GetRequirementsController.getInstance().retrieveRequirements();
     }
     
     /**
@@ -300,7 +301,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
                     
                     @Override
                     public void tableChanged(TableModelEvent e) {
-                        canValidateForm();
+                        isFormValid();
                         checkAllSelected();
                         if (parentPanel != null) {
                             parentPanel.check();
@@ -334,7 +335,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
                     .getModel();
             model.addRow(new Object[] { selected, r,
                     r.getDescription().toString(), r.getType().toString() });
-            canValidateForm();
+            isFormValid();
             parentPanel.check();
         }
     }
@@ -385,7 +386,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      * 
      * @return whether the user has entered valid input
      */
-    public boolean canValidateForm() {
+    public boolean isFormValid() { // $codepro.audit.disable booleanMethodNamingConvention
         boolean hasRequirement = false;
         
         // make sure at least one requirement is checked
@@ -406,7 +407,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      */
     public ArrayList<String> getErrors() {
         final ArrayList<String> errors = new ArrayList<>();
-        if (!canValidateForm()) {
+        if (!isFormValid()) {
             errors.add("At least one requirement is needed");
         }
         return errors;

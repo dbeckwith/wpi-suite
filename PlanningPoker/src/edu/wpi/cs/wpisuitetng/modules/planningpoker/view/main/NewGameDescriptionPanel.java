@@ -136,7 +136,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         datePicker.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canValidateDeadline();
+                isDeadlineValid();
                 parentPanel.check();
             }
         });
@@ -145,7 +145,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
             
             @Override
             public void stateChanged(ChangeEvent e) {
-                canValidateDeadline();
+                isDeadlineValid();
                 parentPanel.check();
             }
         });
@@ -155,12 +155,12 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 parentPanel.setHasChanged(true);
-                canValidateDeadline();
+                isDeadlineValid();
                 parentPanel.check();
             }
         });
         
-        canValidateDeadline();
+        isDeadlineValid();
     }
     
     /**
@@ -436,7 +436,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      * @return valid the boolean value to indicate if the game is still valid
      *         (whether or not pass the deadline)
      */
-    public boolean canValidateDeadline() {
+    public boolean isDeadlineValid() { // $codepro.audit.disable booleanMethodNamingConvention
     	final boolean valid;
     	
     	boolean toReturn;
@@ -465,9 +465,9 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      * @return valid the boolean value to determine if the form is properly
      *         filled.
      */
-    public boolean canValidateForm() {
+    public boolean isFormValid() { // $codepro.audit.disable booleanMethodNamingConvention
         final boolean valid = isNameValid && isDescriptionValid
-                && canValidateDeadline();
+                && isDeadlineValid();
         return valid;
     }
     
@@ -484,7 +484,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         if (!isDescriptionValid) {
             errors.add("Description field is required");
         }
-        if (!canValidateDeadline()) {
+        if (!isDeadlineValid()) {
             errors.add("Deadline is invalid");
         }
         return errors;
