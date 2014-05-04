@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.AWTException;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -17,10 +18,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -32,6 +35,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import org.jdesktop.swingx.image.GaussianBlurFilter;
 
 /**
  * 
@@ -62,7 +67,9 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 		return TutorialPane.instance;
 	}
-
+	GaussianBlurFilter blur = new GaussianBlurFilter(10);
+	private BufferedImage windowImage;
+	private JFrame window;
 	private Rectangle highlightArea = null;
 	private Component highlightedComponent;
 	private ActionListener nextButtonCallback;
@@ -80,7 +87,25 @@ public class TutorialPane extends JComponent implements ActionListener,
 		setLayout(null);
 		addMouseMotionListener(this);
 
-		dialogPanel = new JPanel();
+
+		
+		dialogPanel = new JPanel(){
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D g2 = (Graphics2D)g;
+				if(windowImage != null){
+					g2.drawImage(
+							windowImage.getSubimage(
+									dialogPanel.getX(),
+									dialogPanel.getY(),
+									dialogPanel.getWidth(),
+									dialogPanel.getHeight()),
+							blur, 0, 0);
+
+				}
+			}
+		};
 		dialogPanel.setBackground(Color.WHITE);
 		dialogPanel.setBounds(42, 32, 368, 197);
 		add(dialogPanel);
@@ -142,6 +167,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 * @param comp
 	 */
 	public void install(JFrame to) {
+		window = to;
 		to.setGlassPane(this);
 		setVisible(true);
 		repaint();
@@ -189,6 +215,16 @@ public class TutorialPane extends JComponent implements ActionListener,
 		highlightArea.y = compPos.y - pos.y;
 
 		placePanel(highlightArea);
+
+		if(windowImage == null || windowImage.getWidth() != getWidth() || windowImage.getHeight() != getHeight()){
+			windowImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		}
+		
+		window.getContentPane().paintComponents(windowImage.getGraphics());
+
+		
+		
+		
 
 		Rectangle dialogRect = dialogPanel.getBounds();
 		Point dialogCenter = new Point((int) dialogRect.getCenterX(),
