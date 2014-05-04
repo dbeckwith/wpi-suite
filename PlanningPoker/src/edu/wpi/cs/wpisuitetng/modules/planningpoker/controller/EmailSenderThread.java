@@ -113,7 +113,7 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
         }
         catch (EmailException e) {
             // failed to send email
-            Logger.getGlobal().severe("Failed to send email:  " + e.getMessage());
+            Logger.getGlobal().severe("Failed to send email");
         }
     }
     
