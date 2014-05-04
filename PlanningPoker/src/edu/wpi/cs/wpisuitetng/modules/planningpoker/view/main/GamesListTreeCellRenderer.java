@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
@@ -121,6 +122,8 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
                     || node.getUserObject().equals("<No games in progress>")
                     || node.getUserObject().equals("<No closed games>")) {
                 icon = ImageLoader.getIcon("noGames.png");
+                setFont(getFont().deriveFont(Font.ITALIC));
+                setForeground(new Color(150, 150, 150));
             }
         }
         
