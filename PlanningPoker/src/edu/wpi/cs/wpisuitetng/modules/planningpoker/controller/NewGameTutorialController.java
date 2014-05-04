@@ -248,7 +248,7 @@ public class NewGameTutorialController implements ActionListener {
 	 * adds a default requirement if there are none selected
 	 */
 	private void createDeck(){
-		if(!newTab.getRequirementsPanel().canValidateForm()){
+		if(!newTab.getRequirementsPanel().isFormValid()){
 			newTab.getRequirementsPanel().addCustomRequirement(
 					new GameRequirementModel(
 							new Requirement(RequirementsListModel.getInstance().getSize(), 

@@ -478,8 +478,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
         boolean alreadyReturned = false;
-        if (!(newGameRequirementsPanel.canValidateForm() && gameDescription
-                .canValidateForm())) {
+        if (!(newGameRequirementsPanel.isFormValid() && gameDescription
+                .isFormValid())) {
             check();
             alreadyReturned = true;
             
@@ -565,8 +565,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
      */
     public void check() {
         if (validateMode == 0) {
-            saveButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm());
+            saveButton.setEnabled(gameDescription.isFormValid()
+                    && newGameRequirementsPanel.isFormValid());
         }
         else {
             boolean oldHasDeadline = game.hasDeadline();
@@ -585,8 +585,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                 sameDateStatus = false;
             }
             
-            saveButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm()
+            saveButton.setEnabled(gameDescription.isFormValid()
+                    && newGameRequirementsPanel.isFormValid()
                     && !(game.getDeck().getName().equals(getDeck().getName())
                     		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
                             && sameDateStatus && game.getRequirements()

@@ -167,7 +167,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
                 else {
                     saveEmailButton.setEnabled(false);
                     
-                    if (!extractPhoneNumber(email).isEmpty()) {
+                    if (email.matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) {
                         saveEmailButton.setEnabled(true);
                     }
                     else {
