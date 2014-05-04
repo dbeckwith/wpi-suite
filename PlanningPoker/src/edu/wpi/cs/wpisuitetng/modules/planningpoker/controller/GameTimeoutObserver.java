@@ -71,7 +71,7 @@ public class GameTimeoutObserver extends Thread {
      * @param game
      */
     public GameTimeoutObserver(Session session, GameModel game) {
-        super("GameTimeoutObserver-" + game.getID());
+        super("GameTimeoutObserver-" + (long)game.getID());
         dateFormatGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
         
         this.session = session;

@@ -58,6 +58,7 @@ public class GameEntityManagerTest {
     static GameModel otherGame = new GameModel("Other Game", "something", null,
            DeckModel.DEFAULT_DECK, new Date(
                     System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
+    static Session otherSession = new Session(admin, otherProject, mockSsid);
     
     /**
      * Initializes the mock network and prepares other variables
@@ -88,6 +89,7 @@ public class GameEntityManagerTest {
     public void prepare() {
         try {
             manager.deleteAll(adminSession);
+            manager.deleteAll(otherSession);
         }
         catch (WPISuiteException e) {
             Assert.fail();
@@ -199,7 +201,7 @@ public class GameEntityManagerTest {
      * @throws WPISuiteException
      */
     @Test(expected = NotFoundException.class)
-    public void testDeleteFromOtherProject() throws WPISuiteException {
+    public void testDeleteFromOtherProject() throws WPISuiteException  {
         manager.deleteEntity(adminSession, Long.toString(otherGame.getID()));
     }
     
