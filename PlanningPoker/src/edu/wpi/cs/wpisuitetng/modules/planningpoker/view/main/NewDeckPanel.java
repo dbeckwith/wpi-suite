@@ -455,7 +455,16 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         this.tutorial = tutorial;
     }
 
-
+    /**
+     * 
+     * Determines if the current deck hasn't been edited yet (i.e. no cards have
+     * been added).
+     * 
+     * @return true if the game hasn't been edited yet, false otherwise
+     */
+    public boolean isUnedited() { // $codepro.audit.disable booleanMethodNamingConvention
+        return cards.size() == 1 && cards.get(0).getEstimateValue() == 0;
+    }
 
     private ActionListener newDeckCallback;
 	
@@ -473,4 +482,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     private JButton addCard;
     private boolean tutorial;   //a flag to show if the tutorial is running
 	
+    public JButton getAddCardButton() {
+        return addCard;
+    }
 }

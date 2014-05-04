@@ -189,7 +189,7 @@ public class ViewController {
         
         if (hasChanged) {
             final int result = cancelConfirm.showConfirmDialog(e,
-                    "Are you sure you want to cancel this game?",
+                    "Are you sure you want to cancel creation of this game?",
                     "Cancel Game", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 RequirementsListModel.getInstance().removeListListener(

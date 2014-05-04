@@ -11,7 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -268,6 +267,7 @@ public class NewGameTutorialController implements ActionListener {
 	 * Sets up the tutorial for adding cards to the new deck
 	 */
 	private void addCards(){
+	    System.out.println("addCards()");
 		tPane.setNextButtonCallback(this);
 		newTab.getNewDeckPanel().setTutorial(true);
 		newTab.getNewDeckPanel().getCreateDeckButton().setEnabled(false);
@@ -281,6 +281,14 @@ public class NewGameTutorialController implements ActionListener {
 	 * Sets up the tutorial for saving the new deck
 	 */
 	private void saveDeck(){
+	    if (newTab.getNewDeckPanel().isUnedited()) {
+            newTab.getNewDeckPanel().getAddCardButton().doClick();
+            newTab.getNewDeckPanel().getAddCardButton().doClick();
+            newTab.getNewDeckPanel().getAddCardButton().doClick();
+            newTab.getNewDeckPanel().getAddCardButton().doClick();
+            newTab.getNewDeckPanel().getAddCardButton().doClick();
+	    }
+	    
 		newTab.getNewDeckPanel().setSaveDeckCallback(this);
 		newTab.getNewDeckPanel().setTutorial(false);
 		newTab.getNewDeckPanel().validateInput();
