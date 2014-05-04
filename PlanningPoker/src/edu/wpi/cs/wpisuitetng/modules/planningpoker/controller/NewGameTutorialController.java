@@ -39,7 +39,7 @@ public class NewGameTutorialController implements ActionListener {
 		 EditDescription("Now, enter in a description of what the game is for.\nClick Next to continue.\n\nIf you do not add a description, this tutorial will add one for you."),
 		 AddRequirements("We need to add at least one requirement to our game. Create a new requirement or select an existing one.\nClick Next to continue.\n\nIf you do not select any requirements, this tutorial will add one for you."), 
 		 CreateDeck("We can select a deck, or just a number input with an option maximum. For this tutorial, we will create a new deck."),
-		 AddCards("Let's add a few cards to our deck and give them some different values.\nWhen you feel the deck is ready, click Next to continue."),
+		 AddCards("Let's add a few cards to our deck and give them some different values.\nWhen you feel the deck is ready, click Next to continue.\n\nIf you don't add any cards, this tutorial will add some for you."),
 		 SaveDeck("Now let's save the deck to use it in the game."),
 		 SaveGame("There is some more information we can enter in, but for now, we can save this game."),
 		 StartGame("All games must be manually started by clicking this button."),
