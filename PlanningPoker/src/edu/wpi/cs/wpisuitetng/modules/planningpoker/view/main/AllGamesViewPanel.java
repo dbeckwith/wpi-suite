@@ -11,12 +11,16 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,7 +38,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class AllGamesViewPanel extends javax.swing.JPanel {
+public class AllGamesViewPanel extends JPanel implements AncestorListener {
     
     private static final long serialVersionUID = -6990619499118841478L;
     private GameModel currentSelectionGame;
@@ -43,6 +47,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      * Creates a new AllGamesViewPanel.
      */
     public AllGamesViewPanel() {
+    	addAncestorListener(this);
         setLayout(new BorderLayout(0, 0));
         jSplitPane3 = new javax.swing.JSplitPane();
         add(jSplitPane3, BorderLayout.CENTER);
@@ -145,6 +150,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         });
     }
     
+    private ActionListener visibilityCallback;
+    
     private final javax.swing.JSplitPane jSplitPane3;
     private final GamesListPanel gameTree;
     private final JPanel requirementPanel;
@@ -204,4 +211,30 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     public GamesListPanel getGameTree() {
         return gameTree;
     }
+    
+    public void setVisibilityCallback(ActionListener a){
+    	visibilityCallback = a;
+    }
+
+	@Override
+	public void ancestorAdded(AncestorEvent arg0) {
+		if(visibilityCallback != null){
+			ActionListener call = visibilityCallback;
+			visibilityCallback = null;
+			call.actionPerformed(new ActionEvent(this, 0, ""));
+		}
+		
+	}
+
+	@Override
+	public void ancestorMoved(AncestorEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ancestorRemoved(AncestorEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

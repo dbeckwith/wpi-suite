@@ -60,6 +60,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     public NewDeckPanel() {
         setBackground(Color.WHITE);
         GetDecksController.getInstance().retrieveDecks();
+        tutorial = false;
         
         cards = new ArrayList<SpinnerCard>();
         
@@ -127,6 +128,17 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         createDeckButton = new JButton("Create Deck");
         createDeckButton.setToolTipText("Create and save this deck.");
         
+        createDeckButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(newDeckCallback != null){
+					ActionListener call = newDeckCallback;
+					newDeckCallback = null;
+					call.actionPerformed(new ActionEvent(this, 0, ""));
+				}
+			}
+		});
+        
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -139,20 +151,11 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 final DeckModel newDeck = new DeckModel(newDeckName.getText().trim(), newCards,
                         multipleSelect.isSelected());
                 newDeck.sort();
+                DeckListModel.getInstance().addDeck(newDeck);
+                parentPanel.setNewDeck();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(500);
-                        }
-                        catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        parentPanel.setNewDeck();
-                    }
-                }.run(); // $codepro.audit.disable useStartRatherThanRun
+
             }
         });
         
@@ -194,7 +197,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         
-        final JButton addCard = new JButton("Add Card");
+        addCard = new JButton("Add Card");
         addCard.setToolTipText("Add a new card to the list of cards.");
         addCard.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -269,7 +272,12 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         );
         
         cardPanel = new JPanel(){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void paintComponent(Graphics g) {
                 final BufferedImage texture = ImageLoader.getImage("felt.png");
                 for (int x = 0; x < getWidth(); x += texture.getWidth()) {
@@ -297,6 +305,15 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         newDeckName.setText(makeNewDeckName());
     }
     
+    /**
+     * makes the current input valid if it is not already
+     */
+    public void validateInput(){
+        if (!isNameValid) {
+            newDeckName.setText(makeNewDeckName());
+        }
+    }
+    
     private void checkNewDeck() {
         if (!isNameValid) {
             if (nameInUse) {
@@ -310,7 +327,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         else {
             errorLabel.setText("");
         }
-        createDeckButton.setEnabled(isNameValid);
+        createDeckButton.setEnabled(isNameValid && !tutorial);
     }
     
     /**
@@ -385,7 +402,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		}
 		
 		cards.add(newCard);
-		
+				
 		final GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 10, 0, 10);
 		cardPanel.add(newCard, gbc);
@@ -413,6 +430,34 @@ public class NewDeckPanel extends JPanel implements ActionListener {
 		
 	}
 	
+	public void setSaveDeckCallback(ActionListener a){
+		newDeckCallback = a;
+	}
+	
+	/**
+     * @return the createDeckButton
+     */
+    public JButton getCreateDeckButton() {
+        return createDeckButton;
+    }
+
+    /**
+     * @return the cancelCreationButton
+     */
+    public JButton getCancelDeckButton() {
+        return cancelCreationButton;
+    }
+    
+    /**
+     * @param tutorial the tutorial to set
+     */
+    public void setTutorial(boolean tutorial) {
+        this.tutorial = tutorial;
+    }
+
+
+
+    private ActionListener newDeckCallback;
 	
 	private final JScrollPane scrollPane;
     private final ArrayList<SpinnerCard> cards;
@@ -425,5 +470,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     private boolean nameInUse = false;
     private final JRadioButton multipleSelect;
     private final JLabel errorLabel;
+    private JButton addCard;
+    private boolean tutorial;   //a flag to show if the tutorial is running
 	
 }

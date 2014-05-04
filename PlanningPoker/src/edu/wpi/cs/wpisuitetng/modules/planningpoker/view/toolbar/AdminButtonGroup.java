@@ -36,6 +36,8 @@ public class AdminButtonGroup extends ToolbarGroupView {
     private final JButton editGameButton;
     private final JButton startGameButton;
     
+    private ActionListener startGameCallback;
+    
     private final JPanel contentPanel = new JPanel();
     
     /**
@@ -61,6 +63,18 @@ public class AdminButtonGroup extends ToolbarGroupView {
         startGameButton = new JButton("<html>Start<br/>Game</html>");
         startGameButton.setToolTipText("Start estimation on the currently selected game, enabling users to vote on its requirements."); // $codepro.audit.disable lineLength
         startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
+        
+        startGameButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(startGameCallback != null){
+					ActionListener call = startGameCallback;
+					startGameCallback = null;
+					call.actionPerformed(e);
+				}
+			}
+		});
         
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
@@ -162,5 +176,9 @@ public class AdminButtonGroup extends ToolbarGroupView {
     }
     public JButton getStartGameButton() {
         return startGameButton;
+    }
+    
+    public void setStartGameCallback(ActionListener a){
+    	startGameCallback = a;
     }
 }

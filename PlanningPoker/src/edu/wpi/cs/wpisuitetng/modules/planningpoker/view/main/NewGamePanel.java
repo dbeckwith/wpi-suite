@@ -31,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -48,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class NewGamePanel extends JPanel {
+public class NewGamePanel extends JPanel implements AncestorListener {
     private static final long serialVersionUID = 6206697919180272913L;
     private int validateMode = 0;
     
@@ -60,6 +62,8 @@ public class NewGamePanel extends JPanel {
         setBackground(Color.WHITE);
         
         initComponents();
+        
+        addAncestorListener(this);
         
         NewGamePanel.setErrorBorder(newReqName, false);
         NewGamePanel.setErrorBorder(newReqDesc, false);
@@ -171,6 +175,18 @@ public class NewGamePanel extends JPanel {
     private void initComponents() {
         hasChanged = false;
         saveButton = new javax.swing.JButton();
+        
+        saveButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(saveGameCallback != null){
+					ActionListener call = saveGameCallback;
+					saveGameCallback = null;
+					call.actionPerformed(new ActionEvent(this, 0, ""));
+				}
+			}
+		});
+        
         saveButton.setToolTipText("Save the new game and close this tab.");
         cancelButton = new javax.swing.JButton();
         cancelButton.setToolTipText("Cancel creation of this game.");
@@ -657,17 +673,68 @@ public class NewGamePanel extends JPanel {
     public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
         gameDescription.setNewDeck();
     }
+    
+    public NewGameDescriptionPanel getDescriptionPanel(){
+    	return gameDescription;
+    } 
+    
+    public NewGameRequirementsPanel getRequirementsPanel(){
+    	return newGameRequirementsPanel;
+    }
+    
+    public NewDeckPanel getNewDeckPanel(){
+    	return newDeckPanel;
+    }
+    
+    public JPanel getCardLayoutPanel(){
+    	return newGameRequirementsCard;
+    }
+    
+    public void setNewGameCallback(ActionListener e){
+    	System.out.println("setnewgame callback" + gameDescription.getName());
+    	newGameCallback = e;
+    }
+    
+	@Override
+	public void ancestorAdded(AncestorEvent event) {
+		if(newGameCallback != null){
+			newGameCallback.actionPerformed(new ActionEvent(this, 0, "newgame"));
+			newGameCallback = null;
+		}
+	}
+
+	@Override
+	public void ancestorMoved(AncestorEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ancestorRemoved(AncestorEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public void setSaveGameCallback(ActionListener a){
+		saveGameCallback = a;
+	}
 
     private GameModel game = null;
+    private ActionListener newGameCallback;
+    
+    private ActionListener saveGameCallback;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private JPanel newGameRequirementsCard;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel 
-    	newGameRequirementsPanel;
+    private NewGameRequirementsPanel newGameRequirementsPanel;
     private NewDeckPanel newDeckPanel;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel 
-    	gameDescription;
+    private NewGameDescriptionPanel gameDescription;
+
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;
     private JLabel nameLabel;

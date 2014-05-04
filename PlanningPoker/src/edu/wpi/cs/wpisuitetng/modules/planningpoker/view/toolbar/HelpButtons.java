@@ -8,6 +8,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +32,7 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
     private static final long serialVersionUID = 1902038690593121709L;
     
     private final JButton helpButton;
+    private final JButton tutorialButton;
     
     private final JPanel contentPanel = new JPanel();
     
@@ -47,7 +49,8 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
         helpButton.setIcon(ImageLoader.getIcon("help.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(175);
+
+        setPreferredWidth(350);
         
         helpButton.addActionListener(new ActionListener() {
             @Override
@@ -56,11 +59,20 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
             }
         });
         
+        tutorialButton = new JButton("<html>New Game<br/>Tutorial</html>");
+        tutorialButton.setToolTipText("Start an interactive tutorial to create a game.");
+        tutorialButton.setIcon(ImageLoader.getIcon("tutorial.png"));
         
         helpButton.setHorizontalAlignment(SwingConstants.CENTER);
         
+        tutorialButton.setHorizontalAlignment(SwingConstants.CENTER);
+        tutorialButton.setPreferredSize(new Dimension(175, 200));
+        helpButton.setHorizontalAlignment(SwingConstants.CENTER);
+        helpButton.setPreferredSize(new Dimension(175, 200));
+        
         contentPanel.add(helpButton);
-        contentPanel.setOpaque(false);
+        contentPanel.add(tutorialButton);
+        contentPanel.setOpaque(false);        
         
         this.add(contentPanel);
     }
@@ -69,6 +81,9 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
         return helpButton;
     }
     
+    public JButton getTutorialButton() {
+		return tutorialButton;
+	}
     /*
      * #mouseEntered()
      */
