@@ -166,7 +166,6 @@ public class GameEntityManager implements EntityManager<GameModel> {
     public GameModel makeEntity(Session s, String content)
             throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
-//        newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
         }
