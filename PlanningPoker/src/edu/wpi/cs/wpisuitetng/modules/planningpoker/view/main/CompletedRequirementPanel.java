@@ -333,6 +333,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(finalEstimateField, gbc_finalEstimateField);
         
         final JLabel votedUsersLabel = new JLabel("Users Voted:");
+        votedUsersLabel.setToolTipText("The number of users who voted on this requirement.");
         final GridBagConstraints gbc_votedUsersLabel = new GridBagConstraints();
         gbc_votedUsersLabel.fill = GridBagConstraints.HORIZONTAL;
         gbc_votedUsersLabel.anchor = GridBagConstraints.NORTH;
@@ -342,6 +343,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(votedUsersLabel, gbc_votedUsersLabel);
         
         votedUsersValueLabel = new JLabel("123");
+        votedUsersValueLabel.setToolTipText("The number of users who voted on this requirement.");
         final GridBagConstraints gbc_votedUsersValueLabel = new GridBagConstraints();
         gbc_votedUsersValueLabel.anchor = GridBagConstraints.SOUTHWEST;
         gbc_votedUsersValueLabel.insets = new Insets(0, 0, 5, 5);
@@ -393,6 +395,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(notePane, gbc_notePane);
         
         meanLabel = new javax.swing.JLabel();
+        meanLabel.setToolTipText("The mean value of the estimates for this requirement.");
         
         meanLabel.setText("Mean:");
         final GridBagConstraints gbc_meanLabel = new GridBagConstraints();
@@ -403,6 +406,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_meanLabel.gridy = 4;
         add(meanLabel, gbc_meanLabel);
         meanValueLabel = new javax.swing.JLabel();
+        meanValueLabel.setToolTipText("The mean value of the estimates for this requirement.");
         
         meanValueLabel.setText("XYZ");
         final GridBagConstraints gbc_meanValueLabel = new GridBagConstraints();
@@ -412,6 +416,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_meanValueLabel.gridy = 4;
         add(meanValueLabel, gbc_meanValueLabel);
         medianLabel = new javax.swing.JLabel();
+        medianLabel.setToolTipText("The median value of the estimates for this requirement.");
         
         medianLabel.setText("Median:");
         final GridBagConstraints gbc_medianLabel = new GridBagConstraints();
@@ -425,6 +430,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         lblError = new JLabel("* Positive Integers Only!");
         lblError.setVisible(false);
         medianValueLabel = new javax.swing.JLabel();
+        medianValueLabel.setToolTipText("The median value of the estimates for this requirement.");
         
         medianValueLabel.setText("ABC");
         final GridBagConstraints gbc_medianValueLabel = new GridBagConstraints();
@@ -443,6 +449,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_lblError.gridy = 8;
         add(lblError, gbc_lblError);
         saveFinalEstimateButton = new JButton("Save");
+        saveFinalEstimateButton.setToolTipText("Saves the final estimate.");
         saveFinalEstimateButton.setEnabled(false);
         saveFinalEstimateButton.setIcon(ImageLoader.getIcon("Save.png"));
         
@@ -462,6 +469,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         add(saveFinalEstimateButton, gbc_saveFinalEstimateButton);
         
         saveAndUpdateButton = new JButton("Save and Update Req. Manager");
+        saveAndUpdateButton.setToolTipText("Saves the final estimate and updates this requirement in Requirements Manager.");
         saveAndUpdateButton.setEnabled(false);
         saveAndUpdateButton.setIcon(ImageLoader.getIcon("SaveAndContinue.png"));
         
