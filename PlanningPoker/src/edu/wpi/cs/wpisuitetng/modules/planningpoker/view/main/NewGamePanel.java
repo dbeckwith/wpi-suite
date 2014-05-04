@@ -244,14 +244,14 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                                                         layout.createSequentialGroup()
                                                                 .addComponent(
                                                                         scrollPane_1,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        323,
+                                                                        350,
+                                                                        350,
                                                                         Short.MAX_VALUE)
                                                                 .addGap(12)
                                                                 .addComponent(
                                                                         newGameRequirementsCard,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        631,
+                                                                        650,
+                                                                        650,
                                                                         GroupLayout.PREFERRED_SIZE))
                                                 .addGroup(
                                                         layout.createSequentialGroup()
