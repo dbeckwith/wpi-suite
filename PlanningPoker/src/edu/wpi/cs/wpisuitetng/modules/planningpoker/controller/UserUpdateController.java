@@ -58,7 +58,6 @@ public class UserUpdateController {
      *        the user to update on the server
      */
     public void updateUser(User user) { // $codepro.audit.disable methodShouldBeStatic -->
-        System.out.println("Sending update to user " + user.getName());
         final Request request = Network.getInstance().makeRequest("core/user", //$NON-NLS-1$
                 HttpMethod.POST);
         request.setBody(user.toJSON());

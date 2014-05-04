@@ -8,6 +8,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
@@ -53,9 +55,9 @@ public class CurrentUserController extends AbstractUserController {
             user = findUser(USER_NAME);
         }
         else {
-            System.err.println("No users received!");//TODO remove
+            Logger.getGlobal().warning("No useres received!");
         }
-        System.out.println("User = " + user);//TODO remove
+        Logger.getGlobal().info("Current user = " + user);
     }
     
     /**

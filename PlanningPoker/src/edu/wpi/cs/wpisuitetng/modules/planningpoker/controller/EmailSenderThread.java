@@ -8,6 +8,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
@@ -77,7 +79,6 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
                 sendEmail(u,
                         u.getPhoneNumber() + "@" + u.getCarrier().getURL(),
                         null, SMSbody);
-                System.out.println("Sent SMS to " + u.getName());
             }
         }
     }
@@ -86,7 +87,6 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
         for (User u : EmailController.getInstance().getUsers()) {
             if (u != null && u.getEmail() != null && u.isNotifyByEmail()) {
                 sendEmail(u, u.getEmail(), subject, body);
-                System.out.println("Sent email to " + u.getName());
             }
         }
     }
@@ -109,10 +109,11 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
             email.setMsg("Dear " + u.getName() + "," + System.getProperty("line.separator") + 
             		theBody); //$NON-NLS-1$
             email.send();
+            Logger.getGlobal().info("Sent email to " + u.getName());
         }
         catch (EmailException e) {
             // failed to send email
-            e.printStackTrace();
+            Logger.getGlobal().severe("Failed to send email:  " + e.getMessage());
         }
     }
     

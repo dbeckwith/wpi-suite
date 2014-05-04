@@ -54,7 +54,6 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private static final long serialVersionUID = 6206697919180272913L;
     private int validateMode = 0;
     
-    // TODO: New requirement panel needs to be scrollable vertically
     /**
      * Creates new form EditGame
      */
@@ -330,7 +329,6 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         saveNewReqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                // TODO: get new ID incremented off of existing requirements
                 final GameRequirementModel newRequirement = new GameRequirementModel(
                         0, newReqName.getText(), newReqDesc.getText(),
                         newReqType.getSelectedItem().toString());
@@ -691,7 +689,6 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     }
     
     public void setNewGameCallback(ActionListener e){
-    	System.out.println("setnewgame callback" + gameDescription.getName());
     	newGameCallback = e;
     }
     

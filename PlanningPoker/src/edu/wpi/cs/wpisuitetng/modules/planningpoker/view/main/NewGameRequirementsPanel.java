@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.GroupLayout;
@@ -56,7 +57,6 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private final SimpleListObserver requirementsListObserver;
     private final ArrayList<GameRequirementModel> createdRequirements;
     
-    // TODO: remember which requirements were checked off as added when the list updates
     
     /**
      * Creates new form GameRequirements
@@ -329,7 +329,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     
     private void addRequirement(GameRequirementModel r, boolean selected) {
         if (r != null) {
-            System.out.println("added requirement " + r.toString());
+            Logger.getGlobal().info("Added requirement: " + r);
             final DefaultTableModel model = (DefaultTableModel) requirementsTable
                     .getModel();
             model.addRow(new Object[] { selected, r,

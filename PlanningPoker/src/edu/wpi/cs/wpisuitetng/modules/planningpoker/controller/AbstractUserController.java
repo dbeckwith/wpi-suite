@@ -8,6 +8,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
@@ -58,7 +60,6 @@ public abstract class AbstractUserController {
         synchronized (this) {
             new UserRequestThread(this).start();
             try {
-                System.out.println("Waiting for response");//TODO remove
                 wait(timeout);
             }
             catch (InterruptedException e) {

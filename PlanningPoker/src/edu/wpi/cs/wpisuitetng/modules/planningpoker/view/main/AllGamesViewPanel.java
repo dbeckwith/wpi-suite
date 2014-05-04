@@ -228,13 +228,11 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
 
 	@Override
 	public void ancestorMoved(AncestorEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void ancestorRemoved(AncestorEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 }

@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
@@ -78,13 +79,11 @@ public class GameTimeoutObserver extends Thread {
         this.game = game;
         OBSERVERS.add(this);
         setDaemon(true);
-        System.out.println("Created timeout observer for " + game);
     }
     
     @Override
     public void run() {
         endDate = toGMT(game.getEndTime());
-        System.out.println("Game: \"" + game + "\"\n\tends at: " + endDate);
         if (game.getStatus().equals(GameStatus.PENDING) && game.hasDeadline()) {
             while (!finished()) {
                 try {
@@ -95,7 +94,7 @@ public class GameTimeoutObserver extends Thread {
                 }
             }
             try {
-                System.out.println("Deadline reached, ending game: "
+                Logger.getGlobal().info("Deadline reached, ending game: "
                         + game.toString());
                 // clone the game so we don't change it in the database
                 final GameModel clone = new GameModel();
@@ -104,13 +103,9 @@ public class GameTimeoutObserver extends Thread {
                 GameEntityManager.getInstance().update(session, clone.toJSON());
             }
             catch (WPISuiteException e) {
-                System.err.println("Could not save ended game to database");
+                Logger.getGlobal().severe("Could not save ended game to database");
                 e.printStackTrace();
             }
-        }
-        else {
-            System.out
-                    .println("Game has no deadline or is not live, not running timeout observer.");
         }
     }
     

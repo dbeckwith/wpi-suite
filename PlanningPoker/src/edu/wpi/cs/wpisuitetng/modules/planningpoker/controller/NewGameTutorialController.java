@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -100,7 +101,6 @@ public class NewGameTutorialController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getSource());
 		
 		if(e.getSource() == toolbar.getHelpButtons().getTutorialButton()){
 			tutorialStarted = true;
@@ -111,7 +111,9 @@ public class NewGameTutorialController implements ActionListener {
 
 			return;
 		}
-		System.out.printf("\t[TUTORIAL] at %s, called by %s\n", currentStep.toString(), e.getActionCommand());
+
+//        Logger.getGlobal().info("\t[TUTORIAL] at "+ currentStep.toString() + 
+//                ", called by " + e.getActionCommand());
 		
 		switch (currentStep) {
 			case CreateGame:

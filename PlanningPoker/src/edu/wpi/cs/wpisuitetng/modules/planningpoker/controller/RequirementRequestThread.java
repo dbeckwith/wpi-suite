@@ -11,6 +11,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -89,7 +91,7 @@ public class RequirementRequestThread extends Thread {
                 "requirementmanager/requirement", HttpMethod.GET);
         request.addObserver(observer);
         request.addObserver(controller.observer);
-        System.out.println("Sending request for requirements..."); //TODO remove
+        Logger.getGlobal().info("Sent request for requirements");
         request.send();
     }
     

@@ -49,7 +49,6 @@ public class ImageLoader {
         } else {
             try {
                 final URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
-                System.out.println(u.toString());
                 bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
                 if (bImg != null) {
                 	//put the image in the list

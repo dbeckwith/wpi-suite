@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -56,7 +57,7 @@ public class NotificationClient extends Thread {
     
     @Override
     public void run() {
-        System.out.println("Notification client started");
+        Logger.getGlobal().info("Notification client started");
         while (true) {
             try {
             	//open a connection to the notification server
@@ -66,7 +67,7 @@ public class NotificationClient extends Thread {
                 GetGamesController.getInstance().retrieveGames(); //update the games
             }
             catch (IOException e) {
-                System.out.print(""); //making codePro happy
+                Logger.getGlobal().warning("IO Exception: " + e.getMessage() + " caused by:\n" + e.getCause());
             }
         }
     }
