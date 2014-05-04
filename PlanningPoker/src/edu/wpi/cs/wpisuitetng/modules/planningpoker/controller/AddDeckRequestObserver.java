@@ -8,6 +8,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -46,7 +48,7 @@ public class AddDeckRequestObserver implements RequestObserver {
      */
     @Override
     public void responseError(IRequest iReq) {
-        System.err.println("The request to add a deck failed.");
+        Logger.getGlobal().severe("The request to add a deck failed");
     }
     
     /**
@@ -54,7 +56,7 @@ public class AddDeckRequestObserver implements RequestObserver {
      */
     @Override
     public void fail(IRequest iReq, Exception e) {
-        System.err.println("The request to add a deck failed.");
+        Logger.getGlobal().severe("The request to add a deck failed");
     }
     
     /**

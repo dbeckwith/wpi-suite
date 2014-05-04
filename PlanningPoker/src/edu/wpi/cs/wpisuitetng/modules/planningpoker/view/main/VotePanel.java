@@ -103,13 +103,10 @@ public class VotePanel extends javax.swing.JPanel {
         
         
         setAllowMultipleCards(parentGame.getDeck().canAllowsMultipleSelection());
-        System.out.println("multiple selection : "
-                + parentGame.getDeck().canAllowsMultipleSelection());
         
         
         old = null; // ensure it is erased
         for (Estimate e : req.getEstimates()) {
-            System.out.println(e.getEstimate() + " from " + e.getUsername());
             if (e.getUsername() != null && currentUser != null
                     && e.getIdNum() == currentUser.getIdNum()
                     && e.getName().equals(currentUser.getName())
@@ -225,7 +222,6 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        System.out.println("Estimate = " + estimate);
         final Estimate est = new Estimate(currentUser, estimate, selected);
         
         lblYouVoted.setVisible(true);
@@ -486,7 +482,6 @@ public class VotePanel extends javax.swing.JPanel {
                 c.setCardSelected(false);
             }
         }
-        System.out.println("the card " + card.isCardSelected());
     }
     
     private void validateCards() {

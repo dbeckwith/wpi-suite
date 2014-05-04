@@ -405,7 +405,6 @@ public class ViewController {
      * @param e
      */
     public void setNewGameCallback(ActionListener a) {
-        System.out.println("setNewGmeCallback");
         newGameCallback = a;
     }
     

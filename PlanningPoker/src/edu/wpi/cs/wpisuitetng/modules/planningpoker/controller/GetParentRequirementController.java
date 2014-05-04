@@ -11,6 +11,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -57,7 +59,7 @@ public class GetParentRequirementController extends
             setRequirements(requirements);
         }
         else {
-            System.out.println("Requirements list is null");
+            Logger.getGlobal().info("The requirements list is null");
         }
     }
     

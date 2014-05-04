@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * A server that can notify clients when there is an update
@@ -55,7 +56,7 @@ public class NotificationServer extends Thread {
 	
 	@Override
 	public void run(){
-		System.out.println("Notification server started");
+        Logger.getGlobal().info("Notification server started");
 		while(true){
 			try {
 				Socket newClient = serverSocket.accept();

@@ -54,7 +54,6 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private static final long serialVersionUID = 6206697919180272913L;
     private int validateMode = 0;
     
-    // TODO: New requirement panel needs to be scrollable vertically
     /**
      * Creates new form EditGame
      */
@@ -330,7 +329,6 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         saveNewReqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                // TODO: get new ID incremented off of existing requirements
                 final GameRequirementModel newRequirement = new GameRequirementModel(
                         0, newReqName.getText(), newReqDesc.getText(),
                         newReqType.getSelectedItem().toString());
@@ -478,8 +476,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
         boolean alreadyReturned = false;
-        if (!(newGameRequirementsPanel.canValidateForm() && gameDescription
-                .canValidateForm())) {
+        if (!(newGameRequirementsPanel.isFormValid() && gameDescription
+                .isFormValid())) {
             check();
             alreadyReturned = true;
             
@@ -565,15 +563,14 @@ public class NewGamePanel extends JPanel implements AncestorListener {
      */
     public void check() {
         if (validateMode == 0) {
-            saveButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm());
+            saveButton.setEnabled(gameDescription.isFormValid()
+                    && newGameRequirementsPanel.isFormValid());
         }
         else {
             boolean oldHasDeadline = game.hasDeadline();
             boolean newHasDeadline = gameDescription.getDate() != null;
             boolean sameDateStatus;
-            if (oldHasDeadline == newHasDeadline
-                    || !oldHasDeadline == !newHasDeadline) {
+            if (oldHasDeadline == newHasDeadline) {
                 if (oldHasDeadline) {
                     sameDateStatus = game.getEndTime().compareTo(
                             gameDescription.getDate()) == 0;
@@ -586,21 +583,21 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                 sameDateStatus = false;
             }
             
-            saveButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm()
+            saveButton.setEnabled(gameDescription.isFormValid()
+                    && newGameRequirementsPanel.isFormValid()
                     && !(game.getDeck().getName().equals(getDeck().getName())
                     		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
                             && sameDateStatus && game.getRequirements()
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
             
-            undoButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm()
-                    && !(game.getDeck().getName().equals(getDeck().getName())
-                    		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
+            setHasChanged(!(game.getDeck().getName().equals(getDeck().getName())
+                            && game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
                             && sameDateStatus && game.getRequirements()
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
+            
+            undoButton.setEnabled(hasChanged);
             
         }
         final ArrayList<String> errors = new ArrayList<>();
@@ -691,7 +688,6 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     }
     
     public void setNewGameCallback(ActionListener e){
-    	System.out.println("setnewgame callback" + gameDescription.getName());
     	newGameCallback = e;
     }
     

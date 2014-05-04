@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -49,8 +50,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private static final long serialVersionUID = -4832992249337947413L;
 	private static TutorialPane instance = null;
 
-	private static final long REPAINT_INTERVAL = 1000/60;
-	
 	/**
 	 * 
 	 * @return TutorialPane.instance
@@ -62,7 +61,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 		return TutorialPane.instance;
 	}
-
+	
 	private Rectangle highlightArea = null;
 	private Component highlightedComponent;
 	private ActionListener nextButtonCallback;
@@ -71,7 +70,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private JButton nextButton;
 	private JButton quitButton;
 
-	private long lastRepaint = 0;
 	
 	/**
 	 * Constructor
@@ -80,6 +78,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 		setLayout(null);
 		addMouseMotionListener(this);
 
+
+		
 		dialogPanel = new JPanel();
 		dialogPanel.setBackground(Color.WHITE);
 		dialogPanel.setBounds(42, 32, 368, 197);
@@ -391,6 +391,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
+		
 
 	}
 }
