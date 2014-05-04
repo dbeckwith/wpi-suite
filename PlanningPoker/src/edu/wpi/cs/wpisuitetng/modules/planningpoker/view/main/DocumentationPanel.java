@@ -64,20 +64,20 @@ public class DocumentationPanel extends JPanel {
         catch (IOException e) {
             e.printStackTrace();
         }
-        //editorPane.setDocument(new HTMLDocument());
         editorPane.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
                 if (HyperlinkEvent.EventType.ACTIVATED == e.getEventType()) {
-                    String desc = e.getDescription();
+                    final String desc = e.getDescription();
                     if (desc == null) {
-                        return;
+                        
                     }
-                    else if (desc.startsWith("#")) {
+                    else if (desc.charAt(0) == '#') {
                         editorPane.scrollToReference(desc.substring(1));
                     }
                     else {
-                        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop
+                                .getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
                                 desktop.browse(new URL(desc).toURI());

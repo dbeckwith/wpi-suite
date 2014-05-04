@@ -63,7 +63,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         emptyDescriptionPanel.setLayout(new BorderLayout(0, 0));
         
         emptyDescriptionLabel = new JLabel("Select a Game");
-        emptyDescriptionLabel.setToolTipText("No game is currently selected. Select one from the tree on the left to see information about it or vote on it. If there are no games, create one with the Create Game button above."); // $codepro.audit.disable lineLength
+        emptyDescriptionLabel.setToolTipText("Select a game from the tree on the left to see information about it or vote on it. If there are no games, create one with the Create Game button above."); // $codepro.audit.disable lineLength
         emptyDescriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         emptyDescriptionLabel.setIcon(ImageLoader.getIcon("leftArrow.png"));
         emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
@@ -88,6 +88,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         noRequirementPanel.setLayout(new BorderLayout(0, 0));
         
         final JLabel lblSelectARequirement = new JLabel("Select a Requirement");
+        lblSelectARequirement.setToolTipText("Select a requirement of this game from the list to the left in order to vote on it.");
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);

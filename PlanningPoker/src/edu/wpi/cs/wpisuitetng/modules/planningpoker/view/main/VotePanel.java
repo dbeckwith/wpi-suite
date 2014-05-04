@@ -79,7 +79,8 @@ public class VotePanel extends javax.swing.JPanel {
      * @param req
      *        the requirement
      */
-    public void setRequirement(User currentUser, GameModel parentGame, GameRequirementModel req) {
+    public void setRequirement(User currentUser, GameModel parentGame,
+            GameRequirementModel req) {
         this.currentUser = currentUser;
         this.parentGame = parentGame;
         this.req = req;
@@ -133,8 +134,8 @@ public class VotePanel extends javax.swing.JPanel {
         if (parentGame.getDeck().isNone()) {
             estimateCardsPanel.removeAll();
             
-            final SpinnerCard estimateInput = new SpinnerCard(1, parentGame.getDeck()
-                    .getMaxEstimate());
+            final SpinnerCard estimateInput = new SpinnerCard(1, parentGame
+                    .getDeck().getMaxEstimate());
             estimateInput.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -157,7 +158,8 @@ public class VotePanel extends javax.swing.JPanel {
         }
         else {
             
-            final ArrayList<Double> deckCardValues = parentGame.getDeck().getCards();
+            final ArrayList<Double> deckCardValues = parentGame.getDeck()
+                    .getCards();
             
             
             estimateCardsPanel.removeAll();
@@ -167,8 +169,8 @@ public class VotePanel extends javax.swing.JPanel {
                 cards.add(estimateCard);
                 
                 estimateCard.setPreferredSize(new Dimension(120, 160));
-                estimateCard.setCardSelected(selected.contains(new Integer(deckCardValues
-                        .indexOf(estimate))));
+                estimateCard.setCardSelected(selected.contains(new Integer(
+                        deckCardValues.indexOf(estimate))));
                 estimateCard.addActionListener(new ActionListener() {
                     
                     @Override
@@ -248,7 +250,8 @@ public class VotePanel extends javax.swing.JPanel {
     private void initComponents() {
         
         estimateLabel = new javax.swing.JLabel();
-        estimateLabel.setToolTipText("Select your estimate below by selecting a card or cards.");
+        estimateLabel
+                .setToolTipText("Select your estimate below by selecting a card or cards.");
         
         estimateLabel.setText("Please select your Estimate:");
         
@@ -298,25 +301,30 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel.setMaximumSize(new Dimension(0, 0));
         
         lblYouVoted = new JLabel("You voted: ");
-        lblYouVoted.setToolTipText("The value of your previous vote on this requirement.");
+        lblYouVoted
+                .setToolTipText("The value of your previous vote on this requirement.");
         lblYouVoted.setFont(new Font("Dialog", Font.BOLD, 18));
         
         prevVoteLabel = new JLabel("<previous vote>");
-        prevVoteLabel.setToolTipText("The value of your previous vote on this requirement.");
+        prevVoteLabel
+                .setToolTipText("The value of your previous vote on this requirement.");
         prevVoteLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         
         final JLabel lblSelectedTotal = new JLabel("Current Estimate:");
-        lblSelectedTotal.setToolTipText("Your currently selected estimate total.");
+        lblSelectedTotal
+                .setToolTipText("Your currently selected estimate total.");
         
         lblTotal = new JLabel("<total>");
         lblTotal.setToolTipText("Your currently selected estimate total.");
         
         teammateProgressBar = new JProgressBar();
-        teammateProgressBar.setToolTipText("All users' progress in estimating this requirement.");
+        teammateProgressBar
+                .setToolTipText("All users' progress in estimating this requirement.");
         teammateProgressBar.setStringPainted(true);
         
         final JLabel lblTeammateProgress = new JLabel("Team Progress");
-        lblTeammateProgress.setToolTipText("All users' progress in estimating this requirement.");
+        lblTeammateProgress
+                .setToolTipText("All users' progress in estimating this requirement.");
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
@@ -325,11 +333,15 @@ public class VotePanel extends javax.swing.JPanel {
                         layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(
-                                        layout.createParallelGroup(Alignment.LEADING)
-                                                .addComponent(estimateScrollPane,
-                                                        GroupLayout.DEFAULT_SIZE, 828,
-                                                        Short.MAX_VALUE)
-                                                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(
+                                                        estimateScrollPane,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        828, Short.MAX_VALUE)
+                                                .addComponent(
+                                                        scrollPane,
+                                                        GroupLayout.DEFAULT_SIZE,
                                                         828, Short.MAX_VALUE)
                                                 .addGroup(
                                                         layout.createSequentialGroup()
@@ -390,36 +402,50 @@ public class VotePanel extends javax.swing.JPanel {
                                                                                                         ComponentPlacement.RELATED)
                                                                                                 .addComponent(
                                                                                                         prevVoteLabel)))))));
-        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
-                layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(lblRequirement)
-                                        .addComponent(requirementNameLabel)
-                                        .addComponent(teammateProgressBar,
-                                                GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblTeammateProgress))
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addGroup(
-                                layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(lblType).addComponent(requirementType))
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 50,
-                                GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(estimateLabel)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(estimateScrollPane, GroupLayout.DEFAULT_SIZE, 268,
-                                Short.MAX_VALUE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addGroup(
-                                layout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(btnSubmit).addComponent(lblSelectedTotal)
-                                        .addComponent(lblTotal).addComponent(lblYouVoted)
-                                        .addComponent(prevVoteLabel)).addContainerGap()));
+        layout.setVerticalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(lblRequirement)
+                                                .addComponent(
+                                                        requirementNameLabel)
+                                                .addComponent(
+                                                        teammateProgressBar,
+                                                        GroupLayout.PREFERRED_SIZE,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(
+                                                        lblTeammateProgress))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(lblType)
+                                                .addComponent(requirementType))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane,
+                                        GroupLayout.PREFERRED_SIZE, 50,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(estimateLabel)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(estimateScrollPane,
+                                        GroupLayout.DEFAULT_SIZE, 268,
+                                        Short.MAX_VALUE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(btnSubmit)
+                                                .addComponent(lblSelectedTotal)
+                                                .addComponent(lblTotal)
+                                                .addComponent(lblYouVoted)
+                                                .addComponent(prevVoteLabel))
+                                .addContainerGap()));
         
         estimateScrollPane.setViewportView(estimateCardsPanel);
         final GridBagLayout gbl_estimateCardsPanel = new GridBagLayout();
