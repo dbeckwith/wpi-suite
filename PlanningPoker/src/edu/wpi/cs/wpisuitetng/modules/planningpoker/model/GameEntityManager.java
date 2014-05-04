@@ -142,7 +142,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public GameModel[] getEntity(Session s, String id) throws NotFoundException {
-        final int intId = Integer.parseInt(id);
+        final long intId = Long.parseLong(id);
         if (intId < 0) {
             throw new NotFoundException("");
         }
