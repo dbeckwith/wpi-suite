@@ -125,12 +125,13 @@ h1 {
 		<p>If you have used Planning Poker before but need a review on how
 			to use it, you may want to read over the Quick Start guide.</p>
 		<ul>
-			<li>Only the moderator can create a game.</li>
+			<li>Anyone can create a game.</li>
 			<li>Fill in the required name, description, and game type.</li>
 			<li>Choose to have a deck or no deck.</li>
 			<li>Choose to have a deadline or not.</li>
 			<li>Choose your requirements for estimation.</li>
 			<li>Edit any information before starting the game.</li>
+			<li>Once you save a game, you become the moderator for that game.</li>
 			<li>After a game starts, users can vote on each requirement
 				either by:
 				<ul>
@@ -160,7 +161,7 @@ h1 {
 		<h3>
 			<a name="users">2.2 Users</a>
 		</h3>
-		<p>A user’s moderation privileges are game dependant. A game’s
+		<p>A user’s moderation privileges are game dependent. A game’s
 			Moderator is the creator of the game. A moderator has access to
 			controls to begin the game, end the game, and set the final
 			estimation for each requirement of the game. All other users only
@@ -172,9 +173,9 @@ h1 {
 			<a name="panel">2.3 Overview of the Game Tree Pane</a>
 		</h3>
 		<p>On the game panel, the left side of the window shows a tree
-			view of the games. There are two main groups of games: Games in
-			Progress and Complete Games. Each of the two groups has only two
-			types of games within them:</p>
+			view of the games. There are three main groups of games: Games in
+			Progress, Complete Games, and Closed Games. The first group has two types
+			of games, while the second two groups only have one type of game:</p>
 		<ul>
 			<li>Games in Progress:
 				<ul>
@@ -187,14 +188,20 @@ h1 {
 			</li>
 			<li>Completed Games:
 				<ul>
-					<li>Games marked with a check indicate that voting has been
-						completed and are ready for the creator to set their final
-						estimate.</li>
-					<li>Games marked with a grey file cabinet icon have been
-						closed. These games can be viewed for historical purposes but
-						cannot be changed.</li>
+					<li>Games in this section can no longer be voted on by users.
+						The moderator of a completed game has the option to set final
+						estimates for each requirement and update the Requirement
+						Manager to reflect these requirements.</li>
 				</ul>
 			</li>
+			<li>Closed Games:
+				<ul>
+					<li>Games in this section are completed, but they can no longer
+					be changed in any way. These games can be viewed for historical 
+					purposes.</li>
+				</ul>
+			</li>
+
 		</ul>
 	</div>
 
@@ -225,7 +232,7 @@ h1 {
 						a single card.</li>
 				</ul>
 			</li>
-			<li>select requirements from the panel on the right.
+			<li>Select requirements from the panel on the right.
 				<ul>
 					<li>You have the option of creating new requirements, where
 						you will need to enter a name, description, and choose the type of
@@ -326,7 +333,7 @@ h1 {
 			<a name="close">2.10 How to Close a Game</a>
 		</h3>
 		<ul>
-			<li>CSelect the game that you want to close.</li>
+			<li>Select the game that you want to close.</li>
 			<li>Click the “Close Game” button.</li>
 			<li>You will see that the game has been changed to “Closed”.</li>
 		</ul>

@@ -230,8 +230,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 		Point dialogCenter = new Point((int) dialogRect.getCenterX(),
 				(int) dialogRect.getCenterY());
 
-		// System.out.println(highlightArea);
-
+		
 		if (highlightArea != null) {
 
 			g.setColor(new Color(100, 100, 220, 255));
@@ -284,9 +283,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 		g.fillRect(0, y, x, h);
 		g.fillRect(x + w, y, getWidth() - x - w, h);
 		g.fillRect(0, y + h, getWidth(), getHeight() - y - h);
-		
-
-//		highlightedComponent.repaint();
 
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 

@@ -98,6 +98,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         for (GameRequirementModel req : gameReqs) {
             addRequirement(req, true);
         }
+        GetRequirementsController.getInstance().retrieveRequirements();
     }
     
     /**

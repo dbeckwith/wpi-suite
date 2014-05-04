@@ -244,14 +244,14 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                                                         layout.createSequentialGroup()
                                                                 .addComponent(
                                                                         scrollPane_1,
-                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                        323,
+                                                                        350,
+                                                                        350,
                                                                         Short.MAX_VALUE)
                                                                 .addGap(12)
                                                                 .addComponent(
                                                                         newGameRequirementsCard,
-                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                        631,
+                                                                        650,
+                                                                        650,
                                                                         GroupLayout.PREFERRED_SIZE))
                                                 .addGroup(
                                                         layout.createSequentialGroup()
@@ -572,8 +572,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
             boolean oldHasDeadline = game.hasDeadline();
             boolean newHasDeadline = gameDescription.getDate() != null;
             boolean sameDateStatus;
-            if (oldHasDeadline == newHasDeadline
-                    || !oldHasDeadline == !newHasDeadline) {
+            if (oldHasDeadline == newHasDeadline) {
                 if (oldHasDeadline) {
                     sameDateStatus = game.getEndTime().compareTo(
                             gameDescription.getDate()) == 0;
@@ -594,13 +593,13 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
             
-            undoButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm()
-                    && !(game.getDeck().getName().equals(getDeck().getName())
-                    		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
+            setHasChanged(!(game.getDeck().getName().equals(getDeck().getName())
+                            && game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
                             && sameDateStatus && game.getRequirements()
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
+            
+            undoButton.setEnabled(hasChanged);
             
         }
         final ArrayList<String> errors = new ArrayList<>();

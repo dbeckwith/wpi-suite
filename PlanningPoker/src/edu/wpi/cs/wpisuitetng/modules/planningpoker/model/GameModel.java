@@ -140,7 +140,6 @@ public class GameModel extends AbstractModel implements Serializable {
     public GameModel(String name, String description,
             List<GameRequirementModel> requirements, DeckModel deck,
             Date endDate, GameStatus status, String owner) {
-//        id = GameModel.nextId++;
         id = System.currentTimeMillis();
         this.name = name;
         this.description = description;
