@@ -17,13 +17,11 @@ import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementsListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DeckOptionsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.TutorialPane;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Guides the user through the process of creating and starting a new game
@@ -248,15 +246,13 @@ public class NewGameTutorialController implements ActionListener {
 	 * Sets up the game for creating a new deck
 	 * adds a default requirement if there are none selected
 	 */
-	private void createDeck(){
-		if(!newTab.getRequirementsPanel().isFormValid()){
-			newTab.getRequirementsPanel().addCustomRequirement(
-					new GameRequirementModel(
-							new Requirement(RequirementsListModel.getInstance().getSize(), 
-									"Tutorial Requirement",
-									"Tutorial Requirement Description")), true);
-		}
-		DeckOptionsPanel deckOpt = newTab.getDescriptionPanel().getDeckOptionsPanel();
+    private void createDeck() {
+        if (!newTab.getRequirementsPanel().isFormValid()) {
+            newTab.getRequirementsPanel().addCustomRequirement(
+                    new GameRequirementModel(0, "Tutorial Requirement",
+                            "Tutorial Requirement Description", "User Story"), true);
+        }
+        DeckOptionsPanel deckOpt = newTab.getDescriptionPanel().getDeckOptionsPanel();
 		deckOpt.setNewDeckButtonCallback(this);
 		tPane.setHighlightArea(deckOpt.getNewDeckButton(),Step.CreateDeck.getMessage());
 
