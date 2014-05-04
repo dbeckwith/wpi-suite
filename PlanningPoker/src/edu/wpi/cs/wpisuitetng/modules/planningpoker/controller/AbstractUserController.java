@@ -8,8 +8,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.util.logging.Logger;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**

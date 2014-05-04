@@ -9,8 +9,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;

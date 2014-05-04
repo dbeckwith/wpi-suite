@@ -9,7 +9,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -48,7 +47,6 @@ public class ImageLoader {
             bImg = ImageLoader.images.get(file); //get the image from the list
         } else {
             try {
-                final URL u = ImageLoader.class.getResource(ImageLoader.modifiedPath + file);
                 bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
                 if (bImg != null) {
                 	//put the image in the list

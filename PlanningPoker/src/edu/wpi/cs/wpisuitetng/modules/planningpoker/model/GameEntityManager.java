@@ -297,17 +297,4 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
     }
     
-    /**
-     * Gets the next available unique ID for a GameModel
-     */
-    private long getNextID(Session s) {
-        long max = 0;
-        for (GameModel g : getAll(s)) {
-            if (g.getID() > max) {
-                max = g.getID();
-            }
-        }
-        return max + 1;
-    }
-    
 }

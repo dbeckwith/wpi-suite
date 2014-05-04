@@ -77,7 +77,6 @@ public class GameModel extends AbstractModel implements Serializable {
     private GameStatus status;
     private String owner;
     private DeckModel deck;
-    private static int nextId = 0;
     
     /**
      * Default constructor creates instance with invalid id and null fields.
