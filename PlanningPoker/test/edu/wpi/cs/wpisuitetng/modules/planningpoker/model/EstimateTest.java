@@ -35,7 +35,8 @@ public class EstimateTest {
     }
     
     /**
-     * Tests that the Estimate is the same after being transformed to JSON and back
+     * Tests that the Estimate is the same after being transformed to JSON and
+     * back
      */
     @Test
     public void testJSON() {

@@ -24,8 +24,6 @@ import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-
-
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -40,23 +38,26 @@ public class GameEntityManagerTest {
     static MockData db = new MockData(new HashSet<Object>());
     static User existingUser = new User("joe", "joe", "1234", 2);
     static GameModel existingGame = new GameModel("Existing Game", "something", null,
-           DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-    static long existingGameID = existingGame.getID();
+            DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 100000),
+            GameModel.GameStatus.PENDING);
+    static long existingGameID = GameEntityManagerTest.existingGame.getID();
     static Project testProject = new Project("test", "1");
     static User admin = new User("admin", "admin", "1234", 27);
     static String mockSsid = "abc123";
-    static Session defaultSession = new Session(existingUser, testProject, mockSsid);
-    static GameEntityManager manager = new GameEntityManager(db);
+    static Session defaultSession = new Session(GameEntityManagerTest.existingUser,
+            GameEntityManagerTest.testProject, GameEntityManagerTest.mockSsid);
+    static GameEntityManager manager = new GameEntityManager(GameEntityManagerTest.db);
     static GameModel newGame = new GameModel("New Game", "A new game", null,
-           DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-    static long newGameID = newGame.getID();
+            DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 100000),
+            GameModel.GameStatus.PENDING);
+    static long newGameID = GameEntityManagerTest.newGame.getID();
     static GameModel goodUpdatedGame = new GameModel();;
-    static Session adminSession = new Session(admin, testProject, mockSsid);
+    static Session adminSession = new Session(GameEntityManagerTest.admin,
+            GameEntityManagerTest.testProject, GameEntityManagerTest.mockSsid);
     static Project otherProject = new Project("other", "2");
     GameModel otherGame;
-    static Session otherSession = new Session(admin, otherProject, mockSsid);
+    static Session otherSession = new Session(GameEntityManagerTest.admin,
+            GameEntityManagerTest.otherProject, GameEntityManagerTest.mockSsid);
     
     /**
      * Initializes the mock network and prepares other variables
@@ -66,16 +67,16 @@ public class GameEntityManagerTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-
-        admin.setRole(Role.ADMIN);
-        final GameModel gameUpdates = new GameModel("Updated Game", "Some updates",
-                null, DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-        goodUpdatedGame.copyFrom(existingGame);
-        goodUpdatedGame.editCopyFrom(gameUpdates);
         
-        db.save(existingUser);
-        db.save(admin);
+        GameEntityManagerTest.admin.setRole(Role.ADMIN);
+        final GameModel gameUpdates = new GameModel("Updated Game", "Some updates", null,
+                DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 100000),
+                GameModel.GameStatus.PENDING);
+        GameEntityManagerTest.goodUpdatedGame.copyFrom(GameEntityManagerTest.existingGame);
+        GameEntityManagerTest.goodUpdatedGame.editCopyFrom(gameUpdates);
+        
+        GameEntityManagerTest.db.save(GameEntityManagerTest.existingUser);
+        GameEntityManagerTest.db.save(GameEntityManagerTest.admin);
     }
     
     /**
@@ -84,17 +85,17 @@ public class GameEntityManagerTest {
     @Before
     public void prepare() {
         try {
-            manager.deleteAll(adminSession);
-            manager.deleteAll(otherSession);
+            GameEntityManagerTest.manager.deleteAll(GameEntityManagerTest.adminSession);
+            GameEntityManagerTest.manager.deleteAll(GameEntityManagerTest.otherSession);
         }
         catch (WPISuiteException e) {
             Assert.fail();
         }
-        otherGame = new GameModel("Other Game", "something", null,
-                DeckModel.DEFAULT_DECK, new Date(
-                         System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-        db.save(existingGame, testProject);
-        db.save(otherGame, otherProject);
+        otherGame = new GameModel("Other Game", "something", null, DeckModel.DEFAULT_DECK,
+                new Date(System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
+        GameEntityManagerTest.db.save(GameEntityManagerTest.existingGame,
+                GameEntityManagerTest.testProject);
+        GameEntityManagerTest.db.save(otherGame, GameEntityManagerTest.otherProject);
     }
     
     /**
@@ -104,12 +105,14 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testMakeEntity() throws WPISuiteException {
-        final GameModel created = manager
-                .makeEntity(defaultSession, newGame.toJSON());
-        Assert.assertEquals(newGameID, created.getID()); // IDs are unique across
+        final GameModel created = GameEntityManagerTest.manager.makeEntity(
+                GameEntityManagerTest.defaultSession, GameEntityManagerTest.newGame.toJSON());
+        Assert.assertEquals(GameEntityManagerTest.newGameID, created.getID()); // IDs are unique across
         // projects
         Assert.assertEquals("New Game", created.getName());
-        Assert.assertSame(db.retrieve(GameModel.class, "id", newGameID).get(0), created);
+        Assert.assertSame(
+                GameEntityManagerTest.db.retrieve(GameModel.class, "id",
+                        GameEntityManagerTest.newGameID).get(0), created);
     }
     
     /**
@@ -119,30 +122,34 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testGetEntity() throws NotFoundException {
-        db.save(existingGame, testProject);
-        final GameModel[] games = manager.getEntity(defaultSession, "" + existingGameID);
-        Assert.assertSame(existingGame, games[0]);
+        GameEntityManagerTest.db.save(GameEntityManagerTest.existingGame,
+                GameEntityManagerTest.testProject);
+        final GameModel[] games = GameEntityManagerTest.manager.getEntity(
+                GameEntityManagerTest.defaultSession, "" + GameEntityManagerTest.existingGameID);
+        Assert.assertSame(GameEntityManagerTest.existingGame, games[0]);
     }
     
     /**
-     * Tests that trying to retrieve an entity with a bad ID returns the appropriate exception
+     * Tests that trying to retrieve an entity with a bad ID returns the
+     * appropriate exception
      * 
      * @throws NotFoundException
      */
     @Test(expected = NotFoundException.class)
     public void testGetBadId() throws NotFoundException {
-        manager.getEntity(defaultSession, "-1");
+        GameEntityManagerTest.manager.getEntity(GameEntityManagerTest.defaultSession, "-1");
     }
     
     /**
-     * Tests that trying to retrieve an entity with an ID that doesn't exist throws
+     * Tests that trying to retrieve an entity with an ID that doesn't exist
+     * throws
      * the appropriate exception
      * 
      * @throws NotFoundException
      */
     @Test(expected = NotFoundException.class)
     public void testGetMissingEntity() throws NotFoundException {
-        manager.getEntity(defaultSession, "2");
+        GameEntityManagerTest.manager.getEntity(GameEntityManagerTest.defaultSession, "2");
     }
     
     /**
@@ -150,9 +157,10 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testGetAll() {
-        final GameModel[] received = manager.getAll(defaultSession);
+        final GameModel[] received = GameEntityManagerTest.manager
+                .getAll(GameEntityManagerTest.defaultSession);
         Assert.assertEquals(1, received.length);
-        Assert.assertSame(existingGame, received[0]);
+        Assert.assertSame(GameEntityManagerTest.existingGame, received[0]);
     }
     
     /**
@@ -161,12 +169,13 @@ public class GameEntityManagerTest {
     @Test
     public void testSave() {
         final GameModel game = new GameModel("Save Test", "something", null,
-               DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
+                DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 100000),
+                GameModel.GameStatus.PENDING);
         final long saveTestGameID = game.getID();
-        manager.save(defaultSession, game);
-        Assert.assertSame(game, db.retrieve(GameModel.class, "id", saveTestGameID).get(0));
-        Assert.assertSame(testProject, game.getProject());
+        GameEntityManagerTest.manager.save(GameEntityManagerTest.defaultSession, game);
+        Assert.assertSame(game,
+                GameEntityManagerTest.db.retrieve(GameModel.class, "id", saveTestGameID).get(0));
+        Assert.assertSame(GameEntityManagerTest.testProject, game.getProject());
     }
     
     /**
@@ -176,20 +185,27 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testDelete() throws WPISuiteException {
-        Assert.assertSame(existingGame, db.retrieve(GameModel.class, "id", existingGameID)
-                .get(0));
-        Assert.assertTrue(manager.deleteEntity(adminSession, existingGameID + ""));
-        Assert.assertEquals(0, db.retrieve(GameModel.class, "id", existingGameID).size());
+        Assert.assertSame(
+                GameEntityManagerTest.existingGame,
+                GameEntityManagerTest.db.retrieve(GameModel.class, "id",
+                        GameEntityManagerTest.existingGameID).get(0));
+        Assert.assertTrue(GameEntityManagerTest.manager.deleteEntity(
+                GameEntityManagerTest.adminSession, GameEntityManagerTest.existingGameID + ""));
+        Assert.assertEquals(
+                0,
+                GameEntityManagerTest.db.retrieve(GameModel.class, "id",
+                        GameEntityManagerTest.existingGameID).size());
     }
     
     /**
-     * Tests that trying to delete an entity that doesn't exist throws the appropriate exception.
+     * Tests that trying to delete an entity that doesn't exist throws the
+     * appropriate exception.
      * 
      * @throws WPISuiteException
      */
     @Test(expected = NotFoundException.class)
     public void testDeleteMissing() throws WPISuiteException {
-        manager.deleteEntity(adminSession, "4534");
+        GameEntityManagerTest.manager.deleteEntity(GameEntityManagerTest.adminSession, "4534");
     }
     
     /**
@@ -198,38 +214,48 @@ public class GameEntityManagerTest {
      * @throws WPISuiteException
      */
     @Test(expected = NotFoundException.class)
-    public void testDeleteFromOtherProject() throws WPISuiteException  {
-        manager.deleteEntity(adminSession, Long.toString(otherGame.getID()));
+    public void testDeleteFromOtherProject() throws WPISuiteException {
+        GameEntityManagerTest.manager.deleteEntity(GameEntityManagerTest.adminSession,
+                Long.toString(otherGame.getID()));
     }
     
     /**
      * Tests to ensure you can't delete without privileges
+     * 
      * @throws WPISuiteException
      */
     @Test(expected = UnauthorizedException.class)
     public void testDeleteNotAllowed() throws WPISuiteException {
-        manager.deleteEntity(defaultSession,
-                Long.toString(existingGame.getID()));
+        GameEntityManagerTest.manager.deleteEntity(GameEntityManagerTest.defaultSession,
+                Long.toString(GameEntityManagerTest.existingGame.getID()));
     }
     
     /**
      * Tests that delete all the entities from the database works correctly
+     * 
      * @throws WPISuiteException
      */
     @Test
     public void testDeleteAll() throws WPISuiteException {
-        final GameModel anotherGame = new GameModel("a title", "a description",
-                null, DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
-        manager.makeEntity(defaultSession, anotherGame.toJSON());
-        Assert.assertEquals(2, db.retrieveAll(new GameModel(), testProject)
-                .size());
-        manager.deleteAll(adminSession);
-        Assert.assertEquals(0, db.retrieveAll(new GameModel(), testProject)
-                .size());
+        final GameModel anotherGame = new GameModel("a title", "a description", null,
+                DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 100000),
+                GameModel.GameStatus.PENDING);
+        GameEntityManagerTest.manager.makeEntity(GameEntityManagerTest.defaultSession,
+                anotherGame.toJSON());
+        Assert.assertEquals(
+                2,
+                GameEntityManagerTest.db.retrieveAll(new GameModel(),
+                        GameEntityManagerTest.testProject).size());
+        GameEntityManagerTest.manager.deleteAll(GameEntityManagerTest.adminSession);
+        Assert.assertEquals(
+                0,
+                GameEntityManagerTest.db.retrieveAll(new GameModel(),
+                        GameEntityManagerTest.testProject).size());
         // otherGame should still be around
-        Assert.assertEquals(1, db.retrieveAll(new GameModel(), otherProject)
-                .size());
+        Assert.assertEquals(
+                1,
+                GameEntityManagerTest.db.retrieveAll(new GameModel(),
+                        GameEntityManagerTest.otherProject).size());
     }
     
     /**
@@ -239,7 +265,7 @@ public class GameEntityManagerTest {
      */
     @Test(expected = UnauthorizedException.class)
     public void testDeleteAllNotAllowed() throws WPISuiteException {
-        manager.deleteAll(defaultSession);
+        GameEntityManagerTest.manager.deleteAll(GameEntityManagerTest.defaultSession);
     }
     
     /**
@@ -249,8 +275,8 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testDeleteAllWhenEmpty() throws WPISuiteException {
-        manager.deleteAll(adminSession);
-        manager.deleteAll(adminSession);
+        GameEntityManagerTest.manager.deleteAll(GameEntityManagerTest.adminSession);
+        GameEntityManagerTest.manager.deleteAll(GameEntityManagerTest.adminSession);
         // no exceptions
     }
     
@@ -259,7 +285,7 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testCount() {
-        Assert.assertEquals(2, manager.Count());
+        Assert.assertEquals(2, GameEntityManagerTest.manager.Count());
     }
     
     /**
@@ -269,10 +295,11 @@ public class GameEntityManagerTest {
      */
     @Test
     public void testUpdate() throws WPISuiteException {
-        final GameModel updated = manager.update(defaultSession,
-                goodUpdatedGame.toJSON());
-        Assert.assertSame(existingGame, updated);
-        Assert.assertEquals(goodUpdatedGame.getName(), updated.getName()); // make
+        final GameModel updated = GameEntityManagerTest.manager.update(
+                GameEntityManagerTest.defaultSession,
+                GameEntityManagerTest.goodUpdatedGame.toJSON());
+        Assert.assertSame(GameEntityManagerTest.existingGame, updated);
+        Assert.assertEquals(GameEntityManagerTest.goodUpdatedGame.getName(), updated.getName()); // make
         // sure
         // ModelMapper
         // is
@@ -286,17 +313,19 @@ public class GameEntityManagerTest {
      */
     @Test(expected = NotImplementedException.class)
     public void testAdvancedGet() throws NotImplementedException {
-        manager.advancedGet(defaultSession, new String[0]);
+        GameEntityManagerTest.manager.advancedGet(GameEntityManagerTest.defaultSession,
+                new String[0]);
     }
     
     /**
-     * Tests that the unimplemented advancedPost throws the appropriate exception
+     * Tests that the unimplemented advancedPost throws the appropriate
+     * exception
      * 
      * @throws NotImplementedException
      */
     @Test(expected = NotImplementedException.class)
     public void testAdvancedPost() throws NotImplementedException {
-        manager.advancedPost(defaultSession, "", "");
+        GameEntityManagerTest.manager.advancedPost(GameEntityManagerTest.defaultSession, "", "");
     }
     
     /**
@@ -306,7 +335,8 @@ public class GameEntityManagerTest {
      */
     @Test(expected = NotImplementedException.class)
     public void testAdvancedPut() throws NotImplementedException {
-        manager.advancedPut(defaultSession, new String[0], "");
+        GameEntityManagerTest.manager.advancedPut(GameEntityManagerTest.defaultSession,
+                new String[0], "");
     }
     
 }

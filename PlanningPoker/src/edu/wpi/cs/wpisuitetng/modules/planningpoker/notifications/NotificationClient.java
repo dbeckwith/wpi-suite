@@ -32,10 +32,10 @@ public class NotificationClient extends Thread {
      *         not exist.
      */
     public static NotificationClient getInstance() {
-        if (instance == null) {
-            instance = new NotificationClient();
+        if (NotificationClient.instance == null) {
+            NotificationClient.instance = new NotificationClient();
         }
-        return instance;
+        return NotificationClient.instance;
     }
     
     private InetAddress serverAddress = null;
@@ -60,14 +60,15 @@ public class NotificationClient extends Thread {
         Logger.getGlobal().info("Notification client started");
         while (true) {
             try {
-            	//open a connection to the notification server
+                //open a connection to the notification server
                 Socket server = new Socket(serverAddress, NotificationServer.PORT);
                 server.getInputStream().read(); //wait for the one-byte ping
                 server.close(); //close the connection
                 GetGamesController.getInstance().retrieveGames(); //update the games
             }
             catch (IOException e) {
-                Logger.getGlobal().warning("IO Exception: " + e.getMessage() + " caused by:\n" + e.getCause());
+                Logger.getGlobal().warning(
+                        "IO Exception: " + e.getMessage() + " caused by:\n" + e.getCause());
             }
         }
     }

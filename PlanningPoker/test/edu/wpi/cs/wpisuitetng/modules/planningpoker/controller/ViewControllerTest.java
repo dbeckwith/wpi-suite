@@ -36,8 +36,7 @@ public class ViewControllerTest {
     
     static PlanningPoker pp = new PlanningPoker();
     static MainView mv = new MainView();
-    static ViewController vc = new ViewController(ViewControllerTest.mv,
-            new ToolbarView());
+    static ViewController vc = new ViewController(ViewControllerTest.mv, new ToolbarView());
     
     /**
      * Initializes the mock network
@@ -50,7 +49,8 @@ public class ViewControllerTest {
     }
     
     /**
-     * Ensures that the tab count changes correctly when a new game tab is opened.
+     * Ensures that the tab count changes correctly when a new game tab is
+     * opened.
      */
     @Test
     public void testAddNewGameTab() {
@@ -61,33 +61,31 @@ public class ViewControllerTest {
     }
     
     /**
-     * Ensures that the tab count changes correctly when a new game tab is closed.
+     * Ensures that the tab count changes correctly when a new game tab is
+     * closed.
      */
     @Test
     public void testSaveNewGame() {
         final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addNewGameTab();
-        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
-                .getComponentAt(count);
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv.getComponentAt(count);
         ViewControllerTest.vc.saveNewGame(ngp);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
     
     /**
-     * Ensures that the tab count changes correctly when finished updating a game
+     * Ensures that the tab count changes correctly when finished updating a
+     * game
      */
     @Test
     public void testUpdateGame() {
         final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
-                new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null, null,
+                new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null,
                         null, null));
         ViewControllerTest.vc.editGame();
-        Assert.assertEquals("Edit Test",
-                ViewControllerTest.mv.getTitleAt(count));
-        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
-                .getComponentAt(count);
+        Assert.assertEquals("Edit Test", ViewControllerTest.mv.getTitleAt(count));
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv.getComponentAt(count);
         ViewControllerTest.vc.updateGame(new GameModel(), ngp);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
     }
@@ -99,8 +97,7 @@ public class ViewControllerTest {
     public void testCancelNewGame() {
         final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addNewGameTab();
-        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
-                .getComponentAt(count);
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv.getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
         ViewControllerTest.vc.cancelNewGame(ngp, false);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
@@ -113,12 +110,10 @@ public class ViewControllerTest {
     public void testCancelEditGame() {
         final int count = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
-                new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
-                        null, null));
+                new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(),
+                        DeckModel.DEFAULT_DECK, null, null, null));
         ViewControllerTest.vc.editGame();
-        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv
-                .getComponentAt(count);
+        final NewGamePanel ngp = (NewGamePanel) ViewControllerTest.mv.getComponentAt(count);
         ViewControllerTest.vc.setCancelConfirm(new YesMockOptionPane());
         ViewControllerTest.vc.cancelEditGame(ngp, false);
         Assert.assertEquals(count, ViewControllerTest.mv.getTabCount());
@@ -132,8 +127,7 @@ public class ViewControllerTest {
         final int before = ViewControllerTest.mv.getTabCount();
         ViewControllerTest.vc.addUserPrefsTab();
         Assert.assertEquals(before + 1, ViewControllerTest.mv.getTabCount());
-        Assert.assertSame("Preferences",
-                ViewControllerTest.mv.getTitleAt(before));
+        Assert.assertSame("Preferences", ViewControllerTest.mv.getTitleAt(before));
     }
     
     /**
@@ -142,12 +136,10 @@ public class ViewControllerTest {
     @Test
     public void testStartGame() {
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
-                new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null,
-                        null, GameModel.GameStatus.NEW));
+                new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null,
+                        GameModel.GameStatus.NEW));
         ViewControllerTest.vc.startGame();
-        final MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
         }
@@ -160,12 +152,10 @@ public class ViewControllerTest {
     @Test
     public void testEndEstimation() {
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
-                new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null,
-                        null, GameModel.GameStatus.NEW));
+                new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null,
+                        GameModel.GameStatus.NEW));
         ViewControllerTest.vc.endEstimation();
-        final MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
         }
@@ -178,12 +168,10 @@ public class ViewControllerTest {
     @Test
     public void testCloseGame() {
         ViewControllerTest.mv.getMainPanel().setSelectedGame(
-                new GameModel("Test", "Test",
-                        new ArrayList<GameRequirementModel>(), null,
-                        null, GameModel.GameStatus.NEW));
+                new GameModel("Test", "Test", new ArrayList<GameRequirementModel>(), null, null,
+                        GameModel.GameStatus.NEW));
         ViewControllerTest.vc.closeGame();
-        final MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
         }
@@ -191,7 +179,8 @@ public class ViewControllerTest {
     }
     
     /**
-     * Tests that displayAdmin correctly changes the visibility of the admin controls
+     * Tests that displayAdmin correctly changes the visibility of the admin
+     * controls
      */
     @Test
     public void testDisplayAdmin() {
@@ -200,14 +189,11 @@ public class ViewControllerTest {
                 new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, null,
                 GameModel.GameStatus.NEW, ""));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
-        ViewControllerTest.vc
-                .displayAdmin(new GameModel("", "",
-                        new ArrayList<GameRequirementModel>(), null, null,
-                        GameModel.GameStatus.NEW, "Me"));
+        ViewControllerTest.vc.displayAdmin(new GameModel("", "",
+                new ArrayList<GameRequirementModel>(), null, null, GameModel.GameStatus.NEW, "Me"));
         Assert.assertFalse(ViewControllerTest.vc.getAdminVisibility());
         ViewControllerTest.vc.displayAdmin(new GameModel("", "",
-                new ArrayList<GameRequirementModel>(), null, null,
-                GameModel.GameStatus.COMPLETE,
+                new ArrayList<GameRequirementModel>(), null, null, GameModel.GameStatus.COMPLETE,
                 ""));
         Assert.assertTrue(ViewControllerTest.vc.getAdminVisibility());
     }

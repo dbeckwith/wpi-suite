@@ -15,7 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -36,19 +35,19 @@ public class GameListModelTest {
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
-
+        
         GameListModelTest.instance = GameListModel.getInstance();
-        instance.removeObservers();
-        instance.removeStatusObservers();
+        GameListModelTest.instance.removeObservers();
+        GameListModelTest.instance.removeStatusObservers();
     }
     
     /**
-     * Tests that the instance returned by getInstance is the same as a previous instance
+     * Tests that the instance returned by getInstance is the same as a previous
+     * instance
      */
     @Test
     public void testGetInstance() {
-        Assert.assertEquals(
-                "A new instance is not the same as the previous instance",
+        Assert.assertEquals("A new instance is not the same as the previous instance",
                 GameListModelTest.instance, GameListModel.getInstance());
     }
     
@@ -63,11 +62,9 @@ public class GameListModelTest {
             }
         };
         GameListModelTest.instance.addListListener(slo);
-        Assert.assertTrue(GameListModelTest.instance.getObservers().contains(
-                slo));
+        Assert.assertTrue(GameListModelTest.instance.getObservers().contains(slo));
         GameListModelTest.instance.addListListener(slo);
-        Assert.assertTrue(GameListModelTest.instance.getObservers().contains(
-                slo));
+        Assert.assertTrue(GameListModelTest.instance.getObservers().contains(slo));
     }
     
     /**
@@ -75,23 +72,20 @@ public class GameListModelTest {
      */
     @Test
     public void testGameManipulation() {
-        final GameModel game1 = new GameModel("Test Game",
-                "Test Game Description", null, DeckModel.DEFAULT_DECK, new Date(), null);
-        final GameModel game2 = new GameModel("Test Game 2",
-                "Test Game Description 2", null, DeckModel.DEFAULT_DECK, new Date(), null);
+        final GameModel game1 = new GameModel("Test Game", "Test Game Description", null,
+                DeckModel.DEFAULT_DECK, new Date(), null);
+        final GameModel game2 = new GameModel("Test Game 2", "Test Game Description 2", null,
+                DeckModel.DEFAULT_DECK, new Date(), null);
         GameListModelTest.instance.addGame(game1);
         GameListModelTest.instance.addGame(game2);
         Assert.assertTrue(GameListModelTest.instance.getGames().contains(game1));
         Assert.assertTrue(GameListModelTest.instance.getGames().contains(game2));
         GameListModelTest.instance.removeGame(game1);
         Assert.assertTrue(GameListModelTest.instance.getGames().contains(game2));
-        Assert.assertFalse(GameListModelTest.instance.getGames()
-                .contains(game1));
+        Assert.assertFalse(GameListModelTest.instance.getGames().contains(game1));
         GameListModelTest.instance.addGame(game1);
         GameListModelTest.instance.emptyModel();
-        Assert.assertFalse(GameListModelTest.instance.getGames()
-                .contains(game1));
-        Assert.assertFalse(GameListModelTest.instance.getGames()
-                .contains(game2));
+        Assert.assertFalse(GameListModelTest.instance.getGames().contains(game1));
+        Assert.assertFalse(GameListModelTest.instance.getGames().contains(game2));
     }
 }

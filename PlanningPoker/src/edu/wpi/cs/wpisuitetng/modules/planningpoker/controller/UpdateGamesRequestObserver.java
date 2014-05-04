@@ -17,11 +17,11 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 /**
  * This observer is called when a response is received from a request
  * to the server to update games.
+ * 
  * @author Team 9
  * @version 1.0
  */
 public class UpdateGamesRequestObserver implements RequestObserver {
-    
     
     
     /**
@@ -29,7 +29,7 @@ public class UpdateGamesRequestObserver implements RequestObserver {
      * controller when a response is received with a success (2xx) status code.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess
-     * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     *      (edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {
@@ -46,8 +46,8 @@ public class UpdateGamesRequestObserver implements RequestObserver {
      */
     @Override
     public void responseError(IRequest iReq) {
-        Logger.getGlobal().severe("The request to update a game failed: " + 
-                                    iReq.getResponse().getStatusMessage());
+        Logger.getGlobal().severe(
+                "The request to update a game failed: " + iReq.getResponse().getStatusMessage());
     }
     
     /**

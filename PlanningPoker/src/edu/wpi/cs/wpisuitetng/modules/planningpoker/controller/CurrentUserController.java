@@ -21,8 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class CurrentUserController extends AbstractUserController {
     
-    public static final String USER_NAME = ConfigManager.getConfig()
-            .getUserName();
+    public static final String USER_NAME = ConfigManager.getConfig().getUserName();
     
     private User user = null;
     
@@ -34,11 +33,11 @@ public class CurrentUserController extends AbstractUserController {
      * @return the instance of the CurrentUserController.
      */
     public static CurrentUserController getInstance() {
-        if (Instance == null) {
-            Instance = new CurrentUserController();
+        if (CurrentUserController.Instance == null) {
+            CurrentUserController.Instance = new CurrentUserController();
         }
         
-        return Instance;
+        return CurrentUserController.Instance;
     }
     
     /**
@@ -52,7 +51,7 @@ public class CurrentUserController extends AbstractUserController {
     public void receivedUsers(User[] users) {
         if (users != null) {
             setUsers(users);
-            user = findUser(USER_NAME);
+            user = findUser(CurrentUserController.USER_NAME);
         }
         else {
             Logger.getGlobal().warning("No useres received!");
@@ -72,13 +71,13 @@ public class CurrentUserController extends AbstractUserController {
         User toReturn = null;
         boolean alreadyReturned = false;
         for (User u : getUsers()) {
-            if (u.getUsername().equals(name)){
+            if (u.getUsername().equals(name)) {
                 toReturn = u;
                 alreadyReturned = true;
                 break;
             }
         }
-        if (!alreadyReturned){
+        if (!alreadyReturned) {
             toReturn = null;
         }
         return toReturn;

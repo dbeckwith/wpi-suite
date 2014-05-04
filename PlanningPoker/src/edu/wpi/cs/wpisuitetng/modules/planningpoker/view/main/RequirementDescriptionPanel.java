@@ -62,8 +62,7 @@ public class RequirementDescriptionPanel extends JPanel {
      * @param req
      *        the requirement
      */
-    public void setData(User current_user, GameModel parent_game,
-            GameRequirementModel req) {
+    public void setData(User current_user, GameModel parent_game, GameRequirementModel req) {
         if (parent_game.isEnded()) {
             completedPanel.setRequirement(parent_game, req);
             ((CardLayout) getLayout()).show(this, "complete");

@@ -23,66 +23,69 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class NotificationServer extends Thread {
-	
-	public static final int PORT = 9797;
-	
-	private static NotificationServer instance = null;
-	
+    
+    public static final int PORT = 9797;
+    
+    private static NotificationServer instance = null;
+    
     /**
      * @return The instance of the NotificationServer or creates one if it does
      *         not exist.
      */
-	public static NotificationServer getInstance() {
-		if(instance == null){
-			instance = new NotificationServer();
-		}
-		return instance;
-	}
-	
-	private ServerSocket serverSocket = null;
-	private final List<Socket> clientSockets;
-	
-	/**
-	 * Constructor
-	 */
-	private NotificationServer(){
-		try {
-			serverSocket = new ServerSocket(PORT);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		clientSockets = Collections.synchronizedList(new ArrayList<Socket>());
-	}
-	
-	@Override
-	public void run(){
+    public static NotificationServer getInstance() {
+        if (NotificationServer.instance == null) {
+            NotificationServer.instance = new NotificationServer();
+        }
+        return NotificationServer.instance;
+    }
+    
+    private ServerSocket serverSocket = null;
+    private final List<Socket> clientSockets;
+    
+    /**
+     * Constructor
+     */
+    private NotificationServer() {
+        try {
+            serverSocket = new ServerSocket(NotificationServer.PORT);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        clientSockets = Collections.synchronizedList(new ArrayList<Socket>());
+    }
+    
+    @Override
+    public void run() {
         Logger.getGlobal().info("Notification server started");
-		while(true){
-			try {
-				Socket newClient = serverSocket.accept();
-				clientSockets.add(newClient);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	/**
-	 * Notifies all waiting clients of an update, 
-	 * then closes their connection
-	 */
-	public void sendUpdateNotification(){
-		//copy waiting clients, then clear list
-		final Socket[] clients = clientSockets.toArray(new Socket[]{});
-		clientSockets.clear();
-		
-		for(Socket s:clients){
-			try {
-				s.getOutputStream().write(0); //notify each client by sending one byte
-				s.close(); //close connection
-			} catch (IOException e) {
-				System.out.print("");
-			}
-		}
-	}
+        while (true) {
+            try {
+                Socket newClient = serverSocket.accept();
+                clientSockets.add(newClient);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Notifies all waiting clients of an update,
+     * then closes their connection
+     */
+    public void sendUpdateNotification() {
+        //copy waiting clients, then clear list
+        final Socket[] clients = clientSockets.toArray(new Socket[] {});
+        clientSockets.clear();
+        
+        for (Socket s : clients) {
+            try {
+                s.getOutputStream().write(0); //notify each client by sending one byte
+                s.close(); //close connection
+            }
+            catch (IOException e) {
+                System.out.print("");
+            }
+        }
+    }
 }

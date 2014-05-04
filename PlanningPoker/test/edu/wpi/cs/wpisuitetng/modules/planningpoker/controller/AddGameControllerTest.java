@@ -29,38 +29,36 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * @version 1.0
  */
 public class AddGameControllerTest {
-
-	static AddGameController instance = AddGameController.getInstance();
-
-	/**
-	 * Tests that getInstance returns the same instance
-	 */
-	@Test
-	public void testGetInstance() {
-		AddGameControllerTest.instance = AddGameController.getInstance();
-		Assert.assertEquals(
-				"A new instance is not the same as the previous instance",
-				AddGameControllerTest.instance, AddGameController.getInstance());
-	}
-
-	/**
-	 * Tests that addGame sends a network request
-	 */
-	@Test
-	public void testAddGame() {
-		Network.initNetwork(new MockNetwork());
-		Network.getInstance().setDefaultNetworkConfiguration(
-				new NetworkConfiguration("http://wpisuitetng"));
-		final AddGameController agc = AddGameController.getInstance();
-		agc.addGame(new GameModel( "Test", "Test Description",
-				new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, new Date(),
-				GameModel.GameStatus.COMPLETE));
-		final MockRequest request = ((MockNetwork) Network.getInstance())
-				.getLastRequestMade();
-		if (request == null) {
-			Assert.fail("request not sent");
-		}
-		Assert.assertTrue(request.isSent());
-	}
-
+    
+    static AddGameController instance = AddGameController.getInstance();
+    
+    /**
+     * Tests that getInstance returns the same instance
+     */
+    @Test
+    public void testGetInstance() {
+        AddGameControllerTest.instance = AddGameController.getInstance();
+        Assert.assertEquals("A new instance is not the same as the previous instance",
+                AddGameControllerTest.instance, AddGameController.getInstance());
+    }
+    
+    /**
+     * Tests that addGame sends a network request
+     */
+    @Test
+    public void testAddGame() {
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
+        final AddGameController agc = AddGameController.getInstance();
+        agc.addGame(new GameModel("Test", "Test Description",
+                new ArrayList<GameRequirementModel>(), DeckModel.DEFAULT_DECK, new Date(),
+                GameModel.GameStatus.COMPLETE));
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
+        if (request == null) {
+            Assert.fail("request not sent");
+        }
+        Assert.assertTrue(request.isSent());
+    }
+    
 }

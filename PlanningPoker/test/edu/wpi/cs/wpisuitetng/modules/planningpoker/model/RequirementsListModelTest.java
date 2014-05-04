@@ -61,8 +61,7 @@ public class RequirementsListModelTest {
         rlm.addListListener(mySLO);
         Assert.assertTrue(rlm.getObservers().contains(mySLO));
         rlm.addRequirement(new GameRequirementModel());
-        Assert.assertTrue("Observers updated",
-                outStream.toString().contains("Observers updated"));
+        Assert.assertTrue("Observers updated", outStream.toString().contains("Observers updated"));
         rlm.removeListListener(mySLO);
         Assert.assertFalse(rlm.getObservers().contains(mySLO));
         

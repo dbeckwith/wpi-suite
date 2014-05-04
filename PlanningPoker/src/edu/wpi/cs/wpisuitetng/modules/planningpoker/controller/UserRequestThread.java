@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
  * A class for requesting users from the server.
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -80,8 +81,7 @@ public class UserRequestThread extends Thread {
      * is received.
      */
     private void requestUsers() {
-        final Request request = Network.getInstance().makeRequest("core/user",
-                HttpMethod.GET);
+        final Request request = Network.getInstance().makeRequest("core/user", HttpMethod.GET);
         request.addObserver(observer);
         request.addObserver(controller.observer);
         Logger.getGlobal().info("Sent request for users");

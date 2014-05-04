@@ -23,8 +23,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.OptionPane;
 public class NoMockOptionPane implements OptionPane {
     
     @Override
-    public int showConfirmDialog(Component parentComponent, Object message,
-            String title, int optionType) {
+    public int showConfirmDialog(Component parentComponent, Object message, String title,
+            int optionType) {
         return JOptionPane.NO_OPTION;
     }
     

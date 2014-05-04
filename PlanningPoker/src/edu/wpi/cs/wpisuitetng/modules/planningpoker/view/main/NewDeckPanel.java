@@ -44,7 +44,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 /**
  * 
  * This panel gives an interface for creating a new planning poker deck.
- *
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -55,7 +55,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     /**
      * 
      * Creates a new NewDeckPanel
-     *
+     * 
      */
     public NewDeckPanel() {
         setBackground(Color.WHITE);
@@ -100,54 +100,55 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                             || newDeckName.getText().equals("Generated deck")) {
                         isNameValid = false;
                         nameInUse = true;
-                        setErrorBorder(newDeckName, isNameValid);
+                        NewDeckPanel.setErrorBorder(newDeckName, isNameValid);
                         checkNewDeck();
                         alreadyReturned = true;
                         break;
                         
                     }
                 }
-                if (!alreadyReturned){
+                if (!alreadyReturned) {
                     nameInUse = false;
                     
                     isNameValid = newDeckName.getText() != null
                             && !newDeckName.getText().trim().isEmpty();
                     
-                    setErrorBorder(newDeckName, isNameValid);
+                    NewDeckPanel.setErrorBorder(newDeckName, isNameValid);
                     
                     checkNewDeck();
                 }
-       
+                
                 
             }
         });
         
         final JLabel cardLabel = new JLabel("Cards: *");
-        cardLabel.setToolTipText("The list of cards the user will be able to select in order to make their estimate."); // $codepro.audit.disable lineLength
-
+        cardLabel
+                .setToolTipText("The list of cards the user will be able to select in order to make their estimate."); // $codepro.audit.disable lineLength
+        
         createDeckButton = new JButton("Create Deck");
         createDeckButton.setToolTipText("Create and save this deck.");
         
-        createDeckButton.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(newDeckCallback != null){
-					ActionListener call = newDeckCallback;
-					newDeckCallback = null;
-					call.actionPerformed(new ActionEvent(this, 0, ""));
-				}
-			}
-		});
+        createDeckButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (newDeckCallback != null) {
+                    ActionListener call = newDeckCallback;
+                    newDeckCallback = null;
+                    call.actionPerformed(new ActionEvent(this, 0, ""));
+                }
+            }
+        });
         
         createDeckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-            	final ArrayList<Double> newCards = new ArrayList<Double>();
-            	
-            	for(SpinnerCard card:cards){
-            		newCards.add((double)card.getEstimateValue());
-            	}
-            	
+                final ArrayList<Double> newCards = new ArrayList<Double>();
+                
+                for (SpinnerCard card : cards) {
+                    newCards.add((double) card.getEstimateValue());
+                }
+                
                 final DeckModel newDeck = new DeckModel(newDeckName.getText().trim(), newCards,
                         multipleSelect.isSelected());
                 newDeck.sort();
@@ -155,7 +156,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 parentPanel.setNewDeck();
                 AddDeckController.getInstance().addDeck(newDeck);
                 parentPanel.showPanel("reqlistpanel");
-
+                
             }
         });
         
@@ -171,12 +172,14 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         final ButtonGroup selectionGroup = new ButtonGroup();
         
         final JRadioButton singleSelect = new JRadioButton("Single");
-        singleSelect.setToolTipText("Single selection mode only allows the user to select one card from the deck."); // $codepro.audit.disable lineLength
+        singleSelect
+                .setToolTipText("Single selection mode only allows the user to select one card from the deck."); // $codepro.audit.disable lineLength
         singleSelect.setBackground(Color.WHITE);
         singleSelect.setSelected(true);
         
         multipleSelect = new JRadioButton("Multiple");
-        multipleSelect.setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate."); // $codepro.audit.disable lineLength
+        multipleSelect
+                .setToolTipText("Multiple selection mode allows the user to select any number of cards from the deck and add their values to make their estimate."); // $codepro.audit.disable lineLength
         multipleSelect.setBackground(Color.WHITE);
         
         selectionGroup.add(singleSelect);
@@ -187,12 +190,12 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         
         errorLabel = new JLabel("<errors>");
         errorLabel.setForeground(Color.RED);
-
-        newDeckName.setText(makeNewDeckName());
+        
+        newDeckName.setText(NewDeckPanel.makeNewDeckName());
         
         checkNewDeck();
         
-        setErrorBorder(newDeckName, true);
+        NewDeckPanel.setErrorBorder(newDeckName, true);
         
         scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -200,84 +203,143 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         addCard = new JButton("Add Card");
         addCard.setToolTipText("Add a new card to the list of cards.");
         addCard.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		addCard();
- 
-        	}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addCard();
+                
+            }
         });
         addCard.setIcon(ImageLoader.getIcon("newReq.png"));
         
         final GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(groupLayout.createSequentialGroup()
-        			.addContainerGap()
-        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(groupLayout.createSequentialGroup()
-        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 601, Short
-        							.MAX_VALUE)
-        					.addContainerGap())
-        				.addGroup(groupLayout.createSequentialGroup()
-        					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(groupLayout.createSequentialGroup()
-        							.addComponent(singleSelect)
-        							.addPreferredGap(ComponentPlacement.UNRELATED)
-        							.addComponent(multipleSelect))
-        						.addGroup(groupLayout.createSequentialGroup()
-        							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        								.addComponent(deckLabel)
-        								.addComponent(newDeckName, GroupLayout.DEFAULT_SIZE, 
-        										605, Short.MAX_VALUE)
-        								.addComponent(cardLabel)
-        								.addGroup(groupLayout.createSequentialGroup()
-        									.addComponent(createDeckButton)
-        									.addPreferredGap(ComponentPlacement.RELATED)
-        									.addComponent(errorLabel)
-        									.addPreferredGap(ComponentPlacement.RELATED, 263, Short
-        											.MAX_VALUE)
-        									.addComponent(cancelCreationButton)))
-        							.addPreferredGap(ComponentPlacement.RELATED))
-        						.addComponent(selectionLabel))
-        					.addGap(8))
-        				.addComponent(addCard, Alignment.LEADING)))
-        );
-        groupLayout.setVerticalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(groupLayout.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(deckLabel)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(newDeckName, GroupLayout.PREFERRED_SIZE, GroupLayout
-        					.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(cardLabel)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(addCard)
-        			.addGap(18)
-        			.addComponent(selectionLabel)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(groupLayout.createSequentialGroup()
-        					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(singleSelect)
-        						.addComponent(multipleSelect))
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(createDeckButton)
-        						.addComponent(cancelCreationButton)))
-        				.addComponent(errorLabel))
-        			.addContainerGap())
-        );
+        groupLayout
+                .setHorizontalGroup(groupLayout
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                groupLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                groupLayout
+                                                        .createParallelGroup(Alignment.TRAILING)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                scrollPane,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                601,
+                                                                                Short.MAX_VALUE)
+                                                                        .addContainerGap())
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                singleSelect)
+                                                                                                        .addPreferredGap(
+                                                                                                                ComponentPlacement.UNRELATED)
+                                                                                                        .addComponent(
+                                                                                                                multipleSelect))
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addGroup(
+                                                                                                                groupLayout
+                                                                                                                        .createParallelGroup(
+                                                                                                                                Alignment.LEADING)
+                                                                                                                        .addComponent(
+                                                                                                                                deckLabel)
+                                                                                                                        .addComponent(
+                                                                                                                                newDeckName,
+                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                605,
+                                                                                                                                Short.MAX_VALUE)
+                                                                                                                        .addComponent(
+                                                                                                                                cardLabel)
+                                                                                                                        .addGroup(
+                                                                                                                                groupLayout
+                                                                                                                                        .createSequentialGroup()
+                                                                                                                                        .addComponent(
+                                                                                                                                                createDeckButton)
+                                                                                                                                        .addPreferredGap(
+                                                                                                                                                ComponentPlacement.RELATED)
+                                                                                                                                        .addComponent(
+                                                                                                                                                errorLabel)
+                                                                                                                                        .addPreferredGap(
+                                                                                                                                                ComponentPlacement.RELATED,
+                                                                                                                                                263,
+                                                                                                                                                Short.MAX_VALUE)
+                                                                                                                                        .addComponent(
+                                                                                                                                                cancelCreationButton)))
+                                                                                                        .addPreferredGap(
+                                                                                                                ComponentPlacement.RELATED))
+                                                                                        .addComponent(
+                                                                                                selectionLabel))
+                                                                        .addGap(8))
+                                                        .addComponent(addCard, Alignment.LEADING))));
+        groupLayout
+                .setVerticalGroup(groupLayout
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                groupLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(deckLabel)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(newDeckName, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(cardLabel)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 344,
+                                                Short.MAX_VALUE)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(addCard)
+                                        .addGap(18)
+                                        .addComponent(selectionLabel)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                groupLayout
+                                                        .createParallelGroup(Alignment.TRAILING)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.BASELINE)
+                                                                                        .addComponent(
+                                                                                                singleSelect)
+                                                                                        .addComponent(
+                                                                                                multipleSelect))
+                                                                        .addPreferredGap(
+                                                                                ComponentPlacement.RELATED)
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.BASELINE)
+                                                                                        .addComponent(
+                                                                                                createDeckButton)
+                                                                                        .addComponent(
+                                                                                                cancelCreationButton)))
+                                                        .addComponent(errorLabel))
+                                        .addContainerGap()));
         
-        cardPanel = new JPanel(){
+        cardPanel = new JPanel() {
             /**
 			 * 
 			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
+            private static final long serialVersionUID = 1L;
+            
+            @Override
             public void paintComponent(Graphics g) {
                 final BufferedImage texture = ImageLoader.getImage("felt.png");
                 for (int x = 0; x < getWidth(); x += texture.getWidth()) {
@@ -299,18 +361,18 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     /**
      * 
      * Resets the fields in the form to their default values.
-     *
+     * 
      */
     public void resetFields() {
-        newDeckName.setText(makeNewDeckName());
+        newDeckName.setText(NewDeckPanel.makeNewDeckName());
     }
     
     /**
      * makes the current input valid if it is not already
      */
-    public void validateInput(){
+    public void validateInput() {
         if (!isNameValid) {
-            newDeckName.setText(makeNewDeckName());
+            newDeckName.setText(NewDeckPanel.makeNewDeckName());
         }
     }
     
@@ -323,7 +385,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 errorLabel.setText("Name is required");
             }
         }
-
+        
         else {
             errorLabel.setText("");
         }
@@ -362,8 +424,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
                 int newNum;
                 if (name.matches(defaultName + " \\d+")) {
                     // name has a number after it
-                    newNum = Integer.parseInt(name.substring(defaultName
-                            .length() + 1)) + 1;
+                    newNum = Integer.parseInt(name.substring(defaultName.length() + 1)) + 1;
                 }
                 else {
                     // name has no number after it, so the number was 0
@@ -390,57 +451,58 @@ public class NewDeckPanel extends JPanel implements ActionListener {
         parentPanel = p;
     }
     
-    private void addCard(){
-    	final SpinnerCard newCard = new SpinnerCard(cards.size(), DeckModel.NO_LIMIT);
-		newCard.setDeleteListener(NewDeckPanel.this);
-		newCard.setPreferredSize(new Dimension(80, 120));
-		
-		if(cards.size() == 1){
-			cards.get(0).setDeleteListener(this);
-		} else if(cards.size() == 0){
-			newCard.setDeleteListener(null);
-		}
-		
-		cards.add(newCard);
-				
-		final GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 10, 0, 10);
-		cardPanel.add(newCard, gbc);
-		
-		scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar()
-				.getMaximum());
-		
-		cardPanel.repaint();
-		cardPanel.revalidate();
+    private void addCard() {
+        final SpinnerCard newCard = new SpinnerCard(cards.size(), DeckModel.NO_LIMIT);
+        newCard.setDeleteListener(NewDeckPanel.this);
+        newCard.setPreferredSize(new Dimension(80, 120));
+        
+        if (cards.size() == 1) {
+            cards.get(0).setDeleteListener(this);
+        }
+        else if (cards.size() == 0) {
+            newCard.setDeleteListener(null);
+        }
+        
+        cards.add(newCard);
+        
+        final GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0, 10, 0, 10);
+        cardPanel.add(newCard, gbc);
+        
+        scrollPane.getHorizontalScrollBar().setValue(
+                scrollPane.getHorizontalScrollBar().getMaximum());
+        
+        cardPanel.repaint();
+        cardPanel.revalidate();
     }
     
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		final Card deleteCard = (Card)e.getSource();
-		cardPanel.remove(deleteCard);
-		cards.remove(deleteCard);
-		
-		if(cards.size() == 1){
-			cards.get(0).setDeleteListener(null);
-		}
-		
-		cardPanel.repaint();
-		cardPanel.revalidate();
-		
-		
-	}
-	
-	public void setSaveDeckCallback(ActionListener a){
-		newDeckCallback = a;
-	}
-	
-	/**
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        final Card deleteCard = (Card) e.getSource();
+        cardPanel.remove(deleteCard);
+        cards.remove(deleteCard);
+        
+        if (cards.size() == 1) {
+            cards.get(0).setDeleteListener(null);
+        }
+        
+        cardPanel.repaint();
+        cardPanel.revalidate();
+        
+        
+    }
+    
+    public void setSaveDeckCallback(ActionListener a) {
+        newDeckCallback = a;
+    }
+    
+    /**
      * @return the createDeckButton
      */
     public JButton getCreateDeckButton() {
         return createDeckButton;
     }
-
+    
     /**
      * @return the cancelCreationButton
      */
@@ -449,12 +511,13 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     }
     
     /**
-     * @param tutorial the tutorial to set
+     * @param tutorial
+     *        the tutorial to set
      */
     public void setTutorial(boolean tutorial) {
         this.tutorial = tutorial;
     }
-
+    
     /**
      * 
      * Determines if the current deck hasn't been edited yet (i.e. no cards have
@@ -465,10 +528,10 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     public boolean isUnedited() { // $codepro.audit.disable booleanMethodNamingConvention
         return cards.size() == 1 && cards.get(0).getEstimateValue() == 0;
     }
-
+    
     private ActionListener newDeckCallback;
-	
-	private final JScrollPane scrollPane;
+    
+    private final JScrollPane scrollPane;
     private final ArrayList<SpinnerCard> cards;
     private final JPanel cardPanel;
     private NewGamePanel parentPanel;
@@ -481,7 +544,7 @@ public class NewDeckPanel extends JPanel implements ActionListener {
     private final JLabel errorLabel;
     private JButton addCard;
     private boolean tutorial;   //a flag to show if the tutorial is running
-	
+    
     public JButton getAddCardButton() {
         return addCard;
     }

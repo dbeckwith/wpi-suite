@@ -69,8 +69,8 @@ public class GameRequirementModel extends AbstractModel {
      *        the list of estimates that have been made so far for this
      *        requirement
      */
-    public GameRequirementModel(int parentId, String name, String description,
-            String type, ArrayList<Estimate> estimates) {
+    public GameRequirementModel(int parentId, String name, String description, String type,
+            ArrayList<Estimate> estimates) {
         this.parentId = parentId;
         this.name = name;
         this.description = description;
@@ -79,8 +79,8 @@ public class GameRequirementModel extends AbstractModel {
         
         Collections.sort(this.estimates);
         finalEstimate = 0;
-        id = nextId;
-        nextId++;
+        id = GameRequirementModel.nextId;
+        GameRequirementModel.nextId++;
         estimateNote = "";
     }
     
@@ -97,8 +97,7 @@ public class GameRequirementModel extends AbstractModel {
      * @param type
      *        the type of requirement
      */
-    public GameRequirementModel(int parentId, String name, String description,
-            String type) {
+    public GameRequirementModel(int parentId, String name, String description, String type) {
         this(parentId, name, description, type, new ArrayList<Estimate>());
     }
     
@@ -118,8 +117,8 @@ public class GameRequirementModel extends AbstractModel {
      *        the Requirement to model this GameRequirementModel off of
      */
     public GameRequirementModel(Requirement r) {
-        this(r.getId(), r.getName(), r.getDescription(),
-                r.getType().toString(), new ArrayList<Estimate>());
+        this(r.getId(), r.getName(), r.getDescription(), r.getType().toString(),
+                new ArrayList<Estimate>());
         fromRequirementManager = true;
         parentEstimate = r.getEstimate();
     }
@@ -242,8 +241,7 @@ public class GameRequirementModel extends AbstractModel {
             toReturn = 0;
         }
         else {
-            final ArrayList<Estimate> estimates_copy = new ArrayList<>(
-                    estimates);
+            final ArrayList<Estimate> estimates_copy = new ArrayList<>(estimates);
             Collections.sort(estimates_copy);
             final int count = estimates_copy.size();
             if (estimates_copy.size() % 2 == 1) {
@@ -278,7 +276,7 @@ public class GameRequirementModel extends AbstractModel {
      * @return true if all users have voted on a requirement, false otherwise
      */
     public boolean allVoted() { // $codepro.audit.disable booleanMethodNamingConvention
-    	boolean voted = true;
+        boolean voted = true;
         final ArrayList<User> estimateUsers = new ArrayList<User>();
         final User[] users = CurrentUserController.getInstance().getUsers();
         
@@ -292,8 +290,8 @@ public class GameRequirementModel extends AbstractModel {
         }
         
         for (int i = 0; i < users.length; i++) {
-            if (!estimateUsers.contains(users[i])) { 
-            	voted = false; 
+            if (!estimateUsers.contains(users[i])) {
+                voted = false;
             }
         }
         
@@ -362,8 +360,7 @@ public class GameRequirementModel extends AbstractModel {
         }
         else if (other instanceof GameRequirementModel) {
             toReturn = (name.equals(((GameRequirementModel) other).name))
-                    && (description
-                            .equals(((GameRequirementModel) other).description));
+                    && (description.equals(((GameRequirementModel) other).description));
         }
         else {
             toReturn = super.equals(other);
@@ -372,8 +369,8 @@ public class GameRequirementModel extends AbstractModel {
     }
     
     @Override
-    public int hashCode(){
-		return id;
+    public int hashCode() {
+        return id;
     }
     
     /**
@@ -386,8 +383,7 @@ public class GameRequirementModel extends AbstractModel {
                 .getParentRequirement(parentId);
         parent.setEstimate(finalEstimate);
         UpdateRequirementController.getInstance().updateRequirement(parent);
-        RequirementModel.getInstance().getRequirement(parentId)
-                .setEstimate(finalEstimate);
+        RequirementModel.getInstance().getRequirement(parentId).setEstimate(finalEstimate);
         parentEstimate = finalEstimate;
         ViewEventController.getInstance().refreshTable();
     }
@@ -409,10 +405,10 @@ public class GameRequirementModel extends AbstractModel {
     /**
      * Sets the parentEstimate of this requirement
      * 
-     * @param parentEstimate 
-     *      the parent Estimate
+     * @param parentEstimate
+     *        the parent Estimate
      */
-    public void setParentEstimate(int parentEstimate){
+    public void setParentEstimate(int parentEstimate) {
         this.parentEstimate = parentEstimate;
     }
 }

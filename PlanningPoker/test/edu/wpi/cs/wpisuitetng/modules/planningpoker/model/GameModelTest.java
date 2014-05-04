@@ -43,25 +43,20 @@ public class GameModelTest {
         Network.getInstance().setDefaultNetworkConfiguration(
                 new NetworkConfiguration("http://wpisuitetng"));
         reqs = new ArrayList<GameRequirementModel>();
-        final GameRequirementModel aReq = new GameRequirementModel(1,
-                "Req name", "Req desc", "User Story", new ArrayList<Estimate>());
+        final GameRequirementModel aReq = new GameRequirementModel(1, "Req name", "Req desc",
+                "User Story", new ArrayList<Estimate>());
         reqs.add(aReq);
         nullGame = new GameModel();
-
-        game1 = new GameModel("Test Game 1", "Game that just ended", reqs,
-                DeckModel.DEFAULT_DECK, new Date(),
-                GameModel.GameStatus.COMPLETE);
-        game2 = new GameModel("Test Game 2",
-                "Game that will end in 5 seconds", reqs,
-                DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() + 5000),
+        
+        game1 = new GameModel("Test Game 1", "Game that just ended", reqs, DeckModel.DEFAULT_DECK,
+                new Date(), GameModel.GameStatus.COMPLETE);
+        game2 = new GameModel("Test Game 2", "Game that will end in 5 seconds", reqs,
+                DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() + 5000),
                 GameModel.GameStatus.PENDING);
-        game3 = new GameModel(
-                "Test Game 3",
+        game3 = new GameModel("Test Game 3",
                 "Game with end time in 10 seconds, but already manually ended",
-
-                reqs, DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() + 10000),
+                
+                reqs, DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() + 10000),
                 GameModel.GameStatus.COMPLETE);
     }
     
@@ -95,10 +90,9 @@ public class GameModelTest {
      */
     @Test
     public void testJSON() {
-        Assert.assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON())
-                .getName());
-        Assert.assertEquals(game2.getName(), GameModel.fromJSONArray("["
-                + game2.toJSON() + "]")[0].getName());
+        Assert.assertEquals(game1.getName(), GameModel.fromJSON(game1.toJSON()).getName());
+        Assert.assertEquals(game2.getName(),
+                GameModel.fromJSONArray("[" + game2.toJSON() + "]")[0].getName());
     }
     
     /**

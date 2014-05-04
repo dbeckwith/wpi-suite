@@ -47,52 +47,53 @@ public class MainView extends JTabbedPane {
             
             @Override
             public void stateChanged(ChangeEvent arg0) {
-                PlanningPoker.getViewController()
-                        .tabChanged(getSelectedIndex());
+                PlanningPoker.getViewController().tabChanged(getSelectedIndex());
                 
             }
             
         });
         
         addAncestorListener(new AncestorListener() {
-			@Override
-			public void ancestorAdded(AncestorEvent event) {
-			    // called when this tab is switched to
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                // called when this tab is switched to
                 
-                if (!alreadyShown){
+                if (!alreadyShown) {
                     JFrame window = null;
-
+                    
                     Component comp = MainView.this;
                     while (comp != null && !(comp instanceof JFrame)) {
                         comp = comp.getParent();
                     }
                     if (comp != null) {
-                        window = (JFrame)comp;
+                        window = (JFrame) comp;
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     }
-         
+                    
                     TutorialPane.getInstance().install(window);
-
-
+                    
+                    
                     alreadyShown = true;
                 }
-
+                
                 CurrentUserController.getInstance(); // initialize CurrentUserController early so 
-                											//it gets the current user
+                                                     //it gets the current user
                 GetDecksController.getInstance().retrieveDecks();
                 GetRequirementsController.getInstance().retrieveRequirements();
                 GetGamesController.getInstance().retrieveGames();
-			}
-			
-			@Override
-			public void ancestorRemoved(AncestorEvent event) {}
-			
-			
-			@Override
-			public void ancestorMoved(AncestorEvent event) {}
-		
+            }
+            
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+            
+            
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+            
         });
-  
+        
     }
     
     /**

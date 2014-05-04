@@ -45,10 +45,10 @@ public class UserUpdateController {
      * @return The instance of this UserUpdateController
      */
     public static UserUpdateController getInstance() {
-        if (Instance == null) {
-            Instance = new UserUpdateController();
+        if (UserUpdateController.Instance == null) {
+            UserUpdateController.Instance = new UserUpdateController();
         }
-        return Instance;
+        return UserUpdateController.Instance;
     }
     
     /**

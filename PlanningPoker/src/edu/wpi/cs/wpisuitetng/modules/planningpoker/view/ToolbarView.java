@@ -30,7 +30,7 @@ public class ToolbarView extends DefaultToolbarView {
     
     /**
      * Creates a new ToolbarView
-     *
+     * 
      */
     public ToolbarView() {
         addGroup(commonButtonGroup);
@@ -51,9 +51,10 @@ public class ToolbarView extends DefaultToolbarView {
     
     /**
      * Shows the edit game buttons and start game buttons when passed true
-     *  else shows the end estimation buttons and close game button
+     * else shows the end estimation buttons and close game button
+     * 
      * @param b
-     *      Boolean being passed in to show the start game buttons
+     *        Boolean being passed in to show the start game buttons
      */
     public void showStartButtonGroup(boolean b) {
         adminButtonGroup.showNewGameButtons(b);

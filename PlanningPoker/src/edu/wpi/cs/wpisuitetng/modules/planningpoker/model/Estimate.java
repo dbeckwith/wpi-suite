@@ -34,11 +34,11 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
      * Creates a new Estimate.
      * 
      * @param user
-     *            the user who made the estimate
+     *        the user who made the estimate
      * @param estimate
-     *            the user's estimate value
+     *        the user's estimate value
      * @param cards
-     *            the cards that the user selected to make their estimate
+     *        the cards that the user selected to make their estimate
      */
     public Estimate(User user, float estimate, ArrayList<Integer> cards) {
         name = user.getName();
@@ -67,20 +67,20 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     public String getName() {
         return name;
     }
-
+    
     /**
      * Gets the username of the user that made this estimate.
-     *
+     * 
      * @see User
      * @return the user's username
      */
     public String getUsername() {
         return username;
     }
-
+    
     /**
      * Gets the ID number of the user that made this estimate.
-     *
+     * 
      * @see User
      * @return the user's ID number
      */
@@ -119,7 +119,7 @@ public class Estimate extends AbstractModel implements Comparable<Estimate> {
     
     /**
      * Creates an Estimate object from a JSON string
-     *
+     * 
      * @param json
      * @return Estimate from the JSON string
      */

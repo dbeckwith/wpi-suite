@@ -45,14 +45,16 @@ public class ImageLoader {
         //check if the image is already loaded
         if (ImageLoader.images.containsKey(file)) {
             bImg = ImageLoader.images.get(file); //get the image from the list
-        } else {
+        }
+        else {
             try {
                 bImg = ImageIO.read(ImageLoader.class.getResource(ImageLoader.modifiedPath + file));
                 if (bImg != null) {
-                	//put the image in the list
+                    //put the image in the list
                     ImageLoader.images.put(file, bImg);
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }

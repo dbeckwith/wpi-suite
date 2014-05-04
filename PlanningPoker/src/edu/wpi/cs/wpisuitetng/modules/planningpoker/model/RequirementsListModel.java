@@ -20,8 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  * @author Team 9
  * @version 1.0
  */
-public class RequirementsListModel extends
-        AbstractListModel<GameRequirementModel> {
+public class RequirementsListModel extends AbstractListModel<GameRequirementModel> {
     
     private static final long serialVersionUID = -972873964063134055L;
     
@@ -41,11 +40,11 @@ public class RequirementsListModel extends
      * @return The instance of this RequirementsListModel
      */
     public static RequirementsListModel getInstance() {
-        if (instance == null) {
-            instance = new RequirementsListModel();
+        if (RequirementsListModel.instance == null) {
+            RequirementsListModel.instance = new RequirementsListModel();
         }
         
-        return instance;
+        return RequirementsListModel.instance;
     }
     
     /**
@@ -65,7 +64,7 @@ public class RequirementsListModel extends
      * Removes a SimpleListObserver from the list of SimpleListObservers
      * 
      * @param slo
-     *            The SimpleListObserver to be removed
+     *        The SimpleListObserver to be removed
      */
     public void removeListListener(SimpleListObserver slo) {
         if (observers.contains(slo)) {
@@ -97,7 +96,7 @@ public class RequirementsListModel extends
      * while only triggering one list updated event.
      * 
      * @param reqs
-     *            The array of GameRequirementModels
+     *        The array of GameRequirementModels
      */
     public void setRequirements(GameRequirementModel[] reqs) {
         requirements.clear();
@@ -111,7 +110,7 @@ public class RequirementsListModel extends
      * Adds a requirement to the list of requirements.
      * 
      * @param req
-     *            The GameRequirementModel to add
+     *        The GameRequirementModel to add
      */
     public void addRequirement(GameRequirementModel req) {
         requirements.add(req);
@@ -124,7 +123,7 @@ public class RequirementsListModel extends
      * model and only trigger one list changed event.
      * 
      * @param reqs
-     *            The array of GameRequirementModels to add
+     *        The array of GameRequirementModels to add
      */
     public void addMultipleRequirements(GameRequirementModel[] reqs) {
         for (GameRequirementModel req : reqs) {
@@ -137,7 +136,7 @@ public class RequirementsListModel extends
      * Removes a requirement from the list of requirements
      * 
      * @param req
-     *            The GameRequirementModel to remove
+     *        The GameRequirementModel to remove
      */
     public void removeRequirement(GameRequirementModel req) {
         requirements.remove(req);
@@ -154,6 +153,7 @@ public class RequirementsListModel extends
     
     /**
      * Gets the full list of current requirements.
+     * 
      * @return The list of requirements
      */
     public ArrayList<GameRequirementModel> getAll() {

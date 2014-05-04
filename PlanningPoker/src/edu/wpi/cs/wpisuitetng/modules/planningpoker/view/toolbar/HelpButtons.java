@@ -49,7 +49,7 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
         helpButton.setIcon(ImageLoader.getIcon("help.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-
+        
         setPreferredWidth(350);
         
         helpButton.addActionListener(new ActionListener() {
@@ -72,7 +72,7 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
         
         contentPanel.add(helpButton);
         contentPanel.add(tutorialButton);
-        contentPanel.setOpaque(false);        
+        contentPanel.setOpaque(false);
         
         this.add(contentPanel);
     }
@@ -82,8 +82,9 @@ public class HelpButtons extends ToolbarGroupView { // $codepro.audit.disable ty
     }
     
     public JButton getTutorialButton() {
-		return tutorialButton;
-	}
+        return tutorialButton;
+    }
+    
     /*
      * #mouseEntered()
      */

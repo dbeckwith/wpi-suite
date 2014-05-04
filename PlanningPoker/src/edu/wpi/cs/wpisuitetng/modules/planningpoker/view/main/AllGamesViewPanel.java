@@ -47,7 +47,7 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
      * Creates a new AllGamesViewPanel.
      */
     public AllGamesViewPanel() {
-    	addAncestorListener(this);
+        addAncestorListener(this);
         setLayout(new BorderLayout(0, 0));
         jSplitPane3 = new javax.swing.JSplitPane();
         add(jSplitPane3, BorderLayout.CENTER);
@@ -68,7 +68,8 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
         emptyDescriptionPanel.setLayout(new BorderLayout(0, 0));
         
         emptyDescriptionLabel = new JLabel("Select a Game");
-        emptyDescriptionLabel.setToolTipText("Select a game from the tree on the left to see information about it or vote on it. If there are no games, create one with the Create Game button above."); // $codepro.audit.disable lineLength
+        emptyDescriptionLabel
+                .setToolTipText("Select a game from the tree on the left to see information about it or vote on it. If there are no games, create one with the Create Game button above."); // $codepro.audit.disable lineLength
         emptyDescriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         emptyDescriptionLabel.setIcon(ImageLoader.getIcon("leftArrow.png"));
         emptyDescriptionPanel.add(emptyDescriptionLabel, BorderLayout.CENTER);
@@ -93,7 +94,8 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
         noRequirementPanel.setLayout(new BorderLayout(0, 0));
         
         final JLabel lblSelectARequirement = new JLabel("Select a Requirement");
-        lblSelectARequirement.setToolTipText("Select a requirement of this game from the list to the left in order to vote on it.");
+        lblSelectARequirement
+                .setToolTipText("Select a requirement of this game from the list to the left in order to vote on it.");
         lblSelectARequirement.setHorizontalAlignment(SwingConstants.CENTER);
         lblSelectARequirement.setIcon(ImageLoader.getIcon("leftArrow.png"));
         noRequirementPanel.add(lblSelectARequirement, BorderLayout.CENTER);
@@ -116,8 +118,8 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
                         final GameModel game = (GameModel) nodeInfo;
                         currentSelectionGame = game;
                         getGameDescriptionPanel().setGame(game);
-                        ((CardLayout) getDescriptionCard().getLayout()).show(
-                                getDescriptionCard(), "description");
+                        ((CardLayout) getDescriptionCard().getLayout()).show(getDescriptionCard(),
+                                "description");
                         
                     }
                     else if (nodeInfo instanceof GameRequirementModel) {
@@ -128,23 +130,21 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
                         final GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
                                 .getParent())).getUserObject();
                         getRequirementDescriptionPanel().setData(
-                                CurrentUserController.getInstance().getUser(),
-                                parent_game, req);
+                                CurrentUserController.getInstance().getUser(), parent_game, req);
                         
                         final GameModel game = (GameModel) ((DefaultMutableTreeNode) node
                                 .getParent()).getUserObject();
                         getGameDescriptionPanel().setGame(game);
                         currentSelectionGame = game;
-                        ((CardLayout) getDescriptionCard().getLayout()).show(
-                                getDescriptionCard(), "description");
+                        ((CardLayout) getDescriptionCard().getLayout()).show(getDescriptionCard(),
+                                "description");
                     }
                     else {
-                        ((CardLayout) getDescriptionCard().getLayout()).show(
-                                getDescriptionCard(), "empty");
+                        ((CardLayout) getDescriptionCard().getLayout()).show(getDescriptionCard(),
+                                "empty");
                     }
                     
-                    PlanningPoker.getViewController().displayAdmin(
-                            currentSelectionGame);
+                    PlanningPoker.getViewController().displayAdmin(currentSelectionGame);
                 }
             }
         });
@@ -208,31 +208,32 @@ public class AllGamesViewPanel extends JPanel implements AncestorListener {
     protected JPanel getDescriptionCard() {
         return descriptionCard;
     }
+    
     public GamesListPanel getGameTree() {
         return gameTree;
     }
     
-    public void setVisibilityCallback(ActionListener a){
-    	visibilityCallback = a;
+    public void setVisibilityCallback(ActionListener a) {
+        visibilityCallback = a;
     }
-
-	@Override
-	public void ancestorAdded(AncestorEvent arg0) {
-		if(visibilityCallback != null){
-			ActionListener call = visibilityCallback;
-			visibilityCallback = null;
-			call.actionPerformed(new ActionEvent(this, 0, ""));
-		}
-		
-	}
-
-	@Override
-	public void ancestorMoved(AncestorEvent arg0) {
-		
-	}
-
-	@Override
-	public void ancestorRemoved(AncestorEvent arg0) {
-		
-	}
+    
+    @Override
+    public void ancestorAdded(AncestorEvent arg0) {
+        if (visibilityCallback != null) {
+            ActionListener call = visibilityCallback;
+            visibilityCallback = null;
+            call.actionPerformed(new ActionEvent(this, 0, ""));
+        }
+        
+    }
+    
+    @Override
+    public void ancestorMoved(AncestorEvent arg0) {
+        
+    }
+    
+    @Override
+    public void ancestorRemoved(AncestorEvent arg0) {
+        
+    }
 }

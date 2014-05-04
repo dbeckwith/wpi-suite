@@ -13,6 +13,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 /**
  * This observer is called when a response is received from a request
  * to the server to check game status.
+ * 
  * @author Team 9
  * @version 1.0
  */

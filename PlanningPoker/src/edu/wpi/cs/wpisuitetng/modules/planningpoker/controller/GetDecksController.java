@@ -17,6 +17,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This controller is used to get decks from server
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -48,8 +49,8 @@ public class GetDecksController {
      */
     public void retrieveDecks() {
         // GET reads existing objects
-        final Request request = Network.getInstance().makeRequest(
-                "planningpoker/deck", HttpMethod.GET);
+        final Request request = Network.getInstance().makeRequest("planningpoker/deck",
+                HttpMethod.GET);
         request.addObserver(observer);
         request.send();
     }

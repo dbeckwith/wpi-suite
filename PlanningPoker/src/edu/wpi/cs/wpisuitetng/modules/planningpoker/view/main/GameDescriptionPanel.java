@@ -29,7 +29,7 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
     /**
      * 
      * Creates a new GameDescriptionPanel
-     *
+     * 
      */
     public GameDescriptionPanel() {
         setLayout(new CardLayout(0, 0));
@@ -51,7 +51,8 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         if (game.isEnded()) {
             ((CardLayout) getLayout()).show(this, "completed");
             completed.setGame(game);
-        } else {
+        }
+        else {
             ((CardLayout) getLayout()).show(this, "uncompleted");
             uncompleted.setGame(game);
         }

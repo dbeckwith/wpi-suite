@@ -23,9 +23,9 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 /**
- * @version 1.0 
+ * @version 1.0
  * @author Drew
- *
+ * 
  */
 public class DocumentationPanel extends JPanel {
     
@@ -39,18 +39,17 @@ public class DocumentationPanel extends JPanel {
      * @return the instance of the DocumentationPanel
      */
     public static DocumentationPanel getPanel() {
-        if (instance == null) {
-            instance = new DocumentationPanel();
+        if (DocumentationPanel.instance == null) {
+            DocumentationPanel.instance = new DocumentationPanel();
         }
-        return instance;
+        return DocumentationPanel.instance;
     }
     
     /**
      * Create the panel.
      */
     private DocumentationPanel() {
-        final URL helpPage = DocumentationPanel.class
-                .getResource("/res/UserHelp.html");
+        final URL helpPage = DocumentationPanel.class.getResource("/res/UserHelp.html");
         
         final JEditorPane editorPane = new JEditorPane();
         editorPane.setContentType("text/html");
@@ -76,12 +75,13 @@ public class DocumentationPanel extends JPanel {
                         editorPane.scrollToReference(desc.substring(1));
                     }
                     else {
-                        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop
-                                .getDesktop() : null;
+                        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop()
+                                : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
                                 desktop.browse(new URL(desc).toURI());
-                            } catch (Exception ex) {
+                            }
+                            catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                         }
@@ -89,18 +89,16 @@ public class DocumentationPanel extends JPanel {
                 }
             }
         });
-
+        
         
         final JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane
                 .setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // $codepro.audit.disable lineLength
         final GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-                Alignment.LEADING).addComponent(editorScrollPane,
-                GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-                Alignment.LEADING).addComponent(editorScrollPane,
-                GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE));
+        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                .addComponent(editorScrollPane, GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE));
+        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                .addComponent(editorScrollPane, GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE));
         setLayout(groupLayout);
         
     }

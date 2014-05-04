@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 /**
  * This controller responds when the user clicks the Create Game button by
  * storing new game to remote server's database.
+ * 
  * @author team9
  * @version 1.0
  */
@@ -54,9 +55,9 @@ public class AddGameController {
      *        game to be added.
      */
     public void addGame(GameModel newGame) {
-        final Request request = Network.getInstance().makeRequest(
-                "planningpoker/game", HttpMethod.PUT); // PUT ==
-                                                       // create
+        final Request request = Network.getInstance().makeRequest("planningpoker/game",
+                HttpMethod.PUT); // PUT ==
+                                 // create
         request.setBody(newGame.toJSON()); // put the new game in the body of
                                            // the request
         request.addObserver(observer); // add an observer to process the

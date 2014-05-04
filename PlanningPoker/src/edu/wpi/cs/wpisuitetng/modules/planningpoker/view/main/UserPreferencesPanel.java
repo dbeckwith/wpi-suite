@@ -58,10 +58,10 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
      * @return the instance of the UserPreferencesPanel
      */
     public static UserPreferencesPanel getPanel() {
-        if (instance == null) {
-            instance = new UserPreferencesPanel();
+        if (UserPreferencesPanel.instance == null) {
+            UserPreferencesPanel.instance = new UserPreferencesPanel();
         }
-        return instance;
+        return UserPreferencesPanel.instance;
     }
     
     /**
@@ -104,41 +104,31 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         notificationsPanel = new javax.swing.JPanel();
-        notificationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(
-                184, 207, 229)), "Notification Options", TitledBorder.LEADING,
-                TitledBorder.TOP, null, null));
+        notificationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)),
+                "Notification Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         notificationsPanel.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(notificationsPanel,
-                                        GroupLayout.PREFERRED_SIZE, 804,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(38, Short.MAX_VALUE)));
-        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(notificationsPanel,
-                                        GroupLayout.PREFERRED_SIZE, 172,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(84, Short.MAX_VALUE)));
+        layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 804,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap(38, Short.MAX_VALUE)));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(notificationsPanel, GroupLayout.PREFERRED_SIZE, 172,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap(84, Short.MAX_VALUE)));
         final GridBagLayout gbl_notificationsPanel = new GridBagLayout();
-        gbl_notificationsPanel.columnWidths = new int[] { 16, 162, 73, 336, 83,
-                89, 0 };
+        gbl_notificationsPanel.columnWidths = new int[] { 16, 162, 73, 336, 83, 89, 0 };
         gbl_notificationsPanel.rowHeights = new int[] { 40, 42, 10, 47, 0 };
-        gbl_notificationsPanel.columnWeights = new double[] { 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, Double.MIN_VALUE };
-        gbl_notificationsPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
+        gbl_notificationsPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 Double.MIN_VALUE };
+        gbl_notificationsPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         notificationsPanel.setLayout(gbl_notificationsPanel);
         
         emailField = new JTextField();
-        emailField
-                .setToolTipText("The email at which you will recieve notifications.");
+        emailField.setToolTipText("The email at which you will recieve notifications.");
         emailField.setColumns(10);
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -160,14 +150,14 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
             private void validate() {
                 final String email = emailField.getText();
                 errorEmailLabel.setVisible(false);
-                if (email.equals(CurrentUserController.getInstance().getUser()
-                        .getEmail())) {
+                if (email.equals(CurrentUserController.getInstance().getUser().getEmail())) {
                     saveEmailButton.setEnabled(false);
                 }
                 else {
                     saveEmailButton.setEnabled(false);
                     
-                    if (email.matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) {
+                    if (email
+                            .matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) {
                         saveEmailButton.setEnabled(true);
                     }
                     else {
@@ -215,59 +205,55 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         
         phoneNumberField = new JTextField();
         phoneNumberField.setColumns(10);
-        phoneNumberField.getDocument().addDocumentListener(
-                new DocumentListener() {
-                    
-                    @Override
-                    public void changedUpdate(DocumentEvent arg0) {
-                        validate();
-                        
-                    }
-                    
-                    @Override
-                    public void insertUpdate(DocumentEvent arg0) {
-                        validate();
-                        
-                    }
-                    
-                    @Override
-                    public void removeUpdate(DocumentEvent arg0) {
-                        validate();
-                    }
-                    
-                    private void validate() {
-                        final String phoneNumber = phoneNumberField.getText();
-                        final Carrier carrier = (Carrier) carrierBox
-                                .getSelectedItem();
-                        lblInvalidPhone.setVisible(false);
-                        if (phoneNumber.equals(CurrentUserController
-                                .getInstance().getUser().getPhoneNumber())
-                                && (carrier.equals(CurrentUserController
-                                        .getInstance().getUser().getCarrier()))) {
-                            btnSaveSms.setEnabled(false);
+        phoneNumberField.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                validate();
+                
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent arg0) {
+                validate();
+                
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent arg0) {
+                validate();
+            }
+            
+            private void validate() {
+                final String phoneNumber = phoneNumberField.getText();
+                final Carrier carrier = (Carrier) carrierBox.getSelectedItem();
+                lblInvalidPhone.setVisible(false);
+                if (phoneNumber.equals(CurrentUserController.getInstance().getUser()
+                        .getPhoneNumber())
+                        && (carrier.equals(CurrentUserController.getInstance().getUser()
+                                .getCarrier()))) {
+                    btnSaveSms.setEnabled(false);
+                }
+                else {
+                    btnSaveSms.setEnabled(false);
+                    phoneNumberIsGood = !(UserPreferencesPanel.extractPhoneNumber(phoneNumber)
+                            .isEmpty());
+                    if (phoneNumberIsGood) {
+                        if ((carrierBox.getSelectedItem().equals(Carrier.UNKNOWN))) {
+                            lblInvalidPhone.setText("Select a carrier!");
+                            lblInvalidPhone.setVisible(true);
                         }
                         else {
-                            btnSaveSms.setEnabled(false);
-                            phoneNumberIsGood = !(extractPhoneNumber(phoneNumber)
-                                    .isEmpty());
-                            if (phoneNumberIsGood) {
-                                if ((carrierBox.getSelectedItem()
-                                        .equals(Carrier.UNKNOWN))) {
-                                    lblInvalidPhone
-                                            .setText("Select a carrier!");
-                                    lblInvalidPhone.setVisible(true);
-                                }
-                                else {
-                                    btnSaveSms.setEnabled(true);
-                                }
-                            }
-                            else {
-                                lblInvalidPhone.setText("Invalid Phone #");
-                                lblInvalidPhone.setVisible(true);
-                            }
+                            btnSaveSms.setEnabled(true);
                         }
                     }
-                });
+                    else {
+                        lblInvalidPhone.setText("Invalid Phone #");
+                        lblInvalidPhone.setVisible(true);
+                    }
+                }
+            }
+        });
         
         lblPhoneNumber = new JLabel("Phone # :");
         
@@ -325,8 +311,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         notificationsPanel.add(lblCarrier, gbc_lblCarrier);
         
         carrierBox = new JComboBox<Carrier>();
-        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier
-                .values()));
+        final Vector<Carrier> v = new Vector<Carrier>(Arrays.asList(Carrier.values()));
         v.remove(Carrier.UNKNOWN);
         v.add(0, Carrier.UNKNOWN);
         carrierBox.setModel(new DefaultComboBoxModel<Carrier>(v));
@@ -428,8 +413,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     
     private void carrierBoxActionPerformed(java.awt.event.ActionEvent e) {
         final String phoneNumberText = phoneNumberField.getText();
-        if (!phoneNumberText.isEmpty()
-                && !phoneNumberText.equals(currentUser.getPhoneNumber())) {
+        if (!phoneNumberText.isEmpty() && !phoneNumberText.equals(currentUser.getPhoneNumber())) {
             if (!phoneNumberIsGood) {
                 lblInvalidPhone.setText("Invalid Phone #");
                 lblInvalidPhone.setVisible(true);
@@ -449,8 +433,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         }
         else {
             lblInvalidPhone.setVisible(false);
-            if (!((Carrier) carrierBox.getSelectedItem()).equals(currentUser
-                    .getCarrier())) {
+            if (!((Carrier) carrierBox.getSelectedItem()).equals(currentUser.getCarrier())) {
                 btnSaveSms.setEnabled(true);
             }
             else {
@@ -466,7 +449,8 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
     }
     
     private void updateSMS() {
-        final String extracted = extractPhoneNumber(phoneNumberField.getText());
+        final String extracted = UserPreferencesPanel
+                .extractPhoneNumber(phoneNumberField.getText());
         final Carrier selectedCarrier = (Carrier) carrierBox.getSelectedItem();
         if (!extracted.isEmpty()) {
             currentUser.setPhoneNumber(extracted);
@@ -487,8 +471,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         String returnString;
         
         if (phoneMatcher.matches()) {
-            returnString = phoneMatcher.group(2) + phoneMatcher.group(3)
-                    + phoneMatcher.group(4);
+            returnString = phoneMatcher.group(2) + phoneMatcher.group(3) + phoneMatcher.group(4);
         }
         else {
             returnString = "";

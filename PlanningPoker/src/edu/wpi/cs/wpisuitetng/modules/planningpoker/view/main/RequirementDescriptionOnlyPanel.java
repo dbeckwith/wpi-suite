@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * Panel to show requirement description for new games
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -95,29 +96,22 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
                         layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.TRAILING)
-                                                .addComponent(
-                                                        scrollPane,
-                                                        Alignment.LEADING,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        430, Short.MAX_VALUE)
-                                                .addComponent(
-                                                        ClickStartPanel,
-                                                        Alignment.LEADING,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        430, Short.MAX_VALUE)
+                                        layout.createParallelGroup(Alignment.TRAILING)
+                                                .addComponent(scrollPane, Alignment.LEADING,
+                                                        GroupLayout.DEFAULT_SIZE, 430,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(ClickStartPanel, Alignment.LEADING,
+                                                        GroupLayout.DEFAULT_SIZE, 430,
+                                                        Short.MAX_VALUE)
                                                 .addGroup(
                                                         Alignment.LEADING,
                                                         layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        lblRequirement)
+                                                                .addComponent(lblRequirement)
                                                                 .addGroup(
                                                                         layout.createParallelGroup(
                                                                                 Alignment.LEADING)
                                                                                 .addGroup(
-                                                                                        layout
-                                                                                        .createSequentialGroup()
+                                                                                        layout.createSequentialGroup()
                                                                                                 .addPreferredGap(
                                                                                                         ComponentPlacement.RELATED)
                                                                                                 .addComponent(
@@ -131,36 +125,27 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
                                                                                                         ComponentPlacement.RELATED)
                                                                                                 .addComponent(
                                                                                                         requirementType))))
-                                                .addComponent(lblDescription,
-                                                        Alignment.LEADING))
+                                                .addComponent(lblDescription, Alignment.LEADING))
                                 .addContainerGap()));
-        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(lblRequirement)
-                                                .addComponent(
-                                                        requirementNameLabel)
-                                                .addComponent(lblType)
-                                                .addComponent(requirementType))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(lblDescription)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(scrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 119,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addComponent(ClickStartPanel,
-                                        GroupLayout.PREFERRED_SIZE, 114,
-                                        GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                layout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(lblRequirement)
+                                        .addComponent(requirementNameLabel).addComponent(lblType)
+                                        .addComponent(requirementType))
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(lblDescription)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(ClickStartPanel, GroupLayout.PREFERRED_SIZE, 114,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap()));
         
-        final JLabel lblPressStartGame = new JLabel(
-                "Press Start Game to Begin Estimation");
-        lblPressStartGame.setToolTipText("This game has not been started yet. Press the start game button in the toolbar above to begin estimation.");
+        final JLabel lblPressStartGame = new JLabel("Press Start Game to Begin Estimation");
+        lblPressStartGame
+                .setToolTipText("This game has not been started yet. Press the start game button in the toolbar above to begin estimation.");
         lblPressStartGame.setHorizontalAlignment(SwingConstants.CENTER);
         lblPressStartGame.setVerticalAlignment(SwingConstants.CENTER);
         lblPressStartGame.setIcon(ImageLoader.getIcon("upArrow.png"));
@@ -177,7 +162,8 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
     /**
      * Sets the requirement name
      * 
-     * @param text the name of the requirement  
+     * @param text
+     *        the name of the requirement
      */
     protected void setRequirementName(String text) {
         requirementNameLabel.setText(text);
@@ -186,7 +172,8 @@ public class RequirementDescriptionOnlyPanel extends javax.swing.JPanel {
     /**
      * Sets the requirement type
      * 
-     * @param text the name of the type of the requirement 
+     * @param text
+     *        the name of the type of the requirement
      */
     protected void setRequirementType(String text) {
         requirementType.setText(text);

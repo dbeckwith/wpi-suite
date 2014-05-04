@@ -21,7 +21,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 
 
-
 /**
  * This is a module that implements the Planning Poker technique for estimation
  * on how long a project requirement will take.
@@ -30,49 +29,50 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  * @version 1.0
  */
 public class PlanningPoker implements IJanewayModule {
-	
-	static ViewController viewController = null;
-	
-	public static ViewController getViewController() {
-		return PlanningPoker.viewController;
-	}
-	
-	
-	List<JanewayTabModel> tabs;
-	
-	/**
-	 * Constructor for the Planning Poker game
-	 */
-	public PlanningPoker() {
-		
-		tabs = new ArrayList<JanewayTabModel>();
-		
-		// setup toolbar
-		final ToolbarView toolbar = new ToolbarView();
-		
-		// setup main panel
-		final MainView mainPanel = new MainView();
-				
-		PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
-		
-		toolbar.getHelpButtons().getTutorialButton().addActionListener(new NewGameTutorialController());
-		
-		// Create a tab model that contains the toolbar panel and the main
-		// content panel
-		final JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(),
-				toolbar, mainPanel);
-		
-		// Add the tab to the list of tabs owned by this module
-		tabs.add(tab1);
-	}
-	
-	@Override
-	public String getName() {
-		return "PlanningPoker";
-	}
-	
-	@Override
-	public List<JanewayTabModel> getTabs() {
-		return tabs;
-	}
+    
+    static ViewController viewController = null;
+    
+    public static ViewController getViewController() {
+        return PlanningPoker.viewController;
+    }
+    
+    
+    List<JanewayTabModel> tabs;
+    
+    /**
+     * Constructor for the Planning Poker game
+     */
+    public PlanningPoker() {
+        
+        tabs = new ArrayList<JanewayTabModel>();
+        
+        // setup toolbar
+        final ToolbarView toolbar = new ToolbarView();
+        
+        // setup main panel
+        final MainView mainPanel = new MainView();
+        
+        PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
+        
+        toolbar.getHelpButtons().getTutorialButton()
+                .addActionListener(new NewGameTutorialController());
+        
+        // Create a tab model that contains the toolbar panel and the main
+        // content panel
+        final JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbar,
+                mainPanel);
+        
+        // Add the tab to the list of tabs owned by this module
+        tabs.add(tab1);
+    }
+    
+    @Override
+    public String getName() {
+        return "PlanningPoker";
+    }
+    
+    @Override
+    public List<JanewayTabModel> getTabs() {
+        return tabs;
+    }
 }

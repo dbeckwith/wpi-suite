@@ -42,7 +42,8 @@ public abstract class AbstractRequirementController {
      * This method is called by a RequirementRequestThread when it received a
      * response from the server
      * 
-     * @param reqs The received requirements
+     * @param reqs
+     *        The received requirements
      */
     public abstract void receivedRequirements(Requirement[] reqs);
     
@@ -79,7 +80,7 @@ public abstract class AbstractRequirementController {
      * @return the array of requirements in the current project.
      */
     public static Requirement[] getRequirements() {
-        return reqs;
+        return AbstractRequirementController.reqs;
     }
     
     /**
