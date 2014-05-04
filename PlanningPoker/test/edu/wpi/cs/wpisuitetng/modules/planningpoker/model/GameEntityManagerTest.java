@@ -55,9 +55,7 @@ public class GameEntityManagerTest {
     static GameModel goodUpdatedGame = new GameModel();;
     static Session adminSession = new Session(admin, testProject, mockSsid);
     static Project otherProject = new Project("other", "2");
-    static GameModel otherGame = new GameModel("Other Game", "something", null,
-           DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
+    GameModel otherGame;
     static Session otherSession = new Session(admin, otherProject, mockSsid);
     
     /**
@@ -76,8 +74,6 @@ public class GameEntityManagerTest {
         goodUpdatedGame.copyFrom(existingGame);
         goodUpdatedGame.editCopyFrom(gameUpdates);
         
-        db.save(existingGame, testProject);
-        db.save(otherGame, otherProject);
         db.save(existingUser);
         db.save(admin);
     }
@@ -94,10 +90,11 @@ public class GameEntityManagerTest {
         catch (WPISuiteException e) {
             Assert.fail();
         }
+        otherGame = new GameModel("Other Game", "something", null,
+                DeckModel.DEFAULT_DECK, new Date(
+                         System.currentTimeMillis() - 100000), GameModel.GameStatus.PENDING);
         db.save(existingGame, testProject);
         db.save(otherGame, otherProject);
-        db.save(existingUser);
-        db.save(admin);
     }
     
     /**
