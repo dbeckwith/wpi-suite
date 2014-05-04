@@ -572,8 +572,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
             boolean oldHasDeadline = game.hasDeadline();
             boolean newHasDeadline = gameDescription.getDate() != null;
             boolean sameDateStatus;
-            if (oldHasDeadline == newHasDeadline
-                    || !oldHasDeadline == !newHasDeadline) {
+            if (oldHasDeadline == newHasDeadline) {
                 if (oldHasDeadline) {
                     sameDateStatus = game.getEndTime().compareTo(
                             gameDescription.getDate()) == 0;
@@ -594,13 +593,13 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
             
-            undoButton.setEnabled(gameDescription.canValidateForm()
-                    && newGameRequirementsPanel.canValidateForm()
-                    && !(game.getDeck().getName().equals(getDeck().getName())
-                    		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
+            setHasChanged(!(game.getDeck().getName().equals(getDeck().getName())
+                            && game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
                             && sameDateStatus && game.getRequirements()
                             .equals(newGameRequirementsPanel
                                     .getRequirementsFromTable())));
+            
+            undoButton.setEnabled(hasChanged);
             
         }
         final ArrayList<String> errors = new ArrayList<>();
