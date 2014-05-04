@@ -139,7 +139,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	/**
 	 * Adds itself to the given JFrame's glass pane
 	 * 
-	 * @param comp
+	 * @param to The given JFrame's glass pane
 	 */
 	public void install(JFrame to) {
 		to.setGlassPane(this);
@@ -152,7 +152,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 * Sets an action listener to receive and events when the quit button is
 	 * clicked
 	 * 
-	 * @param a
+	 * @param a An action listener
 	 */
 	public void setQuitListener(ActionListener a) {
 		ActionListener[] quitters = quitButton.getActionListeners();
