@@ -188,7 +188,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 		highlightArea.x = compPos.x - pos.x;
 		highlightArea.y = compPos.y - pos.y;
 
-		placePanel(highlightArea);
+		Point lineEnd = placePanel(highlightArea);
 
 		Rectangle dialogRect = dialogPanel.getBounds();
 		Point dialogCenter = new Point((int) dialogRect.getCenterX(),
@@ -201,24 +201,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 			g2.setStroke(new BasicStroke(5));
 			
 			g2.drawRect(dialogRect.x, dialogRect.y, dialogRect.width, dialogRect.height);
-
-			ArrayList<Point> edges = new ArrayList<Point>();
-			edges.add(new Point((int) highlightArea.getCenterX(),
-					(int) highlightArea.getMinY()));
-			edges.add(new Point((int) highlightArea.getCenterX(),
-					(int) highlightArea.getMaxY()));
-			edges.add(new Point((int) highlightArea.getMinX(),
-					(int) highlightArea.getCenterY()));
-			edges.add(new Point((int) highlightArea.getMaxX(),
-					(int) highlightArea.getCenterY()));
-
-			Point lineEnd = edges.get(0);
-			for (Point p : edges) {
-				if (p.distance(dialogCenter) < lineEnd.distance(dialogCenter)) {
-					lineEnd = p;
-				}
-			}
-
 
 			drawHighlightRect(g2, highlightArea.x, highlightArea.y,
 					highlightArea.width, highlightArea.height);
@@ -261,26 +243,22 @@ public class TutorialPane extends JComponent implements ActionListener,
 	 * the given rectangle
 	 * 
 	 * @param c
+	 * @return the center of the side chosen
 	 */
-	private void placePanel(final Rectangle c) {
+	private Point placePanel(final Rectangle c) {
 
-		// 9 possible areas around the target
-		ArrayList<Rectangle> rects = new ArrayList<Rectangle>();
-		rects.add(new Rectangle(c.x, 0, c.width, c.y));// north
-		rects.add(new Rectangle(c.x + c.width, c.y, getWidth() - c.x - c.width,
-				c.height));// east
-		rects.add(new Rectangle(c.x, c.y + c.height, c.width, getHeight() - c.y
-				- c.height));// south
-		rects.add(new Rectangle(0, c.y, c.x, c.y + c.height));// west
-
-		rects.add(new Rectangle(0, 0, c.x, c.y));// north west
-		rects.add(new Rectangle(c.x + c.width, 0, getWidth() - c.x - c.width,
-				c.y));// north east
-		rects.add(new Rectangle(c.x, c.y, getWidth() - c.width - c.x,
-				getHeight() - c.y - c.height));// south east
-		rects.add(new Rectangle(0, c.y, c.x, getHeight() - c.y - c.height));// south
-																			// west
-
+		ArrayList<Rectangle> rects = new ArrayList<Rectangle>();		
+		rects.add(new Rectangle(0,0,getWidth(),c.y)); //above
+		rects.add(new Rectangle(0,c.y+c.height, getWidth(), getHeight()-c.y-c.height)); //below
+		rects.add(new Rectangle(0,0,c.x, getHeight()));//to the left, to the left
+		rects.add(new Rectangle(c.x+c.width, 0, getWidth()-c.x-c.width, getHeight()));//the other left
+		
+		ArrayList<Point> lineEnds = new ArrayList<>(); //list of corresponding side midpoints
+		lineEnds.add(new Point(c.x+c.width/2, c.y));//above
+		lineEnds.add(new Point(c.x+c.width/2, c.y+c.height));//below
+		lineEnds.add(new Point(c.x, c.y+c.height/2));//to the left, to the left
+		lineEnds.add(new Point(c.x+c.width, c.y+c.height/2));//take it back now yo
+		
 		// pick the largest box
 		Rectangle dir = rects.get(0); // the direction to place the tutorial box
 										// in
@@ -308,6 +286,8 @@ public class TutorialPane extends JComponent implements ActionListener,
 		}
 
 		dialogPanel.setBounds(cur);
+		
+		return lineEnds.get(rects.indexOf(dir));
 
 	}
 
