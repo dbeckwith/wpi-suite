@@ -54,7 +54,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 	private static final long serialVersionUID = -4832992249337947413L;
 	private static TutorialPane instance = null;
 
-	private static final long REPAINT_INTERVAL = 1000/60;
+	private static final long REPAINT_INTERVAL = 1000/20;
 	
 	/**
 	 * 
@@ -67,7 +67,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 		return TutorialPane.instance;
 	}
-	GaussianBlurFilter blur = new GaussianBlurFilter(10);
+	
 	private BufferedImage windowImage;
 	private JFrame window;
 	private Rectangle highlightArea = null;
@@ -89,23 +89,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 
 		
-		dialogPanel = new JPanel(){
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D g2 = (Graphics2D)g;
-				if(windowImage != null){
-					g2.drawImage(
-							windowImage.getSubimage(
-									dialogPanel.getX(),
-									dialogPanel.getY(),
-									dialogPanel.getWidth(),
-									dialogPanel.getHeight()),
-							blur, 0, 0);
-
-				}
-			}
-		};
+		dialogPanel = new JPanel();
 		dialogPanel.setBackground(Color.WHITE);
 		dialogPanel.setBounds(42, 32, 368, 197);
 		add(dialogPanel);
@@ -215,16 +199,6 @@ public class TutorialPane extends JComponent implements ActionListener,
 		highlightArea.y = compPos.y - pos.y;
 
 		placePanel(highlightArea);
-
-		if(windowImage == null || windowImage.getWidth() != getWidth() || windowImage.getHeight() != getHeight()){
-			windowImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-		}
-		
-		window.getContentPane().paintComponents(windowImage.getGraphics());
-
-		
-		
-		
 
 		Rectangle dialogRect = dialogPanel.getBounds();
 		Point dialogCenter = new Point((int) dialogRect.getCenterX(),
@@ -427,6 +401,7 @@ public class TutorialPane extends JComponent implements ActionListener,
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
+		
 
 	}
 }
