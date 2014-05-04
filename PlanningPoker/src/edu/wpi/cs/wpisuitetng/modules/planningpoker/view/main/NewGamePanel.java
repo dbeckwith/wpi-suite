@@ -43,7 +43,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 
-
 /**
  * This is a class to show the panel when the user clicks create game button.
  * 
@@ -71,10 +70,10 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         final GroupLayout gl_panel_1 = new GroupLayout(panel_1);
         gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(
                 Alignment.LEADING).addComponent(gameDescription,
-                        GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE));
+                GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE));
         gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(
                 Alignment.LEADING).addComponent(gameDescription,
-                        GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE));
+                GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE));
         panel_1.setLayout(gl_panel_1);
         newGameRequirementsPanel.setEditGamePanel(this);
         newDeckPanel.setEditGamePanel(this);
@@ -175,10 +174,10 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         hasChanged = false;
         saveButton = new javax.swing.JButton();
         
-        saveButton.addActionListener(new ActionListener() {			
+        saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(saveGameCallback != null){
+                if (saveGameCallback != null) {
                     ActionListener call = saveGameCallback;
                     saveGameCallback = null;
                     call.actionPerformed(new ActionEvent(this, 0, ""));
@@ -217,7 +216,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         errorLabel.setForeground(Color.RED);
         
         undoButton = new JButton("Undo Changes");
-        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state."); // $codepro.audit.disable lineLength
+        undoButton
+                .setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state."); // $codepro.audit.disable lineLength
         undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
         undoButton.addActionListener(new ActionListener() {
             @Override
@@ -228,80 +228,79 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         
         scrollPane_1 = new JScrollPane();
         scrollPane_1
-        .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                layout.createParallelGroup(
-                                        Alignment.LEADING)
-                                        .addGroup(
-                                                layout.createSequentialGroup()
-                                                .addComponent(
-                                                        scrollPane_1,
-                                                        350,
-                                                        350,
-                                                        Short.MAX_VALUE)
-                                                        .addGap(12)
-                                                        .addComponent(
-                                                                newGameRequirementsCard,
-                                                                650,
-                                                                650,
-                                                                GroupLayout.PREFERRED_SIZE))
-                                                                .addGroup(
-                                                                        layout.createSequentialGroup()
-                                                                        .addComponent(
-                                                                                saveButton)
-                                                                                .addPreferredGap(
-                                                                                        ComponentPlacement.RELATED)
-                                                                                        .addComponent(
-                                                                                                undoButton,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                136,
-                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                        ComponentPlacement.RELATED)
-                                                                                                        .addComponent(
-                                                                                                                cancelButton)
-                                                                                                                .addPreferredGap(
-                                                                                                                        ComponentPlacement.RELATED)
-                                                                                                                        .addComponent(
-                                                                                                                                errorLabel)
-                                                                                                                                .addContainerGap()))));
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        scrollPane_1,
+                                                                        350,
+                                                                        350,
+                                                                        Short.MAX_VALUE)
+                                                                .addGap(12)
+                                                                .addComponent(
+                                                                        newGameRequirementsCard,
+                                                                        650,
+                                                                        650,
+                                                                        GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        saveButton)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        undoButton,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        136,
+                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        cancelButton)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        errorLabel)
+                                                                .addContainerGap()))));
         layout.setVerticalGroup(layout
                 .createParallelGroup(Alignment.TRAILING)
                 .addGroup(
                         layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                layout.createParallelGroup(
-                                        Alignment.TRAILING)
-                                        .addComponent(
-                                                newGameRequirementsCard,
-                                                GroupLayout.DEFAULT_SIZE,
-                                                492, Short.MAX_VALUE)
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.TRAILING)
+                                                .addComponent(
+                                                        newGameRequirementsCard,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        492, Short.MAX_VALUE)
                                                 .addComponent(
                                                         scrollPane_1,
                                                         GroupLayout.DEFAULT_SIZE,
                                                         492, Short.MAX_VALUE))
-                                                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                        .addGroup(
-                                                                layout.createParallelGroup(
-                                                                        Alignment.BASELINE)
-                                                                        .addComponent(saveButton)
-                                                                        .addComponent(cancelButton)
-                                                                        .addComponent(undoButton)
-                                                                        .addComponent(errorLabel))
-                                                                        .addContainerGap()));
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(saveButton)
+                                                .addComponent(cancelButton)
+                                                .addComponent(undoButton)
+                                                .addComponent(errorLabel))
+                                .addContainerGap()));
         
         panel_1 = new JPanel();
         scrollPane_1.setViewportView(panel_1);
-        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main
-                .NewGameDescriptionPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel();
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -354,7 +353,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         newReqType = new JComboBox<String>();
         newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
                 "Epic", "Theme", "User story", "Non-functional dependency",
-        "Scenario" }));
+                "Scenario" }));
         
         cancelNewReqButton = new JButton("Return to List");
         cancelNewReqButton.setMaximumSize(new Dimension(150, 31));
@@ -372,103 +371,97 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         final GroupLayout gl_newRequirementPanel = new GroupLayout(
                 newRequirementPanel);
         gl_newRequirementPanel
-        .setHorizontalGroup(gl_newRequirementPanel
-                .createParallelGroup(Alignment.TRAILING)
-                .addGroup(
-                        gl_newRequirementPanel
-                        .createSequentialGroup()
-                        .addContainerGap()
+                .setHorizontalGroup(gl_newRequirementPanel
+                        .createParallelGroup(Alignment.TRAILING)
                         .addGroup(
                                 gl_newRequirementPanel
-                                .createParallelGroup(
-                                        Alignment.LEADING)
-                                        .addComponent(
-                                                scrollPane)
-                                                .addComponent(
-                                                        newReqName,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        683,
-                                                        Short.MAX_VALUE)
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                gl_newRequirementPanel
+                                                        .createParallelGroup(
+                                                                Alignment.LEADING)
+                                                        .addComponent(
+                                                                scrollPane)
+                                                        .addComponent(
+                                                                newReqName,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                683,
+                                                                Short.MAX_VALUE)
                                                         .addComponent(nameLabel)
                                                         .addComponent(descLabel)
                                                         .addGroup(
                                                                 gl_newRequirementPanel
-                                                                .createSequentialGroup()
-                                                                .addComponent(
-                                                                        typeLabel)
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                typeLabel)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
-                                                                                .addComponent(
-                                                                                        newReqType,
-                                                                                        GroupLayout
-                                                                                        .PREFERRED_SIZE,
-                                                                                        GroupLayout
-                                                                                        .DEFAULT_SIZE,
-                                                                                        GroupLayout
-                                                                                        .PREFERRED_SIZE))
-                                                                                        .addGroup(
-                                                                                                gl_newRequirementPanel
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(
-                                                                                                        cancelNewReqButton)
-                                                                                                        .addPreferredGap(
-                                                                                                                ComponentPlacement
-                                                                                                                .RELATED)
-                                                                                                                .addComponent(
-                                                                                                                        saveNewReqButton)
-                                                                                                                        .addPreferredGap(
-                                                                                                                                ComponentPlacement
-                                                                                                                                .RELATED)
-                                                                                                                                .addComponent(
-                                                                                                                                        newReqErrorsLabel)))
-                                                                                                                                        .addContainerGap()));
+                                                                                ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                newReqType,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(
+                                                                gl_newRequirementPanel
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                cancelNewReqButton)
+                                                                        .addPreferredGap(
+                                                                                ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                saveNewReqButton)
+                                                                        .addPreferredGap(
+                                                                                ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                newReqErrorsLabel)))
+                                        .addContainerGap()));
         gl_newRequirementPanel
-        .setVerticalGroup(gl_newRequirementPanel
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        gl_newRequirementPanel
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(nameLabel)
-                        .addGap(5)
-                        .addComponent(newReqName,
-                                GroupLayout.PREFERRED_SIZE,
-                                GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(
-                                        ComponentPlacement.UNRELATED)
+                .setVerticalGroup(gl_newRequirementPanel
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                gl_newRequirementPanel
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(nameLabel)
+                                        .addGap(5)
+                                        .addComponent(newReqName,
+                                                GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(
+                                                ComponentPlacement.UNRELATED)
                                         .addComponent(descLabel)
                                         .addPreferredGap(
                                                 ComponentPlacement.RELATED)
-                                                .addComponent(scrollPane,
-                                                        GroupLayout.DEFAULT_SIZE, 264,
-                                                        Short.MAX_VALUE)
-                                                        .addPreferredGap(
-                                                                ComponentPlacement.UNRELATED)
-                                                                .addGroup(
-                                                                        gl_newRequirementPanel
-                                                                        .createParallelGroup(
-                                                                                Alignment.BASELINE)
-                                                                                .addComponent(typeLabel)
-                                                                                .addComponent(
-                                                                                        newReqType,
-                                                                                        GroupLayout.PREFERRED_SIZE,
-                                                                                        GroupLayout.DEFAULT_SIZE,
-                                                                                        GroupLayout.PREFERRED_SIZE))
-                                                                                        .addPreferredGap(
-                                                                                                ComponentPlacement.UNRELATED)
-                                                                                                .addGroup(
-                                                                                                        gl_newRequirementPanel
-                                                                                                        .createParallelGroup(
-                                                                                                                Alignment.BASELINE)
-                                                                                                                .addComponent(
-                                                                                                                        cancelNewReqButton)
-                                                                                                                        .addComponent(
-                                                                                                                                saveNewReqButton)
-                                                                                                                                .addComponent(
-                                                                                                                                        newReqErrorsLabel))
-                                                                                                                                        .addGap(5)));
+                                        .addComponent(scrollPane,
+                                                GroupLayout.DEFAULT_SIZE, 264,
+                                                Short.MAX_VALUE)
+                                        .addPreferredGap(
+                                                ComponentPlacement.UNRELATED)
+                                        .addGroup(
+                                                gl_newRequirementPanel
+                                                        .createParallelGroup(
+                                                                Alignment.BASELINE)
+                                                        .addComponent(typeLabel)
+                                                        .addComponent(
+                                                                newReqType,
+                                                                GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(
+                                                ComponentPlacement.UNRELATED)
+                                        .addGroup(
+                                                gl_newRequirementPanel
+                                                        .createParallelGroup(
+                                                                Alignment.BASELINE)
+                                                        .addComponent(
+                                                                cancelNewReqButton)
+                                                        .addComponent(
+                                                                saveNewReqButton)
+                                                        .addComponent(
+                                                                newReqErrorsLabel))
+                                        .addGap(5)));
         newRequirementPanel.setLayout(gl_newRequirementPanel);
         
         setLayout(layout);
@@ -482,7 +475,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
             alreadyReturned = true;
             
         }
-        if (!alreadyReturned){
+        if (!alreadyReturned) {
             if (game == null) {
                 PlanningPoker.getViewController().saveNewGame(this);
             }
@@ -586,18 +579,20 @@ public class NewGamePanel extends JPanel implements AncestorListener {
             saveButton.setEnabled(gameDescription.isFormValid()
                     && newGameRequirementsPanel.isFormValid()
                     && !(game.getDeck().getName().equals(getDeck().getName())
-                            && game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
-                            && sameDateStatus && game.getRequirements()
-                            .equals(newGameRequirementsPanel
-                                    .getRequirementsFromTable())));
+                            && game.getDeck().getMaxEstimate() == getDeck()
+                                    .getMaxEstimate() && sameDateStatus && game
+                            .getRequirements().equals(
+                                    newGameRequirementsPanel
+                                            .getRequirementsFromTable())));
             
             setHasChanged(gameDescription.isFormValid()
                     && newGameRequirementsPanel.isFormValid()
                     && !(game.getDeck().getName().equals(getDeck().getName())
-                            && game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
-                            && sameDateStatus && game.getRequirements()
-                            .equals(newGameRequirementsPanel
-                                    .getRequirementsFromTable())));
+                            && game.getDeck().getMaxEstimate() == getDeck()
+                                    .getMaxEstimate() && sameDateStatus && game
+                            .getRequirements().equals(
+                                    newGameRequirementsPanel
+                                            .getRequirementsFromTable())));
             
             undoButton.setEnabled(hasChanged);
             
@@ -669,34 +664,35 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
+    public void setNewDeck() { // $codepro.audit.disable accessorMethodNamingConvention
         gameDescription.setNewDeck();
     }
     
-    public NewGameDescriptionPanel getDescriptionPanel(){
+    public NewGameDescriptionPanel getDescriptionPanel() {
         return gameDescription;
-    } 
+    }
     
-    public NewGameRequirementsPanel getRequirementsPanel(){
+    public NewGameRequirementsPanel getRequirementsPanel() {
         return newGameRequirementsPanel;
     }
     
-    public NewDeckPanel getNewDeckPanel(){
+    public NewDeckPanel getNewDeckPanel() {
         return newDeckPanel;
     }
     
-    public JPanel getCardLayoutPanel(){
+    public JPanel getCardLayoutPanel() {
         return newGameRequirementsCard;
     }
     
-    public void setNewGameCallback(ActionListener e){
+    public void setNewGameCallback(ActionListener e) {
         newGameCallback = e;
     }
     
     @Override
     public void ancestorAdded(AncestorEvent event) {
-        if(newGameCallback != null){
-            newGameCallback.actionPerformed(new ActionEvent(this, 0, "newgame"));
+        if (newGameCallback != null) {
+            newGameCallback
+                    .actionPerformed(new ActionEvent(this, 0, "newgame"));
             newGameCallback = null;
         }
     }
@@ -717,7 +713,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         return saveButton;
     }
     
-    public void setSaveGameCallback(ActionListener a){
+    public void setSaveGameCallback(ActionListener a) {
         saveGameCallback = a;
     }
     
@@ -752,6 +748,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private boolean hasChanged;
     private JScrollPane scrollPane_1;
     private JPanel panel_1;
+    
     public NewGameDescriptionPanel getGameDescriptionPanel() {
         return gameDescription;
     }
