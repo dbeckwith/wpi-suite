@@ -34,16 +34,16 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 public class NewGameTutorialController implements ActionListener {
 
 	private enum Step {
-		 CreateGame("Click this button to start creating a new Planning Poker Game."),
-		 EditName("Games are given name by default, but we should change it to something more descriptive.\nEnter a new name and click Next to continue."),
-		 EditDescription("Now, enter in a description of what the game is for.\nClick Next to continue.\n\nIf you do not add a description, this tutorial will add one for you."),
-		 AddRequirements("We need to add at least one requirement to our game. Create a new requirement or select an existing one.\nClick Next to continue.\n\nIf you do not select any requirements, this tutorial will add one for you."), 
-		 CreateDeck("We can select a deck, or just a number input with an option maximum. For this tutorial, we will create a new deck."),
-		 AddCards("Let's add a few cards to our deck and give them some different values.\nWhen you feel the deck is ready, click Next to continue.\n\nIf you don't add any cards, this tutorial will add some for you."),
-		 SaveDeck("Now let's save the deck to use it in the game."),
-		 SaveGame("There is some more information we can enter in, but for now, we can save this game."),
-		 StartGame("All games must be manually started by clicking this button."),
-		 Finished("Congratulations, we have created a new Planning Poker Game!");
+	     CreateGame("Click this button to start creating a new Planning Poker Game."),
+         EditName("Games are given name by default, but we should change it to something more descriptive.\nEnter a new name and click Next to continue."),
+         EditDescription("Now, enter in a description of what the game is for.\nClick Next to continue.\n\nIf you do not add a description, this tutorial will add one for you."),
+         AddRequirements("We need to add at least one requirement to our game. Create a new requirement or select an existing one.\nClick Next to continue.\n\nIf you do not select any requirements, this tutorial will add one for you."), 
+         CreateDeck("We can select a deck, or just a number input with an option maximum. For this tutorial, we will create a new deck."),
+         AddCards("Let's add a few cards to our deck and give them some different values.\nWhen you feel the deck is ready, click Next to continue."),
+         SaveDeck("Now let's save the deck to use it in the game."),
+         SaveGame("There is some more information we can enter in, but for now, we can save this game.\n\nNote: This step will save the game so that it can be voted on later. Once games are saved, they cannot be deleted. If you do not want to save this game, quit the tutorial now."),
+         StartGame("All games must be manually started by clicking this button.\n\nNote: This step will start the game so that all users can start voting on it. Once a game has been started, it can no longer be edited. If you do not want to start the game now, quit the tutorial now."),
+         Finished("Congratulations, we have created a new Planning Poker Game!");
 		 
 		 private String message;
 		 
