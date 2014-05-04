@@ -43,7 +43,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 
-
 /**
  * This is a class to show the panel when the user clicks create game button.
  * 
@@ -175,16 +174,16 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         hasChanged = false;
         saveButton = new javax.swing.JButton();
         
-        saveButton.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(saveGameCallback != null){
-					ActionListener call = saveGameCallback;
-					saveGameCallback = null;
-					call.actionPerformed(new ActionEvent(this, 0, ""));
-				}
-			}
-		});
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (saveGameCallback != null) {
+                    ActionListener call = saveGameCallback;
+                    saveGameCallback = null;
+                    call.actionPerformed(new ActionEvent(this, 0, ""));
+                }
+            }
+        });
         
         saveButton.setToolTipText("Save the new game and close this tab.");
         cancelButton = new javax.swing.JButton();
@@ -217,7 +216,8 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         errorLabel.setForeground(Color.RED);
         
         undoButton = new JButton("Undo Changes");
-        undoButton.setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state."); // $codepro.audit.disable lineLength
+        undoButton
+                .setToolTipText("Undo all changes made to this game so far and revert it back to its last saved state."); // $codepro.audit.disable lineLength
         undoButton.setIcon(ImageLoader.getIcon("undo-icon.png"));
         undoButton.addActionListener(new ActionListener() {
             @Override
@@ -300,8 +300,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
         
         panel_1 = new JPanel();
         scrollPane_1.setViewportView(panel_1);
-        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main
-        		.NewGameDescriptionPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel();
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -397,29 +396,23 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                                                                         .addComponent(
                                                                                 typeLabel)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
+                                                                                ComponentPlacement.RELATED)
                                                                         .addComponent(
                                                                                 newReqType,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE))
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(
                                                                 gl_newRequirementPanel
                                                                         .createSequentialGroup()
                                                                         .addComponent(
                                                                                 cancelNewReqButton)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
+                                                                                ComponentPlacement.RELATED)
                                                                         .addComponent(
                                                                                 saveNewReqButton)
                                                                         .addPreferredGap(
-                                                                                ComponentPlacement
-                                                                                .RELATED)
+                                                                                ComponentPlacement.RELATED)
                                                                         .addComponent(
                                                                                 newReqErrorsLabel)))
                                         .addContainerGap()));
@@ -482,7 +475,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
             alreadyReturned = true;
             
         }
-        if (!alreadyReturned){
+        if (!alreadyReturned) {
             if (game == null) {
                 PlanningPoker.getViewController().saveNewGame(this);
             }
@@ -490,7 +483,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
                 PlanningPoker.getViewController().updateGame(game, this);
             }
         }
-          
+        
         
     }
     
@@ -586,16 +579,20 @@ public class NewGamePanel extends JPanel implements AncestorListener {
             saveButton.setEnabled(gameDescription.isFormValid()
                     && newGameRequirementsPanel.isFormValid()
                     && !(game.getDeck().getName().equals(getDeck().getName())
-                    		&& game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
-                            && sameDateStatus && game.getRequirements()
-                            .equals(newGameRequirementsPanel
-                                    .getRequirementsFromTable())));
+                            && game.getDeck().getMaxEstimate() == getDeck()
+                                    .getMaxEstimate() && sameDateStatus && game
+                            .getRequirements().equals(
+                                    newGameRequirementsPanel
+                                            .getRequirementsFromTable())));
             
-            setHasChanged(!(game.getDeck().getName().equals(getDeck().getName())
-                            && game.getDeck().getMaxEstimate() == getDeck().getMaxEstimate()
-                            && sameDateStatus && game.getRequirements()
-                            .equals(newGameRequirementsPanel
-                                    .getRequirementsFromTable())));
+            setHasChanged(gameDescription.isFormValid()
+                    && newGameRequirementsPanel.isFormValid()
+                    && !(game.getDeck().getName().equals(getDeck().getName())
+                            && game.getDeck().getMaxEstimate() == getDeck()
+                                    .getMaxEstimate() && sameDateStatus && game
+                            .getRequirements().equals(
+                                    newGameRequirementsPanel
+                                            .getRequirementsFromTable())));
             
             undoButton.setEnabled(hasChanged);
             
@@ -667,58 +664,59 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
+    public void setNewDeck() { // $codepro.audit.disable accessorMethodNamingConvention
         gameDescription.setNewDeck();
     }
     
-    public NewGameDescriptionPanel getDescriptionPanel(){
-    	return gameDescription;
-    } 
-    
-    public NewGameRequirementsPanel getRequirementsPanel(){
-    	return newGameRequirementsPanel;
+    public NewGameDescriptionPanel getDescriptionPanel() {
+        return gameDescription;
     }
     
-    public NewDeckPanel getNewDeckPanel(){
-    	return newDeckPanel;
+    public NewGameRequirementsPanel getRequirementsPanel() {
+        return newGameRequirementsPanel;
     }
     
-    public JPanel getCardLayoutPanel(){
-    	return newGameRequirementsCard;
+    public NewDeckPanel getNewDeckPanel() {
+        return newDeckPanel;
     }
     
-    public void setNewGameCallback(ActionListener e){
-    	newGameCallback = e;
+    public JPanel getCardLayoutPanel() {
+        return newGameRequirementsCard;
     }
     
-	@Override
-	public void ancestorAdded(AncestorEvent event) {
-		if(newGameCallback != null){
-			newGameCallback.actionPerformed(new ActionEvent(this, 0, "newgame"));
-			newGameCallback = null;
-		}
-	}
-
-	@Override
-	public void ancestorMoved(AncestorEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ancestorRemoved(AncestorEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public JButton getSaveButton() {
-		return saveButton;
-	}
-	
-	public void setSaveGameCallback(ActionListener a){
-		saveGameCallback = a;
-	}
-
+    public void setNewGameCallback(ActionListener e) {
+        newGameCallback = e;
+    }
+    
+    @Override
+    public void ancestorAdded(AncestorEvent event) {
+        if (newGameCallback != null) {
+            newGameCallback
+                    .actionPerformed(new ActionEvent(this, 0, "newgame"));
+            newGameCallback = null;
+        }
+    }
+    
+    @Override
+    public void ancestorMoved(AncestorEvent event) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public void ancestorRemoved(AncestorEvent event) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public JButton getSaveButton() {
+        return saveButton;
+    }
+    
+    public void setSaveGameCallback(ActionListener a) {
+        saveGameCallback = a;
+    }
+    
     private GameModel game = null;
     private ActionListener newGameCallback;
     
@@ -730,7 +728,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private NewGameRequirementsPanel newGameRequirementsPanel;
     private NewDeckPanel newDeckPanel;
     private NewGameDescriptionPanel gameDescription;
-
+    
     private javax.swing.JButton saveButton;
     private JPanel newRequirementPanel;
     private JLabel nameLabel;
@@ -750,6 +748,7 @@ public class NewGamePanel extends JPanel implements AncestorListener {
     private boolean hasChanged;
     private JScrollPane scrollPane_1;
     private JPanel panel_1;
+    
     public NewGameDescriptionPanel getGameDescriptionPanel() {
         return gameDescription;
     }
