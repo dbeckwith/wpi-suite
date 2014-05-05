@@ -24,38 +24,40 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
  * 
  */
 public class DeckComboBoxRenderer extends BasicComboBoxRenderer {
-	private static final long serialVersionUID = -6654798255103649031L;
-	
-	private static final DecimalFormat cardFormat = new DecimalFormat("0.0");
-
-	@SuppressWarnings("rawtypes")
+    private static final long serialVersionUID = -6654798255103649031L;
+    
+    private static final DecimalFormat cardFormat = new DecimalFormat("0.0");
+    
+    @SuppressWarnings("rawtypes")
     @Override
-	public Component getListCellRendererComponent(JList list, Object value,
-			int index, boolean isSelected, boolean cellHasFocus) {
-		if (isSelected) {
-			setBackground(list.getSelectionBackground());
-			setForeground(list.getSelectionForeground());
-
-			if (-1 < index && (index == 0 || index > 2)) {
-				String toolTip = "";
-				for (Double card : ((DeckModel) value).getCards()) {
-					toolTip += cardFormat.format(card)
-							+ ", ";
-				}
-				toolTip = toolTip.replaceAll(", $", "");
-				list.setToolTipText(toolTip);
-			} else if (index == 1) {
-				list.setToolTipText("User-entered values, no limit");
-			} else if (index == 2) {
-				list.setToolTipText("Create a deck with cards from 1 to specified value");
-			}
-		} else {
-			setBackground(list.getBackground());
-			setForeground(list.getForeground());
-		}
-
-		setFont(list.getFont());
-		setText((value == null) ? "" : value.toString());
-		return this;
-	}
+    public Component getListCellRendererComponent(JList list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus) {
+        if (isSelected) {
+            setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());
+            
+            if (-1 < index && (index == 0 || index > 2)) {
+                String toolTip = "";
+                for (Double card : ((DeckModel) value).getCards()) {
+                    toolTip += DeckComboBoxRenderer.cardFormat.format(card) + ", ";
+                }
+                toolTip = toolTip.replaceAll(", $", "");
+                list.setToolTipText(toolTip);
+            }
+            else if (index == 1) {
+                list.setToolTipText("User-entered values, no limit");
+            }
+            else if (index == 2) {
+                list.setToolTipText("Create a deck with cards from 1 to specified value");
+            }
+        }
+        else {
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
+        }
+        
+        setFont(list.getFont());
+        setText((value == null) ? "" : value.toString());
+        return this;
+    }
 }

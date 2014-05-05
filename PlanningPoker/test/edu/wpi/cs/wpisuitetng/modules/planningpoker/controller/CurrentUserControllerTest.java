@@ -48,7 +48,7 @@ public class CurrentUserControllerTest {
      * Set users to null to avoid problems with stuff from previous tests
      */
     @Before
-    public void resetController() { 
+    public void resetController() {
         CurrentUserController.getInstance().setUsers(null);
     }
     
@@ -71,8 +71,7 @@ public class CurrentUserControllerTest {
                 new NetworkConfiguration("http://wpisuitetng"));
         final CurrentUserController cuc = CurrentUserController.getInstance();
         cuc.requestUsers();
-        final MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
         }
@@ -104,7 +103,8 @@ public class CurrentUserControllerTest {
     }
     
     /**
-     * Tests if receivedUsers method works correctly for a non-null list of users
+     * Tests if receivedUsers method works correctly for a non-null list of
+     * users
      */
     @Test
     public void testReceivedNonNullUsers() {

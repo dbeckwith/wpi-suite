@@ -15,6 +15,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 /**
  * This observer is called when a response is received from a request
  * to the server to get games.
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -37,13 +38,12 @@ public class GetGamesRequestObserver implements RequestObserver {
      * when a response is received with a success (2xx) status code.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess
-     * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     *      (edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {
         // Convert the JSON array of games to a Games object array
-        final GameModel[] games = GameModel.fromJSONArray(iReq.getResponse()
-                .getBody());
+        final GameModel[] games = GameModel.fromJSONArray(iReq.getResponse().getBody());
         
         // Pass these Games to the controller
         controller.receivedGames(games);
@@ -55,7 +55,7 @@ public class GetGamesRequestObserver implements RequestObserver {
      * server error (5xx) status code.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError
-     * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     *      (edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseError(IRequest iReq) {
@@ -67,7 +67,8 @@ public class GetGamesRequestObserver implements RequestObserver {
      * fails.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail
-     * (edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+     *      (edu.wpi.cs.wpisuitetng.network.models.IRequest,
+     *      java.lang.Exception)
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {

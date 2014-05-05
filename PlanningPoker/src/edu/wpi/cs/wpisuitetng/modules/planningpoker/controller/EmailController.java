@@ -25,7 +25,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 public class EmailController {
     
     
-    
     /**
      * Subject line for a new game email.
      */
@@ -63,17 +62,17 @@ public class EmailController {
      * @return the instance of the EmailController.
      */
     public static EmailController getInstance() {
-        if (Instance == null) {
-            Instance = new EmailController();
+        if (EmailController.Instance == null) {
+            EmailController.Instance = new EmailController();
         }
-        return Instance;
+        return EmailController.Instance;
     }
     
     /**
      * Sets the owner of the game for which notifications are being sent.
      */
     public static void setOwner(User owner) {
-    	gameOwner = owner;
+        EmailController.gameOwner = owner;
     }
     
     /**
@@ -99,8 +98,8 @@ public class EmailController {
      *        the game has ended
      */
     public void sendGameEndNotifications(GameModel game) {
-        final String endGameMessageBody = endGameMessageBody(game);
-        sendEmails(END_GAME_SUBJECT, endGameMessageBody, endGameMessageBody);
+        final String endGameMessageBody = EmailController.endGameMessageBody(game);
+        sendEmails(EmailController.END_GAME_SUBJECT, endGameMessageBody, endGameMessageBody);
     }
     
     /**
@@ -111,7 +110,8 @@ public class EmailController {
      *        the game has started
      */
     public void sendGameStartNotifications(GameModel game) {
-        sendEmails(NEW_GAME_SUBJECT, startGameMessageBody(game), startGameMessageBodySMS(game));
+        sendEmails(EmailController.NEW_GAME_SUBJECT, EmailController.startGameMessageBody(game),
+                EmailController.startGameMessageBodySMS(game));
     }
     
     /**
@@ -142,7 +142,7 @@ public class EmailController {
             body += "An unknown user has created a new Planning Poker game called ";
         }
         else {
-            body += gameOwner.getName()
+            body += EmailController.gameOwner.getName()
                     + " has created a new Planning Poker game called ";
         }
         body += game.getName() + ".\n\n";
@@ -153,9 +153,8 @@ public class EmailController {
         }
         body += "\n";
         
-        body += game.getEndTime() == null ? ""
-                : "The deadline for submitting estimations is "
-                        + game.getEndTime();
+        body += game.getEndTime() == null ? "" : "The deadline for submitting estimations is "
+                + game.getEndTime();
         return body;
     }
     
@@ -166,16 +165,14 @@ public class EmailController {
             body += "An unknown user has created a new Planning Poker game called ";
         }
         else {
-            body += gameOwner.getName()
+            body += EmailController.gameOwner.getName()
                     + " has created a new Planning Poker game called ";
         }
         body += game.getName() + ".\n\n";
         
-        body += game.getEndTime() == null ? ""
-                : "Deadline: "
-                        + game.getEndTime();
+        body += game.getEndTime() == null ? "" : "Deadline: " + game.getEndTime();
         return body;
-    }  
+    }
     
     
     /**

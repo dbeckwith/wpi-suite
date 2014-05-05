@@ -29,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * 
  */
 public class AdminButtonGroup extends ToolbarGroupView {
-
+    
     private static final long serialVersionUID = 312905811728893535L;
     private final JButton endGameButton;
     private final JButton closeGameButton;
@@ -43,17 +43,19 @@ public class AdminButtonGroup extends ToolbarGroupView {
     /**
      * 
      * Creates a new AdminButtonGroup
-     *
+     * 
      */
     public AdminButtonGroup() {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
-        endGameButton.setToolTipText("End the currently selected game so that users can no longer vote on it. A final estimation can still be made after estimation is ended."); // $codepro.audit.disable lineLength
+        endGameButton
+                .setToolTipText("End the currently selected game so that users can no longer vote on it. A final estimation can still be made after estimation is ended."); // $codepro.audit.disable lineLength
         endGameButton.setIcon(ImageLoader.getIcon("EndEstimation.png"));
         
         closeGameButton = new JButton("<html>Close<br/>Game</html>");
-        closeGameButton.setToolTipText("Completely close the currently selected game, archiving it."); // $codepro.audit.disable lineLength
+        closeGameButton
+                .setToolTipText("Completely close the currently selected game, archiving it."); // $codepro.audit.disable lineLength
         closeGameButton.setIcon(ImageLoader.getIcon("CloseGame.png"));
         
         editGameButton = new JButton("<html>Edit<br/>Game</html>");
@@ -61,20 +63,21 @@ public class AdminButtonGroup extends ToolbarGroupView {
         editGameButton.setIcon(ImageLoader.getIcon("edit.png"));
         
         startGameButton = new JButton("<html>Start<br/>Game</html>");
-        startGameButton.setToolTipText("Start estimation on the currently selected game, enabling users to vote on its requirements."); // $codepro.audit.disable lineLength
+        startGameButton
+                .setToolTipText("Start estimation on the currently selected game, enabling users to vote on its requirements."); // $codepro.audit.disable lineLength
         startGameButton.setIcon(ImageLoader.getIcon("StartEstimation.png"));
         
         startGameButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(startGameCallback != null){
-					ActionListener call = startGameCallback;
-					startGameCallback = null;
-					call.actionPerformed(e);
-				}
-			}
-		});
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (startGameCallback != null) {
+                    ActionListener call = startGameCallback;
+                    startGameCallback = null;
+                    call.actionPerformed(e);
+                }
+            }
+        });
         
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
@@ -105,7 +108,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
                 
             }
         });
-
+        
         startGameButton.addActionListener(new ActionListener() {
             
             @Override
@@ -138,9 +141,10 @@ public class AdminButtonGroup extends ToolbarGroupView {
     
     /**
      * Shows the Start Game and Edit Game buttons when passed true
-     *  else shows the End Game and Close Game buttons when passed false
+     * else shows the End Game and Close Game buttons when passed false
+     * 
      * @param b
-     *      The boolean to flip the buttons
+     *        The boolean to flip the buttons
      */
     public void showNewGameButtons(boolean b) {
         endGameButton.setVisible(!b);
@@ -148,6 +152,7 @@ public class AdminButtonGroup extends ToolbarGroupView {
         startGameButton.setVisible(b);
         editGameButton.setVisible(b);
     }
+    
     public JButton getCloseGameButton() {
         return closeGameButton;
     }
@@ -167,18 +172,20 @@ public class AdminButtonGroup extends ToolbarGroupView {
     public void mouseExited() {
         //don't highlight
     }
-
+    
     public JButton getEditGameButton() {
         return editGameButton;
     }
+    
     public JButton getEndGameButton() {
         return endGameButton;
     }
+    
     public JButton getStartGameButton() {
         return startGameButton;
     }
     
-    public void setStartGameCallback(ActionListener a){
-    	startGameCallback = a;
+    public void setStartGameCallback(ActionListener a) {
+        startGameCallback = a;
     }
 }

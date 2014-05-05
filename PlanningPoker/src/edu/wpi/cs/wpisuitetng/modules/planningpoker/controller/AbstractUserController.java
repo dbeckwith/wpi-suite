@@ -111,10 +111,10 @@ public abstract class AbstractUserController {
      *        a variable to hold timeout value
      */
     public void setTimeout(long timeout) {
-        if (timeout < 0){
+        if (timeout < 0) {
             throw new IllegalArgumentException("Timeout must be >= 0");
         }
-        else{
+        else {
             this.timeout = timeout;
         }
     }

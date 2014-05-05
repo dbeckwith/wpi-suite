@@ -22,15 +22,15 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * @author nfbrown
  * @version Apr 21, 2014
  */
-public class GetParentRequirementController extends
-        AbstractRequirementController {
+public class GetParentRequirementController extends AbstractRequirementController {
     
     private static GetParentRequirementController instance = null;
     
     /**
      * Constructs the controller given a RequirementModel
      */
-    private GetParentRequirementController() {}
+    private GetParentRequirementController() {
+    }
     
     /**
      * 
@@ -39,11 +39,11 @@ public class GetParentRequirementController extends
      *         exist.
      */
     public static GetParentRequirementController getInstance() {
-        if (instance == null) {
-            instance = new GetParentRequirementController();
+        if (GetParentRequirementController.instance == null) {
+            GetParentRequirementController.instance = new GetParentRequirementController();
         }
         
-        return instance;
+        return GetParentRequirementController.instance;
     }
     
     /**
@@ -54,9 +54,10 @@ public class GetParentRequirementController extends
      * @param requirements
      *        array of requirements received from the server
      */
+    @Override
     public void receivedRequirements(Requirement[] requirements) {
         if (requirements != null) {
-            setRequirements(requirements);
+            AbstractRequirementController.setRequirements(requirements);
         }
         else {
             Logger.getGlobal().info("The requirements list is null");
@@ -75,10 +76,10 @@ public class GetParentRequirementController extends
     public Requirement getParentRequirement(int id) { // $codepro.audit.disable methodShouldBeStatic
         Requirement toReturn = null;
         retrieveRequirements();
-        if (getRequirements() != null) {
-            for (Requirement r : getRequirements()) {
-                if (r.getId() == id) { 
-                    toReturn = r; 
+        if (AbstractRequirementController.getRequirements() != null) {
+            for (Requirement r : AbstractRequirementController.getRequirements()) {
+                if (r.getId() == id) {
+                    toReturn = r;
                     break;
                 }
             }

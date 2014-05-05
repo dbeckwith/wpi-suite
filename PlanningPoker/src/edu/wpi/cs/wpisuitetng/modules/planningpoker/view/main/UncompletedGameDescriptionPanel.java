@@ -15,6 +15,7 @@ import java.util.Date;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -24,8 +25,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
-import javax.swing.JProgressBar;
-
 /**
  * The requirements panel of the planning poker GUI
  * 
@@ -34,8 +33,7 @@ import javax.swing.JProgressBar;
  */
 public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     
-    private static final SimpleDateFormat date_format = new SimpleDateFormat(
-            "MM/dd/yyyy hh:mm a");
+    private static final SimpleDateFormat date_format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     
     private static final long serialVersionUID = 7579915917240962935L;
     
@@ -61,8 +59,8 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         
         final int difference = gameDeadline.getX() - lblDeadline.getX();
         if ((gameName.getX() + gameName.getWidth()) > lblDeadline.getX()) {
-            lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10, 
-            		lblDeadline.getY());
+            lblDeadline.setLocation(nameLabel.getX() + nameLabel.getWidth() + 10,
+                    lblDeadline.getY());
             gameDeadline.setLocation(lblDeadline.getX() + difference, gameDeadline.getY());
         }
         this.game = game;
@@ -81,8 +79,7 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         }
         else {
             setNoDeadline(false);
-            setGameDeadlineText(UncompletedGameDescriptionPanel.date_format
-                    .format(date));
+            setGameDeadlineText(UncompletedGameDescriptionPanel.date_format.format(date));
         }
     }
     
@@ -122,58 +119,103 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
         personalProgress.setStringPainted(true);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(Alignment.LEADING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(nameLabel)
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(gameName, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                                    .addGap(7)
-                                    .addComponent(lblDeadline)
-                                    .addGap(6)
-                                    .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblDeck)
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(6)
-                                            .addComponent(deckName)
-                                            .addPreferredGap(ComponentPlacement.RELATED, 257, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(ComponentPlacement.RELATED)
-                                            .addComponent(lblYourProgress)
-                                            .addGap(12)))))
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(nameLabel)
-                        .addComponent(gameName, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblDeadline, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                            .addComponent(deckName)
-                            .addComponent(lblDeck))
-                        .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                            .addComponent(lblYourProgress)
-                            .addComponent(personalProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(10, Short.MAX_VALUE))
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.TRAILING)
+                .addGroup(
+                        Alignment.LEADING,
+                        layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        layout.createParallelGroup(Alignment.LEADING)
+                                                .addComponent(scrollPane_1,
+                                                        GroupLayout.DEFAULT_SIZE, 440,
+                                                        Short.MAX_VALUE)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.LEADING)
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addComponent(
+                                                                                                        nameLabel)
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addComponent(
+                                                                                                        gameName,
+                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                        42,
+                                                                                                        Short.MAX_VALUE)
+                                                                                                .addGap(7)
+                                                                                                .addComponent(
+                                                                                                        lblDeadline)
+                                                                                                .addGap(6)
+                                                                                                .addComponent(
+                                                                                                        gameDeadline,
+                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                        153,
+                                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                .addGroup(
+                                                                                        layout.createSequentialGroup()
+                                                                                                .addComponent(
+                                                                                                        lblDeck)
+                                                                                                .addPreferredGap(
+                                                                                                        ComponentPlacement.RELATED)
+                                                                                                .addGroup(
+                                                                                                        layout.createParallelGroup(
+                                                                                                                Alignment.TRAILING)
+                                                                                                                .addGroup(
+                                                                                                                        layout.createSequentialGroup()
+                                                                                                                                .addGap(6)
+                                                                                                                                .addComponent(
+                                                                                                                                        deckName)
+                                                                                                                                .addPreferredGap(
+                                                                                                                                        ComponentPlacement.RELATED,
+                                                                                                                                        257,
+                                                                                                                                        Short.MAX_VALUE))
+                                                                                                                .addGroup(
+                                                                                                                        layout.createSequentialGroup()
+                                                                                                                                .addPreferredGap(
+                                                                                                                                        ComponentPlacement.RELATED)
+                                                                                                                                .addComponent(
+                                                                                                                                        lblYourProgress)
+                                                                                                                                .addGap(12)))))
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(personalProgress,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        GroupLayout.PREFERRED_SIZE)))));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                layout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(nameLabel)
+                                        .addComponent(gameName, GroupLayout.PREFERRED_SIZE, 15,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblDeadline, GroupLayout.PREFERRED_SIZE, 14,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(gameDeadline, GroupLayout.PREFERRED_SIZE, 15,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 71,
+                                GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addGroup(
+                                layout.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(
+                                                layout.createParallelGroup(Alignment.BASELINE)
+                                                        .addComponent(deckName)
+                                                        .addComponent(lblDeck))
+                                        .addGroup(
+                                                layout.createParallelGroup(Alignment.BASELINE)
+                                                        .addComponent(lblYourProgress)
+                                                        .addComponent(personalProgress,
+                                                                GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(10, Short.MAX_VALUE)));
         
         descriptionText = new JTextPane();
         descriptionText.setToolTipText("The description of the selected game.");
@@ -185,25 +227,26 @@ public class UncompletedGameDescriptionPanel extends javax.swing.JPanel {
     /**
      * updates the personal progress bar
      */
-    private void updateprogress(){
+    private void updateprogress() {
         personalProgress.setVisible(true);
         lblYourProgress.setVisible(true);
         int req = 0, est = 0;   //requirements in the game, and ones the user has estiamted
-        for(GameRequirementModel r: game.getRequirements()){
+        for (GameRequirementModel r : game.getRequirements()) {
             req++;
-            if(!r.allVoted()){
-                for (Estimate e: r.getEstimates()){
-                    if(e.getUsername().equals(CurrentUserController.USER_NAME)){
+            if (!r.allVoted()) {
+                for (Estimate e : r.getEstimates()) {
+                    if (e.getUsername().equals(CurrentUserController.USER_NAME)) {
                         est++;
                     }
                 }
-            } else{
+            }
+            else {
                 est++;
             }
         }
-        final double prog = (double)est / (double)req;
-        personalProgress.setValue((int)(prog * 100));
-        if(!game.isStarted()){
+        final double prog = (double) est / (double) req;
+        personalProgress.setValue((int) (prog * 100));
+        if (!game.isStarted()) {
             personalProgress.setVisible(false);
             lblYourProgress.setVisible(false);
         }

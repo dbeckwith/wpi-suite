@@ -19,11 +19,12 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 /**
  * This class waits for response from the server based on the
  * request sent by its UserController
+ * 
  * @author Team 9
  * @version 1.0
  */
-public class UserRequestObserver implements RequestObserver { 
-
+public class UserRequestObserver implements RequestObserver {
+    
     /**
      * The controller that will be used to call receivedUsers().
      */

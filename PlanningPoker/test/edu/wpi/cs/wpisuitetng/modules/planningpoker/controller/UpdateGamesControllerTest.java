@@ -35,8 +35,7 @@ public class UpdateGamesControllerTest {
                 new NetworkConfiguration("http://wpisuitetng"));
         final UpdateGamesController ugc = UpdateGamesController.getInstance();
         ugc.updateGame(new GameModel());
-        final MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
         }

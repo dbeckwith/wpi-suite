@@ -17,6 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 
 /**
  * This handles requests for game requirements
+ * 
  * @author team9
  * @version 1.0
  */
@@ -37,11 +38,11 @@ public class GetRequirementsController extends AbstractRequirementController {
      *         exist.
      */
     public static GetRequirementsController getInstance() {
-        if (instance == null) {
-            instance = new GetRequirementsController();
+        if (GetRequirementsController.instance == null) {
+            GetRequirementsController.instance = new GetRequirementsController();
         }
         
-        return instance;
+        return GetRequirementsController.instance;
     }
     
     
@@ -53,6 +54,7 @@ public class GetRequirementsController extends AbstractRequirementController {
      * @param requirements
      *        array of requirements received from the server
      */
+    @Override
     public void receivedRequirements(Requirement[] requirements) {
         // Make sure the response was not null
         if (requirements != null) {
@@ -64,8 +66,7 @@ public class GetRequirementsController extends AbstractRequirementController {
             }
             final GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
             // set the requirements to the local model
-            RequirementsListModel.getInstance().setRequirements(
-                    gameReqs.toArray(toSet));
+            RequirementsListModel.getInstance().setRequirements(gameReqs.toArray(toSet));
             
             // Update Requirement Manager
             // Empty the local model to eliminate duplications
@@ -93,8 +94,7 @@ public class GetRequirementsController extends AbstractRequirementController {
             }
             final GameRequirementModel[] toSet = new GameRequirementModel[requirements.length];
             // set the requirements to the local model
-            RequirementsListModel.getInstance().setRequirements(
-                    gameReqs.toArray(toSet));
+            RequirementsListModel.getInstance().setRequirements(gameReqs.toArray(toSet));
             
         }
     }

@@ -29,14 +29,11 @@ public class GameRequirementModelTest {
      */
     @Test
     public void testMean() {
-        final GameRequirementModel grm = new GameRequirementModel(-1,
-                "A requirement", "A Description", "A type");
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25,
-                null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20,
-                null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30,
-                null));
+        final GameRequirementModel grm = new GameRequirementModel(-1, "A requirement",
+                "A Description", "A type");
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
         Assert.assertEquals("testing mean failed", 25, grm.getEstimateMean(), 3);
     }
     
@@ -45,20 +42,14 @@ public class GameRequirementModelTest {
      */
     @Test
     public void testMedian() {
-        final GameRequirementModel grm = new GameRequirementModel(-1,
-                "A requirement", "A Description", "A type");
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25,
-                null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20,
-                null));
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30,
-                null));
-        Assert.assertEquals("testing median failed", 25,
-                grm.getEstimateMedian(), 3);
-        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 25,
-                null));
-        Assert.assertEquals("testing median failed", 25,
-                grm.getEstimateMedian(), 3);
+        final GameRequirementModel grm = new GameRequirementModel(-1, "A requirement",
+                "A Description", "A type");
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 0), 25, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 1), 20, null));
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 30, null));
+        Assert.assertEquals("testing median failed", 25, grm.getEstimateMedian(), 3);
+        grm.addEstimate(new Estimate(new User("Bob", "Bob", "password", 2), 25, null));
+        Assert.assertEquals("testing median failed", 25, grm.getEstimateMedian(), 3);
         
     }
     
@@ -67,9 +58,8 @@ public class GameRequirementModelTest {
      */
     @Test
     public void testEmptyModel() {
-        final GameRequirementModel grm = new GameRequirementModel(-1,
-                "A requirement", "A description", "A type",
-                new ArrayList<Estimate>());
+        final GameRequirementModel grm = new GameRequirementModel(-1, "A requirement",
+                "A description", "A type", new ArrayList<Estimate>());
         Assert.assertEquals(0, grm.getEstimateMean(), 3);
         Assert.assertEquals(0, grm.getEstimateMedian(), 3);
     }
@@ -85,8 +75,8 @@ public class GameRequirementModelTest {
         Assert.assertEquals(1, blank.getParentId());
         Assert.assertSame("", blank.getType());
         Assert.assertSame("", blank.getName());
-        final GameRequirementModel fromReq = new GameRequirementModel(
-                new Requirement(2, "Test Req", "Test Desc"));
+        final GameRequirementModel fromReq = new GameRequirementModel(new Requirement(2,
+                "Test Req", "Test Desc"));
         Assert.assertSame("Test Req", fromReq.getName());
         Assert.assertSame("Test Desc", fromReq.getDescription());
         Assert.assertEquals(0, fromReq.getEstimates().size());
@@ -98,16 +88,16 @@ public class GameRequirementModelTest {
      */
     @Test
     public void testEqualsMethod() {
-        final Object grm = new GameRequirementModel(-1, "A requirement",
-                "A description", "A type", new ArrayList<Estimate>());
-        final Object grmDouble = new GameRequirementModel(-1, "A requirement",
-                "A description", "A type", new ArrayList<Estimate>());
-        final Object grmDifferent1 = new GameRequirementModel(-1,
-                "A requirement", "B description", "A type");
-        final Object grmDifferent2 = new GameRequirementModel(5,
-                "B requirement", "A description", "B type");
-        final Object grmDifferent3 = new GameRequirementModel(6,
-                "C requirement", "D description", "Z type");
+        final Object grm = new GameRequirementModel(-1, "A requirement", "A description", "A type",
+                new ArrayList<Estimate>());
+        final Object grmDouble = new GameRequirementModel(-1, "A requirement", "A description",
+                "A type", new ArrayList<Estimate>());
+        final Object grmDifferent1 = new GameRequirementModel(-1, "A requirement", "B description",
+                "A type");
+        final Object grmDifferent2 = new GameRequirementModel(5, "B requirement", "A description",
+                "B type");
+        final Object grmDifferent3 = new GameRequirementModel(6, "C requirement", "D description",
+                "Z type");
         final Object blank = new GameRequirementModel();
         final int anInteger = 5;
         final String aString = "A String";

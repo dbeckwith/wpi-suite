@@ -15,8 +15,8 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * A class for handling email sending to users.
@@ -74,11 +74,9 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
     
     private void sendSMSNotifications() {
         for (User u : EmailController.getInstance().getUsers()) {
-            if (u != null && u.getPhoneNumber() != null
-                    && u.getCarrier() != Carrier.UNKNOWN && u.isNotifyBySMS()) {
-                sendEmail(u,
-                        u.getPhoneNumber() + "@" + u.getCarrier().getURL(),
-                        null, SMSbody);
+            if (u != null && u.getPhoneNumber() != null && u.getCarrier() != Carrier.UNKNOWN
+                    && u.isNotifyBySMS()) {
+                sendEmail(u, u.getPhoneNumber() + "@" + u.getCarrier().getURL(), null, SMSbody);
             }
         }
     }
@@ -100,14 +98,15 @@ public class EmailSenderThread extends Thread { // $codepro.audit.disable declar
         try {
             final Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com"); //$NON-NLS-1$
-            email.setSmtpPort(SMTP_PORT);
-            email.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
+            email.setSmtpPort(EmailSenderThread.SMTP_PORT);
+            email.setAuthenticator(new DefaultAuthenticator(EmailSenderThread.USERNAME,
+                    EmailSenderThread.PASSWORD));
             email.setSSLOnConnect(true);
             email.addTo(emailAddress);
             email.setSubject(theSubject);
-            email.setFrom(EMAIL_ADDRESS);
-            email.setMsg("Dear " + u.getName() + "," + System.getProperty("line.separator") + 
-            		theBody); //$NON-NLS-1$
+            email.setFrom(EmailSenderThread.EMAIL_ADDRESS);
+            email.setMsg("Dear " + u.getName() + "," + System.getProperty("line.separator")
+                    + theBody); //$NON-NLS-1$
             email.send();
             Logger.getGlobal().info("Sent email to " + u.getName());
         }

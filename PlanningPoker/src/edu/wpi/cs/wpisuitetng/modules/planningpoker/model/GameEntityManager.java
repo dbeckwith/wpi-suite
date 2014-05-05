@@ -48,11 +48,11 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (NotificationServer.getInstance().getState() == Thread.State.NEW) {
             NotificationServer.getInstance().start();
         }
-        instance = this;
+        GameEntityManager.instance = this;
     }
     
     public static GameEntityManager getInstance() {
-        return instance;
+        return GameEntityManager.instance;
     }
     
     /**
@@ -66,10 +66,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * @throws WPISuiteException
      *         if the user isn't authorized for the given role
      */
-    private void ensureRole(Session session, Role role)
-            throws WPISuiteException {
-        final User user = (User) db.retrieve(User.class, "username",
-                session.getUsername()).get(0);
+    private void ensureRole(Session session, Role role) throws WPISuiteException {
+        final User user = (User) db.retrieve(User.class, "username", session.getUsername()).get(0);
         if (!user.getRole().equals(role)) {
             throw new UnauthorizedException("");
         }
@@ -87,8 +85,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public String advancedGet(Session arg0, String[] arg1)
-            throws NotImplementedException {
+    public String advancedGet(Session arg0, String[] arg1) throws NotImplementedException {
         throw new NotImplementedException();
     }
     
@@ -133,8 +130,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public GameModel[] getAll(Session s) {
-        return db.retrieveAll(new GameModel(), s.getProject()).toArray(
-                new GameModel[0]);
+        return db.retrieveAll(new GameModel(), s.getProject()).toArray(new GameModel[0]);
     }
     
     /**
@@ -148,8 +144,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         }
         GameModel[] GameModels = null;
         try {
-            GameModels = db.retrieve(GameModel.class, "id", intId,
-                    s.getProject()).toArray(new GameModel[0]);
+            GameModels = db.retrieve(GameModel.class, "id", intId, s.getProject()).toArray(
+                    new GameModel[0]);
         }
         catch (WPISuiteException e) {
             e.printStackTrace();
@@ -164,8 +160,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public GameModel makeEntity(Session s, String content)
-            throws WPISuiteException {
+    public GameModel makeEntity(Session s, String content) throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
         if (!db.save(newGameModel, s.getProject())) {
             throw new WPISuiteException("");
@@ -209,7 +204,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
         
         sendEmails(existingGameModel, updatedGameModel);
         
-        startObserver(updatedGameModel);
+        GameEntityManager.startObserver(updatedGameModel);
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
@@ -231,11 +226,11 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (updatedGameModel.getStatus().equals(GameModel.GameStatus.PENDING)) {
             // start observer only when the game is live
             if (updatedGameModel.hasDeadline()) {
-                final GameTimeoutObserver obs = GameTimeoutObserver
-                        .getObserver(updatedGameModel);
+                final GameTimeoutObserver obs = GameTimeoutObserver.getObserver(updatedGameModel);
                 if (obs != null && !obs.isAlive()) {
                     obs.start();
-                } else {
+                }
+                else {
                     Logger.getGlobal().warning("Could not get timeout observer for game");
                 }
             }
@@ -254,8 +249,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
      *        the updated game model
      * @throws NotImplementedException
      */
-    private void sendEmails(GameModel existingGameModel,
-            GameModel updatedGameModel) throws NotImplementedException {
+    private void sendEmails(GameModel existingGameModel, GameModel updatedGameModel)
+            throws NotImplementedException {
         
         // send emails based on updated status
         if (!updatedGameModel.getStatus().equals(existingGameModel.getStatus())) {
@@ -271,21 +266,18 @@ public class GameEntityManager implements EntityManager<GameModel> {
                 }
             }
             EmailController.setOwner(owner);
-            EmailController.getInstance().setUsers(
-                    users.toArray(new User[users.size()]));
+            EmailController.getInstance().setUsers(users.toArray(new User[users.size()]));
             switch (updatedGameModel.getStatus()) {
                 case NEW:
                     // don't send an email
                     break;
                 case PENDING:
                     // send game start email
-                    EmailController.getInstance().sendGameStartNotifications(
-                            updatedGameModel);
+                    EmailController.getInstance().sendGameStartNotifications(updatedGameModel);
                     break;
                 case COMPLETE:
                     // send ended game email
-                    EmailController.getInstance().sendGameEndNotifications(
-                            updatedGameModel);
+                    EmailController.getInstance().sendGameEndNotifications(updatedGameModel);
                     break;
                 case CLOSED:
                     // don't send an email

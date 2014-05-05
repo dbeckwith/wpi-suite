@@ -18,7 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 public class MockRequest extends Request { // $codepro.audit.disable typeJavadoc
-    
+
     protected boolean sent = false;
     
     public MockRequest(NetworkConfiguration networkConfiguration, String path,

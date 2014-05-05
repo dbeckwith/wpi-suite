@@ -16,7 +16,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GameStatusObserve
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
- * A model for keeping track of all the games in the database as a list of GameModels.
+ * A model for keeping track of all the games in the database as a list of
+ * GameModels.
  * 
  * @author Team 9
  * @version 1.0
@@ -64,7 +65,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * changed.
      * 
      * @param slo
-     *            The SimpleListObserver to add
+     *        The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -78,7 +79,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * 
      * @see GameModel#addStatusListener(GameStatusObserver)
      * @param gso
-     *            the status observer to add
+     *        the status observer to add
      */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
@@ -90,7 +91,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * Add a game to the list
      * 
      * @param g
-     *            the game to add
+     *        the game to add
      */
     public void addGame(GameModel g) {
         addAndRegisterGame(g);
@@ -102,7 +103,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * will add multiple games at once and fire only one update on the list.
      * 
      * @param gs
-     *            the list of games to add
+     *        the list of games to add
      */
     public void addMultipleGames(GameModel[] gs) {
         for (GameModel g : gs) {
@@ -116,7 +117,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * the list.
      * 
      * @param g
-     *            The game to remove
+     *        The game to remove
      */
     public void removeGame(GameModel g) {
         if (games.contains(g)) {
@@ -142,7 +143,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
      * and fire only one list updated event.
      * 
      * @param gs
-     *            the games to be included in the list model
+     *        the games to be included in the list model
      */
     public void setGames(GameModel[] gs) {
         final int numGames = games.size();
@@ -207,6 +208,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     /**
      * Gets all the list observers currently registered with the list model.
+     * 
      * @return the simplelistobservers for the list of games
      */
     public ArrayList<SimpleListObserver> getObservers() {
@@ -216,14 +218,14 @@ public class GameListModel extends AbstractListModel<GameModel> {
     /**
      * Remove all observers from the model.
      */
-    public void removeObservers(){
+    public void removeObservers() {
         observers.clear();
     }
     
     /**
      * Remove all game status observers from the model.
      */
-    public void removeStatusObservers(){
+    public void removeStatusObservers() {
         status_observers.clear();
     }
     

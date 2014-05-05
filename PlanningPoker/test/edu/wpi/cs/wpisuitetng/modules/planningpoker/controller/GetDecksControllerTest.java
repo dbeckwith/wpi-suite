@@ -23,19 +23,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckModel;
 public class GetDecksControllerTest {
     
     /**
-     * Tests that DeckListModel correctly contains decks after they've been received
+     * Tests that DeckListModel correctly contains decks after they've been
+     * received
      */
     @Test
     public void test() {
         final DeckModel deck1 = new DeckModel();
         final DeckModel deck2 = new DeckModel();
-
+        
         DeckListModel.getInstance().removeObservers();
         GetDecksController.receivedDecks(new DeckModel[] { deck1, deck2 });
-        Assert.assertTrue(DeckListModel.getInstance().getDecks()
-                .contains(deck1));
-        Assert.assertTrue(DeckListModel.getInstance().getDecks()
-                .contains(deck2));
+        Assert.assertTrue(DeckListModel.getInstance().getDecks().contains(deck1));
+        Assert.assertTrue(DeckListModel.getInstance().getDecks().contains(deck2));
     }
     
 }

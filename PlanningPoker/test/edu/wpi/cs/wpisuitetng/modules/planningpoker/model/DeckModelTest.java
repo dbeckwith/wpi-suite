@@ -8,8 +8,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -30,7 +28,7 @@ public class DeckModelTest {
      * Creates a deck out of an array of two cards
      */
     @Before
-    public void prepare(){
+    public void prepare() {
         cards = new ArrayList<Double>();
         cards.add(1.0);
         cards.add(2.0);
@@ -43,27 +41,27 @@ public class DeckModelTest {
     @Test
     public void testCardManipulation() {
         deck.addCard(3.0);
-        assertTrue(deck.getCards().contains(3.0));
+        Assert.assertTrue(deck.getCards().contains(3.0));
         deck.removeCard(2.0);
-        assertFalse(deck.getCards().contains(2.0));
+        Assert.assertFalse(deck.getCards().contains(2.0));
         deck.addCard(2.0);
         deck.addCard(2.0);
-        assertEquals(3, deck.getCards().size());
+        Assert.assertEquals(3, deck.getCards().size());
         deck.removeCard(4.0);
-        assertEquals(3, deck.getCards().size());
+        Assert.assertEquals(3, deck.getCards().size());
         deck.sort();
-        assertEquals(2.0, deck.getCards().get(1), 3);
+        Assert.assertEquals(2.0, deck.getCards().get(1), 3);
         
     }
     
     /**
-     * Tests that an object is equivalent after being transformed to JSON and back
+     * Tests that an object is equivalent after being transformed to JSON and
+     * back
      */
     @Test
     public void testJSON() {
-        Assert.assertEquals(deck.getName(), DeckModel.fromJSON(deck.toJSON())
-                .getName());
-        Assert.assertEquals(deck.getName(), DeckModel.fromJSONArray("["
-                + deck.toJSON() + "]")[0].getName());
+        Assert.assertEquals(deck.getName(), DeckModel.fromJSON(deck.toJSON()).getName());
+        Assert.assertEquals(deck.getName(),
+                DeckModel.fromJSONArray("[" + deck.toJSON() + "]")[0].getName());
     }
 }

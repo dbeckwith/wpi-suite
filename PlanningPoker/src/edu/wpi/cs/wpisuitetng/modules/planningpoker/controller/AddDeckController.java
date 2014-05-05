@@ -16,6 +16,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 /**
  * This controller responds when the user clicks the Create Deck button by
  * storing new deck to remote server's database.
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -51,8 +52,8 @@ public class AddDeckController {
      */
     public void addDeck(DeckModel deck) {
         // PUT creates a new object
-        final Request request = Network.getInstance().makeRequest(
-                "planningpoker/deck", HttpMethod.PUT);
+        final Request request = Network.getInstance().makeRequest("planningpoker/deck",
+                HttpMethod.PUT);
         request.setBody(deck.toJSON());
         request.addObserver(observer);
         request.send();

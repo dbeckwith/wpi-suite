@@ -31,27 +31,20 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  * @version 1.0
  */
 public class GetGamesControllerTest {
-
+    
     GetGamesController instance = GetGamesController.getInstance();
     GameModel nullGame = new GameModel();
-    GameModel game1 = new GameModel("Test Game 1", "Live Game that just ended",
-            null, DeckModel.DEFAULT_DECK, new Date(),
+    GameModel game1 = new GameModel("Test Game 1", "Live Game that just ended", null,
+            DeckModel.DEFAULT_DECK, new Date(), GameStatus.COMPLETE);
+    GameModel game2 = new GameModel("Test Game 2", "Game that will end in 5 seconds", null,
+            DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() + 5000), GameStatus.PENDING);
+    GameModel game3 = new GameModel("Test Game 3",
+            "Game with end time in 10 seconds, but already manually ended", null,
+            DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() + 10000),
             GameStatus.COMPLETE);
-    GameModel game2 = new GameModel("Test Game 2",
-            "Game that will end in 5 seconds", null, DeckModel.DEFAULT_DECK, new Date(
-                    System.currentTimeMillis() + 5000),
-            GameStatus.PENDING);
-    GameModel game3 = new GameModel(
-            "Test Game 3",
-            "Game with end time in 10 seconds, but already manually ended",
-            null, DeckModel.DEFAULT_DECK, new Date(System
-                    .currentTimeMillis() + 10000),
-            GameStatus.COMPLETE);
-    GameModel game4 = new GameModel(
-            "Test Game 4",
+    GameModel game4 = new GameModel("Test Game 4",
             "Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-            null, DeckModel.DEFAULT_DECK, new Date(System
-                    .currentTimeMillis() - 10000),
+            null, DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 10000),
             GameStatus.PENDING);
     GameListModel list = GameListModel.getInstance();
     GameModel[] gamesToAdd = new GameModel[] { game1, game2, game3, game4 };
@@ -76,22 +69,18 @@ public class GetGamesControllerTest {
         instance = GetGamesController.getInstance();
         nullGame = new GameModel();
         game1 = new GameModel("Test Game 1", "Live Game that just ended", null,
-               DeckModel.DEFAULT_DECK, new Date(), GameStatus.COMPLETE);
-        game2 = new GameModel("Test Game 2",
-                "Game that will end in 5 seconds", null,
-               DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() + 5000), GameStatus.PENDING);
-        game3 = new GameModel(
-                "Test Game 3",
-                "Game with end time in 10 seconds, but already manually ended",
-                null, DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() + 10000),
+                DeckModel.DEFAULT_DECK, new Date(), GameStatus.COMPLETE);
+        game2 = new GameModel("Test Game 2", "Game that will end in 5 seconds", null,
+                DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() + 5000),
+                GameStatus.PENDING);
+        game3 = new GameModel("Test Game 3",
+                "Game with end time in 10 seconds, but already manually ended", null,
+                DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() + 10000),
                 GameStatus.COMPLETE);
-        game4 = new GameModel(
-                "Test Game 4",
+        game4 = new GameModel("Test Game 4",
                 "Game that has end time 10 seconds ago but hasn't been updated to be complete yet",
-                null, DeckModel.DEFAULT_DECK, new Date(
-                        System.currentTimeMillis() - 10000), GameStatus.PENDING);
+                null, DeckModel.DEFAULT_DECK, new Date(System.currentTimeMillis() - 10000),
+                GameStatus.PENDING);
         list = GameListModel.getInstance();
         gamesToAdd = new GameModel[] { game1, game2, game3, game4 };
         list.removeObservers();
@@ -103,9 +92,8 @@ public class GetGamesControllerTest {
      */
     @Test
     public void testGetInstance() {
-        Assert.assertEquals(
-                "A new instance is not the same as the previous instance",
-                instance, GetGamesController.getInstance());
+        Assert.assertEquals("A new instance is not the same as the previous instance", instance,
+                GetGamesController.getInstance());
     }
     
     /**
@@ -114,14 +102,10 @@ public class GetGamesControllerTest {
     @Test
     public void testReceivedGames() {
         instance.receivedGames(new GameModel[] { game1, game2, game3, game4 });
-        Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(game1));
-        Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(game2));
-        Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(game3));
-        Assert.assertTrue(GameListModel.getInstance().getGames()
-                .contains(game4));
+        Assert.assertTrue(GameListModel.getInstance().getGames().contains(game1));
+        Assert.assertTrue(GameListModel.getInstance().getGames().contains(game2));
+        Assert.assertTrue(GameListModel.getInstance().getGames().contains(game3));
+        Assert.assertTrue(GameListModel.getInstance().getGames().contains(game4));
     }
     
     /**
@@ -130,8 +114,7 @@ public class GetGamesControllerTest {
     @Test
     public void testRetrieveGames() {
         GetGamesController.getInstance().retrieveGames();
-        final MockRequest request = ((MockNetwork) Network.getInstance())
-                .getLastRequestMade();
+        final MockRequest request = ((MockNetwork) Network.getInstance()).getLastRequestMade();
         if (request == null) {
             Assert.fail("request not sent");
         }

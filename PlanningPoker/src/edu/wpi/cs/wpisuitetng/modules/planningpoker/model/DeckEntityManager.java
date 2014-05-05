@@ -125,12 +125,12 @@ public class DeckEntityManager implements EntityManager<DeckModel> {
     }
     
     @Override
-    public void save(Session s, DeckModel deck){
+    public void save(Session s, DeckModel deck) {
         db.save(deck, s.getProject());
     }
     
     @Override
-    public DeckModel update(Session arg0, String arg1) throws NotImplementedException{
+    public DeckModel update(Session arg0, String arg1) throws NotImplementedException {
         throw new NotImplementedException();
     }
 }

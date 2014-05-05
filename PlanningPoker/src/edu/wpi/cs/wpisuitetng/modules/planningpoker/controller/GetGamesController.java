@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This controller responds by sending request to get games from remote server.
+ * 
  * @author Team9
  * @version 1.0
  */
@@ -38,7 +39,8 @@ public class GetGamesController implements ActionListener {
     
     /**
      * get the instance of the GetGameControlleror creates one if it does
-     *         not exist.
+     * not exist.
+     * 
      * @return the instance of the GetGameController
      */
     public static GetGamesController getInstance() {
@@ -66,8 +68,8 @@ public class GetGamesController implements ActionListener {
      * Sends an HTTP request to retrieve all games
      */
     public void retrieveGames() {
-        final Request request = Network.getInstance().makeRequest(
-                "planningpoker/game", HttpMethod.GET); 
+        final Request request = Network.getInstance().makeRequest("planningpoker/game",
+                HttpMethod.GET);
         request.addObserver(observer); // add an observer to process the
                                        // response
         request.send(); // send the request

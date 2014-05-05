@@ -71,11 +71,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         final int gameCount = GameListModel.getInstance().getGames().size();
         final SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         final String formatted = dateFormatter.format(now.getTime());
-        nameField.setText(String.format("Game %d - ", gameCount + 1)
-                + formatted);
+        nameField.setText(String.format("Game %d - ", gameCount + 1) + formatted);
         isNameValid = true;
         
-        setErrorBorder(descriptionField, false);
+        NewGameDescriptionPanel.setErrorBorder(descriptionField, false);
         
         GetDecksController.getInstance().retrieveDecks();
         
@@ -98,40 +97,37 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
             
             private void validate() {
                 parentPanel.setHasChanged(true);
-                isNameValid = (nameField.getText() != null && !nameField
-                        .getText().isEmpty());
-                setErrorBorder(nameField, isNameValid);
+                isNameValid = (nameField.getText() != null && !nameField.getText().isEmpty());
+                NewGameDescriptionPanel.setErrorBorder(nameField, isNameValid);
                 parentPanel.check();
             }
         });
         
-        descriptionField.getDocument().addDocumentListener(
-                new DocumentListener() {
-                    
-                    @Override
-                    public void removeUpdate(DocumentEvent e) {
-                        validate();
-                    }
-                    
-                    @Override
-                    public void insertUpdate(DocumentEvent e) {
-                        validate();
-                    }
-                    
-                    @Override
-                    public void changedUpdate(DocumentEvent e) {
-                        validate();
-                    }
-                    
-                    private void validate() {
-                        parentPanel.setHasChanged(true);
-                        isDescriptionValid = (descriptionField.getText() != null && 
-                        		!descriptionField
-                                .getText().isEmpty());
-                        setErrorBorder(descriptionField, isDescriptionValid);
-                        parentPanel.check();
-                    }
-                });
+        descriptionField.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            private void validate() {
+                parentPanel.setHasChanged(true);
+                isDescriptionValid = (descriptionField.getText() != null && !descriptionField
+                        .getText().isEmpty());
+                NewGameDescriptionPanel.setErrorBorder(descriptionField, isDescriptionValid);
+                parentPanel.check();
+            }
+        });
         
         datePicker.addActionListener(new ActionListener() {
             @Override
@@ -187,8 +183,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         }
         else {
             selectDeadline.setSelected(false);
-            datePicker.setDate(getDefaultDate());
-            timeSpinner.setValue(getDefaultDate());
+            datePicker.setDate(NewGameDescriptionPanel.getDefaultDate());
+            timeSpinner.setValue(NewGameDescriptionPanel.getDefaultDate());
         }
         
         deckOptions.setGame(game);
@@ -214,8 +210,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         descriptionScrollPane.setViewportBorder(null);
         descriptionField = new javax.swing.JTextPane();
         descriptionField.setToolTipText("The new game's description.");
-        descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-                null));
+        descriptionField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
         nameLabel.setText("Game Name: *");
         
@@ -227,50 +222,48 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         deckOptions.setParent(this);
         
         final JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new TitledBorder(null, "Deadline",
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_1.setBorder(new TitledBorder(null, "Deadline", TitledBorder.LEADING,
+                TitledBorder.TOP, null, null));
         panel_1.setBackground(Color.WHITE);
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(descriptionScrollPane, Alignment.LEADING, GroupLayout
-                        		.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(nameField, Alignment.LEADING, GroupLayout
-                        		.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(nameLabel, Alignment.LEADING)
-                        .addComponent(descriptionLabel, Alignment.LEADING)
-                        .addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addComponent(deckOptions, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-                        		529, Short.MAX_VALUE))
-                    .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(12)
-                    .addComponent(nameLabel)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout
-                    		.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.UNRELATED)
-                    .addComponent(descriptionLabel)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 
-                    		106, Short.MAX_VALUE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99, 
-                    		GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94, 
-                    		GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-        );
+        layout.setHorizontalGroup(layout.createParallelGroup(Alignment.TRAILING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                layout.createParallelGroup(Alignment.TRAILING)
+                                        .addComponent(descriptionScrollPane, Alignment.LEADING,
+                                                GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                                        .addComponent(nameField, Alignment.LEADING,
+                                                GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                                        .addComponent(nameLabel, Alignment.LEADING)
+                                        .addComponent(descriptionLabel, Alignment.LEADING)
+                                        .addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 529,
+                                                Short.MAX_VALUE)
+                                        .addComponent(deckOptions, Alignment.LEADING,
+                                                GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
+                        .addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addGap(12)
+                        .addComponent(nameLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(nameField, GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(descriptionLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, 106,
+                                Short.MAX_VALUE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(deckOptions, GroupLayout.PREFERRED_SIZE, 99,
+                                GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 94,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap()));
         selectDeadline = new javax.swing.JCheckBox();
-        selectDeadline.setToolTipText("If checked, the game will end itself automatically at the specified date."); // $codepro.audit.disable lineLength
+        selectDeadline
+                .setToolTipText("If checked, the game will end itself automatically at the specified date."); // $codepro.audit.disable lineLength
         selectDeadline.setBackground(Color.WHITE);
         
         selectDeadline.setText("Deadline");
@@ -286,9 +279,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         final JLabel lblDate = new JLabel("Date:");
         lblDate.setToolTipText("The date that the game will end itself automatically.");
         
-        datePicker = new JXDatePicker(getDefaultDate());
+        datePicker = new JXDatePicker(NewGameDescriptionPanel.getDefaultDate());
         datePicker.setToolTipText("The date that the game will end itself automatically.");
-        datePicker.getEditor().setToolTipText("The date that the game will end itself automatically."); // $codepro.audit.disable lineLength
+        datePicker.getEditor().setToolTipText(
+                "The date that the game will end itself automatically."); // $codepro.audit.disable lineLength
         final JButton eDate = (JButton) datePicker.getComponent(1);
         final JButton dateBtn = (JButton) datePicker.getComponent(1);
         dateBtn.remove(eDate);
@@ -303,86 +297,57 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         timeSpinner = new JSpinner();
         timeSpinner.setToolTipText("The date that the game will end itself automatically.");
         timeSpinner.setModel(new SpinnerDateModel());
-        final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner,
-                "h:mm a");
+        final JSpinner.DateEditor dEdit = new JSpinner.DateEditor(timeSpinner, "h:mm a");
         timeSpinner.setEditor(dEdit);
-        timeSpinner.setValue(getDefaultDate());
+        timeSpinner.setValue(NewGameDescriptionPanel.getDefaultDate());
         final GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-        gl_panel_1
-                .setHorizontalGroup(gl_panel_1
-                        .createParallelGroup(Alignment.LEADING)
+        gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
+                gl_panel_1
+                        .createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(
                                 gl_panel_1
-                                        .createSequentialGroup()
-                                        .addContainerGap()
-                                        .addGroup(
-                                                gl_panel_1
-                                                        .createParallelGroup(
-                                                                Alignment.LEADING)
-                                                        .addComponent(
-                                                                selectDeadline)
-                                                        .addGroup(
-                                                                gl_panel_1
-                                                                        .createSequentialGroup()
-                                                                        .addComponent(
-                                                                                lblDate)
-                                                                        .addGap(12)
-                                                                        .addComponent(
-                                                                                datePicker,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE)
-                                                                        .addGap(6)
-                                                                        .addComponent(
-                                                                                timeSpinner,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE)))
-                                        .addContainerGap(165, Short.MAX_VALUE)));
-        gl_panel_1
-                .setVerticalGroup(gl_panel_1
-                        .createParallelGroup(Alignment.LEADING)
-                        .addGroup(
-                                gl_panel_1
-                                        .createSequentialGroup()
-                                        .addContainerGap()
+                                        .createParallelGroup(Alignment.LEADING)
                                         .addComponent(selectDeadline)
-                                        .addPreferredGap(
-                                                ComponentPlacement.RELATED)
                                         .addGroup(
                                                 gl_panel_1
-                                                        .createParallelGroup(
-                                                                Alignment.LEADING)
-                                                        .addGroup(
-                                                                gl_panel_1
-                                                                        .createSequentialGroup()
-                                                                        .addGap(4)
-                                                                        .addComponent(
-                                                                                lblDate))
-                                                        .addComponent(
-                                                                datePicker,
+                                                        .createSequentialGroup()
+                                                        .addComponent(lblDate)
+                                                        .addGap(12)
+                                                        .addComponent(datePicker,
                                                                 GroupLayout.PREFERRED_SIZE,
                                                                 GroupLayout.DEFAULT_SIZE,
                                                                 GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(
-                                                                gl_panel_1
-                                                                        .createSequentialGroup()
-                                                                        .addGap(2)
-                                                                        .addComponent(
-                                                                                timeSpinner,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE,
-                                                                                GroupLayout
-                                                                                .DEFAULT_SIZE,
-                                                                                GroupLayout
-                                                                                .PREFERRED_SIZE)))
-                                        .addContainerGap(35, Short.MAX_VALUE)));
+                                                        .addGap(6)
+                                                        .addComponent(timeSpinner,
+                                                                GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(165, Short.MAX_VALUE)));
+        gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
+                gl_panel_1
+                        .createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(selectDeadline)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addGroup(
+                                gl_panel_1
+                                        .createParallelGroup(Alignment.LEADING)
+                                        .addGroup(
+                                                gl_panel_1.createSequentialGroup().addGap(4)
+                                                        .addComponent(lblDate))
+                                        .addComponent(datePicker, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(
+                                                gl_panel_1
+                                                        .createSequentialGroup()
+                                                        .addGap(2)
+                                                        .addComponent(timeSpinner,
+                                                                GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE,
+                                                                GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(35, Short.MAX_VALUE)));
         panel_1.setLayout(gl_panel_1);
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
@@ -437,17 +402,17 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      *         (whether or not pass the deadline)
      */
     public boolean isDeadlineValid() { // $codepro.audit.disable booleanMethodNamingConvention
-    	final boolean valid;
-    	
-    	boolean toReturn;
+        final boolean valid;
+        
+        boolean toReturn;
         datePicker.setEnabled(selectDeadline.isSelected());
         timeSpinner.setEnabled(selectDeadline.isSelected());
         
-        if (!selectDeadline.isSelected()) { 
+        if (!selectDeadline.isSelected()) {
             toReturn = true;
-        	
+            
         }
-        else{
+        else {
             final Date currentDate = new Date();
             final Date enteredDate = getDate();
             
@@ -466,8 +431,7 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
      *         filled.
      */
     public boolean isFormValid() { // $codepro.audit.disable booleanMethodNamingConvention
-        final boolean valid = isNameValid && isDescriptionValid
-                && isDeadlineValid();
+        final boolean valid = isNameValid && isDescriptionValid && isDeadlineValid();
         return valid;
     }
     
@@ -552,13 +516,13 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     /**
      * Sets the selected deck in the combo box of saved decks to the newest deck
      */
-    public void setNewDeck(){ // $codepro.audit.disable accessorMethodNamingConvention
+    public void setNewDeck() { // $codepro.audit.disable accessorMethodNamingConvention
         deckOptions.setNewDeck();
     }
-
+    
     public DeckOptionsPanel getDeckOptionsPanel() {
-		return deckOptions;
-	}
+        return deckOptions;
+    }
     
     private boolean isNameValid = false;
     private boolean isDescriptionValid = false;
@@ -573,5 +537,5 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     private JLabel nameLabel;
     private JCheckBox selectDeadline;
     private DeckOptionsPanel deckOptions;
-
+    
 }

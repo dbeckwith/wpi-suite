@@ -22,17 +22,16 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 public class EmailSenderThreadTest {
     
     /**
-     * Tests email sending functionality by sending an e-mail to team9wpi@gmail.com
+     * Tests email sending functionality by sending an e-mail to
+     * team9wpi@gmail.com
      */
     @Test
     public void testSendEmail() {
-        final User person = new User("Team9", "User", "team9wpi@gmail.com",
-                "Pass", 0);
+        final User person = new User("Team9", "User", "team9wpi@gmail.com", "Pass", 0);
         person.setNotifyByEmail(true);
         Assert.assertTrue(person.isNotifyByEmail());
         EmailController.getInstance().setUsers(new User[] { person });
-        final EmailSenderThread est = new EmailSenderThread(
-                "EmailSenderThreadTest",
+        final EmailSenderThread est = new EmailSenderThread("EmailSenderThreadTest",
                 "This came from EmailSenderThreadTest.java", null);
         est.start();
     }

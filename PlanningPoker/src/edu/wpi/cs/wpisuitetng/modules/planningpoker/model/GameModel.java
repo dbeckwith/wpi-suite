@@ -50,7 +50,7 @@ public class GameModel extends AbstractModel implements Serializable {
          * Creates a new GameStatus
          * 
          * @param stat
-         *            the name of the status
+         *        the name of the status
          */
         GameStatus(String stat) {
             name = stat;
@@ -97,48 +97,46 @@ public class GameModel extends AbstractModel implements Serializable {
      * Creates a new planning poker game.
      * 
      * @param name
-     *            the game's name
+     *        the game's name
      * @param description
-     *            the description of the game
+     *        the description of the game
      * @param requirements
-     *            a list of the requirements to be estimated for this game
+     *        a list of the requirements to be estimated for this game
      * @param deck
-     *            the deck of cards users can use to estimate requirements for
-     *            this game
+     *        the deck of cards users can use to estimate requirements for
+     *        this game
      * @param end
-     *            the deadline for this game
+     *        the deadline for this game
      * @param status
-     *            what the current status of this game should be
+     *        what the current status of this game should be
      */
-    public GameModel(String name, String description,
-            List<GameRequirementModel> requirements, DeckModel deck, Date end,
-            GameStatus status) {
-        this(name, description, requirements, deck, end, status, ConfigManager
-                .getConfig().getUserName());
+    public GameModel(String name, String description, List<GameRequirementModel> requirements,
+            DeckModel deck, Date end, GameStatus status) {
+        this(name, description, requirements, deck, end, status, ConfigManager.getConfig()
+                .getUserName());
     }
     
     /**
      * Creates a new planning poker game.
      * 
      * @param name
-     *            the game's name
+     *        the game's name
      * @param description
-     *            the description of the game
+     *        the description of the game
      * @param requirements
-     *            a list of the requirements to be estimated for this game
+     *        a list of the requirements to be estimated for this game
      * @param deck
-     *            the deck of cards users can use to estimate requirements for
-     *            this game
+     *        the deck of cards users can use to estimate requirements for
+     *        this game
      * @param endDate
-     *            the deadline for this game
+     *        the deadline for this game
      * @param status
-     *            what the current status of this game should be
+     *        what the current status of this game should be
      * @param owner
-     *            the name of the user who created this game
+     *        the name of the user who created this game
      */
-    public GameModel(String name, String description,
-            List<GameRequirementModel> requirements, DeckModel deck,
-            Date endDate, GameStatus status, String owner) {
+    public GameModel(String name, String description, List<GameRequirementModel> requirements,
+            DeckModel deck, Date endDate, GameStatus status, String owner) {
         id = System.currentTimeMillis();
         this.name = name;
         this.description = description;
@@ -163,7 +161,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Sets the unique ID number of this game.
      * 
      * @param id
-     *            the new ID number
+     *        the new ID number
      */
     public void setID(long id) {
         this.id = id;
@@ -191,7 +189,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Adds a GameStatusObserver to the list of status observers
      * 
      * @param gso
-     *            the GameStatusObserver to add
+     *        the GameStatusObserver to add
      */
     public void addStatusListener(GameStatusObserver gso) {
         if (!status_observers.contains(gso)) {
@@ -203,7 +201,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Removes a GameStatusObserver from the list of status observers
      * 
      * @param gso
-     *            the GameStatusObserver to remove
+     *        the GameStatusObserver to remove
      */
     public void removeStatusListener(GameStatusObserver gso) {
         if (status_observers.contains(gso)) {
@@ -215,7 +213,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * Returns the list of estimates for a given requirement
      * 
      * @param reqIndex
-     *            the index of the requirement in the list of requirements
+     *        the index of the requirement in the list of requirements
      * @return an array containing all of the estimates
      */
     public List<Estimate> getEstimates(int reqIndex) {
@@ -275,11 +273,10 @@ public class GameModel extends AbstractModel implements Serializable {
      * Manually set the game to ended
      * 
      * @param fin
-     *            whether or not the game should be ended
+     *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
-        final GameStatus new_status = fin ? GameStatus.COMPLETE
-                : GameStatus.PENDING;
+        final GameStatus new_status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
         if (status != new_status && status == GameStatus.PENDING) {
             status = new_status;
             endDate = new Date();
@@ -298,11 +295,11 @@ public class GameModel extends AbstractModel implements Serializable {
     public boolean checkVoted() { // $codepro.audit.disable booleanMethodNamingConvention
         boolean toReturn = true;
         int returnFlag = 1;
-
+        
         final ArrayList<User> users;
-        if(CurrentUserController.getInstance().getUsers() != null){
-            users = new ArrayList<User>(Arrays.asList(CurrentUserController
-                    .getInstance().getUsers()));
+        if (CurrentUserController.getInstance().getUsers() != null) {
+            users = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance()
+                    .getUsers()));
         }
         else {
             users = new ArrayList<User>();
@@ -333,17 +330,18 @@ public class GameModel extends AbstractModel implements Serializable {
             }
             
             final ArrayList<User> nowUsers;
-            if(CurrentUserController.getInstance().getUsers() != null) {
-                nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance().getUsers()));
+            if (CurrentUserController.getInstance().getUsers() != null) {
+                nowUsers = new ArrayList<User>(Arrays.asList(CurrentUserController.getInstance()
+                        .getUsers()));
             }
             else {
                 nowUsers = new ArrayList<User>();
             }
             
-            if(users.containsAll(nowUsers)){
+            if (users.containsAll(nowUsers)) {
                 toReturn = true;
             }
-            else{
+            else {
                 toReturn = false;
             }
         }
@@ -357,7 +355,7 @@ public class GameModel extends AbstractModel implements Serializable {
      * @return whether the game has ended
      */
     public boolean isEnded() {
-        if(status != GameStatus.COMPLETE && status != GameStatus.CLOSED){
+        if (status != GameStatus.COMPLETE && status != GameStatus.CLOSED) {
             if (checkVoted()) {
                 setEnded(true);
             }
@@ -515,9 +513,11 @@ public class GameModel extends AbstractModel implements Serializable {
         boolean ret;
         if (this == other) {
             ret = true;
-        } else if (other instanceof GameModel) {
+        }
+        else if (other instanceof GameModel) {
             ret = this.equals((GameModel) other);
-        } else {
+        }
+        else {
             ret = super.equals(other);
         }
         return ret;

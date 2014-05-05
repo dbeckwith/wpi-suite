@@ -49,8 +49,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * @author Team 9
  * @version 1.0
  */
-public class NewGameRequirementsPanel extends JPanel implements MouseListener,
-        KeyListener {
+public class NewGameRequirementsPanel extends JPanel implements MouseListener, KeyListener {
     
     private static final long serialVersionUID = -4252474071295177531L;
     
@@ -73,16 +72,14 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
             @Override
             public void listUpdated() {
                 final List<GameRequirementModel> inTable = getAllRequirementsFromTable(true);
-                for (GameRequirementModel req : RequirementsListModel
-                        .getInstance().getAll()) {
+                for (GameRequirementModel req : RequirementsListModel.getInstance().getAll()) {
                     if (!inTable.contains(req)) {
                         addRequirement(req);
                     }
                 }
             }
         };
-        RequirementsListModel.getInstance().addListListener(
-                requirementsListObserver);
+        RequirementsListModel.getInstance().addListListener(requirementsListObserver);
         GetRequirementsController.getInstance().retrieveRequirements();
     }
     
@@ -115,20 +112,21 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         addKeyListener(this);
         
         requirementsTableScrollPane = new JScrollPane();
-        requirementsTableScrollPane.setToolTipText("The list of available requirements to include in this game."); // $codepro.audit.disable lineLength
+        requirementsTableScrollPane
+                .setToolTipText("The list of available requirements to include in this game."); // $codepro.audit.disable lineLength
         requirementsTable = new HighlightedTable();
-        requirementsTable.setToolTipText("The list of available requirements to include in this game."); // $codepro.audit.disable lineLength
+        requirementsTable
+                .setToolTipText("The list of available requirements to include in this game."); // $codepro.audit.disable lineLength
         addButton = new JButton();
-        addButton.setToolTipText("Create a new requirement that can be added to this game's list of requirements."); // $codepro.audit.disable lineLength
+        addButton
+                .setToolTipText("Create a new requirement that can be added to this game's list of requirements."); // $codepro.audit.disable lineLength
         
         clearRequirements();
-        requirementsTable
-                .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        requirementsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         requirementsTable.getTableHeader().setReorderingAllowed(false);
         final Font temp_Font;
         temp_Font = requirementsTable.getTableHeader().getFont();
-        requirementsTable.getTableHeader().setFont(
-                temp_Font.deriveFont(Font.BOLD));
+        requirementsTable.getTableHeader().setFont(temp_Font.deriveFont(Font.BOLD));
         requirementsTableScrollPane.setViewportView(requirementsTable);
         requirementsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         requirementsTable.addMouseListener(this);
@@ -142,8 +140,10 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         addButton.setIcon(ImageLoader.getIcon("newReq.png"));
         
         btnSelectAll = new JButton("Select All");
-        btnSelectAll.setToolTipText("Select/Deselect all the requirements in the list to be included in this game."); // $codepro.audit.disable lineLength
+        btnSelectAll
+                .setToolTipText("Select/Deselect all the requirements in the list to be included in this game."); // $codepro.audit.disable lineLength
         btnSelectAll.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setAllSelected(!allSelected);
             }
@@ -151,10 +151,11 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         
         final JLabel lblGameRequirements = new JLabel("Game Requirements:");
         
-        final JButton reloadButton = new JButton(
-                "Reload from Requirements Manager");
-        reloadButton.setToolTipText("Refresh the list of requirements to reflect the requirements in the backlog of Requirements Manager."); // $codepro.audit.disable lineLength
+        final JButton reloadButton = new JButton("Reload from Requirements Manager");
+        reloadButton
+                .setToolTipText("Refresh the list of requirements to reflect the requirements in the backlog of Requirements Manager."); // $codepro.audit.disable lineLength
         reloadButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 GetRequirementsController.getInstance().retrieveRequirements();
             }
@@ -162,61 +163,42 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         reloadButton.setIcon(ImageLoader.getIcon("reload.png"));
         
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.LEADING)
-                                                .addComponent(
-                                                        requirementsTableScrollPane,
+                                        layout.createParallelGroup(Alignment.LEADING)
+                                                .addComponent(requirementsTableScrollPane,
                                                         Alignment.TRAILING,
-                                                        GroupLayout.DEFAULT_SIZE,
-                                                        549, Short.MAX_VALUE)
+                                                        GroupLayout.DEFAULT_SIZE, 549,
+                                                        Short.MAX_VALUE)
                                                 .addGroup(
                                                         layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        addButton)
+                                                                .addComponent(addButton)
                                                                 .addPreferredGap(
                                                                         ComponentPlacement.RELATED)
-                                                                .addComponent(
-                                                                        reloadButton))
-                                                .addComponent(
-                                                        lblGameRequirements)
-                                                .addComponent(
-                                                        btnSelectAll,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        150,
+                                                                .addComponent(reloadButton))
+                                                .addComponent(lblGameRequirements)
+                                                .addComponent(btnSelectAll,
+                                                        GroupLayout.PREFERRED_SIZE, 150,
                                                         GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap()));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                Alignment.BASELINE)
-                                                .addComponent(
-                                                        addButton,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        37,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(
-                                                        reloadButton,
-                                                        GroupLayout.PREFERRED_SIZE,
-                                                        37,
-                                                        GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addComponent(lblGameRequirements)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(requirementsTableScrollPane,
-                                        GroupLayout.DEFAULT_SIZE, 615,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(btnSelectAll).addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
+                layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                layout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 37,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(reloadButton, GroupLayout.PREFERRED_SIZE, 37,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(lblGameRequirements)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(requirementsTableScrollPane, GroupLayout.DEFAULT_SIZE, 615,
+                                Short.MAX_VALUE).addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(btnSelectAll).addContainerGap()));
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
@@ -225,8 +207,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private void setAllSelected(boolean select) {
         allSelected = select;
         btnSelectAll.setText(allSelected ? "Deselect All" : "Select All");
-        final DefaultTableModel model = (DefaultTableModel) requirementsTable
-                .getModel();
+        final DefaultTableModel model = (DefaultTableModel) requirementsTable.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
             model.setValueAt(select, i, 0);
         }
@@ -241,10 +222,9 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
              * 
              */
             private static final long serialVersionUID = 3245971487236783965L;
-            private final Class[] types = new Class[] { Boolean.class,
-                    Object.class, String.class, String.class };
-            private final boolean[] canEdit = new boolean[] { false, false,
-                    false, false };
+            private final Class[] types = new Class[] { Boolean.class, Object.class, String.class,
+                    String.class };
+            private final boolean[] canEdit = new boolean[] { false, false, false, false };
             
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -272,8 +252,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     }
     
     private void checkAllSelected() {
-        final DefaultTableModel model = (DefaultTableModel) requirementsTable
-                .getModel();
+        final DefaultTableModel model = (DefaultTableModel) requirementsTable.getModel();
         boolean alreadyReturned = false;
         for (int i = 0; i < model.getRowCount(); i++) {
             if (!(Boolean) model.getValueAt(i, 0)) {
@@ -284,7 +263,7 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
                 
             }
         }
-        if (!alreadyReturned){
+        if (!alreadyReturned) {
             allSelected = true;
             btnSelectAll.setText("Deselect All");
         }
@@ -296,18 +275,17 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
         requirementsTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         requirementsTable.getColumnModel().getColumn(1).setPreferredWidth(200);
         requirementsTable.getColumnModel().getColumn(2).setPreferredWidth(250);
-        requirementsTable.getModel().addTableModelListener(
-                new TableModelListener() {
-                    
-                    @Override
-                    public void tableChanged(TableModelEvent e) {
-                        isFormValid();
-                        checkAllSelected();
-                        if (parentPanel != null) {
-                            parentPanel.check();
-                        }
-                    }
-                });
+        requirementsTable.getModel().addTableModelListener(new TableModelListener() {
+            
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                isFormValid();
+                checkAllSelected();
+                if (parentPanel != null) {
+                    parentPanel.check();
+                }
+            }
+        });
     }
     
     
@@ -331,10 +309,9 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private void addRequirement(GameRequirementModel r, boolean selected) {
         if (r != null) {
             Logger.getGlobal().info("Added requirement: " + r);
-            final DefaultTableModel model = (DefaultTableModel) requirementsTable
-                    .getModel();
-            model.addRow(new Object[] { selected, r,
-                    r.getDescription().toString(), r.getType().toString() });
+            final DefaultTableModel model = (DefaultTableModel) requirementsTable.getModel();
+            model.addRow(new Object[] { selected, r, r.getDescription().toString(),
+                    r.getType().toString() });
             isFormValid();
             parentPanel.check();
         }
@@ -357,10 +334,8 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      *        true if all requirements, flase if only slective requirements
      * @return requirements from table
      */
-    public ArrayList<GameRequirementModel> getAllRequirementsFromTable(
-            boolean all) {
-        final DefaultTableModel model = (DefaultTableModel) requirementsTable
-                .getModel();
+    public ArrayList<GameRequirementModel> getAllRequirementsFromTable(boolean all) {
+        final DefaultTableModel model = (DefaultTableModel) requirementsTable.getModel();
         final ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for (int i = 0; i < model.getRowCount(); i++) {
             if (!(Boolean) model.getValueAt(i, 0) && !all) {
@@ -417,18 +392,16 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
      * selectedHighlightedRows
      */
     public void selectedHighlightedRows() {
-        final DefaultTableModel model = (DefaultTableModel) requirementsTable
-                .getModel();
+        final DefaultTableModel model = (DefaultTableModel) requirementsTable.getModel();
         boolean alreadyReturned = false;
         final int[] selectedRows = requirementsTable.getSelectedRows();
-
-        if (selectedRows.length == 0) { 
+        
+        if (selectedRows.length == 0) {
             alreadyReturned = true;
-        	
+            
         }
-        if (!alreadyReturned){
-            final boolean selectionValue = !(Boolean) model.getValueAt(
-                    selectedRows[0], 0);
+        if (!alreadyReturned) {
+            final boolean selectionValue = !(Boolean) model.getValueAt(selectedRows[0], 0);
             for (int i = 0; i < selectedRows.length; i++) {
                 model.setValueAt(selectionValue, selectedRows[i], 0);
             }
@@ -479,8 +452,8 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     }
     
     public JTable getRequirementsTable() {
-		return requirementsTable;
-	}
+        return requirementsTable;
+    }
     
     private NewGamePanel parentPanel;
     
@@ -489,7 +462,6 @@ public class NewGameRequirementsPanel extends JPanel implements MouseListener,
     private JScrollPane requirementsTableScrollPane;
     private JTable requirementsTable;
     private JButton btnSelectAll;
-
-	
-
+    
+    
 }

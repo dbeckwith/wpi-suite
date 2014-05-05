@@ -58,17 +58,15 @@ public class GameTimeoutObserver extends Thread {
      */
     private Date endDate;
     
-    private final SimpleDateFormat dateFormatGMT = new SimpleDateFormat(
-            "yyyy-MMM-dd HH:mm:ss");
-    private final SimpleDateFormat dateFormatLocal = new SimpleDateFormat(
-            "yyyy-MMM-dd HH:mm:ss");
+    private final SimpleDateFormat dateFormatGMT = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+    private final SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
     
     /**
      * Creates a new {@link GameTimeoutObserver}. Called when the
      * GameEntityManager creates a new GameModel on the server.
      * 
      * @see GameEntityManager#makeEntity(Session, String)
-     * @param session  
+     * @param session
      * @param game
      */
     public GameTimeoutObserver(Session session, GameModel game) {
@@ -77,7 +75,7 @@ public class GameTimeoutObserver extends Thread {
         
         this.session = session;
         this.game = game;
-        OBSERVERS.add(this);
+        GameTimeoutObserver.OBSERVERS.add(this);
         setDaemon(true);
     }
     
@@ -87,15 +85,14 @@ public class GameTimeoutObserver extends Thread {
         if (game.getStatus().equals(GameStatus.PENDING) && game.hasDeadline()) {
             while (!finished()) {
                 try {
-                    sleep(sleepTime);
+                    Thread.sleep(sleepTime);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             try {
-                Logger.getGlobal().info("Deadline reached, ending game: "
-                        + game.toString());
+                Logger.getGlobal().info("Deadline reached, ending game: " + game.toString());
                 // clone the game so we don't change it in the database
                 final GameModel clone = new GameModel();
                 clone.copyFrom(game);
@@ -116,23 +113,24 @@ public class GameTimeoutObserver extends Thread {
         return toGMT(new Date()).after(endDate);
     }
     
-
+    
     /**
      * Gets the observer associated with the given game.
+     * 
      * @param game
      * @return GameTimeoutObserver
      */
     public static GameTimeoutObserver getObserver(GameModel game) {
         boolean alreadyReturned = false;
         GameTimeoutObserver toReturn = null;
-        for (GameTimeoutObserver o : OBSERVERS) {
-            if (o.game.equals(game)) { 
+        for (GameTimeoutObserver o : GameTimeoutObserver.OBSERVERS) {
+            if (o.game.equals(game)) {
                 toReturn = o;
                 alreadyReturned = true;
-                break; 
+                break;
             }
         }
-        if (!alreadyReturned){
+        if (!alreadyReturned) {
             toReturn = null;
         }
         return toReturn;

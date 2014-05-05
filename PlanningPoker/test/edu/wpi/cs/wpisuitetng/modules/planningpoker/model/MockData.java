@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Set;
 
 import edu.wpi.cs.wpisuitetng.database.Data;
-
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 
-/** // $codepro.audit.disable typeJavadoc
+/**
+ * // $codepro.audit.disable typeJavadoc
  * A mock data implementation for server-side testing.
  */
 public class MockData implements Data {
@@ -114,8 +114,7 @@ public class MockData implements Data {
     
     @SuppressWarnings("rawtypes")
     @Override
-    public void update(Class arg0, String arg1, Object arg2, String arg3,
-            Object arg4) {
+    public void update(Class arg0, String arg1, Object arg2, String arg3, Object arg4) {
         
     }
     
@@ -128,9 +127,8 @@ public class MockData implements Data {
     
     @SuppressWarnings("rawtypes")
     @Override
-    public List<Model> complexRetrieve(Class arg0, String[] arg1,
-            List<Object> arg2, Class arg3, String[] arg4, List<Object> arg5)
-            throws IllegalArgumentException {
+    public List<Model> complexRetrieve(Class arg0, String[] arg1, List<Object> arg2, Class arg3,
+            String[] arg4, List<Object> arg5) throws IllegalArgumentException {
         return null;
     }
     
@@ -159,8 +157,7 @@ public class MockData implements Data {
     
     @SuppressWarnings("rawtypes")
     @Override
-    public List<Model> retrieve(Class arg0, String arg1, Object arg2,
-            Project arg3) {
+    public List<Model> retrieve(Class arg0, String arg1, Object arg2, Project arg3) {
         return filterByProject(retrieve(arg0, arg1, arg2), arg3);
     }
     

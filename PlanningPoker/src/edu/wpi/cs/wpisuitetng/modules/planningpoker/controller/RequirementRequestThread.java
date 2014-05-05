@@ -87,8 +87,8 @@ public class RequirementRequestThread extends Thread {
      * is received.
      */
     private void requestRequirements() {
-        final Request request = Network.getInstance().makeRequest(
-                "requirementmanager/requirement", HttpMethod.GET);
+        final Request request = Network.getInstance().makeRequest("requirementmanager/requirement",
+                HttpMethod.GET);
         request.addObserver(observer);
         request.addObserver(controller.observer);
         Logger.getGlobal().info("Sent request for requirements");

@@ -17,6 +17,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 /**
  * This observer is called when a response is received from a request
  * to the server to get decks.
+ * 
  * @author Team 9
  * @version 1.0
  */
@@ -39,8 +40,7 @@ public class GetDecksRequestObserver implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        final DeckModel[] decks = DeckModel.fromJSONArray(iReq.getResponse()
-                .getBody());
+        final DeckModel[] decks = DeckModel.fromJSONArray(iReq.getResponse().getBody());
         GetDecksController.receivedDecks(decks);
     }
     
