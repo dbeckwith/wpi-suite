@@ -202,9 +202,10 @@ public class VotePanel extends javax.swing.JPanel {
                 estimateCardsPanel.add(estimateCard, gbc);
             }
             
-
-            for (Integer i : selectedCards) {
-                cards.get(i).setCardSelected(true);
+            if (selectedCards != null) {
+                for (Integer i : selectedCards) {
+                    cards.get(i).setCardSelected(true);
+                }
             }
             
         }
