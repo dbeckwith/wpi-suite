@@ -89,7 +89,7 @@ public class VotePanel extends javax.swing.JPanel {
         old = null;
         
         ArrayList<Integer> selectedCards = null;
-        if(this.parentGame != null && this.parentGame.equals(parentGame)){
+        if(this.req != null && this.req.equals(req)){
         	System.out.println("[VotePanel] Updating current Game");
         	selectedCards = new ArrayList<Integer>();
         	for(Card card:cards){
