@@ -48,6 +48,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (NotificationServer.getInstance().getState() == Thread.State.NEW) {
             NotificationServer.getInstance().start();
         }
+        System.setProperty("location", "server");
         GameEntityManager.instance = this;
     }
     
@@ -229,9 +230,6 @@ public class GameEntityManager implements EntityManager<GameModel> {
                 final GameTimeoutObserver obs = GameTimeoutObserver.getObserver(updatedGameModel);
                 if (obs != null && !obs.isAlive()) {
                     obs.start();
-                }
-                else {
-                    Logger.getGlobal().warning("Could not get timeout observer for game");
                 }
             }
         }
