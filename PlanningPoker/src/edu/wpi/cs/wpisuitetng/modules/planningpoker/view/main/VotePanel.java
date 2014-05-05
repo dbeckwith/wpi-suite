@@ -82,20 +82,37 @@ public class VotePanel extends javax.swing.JPanel {
     public void setRequirement(User currentUser, GameModel parentGame,
             GameRequirementModel req) {
         this.currentUser = currentUser;
-        this.parentGame = parentGame;
-        this.req = req;
+        
+
+        final ArrayList<Estimate> estimates = req.getEstimates();
         
         boolean voted = false;
         old = null;
+        
         ArrayList<Integer> selectedCards = null;
-        final ArrayList<Estimate> estimates = req.getEstimates();
-        for (Estimate e : estimates) {
-            if (e.getUsername().equals(currentUser.getUsername())) {
-                selectedCards = e.getCardsSelected();
-                voted = true;
-                old = e;
+        if(this.parentGame != null && this.parentGame.equals(parentGame)){
+        	System.out.println("[VotePanel] Updating current Game");
+        	selectedCards = new ArrayList<Integer>();
+        	for(Card card:cards){
+        		if(card.isCardSelected()){
+        			selectedCards.add(cards.indexOf(card));
+        		}
+        	}
+        } else {
+            for (Estimate e : estimates) {
+                if (e.getUsername().equals(currentUser.getUsername())) {
+                	voted = true;
+                    selectedCards = e.getCardsSelected();
+                    old = e;
+                }
             }
+        	
         }
+        
+        this.parentGame = parentGame;
+        this.req = req;
+        
+
         
         reqDescriptionTextArea.setText(req.getDescription());
         setRequirementName(req.getName());
@@ -187,11 +204,9 @@ public class VotePanel extends javax.swing.JPanel {
                 estimateCardsPanel.add(estimateCard, gbc);
             }
             
-            if (voted) {
-                for (Integer i : selectedCards) {
-                    cards.get(i).setCardSelected(true);
-                }
-                
+
+            for (Integer i : selectedCards) {
+                cards.get(i).setCardSelected(true);
             }
             
         }
