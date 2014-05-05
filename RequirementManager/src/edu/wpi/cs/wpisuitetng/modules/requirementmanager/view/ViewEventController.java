@@ -636,8 +636,6 @@ public class ViewEventController {
                                 .add(new Transaction(ConfigManager.getConfig()
                                         .getUserName(), System
                                         .currentTimeMillis(), "Imported"));
-                        AddRequirementController.getInstance().addRequirement(
-                                req);
                         RequirementModel.getInstance().addRequirement(req);
                     }
                     
