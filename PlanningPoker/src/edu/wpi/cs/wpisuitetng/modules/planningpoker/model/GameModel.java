@@ -283,7 +283,9 @@ public class GameModel extends AbstractModel implements Serializable {
             for (int i = 0; i < status_observers.size(); i++) {
                 status_observers.get(i).statusChanged(this);
             }
-            UpdateGamesController.getInstance().updateGame(this);
+            if(!"server".equals(System.getProperty("location"))) {
+                UpdateGamesController.getInstance().updateGame(this);
+            }
         }
     }
     

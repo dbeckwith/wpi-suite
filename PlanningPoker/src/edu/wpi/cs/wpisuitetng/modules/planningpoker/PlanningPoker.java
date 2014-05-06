@@ -44,6 +44,8 @@ public class PlanningPoker implements IJanewayModule {
      */
     public PlanningPoker() {
         
+        System.setProperty("location", "client");
+        
         tabs = new ArrayList<JanewayTabModel>();
         
         // setup toolbar
