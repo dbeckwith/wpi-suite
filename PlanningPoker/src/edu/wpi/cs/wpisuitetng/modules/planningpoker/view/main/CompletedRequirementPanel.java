@@ -508,6 +508,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             public void run() {
                 final String pattern = "^[\\s]*$";
                 if (!parentModel.isClosed() && parentModel.getOwner().equals(CurrentUserController.USER_NAME)) {
+                    finalEstimateField.setEnabled(true);
+                    notePane.setEnabled(true);
                     try {
                         final int finalEstimate = Integer.parseInt(finalEstimateField.getText());
                         if (finalEstimate == req.getFinalEstimate() && finalEstimate != 0) {
