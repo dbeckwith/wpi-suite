@@ -42,11 +42,15 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         
         final DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         ImageIcon icon = null;
-        
+
         setFont(getFont().deriveFont(Font.PLAIN));
         
         if (node.getUserObject() instanceof GameModel) {
             final GameModel game = (GameModel) node.getUserObject();
+
+            if (game.getOwner().equals(CurrentUserController.USER_NAME)) {
+                setText("> " + getText());
+            }
             
             if (game.isClosed()) {
                 icon = ImageLoader.getIcon("archiveTree.png");
