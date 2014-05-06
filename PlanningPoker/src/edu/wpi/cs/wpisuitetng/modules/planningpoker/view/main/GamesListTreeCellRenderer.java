@@ -11,8 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.font.TextAttribute;
-import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
@@ -38,7 +36,6 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
     private static final long serialVersionUID = -2728918517590604079L;
     
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel,
             boolean expanded, boolean leaf, int row, boolean hasFocus) {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
@@ -46,16 +43,13 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         final DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         ImageIcon icon = null;
 
-        Map fontAttributes = getFont().getAttributes();
-        fontAttributes.put(TextAttribute.UNDERLINE, -1);
-        setFont(getFont().deriveFont(fontAttributes));
         setFont(getFont().deriveFont(Font.PLAIN));
         
         if (node.getUserObject() instanceof GameModel) {
             final GameModel game = (GameModel) node.getUserObject();
 
             if (game.getOwner().equals(CurrentUserController.USER_NAME)) {
-                fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                setText("> " + getText());
             }
             
             if (game.isClosed()) {
@@ -132,7 +126,6 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
         if (icon != null) {
             setIcon(icon);
         }
-        setFont(getFont().deriveFont(fontAttributes));
         
         return this;
     }
