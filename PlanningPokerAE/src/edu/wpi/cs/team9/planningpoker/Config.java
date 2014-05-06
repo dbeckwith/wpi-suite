@@ -12,10 +12,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+/**
+ * A utility to access some global configuration values
+ * @author akshay
+ *
+ */
 public class Config {
 	
-	
+	/**
+	 * 
+	 * @param ctx the context of this application
+	 * @return the username of the currently loged in user
+	 */
 	public static String getUserName(Context ctx){
+		//get user from preferences
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 		return prefs.getString("username", "");		
 	}

@@ -35,6 +35,11 @@ import edu.wpi.cs.team9.planningpoker.view.GameSummaryFragment.RequirementListLi
 import edu.wpi.cs.team9.planningpoker.view.RequirementFragment;
 import edu.wpi.cs.team9.planningpoker.view.RequirementFragment.RequirementFragmentListener;
 
+/**
+ * Shows a game and its requirements in a scrollable view
+ * @author akshay
+ *
+ */
 public class RequirementActivity extends Activity implements RequirementFragmentListener, GetGamesObserver{
 
 	private static final String TAG = RequirementActivity.class.getSimpleName();
@@ -122,12 +127,22 @@ public class RequirementActivity extends Activity implements RequirementFragment
 		private GameModel game;
 		private RequirementFragmentListener reqListener;
 		
+		/**
+		 * Constructor
+		 * @param fm the context's fragment manager
+		 * @param game 
+		 * @param rfl the listener for updates
+		 */
 		public RequirementPagerAdapter(FragmentManager fm, GameModel game, RequirementFragmentListener rfl) {
 			super(fm);
 			this.game = game;
 			this.reqListener = rfl;
 		}
 
+		/**
+		 * sets the current game
+		 * @param game
+		 */
 		public void setGame(GameModel game){
 			this.game = game;
 		}
@@ -162,6 +177,11 @@ public class RequirementActivity extends Activity implements RequirementFragment
 			}
 		}
 		
+		/**
+		 * get the index of the item by title
+		 * @param s title
+		 * @return index of item with title
+		 */
 		public int getTitleIndex(String s){
 			List<GameRequirementModel> reqs = game.getRequirements();
 			for(GameRequirementModel r:reqs){

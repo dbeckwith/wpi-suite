@@ -18,10 +18,19 @@ import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
 
+/**
+ * Adpater for the list of game. Shows the game's name and an icon
+ * @author akshay
+ *
+ */
 public class GameListAdapter extends ArrayAdapter<GameModel>{
 	
 	private Context context;
-
+	
+	/**
+	 * Constructor
+	 * @param context
+	 */
 	public GameListAdapter(Context context) {
 		super(context, R.layout.game_list_item);
 		this.context = context;
@@ -40,7 +49,8 @@ public class GameListAdapter extends ArrayAdapter<GameModel>{
 		GameModel game = getItem(position);
 		ImageView statusView = (ImageView)view.findViewById(R.id.status);	
 		TextView nameView = (TextView)view.findViewById(R.id.name);
-				
+		
+		//pick the icon according to the status
 		int icon = R.drawable.ic_status_pending;
 		
 		if(game.isEnded()){

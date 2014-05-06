@@ -11,7 +11,6 @@ package edu.wpi.cs.team9.planningpoker.view;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,10 +20,20 @@ import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.model.Estimate;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 
+/**
+ * An adapter for the list of requirements in the game fragment
+ * @author akshay
+ */
 public class RequirementListAdapter extends ArrayAdapter<GameRequirementModel> {
 	
 	private static final String TAG = RequirementListAdapter.class.getSimpleName();
 
+	/**
+	 * Constructor
+	 * @param context the context of the application
+	 * @param resource the view to use as a resource
+	 * @param textViewResourceId 
+	 */
 	public RequirementListAdapter(Context context, int resource, int textViewResourceId) {
 		super(context, resource, textViewResourceId);
 	}
@@ -44,6 +53,11 @@ public class RequirementListAdapter extends ArrayAdapter<GameRequirementModel> {
 		return view;		
 	}
 	
+	/**
+	 * returns whether the current user has voted for the given requirement
+	 * @param m
+	 * @return
+	 */
 	public boolean hasUserEstimated(GameRequirementModel m){
 		ArrayList<Estimate> estimates = m.getEstimates();
 		String user = Config.getUserName(getContext());

@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.team9.planningpoker.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
@@ -19,13 +18,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 
+/**
+ * shows the game's basic information and a list of requirements
+ * @author akshay
+ *
+ */
 public class GameSummaryFragment extends Fragment implements OnItemClickListener{
 	
 	private static final String TAG = GameSummaryFragment.class.getSimpleName();
@@ -40,14 +43,25 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 	
 	private RequirementListListener listener;
 
+	/**
+	 * Blank Constructor needed for Android
+	 */
 	public GameSummaryFragment(){
 		
 	}
 	
+	/**
+	 * sets the game to display
+	 * @param game
+	 */
 	public void setGame(GameModel game){
 		this.game = game;		
 	}
 	
+	/**
+	 * Sets the listener for requirement selections
+	 * @param l
+	 */
 	public void setListener(RequirementListListener l){
 		this.listener = l;
 	}
@@ -89,6 +103,10 @@ public class GameSummaryFragment extends Fragment implements OnItemClickListener
 		}
 	}
 	
+	/**
+	 * Notified when a requirement is clicked on
+	 * @author akshay
+	 */
 	public interface RequirementListListener{
 		public void requirementSelected(GameRequirementModel requirement);
 	}

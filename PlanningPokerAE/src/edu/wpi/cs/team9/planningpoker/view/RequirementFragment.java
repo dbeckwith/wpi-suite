@@ -14,7 +14,6 @@ import android.app.Fragment;
 import android.app.Service;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +34,10 @@ import edu.wpi.cs.team9.planningpoker.model.GameModel;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.team9.planningpoker.view.Card.CardListener;
 
+/**
+ * Allows a user to vote on requirements using cards or input
+ * @author akshay 
+ */
 public class RequirementFragment extends Fragment implements CardListener {
 	
 	private static final String TAG = RequirementFragment.class.getSimpleName();
@@ -67,22 +70,41 @@ public class RequirementFragment extends Fragment implements CardListener {
 	private EditText numberInput;
 	
 	private ArrayList<Card> cards;
-
+	
+	/**
+	 * Empty constructor
+	 */
 	public RequirementFragment() {
 	}
 	
+	/**
+	 * sets the game of the requirement
+	 * @param g
+	 */
 	public void setGame(GameModel g){
 		game = g;
 	}
 	
+	/**
+	 * set the requirement being voted on
+	 * @param req
+	 */
 	public void setRequirement(GameRequirementModel req){
 		this.requirement = req;		
 	}
 	
+	/**
+	 * sets the deck being used
+	 * @param dm the deckmodel
+	 */
 	public void setDeck(DeckModel dm){
 		this.deck = dm;
 	}
-			
+	
+	/**
+	 * sets the vote submission listener
+	 * @param rfl
+	 */
 	public void setListener(RequirementFragmentListener rfl){
 		listener = rfl;
 	}
@@ -109,6 +131,7 @@ public class RequirementFragment extends Fragment implements CardListener {
 		descView.setText(requirement.getDescription());
 		
 		submit = (Button)root.findViewById(R.id.submitButton);
+		//submit the vote estimate
 		submit.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -136,7 +159,6 @@ public class RequirementFragment extends Fragment implements CardListener {
 		table = (TableLayout)root.findViewById(R.id.buttonLayout);
 		if(game.isStarted()){
 			if(game.getDeck().isNone()){
-				int max = game.getDeck().getMaxEstimate();
 				setUpInputCard();
 			} else {
 				setUpCardTable();
@@ -149,6 +171,9 @@ public class RequirementFragment extends Fragment implements CardListener {
 		return root;
 	}
 	
+	/**
+	 * sets up the grid of card in the deck
+	 */
 	private void setUpCardTable(){
 		cards.clear();
 		
@@ -171,6 +196,9 @@ public class RequirementFragment extends Fragment implements CardListener {
 		}
 	}
 	
+	/**
+	 * sets up a number input for games without a deck
+	 */
 	private void setUpInputCard(){
 		LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Service.LAYOUT_INFLATER_SERVICE);
 		View inputView = inflater.inflate(R.layout.card_spinner, null);
@@ -245,7 +273,11 @@ public class RequirementFragment extends Fragment implements CardListener {
 		
 	}
 	
-	public void setSubmitEnabled(boolean enabled){
+	/**
+	 * sets the state of the submit button
+	 * @param enabled
+	 */
+	private void setSubmitEnabled(boolean enabled){
 		if(enabled){
 			submit.setBackgroundResource(R.drawable.bg_card_button);
 			submit.setEnabled(true);
@@ -255,6 +287,10 @@ public class RequirementFragment extends Fragment implements CardListener {
 		}
 	}
 	
+	/**
+	 * computes the selected estimate
+	 * @return
+	 */
 	public float getEstimate(){
 		float estimate = 0;
 		if(game.getDeck().isNone()){
@@ -269,6 +305,10 @@ public class RequirementFragment extends Fragment implements CardListener {
 		return estimate;
 	}
 	
+	/**
+	 * gets the estimate stored in the server for this user
+	 * @return
+	 */
 	public Estimate getRecordedEstimate(){
 		String userName = Config.getUserName(getActivity());
 		Estimate oldEstimate = null;
@@ -280,6 +320,10 @@ public class RequirementFragment extends Fragment implements CardListener {
 		return oldEstimate;
 	}
 	
+	/**
+	 * returns a list of selected card indices
+	 * @return list of indices
+	 */
 	public ArrayList<Integer> getSelectedCards(){
 		ArrayList<Integer> selected = new ArrayList<Integer>();
 		for(Card c:cards){
@@ -290,6 +334,11 @@ public class RequirementFragment extends Fragment implements CardListener {
 		return selected;
 	}
 	
+	/**
+	 * gets called when a vote is submitted
+	 * @author akshay
+	 *
+	 */
 	public interface RequirementFragmentListener{
 		public void updated(GameRequirementModel requirement);
 	}

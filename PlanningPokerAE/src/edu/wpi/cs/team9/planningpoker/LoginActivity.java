@@ -29,6 +29,11 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
+/**
+ * Shows a login screen to log into a WPISuite project
+ * @author akshay
+ *
+ */
 public class LoginActivity extends Activity {
 	
 	private static final String TAG = LoginActivity.class.getSimpleName();
@@ -44,6 +49,9 @@ public class LoginActivity extends Activity {
 	
 	private SharedPreferences prefs;
 	
+	/**
+	 * watches for changes to the 4 login fields to enable the log in button
+	 */
 	private TextWatcher formWatcher = new TextWatcher() {
 		
 		@Override
@@ -67,6 +75,10 @@ public class LoginActivity extends Activity {
 		public void afterTextChanged(Editable s) {}
 	};
 	
+	/**
+	 * listens for the client trying to select a project
+	 * If a project is selected, moves to the games list activity
+	 */
 	private RequestObserver projectObserver = new RequestObserver() {
 		
 		@Override
@@ -118,6 +130,9 @@ public class LoginActivity extends Activity {
 		}
 	};
 	
+	/**
+	 * watches the login process, tries to select a project upon success
+	 */
 	private RequestObserver loginObserver = new RequestObserver() {
 		
 		@Override
@@ -182,6 +197,7 @@ public class LoginActivity extends Activity {
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		
+		//set up fields
 		usernameText = (EditText)findViewById(R.id.usernameField);
 		passwordText = (EditText)findViewById(R.id.passwordField);
 		projectText = (EditText)findViewById(R.id.projectField);
@@ -225,6 +241,7 @@ public class LoginActivity extends Activity {
 		
 	}
 	
+	//sets the error message for login
 	private void setError(final String error){
 		runOnUiThread(new Runnable() {			
 			@Override
@@ -235,7 +252,9 @@ public class LoginActivity extends Activity {
 	}
 	
 	
-	
+	/**
+	 * diables the progress indicator in the action bar
+	 */
 	private void hideProgress(){
 		runOnUiThread(new Runnable() {			
 			@Override

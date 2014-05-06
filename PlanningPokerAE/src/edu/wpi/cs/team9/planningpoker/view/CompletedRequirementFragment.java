@@ -15,33 +15,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
-import edu.wpi.cs.team9.planningpoker.view.RequirementFragment.RequirementFragmentListener;
 
+/**
+ * shows information about a requirement from a completed or ended game
+ * @author akshay
+ *
+ */
 public class CompletedRequirementFragment extends Fragment {
 	
 	private static final String TAG = RequirementFragment.class.getSimpleName();
-	
-	private static final int COLUMNS = 4;
-	
-	private static final float[] deck = {0.5f, 1, 2, 3, 5, 10, 20, 50, 100};
-		
-	private static final TableLayout.LayoutParams rowLP = new TableLayout.LayoutParams(
-	        TableLayout.LayoutParams.MATCH_PARENT,
-	        TableLayout.LayoutParams.MATCH_PARENT,
-	        1.0f);
-	
-	private static final TableRow.LayoutParams cellLP = new TableRow.LayoutParams(
-	        TableRow.LayoutParams.MATCH_PARENT,
-	        TableRow.LayoutParams.MATCH_PARENT,
-	        1.0f);
-	
-	private RequirementFragmentListener listener;
-	
+
 	private GameRequirementModel requirement;
 	
 	private TextView nameView;
@@ -52,8 +38,6 @@ public class CompletedRequirementFragment extends Fragment {
 	private ListView estimateListView;
 	private EstimateListAdapter adapter;
 		
-	private boolean selectMultiple = true;
-	
 	public CompletedRequirementFragment() {
 	}
 	

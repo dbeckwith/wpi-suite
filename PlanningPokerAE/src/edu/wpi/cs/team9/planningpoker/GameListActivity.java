@@ -27,9 +27,13 @@ import edu.wpi.cs.team9.planningpoker.controller.CurrentUserController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
-import edu.wpi.cs.team9.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.team9.planningpoker.view.GameListAdapter;
 
+/**
+ * Displays a list of started, ended, and completed games to the user
+ * @author akshay
+ *
+ */
 public class GameListActivity extends Activity implements GetGamesObserver {
 
 	private static final String TAG = GameListActivity.class.getSimpleName();
@@ -45,6 +49,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		setContentView(R.layout.activity_game_list);
 		//Intent intent = getIntent();
 		
+		//get the project's name, set it to the title
 		String project = getIntent().getStringExtra("project");
 		setTitle(String.format("PlanningPoker : %s", project));
 		
@@ -54,15 +59,17 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		adapter = new GameListAdapter(this);
 		gameListView.setAdapter(adapter);
 		
+		//when an item is clicked, show the game activity
 		gameListView.setOnItemClickListener(new OnItemClickListener() {			
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getBaseContext(), RequirementActivity.class);
 				
+				//stringify the game and pass it to the new activity
 				String gameJson = ((GameModel)adapter.getItem(position)).toJSON();	
 				
 				intent.putExtra("game", gameJson);
-				startActivity(intent);
+				startActivity(intent); //start the requirement activity
 				
 			}
 		});
@@ -81,6 +88,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 
 	@Override
 	public void receivedGames(final GameModel[] games) {
+		//set the label to show whether games were found
 		runOnUiThread(new Runnable(){
 			@Override
 			public void run(){
@@ -92,7 +100,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 			}
 		});
 		
-
+		//sort the games by their status
 		if(games != null){
 			Arrays.sort(games, new Comparator<GameModel>() {
 				@Override
@@ -108,6 +116,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 			});
 		
 		
+			// add the games to the list
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
@@ -127,7 +136,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_refresh:
+		case R.id.action_refresh: // refresh games when the refresh button tis pressed
 			setProgressBarIndeterminateVisibility(true);
 			GetGamesController.getInstance().requestGames();
 			break;

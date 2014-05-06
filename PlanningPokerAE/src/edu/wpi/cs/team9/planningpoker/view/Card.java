@@ -16,10 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.R;
 
+/**
+ * A estimation card that shows a value and can be selected
+ * @author akshay
+ *
+ */
 public class Card implements View.OnClickListener{
 	
 	public static final DecimalFormat cardNumberFormat = new DecimalFormat("0.#");
@@ -32,7 +36,7 @@ public class Card implements View.OnClickListener{
 		R.drawable.ic_goat
 	};
 	
-	private Context context;
+	//private Context context;
 	
 	private View view;
 	private double value;
@@ -44,8 +48,14 @@ public class Card implements View.OnClickListener{
 	
 	private boolean selected = false;
 	
+	/**
+	 * Constructor
+	 * @param ctx the context of the application
+	 * @param value the value of the card
+	 * @param listener the selection listener
+	 */
 	public Card(Context ctx, double value, CardListener listener){
-		this.context = ctx;
+		//this.context = ctx;
 		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.listener = listener;
 	  	this.value = value;
@@ -63,7 +73,10 @@ public class Card implements View.OnClickListener{
 		view.setOnClickListener(this);		
 	}
 
-	
+	/**
+	 * Sets the card's selection state
+	 * @param selected
+	 */
 	public void setCardSelected(boolean selected){
 		this.selected = selected;
 		if(selected){
@@ -75,14 +88,26 @@ public class Card implements View.OnClickListener{
 		}
 	}
 	
+	/**
+	 * 
+	 * @return whether the card is selected or not
+	 */
 	public boolean isCardSelected(){
 		return selected;
 	}
 	
+	/**
+	 * 
+	 * @return the view to be displayed by the card
+	 */
 	public View getView(){
 		return view;
 	}
 	
+	/**
+	 * @return the value of the card
+	 * 
+	 */
 	public double getValue(){
 		return value;
 	}
@@ -97,6 +122,11 @@ public class Card implements View.OnClickListener{
 		}
 	}
 	
+	/**
+	 * interface to listen to changes from the card
+	 * @author akshay
+	 *
+	 */
 	public interface CardListener{
 		public void cardSelected(Card c);
 	}

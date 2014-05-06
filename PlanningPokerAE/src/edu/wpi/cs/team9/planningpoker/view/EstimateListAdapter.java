@@ -16,12 +16,22 @@ import android.widget.TextView;
 import edu.wpi.cs.team9.planningpoker.R;
 import edu.wpi.cs.team9.planningpoker.model.Estimate;
 
+/**
+ * an adapter for the list of estimates
+ * @author akshay
+ *
+ */
 public class EstimateListAdapter extends ArrayAdapter<Estimate> {
 
+	/**
+	 * Constructor
+	 * @param context
+	 */
 	public EstimateListAdapter(Context context) {
 		super(context, R.layout.estimate_list_item, R.id.username);
 	}
 	
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
 		View view = super.getView(position, convertView, parent);
 		

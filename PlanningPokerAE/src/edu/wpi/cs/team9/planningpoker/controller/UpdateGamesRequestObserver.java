@@ -10,7 +10,6 @@ package edu.wpi.cs.team9.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
-import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 public class UpdateGamesRequestObserver implements RequestObserver {
     
@@ -35,7 +34,7 @@ public class UpdateGamesRequestObserver implements RequestObserver {
     @Override
     public void responseSuccess(IRequest iReq) {
         // Get the response to the given request
-        final ResponseModel response = iReq.getResponse();
+        //final ResponseModel response = iReq.getResponse();
         
         // Parse the game out of the response body
         // final GameModel game = GameModel.fromJson(response.getBody());
