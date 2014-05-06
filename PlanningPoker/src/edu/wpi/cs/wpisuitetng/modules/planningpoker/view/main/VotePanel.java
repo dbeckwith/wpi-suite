@@ -133,9 +133,7 @@ public class VotePanel extends javax.swing.JPanel {
             }
         }
         
-        ArrayList<Integer> selected = new ArrayList<Integer>();
         if (old != null) {
-            selected = old.getCardsSelected();
             lblYouVoted.setVisible(true);
             prevVoteLabel.setText(NUM_FORMAT.format(old.getEstimate()));
         }

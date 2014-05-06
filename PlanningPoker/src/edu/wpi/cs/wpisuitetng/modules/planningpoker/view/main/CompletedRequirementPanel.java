@@ -358,7 +358,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         gbc_votedUsersValueLabel.gridy = 3;
         add(votedUsersValueLabel, gbc_votedUsersValueLabel);
         
-        final JLabel lblNote = new JLabel("Note:");
+        lblNote = new JLabel("Note:");
         lblNote.setToolTipText("A note to describe reasons behind the final estimate. Optional only on the first final estimate given to this requirement. If the final estimate is being changed, the note is required."); // $codepro.audit.disable lineLength
         final GridBagConstraints gbc_lblNote = new GridBagConstraints();
         gbc_lblNote.anchor = GridBagConstraints.EAST;
@@ -507,7 +507,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             @Override
             public void run() {
                 final String pattern = "^[\\s]*$";
-                if (!parentModel.isClosed()) {
+                if (!parentModel.isClosed() && parentModel.getOwner().equals(CurrentUserController.USER_NAME)) {
                     try {
                         final int finalEstimate = Integer.parseInt(finalEstimateField.getText());
                         if (finalEstimate == req.getFinalEstimate() && finalEstimate != 0) {
@@ -564,6 +564,14 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                         saveFinalEstimateButton.setEnabled(false);
                         saveAndUpdateButton.setEnabled(false);
                     }
+                }
+                else {
+                    // can't make final estimates, so hide all of that
+                    lblError.setVisible(false);
+                    saveFinalEstimateButton.setEnabled(false);
+                    saveAndUpdateButton.setEnabled(false);
+                    finalEstimateField.setEnabled(false);
+                    notePane.setEnabled(false);
                 }
                 
             }
@@ -626,4 +634,5 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private JTextPane notePane;
     private final JTree tree;
     private JButton saveAndUpdateButton;
+    private JLabel lblNote;
 }
