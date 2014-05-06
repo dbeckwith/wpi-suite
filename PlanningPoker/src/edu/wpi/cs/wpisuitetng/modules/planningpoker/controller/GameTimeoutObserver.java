@@ -88,7 +88,7 @@ public class GameTimeoutObserver extends Thread {
                     Thread.sleep(sleepTime);
                 }
                 catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Logger.getGlobal().warning("GameTimeoutObserver interrupted");
                 }
             }
             try {
@@ -127,11 +127,13 @@ public class GameTimeoutObserver extends Thread {
             if (o.game.equals(game)) {
                 toReturn = o;
                 alreadyReturned = true;
+                Logger.getGlobal().info("Got observer for game " + game.getName());
                 break;
             }
         }
         if (!alreadyReturned) {
             toReturn = null;
+            Logger.getGlobal().warning("Could not get observer for game " + game.getName());
         }
         return toReturn;
     }

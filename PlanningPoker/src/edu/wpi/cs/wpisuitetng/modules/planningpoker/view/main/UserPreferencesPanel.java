@@ -446,6 +446,7 @@ public class UserPreferencesPanel extends javax.swing.JPanel {
         final String email = emailField.getText();
         currentUser.setEmail(email);
         saveEmailButton.setEnabled(false);
+        updateAndRetrieve(currentUser);
     }
     
     private void updateSMS() {
